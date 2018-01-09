@@ -1,6 +1,4 @@
-import myPalette from './colorPalette';
-
-const primary = myPalette.primary;
+import AppPalette from './appPalette';
 
 export default {
   contentWraper: { padding: '24px', background: 'white' },

@@ -2,17 +2,8 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../components/withRoot';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
+import WithRoot from './WithRoot';
 import FooterStyles from '../../styles/footerStyle';
-import { Link } from 'react-scroll';
-
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
 
 class AppFooter extends Component {
   render() {
@@ -21,7 +12,7 @@ class AppFooter extends Component {
 }
 
 AppFooter.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-export default withRoot(AppFooter);
+export default WithRoot(AppFooter);

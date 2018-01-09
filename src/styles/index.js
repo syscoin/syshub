@@ -3,7 +3,7 @@ import ContentStyles from './contentStyle';
 import CreateContext from './createContext';
 import FooterStyles from './footerStyle';
 import HeaderStyles from './headerStyle';
-import MyPalette from './myPalette';
+import AppPalette from './appPalette';
 import SiderStyles from './siderStyle';
 
 export {
@@ -12,7 +12,6 @@ export {
   CreateContext,
   FooterStyles,
   HeaderStyles,
-  MyPalette,
-  SiderStyles
+  AppPalette,
+  SiderStyles,
 };
-

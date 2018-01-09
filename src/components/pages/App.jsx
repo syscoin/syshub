@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-import { DesktopLayout } from '../components/layouts';
+import { DesktopLayout } from '../layouts';
 
-import AppStyles from '../styles/appStyle';
+import AppStyles from '../../styles/appStyle';
 
 class App extends Component {
   render() {

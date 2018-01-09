@@ -1,6 +1,6 @@
-import myPalette from './colorPalette';
+import AppPalette from './appPalette';
 
-const primary = myPalette.primary;
+const primary = AppPalette.primary;
 
 export default {
   siderWraper: { background: '#F0F2F5' },

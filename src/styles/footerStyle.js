@@ -1,7 +1,7 @@
-import myPalette from './colorPalette';
+import AppPalette from './appPalette';
 
-const darkGrey = myPalette.darkGrey;
-const white = myPalette.white;
+const darkGrey = AppPalette.darkGrey;
+const white = AppPalette.white;
 
 export default {
   footerWraper: {
