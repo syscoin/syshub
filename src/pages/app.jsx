@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-import DesktopLayout from '../components/layouts/desktopLayout';
+import { DesktopLayout } from '../components/layouts';
 
 import AppStyles from '../styles/appStyle';
 
-class Index extends Component {
+class App extends Component {
   render() {
     return (
       <div style={AppStyles.appWraper}>
@@ -15,4 +15,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default App;

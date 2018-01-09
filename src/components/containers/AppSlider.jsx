@@ -14,7 +14,7 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-class Index extends Component {
+class AppSlider extends Component {
   render() {
     return (
       <Menu
@@ -23,7 +23,7 @@ class Index extends Component {
         defaultOpenKeys={['sub2']}
         style={{
           height: '100%',
-          borderRight: '6px solid red',
+          borderRight: '6px solid red'
         }}
       >
         <SubMenu
@@ -69,8 +69,8 @@ class Index extends Component {
   }
 }
 
-Index.propTypes = {
-  classes: PropTypes.object.isRequired,
+AppSlider.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withRoot(Index);
+export default withRoot(AppSlider);

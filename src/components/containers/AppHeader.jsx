@@ -15,19 +15,19 @@ import { Link } from 'react-scroll';
 const styles = theme => ({
   root: {
     marginTop: theme.spacing.unit * 0,
-    width: '100%',
-  },
+    width: '100%'
+  }
 });
 
-class Index extends Component {
+class AppHeader extends Component {
   state = {
     open: false,
-    showModal: false,
+    showModal: false
   };
 
   toggleModal() {
     this.setState({
-      showModal: !this.state.showModal,
+      showModal: !this.state.showModal
     });
   }
 
@@ -42,8 +42,8 @@ class Index extends Component {
   }
 }
 
-Index.propTypes = {
-  classes: PropTypes.object.isRequired,
+AppHeader.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withRoot(withStyles(styles)(Index));
+export default withRoot(withStyles(styles)(AppHeader));

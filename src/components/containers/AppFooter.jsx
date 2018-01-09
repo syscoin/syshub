@@ -14,14 +14,14 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-class Index extends Component {
+class AppFooter extends Component {
   render() {
     return <div style={FooterStyles.footer}>Footer</div>;
   }
 }
 
-Index.propTypes = {
-  classes: PropTypes.object.isRequired,
+AppFooter.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withRoot(Index);
+export default withRoot(AppFooter);

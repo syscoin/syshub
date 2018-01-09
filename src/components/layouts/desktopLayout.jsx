@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-import AppHeader from '../containers/header';
-import AppSider from '../containers/sider';
-import AppContent from '../containers/content';
-import AppFooter from '../containers/footer';
-
+import { AppHeader, AppContent, AppSlider, AppFooter } from '../containers/';
 // Styles
-import HeaderStyles from '../../styles/headerStyle';
-import SiderStyles from '../../styles/siderStyle';
-import ContentStyles from '../../styles/contentStyle';
-import FooterStyles from '../../styles/footerStyle';
+import { HeaderStyles, SiderStyles, ContentStyles, FooterStyles } from '../../styles';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-class Index extends Component {
+class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
@@ -24,7 +17,7 @@ class Index extends Component {
         </Header>
         <Layout>
           <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppSider />
+            <AppSlider />
           </Sider>
           <Layout>
             <Content style={ContentStyles.contentWraper}>
@@ -40,4 +33,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default DesktopLayout;

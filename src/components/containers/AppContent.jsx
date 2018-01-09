@@ -12,14 +12,14 @@ import HeaderStyles from '../../styles/headerStyle';
 import { Link } from 'react-scroll';
 //import EmailModal from './the-modal';
 
-class Index extends Component {
+class AppContent extends Component {
   render() {
     return <div>Content</div>;
   }
 }
 
-Index.propTypes = {
-  classes: PropTypes.object.isRequired,
+AppContent.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withRoot(Index);
+export default withRoot(AppContent);
