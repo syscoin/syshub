@@ -1,4 +1,4 @@
-import myPalette from './myPalette';
+import myPalette from './colorPalette';
 
 const darkGrey = myPalette.darkGrey;
 const white = myPalette.white;

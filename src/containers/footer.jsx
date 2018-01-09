@@ -2,19 +2,22 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import withRoot from '../../components/withRoot';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import HeaderStyles from '../../styles/headerStyle';
 import { Link } from 'react-scroll';
-//import EmailModal from './the-modal';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+
+import withRoot from './withRoot';
+import FooterStyles from '../styles/footerStyle';
+
+const { SubMenu } = Menu;
+const { Header, Content, Sider, Footer } = Layout;
 
 class Index extends Component {
   render() {
-    return <div>Content</div>;
+    return <div style={FooterStyles.footer}>Footer</div>;
   }
 }
 

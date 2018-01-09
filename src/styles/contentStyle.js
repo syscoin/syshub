@@ -1,4 +1,4 @@
-import myPalette from './myPalette';
+import myPalette from './colorPalette';
 
 const primary = myPalette.primary;
 

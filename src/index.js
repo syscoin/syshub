@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
-import App from './pages/app';
+import App from './app';
 
 // Redux Imports
 import reducers from './redux/reducers';

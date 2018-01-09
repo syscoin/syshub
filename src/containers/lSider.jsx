@@ -4,11 +4,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import withRoot from '../../components/withRoot';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import SiderStyles from '../../styles/siderStyle';
 import { Link } from 'react-scroll';
+
+import withRoot from './withRoot';
+import SiderStyles from '../styles/siderStyle';
 
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { SubMenu } = Menu;
