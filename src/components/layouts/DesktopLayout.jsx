@@ -10,7 +10,7 @@ import {
 } from '../containers/';
 // Styles
 import {
-  headerStyle,
+  appHeaderStyle,
   rSiderStyle,
   lSiderStyle,
   contentStyle,
@@ -23,17 +23,17 @@ class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <Header style={headerStyle.headerWraper}>
+        <Header style={appHeaderStyle.headerWraper}>
           <AppHeader />
         </Header>
         <Layout>
-          <Sider width={200} style={lSiderStyle.siderWraper}>
+          <Sider width={250} style={lSiderStyle.wraper}>
             <AppLSider />
           </Sider>
           <Content style={contentStyle.contentWraper}>
             <AppContent />
           </Content>
-          <Sider width={200} style={rSiderStyle.siderWraper}>
+          <Sider width={250} style={rSiderStyle.wraper}>
             <AppRSider />
           </Sider>
         </Layout>

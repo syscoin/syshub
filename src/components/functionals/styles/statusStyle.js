@@ -3,9 +3,8 @@ import Palette from './palette';
 const primary = Palette.primary;
 
 export default {
-  headerWraper: {},
-  header: {
-    backgroundColor: primary,
+  wraper: {
+    border: '1px solid lime',
     color: 'white',
   },
 };

@@ -1,14 +1,17 @@
 const basicColors = {
   white: '#FFFFFF',
   primary: '#1991CC',
-  darkGrey: '#464745',
-  lightGrey: '#bdc3c7',
+  primaryDark: '#0073a8',
+  primaryLight: '#53a5cc',
+  greyDark: '#464745',
+  grey: '#bdc3c7',
+  greyLight: '#F0F2F5',
 };
 
 const textColors = {
   textBlue: basicColors.primary,
-  textDark: basicColors.darkGrey,
-  textLignt: basicColors.lightGrey,
+  text: basicColors.greyDark,
+  textLight: basicColors.grey,
 };
 
 export default { ...basicColors, ...textColors };

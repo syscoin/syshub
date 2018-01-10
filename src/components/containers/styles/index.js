@@ -1,7 +1,7 @@
 import palette from './palette';
 import contentStyle from './contentStyle';
 import footerStyle from './footerStyle';
-import headerStyle from './headerStyle';
+import appHeaderStyle from './appHeaderStyle';
 import rSiderStyle from './rSiderStyle';
 import lSiderStyle from './lSiderStyle';
 
@@ -9,7 +9,7 @@ export {
   palette,
   contentStyle,
   footerStyle,
-  headerStyle,
+  appHeaderStyle,
   rSiderStyle,
   lSiderStyle,
 };

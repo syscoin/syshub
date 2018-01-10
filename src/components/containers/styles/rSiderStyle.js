@@ -1,9 +1,10 @@
 import Palette from './palette';
 
 const primary = Palette.primary;
+const white = Palette.white;
 
 export default {
-  siderWraper: { background: '#F0F2F5' },
+  wraper: { background: white },
   sider: {
     backgroundColor: primary, //'#ff0045',
   },
