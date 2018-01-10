@@ -15,7 +15,7 @@ import {
   ContentStyles,
   FooterStyles,
 } from '../../styles';
-
+import ChatBox from '../chatBox'
 const { Header, Content, Sider, Footer } = Layout;
 
 class DesktopLayout extends Component {
@@ -33,7 +33,7 @@ class DesktopLayout extends Component {
             <AppContent />
           </Content>
           <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppRSlider />
+            <ChatBox />
           </Sider>
         </Layout>
         <Footer style={FooterStyles.footerWraper}>
