@@ -1,6 +1,9 @@
 import constants from '../constants';
 
-const initialState = {};
+const initialState = {
+  showPage: 'home',
+  showChat: true,
+};
 
 const app = (state = initialState, action) => {
   switch (action.type) {
