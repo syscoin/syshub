@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, compose } from 'redux';
-import { App } from './components/pages';
+import App from './App';
 
 // Redux Imports
 import reducers from './redux/reducers';
