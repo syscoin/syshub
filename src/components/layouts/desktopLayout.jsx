@@ -40,9 +40,8 @@ class DesktopLayout extends Component {
             text: 'Successfully logged out.',
             icon: 'success'
           });
+          this.setState({ currentUser: null });
         }
-
-        this.setState({ currentUser: null });
       });
   }
 
@@ -59,8 +58,16 @@ class DesktopLayout extends Component {
           <Layout>
             <Content style={ContentStyles.contentWraper}>
               <AppContent />
-              {this.state.currentUser ? this.state.currentUser.email : null}
-              <Login /> <Register /> <button onClick={this.logout}>Logout</button>
+              {this.state.currentUser ? (
+                <div>
+                  <h2>{this.state.currentUser.displayName || this.state.currentUser.email}</h2>
+                  <button onClick={this.logout}>Logout</button>
+                </div>
+              ) : (
+                <div>
+                  <Login /> <Register />
+                </div>
+              )}
             </Content>
           </Layout>
         </Layout>
