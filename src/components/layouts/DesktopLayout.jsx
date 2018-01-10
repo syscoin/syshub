@@ -10,11 +10,12 @@ import {
 } from '../containers/';
 // Styles
 import {
-  HeaderStyles,
-  SiderStyles,
-  ContentStyles,
-  FooterStyles,
-} from '../../styles';
+  headerStyle,
+  rSiderStyle,
+  lSiderStyle,
+  contentStyle,
+  footerStyle,
+} from '../containers/styles';
 
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -22,21 +23,21 @@ class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <Header style={HeaderStyles.headerWraper}>
+        <Header style={headerStyle.headerWraper}>
           <AppHeader />
         </Header>
         <Layout>
-          <Sider width={200} style={SiderStyles.siderWraper}>
+          <Sider width={200} style={lSiderStyle.siderWraper}>
             <AppLSider />
           </Sider>
-          <Content style={ContentStyles.contentWraper}>
+          <Content style={contentStyle.contentWraper}>
             <AppContent />
           </Content>
-          <Sider width={200} style={SiderStyles.siderWraper}>
+          <Sider width={200} style={rSiderStyle.siderWraper}>
             <AppRSider />
           </Sider>
         </Layout>
-        <Footer style={FooterStyles.footerWraper}>
+        <Footer style={footerStyle.footerWraper}>
           <AppFooter />
         </Footer>
       </Layout>
