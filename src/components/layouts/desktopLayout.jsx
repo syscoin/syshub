@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import swal from 'sweetalert';
 
-import { AppHeader, AppContent, AppSlider, AppFooter } from '../containers/';
+import { fire } from '../../firebase';
+import { AppHeader, AppContent, AppSlider, AppFooter, Login, Register } from '../containers/';
 // Styles
 import { HeaderStyles, SiderStyles, ContentStyles, FooterStyles } from '../../styles';
 
@@ -9,6 +11,41 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
 class DesktopLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+    this.state = {
+      currentUser: null
+    };
+  }
+
+  componentWillMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user
+        });
+      }
+    });
+  }
+
+  logout() {
+    fire
+      .auth()
+      .signOut()
+      .then(() => {
+        if (this.state.currentUser !== null) {
+          swal({
+            title: 'success',
+            text: 'Successfully logged out.',
+            icon: 'success'
+          });
+        }
+
+        this.setState({ currentUser: null });
+      });
+  }
+
   render() {
     return (
       <Layout>
@@ -22,6 +59,8 @@ class DesktopLayout extends Component {
           <Layout>
             <Content style={ContentStyles.contentWraper}>
               <AppContent />
+              {this.state.currentUser ? this.state.currentUser.email : null}
+              <Login /> <Register /> <button onClick={this.logout}>Logout</button>
             </Content>
           </Layout>
         </Layout>
