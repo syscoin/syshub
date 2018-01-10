@@ -11,7 +11,8 @@ import {
 // Styles
 import {
   headerStyle,
-  siderStyle,
+  rSiderStyle,
+  lSiderStyle,
   contentStyle,
   footerStyle,
 } from '../containers/styles';
@@ -26,13 +27,13 @@ class DesktopLayout extends Component {
           <AppHeader />
         </Header>
         <Layout>
-          <Sider width={200} style={siderStyle.siderWraper}>
+          <Sider width={200} style={lSiderStyle.siderWraper}>
             <AppLSider />
           </Sider>
           <Content style={contentStyle.contentWraper}>
             <AppContent />
           </Content>
-          <Sider width={200} style={siderStyle.siderWraper}>
+          <Sider width={200} style={rSiderStyle.siderWraper}>
             <AppRSider />
           </Sider>
         </Layout>
