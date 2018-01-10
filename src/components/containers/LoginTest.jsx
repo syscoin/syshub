@@ -19,7 +19,6 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        console.log(user);
         swal({
           title: 'Success',
           text: `Account: ${user.email} logged in.`,

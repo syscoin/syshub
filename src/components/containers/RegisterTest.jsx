@@ -18,6 +18,17 @@ class Register extends Component {
   componentDidMount() {}
 
   updateUsername(event) {
+    if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
+      swal({
+        title: 'Oops...',
+        text: 'Must be an alphanumeric character',
+        icon: 'warning'
+      });
+
+      this.registerForm.reset();
+      return;
+    }
+
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -25,6 +36,7 @@ class Register extends Component {
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
       usernameRef.child(event.target.value).on('value', snap => {
+        console.log(snap.val());
         if (snap.val() != null) {
           this.setState({
             disabled: true
@@ -73,7 +85,7 @@ class Register extends Component {
             .then(() => {
               swal({
                 title: 'Success',
-                text: `Account ${user.email - user.displayName} created`,
+                text: `Account ${user.email} - ${user.displayName} created`,
                 icon: 'success'
               });
             })
@@ -96,7 +108,6 @@ class Register extends Component {
   }
 
   render() {
-    console.log(this.state.username);
     return (
       <div>
         <form

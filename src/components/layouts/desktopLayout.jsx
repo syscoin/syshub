@@ -3,7 +3,14 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import swal from 'sweetalert';
 
 import { fire } from '../../firebase';
-import { AppHeader, AppContent, AppSlider, AppFooter, Login, Register } from '../containers/';
+import {
+  AppHeader,
+  AppContent,
+  AppSlider,
+  AppFooter,
+  LoginTest,
+  RegisterTest
+} from '../containers/';
 // Styles
 import { HeaderStyles, SiderStyles, ContentStyles, FooterStyles } from '../../styles';
 
@@ -19,7 +26,7 @@ class DesktopLayout extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -65,7 +72,7 @@ class DesktopLayout extends Component {
                 </div>
               ) : (
                 <div>
-                  <Login /> <Register />
+                  <LoginTest /> <RegisterTest />
                 </div>
               )}
             </Content>

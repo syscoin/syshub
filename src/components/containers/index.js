@@ -2,7 +2,7 @@ import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import AppSlider from './AppSlider';
 import AppContent from './AppContent';
-import Register from './Register';
-import Login from './Login';
+import RegisterTest from './RegisterTest';
+import LoginTest from './LoginTest';
 
-export { AppHeader, AppFooter, AppSlider, AppContent, Register, Login };
+export { AppHeader, AppFooter, AppSlider, AppContent, RegisterTest, LoginTest };
