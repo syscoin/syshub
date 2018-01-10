@@ -4,8 +4,8 @@ import { Layout } from 'antd';
 import {
   AppHeader,
   AppContent,
-  AppLSlider,
-  AppRSlider,
+  AppLSider,
+  AppRSider,
   AppFooter,
 } from '../containers/';
 // Styles
@@ -27,13 +27,13 @@ class DesktopLayout extends Component {
         </Header>
         <Layout>
           <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppLSlider />
+            <AppLSider />
           </Sider>
           <Content style={ContentStyles.contentWraper}>
             <AppContent />
           </Content>
           <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppRSlider />
+            <AppRSider />
           </Sider>
         </Layout>
         <Footer style={FooterStyles.footerWraper}>
