@@ -11,7 +11,7 @@ import { headerNavStyle } from './styles';
 
 const ButtonGroup = Button.Group;
 
-class HeaderStats extends Component {
+class HeaderNav extends Component {
   state = {
     currentUser: 'Guest',
   };
@@ -72,4 +72,4 @@ class HeaderStats extends Component {
   }
 }
 
-export default HeaderStats;
+export default HeaderNav;

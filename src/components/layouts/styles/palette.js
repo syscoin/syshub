@@ -1,8 +1,8 @@
 /*
 ******************************************************************************************** 
-  Don't touch nothing, go to "/src/style/Palette" if you want to change/add color Palette
+  Don't touch nothing, go to "/src/style/palette" if you want to change/add color palette
 ******************************************************************************************** 
  */
 
-import Palette from '../../../styles/Palette';
-export default Palette;
+import palette from '../../../styles/palette';
+export default palette;

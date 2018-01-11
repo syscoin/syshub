@@ -1,8 +1,8 @@
-import Palette from './Palette';
+import palette from './palette';
 
-const primaryDark = Palette.primaryDark;
-const primaryLight = Palette.primaryLight;
-const white = Palette.white;
+const primaryDark = palette.primaryDark;
+const primaryLight = palette.primaryLight;
+const white = palette.white;
 
 const wraper = {
   // border: '1px solid pink',
