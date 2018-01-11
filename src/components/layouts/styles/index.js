@@ -1,4 +1,4 @@
-import Palette from './Palette';
-import DesktopLayoutStyle from './DesktopLayoutStyle';
+import palette from './palette';
+import desktopLayoutStyle from './desktopLayoutStyle';
 
-export { Palette, DesktopLayoutStyle };
+export { palette, desktopLayoutStyle };

@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withRoot from './WithRoot';
+import { withRoot } from '../HOC';
 
 import { Layout, Menu, Icon } from 'antd';
 
-import { LSiderStyle } from './styles';
+import { lSiderStyle } from './styles';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -14,7 +14,7 @@ const { Sider } = Layout;
 class AppLSider extends Component {
   render() {
     return (
-      <Sider width={200} style={LSiderStyle.siderWraper}>
+      <Sider width={200} style={lSiderStyle.siderWraper}>
         <Menu
           mode="inline"
           defaultSelectedKeys={['5']}

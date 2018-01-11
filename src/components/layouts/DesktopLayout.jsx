@@ -10,7 +10,7 @@ import {
 } from '../containers/';
 
 //Import Styles
-import { DesktopLayoutStyle } from './styles';
+import { desktopLayoutStyle } from './styles';
 
 const { SubMenu } = Menu;
 const { Content, Footer } = Layout;
@@ -20,7 +20,7 @@ class DesktopLayout extends Component {
     return (
       <Layout>
         <AppHeader />
-        <Layout style={DesktopLayoutStyle.wraper}>
+        <Layout style={desktopLayoutStyle.wraper}>
           <AppLSider />
           <AppContent />
           <AppRSider />

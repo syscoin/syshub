@@ -8,10 +8,9 @@ import Toolbar from 'material-ui/Toolbar';
 import { Layout } from 'antd';
 
 //import components
-import HeaderStats from '../functionals/HeaderStats';
-import Status from '../functionals/Status';
+import { HeaderStats, HeaderNav } from '../functionals';
 
-import { AppHeaderStyle } from './styles';
+import { appHeaderStyle } from './styles';
 
 const { Header } = Layout;
 
@@ -19,12 +18,12 @@ class AppHeader extends Component {
   render() {
     return (
       <div>
-        <Header style={AppHeaderStyle.headerWraper}>
+        <Header style={appHeaderStyle.headerWraper}>
           <AppBar position="fixed">
-            <Toolbar style={AppHeaderStyle.header}>
-              <div style={AppHeaderStyle.container}>
+            <Toolbar style={appHeaderStyle.header}>
+              <div style={appHeaderStyle.container}>
                 <HeaderStats />
-                <Status />
+                <HeaderNav />
               </div>
             </Toolbar>
           </AppBar>

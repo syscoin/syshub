@@ -2,18 +2,18 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withRoot from './WithRoot';
+import { withRoot } from '../HOC';
 import { Layout } from 'antd';
 
-import { FooterStyle } from './styles';
+import { footerStyle } from './styles';
 
 const { Footer } = Layout;
 
 class AppFooter extends Component {
   render() {
     return (
-      <div style={FooterStyle.footer}>
-        <Footer style={FooterStyle.footerWraper}>Footer </Footer>
+      <div style={footerStyle.footer}>
+        <Footer style={footerStyle.footerWraper}>Footer </Footer>
       </div>
     );
   }
