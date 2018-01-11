@@ -10,6 +10,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login__container">
+      Login
       </div>
     )
   }

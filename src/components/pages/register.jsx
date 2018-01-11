@@ -10,6 +10,7 @@ class Register extends Component {
   render() {
     return (
       <div className="register__container">
+      Register
       </div>
     )
   }

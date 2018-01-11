@@ -13,6 +13,8 @@ class WellcomeBox extends Component {
   constructor(props) {
     super(props);
   }
+
+
   render() {
     const style = {
       minHeight: '100px',
@@ -46,7 +48,7 @@ class WellcomeBox extends Component {
                 </ul>
               </div>
               <div style={wellcomeBox.joinBtn}>
-                <Button raised color="primary" style={wellcomeBox.btn}>
+                <Button raised color="primary" style={wellcomeBox.btn} onClick={this.props.changeState}>
                   <span style={wellcomeBox.btnText}> Join SysHub </span>
                 </Button>
               </div>
