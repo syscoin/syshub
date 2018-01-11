@@ -8,6 +8,7 @@ import {
   AppRSider,
   AppFooter,
 } from '../containers/';
+
 // Styles
 import {
   headerStyle,
