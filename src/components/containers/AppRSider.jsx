@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import ChatBox from '../functionals/ChatBox'
 import WithRoot from './WithRoot';
 
 class AppRSider extends Component {
   render() {
-    return <div>Here comes ChatBox component</div>;
+    return <div><ChatBox/></div>;
   }
 }
 
