@@ -1,0 +1,18 @@
+.chat_box_container{
+    padding: 5px;
+    /* .chatHeader{
+    //     padding: 5px;
+    // }
+    // .chat_list{
+    //     padding: 5px;
+    //     .chat_content{
+            
+    //     }
+     }*/
+}
+.chat_list{
+    padding: 5px;
+}
+.chat_content{
+    padding: 5px;    
+}
