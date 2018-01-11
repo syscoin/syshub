@@ -34,7 +34,7 @@ class AppHeader extends Component {
 }
 
 AppHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default AppHeader;
