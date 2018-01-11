@@ -12,7 +12,6 @@ import { Link } from 'react-scroll';
 import swal from 'sweetalert';
 
 import { Layout } from 'antd';
-import { fire } from '../../firebase';
 
 //Import functionals components
 import { Home, LoginTest, RegisterTest } from '../pages';
@@ -39,7 +38,7 @@ class AppContent extends Component {
 }
 
 AppContent.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default WithRoot(AppContent);

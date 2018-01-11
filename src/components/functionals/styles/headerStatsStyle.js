@@ -1,4 +1,4 @@
-import Palette from './Palette';
+import Palette from './palette';
 
 const primaryDark = Palette.primaryDark;
 const primaryLight = Palette.primaryLight;
@@ -9,24 +9,24 @@ const wraper = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'center'
 };
 const common = {
   //border: '1px solid red',
   padding: '0 30px',
-  color: white,
+  color: white
 };
 
 const spanTxt = {
   ...common,
   padding: '0 0 0 10px',
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 };
 
 const divider = {
   height: '75%',
   borderLeft: `1px solid ${primaryDark}`,
-  borderRight: `1px solid ${primaryLight}`,
+  borderRight: `1px solid ${primaryLight}`
 };
 
 export default { wraper, common, divider, spanTxt };

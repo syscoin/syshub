@@ -1,15 +1,8 @@
-import Palette from './Palette';
-import ContentStyle from './ContentStyle';
-import FooterStyle from './FooterStyle';
-import AppHeaderStyle from './AppHeaderStyle';
-import RSiderStyle from './RSiderStyle';
-import LSiderStyle from './LSiderStyle';
+import Palette from './palette';
+import ContentStyle from './contentStyle';
+import FooterStyle from './footerStyle';
+import AppHeaderStyle from './appHeaderStyle';
+import RSiderStyle from './rSiderStyle';
+import LSiderStyle from './lSiderStyle';
 
-export {
-  Palette,
-  ContentStyle,
-  FooterStyle,
-  AppHeaderStyle,
-  RSiderStyle,
-  LSiderStyle,
-};
+export { Palette, ContentStyle, FooterStyle, AppHeaderStyle, RSiderStyle, LSiderStyle };

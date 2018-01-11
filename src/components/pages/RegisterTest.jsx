@@ -36,7 +36,6 @@ class Register extends Component {
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
       usernameRef.child(event.target.value).on('value', snap => {
-        console.log(snap.val());
         if (snap.val() != null) {
           this.setState({
             disabled: true
@@ -83,6 +82,8 @@ class Register extends Component {
               displayName: username
             })
             .then(() => {
+              this.registerForm.reset();
+
               swal({
                 title: 'Success',
                 text: `Account ${user.email} - ${user.displayName} created`,
