@@ -1,10 +1,19 @@
 import ChatBox from './ChatBox';
-import HeaderNav from './HeaderNav';
 import HeaderStats from './HeaderStats';
-import FooterInfo from './FooterInfo';
-import SiderMenu from './SiderMenu';
+import HeaderNav from './HeaderNav';
 import SiderLogo from './SiderLogo';
+import SiderMenu from './SiderMenu';
+import WelcomeBox from './WelcomeBox';
 import Stats from './Stats';
-import WellcomeBox from './WellcomeBox';
+import FooterInfo from './FooterInfo';
 
-export { ChatBox, HeaderStats, HeaderNav, SiderLogo, SiderMenu };
+export {
+  ChatBox,
+  HeaderStats,
+  HeaderNav,
+  SiderLogo,
+  SiderMenu,
+  WelcomeBox,
+  Stats,
+  FooterInfo,
+};

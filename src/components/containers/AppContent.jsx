@@ -2,14 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
 import { withRoot } from '../HOC';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import { Link } from 'react-scroll';
-import swal from 'sweetalert';
 
 import { Layout } from 'antd';
 
@@ -38,7 +31,7 @@ class AppContent extends Component {
 }
 
 AppContent.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withRoot(AppContent);

@@ -1,8 +1,11 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import actions from '../../redux/actions';
+import { fire } from '../../firebase';
 
 //Import UI Framework components
 import { Button } from 'antd';
@@ -13,15 +16,43 @@ import { headerNavStyle } from './styles';
 const ButtonGroup = Button.Group;
 
 class HeaderNav extends Component {
-  state = {
-    currentUser: 'Guest',
-  };
+  constructor(props) {
+    super(props);
+
+    this.doLogout = this.doLogout.bind(this);
+  }
+
+  componentDidMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.setCurrentUser(user);
+      }
+    });
+  }
+
+  doLogout() {
+    const { currentUser } = this.props.app;
+    if (currentUser) {
+      fire
+        .auth()
+        .signOut()
+        .then(() => {
+          this.props.doLogout();
+        });
+    }
+  }
+
   render() {
+    const { currentUser } = this.props.app;
     return (
       <div style={headerNavStyle.wraper}>
         <div style={headerNavStyle.common}>
           <span style={headerNavStyle.TxtRegular}>{`Welcome  `}</span>
-          <span style={headerNavStyle.TxtBold}>{this.state.currentUser}</span>
+          <span style={headerNavStyle.TxtBold}>
+            {currentUser
+              ? currentUser.displayName || currentUser.email
+              : 'Guest'}
+          </span>
         </div>
         <div style={headerNavStyle.common}>
           <ButtonGroup>
@@ -63,54 +94,30 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
+              onClick={this.doLogout}
             >
-              <div style={headerNavStyle.common}>{`Login  `}</div>
+              <div style={headerNavStyle.common}>
+                {currentUser ? 'logout' : 'Login'}
+              </div>
             </Button>
           </ButtonGroup>
         </div>
-=======
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
-import { statusStyle } from './styles';
-import actions from '../../redux/actions';
-import { fire } from '../../firebase';
-
-class HeaderStats extends Component {
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.currentUser(user);
-      }
-    });
-  }
-
-  render() {
-    const { currentUser } = this.props.app;
-
-    return (
-      <div style={statusStyle.wraper}>
-        {currentUser ? currentUser.displayName || currentUser.email : 'Status'}
->>>>>>> 6-connect-the-app-with-firebase-backend-and-set-up-firebase-project
       </div>
     );
   }
 }
 
-<<<<<<< HEAD
-export default HeaderNav;
-=======
 const stateToProps = state => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    currentUser: user => dispatch(actions.currentUser(user))
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
+    doLogout: () => dispatch(actions.doLogout()),
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(HeaderStats);
->>>>>>> 6-connect-the-app-with-firebase-backend-and-set-up-firebase-project
+export default connect(stateToProps, dispatchToProps)(HeaderNav);

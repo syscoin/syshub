@@ -1,50 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import swal from 'sweetalert';
 
 import { fire } from '../../firebase';
-import { Logout } from '../pages';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null
+      currentUser: null,
     };
     this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
-          currentUser: user
+          currentUser: user,
         });
       }
     });
-  }
-
-  logout() {
-    fire
-      .auth()
-      .signOut()
-      .then(() => {
-        if (this.state.currentUser !== null) {
-          swal({
-            title: 'success',
-            text: 'Successfully logged out.',
-            icon: 'success'
-          });
-          this.setState({ currentUser: null });
-        }
-      });
   }
 
   login(event) {
     event.preventDefault();
     const email = this.emailInput.value;
     const password = this.passwordInput.value;
-
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -52,7 +34,7 @@ class Login extends Component {
         swal({
           title: 'Success',
           text: `Account: ${user.email} logged in.`,
-          icon: 'success'
+          icon: 'success',
         });
         this.loginForm.reset();
       })
@@ -60,31 +42,31 @@ class Login extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error'
+          icon: 'error',
         });
       });
   }
 
   render() {
-    return this.state.currentUser ? (
+    const { currentUser } = this.props.app;
+    return currentUser ? (
       <div>
         <p>
           <span>
             <strong>{`Uid: `}</strong>
-            {`${this.state.currentUser.uid}`}
+            {`${currentUser.uid}`}
           </span>
           <br />
           <span>
             <strong>{`Name: `}</strong>
-            {`${this.state.currentUser.displayName}`}
+            {`${currentUser.displayName}`}
           </span>
           <br />
           <span>
             <strong>{`Email: `}</strong>
-            {`${this.state.currentUser.email}`}
+            {`${currentUser.email}`}
           </span>
         </p>
-        <Logout onLogout={this.logout} />
       </div>
     ) : (
       <div>
@@ -119,4 +101,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(stateToProps, dispatchToProps)(Login);

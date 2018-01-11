@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
 
 // import style
 import './styles/wellcomeBox.css';
-
 
 class WellcomeBox extends Component {
   constructor(props) {
@@ -21,9 +19,8 @@ class WellcomeBox extends Component {
       display: 'inline-block',
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
       width: '100%',
-      padding: '20px'
+      padding: '20px',
     };
-
 
     return (
       <div className="wellcomeBox__container">
@@ -31,7 +28,10 @@ class WellcomeBox extends Component {
           <GridList cols={2} cellHeight={300}>
             <GridListTile>
               <div className="logo-img" style={{ textAlign: 'center' }}>
-                <img src={require('../../assets/img/png_logo.png')} height="250" />
+                <img
+                  src={require('../../assets/img/png_logo.png')}
+                  height="250"
+                />
               </div>
             </GridListTile>
             <GridListTile>
@@ -39,22 +39,30 @@ class WellcomeBox extends Component {
               <Divider />
               <div className="addvertise-text">
                 <ul>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                  </li>
                 </ul>
               </div>
               <div className="join-btn">
                 <Button raised color="primary">
                   Join SysHub
-            </Button>
+                </Button>
               </div>
             </GridListTile>
           </GridList>
         </Paper>
       </div>
-    )
+    );
   }
 }
 
