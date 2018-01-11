@@ -7,14 +7,12 @@ import WithRoot from './WithRoot';
 
 
 // import components
-import WellcomeBox from "./../functionals/wellcomeBox";
-import Stats from "./../functionals/stats";
+import Home from "./../pages/home";
 class AppContent extends Component {
   render() {
     return (
       <div className="main-content-div">
-        <WellcomeBox />
-        <Stats />
+        <Home />
         Content
       </div>
     )

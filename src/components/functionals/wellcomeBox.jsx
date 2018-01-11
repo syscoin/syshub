@@ -6,7 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
 
 // import style
-import './styles/wellcomeBox.css';
+import { wellcomeBox } from './styles';
 
 
 class WellcomeBox extends Component {
@@ -30,25 +30,25 @@ class WellcomeBox extends Component {
         <Paper style={style} elevation={4}>
           <GridList cols={2} cellHeight={300}>
             <GridListTile>
-              <div className="logo-img" style={{ textAlign: 'center' }}>
+              <div style={wellcomeBox.logoImg} style={{ textAlign: 'center' }}>
                 <img src={require('../../assets/img/png_logo.png')} height="250" />
               </div>
             </GridListTile>
             <GridListTile>
               <h1 style={{ color: '#3498db' }}>Advertisement Text here</h1>
               <Divider />
-              <div className="addvertise-text">
-                <ul>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-                  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
+              <div style={wellcomeBox.addvertiseText}>
+                <ul style={wellcomeBox.wellcomBoxTextList}>
+                  <li style={wellcomeBox.listItem} >Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
+                  <li style={wellcomeBox.listItem}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
+                  <li style={wellcomeBox.listItem}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
+                  <li style={wellcomeBox.listItem}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
                 </ul>
               </div>
-              <div className="join-btn">
-                <Button raised color="primary">
-                  Join SysHub
-            </Button>
+              <div style={wellcomeBox.joinBtn}>
+                <Button raised color="primary" style={wellcomeBox.btn}>
+                  <span style={wellcomeBox.btnText}> Join SysHub </span>
+                </Button>
               </div>
             </GridListTile>
           </GridList>

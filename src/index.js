@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { createStore, compose } from 'redux';
 import App from './App';
 
@@ -10,11 +10,18 @@ import middlewares from './redux/middleware';
 // ant Styles
 import 'antd/dist/antd.css';
 
-//Redux Entry Point
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, {}, composeEnhancers(middlewares));
+import initialState from './redux/reducers/appReducer'
 
-const rootElement = document.querySelector('#root');
+//Redux Entry Point
+import { Provider } from 'react-redux';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, {},composeEnhancers(middlewares));
+
+const rootElement = document.getElementById('root');
 if (rootElement) {
-  render(<App />, rootElement);
+  ReactDOM.render((
+    <Provider store={store}>
+      <App />
+    </Provider>
+  ), rootElement);
 }
