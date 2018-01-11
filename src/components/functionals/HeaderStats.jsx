@@ -23,7 +23,7 @@ class HeaderStats extends Component {
             src={require('../../assets/img/png_stasts_sys.png')}
             height="30"
           />
-          <span style={headerStatsStyle.spanTxt}>{`SYSCOIN: `}</span>
+          <span style={headerStatsStyle.TxtBold}>{`SYSCOIN: `}</span>
           {this.state.syscoinStat}
         </div>
         <Divider style={headerStatsStyle.divider} type="vertical" />
@@ -33,7 +33,7 @@ class HeaderStats extends Component {
             height="30"
           />
           <span
-            style={headerStatsStyle.spanTxt}
+            style={headerStatsStyle.TxtBold}
           >{`REGISTERED MASTERNODES: `}</span>
           {this.state.regMasterNods}
         </div>
@@ -43,7 +43,7 @@ class HeaderStats extends Component {
             src={require('../../assets/img/png_stats_users.png')}
             height="30"
           />
-          <span style={headerStatsStyle.spanTxt}>{`USERS: `}</span>
+          <span style={headerStatsStyle.TxtBold}>{`USERS: `}</span>
           {this.state.sysUsers}
         </div>
       </div>

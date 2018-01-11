@@ -8,7 +8,7 @@ export default {
     backgroundColor: primary,
   },
   container: {
-    border: '1px solid red',
+    // border: '1px solid red',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
