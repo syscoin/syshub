@@ -8,16 +8,9 @@ import {
   AppRSider,
   AppFooter,
 } from '../containers/';
+
 // Styles
 import {
-<<<<<<< HEAD
-  HeaderStyles,
-  SiderStyles,
-  ContentStyles,
-  FooterStyles,
-} from '../../styles';
-import ChatBox from '../chatBox'
-=======
   headerStyle,
   rSiderStyle,
   lSiderStyle,
@@ -25,7 +18,6 @@ import ChatBox from '../chatBox'
   footerStyle,
 } from '../containers/styles';
 
->>>>>>> 50f421c86778284579f09e33ee546530ec35e2d4
 const { Header, Content, Sider, Footer } = Layout;
 
 class DesktopLayout extends Component {
