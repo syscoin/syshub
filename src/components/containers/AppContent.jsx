@@ -64,17 +64,29 @@ class AppContent extends Component {
         <Content style={ContentStyle.contentWraper}>
           {this.state.currentUser ? (
             <div>
-              <h2>
-                {this.state.currentUser.displayName ||
-                  this.state.currentUser.email}
-              </h2>
+              <p>
+                <span>
+                  <strong>{`Uid: `}</strong>
+                  {`${this.state.currentUser.uid}`}
+                </span>
+                <br />
+                <span>
+                  <strong>{`Name: `}</strong>
+                  {`${this.state.currentUser.displayName}`}
+                </span>
+                <br />
+                <span>
+                  <strong>{`Email: `}</strong>
+                  {`${this.state.currentUser.email}`}
+                </span>
+              </p>
               <button onClick={this.logout}>Logout</button>
             </div>
           ) : (
             <div>
               <LoginTest /> <RegisterTest />
             </div>
-          )}{' '}
+          )}
         </Content>
       </div>
     );
