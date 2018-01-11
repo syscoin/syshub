@@ -1,5 +1,6 @@
 export default {
   // App States
+  APP_LOGIN_USER: 'APP_LOGIN_USER',
   APP_LOADING_GLOBAL: 'APP_LOADING_GLOBAL',
   APP_LOADING_NAV: 'APP_LOADING_NAV',
 };
