@@ -1,5 +1,5 @@
-import palette from './palette';
+import Palette from './Palette';
 import headerStatsStyle from './headerStatsStyle';
 import statusStyle from './statusStyle';
 
-export { palette, headerStatsStyle, statusStyle };
+export { Palette, headerStatsStyle, statusStyle };

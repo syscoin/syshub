@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
 import {
   AppHeader,
@@ -8,38 +8,24 @@ import {
   AppRSider,
   AppFooter,
 } from '../containers/';
-// Styles
-import {
-  appHeaderStyle,
-  rSiderStyle,
-  lSiderStyle,
-  contentStyle,
-  footerStyle,
-} from '../containers/styles';
 
-const { Header, Content, Sider, Footer } = Layout;
+//Import Styles
+import { DesktopLayoutStyle } from './styles';
+
+const { SubMenu } = Menu;
+const { Content, Footer } = Layout;
 
 class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <Header style={appHeaderStyle.headerWraper}>
-          <AppHeader />
-        </Header>
-        <Layout>
-          <Sider width={250} style={lSiderStyle.wraper}>
-            <AppLSider />
-          </Sider>
-          <Content style={contentStyle.contentWraper}>
-            <AppContent />
-          </Content>
-          <Sider width={250} style={rSiderStyle.wraper}>
-            <AppRSider />
-          </Sider>
+        <AppHeader />
+        <Layout style={DesktopLayoutStyle.wraper}>
+          <AppLSider />
+          <AppContent />
+          <AppRSider />
         </Layout>
-        <Footer style={footerStyle.footerWraper}>
-          <AppFooter />
-        </Footer>
+        <AppFooter />
       </Layout>
     );
   }

@@ -2,12 +2,24 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Layout } from 'antd';
 
 import WithRoot from './WithRoot';
 
+//import Styles
+import { RSiderStyle } from './styles';
+
+const { Sider } = Layout;
+
 class AppRSider extends Component {
   render() {
-    return <div>Here comes ChatBox component</div>;
+    return (
+      <div>
+        <Sider width={200} style={RSiderStyle.siderWraper}>
+          Here comes ChatBox component{' '}
+        </Sider>{' '}
+      </div>
+    );
   }
 }
 

@@ -1,4 +1,4 @@
-import Palette from './palette';
+import Palette from './Palette';
 
 const primary = Palette.primary;
 

@@ -2,21 +2,37 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 import WithRoot from './WithRoot';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import { Link } from 'react-scroll';
+import swal from 'sweetalert';
+
+import { Layout } from 'antd';
+import { fire } from '../../firebase';
+
+//Import functionals components
+import { Home, LoginTest, RegisterTest } from '../pages';
+
+//Import Styles
+import { ContentStyle } from './styles';
 //import EmailModal from './the-modal';
 
-// import components
-import WellcomeBox from './../functionals/wellcomeBox';
-import Stats from './../functionals/stats';
-
-import { contentStyle } from './styles';
+const { Content } = Layout;
 
 class AppContent extends Component {
   render() {
     return (
-      <div style={contentStyle.wraper}>
-        <WellcomeBox />
-        <Stats />
+      <div>
+        <Content style={ContentStyle.contentWraper}>
+          {/* <Home /> */}
+          {/* TODO: Replace for correct components*/}
+          <LoginTest />
+          <RegisterTest />
+        </Content>
       </div>
     );
   }

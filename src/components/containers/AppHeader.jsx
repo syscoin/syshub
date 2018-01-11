@@ -5,24 +5,30 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 
+import { Layout } from 'antd';
+
 //import components
 import HeaderStats from '../functionals/HeaderStats';
 import Status from '../functionals/Status';
 
-import { appHeaderStyle } from './styles';
+import { AppHeaderStyle } from './styles';
+
+const { Header } = Layout;
 
 class AppHeader extends Component {
   render() {
     return (
       <div>
-        <AppBar position="fixed">
-          <Toolbar style={appHeaderStyle.header}>
-            <div style={appHeaderStyle.container}>
-              <HeaderStats />
-              <Status />
-            </div>
-          </Toolbar>
-        </AppBar>
+        <Header style={AppHeaderStyle.headerWraper}>
+          <AppBar position="fixed">
+            <Toolbar style={AppHeaderStyle.header}>
+              <div style={AppHeaderStyle.container}>
+                <HeaderStats />
+                <Status />
+              </div>
+            </Toolbar>
+          </AppBar>
+        </Header>
       </div>
     );
   }

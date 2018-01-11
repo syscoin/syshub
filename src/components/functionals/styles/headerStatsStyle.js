@@ -1,5 +1,4 @@
-import Palette from './palette';
-import { headerStatsStyle } from './index';
+import Palette from './Palette';
 
 const primaryDark = Palette.primaryDark;
 const primaryLight = Palette.primaryLight;

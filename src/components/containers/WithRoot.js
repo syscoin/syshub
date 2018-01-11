@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
-import createContext from './styles/createContext';
+import CreateContext from './styles/CreateContext';
 
 // Apply some reset
 const styles = theme => ({
@@ -24,7 +24,7 @@ let AppWrapper = props => props.children;
 
 AppWrapper = withStyles(styles)(AppWrapper);
 
-const context = createContext();
+const context = CreateContext();
 
 function withRoot(BaseComponent) {
   class WithRoot extends Component {
