@@ -1,0 +1,19 @@
+.wellcomeBox__container .logo-img {
+  background-image: url("./../../../assets/img/png_stasts_sys.png");
+  background-repeat: no-repeat; }
+
+.wellcomeBox__container .addvertise-text {
+  margin-top: 20px;
+  font-size: 16px; }
+  .wellcomeBox__container .addvertise-text ul {
+    padding-left: 25px;
+    list-style-type: disc; }
+  .wellcomeBox__container .addvertise-text li {
+    padding: 10px 0px; }
+
+.wellcomeBox__container .join-btn {
+  text-align: right; }
+  .wellcomeBox__container .join-btn .MuiButton-label-16 {
+    color: white; }
+  .wellcomeBox__container .join-btn .MuiButton-raisedPrimary-23 {
+    border-radius: 8px; }
