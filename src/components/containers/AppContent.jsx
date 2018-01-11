@@ -15,7 +15,7 @@ import { Layout } from 'antd';
 import { fire } from '../../firebase';
 
 //Import functionals components
-import { LoginTest, RegisterTest } from '../pages';
+import { Home, LoginTest, RegisterTest } from '../pages';
 
 //Import Styles
 import { ContentStyle } from './styles';
@@ -24,69 +24,14 @@ import { ContentStyle } from './styles';
 const { Content } = Layout;
 
 class AppContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-    };
-    this.logout = this.logout.bind(this);
-  }
-
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user,
-        });
-      }
-    });
-  }
-
-  logout() {
-    fire
-      .auth()
-      .signOut()
-      .then(() => {
-        if (this.state.currentUser !== null) {
-          swal({
-            title: 'success',
-            text: 'Successfully logged out.',
-            icon: 'success',
-          });
-          this.setState({ currentUser: null });
-        }
-      });
-  }
-
   render() {
     return (
       <div>
         <Content style={ContentStyle.contentWraper}>
-          {this.state.currentUser ? (
-            <div>
-              <p>
-                <span>
-                  <strong>{`Uid: `}</strong>
-                  {`${this.state.currentUser.uid}`}
-                </span>
-                <br />
-                <span>
-                  <strong>{`Name: `}</strong>
-                  {`${this.state.currentUser.displayName}`}
-                </span>
-                <br />
-                <span>
-                  <strong>{`Email: `}</strong>
-                  {`${this.state.currentUser.email}`}
-                </span>
-              </p>
-              <button onClick={this.logout}>Logout</button>
-            </div>
-          ) : (
-            <div>
-              <LoginTest /> <RegisterTest />
-            </div>
-          )}
+          {/* <Home /> */}
+          {/* TODO: Replace for correct components*/}
+          <LoginTest />
+          <RegisterTest />
         </Content>
       </div>
     );

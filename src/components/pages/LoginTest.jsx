@@ -6,8 +6,21 @@ import { fire } from '../../firebase';
 class Login extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      currentUser: null,
+    };
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user,
+        });
+      }
+    });
   }
 
   login(event) {
@@ -22,7 +35,7 @@ class Login extends Component {
         swal({
           title: 'Success',
           text: `Account: ${user.email} logged in.`,
-          icon: 'success'
+          icon: 'success',
         });
         this.loginForm.reset();
       })
@@ -30,39 +43,77 @@ class Login extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error'
+          icon: 'error',
         });
       });
   }
 
+  logout() {
+    fire
+      .auth()
+      .signOut()
+      .then(() => {
+        if (this.state.currentUser !== null) {
+          swal({
+            title: 'success',
+            text: 'Successfully logged out.',
+            icon: 'success',
+          });
+          this.setState({ currentUser: null });
+        }
+      });
+  }
+
   render() {
-    return (
-      <form
-        onSubmit={event => {
-          this.login(event);
-        }}
-        ref={form => {
-          this.loginForm = form;
-        }}
-      >
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          ref={input => {
-            this.emailInput = input;
+    return this.state.currentUser ? (
+      <div>
+        <p>
+          <span>
+            <strong>{`Uid: `}</strong>
+            {`${this.state.currentUser.uid}`}
+          </span>
+          <br />
+          <span>
+            <strong>{`Name: `}</strong>
+            {`${this.state.currentUser.displayName}`}
+          </span>
+          <br />
+          <span>
+            <strong>{`Email: `}</strong>
+            {`${this.state.currentUser.email}`}
+          </span>
+        </p>
+        <button onClick={this.logout}>Logout</button>
+      </div>
+    ) : (
+      <div>
+        <form
+          onSubmit={event => {
+            this.login(event);
           }}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          ref={input => {
-            this.passwordInput = input;
+          ref={form => {
+            this.loginForm = form;
           }}
-        />
-        <button type="submit">Log In</button>
-      </form>
+        >
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            ref={input => {
+              this.emailInput = input;
+            }}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            ref={input => {
+              this.passwordInput = input;
+            }}
+          />
+          <button type="submit">Log In</button>
+        </form>
+      </div>
     );
   }
 }
