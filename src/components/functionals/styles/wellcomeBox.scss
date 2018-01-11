@@ -1,0 +1,29 @@
+.wellcomeBox__container{
+
+  .logo-img{
+    background-image: url('./../../../assets/img/png_stasts_sys.png');
+    background-repeat: no-repeat;
+  }
+
+  .addvertise-text{
+    margin-top: 20px;
+    font-size: 16px;
+    ul{
+      padding-left: 25px;
+      list-style-type: disc;
+    }
+    li{
+      padding: 10px 0px;
+    }
+  }
+  .join-btn{
+    text-align: right;
+    .MuiButton-label-16{
+      color: white;
+    }
+    .MuiButton-raisedPrimary-23{
+      border-radius: 8px;
+    }
+  }
+}
+

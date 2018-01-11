@@ -7,7 +7,7 @@ import WithRoot from './WithRoot';
 import { Menu, Icon } from 'antd';
 const { SubMenu } = Menu;
 
-class AppSlider extends Component {
+class AppLSider extends Component {
   render() {
     return (
       <Menu
@@ -62,8 +62,8 @@ class AppSlider extends Component {
   }
 }
 
-AppSlider.propTypes = {
+AppLSider.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppSlider);
+export default WithRoot(AppLSider);
