@@ -6,7 +6,6 @@ import WithRoot from './WithRoot';
 //import EmailModal from './the-modal';
 // import Login from '../functionals/login'
 import Register from '../functionals/register'
-
 // import components
 import WellcomeBox from './../functionals/wellcomeBox';
 import Stats from './../functionals/stats';
