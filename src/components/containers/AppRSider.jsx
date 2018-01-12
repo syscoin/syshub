@@ -16,10 +16,8 @@ const { Sider } = Layout;
 class AppRSider extends Component {
   render() {
     return (
-      <div>
-        <Sider width={200} style={appRSiderStyle.wraper}>
-          <ChatBox />
-        </Sider>
+      <div style={appRSiderStyle.wraper}>
+        <ChatBox />
       </div>
     );
   }

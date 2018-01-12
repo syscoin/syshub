@@ -10,11 +10,14 @@ import SiderLogo from './SiderLogo';
 import { siderMenuStyle } from './styles';
 
 class SiderMenu extends Component {
+  tests(pageActive) {
+    this.props.onItemClick(pageActive);
+  }
+
   render() {
     return (
       <div style={siderMenuStyle.wraper}>
         <SiderLogo />
-
         {this.props.menuItems.map(item => {
           const icon =
             item.key === this.props.active ? item.iconSelected : item.icon;
@@ -30,13 +33,15 @@ class SiderMenu extends Component {
             <button
               key={item.key}
               style={btnStyle}
-              onClick={this.props.itemClick(item.key)}
+              onClick={() => this.tests(item.key)}
             >
               <img src={require(`../../assets/img/${icon}.png`)} width="25" />
               <span style={txt}>{`${item.title.toUpperCase()}`}</span>
             </button>
           );
         })}
+        <div style={siderMenuStyle.lastBorder} /> {/*Last border*/}
+        <div />
       </div>
     );
   }

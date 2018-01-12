@@ -57,15 +57,12 @@ const menuItems = [
 ];
 
 class AppLSider extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: 'account',
-    };
-    this.itemClick = this.itemClick.bind(this);
-  }
+  state = {
+    pageActive: 'account',
+  };
+
   itemClick(pageActive) {
-    console.log('ACZ (pageActive) --> ', pageActive);
+    this.setState({ pageActive });
   }
 
   render() {
@@ -73,8 +70,8 @@ class AppLSider extends Component {
       <div style={appLSiderStyle.wraper}>
         <SiderMenu
           menuItems={menuItems}
-          active={this.state.active}
-          itemClick={this.itemClick}
+          active={this.state.pageActive}
+          onItemClick={pageActive => this.itemClick(pageActive)}
         />
       </div>
     );

@@ -1,6 +1,6 @@
 import palette from './palette';
 
-const darkGrey = palette.darkGrey;
+const greyDark = palette.greyDark;
 const white = palette.white;
 
 export default {
@@ -10,7 +10,7 @@ export default {
     bottom: '0px',
     height: '60px',
     width: '100%',
-    backgroundColor: darkGrey,
+    backgroundColor: greyDark,
   },
   footer: {
     textAlign: 'center',
