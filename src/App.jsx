@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { DesktopLayout } from './components/layouts';
 
-import AppStyles from './styles/appStyle';
+import AppStyles from './styles/AppStyle';
 
 class App extends Component {
   render() {
