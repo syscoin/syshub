@@ -22,14 +22,6 @@ class HeaderNav extends Component {
     this.doLogout = this.doLogout.bind(this);
   }
 
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.setCurrentUser(user);
-      }
-    });
-  }
-
   doLogout() {
     const { currentUser } = this.props.app;
     if (currentUser) {
@@ -115,7 +107,6 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     doLogout: () => dispatch(actions.doLogout()),
   };
 };

@@ -5,11 +5,11 @@ const primaryLight = palette.primaryLight;
 const white = palette.white;
 
 const wraper = {
-  //border: '1px solid pink',
+  border: '1px solid red',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'start',
 };
 
 export default { wraper };

@@ -6,6 +6,8 @@ import { Layout } from 'antd';
 
 import { withRoot } from '../HOC';
 
+import { ChatBox } from '../functionals';
+
 //import Styles
 import { appRSiderStyle } from './styles';
 
@@ -14,10 +16,8 @@ const { Sider } = Layout;
 class AppRSider extends Component {
   render() {
     return (
-      <div>
-        <Sider width={200} style={appRSiderStyle.wraper}>
-          Here comes ChatBox component{' '}
-        </Sider>{' '}
+      <div style={appRSiderStyle.wraper}>
+        <ChatBox />
       </div>
     );
   }
