@@ -19,8 +19,8 @@ export default {
     margin: 'auto',
   },
   label: {
-    padding: '0px 30px',
-    fontSize: '18px',
+    padding: '0px 34px',
+    fontSize: '16px',
     color: primary,
   },
   formDiv: {
@@ -36,7 +36,7 @@ export default {
   ,
   input: {
     height: '42px',
-    width: '27%',
+    width: '28.7%',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding: '12px 20px',
@@ -45,12 +45,13 @@ export default {
   },
   confirmPasswordinput: {
     height: '42px',
-    width: '25%',
+    width: '27%',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding: '12px 20px',
     fontSize: '20px',
-    borderRadius:'3px'
+    borderRadius:'3px',
+    marginLeft:'8px'
   },
   btnText: {
     color: white,
@@ -59,15 +60,17 @@ export default {
   },
   registerBtn: {
     borderRadius: '7px',
-    width: '13%',
+    width: '12%',
     height :'20px',
-    marginRight :'35px'
+    marginRight :'20px',
+    padding:'9px'
   },
   registerLoginBtn: {
     borderRadius: '7px',
-    width: '25%',
+    width: '20%',
     height :'20px',
-    marginRight :'35px'
+    marginRight :'35px',
+
   },
   forgetLink: {
     padding: '10px 0px 10px 10px',
@@ -75,28 +78,37 @@ export default {
     color: primary
   },
   btnDiv: {
-    padding: '25px 0px 25px 10px',
+    padding: '25px 0px 25px 0px',
     marginLeft: '20%'
   },
-  captcha:{
-    marginLeft :'70px'
-
+  captchaWrapper :{
+    marginLeft : '70px',
+    '&>label':{
+      verticalAlign: 'top'
+    },
+    '&>#g-recaptcha':{
+      display: 'inline-block',
+      marginLeft:'10px'
+    }
   },
   captchaImg:{
     width:'29%'
   },
   termsDiv:{
-   marginLeft:'20.5%',
-   color:darkGrey
+   marginLeft:'18%',
+   color:darkGrey,
+   fontSize:'16px'
   },
   activeTermsText:{
 
         color: primary,
-        fontWeight:"bold"
+        // fontWeight:"bold"
+        fontWeight:500
   },
   checkIcon:{
       width:'23px',
-      margin:'0px 15px'
+      margin:'0px 15px',
+      verticalAlign: 'text-bottom'
   },
   passwordStrength:{
       fontSize:'16px',
