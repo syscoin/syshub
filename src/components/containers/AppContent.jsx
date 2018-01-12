@@ -1,7 +1,9 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { withRoot } from '../HOC';
 
 import { Layout } from 'antd';
@@ -17,13 +19,24 @@ const { Content } = Layout;
 
 class AppContent extends Component {
   render() {
+    const page = this.props.app.showPage;
+
     return (
       <div>
         <Content style={contentStyle.contentWraper}>
-          {/* <Home /> */}
-          {/* TODO: Replace for correct components*/}
-          <LoginTest />
-          <RegisterTest />
+          {
+            {
+              ['home']: <Home />,
+              ['dash']: 'You can see DASHBOARD ',
+              ['create']: 'This Create PROPOSAL',
+              ['news']: 'Some NEWS to read',
+              ['account']: 'Your ACCOUNT SETTINGS',
+              ['faq']: 'Any doubts?, read our FAQ',
+              ['masternode']: 'Your MASTERNODE SETTING',
+              ['login']: <LoginTest />,
+              ['register']: <RegisterTest />,
+            }[this.props.app.showPage]
+          }
         </Content>
       </div>
     );
@@ -34,4 +47,14 @@ AppContent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRoot(AppContent);
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(stateToProps, dispatchToProps)(withRoot(AppContent));
