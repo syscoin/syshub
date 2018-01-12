@@ -2,21 +2,29 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import WithRoot from './WithRoot';
+import { withRoot } from '../HOC';
+
+import { Layout } from 'antd';
+
+//Import functionals components
+import { Home, LoginTest, RegisterTest } from '../pages';
+
+//Import Styles
+import { contentStyle } from './styles';
 //import EmailModal from './the-modal';
 
-// import components
-import WellcomeBox from './../functionals/wellcomeBox';
-import Stats from './../functionals/stats';
-
-import { contentStyle } from './styles';
+const { Content } = Layout;
 
 class AppContent extends Component {
   render() {
     return (
-      <div style={contentStyle.wraper}>
-        <WellcomeBox />
-        <Stats />
+      <div>
+        <Content style={contentStyle.contentWraper}>
+          {/* <Home /> */}
+          {/* TODO: Replace for correct components*/}
+          <LoginTest />
+          <RegisterTest />
+        </Content>
       </div>
     );
   }
@@ -26,4 +34,4 @@ AppContent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppContent);
+export default withRoot(AppContent);

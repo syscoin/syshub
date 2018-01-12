@@ -2,62 +2,81 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import WithRoot from './WithRoot';
+import { withRoot } from '../HOC';
 
-import { Menu, Icon } from 'antd';
+//Import functional components
+import { SiderMenu } from '../functionals';
+
+// import Antd components
+import { Layout, Menu, Icon } from 'antd';
+
+// Styles
+import { appLSiderStyle } from './styles';
+
+//constants
 const { SubMenu } = Menu;
+const { Sider } = Layout;
+
+const menuItems = [
+  {
+    key: 'dash',
+    icon: 'png_menu_proposals',
+    iconSelected: 'png_menu_proposals_selected',
+    title: 'Proposal Dashboard',
+  },
+  {
+    key: 'create',
+    icon: 'png_menu_create',
+    iconSelected: 'png_menu_create_selected',
+    title: 'Create Proposal',
+  },
+  {
+    key: 'news',
+    icon: 'png_menu_news',
+    iconSelected: 'png_menu_news_selected',
+    title: 'News and Announcements',
+  },
+  {
+    key: 'account',
+    icon: 'png_menu_account',
+    iconSelected: 'png_menu_account_selected',
+    title: 'Account Settings',
+  },
+  {
+    key: 'faq',
+    icon: 'png_menu_faq',
+    iconSelected: 'png_menu_faq_selected',
+    title: 'Faq',
+  },
+  {
+    key: 'Masternode',
+    icon: 'png_menu_proposals',
+    iconSelected: 'png_menu_proposals_selected',
+    title: 'Masternode Setting',
+  },
+];
 
 class AppLSider extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: 'account',
+    };
+    this.itemClick = this.itemClick.bind(this);
+  }
+  itemClick(pageActive) {
+    console.log('ACZ (pageActive) --> ', pageActive);
+  }
+
   render() {
     return (
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={['5']}
-        defaultOpenKeys={['sub2']}
-        style={{
-          height: '100%',
-          borderRight: '6px solid red',
-        }}
-      >
-        <SubMenu
-          key="sub1"
-          title={
-            <span>
-              <Icon type="user" />subnav 1
-            </span>
-          }
-        >
-          <Menu.Item key="1">option1</Menu.Item>
-          <Menu.Item key="2">option2</Menu.Item>
-          <Menu.Item key="3">option3</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <Icon type="laptop" />subnav 2
-            </span>
-          }
-        >
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub3"
-          title={
-            <span>
-              <Icon type="notification" />subnav 3
-            </span>
-          }
-        >
-          <Menu.Item key="9">option9</Menu.Item>
-          <Menu.Item key="10">option10</Menu.Item>
-          <Menu.Item key="11">option11</Menu.Item>
-          <Menu.Item key="12">option12</Menu.Item>
-        </SubMenu>
-      </Menu>
+      <div style={appLSiderStyle.wraper}>
+        <SiderMenu
+          menuItems={menuItems}
+          active={this.state.active}
+          itemClick={this.itemClick}
+        />
+      </div>
     );
   }
 }
@@ -66,4 +85,4 @@ AppLSider.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppLSider);
+export default withRoot(AppLSider);

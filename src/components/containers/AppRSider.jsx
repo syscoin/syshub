@@ -2,12 +2,26 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Layout } from 'antd';
 
-import WithRoot from './WithRoot';
+import { withRoot } from '../HOC';
+
+import { ChatBox } from '../functionals';
+
+//import Styles
+import { appRSiderStyle } from './styles';
+
+const { Sider } = Layout;
 
 class AppRSider extends Component {
   render() {
-    return <div>Here comes ChatBox component</div>;
+    return (
+      <div>
+        <Sider width={200} style={appRSiderStyle.wraper}>
+          <ChatBox />
+        </Sider>
+      </div>
+    );
   }
 }
 
@@ -15,4 +29,4 @@ AppRSider.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppRSider);
+export default withRoot(AppRSider);
