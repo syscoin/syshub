@@ -1,0 +1,18 @@
+image: node
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - develop
+  - build
+  - deploy
+
+develop:
+  stage: develop
+  image: ruby:latest
+  script:
+   - gem install dpl
+   - dpl --provider=heroku --app=$HEROKU_APP_URL --api-key=$HEROKU_API_KEY
+
