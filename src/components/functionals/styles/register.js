@@ -36,20 +36,18 @@ export default {
   ,
   input: {
     height: '42px',
-    width: '28.7%',
+    width: '30%',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding: '12px 20px',
-    fontSize: '20px',
     borderRadius:'3px'
   },
   confirmPasswordinput: {
     height: '42px',
-    width: '27%',
+    width: '28%',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding: '12px 20px',
-    fontSize: '20px',
     borderRadius:'3px',
     marginLeft:'8px'
   },
@@ -60,14 +58,14 @@ export default {
   },
   registerBtn: {
     borderRadius: '7px',
-    width: '12%',
+    width: '16%',
     height :'20px',
     marginRight :'20px',
     padding:'9px'
   },
   registerLoginBtn: {
     borderRadius: '7px',
-    width: '20%',
+    width: '21%',
     height :'20px',
     marginRight :'35px',
 
@@ -79,7 +77,7 @@ export default {
   },
   btnDiv: {
     padding: '25px 0px 25px 0px',
-    marginLeft: '20%'
+    marginLeft: '16.2%'
   },
   captchaWrapper :{
     marginLeft : '70px',
@@ -102,7 +100,6 @@ export default {
   activeTermsText:{
 
         color: primary,
-        // fontWeight:"bold"
         fontWeight:500
   },
   checkIcon:{
