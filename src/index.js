@@ -10,6 +10,7 @@ import middlewares from './redux/middleware';
 
 // ant Styles
 import 'antd/dist/antd.css';
+import './styles/customAntd.css';
 
 //Redux Entry Point
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
