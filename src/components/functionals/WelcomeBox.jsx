@@ -8,9 +8,14 @@ import Button from 'material-ui/Button';
 import './styles/wellcomeBox.css';
 
 class WellcomeBox extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    disableJoin: false,
+  };
+
+  onJoin() {
+    this.props.onJoin();
   }
+
   render() {
     const style = {
       minHeight: '100px',
@@ -54,7 +59,12 @@ class WellcomeBox extends Component {
                 </ul>
               </div>
               <div className="join-btn">
-                <Button raised color="primary">
+                <Button
+                  raised
+                  color="primary"
+                  onClick={() => this.onJoin()}
+                  disabled={this.props.logged}
+                >
                   Join SysHub
                 </Button>
               </div>

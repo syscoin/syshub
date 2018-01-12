@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import actions from '../../redux/actions';
+
 import { fire } from '../../firebase';
 
 //Import UI Framework components
@@ -16,12 +16,6 @@ import { headerNavStyle } from './styles';
 const ButtonGroup = Button.Group;
 
 class HeaderNav extends Component {
-  constructor(props) {
-    super(props);
-
-    this.doLogout = this.doLogout.bind(this);
-  }
-
   doLogout() {
     const { currentUser } = this.props.app;
     if (currentUser) {
@@ -32,6 +26,10 @@ class HeaderNav extends Component {
           this.props.doLogout();
         });
     }
+  }
+
+  setPage(Page) {
+    this.props.setPage(Page);
   }
 
   render() {
@@ -64,6 +62,7 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
+              onClick={() => this.setPage('home')}
             >
               <img
                 src={require('../../assets/img/png_menu_home.png')}
@@ -81,17 +80,27 @@ class HeaderNav extends Component {
                 height="30"
               />
             </Button>
-            <Button
-              size={'large'}
-              type="primary"
-              ghost
-              style={headerNavStyle.button}
-              onClick={this.doLogout}
-            >
-              <div style={headerNavStyle.common}>
-                {currentUser ? 'logout' : 'Login'}
-              </div>
-            </Button>
+            {currentUser ? (
+              <Button
+                size={'large'}
+                type="primary"
+                ghost
+                style={headerNavStyle.button}
+                onClick={() => this.doLogout()}
+              >
+                <div style={headerNavStyle.common}>Logout</div>
+              </Button>
+            ) : (
+              <Button
+                size={'large'}
+                type="primary"
+                ghost
+                style={headerNavStyle.button}
+                onClick={() => this.setPage('login')}
+              >
+                <div style={headerNavStyle.common}>Login</div>
+              </Button>
+            )}
           </ButtonGroup>
         </div>
       </div>
@@ -108,6 +117,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
+    setPage: page => dispatch(actions.setPage(page)),
   };
 };
 
