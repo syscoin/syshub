@@ -1,15 +1,16 @@
+
 export default {
   mainContainer: {
     padding: '20px'
   },
   form: {
     padding: '20px',
-    width: '40%',
+    width: '50%',
     margin: 'auto',
   },
   label: {
     padding: '0px 30px',
-    fontSize: '25px',
+    fontSize: '20px',
     color: '#3498db',
   },
   formDiv: {
@@ -17,12 +18,13 @@ export default {
     boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px'
   },
   input: {
-    height: '45px',
+    height: '42px',
     width: '60%',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding: '12px 20px',
-    fontSize: '20px'
+    fontSize: '20px',
+    borderRadius:'3px'
   },
   btnText: {
     color: '#fff',

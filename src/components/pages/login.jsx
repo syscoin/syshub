@@ -16,13 +16,14 @@ class Login extends Component {
         <div style={login.formDiv}>
           <form style={login.form}>
             <div style={login.inputDiv}>
-              <span style={login.label}>Username: </span>
-              <input type="text" name="username" style={login.input} />
+              <label style={login.label} htmlFor="uName">Username:</label>
+              <input type="text" name="username" id="uName" style={login.input} placeholder="Username" />
             </div>
             <br />
             <div style={login.inputDiv}>
-              <span style={login.label}>Password: </span>
-              <input type="password" name="password" style={login.input} />
+              {/* <span style={login.label}>Password: </span> */}
+              <label style={login.label} htmlFor="pass">Password:</label>
+              <input type="password" name="password" id="pass" style={login.input} placeholder="********" />
             </div>
             <br />
             <div style={login.btnDiv}>
