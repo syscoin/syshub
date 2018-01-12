@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
-import CreateContext from './styles/CreateContext';
+import CreateContext from './styles/createContext';
 
 // Apply some reset
 const styles = theme => ({
@@ -12,12 +12,12 @@ const styles = theme => ({
     html: {
       background: theme.palette.background.default,
       WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
+      MozOsxFontSmoothing: 'grayscale' // Antialiasing.
     },
     body: {
-      margin: 0,
-    },
-  },
+      margin: 0
+    }
+  }
 });
 
 let AppWrapper = props => props.children;
@@ -39,10 +39,7 @@ function withRoot(BaseComponent) {
     render() {
       return (
         <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
-          <MuiThemeProvider
-            theme={context.theme}
-            sheetsManager={context.sheetsManager}
-          >
+          <MuiThemeProvider theme={context.theme} sheetsManager={context.sheetsManager}>
             <AppWrapper>
               <BaseComponent {...this.props} />
             </AppWrapper>

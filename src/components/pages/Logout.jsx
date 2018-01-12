@@ -13,7 +13,6 @@ class Logout extends Component {
   }
 
   logout() {
-    this.props.onLogout();
     fire
       .auth()
       .signOut()

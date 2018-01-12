@@ -7,7 +7,6 @@
     "axios": "^0.17.1",
     "firebase": "^4.8.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
     "jss": "^9.5.0",
     "jss-preset-default": "^4.0.1",
     "material-ui": "next",
@@ -29,8 +28,10 @@
     "sweetalert": "^2.1.0"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",

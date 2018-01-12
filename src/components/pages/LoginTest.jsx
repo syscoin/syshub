@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
+import { connect } from 'react-redux';
 
 import { fire } from '../../firebase';
 import { Logout } from '../pages';
@@ -7,37 +8,8 @@ import { Logout } from '../pages';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentUser: null
-    };
+
     this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
-
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user
-        });
-      }
-    });
-  }
-
-  logout() {
-    fire
-      .auth()
-      .signOut()
-      .then(() => {
-        if (this.state.currentUser !== null) {
-          swal({
-            title: 'success',
-            text: 'Successfully logged out.',
-            icon: 'success'
-          });
-          this.setState({ currentUser: null });
-        }
-      });
   }
 
   login(event) {
@@ -66,25 +38,25 @@ class Login extends Component {
   }
 
   render() {
-    return this.state.currentUser ? (
+    return this.props.app.currentUser ? (
       <div>
         <p>
           <span>
             <strong>{`Uid: `}</strong>
-            {`${this.state.currentUser.uid}`}
+            {`${this.props.app.currentUser.uid}`}
           </span>
           <br />
           <span>
             <strong>{`Name: `}</strong>
-            {`${this.state.currentUser.displayName}`}
+            {`${this.props.app.currentUser.displayName}`}
           </span>
           <br />
           <span>
             <strong>{`Email: `}</strong>
-            {`${this.state.currentUser.email}`}
+            {`${this.props.app.currentUser.email}`}
           </span>
         </p>
-        <Logout onLogout={this.logout} />
+        <Logout />
       </div>
     ) : (
       <div>
@@ -119,4 +91,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const stateToProps = state => {
+  return {
+    app: state.app
+  };
+};
+
+export default connect(stateToProps)(Login);

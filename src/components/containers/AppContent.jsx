@@ -15,6 +15,7 @@ import { Layout } from 'antd';
 
 //Import functionals components
 import { Home, LoginTest, RegisterTest } from '../pages';
+import { ChatBoxTest } from '../functionals';
 
 //Import Styles
 import { ContentStyle } from './styles';
@@ -29,8 +30,11 @@ class AppContent extends Component {
         <Content style={ContentStyle.contentWraper}>
           {/* <Home /> */}
           {/* TODO: Replace for correct components*/}
-          <LoginTest />
-          <RegisterTest />
+          <div style={{ marginTop: '300px' }}>
+            <LoginTest />
+            <RegisterTest />
+            <ChatBoxTest />
+          </div>
         </Content>
       </div>
     );
