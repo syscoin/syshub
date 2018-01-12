@@ -1,4 +1,4 @@
-import AppPalette from './Palette';
+import AppPalette from './palette';
 
 export default {
   wraper: {},

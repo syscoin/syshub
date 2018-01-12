@@ -1,51 +1,49 @@
-import Palette from './palette'
+import palette from './palette';
 
-const white = Palette.white;
-const primary = Palette.primary;
-const grey = Palette.textLignt;
-const lightColor = Palette.textDark;
+const white = palette.white;
+const primary = palette.primary;
+const grey = palette.textLignt;
+const lightColor = palette.textDark;
 
 export default {
-    chat_box_container:{
-        height:'80vw'
-    },
+  chat_box_container: {
+    height: '80vw',
+  },
   footerWraper: {
-    position:'absolute',
-    bottom:"0px"
-
-
+    position: 'absolute',
+    bottom: '0px',
   },
-  chatHeader:{
-    backgroundColor:primary,
-    height:'35px',
-    paddingTop:'7px',
-    textAlign:'left',
-    paddingLeft:'10px'
+  chatHeader: {
+    backgroundColor: primary,
+    height: '35px',
+    paddingTop: '7px',
+    textAlign: 'left',
+    paddingLeft: '10px',
   },
-  chatIcon:{
-    width:'25px',
-    height:'20px'
+  chatIcon: {
+    width: '25px',
+    height: '20px',
   },
-  chatHeaderText:{
-    color:white,
+  chatHeaderText: {
+    color: white,
     marginRight: '52px',
     marginLeft: '6px',
-    fontSize: '13px'  
+    fontSize: '13px',
   },
-  chatList:{
+  chatList: {
     height: '75.5vh',
     overflowY: 'auto',
   },
-  chatContent:{
-    padding:'10px',
+  chatContent: {
+    padding: '10px',
     textAlign: 'left',
     marginLeft: '10px',
-    display:'block'
+    display: 'block',
   },
-  primaryText:{
-      color: primary
+  primaryText: {
+    color: primary,
   },
-  secondaryText:{
-      color: grey
-  }
+  secondaryText: {
+    color: grey,
+  },
 };
