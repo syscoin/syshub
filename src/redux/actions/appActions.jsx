@@ -13,6 +13,12 @@ export default {
       data: null,
     };
   },
+  setPage: value => {
+    return {
+      type: constants.APP_PAGE_SHOW,
+      data: value,
+    };
+  },
   loading: value => {
     return {
       type: constants.APP_LOADING_GLOBAL,

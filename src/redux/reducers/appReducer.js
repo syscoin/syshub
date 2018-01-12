@@ -25,6 +25,12 @@ const app = (state = initialState, action) => {
         loading: false,
       };
 
+    case constants.APP_PAGE_SHOW:
+      return {
+        ...state,
+        showPage: action.data,
+      };
+
     case constants.APP_LOADING:
       return { ...state, loading: action.data };
 

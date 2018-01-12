@@ -2,6 +2,9 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import actions from '../../redux/actions';
 import { withRoot } from '../HOC';
 
 //Import functional components
@@ -62,7 +65,7 @@ class AppLSider extends Component {
   };
 
   itemClick(pageActive) {
-    this.setState({ pageActive });
+    this.props.setPage(pageActive);
   }
 
   render() {
@@ -70,7 +73,7 @@ class AppLSider extends Component {
       <div style={appLSiderStyle.wraper}>
         <SiderMenu
           menuItems={menuItems}
-          active={this.state.pageActive}
+          active={this.props.app.showPage}
           onItemClick={pageActive => this.itemClick(pageActive)}
         />
       </div>
@@ -82,4 +85,16 @@ AppLSider.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRoot(AppLSider);
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(withRoot(AppLSider));
