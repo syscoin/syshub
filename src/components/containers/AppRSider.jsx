@@ -18,7 +18,7 @@ class AppRSider extends Component {
     return (
       <div>
         <Sider width={200} style={appRSiderStyle.wraper}>
-          <ChatBox />
+          Here comes "ChatBox"
         </Sider>
       </div>
     );
