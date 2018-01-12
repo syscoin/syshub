@@ -3,11 +3,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import WithRoot from './WithRoot';
-import FooterStyles from '../../styles/footerStyle';
+
+import { footerStyle } from './styles';
 
 class AppFooter extends Component {
   render() {
-    return <div style={FooterStyles.footer}>Footer</div>;
+    return <div style={footerStyle.footer}>Footer</div>;
   }
 }
 
