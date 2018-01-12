@@ -17,7 +17,12 @@ const button = {
   border: 'none',
   textAlign: 'left',
   background: `linear-gradient(${white}, ${greyLight})`,
-  border: `1px solid ${greyLight}`,
+  borderWidth: '1px 0 0 0',
+  borderStyle: 'solid',
+  borderColor: grey,
+};
+const lastBorder = {
+  borderTop: `1px solid ${grey}`,
 };
 
 const buttonActive = {
@@ -35,4 +40,11 @@ const menuTxtActive = {
   color: white,
 };
 
-export default { wraper, menuTxt, menuTxtActive, button, buttonActive };
+export default {
+  wraper,
+  menuTxt,
+  menuTxtActive,
+  button,
+  buttonActive,
+  lastBorder,
+};
