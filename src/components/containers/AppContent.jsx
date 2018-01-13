@@ -9,7 +9,7 @@ import { withRoot } from '../HOC';
 import { Layout } from 'antd';
 
 //Import functionals components
-import { Home, LoginTest, RegisterTest } from '../pages';
+import { Home, Register, LoginTest } from '../pages';
 
 //Import Styles
 import { contentStyle } from './styles';
@@ -34,7 +34,7 @@ class AppContent extends Component {
               ['faq']: 'Any doubts?, read our FAQ',
               ['masternode']: 'Your MASTERNODE SETTING',
               ['login']: <LoginTest />,
-              ['register']: <RegisterTest />,
+              ['register']: <Register />,
             }[this.props.app.showPage]
           }
         </Content>
