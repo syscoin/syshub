@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { connect } from 'react-redux';
 
 import {
   AppHeader,
@@ -31,4 +32,14 @@ class DesktopLayout extends Component {
   }
 }
 
-export default DesktopLayout;
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(stateToProps, dispatchToProps)(DesktopLayout);

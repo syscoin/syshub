@@ -9,7 +9,7 @@ const wraper = {
   display: 'flex',
   flexDirection: 'column',
   justifyAlign: 'flex-start',
-  width: '20%',
+  flex: '0 1 20%',
   background: greyLight,
 };
 const sider = {

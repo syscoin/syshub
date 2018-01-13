@@ -51,6 +51,7 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
+              onClick={() => this.props.toggleChat()}
             >
               <img
                 src={require('../../assets/img/png_menu_chat.png')}
@@ -62,7 +63,7 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
-              onClick={() => this.setPage('home')}
+              onClick={() => this.props.setPage('home')}
             >
               <img
                 src={require('../../assets/img/png_menu_home.png')}
@@ -118,6 +119,7 @@ const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
     setPage: page => dispatch(actions.setPage(page)),
+    toggleChat: page => dispatch(actions.toggleChat()),
   };
 };
 

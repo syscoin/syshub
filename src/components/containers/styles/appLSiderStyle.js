@@ -9,7 +9,7 @@ const wraper = {
   display: 'flex',
   flexDirection: 'column',
   justifyAlign: 'flex-start',
-  width: '15%',
+  flex: '0 1 15%',
   background: greyLight,
   borderRight: `1px solid ${grey}`,
 };

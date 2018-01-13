@@ -9,7 +9,7 @@ const initialState = {
 
 const app = (state = initialState, action) => {
   switch (action.type) {
-    case constants.APP_LOGIN_USER:
+    case constants.APP_USER_LOGIN:
       return {
         ...state,
         currentUser: action.data,
@@ -17,7 +17,7 @@ const app = (state = initialState, action) => {
         loading: false,
       };
 
-    case constants.APP_LOGOUT_USER:
+    case constants.APP_USER_LOGOUT:
       return {
         ...state,
         currentUser: action.data,
@@ -29,6 +29,12 @@ const app = (state = initialState, action) => {
       return {
         ...state,
         showPage: action.data,
+      };
+
+    case constants.APP_CHAT_TOGGLE:
+      return {
+        ...state,
+        showChat: !state.showChat,
       };
 
     case constants.APP_LOADING:
