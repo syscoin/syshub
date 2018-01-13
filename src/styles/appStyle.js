@@ -1,4 +1,6 @@
-import AppPalette from './palette';
+import palette from './palette';
+
+const primary = palette.primary;
 
 export default {
   wraper: {},
