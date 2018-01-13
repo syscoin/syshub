@@ -1,17 +1,17 @@
-import AppPalette from '../../../styles/Palette';
+import palette from './palette';
 
-const primary = AppPalette.primary;
-const white  = AppPalette.white;
-const darkGrey = AppPalette.darkGrey;
-const lightGrey = AppPalette.lightGrey;
+const primary = palette.primary;
+const white = palette.white;
+const darkGrey = palette.darkGrey;
+const lightGrey = palette.lightGrey;
 
 export default {
   mainContainer: {
     padding: '10px 0px 0px 20px',
-    width: 'calc(100% - 20px)'
+    width: 'calc(100% - 20px)',
   },
-  mainheading:{
-    color : darkGrey
+  mainheading: {
+    color: darkGrey,
   },
   form: {
     padding: '20px',
@@ -25,7 +25,7 @@ export default {
   },
   formDiv: {
     padding: '5% 5%',
-    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px'
+    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
   },
   input: {
     height: '42px',
@@ -34,35 +34,34 @@ export default {
     boxSizing: 'border-box',
     padding: '12px 20px',
     fontSize: '20px',
-    borderRadius:'3px'
+    borderRadius: '3px',
   },
   btnText: {
     color: white,
     fontSize: '16px',
-    textTransform: "capitalize"
+    textTransform: 'capitalize',
   },
   btn: {
     borderRadius: '7px',
     width: '30%',
-    height :'20px'
+    height: '20px',
   },
   forgetLink: {
     padding: '10px 0px 10px 10px',
     fontSize: '16px',
-    color: primary
+    color: primary,
   },
   btnDiv: {
     padding: '25px 0px 25px 10px',
     textAlign: 'center',
-    marginLeft: '80px'
+    marginLeft: '80px',
   },
-  captcha:{
-    marginLeft :'4px',
-    marginBottom :'15px'
-
+  captcha: {
+    marginLeft: '4px',
+    marginBottom: '15px',
   },
-  captchaImg:{
-    width:'64%',
-    height:'80px'
+  captchaImg: {
+    width: '64%',
+    height: '80px',
   },
-}
+};
