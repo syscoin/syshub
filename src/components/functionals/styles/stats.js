@@ -1,63 +1,58 @@
-
-
 export default {
   statsHeading: {
     alignItems: 'center',
     display: 'flex',
-    fontSiza: '32px'
+    fontSiza: '32px',
   },
   headingIcon: {
     height: '50px',
-    width: '60px'
+    width: '60px',
   },
   statsMainDiv: {
     display: 'flex',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    width: '100%'
+    width: '100%',
   },
   statsCard: {
-    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
+    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
     padding: '0px !important',
-    margin: '20px',
+    margin: '25px',
     textAlign: 'center',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   statsCardHeader: {
     background: '#3498db',
     borderTopLeftRadius: '8px',
-    borderTopRightRadius: '8px'
+    borderTopRightRadius: '8px',
   },
   statsGridDiv: {
     width: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   statsTextHeading: {
     lineHeight: '2em',
-    fontSize: '20px',
+    fontSize: '1.1em',
     fontWeight: 'bold',
     marginTop: '20px',
-    height: '60px'
+    height: '60px',
   },
   statsText: {
     color: 'rgb(189, 195, 199)',
     padding: '10px 10px',
-    fontSize: '25px',
-    height: '100px'
+    fontSize: '1.4em',
+    height: '100px',
   },
-  statsPercentage : {
+  statsPercentage: {
     color: 'rgb(52, 152, 219)',
     position: 'absolute',
     right: '0px',
     left: '0px',
     bottom: '0px',
-    height: '25px'
-  }
-
-}
-
-
-
+    height: '25px',
+    margin: '0 0 6% 0',
+  },
+};
 
 //   .stats__container{
 //   .stats - heading{

@@ -5,7 +5,7 @@ import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
 import chatBox from './chatBox';
 import stats from './stats';
-import wellcomeBox from './wellcomeBox';
+import welcomeBox from './welcomeBox';
 
 export {
   palette,
@@ -15,5 +15,5 @@ export {
   siderMenuStyle,
   chatBox,
   stats,
-  wellcomeBox,
+  welcomeBox,
 };
