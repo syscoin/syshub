@@ -3,4 +3,5 @@
 html *:not(i) {
   font-family: 'Roboto', sans-serif !important;
   color: #464745;
+  primary-color: #ff0000;
 }
