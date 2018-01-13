@@ -43,20 +43,15 @@ class Stats extends Component {
                   />
                   <CardContent style={{ position: 'relative' }}>
                     <Typography style={stats.statsTextHeading}>
-                      {' '}
-                      <h1 style={{ color: '#3498db' }}> {item.num} </h1>{' '}
+                      <h1 style={{ color: '#3498db' }}> {item.num} </h1>
                     </Typography>
-                    <Typography style={stats.statsText}>
-                      {' '}
-                      {item.text}{' '}
-                    </Typography>
+                    <Typography style={stats.statsText}>{item.text}</Typography>
                     <Typography style={stats.statsPercentage}>
-                      {' '}
                       <img
                         src={require('./../../assets/img/' + item.arrow)}
                         height="20"
-                      />{' '}
-                      {item.percentage}{' '}
+                      />
+                      {item.percentage}
                     </Typography>
                   </CardContent>
                 </Card>
