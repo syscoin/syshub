@@ -1,7 +1,17 @@
+import palette from './palette';
+
+const primary = palette.primary;
+const white = palette.white;
+const darkGrey = palette.darkGrey;
+const lightGrey = palette.lightGrey;
 
 export default {
   mainContainer: {
-    padding: '20px'
+    padding: '10px 0px 0px 20px',
+    width: 'calc(100% - 20px)',
+  },
+  mainheading: {
+    color: darkGrey,
   },
   form: {
     padding: '20px',
@@ -10,12 +20,12 @@ export default {
   },
   label: {
     padding: '0px 30px',
-    fontSize: '20px',
-    color: '#3498db',
+    fontSize: '18px',
+    color: primary,
   },
   formDiv: {
-    padding: '100px 20px',
-    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px'
+    padding: '5% 5%',
+    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
   },
   input: {
     height: '42px',
@@ -24,24 +34,34 @@ export default {
     boxSizing: 'border-box',
     padding: '12px 20px',
     fontSize: '20px',
-    borderRadius:'3px'
+    borderRadius: '3px',
   },
   btnText: {
-    color: '#fff',
-    fontSize: '23px',
-    padding: '5px'
+    color: white,
+    fontSize: '16px',
+    textTransform: 'capitalize',
   },
   btn: {
-    borderRadius: '5px',
-    width: '30%'
+    borderRadius: '7px',
+    width: '30%',
+    height: '20px',
   },
   forgetLink: {
     padding: '10px 0px 10px 10px',
-    fontSize: '20px',
-    color: '#1976d2'
+    fontSize: '16px',
+    color: primary,
   },
   btnDiv: {
     padding: '25px 0px 25px 10px',
-    textAlign: 'right'
-  }
-}
+    textAlign: 'center',
+    marginLeft: '80px',
+  },
+  captcha: {
+    marginLeft: '4px',
+    marginBottom: '15px',
+  },
+  captchaImg: {
+    width: '64%',
+    height: '80px',
+  },
+};

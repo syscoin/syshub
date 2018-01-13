@@ -1,5 +1,5 @@
-import login from "./login";
+import palette from './palette';
+import register from './register';
+import login from './login';
 
-export {
-  login
-}
+export { palette, register, login };

@@ -1,15 +1,15 @@
 import palette from './palette';
 import contentStyle from './contentStyle';
 import footerStyle from './footerStyle';
-import headerStyle from './headerStyle';
-import rSiderStyle from './rSiderStyle';
-import lSiderStyle from './lSiderStyle';
+import appHeaderStyle from './appHeaderStyle';
+import appRSiderStyle from './appRSiderStyle';
+import appLSiderStyle from './appLSiderStyle';
 
 export {
   palette,
   contentStyle,
   footerStyle,
-  headerStyle,
-  rSiderStyle,
-  lSiderStyle,
+  appHeaderStyle,
+  appRSiderStyle,
+  appLSiderStyle,
 };

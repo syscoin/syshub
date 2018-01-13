@@ -1,23 +1,43 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import WithRoot from './WithRoot';
-//import EmailModal from './the-modal';
-import Login from '../functionals/login'
-// import components
-import WellcomeBox from './../functionals/wellcomeBox';
-import Stats from './../functionals/stats';
 
+import { withRoot } from '../HOC';
+
+import { Layout } from 'antd';
+
+//Import functionals components
+import { Home, Register, Login } from '../pages';
+
+//Import Styles
 import { contentStyle } from './styles';
+//import EmailModal from './the-modal';
+
+const { Content } = Layout;
 
 class AppContent extends Component {
   render() {
+    const page = this.props.app.showPage;
+
     return (
-      <div style={contentStyle.wraper}>
-        {/* <WellcomeBox />
-        <Stats /> */}
-        <Login/>
+      <div>
+        <Content style={contentStyle.contentWraper}>
+          {
+            {
+              ['home']: <Home />,
+              ['dash']: 'You can see DASHBOARD ',
+              ['create']: 'This Create PROPOSAL',
+              ['news']: 'Some NEWS to read',
+              ['account']: 'Your ACCOUNT SETTINGS',
+              ['faq']: 'Any doubts?, read our FAQ',
+              ['masternode']: 'Your MASTERNODE SETTING',
+              ['login']: <Login />,
+              ['register']: <Register />,
+            }[this.props.app.showPage]
+          }
+        </Content>
       </div>
     );
   }
@@ -27,4 +47,14 @@ AppContent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppContent);
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(stateToProps, dispatchToProps)(withRoot(AppContent));

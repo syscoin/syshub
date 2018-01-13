@@ -1,5 +1,19 @@
-import login from "./login";
-import AppPalette from '../../../styles/Palette';
+import palette from './palette';
+import headerStatsStyle from './headerStatsStyle';
+import headerNavStyle from './headerNavStyle';
+import siderLogoStyle from './siderLogoStyle';
+import siderMenuStyle from './siderMenuStyle';
+import chatBox from './chatBox';
+import stats from './stats';
+import welcomeBox from './welcomeBox';
+
 export {
-  login
-}
+  palette,
+  headerStatsStyle,
+  headerNavStyle,
+  siderLogoStyle,
+  siderMenuStyle,
+  chatBox,
+  stats,
+  welcomeBox,
+};
