@@ -7,7 +7,6 @@ const lightColor = palette.textDark;
 
 export default {
   chat_box_container: {
-    height: '90vh',
   },
   footerWraper: {
     position: 'absolute',
@@ -21,7 +20,7 @@ export default {
     paddingLeft: '10px',
   },
   chatIcon: {
-    width: '20px',
+    width: '25px',
     height: '20px',
   },
   chatHeaderText: {
@@ -31,7 +30,6 @@ export default {
     fontSize: '13px',
   },
   chatList: {
-    // border: '1px solid red',
     height: '75.5vh',
     overflowY: 'auto',
   },
@@ -40,6 +38,17 @@ export default {
     textAlign: 'left',
     marginLeft: '10px',
     display: 'block',
+  },
+  textBox: {
+    border: 'thin solid ' + grey,
+    backgroundColor: white,
+    '&>div': {
+      width: 'calc(100% - 40px)',
+      marginLeft: '20px'
+    },
+    '& ::before': {
+      backgroundColor: 'transparent'
+    }
   },
   primaryText: {
     color: primary,

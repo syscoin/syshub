@@ -13,7 +13,7 @@ import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
 
 // import style
-import { stats } from './styles';
+import { statsStyle } from './styles';
 
 class Stats extends Component {
   constructor(props) {
@@ -24,16 +24,16 @@ class Stats extends Component {
     return (
       <div className="stats__container">
         {/* <Icon color="accent">add_circle</Icon> */}
-        <h1 style={stats.statsHeading}>
-          <Equalizer style={stats.headingIcon} /> SYSHub Stats
+        <h1 style={statsStyle.statsHeading}>
+          <Equalizer style={statsStyle.headingIcon} /> SYSHub Stats
         </h1>
-        <div style={stats.statsMainDiv}>
-          <GridList cols={4} cellHeight={300} style={stats.statsGridDiv}>
+        <div style={statsStyle.statsMainDiv}>
+          <GridList cols={4} cellHeight={300} style={statsStyle.statsGridDiv}>
             {this.props.SysStats.map((item, key) => {
               return (
-                <Card key={key} style={stats.statsCard}>
+                <Card key={key} style={statsStyle.statsCard}>
                   <CardHeader
-                    style={stats.statsCardHeader}
+                    style={statsStyle.statsCardHeader}
                     title={
                       <img
                         src={require('./../../assets/img/' + item.img)}
@@ -42,11 +42,11 @@ class Stats extends Component {
                     }
                   />
                   <CardContent style={{ position: 'relative' }}>
-                    <Typography style={stats.statsTextHeading}>
+                    <Typography style={statsStyle.statsTextHeading}>
                       <h1 style={{ color: '#3498db' }}> {item.num} </h1>
                     </Typography>
-                    <Typography style={stats.statsText}>{item.text}</Typography>
-                    <Typography style={stats.statsPercentage}>
+                    <Typography style={statsStyle.statsText}>{item.text}</Typography>
+                    <Typography style={statsStyle.statsPercentage}>
                       <img
                         src={require('./../../assets/img/' + item.arrow)}
                         height="20"

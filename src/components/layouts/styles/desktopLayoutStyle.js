@@ -10,6 +10,7 @@ const wraper = {
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'start',
+  marginTop: '10px'
 };
 
 export default { wraper };

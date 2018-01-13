@@ -5,7 +5,7 @@ import Recaptcha from 'react-recaptcha';
 
 import LoginTest from './LoginTest';
 // import style
-import { login } from './styles';
+import { loginStyle } from './styles';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -24,42 +24,42 @@ class Login extends Component {
   render() {
     const captcha = require('../../assets/img/captcha.jpg');
     return (
-      <div style={login.mainContainer}>
-        <h1 style={login.mainheading}>Login to SysHub</h1>
-        <div style={login.formDiv}>
-          <form style={login.form}>
-            <div style={login.inputDiv}>
-              <label style={login.label} htmlFor="uName">
+      <div style={loginStyle.mainContainer}>
+        <h1 style={loginStyle.mainheading}>Login to SysHub</h1>
+        <div style={loginStyle.formDiv}>
+          <form style={loginStyle.form}>
+            <div style={loginStyle.inputDiv}>
+              <label style={loginStyle.label} htmlFor="uName">
                 Username:
               </label>
               <input
                 type="text"
                 name="username"
                 id="uName"
-                style={login.input}
+                style={loginStyle.input}
                 placeholder="Username"
               />
             </div>
             <br />
-            <div style={login.inputDiv}>
+            <div style={loginStyle.inputDiv}>
               {/* <span style={login.label}>Password: </span> */}
-              <label style={login.label} htmlFor="pass">
+              <label style={loginStyle.label} htmlFor="pass">
                 Password:
               </label>
               <input
                 type="password"
                 name="password"
                 id="pass"
-                style={login.input}
+                style={loginStyle.input}
                 placeholder="********"
               />
             </div>
             <br />
-            <div style={login.captcha}>
-              <label style={login.label} htmlFor="captcha">
+            <div style={loginStyle.captcha}>
+              <label style={loginStyle.label} htmlFor="captcha">
                 Captcha:
               </label>
-              <img src={captcha} style={login.captchaImg} />
+              <img src={captcha} style={loginStyle.captchaImg} />
               {/* <Recaptcha
                id="captcha"
                       sitekey="xxxxxxxxxxxxxxxxxxxx"
@@ -69,11 +69,11 @@ class Login extends Component {
                     /> */}
             </div>
 
-            <div style={login.btnDiv}>
-              <Button raised color="primary" style={login.btn}>
-                <span style={login.btnText}> Login </span>
+            <div style={loginStyle.btnDiv}>
+              <Button raised color="primary" style={loginStyle.btn}>
+                <span style={loginStyle.btnText}> Login </span>
               </Button>
-              <a style={login.forgetLink}>Forget your Password? </a>
+              <a style={loginStyle.forgetLink}>Forget your Password? </a>
             </div>
           </form>
           <LoginTest />
