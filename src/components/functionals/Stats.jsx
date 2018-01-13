@@ -8,53 +8,32 @@ import Card, {
   CardActions,
 } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-// import style
-import './styles/stats.css';
 
-const stats = [
-  {
-    img: 'png_stasts_sys.png',
-    num: '0.00022',
-    text: 'BTC 1000 USD',
-    percentage: '9%',
-    arrow: 'png_button_down.png',
-  },
-  {
-    img: 'png_menu_masternodes_selected.png',
-    num: '0415/0430',
-    text: 'REGISTERED MASTER NODES',
-    percentage: '10%',
-    arrow: 'png_button_up.png',
-  },
-  {
-    img: 'png_stats_users.png',
-    num: '2000',
-    text: 'ALL USERS',
-    percentage: '9%',
-    arrow: 'png_button_down.png',
-  },
-];
+import { connect } from 'react-redux'; //to pass functions
+import { bindActionCreators } from 'redux';
+
+// import style
+import { stats } from './styles';
 
 class Stats extends Component {
   constructor(props) {
     super(props);
   }
   render() {
+    console.log('Props', this.props);
     return (
       <div className="stats__container">
         {/* <Icon color="accent">add_circle</Icon> */}
-        <h1 className="stats-heading">
-          <Equalizer /> SYSHub Stats
+        <h1 style={stats.statsHeading}>
+          <Equalizer style={stats.headingIcon} /> SYSHub Stats
         </h1>
-        <div className="stats-div">
-          <GridList cols={4} cellHeight={300}>
-            {stats.map((item, key) => {
+        <div style={stats.statsMainDiv}>
+          <GridList cols={4} cellHeight={300} style={stats.statsGridDiv}>
+            {this.props.SysStats.map((item, key) => {
               return (
-                <Card
-                  key={key}
-                  style={{ textAlign: 'center', borderRadius: '10px' }}
-                >
+                <Card key={key} style={stats.statsCard}>
                   <CardHeader
+                    style={stats.statsCardHeader}
                     title={
                       <img
                         src={require('./../../assets/img/' + item.img)}
@@ -62,16 +41,16 @@ class Stats extends Component {
                       />
                     }
                   />
-                  <CardContent>
-                    <Typography>
+                  <CardContent style={{ position: 'relative' }}>
+                    <Typography style={stats.statsTextHeading}>
                       {' '}
-                      <h1> {item.num} </h1>{' '}
+                      <h1 style={{ color: '#3498db' }}> {item.num} </h1>{' '}
                     </Typography>
-                    <Typography style={{ color: '#bdc3c7' }}>
+                    <Typography style={stats.statsText}>
                       {' '}
                       {item.text}{' '}
                     </Typography>
-                    <Typography style={{ color: '#3498db' }}>
+                    <Typography style={stats.statsPercentage}>
                       {' '}
                       <img
                         src={require('./../../assets/img/' + item.arrow)}
@@ -90,4 +69,18 @@ class Stats extends Component {
   }
 }
 
-export default Stats;
+function mapStateToProps(state) {
+  //pass the providers
+  return {
+    SysStats: state.sysStats.values,
+  };
+}
+
+/* Map Actions to Props */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stats);
