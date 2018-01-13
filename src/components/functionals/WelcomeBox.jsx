@@ -6,7 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
 
 // import style
-import { wellcomeBox } from './styles';
+import { welcomeBox } from './styles';
 
 class WellcomeBox extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class WellcomeBox extends Component {
         <Paper style={style} elevation={4}>
           <GridList cols={2} cellHeight={300}>
             <GridListTile>
-              <div style={wellcomeBox.logoImg} style={{ textAlign: 'center' }}>
+              <div style={welcomeBox.logoImg} style={{ textAlign: 'center' }}>
                 <img
                   src={require('../../assets/img/png_logo.png')}
                   height="250"
@@ -39,31 +39,31 @@ class WellcomeBox extends Component {
             <GridListTile>
               <h1 style={{ color: '#3498db' }}>Advertisement Text here</h1>
               <Divider />
-              <div style={wellcomeBox.addvertiseText}>
-                <ul style={wellcomeBox.wellcomBoxTextList}>
-                  <li style={wellcomeBox.listItem}>
+              <div style={welcomeBox.addvertiseText}>
+                <ul style={welcomeBox.wellcomBoxTextList}>
+                  <li style={welcomeBox.listItem}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={wellcomeBox.listItem}>
+                  <li style={welcomeBox.listItem}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={wellcomeBox.listItem}>
+                  <li style={welcomeBox.listItem}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={wellcomeBox.listItem}>
+                  <li style={welcomeBox.listItem}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
                 </ul>
               </div>
-              <div style={wellcomeBox.joinBtn}>
+              <div style={welcomeBox.joinBtn}>
                 <Button
                   raised
                   color="primary"
-                  style={wellcomeBox.btn}
+                  style={welcomeBox.btn}
                   onClick={this.props.onJoin}
                   disabled={this.props.logged}
                 >
-                  <span style={wellcomeBox.btnText}> Join SysHub </span>
+                  <span style={welcomeBox.btnText}> Join SysHub </span>
                 </Button>
               </div>
             </GridListTile>
