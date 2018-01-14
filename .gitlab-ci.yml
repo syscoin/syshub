@@ -6,7 +6,7 @@ cache:
 
 stages:
   - develop
-  - build
+  - staging
   - deploy
 
 develop:
@@ -14,5 +14,16 @@ develop:
   image: ruby:latest
   script:
    - gem install dpl
-   - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
+   - dpl --provider=heroku --app=$HEROKU_APP_DEV --api-key=$HEROKU_API_KEY
+  except:
+   - master
+
+staging:
+  stage: staging
+  image: ruby:latest
+  script:
+   - gem install dpl
+   - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+  only:
+   - master
 
