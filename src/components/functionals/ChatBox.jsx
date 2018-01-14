@@ -14,7 +14,6 @@ import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui/styles';
 
 const style = {
-  height: '80vh',
   textAlign: 'center',
   display: 'inline-block',
   position: 'relative',
@@ -95,7 +94,6 @@ class ChatBox extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(this.state.message, 'asdasdas');
   }
   onSubmit(e) {
     e.preventDefault();
@@ -107,6 +105,9 @@ class ChatBox extends Component {
     this.setState({
       chats: _tempArra,
       message: '',
+    },()=>{
+      let chatContentContainer = document.getElementById('chat-messages-container');
+      chatContentContainer.scrollTop = chatContentContainer.scrollHeight;
     });
   }
 
@@ -124,7 +125,7 @@ class ChatBox extends Component {
             <span style={chatBoxStyle.chatHeaderText}>CHATBOX</span>
           </div>
           <List>
-            <div style={chatBoxStyle.chatList}>
+            <div id='chat-messages-container' style={chatBoxStyle.chatList}>
               {this.state.chats.map((data, index) => (
                 <ListItemText
                   key={index}

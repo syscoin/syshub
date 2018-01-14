@@ -30,7 +30,7 @@ export default {
     fontSize: '13px',
   },
   chatList: {
-    height: '75.5vh',
+    height: 'calc(100vh - 230px)',
     overflowY: 'auto',
   },
   chatContent: {
