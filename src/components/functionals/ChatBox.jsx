@@ -102,20 +102,25 @@ class ChatBox extends Component {
       user: 'qweer',
       text: this.state.message,
     });
-    this.setState({
-      chats: _tempArra,
-      message: '',
-    },()=>{
-      let chatContentContainer = document.getElementById('chat-messages-container');
-      chatContentContainer.scrollTop = chatContentContainer.scrollHeight;
-    });
+    this.setState(
+      {
+        chats: _tempArra,
+        message: '',
+      },
+      () => {
+        let chatContentContainer = document.getElementById(
+          'chat-messages-container'
+        );
+        chatContentContainer.scrollTop = chatContentContainer.scrollHeight;
+      }
+    );
   }
 
   render() {
     const chat_icon = require('../../assets/img/png_menu_chat.png'),
-      {classes} = this.props;
-    
-      return (
+      { classes } = this.props;
+
+    return (
       <div style={chatBoxStyle.chat_box_container}>
         <Paper style={style} zDepth={2}>
           <div style={chatBoxStyle.chatHeader}>
@@ -125,7 +130,7 @@ class ChatBox extends Component {
             <span style={chatBoxStyle.chatHeaderText}>CHATBOX</span>
           </div>
           <List>
-            <div id='chat-messages-container' style={chatBoxStyle.chatList}>
+            <div id="chat-messages-container" style={chatBoxStyle.chatList}>
               {this.state.chats.map((data, index) => (
                 <ListItemText
                   key={index}

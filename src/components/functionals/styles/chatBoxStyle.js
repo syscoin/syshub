@@ -3,11 +3,9 @@ import palette from './palette';
 const white = palette.white;
 const primary = palette.primary;
 const grey = palette.textLignt;
-const lightColor = palette.textDark;
 
 export default {
-  chat_box_container: {
-  },
+  chat_box_container: {},
   footerWraper: {
     position: 'absolute',
     bottom: '0px',
@@ -44,11 +42,11 @@ export default {
     backgroundColor: white,
     '&>div': {
       width: 'calc(100% - 40px)',
-      marginLeft: '20px'
+      marginLeft: '20px',
     },
     '& ::before': {
-      backgroundColor: 'transparent'
-    }
+      backgroundColor: 'transparent',
+    },
   },
   primaryText: {
     color: primary,
