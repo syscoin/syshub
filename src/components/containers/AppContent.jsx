@@ -24,7 +24,7 @@ class AppContent extends Component {
 
     return (
       <div style={contentStyle.__container}>
-        <Content style={contentStyle.contentWraper}>
+        <Content style={contentStyle.wraper}>
           {
             {
               ['home']: <Home />,

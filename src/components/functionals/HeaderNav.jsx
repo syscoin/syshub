@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
-import { fire } from '../../firebase';
+import { doLogout } from '../../firebase';
 
 //Import UI Framework components
 import { Button } from 'antd';
@@ -19,12 +19,7 @@ class HeaderNav extends Component {
   doLogout() {
     const { currentUser } = this.props.app;
     if (currentUser) {
-      fire
-        .auth()
-        .signOut()
-        .then(() => {
-          this.props.doLogout();
-        });
+      doLogout();
     }
   }
 
@@ -52,6 +47,7 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
+              onClick={() => this.props.toggleChat()}
             >
               <img
                 src={require('../../assets/img/png_menu_chat.png')}
@@ -63,7 +59,7 @@ class HeaderNav extends Component {
               type="primary"
               ghost
               style={headerNavStyle.button}
-              onClick={() => this.setPage('home')}
+              onClick={() => this.props.setPage('home')}
             >
               <img
                 src={require('../../assets/img/png_menu_home.png')}
@@ -119,6 +115,7 @@ const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
     setPage: page => dispatch(actions.setPage(page)),
+    toggleChat: page => dispatch(actions.toggleChat()),
   };
 };
 

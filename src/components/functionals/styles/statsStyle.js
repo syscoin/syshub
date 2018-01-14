@@ -44,13 +44,18 @@ export default {
     height: '100px',
   },
   statsPercentage: {
+    //border: '1px solid red',
     color: 'rgb(52, 152, 219)',
     position: 'absolute',
     right: '0px',
     left: '0px',
     bottom: '0px',
     height: '25px',
-    margin: '0 0 6% 0',
+    margin: '0 0 6% 1%',
+    '& >img': {
+      //border: '1px solid blue',
+      margin: '0 3% 0 0',
+    },
   },
 };
 

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+import swal from 'sweetalert';
+
+import { fire, messages } from '../../firebase';
+
 import List, {
   ListItem,
   ListItemAvatar,
@@ -17,129 +23,121 @@ const style = {
   textAlign: 'center',
   display: 'inline-block',
   position: 'relative',
+  minWidth: '95%',
 };
 
 class ChatBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      messages: [],
+
       message: '',
-      chats: [
-        {
-          user: 'abc',
-          text: 'khalidadsssss sdsd sddsds sdsds sdsd xsddxd',
-        },
-        {
-          user: 'abca',
-          text: 'khalid',
-        },
-        {
-          user: 'abc2',
-          text: 'khalidwqeqw',
-        },
-        {
-          user: 'abc',
-          text: 'khalideqwe',
-        },
-        {
-          user: 'abc',
-          text: 'khalidqwe',
-        },
-        {
-          user: 'abc',
-          text: 'khalidadsss sdsds sdsd sdsd xdfsdsdsds sdsd',
-        },
-        {
-          user: 'abca',
-          text: 'khalid',
-        },
-        {
-          user: 'abc2',
-          text: 'khalidwqeqw',
-        },
-        {
-          user: 'abc',
-          text: 'khalideqwe',
-        },
-        {
-          user: 'abc',
-          text: 'khalidqwe',
-        },
-        {
-          user: 'abc',
-          text: 'khalidadssss sdsd sdsd sdsds asdsdsdsd sdsdsd sdsds sdsd',
-        },
-        {
-          user: 'abca',
-          text: 'khalid',
-        },
-        {
-          user: 'abc2',
-          text: 'khalidwqeqw',
-        },
-        {
-          user: 'abc',
-          text: 'khalideqwe',
-        },
-        {
-          user: 'abc',
-          text: 'khalidqwe',
-        },
-      ],
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
+
+  componentWillMount() {
+    messages.limitToLast(100).on('value', snap => {
+      const updated = [];
+      snap.forEach(message => {
+        updated.push(message.val());
+      });
+      this.setState({
+        messages: updated,
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    const messagesContainer = ReactDOM.findDOMNode(this.messagesContainer);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  };
+
+  loginAlert() {
+    swal({
+      title: 'Oops...',
+      text: 'Must be signed in to chat',
+      icon: 'warning',
+    });
+  }
+
+  addMessage(message) {
+    const { currentUser } = this.props.app;
+
+    if (!currentUser) {
+      this.loginAlert();
+      return;
+    }
+
+    const updated = {
+      body: message,
+      user: {
+        displayName: currentUser.displayName,
+        id: currentUser.uid,
+        email: currentUser.email,
+      },
+    };
+
+    messages.push(updated);
+  }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
   }
+
   onSubmit(e) {
     e.preventDefault();
-    let _tempArra = this.state.chats;
-    _tempArra.push({
-      user: 'qweer',
-      text: this.state.message,
-    });
-    this.setState({
-      chats: _tempArra,
-      message: '',
-    },()=>{
-      let chatContentContainer = document.getElementById('chat-messages-container');
-      chatContentContainer.scrollTop = chatContentContainer.scrollHeight;
-    });
+    const message = this.state.message;
+    this.addMessage(message);
+    this.setState({ message: '' });
   }
 
   render() {
+    const { currentUser } = this.props.app;
     const chat_icon = require('../../assets/img/png_menu_chat.png'),
-      {classes} = this.props;
-    
-      return (
-      <div style={chatBoxStyle.chat_box_container}>
+      { classes } = this.props;
+    return (
+      <div className={classes.chat_box_container}>
         <Paper style={style} zDepth={2}>
-          <div style={chatBoxStyle.chatHeader}>
+          <div className={classes.chatHeader}>
             <span>
               <img src={chat_icon} style={chatBoxStyle.chatIcon} />
             </span>
             <span style={chatBoxStyle.chatHeaderText}>CHATBOX</span>
           </div>
-          <List>
-            <div id='chat-messages-container' style={chatBoxStyle.chatList}>
-              {this.state.chats.map((data, index) => (
+          <List style={{ maxHeight: '80%' }}>
+            <div
+              ref={el => {
+                this.messagesContainer = el;
+              }}
+              id="chat-messages-container"
+              style={chatBoxStyle.chatList}
+            >
+              {this.state.messages.map((message, index) => (
                 <ListItemText
                   key={index}
                   style={chatBoxStyle.chatContent}
                   primary={
                     <Typography style={chatBoxStyle.primaryText}>
-                      {' '}
-                      {data.user}{' '}
+                      {message.user.displayName}
                     </Typography>
                   }
                   secondary={
                     <Typography style={chatBoxStyle.secondaryText}>
-                      {' '}
-                      {data.text}{' '}
+                      {message.body}
                     </Typography>
                   }
                 />
@@ -151,8 +149,13 @@ class ChatBox extends Component {
               value={this.state.message}
               name="message"
               onChange={this.onChange}
+              onClick={() => {
+                return !currentUser ? this.loginAlert() : null;
+              }}
               multiLine=" true"
-              placeholder="login to write message"
+              placeholder={
+                currentUser ? 'Tell something' : 'login to write message'
+              }
             />
           </form>
         </Paper>
@@ -161,4 +164,10 @@ class ChatBox extends Component {
   }
 }
 
-export default withStyles(chatBoxStyle)(ChatBox);
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+export default connect(stateToProps)(withStyles(chatBoxStyle)(ChatBox));
