@@ -2,44 +2,39 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import HeaderStyles from '../../styles/headerStyle';
-//import EmailModal from './the-modal';
 
-const styles = theme => ({
-  root: {
-    marginTop: theme.spacing.unit * 0,
-    width: '100%',
-  },
-});
+import { Layout } from 'antd';
+
+//import components
+import { HeaderStats, HeaderNav } from '../functionals';
+
+import { appHeaderStyle } from './styles';
+
+const { Header } = Layout;
 
 class AppHeader extends Component {
-  state = {
-    open: false,
-    showModal: false,
-  };
-
-  toggleModal() {
-    this.setState({
-      showModal: !this.state.showModal,
-    });
-  }
-
   render() {
     return (
-      <div className={this.props.classes.root}>
-        <AppBar position="fixed">
-          <Toolbar style={HeaderStyles.header}>Header</Toolbar>
-        </AppBar>
+      <div>
+        <Header style={appHeaderStyle.headerWraper}>
+          <AppBar position="fixed">
+            <Toolbar style={appHeaderStyle.header}>
+              <div style={appHeaderStyle.container}>
+                <HeaderStats />
+                <HeaderNav />
+              </div>
+            </Toolbar>
+          </AppBar>
+        </Header>
       </div>
     );
   }
 }
 
 AppHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AppHeader);
+export default AppHeader;

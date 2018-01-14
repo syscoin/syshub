@@ -2,12 +2,20 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import WithRoot from './WithRoot';
-import FooterStyles from '../../styles/footerStyle';
+import { withRoot } from '../HOC';
+import { Layout } from 'antd';
+
+import { footerStyle } from './styles';
+
+const { Footer } = Layout;
 
 class AppFooter extends Component {
   render() {
-    return <div style={FooterStyles.footer}>Footer</div>;
+    return (
+      <div style={footerStyle.footer}>
+        <Footer style={footerStyle.footerWraper}>{` `} </Footer>
+      </div>
+    );
   }
 }
 
@@ -15,4 +23,4 @@ AppFooter.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default WithRoot(AppFooter);
+export default withRoot(AppFooter);

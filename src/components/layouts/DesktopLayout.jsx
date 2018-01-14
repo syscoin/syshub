@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { connect } from 'react-redux';
 
 import {
   AppHeader,
@@ -8,40 +9,37 @@ import {
   AppRSider,
   AppFooter,
 } from '../containers/';
-// Styles
-import {
-  HeaderStyles,
-  SiderStyles,
-  ContentStyles,
-  FooterStyles,
-} from '../../styles';
 
-const { Header, Content, Sider, Footer } = Layout;
+//Import Styles
+import { desktopLayoutStyle } from './styles';
+
+const { SubMenu } = Menu;
+const { Content, Footer } = Layout;
 
 class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <Header style={HeaderStyles.headerWraper}>
-          <AppHeader />
-        </Header>
-        <Layout>
-          <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppLSider />
-          </Sider>
-          <Content style={ContentStyles.contentWraper}>
-            <AppContent />
-          </Content>
-          <Sider width={200} style={SiderStyles.siderWraper}>
-            <AppRSider />
-          </Sider>
-        </Layout>
-        <Footer style={FooterStyles.footerWraper}>
-          <AppFooter />
-        </Footer>
+        <AppHeader />
+        <div style={desktopLayoutStyle.wraper}>
+          <AppLSider />
+          <AppContent />
+          <AppRSider />
+        </div>
+        <AppFooter />
       </Layout>
     );
   }
 }
 
-export default DesktopLayout;
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(stateToProps, dispatchToProps)(DesktopLayout);

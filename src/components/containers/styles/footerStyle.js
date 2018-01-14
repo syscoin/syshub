@@ -1,7 +1,7 @@
-import AppPalette from './appPalette';
+import palette from './palette';
 
-const darkGrey = AppPalette.darkGrey;
-const white = AppPalette.white;
+const greyDark = palette.greyDark;
+const white = palette.white;
 
 export default {
   footerWraper: {
@@ -10,7 +10,7 @@ export default {
     bottom: '0px',
     height: '60px',
     width: '100%',
-    backgroundColor: darkGrey,
+    backgroundColor: greyDark,
   },
   footer: {
     textAlign: 'center',
