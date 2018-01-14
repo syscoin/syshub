@@ -34,6 +34,7 @@ class HeaderNav extends Component {
 
   render() {
     const { currentUser } = this.props.app;
+    console.log(currentUser);
     return (
       <div style={headerNavStyle.wraper}>
         <div style={headerNavStyle.common}>
