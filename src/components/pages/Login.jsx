@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import {
-  TextField,
   Button,
   Grid,
-  Paper,
-  FormLabel,
   FormGroup,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
   Input,
-  Checkbox,
   withStyles
 } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
@@ -103,19 +96,12 @@ class Login extends Component {
                   </div> 
                 </FormGroup>
                 
-                {/* Terms and Service */}
-                <FormGroup className='form-group terms-of-condition'>
-                  <p>I have read and accepted the <a href='#'>Terms of Service</a></p>
-                </FormGroup>
-                
                 {/* Form Action Button */}
                 <FormGroup className='form-group form-button-group'>
-                  <Button color="primary" className={classes.button}>
-                    Primary
+                  <Button color="primary">
+                    Login
                   </Button>
-                  <Button color="accent" className={classes.button}>
-                    Accent
-                  </Button> 
+                  <a>Forget Your Password?</a>
                 </FormGroup>
               </Grid>
             </form>

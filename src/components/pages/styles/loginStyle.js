@@ -76,7 +76,8 @@ export default {
       }
     },
     '& .title':{
-      display: "inline-block"
+      display: "inline-block",
+      fontWeight: 'lighter'
     }
 
   },

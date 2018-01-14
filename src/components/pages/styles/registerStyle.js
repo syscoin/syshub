@@ -1,113 +1,85 @@
-import AppPalette from './palette';
+import palette from './palette';
 
-const primary = AppPalette.primary;
-const white = AppPalette.white;
-const darkGrey = AppPalette.darkGrey;
-const lightGrey = AppPalette.lightGrey;
+const primary = palette.primary;
+const white = palette.white;
+const greyDark = palette.greyDark;
+const greyLight = palette.greyLight;
+const secondary = palette.secondary;
 
 export default {
-  mainContainer: {
+  root: {
     padding: '10px 0px 0px 20px',
-    width: 'calc(100% - 20px)',
-  },
-  mainheading: {
-    color: darkGrey,
-  },
-  form: {
-    padding: '20px',
-    width: '100%',
-    margin: 'auto',
-  },
-  label: {
-    padding: '0px 34px',
-    fontSize: '16px',
-    color: primary,
-  },
-  formDiv: {
-    padding: '25px 20px 35px 180px',
-    boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
-  },
-  inputDivUsername: {
-    marginLeft: '66px',
-  },
-  inputDivPassword: {
-    marginLeft: '68px',
-  },
-  input: {
-    height: '42px',
-    width: '30%',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box',
-    padding: '12px 20px',
-    borderRadius: '3px',
-  },
-  confirmPasswordinput: {
-    height: '42px',
-    width: '28%',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box',
-    padding: '12px 20px',
-    borderRadius: '3px',
-    marginLeft: '8px',
-  },
-  btnText: {
-    color: white,
-    fontSize: '16px',
-    textTransform: 'capitalize',
-  },
-  registerBtn: {
-    borderRadius: '7px',
-    width: '16%',
-    height: '20px',
-    marginRight: '20px',
-    padding: '9px',
-  },
-  registerLoginBtn: {
-    borderRadius: '7px',
-    width: '21%',
-    height: '20px',
-    marginRight: '35px',
-  },
-  forgetLink: {
-    padding: '10px 0px 10px 10px',
-    fontSize: '16px',
-    color: primary,
-  },
-  btnDiv: {
-    padding: '25px 0px 25px 0px',
-    marginLeft: '16.2%',
-  },
-  captchaWrapper: {
-    marginLeft: '70px',
-    '&>label': {
-      verticalAlign: 'top',
+    height: '50vh',
+    '& .form__container': {
+      backgroundColor: white,
+      padding: '20px',
+      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
+      '& .form-group': {
+        flexDirection: 'row',
+        marginTop: '10px'
+      },
+      '& .label': {
+        width: '20%',
+        display: 'inline-block',
+        textAlign: 'right',
+        fontSize: '15px',
+        marginTop: '15px',
+        color: primary,
+        paddingRight: '10px'
+      },
+      '& .input-field': {
+        width: 'calc(45% - 20px)',
+        margin: '0px 10px',
+        display: 'inline-block',
+        border: 'thin solid ' + greyLight,
+        padding: '10px',
+        '&::before':{
+          backgroundColor: 'transparent'
+        }
+      },
+      '& .recaptcha': {
+        marginLeft: 10
+      },
+      '& .validation-message': {
+        width: '35%',
+        display: 'inline-block',
+        fontSize: '15px',
+        marginTop: '15px',
+        color: greyDark,
+        '& img': {
+          width: '20px',
+          marginRight: '5px'
+        },
+        '& .strong': {
+          color: secondary,
+          fontWeight: 'bold',
+          marginLeft: 5
+        }
+      }
+      ,
+      '& .terms-of-condition  ':{
+        textAlign: 'center',
+        display: 'grid'
+      },
+      '& .form-button-group':{
+        textAlign: 'center',
+        display: 'inherit',
+        '&>button':{
+          backgroundColor: primary,
+          margin: '0 10px',
+          borderRadius: 10,
+          '& span': {
+            color: white,
+            fontWeight: 'bold'
+          }
+        }
+      }
     },
-    '&>#g-recaptcha': {
-      display: 'inline-block',
-      marginLeft: '10px',
-    },
+    '& .title':{
+      display: "inline-block",
+      fontWeight: 'lighter'
+    }
+
   },
-  captchaImg: {
-    width: '29%',
-  },
-  termsDiv: {
-    marginLeft: '18%',
-    color: darkGrey,
-    fontSize: '16px',
-  },
-  activeTermsText: {
-    color: primary,
-    fontWeight: 500,
-  },
-  checkIcon: {
-    width: '23px',
-    margin: '0px 15px',
-    verticalAlign: 'text-bottom',
-  },
-  passwordStrength: {
-    fontSize: '16px',
-    margin: '10px',
-    textTransform: 'upperCase',
-    color: '#2ecc71',
-  },
+  
 };
