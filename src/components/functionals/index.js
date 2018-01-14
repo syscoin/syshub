@@ -1,4 +1,5 @@
 import ChatBox from './ChatBox';
+import ChatBoxTest from './ChatBoxTest';
 import HeaderStats from './HeaderStats';
 import HeaderNav from './HeaderNav';
 import SiderLogo from './SiderLogo';
@@ -16,4 +17,5 @@ export {
   WelcomeBox,
   Stats,
   FooterInfo,
+  ChatBoxTest
 };
