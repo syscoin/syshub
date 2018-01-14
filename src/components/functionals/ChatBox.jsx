@@ -10,12 +10,10 @@ import List, {
   ListItemText,
 } from 'material-ui/List';
 import ListSubheader from 'material-ui/List/ListSubheader';
-import { chatBox } from './styles';
+import { chatBoxStyle } from './styles';
+import { withStyles } from 'material-ui/styles';
 
 const style = {
-  height: '80vh',
-  width: '86%',
-  margin: 20,
   textAlign: 'center',
   display: 'inline-block',
   position: 'relative',
@@ -96,7 +94,6 @@ class ChatBox extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(this.state.message, 'asdasdas');
   }
   onSubmit(e) {
     e.preventDefault();
@@ -108,34 +105,39 @@ class ChatBox extends Component {
     this.setState({
       chats: _tempArra,
       message: '',
+    },()=>{
+      let chatContentContainer = document.getElementById('chat-messages-container');
+      chatContentContainer.scrollTop = chatContentContainer.scrollHeight;
     });
   }
 
   render() {
-    const chat_icon = require('../../assets/img/png_menu_chat.png');
-    return (
-      <div style={chatBox.chat_box_container}>
+    const chat_icon = require('../../assets/img/png_menu_chat.png'),
+      {classes} = this.props;
+    
+      return (
+      <div style={chatBoxStyle.chat_box_container}>
         <Paper style={style} zDepth={2}>
-          <div style={chatBox.chatHeader}>
+          <div style={chatBoxStyle.chatHeader}>
             <span>
-              <img src={chat_icon} style={chatBox.chatIcon} />
+              <img src={chat_icon} style={chatBoxStyle.chatIcon} />
             </span>
-            <span style={chatBox.chatHeaderText}>CHATBOX</span>
+            <span style={chatBoxStyle.chatHeaderText}>CHATBOX</span>
           </div>
           <List>
-            <div style={chatBox.chatList}>
+            <div id='chat-messages-container' style={chatBoxStyle.chatList}>
               {this.state.chats.map((data, index) => (
                 <ListItemText
                   key={index}
-                  style={chatBox.chatContent}
+                  style={chatBoxStyle.chatContent}
                   primary={
-                    <Typography style={chatBox.primaryText}>
+                    <Typography style={chatBoxStyle.primaryText}>
                       {' '}
                       {data.user}{' '}
                     </Typography>
                   }
                   secondary={
-                    <Typography style={chatBox.secondaryText}>
+                    <Typography style={chatBoxStyle.secondaryText}>
                       {' '}
                       {data.text}{' '}
                     </Typography>
@@ -144,7 +146,7 @@ class ChatBox extends Component {
               ))}
             </div>
           </List>
-          <form style={chatBox} onSubmit={this.onSubmit}>
+          <form className={classes.textBox} onSubmit={this.onSubmit}>
             <TextField
               value={this.state.message}
               name="message"
@@ -159,4 +161,4 @@ class ChatBox extends Component {
   }
 }
 
-export default ChatBox;
+export default withStyles(chatBoxStyle)(ChatBox);

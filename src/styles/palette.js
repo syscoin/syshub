@@ -6,6 +6,7 @@ const basicColors = {
   greyDark: '#464745',
   grey: '#bdc3c7',
   greyLight: '#F0F2F5',
+  secondary: '#1abc9c'
 };
 
 const textColors = {

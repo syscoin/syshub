@@ -3,9 +3,9 @@ import headerStatsStyle from './headerStatsStyle';
 import headerNavStyle from './headerNavStyle';
 import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
-import chatBox from './chatBox';
-import stats from './stats';
-import welcomeBox from './welcomeBox';
+import chatBoxStyle from './chatBoxStyle';
+import statsStyle from './statsStyle';
+import welcomeBoxStyle from './welcomeBoxStyle';
 
 export {
   palette,
@@ -13,7 +13,7 @@ export {
   headerNavStyle,
   siderLogoStyle,
   siderMenuStyle,
-  chatBox,
-  stats,
-  welcomeBox,
+  chatBoxStyle,
+  statsStyle,
+  welcomeBoxStyle,
 };

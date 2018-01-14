@@ -11,6 +11,8 @@ const wraper = {
   justifyContent: 'space-between',
   alignItems: 'start',
   minWidth: '100vw',
+    },
+    appContent__container: {
+      width: '55%'
+    }
 };
-
-export default { wraper };

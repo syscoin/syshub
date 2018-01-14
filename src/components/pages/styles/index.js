@@ -1,5 +1,5 @@
 import palette from './palette';
-import register from './register';
-import login from './login';
+import registerStyle from './registerStyle';
+import loginStyle from './loginStyle';
 
-export { palette, register, login };
+export { palette, registerStyle, loginStyle };

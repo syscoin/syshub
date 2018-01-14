@@ -1,86 +1,115 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import {
+  Button,
+  Grid,
+  FormGroup,
+  Input,
+  withStyles
+} from 'material-ui';
 import Recaptcha from 'react-recaptcha';
-
 import LoginTest from './LoginTest';
+
 // import style
-import { login } from './styles';
+import { loginStyle } from './styles';
+
 class Login extends Component {
   constructor(props) {
     super(props);
   }
 
   // specifying your onload callback function
-  callback = function() {
+  callback = function () {
     console.log('Done!!!!');
   };
 
   // specifying verify callback function
-  verifyCallback = function(response) {
+  verifyCallback = function (response) {
     console.log(response);
   };
 
   render() {
-    const captcha = require('../../assets/img/captcha.jpg');
+    const captcha = require('../../assets/img/captcha.jpg'),
+      checkIcon = require('../../assets/img/checkIcon.png'),
+      { classes } = this.props;
+
     return (
-      <div style={login.mainContainer}>
-        <h1 style={login.mainheading}>Login to SysHub</h1>
-        <div style={login.formDiv}>
-          <form style={login.form}>
-            <div style={login.inputDiv}>
-              <label style={login.label} htmlFor="uName">
-                Username:
-              </label>
-              <input
-                type="text"
-                name="username"
-                id="uName"
-                style={login.input}
-                placeholder="Username"
-              />
-            </div>
-            <br />
-            <div style={login.inputDiv}>
-              {/* <span style={login.label}>Password: </span> */}
-              <label style={login.label} htmlFor="pass">
-                Password:
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="pass"
-                style={login.input}
-                placeholder="********"
-              />
-            </div>
-            <br />
-            <div style={login.captcha}>
-              <label style={login.label} htmlFor="captcha">
-                Captcha:
-              </label>
-              <img src={captcha} style={login.captchaImg} />
-              {/* <Recaptcha
-               id="captcha"
-                      sitekey="xxxxxxxxxxxxxxxxxxxx"
+      <Grid container className={classes.root} md={12}>
+        <h1 className='title'>Login to SysHub</h1>
+        <Grid item md={12} className='form__container'>
+            <form className="wrapper">
+              <Grid item lg={{size: 8, offset:2}} md={{size: 10, offset: 1}} justify='center'>
+                
+                {/* For User Name */}
+                <FormGroup className='form-group'>
+                  <span htmlFor="user-name" className="label">Username: </span>
+                  <Input 
+                    id="user-name" 
+                    className="input-field"
+                    placeholder="Enter Username" />
+                  <span className="validation-message">
+                    <img src={checkIcon}/>
+                    Username Available
+                  </span>
+                </FormGroup>
+                
+                {/* For Password */}
+                <FormGroup className='form-group'>
+                  <span htmlFor="password" className="label">Password: </span>
+                  <Input 
+                    type="password" 
+                    id="password" 
+                    className="input-field"
+                    placeholder="**************" />
+                  <span className="validation-message">
+                    <img src={checkIcon}/>
+                    Password Strength
+                    <span className="strong">Strong</span>
+                  </span>
+                </FormGroup>
+                
+                {/* For Confirm Password */}
+                <FormGroup className='form-group'>
+                  <span htmlFor="confirm-password" className="label">Confirm Password: </span>
+                  <Input 
+                    type="password" 
+                    id="confirm-password" 
+                    className="input-field" 
+                    placeholder="**************" />
+                  {/* <span className="validation-message">
+                    <img src={checkIcon}/>
+                    Username Available
+                  </span> */}
+                </FormGroup>
+
+                {/* For Confirm Password */}
+                <FormGroup className='form-group'>
+                  <span htmlFor="confirm-password" className="label">Confirm Password: </span>
+                  <div className="recaptcha">
+                    <Recaptcha
+                      style={{marginLeft: '10px'}}
+                      id="captcha"
+                      sitekey="6LeNoEAUAAAAADaWqXweDPiSR-8HnWCQ3ZMrNp1o"
                       render="explicit"
                       verifyCallback={this.verifyCallback.bind(this)}
                       onloadCallback={this.callback.bind(this)}
-                    /> */}
-            </div>
-
-            <div style={login.btnDiv}>
-              <Button raised color="primary" style={login.btn}>
-                <span style={login.btnText}> Login </span>
-              </Button>
-              <a style={login.forgetLink}>Forget your Password? </a>
-            </div>
-          </form>
-          <LoginTest />
-        </div>
-      </div>
+                    />
+                  </div> 
+                </FormGroup>
+                
+                {/* Form Action Button */}
+                <FormGroup className='form-group form-button-group'>
+                  <Button color="primary">
+                    Login
+                  </Button>
+                  <a>Forget Your Password?</a>
+                </FormGroup>
+              </Grid>
+            </form>
+            <LoginTest />
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default Login;
+export default withStyles(loginStyle)(Login);
