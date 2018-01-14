@@ -2,7 +2,7 @@ import constants from '../constants';
 
 const initialState = {
   currentUser: null,
-  showPage: 'homesssss',
+  showPage: 'home',
   showChat: true,
   loading: false,
 };

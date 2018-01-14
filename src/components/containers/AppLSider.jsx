@@ -52,7 +52,7 @@ const menuItems = [
     title: 'Faq',
   },
   {
-    key: 'Masternode',
+    key: 'masternode',
     icon: 'png_menu_proposals',
     iconSelected: 'png_menu_proposals_selected',
     title: 'Masternode Setting',
