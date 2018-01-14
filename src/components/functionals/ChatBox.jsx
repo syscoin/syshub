@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+
+import { fire, messages } from '../../firebase';
+
 import List, {
   ListItem,
   ListItemAvatar,
@@ -25,6 +29,8 @@ class ChatBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      messages: [],
+
       message: '',
       chats: [
         {
@@ -92,6 +98,20 @@ class ChatBox extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  componentWillMount() {
+    messages.limitToLast(5).on('value', snap => {
+      const updated = [];
+      snap.forEach(message => {
+        updated.push(message.val());
+      });
+
+      this.setState({
+        messages: updated,
+      });
+    });
+  }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
