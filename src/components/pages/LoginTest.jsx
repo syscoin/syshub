@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { connect } from 'react-redux';
+
+import Logout from './Logout';
 
 import { fire } from '../../firebase';
 
@@ -92,7 +93,7 @@ class Login extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 

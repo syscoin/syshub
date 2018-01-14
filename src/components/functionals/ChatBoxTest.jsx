@@ -10,7 +10,7 @@ class ChatBoxTest extends Component {
     super(props);
 
     this.state = {
-      messages: []
+      messages: [],
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -24,7 +24,7 @@ class ChatBoxTest extends Component {
       });
 
       this.setState({
-        messages: updated
+        messages: updated,
       });
     });
   }
@@ -36,14 +36,18 @@ class ChatBoxTest extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be signed in to chat',
-        icon: 'warning'
+        icon: 'warning',
       });
       return;
     }
 
     const updated = {
       body: message,
-      user: { displayName: currentUser.displayName, id: currentUser.uid, email: currentUser.email }
+      user: {
+        displayName: currentUser.displayName,
+        id: currentUser.uid,
+        email: currentUser.email,
+      },
     };
 
     messages.push(updated);
@@ -66,7 +70,7 @@ class ChatBoxTest extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 

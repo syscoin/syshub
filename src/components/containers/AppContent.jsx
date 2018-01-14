@@ -10,7 +10,6 @@ import { Layout } from 'antd';
 
 //Import functionals components
 import { Home, Register, Login } from '../pages';
-import { ChatBoxTest } from '../functionals';
 
 //Import Styles
 import { contentStyle } from './styles';
@@ -38,7 +37,6 @@ class AppContent extends Component {
               ['register']: <Register />,
             }[this.props.app.showPage]
           }
-            <ChatBoxTest />
         </Content>
       </div>
     );
