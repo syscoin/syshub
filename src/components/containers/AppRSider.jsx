@@ -17,7 +17,7 @@ class AppRSider extends Component {
   render() {
     return (
       <div style={appRSiderStyle.wraper}>
-        <ChatBoxTest />
+        {/* <ChatBoxTest /> */}
         <ChatBox />
       </div>
     );

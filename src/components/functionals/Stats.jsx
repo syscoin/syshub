@@ -20,7 +20,6 @@ class Stats extends Component {
     super(props);
   }
   render() {
-    console.log('Props', this.props);
     return (
       <div className="stats__container">
         {/* <Icon color="accent">add_circle</Icon> */}
@@ -45,7 +44,9 @@ class Stats extends Component {
                     <Typography style={statsStyle.statsTextHeading}>
                       <h1 style={{ color: '#3498db' }}> {item.num} </h1>
                     </Typography>
-                    <Typography style={statsStyle.statsText}>{item.text}</Typography>
+                    <Typography style={statsStyle.statsText}>
+                      {item.text}
+                    </Typography>
                     <Typography style={statsStyle.statsPercentage}>
                       <img
                         src={require('./../../assets/img/' + item.arrow)}

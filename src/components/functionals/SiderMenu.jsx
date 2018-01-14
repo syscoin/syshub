@@ -18,7 +18,6 @@ class SiderMenu extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log('ACZ (classes) --> ', classes);
     return (
       <div className={classes.wraper}>
         <SiderLogo />

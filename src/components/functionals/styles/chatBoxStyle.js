@@ -5,7 +5,9 @@ const primary = palette.primary;
 const grey = palette.textLignt;
 
 export default {
-  chat_box_container: {},
+  chat_box_container: {
+    padding: '10px',
+  },
   footerWraper: {
     position: 'absolute',
     bottom: '0px',
@@ -53,5 +55,6 @@ export default {
   },
   secondaryText: {
     color: grey,
+    padding: '0px 0px 0px 5px',
   },
 };
