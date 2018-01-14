@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 
 import { withRoot } from '../HOC';
 
-import { ChatBox } from '../functionals';
+import { ChatBox, ChatBoxTest } from '../functionals';
 
 //import Styles
 import { appRSiderStyle } from './styles';
@@ -17,6 +17,7 @@ class AppRSider extends Component {
   render() {
     return (
       <div style={appRSiderStyle.wraper}>
+        <ChatBoxTest />
         <ChatBox />
       </div>
     );

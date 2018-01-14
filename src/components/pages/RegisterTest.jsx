@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
+import { connect } from 'react-redux';
 
 import { fire } from '../../firebase';
+import actions from '../../redux/actions';
 
 class Register extends Component {
   constructor(props) {
@@ -51,6 +53,9 @@ class Register extends Component {
 
   register(event) {
     event.preventDefault();
+    this.setState({
+      username: ''
+    });
     const email = this.emailInput.value;
     const password = this.passwordInput.value;
     const username = this.usernameInput.value;
@@ -69,34 +74,19 @@ class Register extends Component {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
-        this.registerForm.reset();
-      })
-      .then(() => {
-        const user = fire.auth().currentUser;
+        const currentUser = fire.auth().currentUser;
 
-        if (user != null) {
+        if (user.uid === currentUser.uid) {
           const usernameRef = fire.database().ref('usernames');
           usernameRef.child(username).set(user.uid);
-          user
-            .updateProfile({
-              displayName: username
-            })
-            .then(() => {
-              this.registerForm.reset();
+          currentUser.updateProfile({ displayName: username });
 
-              swal({
-                title: 'Success',
-                text: `Account ${user.email} - ${user.displayName} created`,
-                icon: 'success'
-              });
-            })
-            .catch(err => {
-              swal({
-                title: 'Oops...',
-                text: `${err}`,
-                icon: 'error'
-              });
-            });
+          this.registerForm.reset();
+          swal({
+            title: 'Success',
+            text: `Account ${currentUser.email} created`,
+            icon: 'success'
+          });
         }
       })
       .catch(err => {
@@ -109,57 +99,73 @@ class Register extends Component {
   }
 
   render() {
+    const { currentUser } = this.props.app;
     return (
       <div>
-        <form
-          onSubmit={event => {
-            this.register(event);
-          }}
-          ref={form => {
-            this.registerForm = form;
-          }}
-        >
-          <input
-            name="username"
-            type="text"
-            placeholder="Username"
-            ref={input => {
-              this.usernameInput = input;
+        {currentUser ? null : (
+          <form
+            onSubmit={event => {
+              this.register(event);
             }}
-            onChange={e => this.updateUsername(e)}
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            ref={input => {
-              this.emailInput = input;
+            ref={form => {
+              this.registerForm = form;
             }}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            ref={input => {
-              this.passwordInput = input;
-            }}
-          />
-          <button type="submit" disabled={this.state.disabled}>
-            Register
-          </button>
+          >
+            <input
+              name="username"
+              type="text"
+              placeholder="Username"
+              ref={input => {
+                this.usernameInput = input;
+              }}
+              onChange={e => this.updateUsername(e)}
+              value={this.state.username}
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              ref={input => {
+                this.emailInput = input;
+              }}
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              ref={input => {
+                this.passwordInput = input;
+              }}
+            />
+            <button type="submit" disabled={this.state.disabled}>
+              Register
+            </button>
 
-          <div style={this.state.disabled ? { color: 'red' } : null}>
-            {this.state.username}
-            {this.state.username != null
-              ? this.state.username.length > 0
-                ? this.state.disabled ? '- Taken' : '- Not Taken'
-                : null
-              : null}
-          </div>
-        </form>
+            <div style={this.state.disabled ? { color: 'red' } : null}>
+              {this.state.username}
+              {this.state.username != null
+                ? this.state.username.length > 0
+                  ? this.state.disabled ? '- Taken' : '- Not Taken'
+                  : null
+                : null}
+            </div>
+          </form>
+        )}
       </div>
     );
   }
 }
 
-export default Register;
+const stateToProps = state => {
+  return {
+    app: state.app
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    currentUser: user => dispatch(actions.currentUser(user))
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(Register);

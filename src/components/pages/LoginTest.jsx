@@ -2,25 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
 
+import Logout from './Logout';
+
 import { fire } from '../../firebase';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentUser: null,
-    };
-    this.login = this.login.bind(this);
-  }
 
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user,
-        });
-      }
-    });
+    this.login = this.login.bind(this);
   }
 
   login(event) {
@@ -48,25 +38,25 @@ class Login extends Component {
   }
 
   render() {
-    const { currentUser } = this.props.app;
-    return currentUser ? (
+    return this.props.app.currentUser ? (
       <div>
         <p>
           <span>
             <strong>{`Uid: `}</strong>
-            {`${currentUser.uid}`}
+            {`${this.props.app.currentUser.uid}`}
           </span>
           <br />
           <span>
             <strong>{`Name: `}</strong>
-            {`${currentUser.displayName}`}
+            {`${this.props.app.currentUser.displayName}`}
           </span>
           <br />
           <span>
             <strong>{`Email: `}</strong>
-            {`${currentUser.email}`}
+            {`${this.props.app.currentUser.email}`}
           </span>
         </p>
+        <Logout />
       </div>
     ) : (
       <div>
@@ -107,8 +97,4 @@ const stateToProps = state => {
   };
 };
 
-const dispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(stateToProps, dispatchToProps)(Login);
+export default connect(stateToProps)(Login);
