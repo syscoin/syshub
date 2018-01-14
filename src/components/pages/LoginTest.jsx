@@ -1,40 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import swal from 'sweetalert';
 
-import Logout from './Logout';
-
-import { fire } from '../../firebase';
+import { doLogin } from '../../firebase';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.login = this.login.bind(this);
-  }
-
   login(event) {
     event.preventDefault();
     const email = this.emailInput.value;
     const password = this.passwordInput.value;
-    fire
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        swal({
-          title: 'Success',
-          text: `Account: ${user.email} logged in.`,
-          icon: 'success',
-        });
-        this.loginForm.reset();
-      })
-      .catch(err => {
-        swal({
-          title: 'Oops...',
-          text: `${err}`,
-          icon: 'error',
-        });
-      });
+    doLogin(email, password);
   }
 
   render() {
@@ -56,14 +30,11 @@ class Login extends Component {
             {`${this.props.app.currentUser.email}`}
           </span>
         </p>
-        <Logout />
       </div>
     ) : (
       <div>
         <form
-          onSubmit={event => {
-            this.login(event);
-          }}
+          onSubmit={event => this.login(event)}
           ref={form => {
             this.loginForm = form;
           }}

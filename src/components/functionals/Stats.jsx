@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Equalizer, AccountCircle, Usb, TrendingUp } from 'material-ui-icons';
+import injectSheet from 'react-jss';
+
 import { GridList, GridListTile } from 'material-ui/GridList';
 import Card, {
   CardHeader,
@@ -13,27 +15,27 @@ import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
 
 // import style
-import { stats } from './styles';
+import { statsStyle } from './styles';
 
 class Stats extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    console.log('Props', this.props);
+    const { classes } = this.props;
     return (
       <div className="stats__container">
         {/* <Icon color="accent">add_circle</Icon> */}
-        <h1 style={stats.statsHeading}>
-          <Equalizer style={stats.headingIcon} /> SYSHub Stats
+        <h1 className={classes.statsHeading}>
+          <Equalizer className={classes.headingIcon} /> SYSHub Stats
         </h1>
-        <div style={stats.statsMainDiv}>
-          <GridList cols={4} cellHeight={300} style={stats.statsGridDiv}>
+        <div className={classes.statsMainDiv}>
+          <GridList cols={4} cellHeight={300} className={classes.statsGridDiv}>
             {this.props.SysStats.map((item, key) => {
               return (
-                <Card key={key} style={stats.statsCard}>
+                <Card key={key} className={classes.statsCard}>
                   <CardHeader
-                    style={stats.statsCardHeader}
+                    className={classes.statsCardHeader}
                     title={
                       <img
                         src={require('./../../assets/img/' + item.img)}
@@ -42,11 +44,13 @@ class Stats extends Component {
                     }
                   />
                   <CardContent style={{ position: 'relative' }}>
-                    <Typography style={stats.statsTextHeading}>
+                    <Typography className={classes.statsTextHeading}>
                       <h1 style={{ color: '#3498db' }}> {item.num} </h1>
                     </Typography>
-                    <Typography style={stats.statsText}>{item.text}</Typography>
-                    <Typography style={stats.statsPercentage}>
+                    <Typography className={classes.statsText}>
+                      {item.text}
+                    </Typography>
+                    <Typography className={classes.statsPercentage}>
                       <img
                         src={require('./../../assets/img/' + item.arrow)}
                         height="20"
@@ -78,4 +82,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stats);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  injectSheet(statsStyle)(Stats)
+);
