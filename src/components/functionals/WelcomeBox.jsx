@@ -29,7 +29,10 @@ class WelcomeBox extends Component {
         <Paper style={style} elevation={4}>
           <GridList cols={2} cellHeight={300}>
             <GridListTile>
-              <div style={welcomeBoxStyle.logoImg} style={{ textAlign: 'center' }}>
+              <div
+                style={welcomeBoxStyle.logoImg}
+                style={{ textAlign: 'center' }}
+              >
                 <img
                   src={require('../../assets/img/png_logo.png')}
                   height="250"
@@ -58,7 +61,6 @@ class WelcomeBox extends Component {
               <div style={welcomeBoxStyle.joinBtn}>
                 <Button
                   raised
-                  color="primary"
                   style={welcomeBoxStyle.btn}
                   onClick={this.props.onJoin}
                   disabled={this.props.logged}

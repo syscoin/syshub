@@ -1,3 +1,9 @@
+import palette from './palette';
+
+const white = palette.white;
+const primary = palette.primary;
+const grey = palette.textLignt;
+
 export default {
   statsHeading: {
     alignItems: 'center',
@@ -22,7 +28,7 @@ export default {
     borderRadius: '10px',
   },
   statsCardHeader: {
-    background: '#3498db',
+    background: primary,
     borderTopLeftRadius: '8px',
     borderTopRightRadius: '8px',
   },

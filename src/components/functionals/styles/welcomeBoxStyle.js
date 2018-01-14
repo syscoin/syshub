@@ -1,9 +1,13 @@
+import palette from './palette';
+
+const white = palette.white;
+const primary = palette.primary;
+const grey = palette.textLignt;
 
 export default {
-
   logoImg: {
     backgroundImage: "url('./../../../assets/img/png_stasts_sys.png')",
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
   },
   addvertiseText: {
     marginTop: '20px',
@@ -11,10 +15,10 @@ export default {
   },
   wellcomBoxTextList: {
     paddingLeft: '25px',
-    listStyleType: 'disc'
+    listStyleType: 'disc',
   },
   listItem: {
-    padding: '10px 0px'
+    padding: '10px 0px',
   },
   joinBtn: {
     textAlign: 'right',
@@ -23,7 +27,7 @@ export default {
     color: '#ffff',
   },
   btn: {
-    borderRadius: '8px'
-  }
-
-}
+    borderRadius: '8px',
+    background: primary,
+  },
+};
