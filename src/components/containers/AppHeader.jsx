@@ -18,7 +18,7 @@ class AppHeader extends Component {
   render() {
     return (
       <div>
-        <Header style={appHeaderStyle.headerWraper}>
+        <Header style={appHeaderStyle.wraper}>
           <AppBar position="fixed">
             <Toolbar style={appHeaderStyle.header}>
               <div style={appHeaderStyle.container}>
@@ -34,7 +34,7 @@ class AppHeader extends Component {
 }
 
 AppHeader.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default AppHeader;

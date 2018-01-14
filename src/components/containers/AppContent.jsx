@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 
 import { withRoot } from '../HOC';
 
@@ -22,7 +23,7 @@ class AppContent extends Component {
     const page = this.props.app.showPage;
 
     return (
-      <div>
+      <div style={contentStyle.__container}>
         <Content style={contentStyle.wraper}>
           {
             {
@@ -56,5 +57,4 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {};
 };
-
 export default connect(stateToProps, dispatchToProps)(withRoot(AppContent));

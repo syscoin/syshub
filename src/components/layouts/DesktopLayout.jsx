@@ -23,7 +23,7 @@ class DesktopLayout extends Component {
         <AppHeader />
         <div style={desktopLayoutStyle.wraper}>
           <AppLSider />
-          <AppContent />
+          <AppContent/>
           <AppRSider />
         </div>
         <AppFooter />

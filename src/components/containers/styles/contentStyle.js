@@ -14,4 +14,10 @@ export default {
     background: greyLight,
     minWidth: '100%',
   },
+  contentWraper: { 
+    marginTop: '40px'
+   },
+   __container: {
+     width: '60%'
+   }
 };

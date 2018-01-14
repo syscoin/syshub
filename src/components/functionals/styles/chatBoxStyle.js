@@ -3,11 +3,10 @@ import palette from './palette';
 const white = palette.white;
 const primary = palette.primary;
 const grey = palette.textLignt;
-const lightColor = palette.textDark;
 
 export default {
   chat_box_container: {
-    height: '90vh',
+    padding: '10px',
   },
   footerWraper: {
     position: 'absolute',
@@ -21,7 +20,7 @@ export default {
     paddingLeft: '10px',
   },
   chatIcon: {
-    width: '20px',
+    width: '25px',
     height: '20px',
   },
   chatHeaderText: {
@@ -31,8 +30,7 @@ export default {
     fontSize: '13px',
   },
   chatList: {
-    // border: '1px solid red',
-    height: '75.5vh',
+    height: 'calc(100vh - 230px)',
     overflowY: 'auto',
   },
   chatContent: {
@@ -41,10 +39,22 @@ export default {
     marginLeft: '10px',
     display: 'block',
   },
+  textBox: {
+    border: 'thin solid ' + grey,
+    backgroundColor: white,
+    '&>div': {
+      width: 'calc(100% - 40px)',
+      marginLeft: '20px',
+    },
+    '& ::before': {
+      backgroundColor: 'transparent',
+    },
+  },
   primaryText: {
     color: primary,
   },
   secondaryText: {
     color: grey,
+    padding: '0px 0px 0px 5px',
   },
 };
