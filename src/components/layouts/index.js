@@ -1,5 +1,4 @@
 import DesktopLayout from './DesktopLayout';
-import MessageTest from './MessageTest';
-import MessageEditorTest from './MessageEditorTest';
+import MobileLayout from './MobileLayout';
 
-export { DesktopLayout, MessageTest, MessageEditorTest };
+export { DesktopLayout, MobileLayout };

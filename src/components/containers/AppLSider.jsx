@@ -22,40 +22,46 @@ const { Sider } = Layout;
 
 const menuItems = [
   {
-    key: 'dash',
+    key: 'dashBoard',
     icon: 'png_menu_proposals',
     iconSelected: 'png_menu_proposals_selected',
     title: 'Proposal Dashboard',
+    private: false,
   },
   {
-    key: 'create',
+    key: 'newProposal',
     icon: 'png_menu_create',
     iconSelected: 'png_menu_create_selected',
     title: 'Create Proposal',
+    private: false,
   },
   {
     key: 'news',
     icon: 'png_menu_news',
     iconSelected: 'png_menu_news_selected',
     title: 'News and Announcements',
+    private: false,
   },
   {
-    key: 'account',
+    key: 'userAccount',
     icon: 'png_menu_account',
     iconSelected: 'png_menu_account_selected',
     title: 'Account Settings',
+    private: true,
   },
   {
     key: 'faq',
     icon: 'png_menu_faq',
     iconSelected: 'png_menu_faq_selected',
     title: 'Faq',
+    private: false,
   },
   {
-    key: 'masternode',
+    key: 'masterNode',
     icon: 'png_menu_proposals',
     iconSelected: 'png_menu_proposals_selected',
     title: 'Masternode Setting',
+    private: false,
   },
 ];
 
@@ -74,6 +80,7 @@ class AppLSider extends Component {
         <SiderMenu
           menuItems={menuItems}
           active={this.props.app.showPage}
+          logged={this.props.logged}
           onItemClick={pageActive => this.itemClick(pageActive)}
         />
       </div>
@@ -87,6 +94,7 @@ AppLSider.propTypes = {
 
 const stateToProps = state => {
   return {
+    logged: state.app.currentUser ? true : false,
     app: state.app,
   };
 };

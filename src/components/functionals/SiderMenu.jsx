@@ -32,7 +32,9 @@ class SiderMenu extends Component {
             item.key === this.props.active
               ? classes.buttonActive
               : classes.button;
-          return (
+          const showMe = item.private;
+
+          return showMe && !this.props.logged ? null : (
             <button
               key={item.key}
               className={btnStyle}

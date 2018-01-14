@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Platform from 'react-platform-js';
 
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-import { DesktopLayout } from './components/layouts';
+import { DesktopLayout, MobileLayout } from './components/layouts';
 
 import actions from './redux/actions';
 import { fire } from './firebase';
@@ -11,6 +12,7 @@ import { fire } from './firebase';
 import appStyles from './styles/appStyle';
 
 class App extends Component {
+  state = {};
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -23,7 +25,12 @@ class App extends Component {
   render() {
     return (
       <div style={appStyles.wraper}>
-        <DesktopLayout />
+        <Platform rules={{ DeviceType: undefined }}>
+          <DesktopLayout />
+        </Platform>
+        <Platform rules={{ DeviceType: 'mobile' }}>
+          <MobileLayout />
+        </Platform>
       </div>
     );
   }

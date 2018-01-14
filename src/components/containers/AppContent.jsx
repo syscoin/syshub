@@ -10,7 +10,17 @@ import { withRoot } from '../HOC';
 import { Layout } from 'antd';
 
 //Import functionals components
-import { Home, Register, Login } from '../pages';
+import {
+  Home,
+  Login,
+  Register,
+  DashBoard,
+  Faq,
+  MasterNode,
+  NewProposal,
+  News,
+  UserAccount,
+} from '../pages';
 
 //Import Styles
 import { contentStyle } from './styles';
@@ -28,12 +38,12 @@ class AppContent extends Component {
           {
             {
               ['home']: <Home />,
-              ['dash']: 'You can see DASHBOARD ',
-              ['create']: 'This Create PROPOSAL',
-              ['news']: 'Some NEWS to read',
-              ['account']: 'Your ACCOUNT SETTINGS',
-              ['faq']: 'Any doubts?, read our FAQ',
-              ['masternode']: 'Your MASTERNODE SETTING',
+              ['dashBoard']: <DashBoard />,
+              ['newProposal']: <NewProposal />,
+              ['news']: <News />,
+              ['userAccount']: <UserAccount />,
+              ['faq']: <Faq />,
+              ['masterNode']: <MasterNode />,
               ['login']: <Login />,
               ['register']: <Register />,
             }[this.props.app.showPage]
