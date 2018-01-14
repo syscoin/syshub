@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
-import { fire } from '../../firebase';
+import { doLogout } from '../../firebase';
 
 //Import UI Framework components
 import { Button } from 'antd';
@@ -19,12 +19,7 @@ class HeaderNav extends Component {
   doLogout() {
     const { currentUser } = this.props.app;
     if (currentUser) {
-      fire
-        .auth()
-        .signOut()
-        .then(() => {
-          this.props.doLogout();
-        });
+      doLogout();
     }
   }
 

@@ -4,6 +4,5 @@ import Register from './Register';
 
 //Import testing components
 import RegisterTest from './RegisterTest';
-import LoginTest from './LoginTest';
 
-export { RegisterTest, LoginTest, Home, Register, Login };
+export { RegisterTest, Home, Register, Login };
