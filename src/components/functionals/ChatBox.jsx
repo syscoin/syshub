@@ -5,6 +5,9 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
+import { AccessAlarm ,Send } from 'material-ui-icons';
+
+
 
 import { fire, messages } from '../../firebase';
 
@@ -17,7 +20,7 @@ import List, {
 } from 'material-ui/List';
 import ListSubheader from 'material-ui/List/ListSubheader';
 import { chatBoxStyle } from './styles';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui';
 
 const style = {
   textAlign: 'center',
@@ -110,56 +113,65 @@ class ChatBox extends Component {
     const chat_icon = require('../../assets/img/png_menu_chat.png'),
       { classes } = this.props;
     return (
-      <div className={classes.chat_box_container}>
-        <Paper style={style} zDepth={2}>
-          <div className={classes.chatHeader}>
-            <span>
-              <img src={chat_icon} style={chatBoxStyle.chatIcon} />
-            </span>
-            <span style={chatBoxStyle.chatHeaderText}>CHATBOX</span>
-          </div>
-          <List style={{ maxHeight: '80%' }}>
-            <div
-              ref={el => {
-                this.messagesContainer = el;
-              }}
-              id="chat-messages-container"
-              style={chatBoxStyle.chatList}
-            >
-              {this.state.messages.map((message, index) => (
-                <ListItemText
-                  key={index}
-                  style={chatBoxStyle.chatContent}
-                  primary={
-                    <Typography style={chatBoxStyle.primaryText}>
-                      {message.user.displayName}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography style={chatBoxStyle.secondaryText}>
-                      {message.body}
-                    </Typography>
-                  }
-                />
-              ))}
+      <div className={classes.root}>
+      {/* chat box container */}
+        <div className='chat_box_container'>
+          <Paper className='paper-style' zDepth={2}>
+            <div className='chatbox-Header'>
+              <span>
+                <img src={chat_icon} className='chatBox-headerIcon' />
+              </span>
+              <span className='chatBox-headerText'>CHATBOX</span>
             </div>
-          </List>
-          <form className={classes.textBox} onSubmit={this.onSubmit}>
-            <TextField
-              value={this.state.message}
-              name="message"
-              onChange={this.onChange}
-              onClick={() => {
-                return !currentUser ? this.loginAlert() : null;
-              }}
-              multiLine=" true"
-              placeholder={
-                currentUser ? 'Tell something' : 'login to write message'
-              }
-            />
-          </form>
-        </Paper>
+            {/* chat list */}
+            <List className='list'>
+              <div
+                ref={el => {
+                  this.messagesContainer = el;
+                }}
+                id="chat-messages-container"
+                className='chat-list'
+              >
+                {this.state.messages.map((message, index) => (
+                  <ListItemText
+                    key={index}
+                    className='chatContent-listItemText'
+                    primary={
+                      <Typography className='chatContent-primaryText'>
+                        {message.user.displayName}
+                      </Typography>
+                    }
+                    secondary={
+                      <Typography className='chatContent-secondaryText'>
+                        {message.body}
+                      </Typography>
+                    }
+                  />
+                ))}
+              </div>
+            </List>
+            
+
+            {/* input field for chat */}
+            <form className='form' onSubmit={this.onSubmit}>
+              <TextField
+                value={this.state.message}
+                name="message"
+                onChange={this.onChange}
+                onClick={() => {
+                  return !currentUser ? this.loginAlert() : null;
+                }}
+                multiLine=" true"
+                placeholder={
+                  currentUser ? 'Tell something' : 'login to write message'
+                }
+              />
+              <Send className="send-button" onClick={this.onSubmit}/> 
+            </form>
+          </Paper>
+        </div>
       </div>
+
     );
   }
 }
