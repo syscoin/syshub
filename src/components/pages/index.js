@@ -7,6 +7,9 @@ import MasterNode from './MasterNode';
 import NewProposal from './NewProposal';
 import News from './News';
 import UserAccount from './UserAccount';
+import UserAccountTest from './UserAccountTest';
+import UpdateUserAccountTest from './UpdateUserAccountTest';
+import UpdateUserPasswordTest from './UpdateUserPasswordTest';
 
 //Import testing components
 
@@ -20,4 +23,7 @@ export {
   NewProposal,
   News,
   UserAccount,
+  UserAccountTest,
+  UpdateUserAccountTest,
+  UpdateUserPasswordTest
 };

@@ -7,13 +7,4 @@ import WelcomeBox from './WelcomeBox';
 import Stats from './Stats';
 import FooterInfo from './FooterInfo';
 
-export {
-  ChatBox,
-  HeaderStats,
-  HeaderNav,
-  SiderLogo,
-  SiderMenu,
-  WelcomeBox,
-  Stats,
-  FooterInfo,
-};
+export { ChatBox, HeaderStats, HeaderNav, SiderLogo, SiderMenu, WelcomeBox, Stats, FooterInfo };

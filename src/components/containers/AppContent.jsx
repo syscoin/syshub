@@ -20,6 +20,7 @@ import {
   NewProposal,
   News,
   UserAccount,
+  UserAccountTest
 } from '../pages';
 
 //Import Styles
@@ -41,11 +42,11 @@ class AppContent extends Component {
               ['dashBoard']: <DashBoard />,
               ['newProposal']: <NewProposal />,
               ['news']: <News />,
-              ['userAccount']: <UserAccount />,
+              ['userAccount']: <UserAccountTest />,
               ['faq']: <Faq />,
               ['masterNode']: <MasterNode />,
               ['login']: <Login />,
-              ['register']: <Register />,
+              ['register']: <Register />
             }[this.props.app.showPage]
           }
         </Content>
@@ -55,12 +56,12 @@ class AppContent extends Component {
 }
 
 AppContent.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
