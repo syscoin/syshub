@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 //import antd components
 import { Divider } from 'antd';
+import { Grid, withStyles } from 'material-ui';
+
 
 import { headerStatsStyle } from './styles';
 
@@ -16,39 +18,35 @@ class HeaderStats extends Component {
   };
 
   render() {
+    const classes = this.props.classes;
+     console.clear();
+     console.log("this.props --------" ,classes)
     return (
-      <div style={headerStatsStyle.wraper}>
-        <div style={headerStatsStyle.common}>
-          <img
-            src={require('../../assets/img/png_stasts_sys.png')}
-            height="30"
-          />
-          <span style={headerStatsStyle.TxtBold}>{`SYSCOIN: `}</span>
+      <Grid container   md={7} className={classes.root}>
+        <Grid item className="common">
+          <img src={require('../../assets/img/png_stasts_sys.png')}height="30" />
+          <span className="TxtBold">{`SYSCOIN: `}</span>
           {this.state.syscoinStat}
-        </div>
-        <Divider style={headerStatsStyle.divider} type="vertical" />
-        <div style={headerStatsStyle.common}>
-          <img
-            src={require('../../assets/img/png_stats_masternodes.png')}
-            height="30"
-          />
-          <span
-            style={headerStatsStyle.TxtBold}
-          >{`REGISTERED MASTERNODES: `}</span>
+        </Grid>
+        <Divider className="divider" type="vertical" />
+        <Grid item  className="common">
+          <img src={require('../../assets/img/png_stats_masternodes.png')}height="30" />
+          <span className= "TxtBold">{`REGISTERED MASTERNODES: `}</span>
           {this.state.regMasterNods}
-        </div>
-        <Divider style={headerStatsStyle.divider} type="vertical" />
-        <div style={headerStatsStyle.common}>
-          <img
-            src={require('../../assets/img/png_stats_users.png')}
-            height="30"
-          />
-          <span style={headerStatsStyle.TxtBold}>{`USERS: `}</span>
+        </Grid>
+        <Divider className= "divider" type="vertical" />
+        <Grid item className="common">
+          <img src={require('../../assets/img/png_stats_users.png')} height="30"/>
+          <span className="TxtBold">{`USERS: `}</span>
           {this.state.sysUsers}
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default HeaderStats;
+HeaderStats.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(headerStatsStyle)(HeaderStats);
