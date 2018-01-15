@@ -4,6 +4,10 @@ import { GridList, GridListTile } from 'material-ui/GridList';
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui';
+import PropTypes from 'prop-types';
+
+
 
 // import style
 import { welcomeBoxStyle } from './styles';
@@ -14,58 +18,45 @@ class WelcomeBox extends Component {
   }
 
   render() {
-    const style = {
-      minHeight: '100px',
-      width: '100px',
-      margin: '20px 5px',
-      display: 'inline-block',
-      boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
-      width: '100%',
-      padding: '20px',
-    };
+    const  classes  = this.props.classes;
+    const  logo  = require('../../assets/img/png_logo.png');
 
     return (
-      <div className="welcomeBox__container">
-        <Paper style={style} elevation={4}>
+      <div className={classes.root}>
+        <Paper className="Paper" elevation={4}>
           <GridList cols={2} cellHeight={300}>
             <GridListTile>
-              <div
-                style={welcomeBoxStyle.logoImg}
-                style={{ textAlign: 'center' }}
-              >
-                <img
-                  src={require('../../assets/img/png_logo.png')}
-                  height="250"
-                />
+              <div className="logoDiv">
+                <img src={logo} height="250" />
               </div>
             </GridListTile>
             <GridListTile>
-              <h1 style={{ color: '#3498db' }}>Advertisement Text here</h1>
+              <h1 className="heading">Advertisement Text here</h1>
               <Divider />
-              <div style={welcomeBoxStyle.addvertiseText}>
-                <ul style={welcomeBoxStyle.wellcomBoxTextList}>
-                  <li style={welcomeBoxStyle.listItem}>
+              <div className="addvertiseText">
+                <ul className="wellcomBoxTextList">
+                  <li className="listItem">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={welcomeBoxStyle.listItem}>
+                  <li className="listItem">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={welcomeBoxStyle.listItem}>
+                  <li className="listItem">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
-                  <li style={welcomeBoxStyle.listItem}>
+                  <li className="listItem">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
                   </li>
                 </ul>
               </div>
-              <div style={welcomeBoxStyle.joinBtn}>
+              <div className="joinBtn">
                 <Button
                   raised
-                  style={welcomeBoxStyle.btn}
+                  className="btn"
                   onClick={this.props.onJoin}
                   disabled={this.props.logged}
                 >
-                  <span style={welcomeBoxStyle.btnText}> Join SysHub </span>
+                  <span className="btnText"> Join SysHub </span>
                 </Button>
               </div>
             </GridListTile>
@@ -76,4 +67,9 @@ class WelcomeBox extends Component {
   }
 }
 
-export default WelcomeBox;
+WelcomeBox.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(welcomeBoxStyle)(WelcomeBox);
+
