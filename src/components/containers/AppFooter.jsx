@@ -13,7 +13,7 @@ class AppFooter extends Component {
   render() {
     return (
       <div style={footerStyle.footer}>
-        <Footer style={footerStyle.wraper}>{` `} </Footer>
+        <Footer style={footerStyle.footerWraper}>{` `} </Footer>
       </div>
     );
   }

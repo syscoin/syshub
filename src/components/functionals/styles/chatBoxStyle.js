@@ -6,10 +6,9 @@ const grey = palette.textLignt;
 
 export default {
   root: {
-
     '& .chat_box_container': {
       padding: '10px',
-      footerWraper: {
+      wraper: {
         position: 'absolute',
         bottom: '0px',
       },
@@ -33,8 +32,7 @@ export default {
             marginRight: '52px',
             marginLeft: '6px',
             fontSize: '13px',
-          }
-
+          },
         },
         '& .list': {
           maxHeight: '80%',
@@ -53,10 +51,10 @@ export default {
             '& .chatContent-secondaryText': {
               color: grey,
               padding: '0px 0px 0px 5px',
-            }
-          }
-        }
-        , '& .form': {
+            },
+          },
+        },
+        '& .form': {
           border: 'thin solid ' + grey,
           backgroundColor: white,
           '&>div': {
@@ -66,15 +64,14 @@ export default {
           '& ::before': {
             backgroundColor: 'transparent',
           },
-          '& .send-button':{
-            position:'absolute',
-            marginTop : '3px',
-            cursor:'pointer',
-            color:'#a8aba5'
-          }
-        }
-      }
-    }
-  }
-
+          '& .send-button': {
+            position: 'absolute',
+            marginTop: '3px',
+            cursor: 'pointer',
+            color: '#a8aba5',
+          },
+        },
+      },
+    },
+  },
 };
