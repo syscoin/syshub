@@ -6,6 +6,8 @@ import siderMenuStyle from './siderMenuStyle';
 import chatBoxStyle from './chatBoxStyle';
 import statsStyle from './statsStyle';
 import welcomeBoxStyle from './welcomeBoxStyle';
+import deshBoardHeaderStyle from './deshBoardHeaderStyle';
+import proposalCardStyle from './proposalCardStyle';
 
 export {
   palette,
@@ -16,4 +18,6 @@ export {
   chatBoxStyle,
   statsStyle,
   welcomeBoxStyle,
+  deshBoardHeaderStyle,
+  proposalCardStyle,
 };

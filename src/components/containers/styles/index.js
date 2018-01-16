@@ -4,6 +4,8 @@ import footerStyle from './footerStyle';
 import appHeaderStyle from './appHeaderStyle';
 import appRSiderStyle from './appRSiderStyle';
 import appLSiderStyle from './appLSiderStyle';
+import proposalStyle from './proposalStyle';
+
 
 export {
   palette,
@@ -12,4 +14,5 @@ export {
   appHeaderStyle,
   appRSiderStyle,
   appLSiderStyle,
+  proposalStyle,
 };

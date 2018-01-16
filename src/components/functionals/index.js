@@ -6,6 +6,8 @@ import SiderMenu from './SiderMenu';
 import WelcomeBox from './WelcomeBox';
 import Stats from './Stats';
 import FooterInfo from './FooterInfo';
+import DashBoardHeader from './DashBoardHeader';
+import ProposalCard from './ProposalCard';
 
 export {
   ChatBox,
@@ -16,4 +18,6 @@ export {
   WelcomeBox,
   Stats,
   FooterInfo,
+  DashBoardHeader,
+  ProposalCard,
 };
