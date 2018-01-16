@@ -1,5 +1,5 @@
 import Rebase from 're-base';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import swal from 'sweetalert';
 
 const config = {
@@ -11,7 +11,10 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-const fire = firebase.initializeApp(config);
+firebase.initializeApp(config);
+
+const fire = firebase;
+
 const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = firebase.database().ref('messages');

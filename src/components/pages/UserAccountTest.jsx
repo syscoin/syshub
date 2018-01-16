@@ -19,25 +19,39 @@ class UserAccountTest extends Component {
 
     if (currentUser) {
       if (user.email) {
-        const credentials = fire.auth.EmailAuthProvider.credential(
-          currentUser.email,
-          user.currentPass
-        );
-
-        currentUser
-          .reauthenticateWithCredential(credentials)
-          .then(() => {
-            return currentUser.updateEmail(user.email);
-          })
-          .then(() => {
-            if (user.username) {
-              return;
+        swal({
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Warning',
+          text: 'You are about to change your email, you must input your password first',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Type your password',
+              type: 'password'
             }
-            swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
-          })
-          .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-          });
+          }
+        }).then(password => {
+          const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+
+          currentUser
+            .reauthenticateWithCredential(credentials)
+            .then(() => {
+              return currentUser.updateEmail(user.email);
+            })
+            .then(() => {
+              if (user.username) {
+                return;
+              }
+              swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        });
       }
 
       if (user.username) {
@@ -65,11 +79,10 @@ class UserAccountTest extends Component {
       currentUser
         .reauthenticateWithCredential(credentials)
         .then(() => {
-          alert('Success');
-          // return user.updatePassword(user.newPass);
+          return currentUser.updatePassword(user.newPass);
         })
         .then(() => {
-          // alert('Profile Updated')
+          swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
         })
         .catch(err => {
           alert(err);
