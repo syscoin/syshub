@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { Divider } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 
-
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
@@ -19,24 +18,32 @@ class HeaderStats extends Component {
 
   render() {
     const classes = this.props.classes;
-     console.clear();
-     console.log("this.props --------" ,classes)
+    //console.clear();
     return (
-      <Grid container   md={7} className={classes.root}>
+      <Grid container md={7} className={classes.root}>
         <Grid item className="common">
-          <img src={require('../../assets/img/png_stasts_sys.png')}height="30" />
+          <img
+            src={require('../../assets/img/png_stasts_sys.png')}
+            height="30"
+          />
           <span className="TxtBold">{`SYSCOIN: `}</span>
           {this.state.syscoinStat}
         </Grid>
         <Divider className="divider" type="vertical" />
-        <Grid item  className="common">
-          <img src={require('../../assets/img/png_stats_masternodes.png')}height="30" />
-          <span className= "TxtBold">{`REGISTERED MASTERNODES: `}</span>
+        <Grid item className="common">
+          <img
+            src={require('../../assets/img/png_stats_masternodes.png')}
+            height="30"
+          />
+          <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
           {this.state.regMasterNods}
         </Grid>
-        <Divider className= "divider" type="vertical" />
+        <Divider className="divider" type="vertical" />
         <Grid item className="common">
-          <img src={require('../../assets/img/png_stats_users.png')} height="30"/>
+          <img
+            src={require('../../assets/img/png_stats_users.png')}
+            height="30"
+          />
           <span className="TxtBold">{`USERS: `}</span>
           {this.state.sysUsers}
         </Grid>

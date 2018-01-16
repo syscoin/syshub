@@ -1,6 +1,8 @@
 import constants from '../constants';
 
 const initialState = {
+  valuesNew: {},
+  valuesOld: {},
   values: [
     {
       img: 'png_stasts_sys.png',

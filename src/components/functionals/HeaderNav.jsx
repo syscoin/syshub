@@ -11,7 +11,6 @@ import { Grid, withStyles } from 'material-ui';
 //Import UI Framework components
 import { Button } from 'antd';
 
-
 //Import Styles
 import { headerNavStyle } from './styles';
 
@@ -35,10 +34,8 @@ class HeaderNav extends Component {
     const { chatIcon } = require('../../assets/img/png_menu_chat.png');
     const { homeIcon } = require('../../assets/img/png_menu_home.png');
     const { contectIcon } = require('../../assets/img/png_menu_contact.png');
-    console.log(currentUser);
     return (
-      <Grid container md={3} className={classes.root} >
-
+      <Grid container md={3} className={classes.root}>
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">
@@ -67,13 +64,7 @@ class HeaderNav extends Component {
             >
               <img src={homeIcon} height="30" />
             </Button>
-            <Button
-
-              size={'large'}
-              type="primary"
-              ghost
-              className="button"
-            >
+            <Button size={'large'} type="primary" ghost className="button">
               <img src={contectIcon} height="30" />
             </Button>
             {currentUser ? (
@@ -87,20 +78,19 @@ class HeaderNav extends Component {
                 <div className={headerNavStyle.common}>Logout</div>
               </Button>
             ) : (
-                <Button
-                  size={'large'}
-                  type="primary"
-                  ghost
-                  className="button"
-                  onClick={() => this.setPage('login')}
-                >
-                  <div className="common">Login</div>
-                </Button>
-              )}
+              <Button
+                size={'large'}
+                type="primary"
+                ghost
+                className="button"
+                onClick={() => this.setPage('login')}
+              >
+                <div className="common">Login</div>
+              </Button>
+            )}
           </ButtonGroup>
         </Grid>
       </Grid>
-
     );
   }
 }
@@ -119,10 +109,10 @@ const dispatchToProps = dispatch => {
   };
 };
 
-
 HeaderNav.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(headerNavStyle)(HeaderNav));
-
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(headerNavStyle)(HeaderNav)
+);

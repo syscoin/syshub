@@ -21,6 +21,7 @@ class App extends Component {
         this.props.setCurrentUser(null);
       }
     });
+    this.props.getSysStat();
   }
   render() {
     return (
@@ -45,6 +46,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
+    getSysStat: () => dispatch(actions.getSysStat()),
   };
 };
 

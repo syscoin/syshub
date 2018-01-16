@@ -1,3 +1,6 @@
 import { applyMiddleware } from 'redux';
 
-export default applyMiddleware();
+//Custom Middleware
+import SysGetStats from './SysGetStats';
+
+export default applyMiddleware(SysGetStats);
