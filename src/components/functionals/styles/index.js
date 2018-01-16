@@ -9,6 +9,10 @@ import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from './proposalCardStyle';
 
+
+import userProfileStyle from './userProfileStyle';
+import userChangePswStyle from './userChangePswStyle';
+
 export {
   palette,
   headerStatsStyle,
@@ -20,4 +24,6 @@ export {
   welcomeBoxStyle,
   deshBoardHeaderStyle,
   proposalCardStyle,
+  userProfileStyle,
+  userChangePswStyle
 };
