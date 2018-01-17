@@ -1,17 +1,16 @@
 import palette from './palette';
-import contentStyle from './contentStyle';
-import footerStyle from './footerStyle';
+import appContentStyle from './appContentStyle';
+import appFooterStyle from './appFooterStyle';
 import appHeaderStyle from './appHeaderStyle';
 import appRSiderStyle from './appRSiderStyle';
 import appLSiderStyle from './appLSiderStyle';
 import proposalStyle from './proposalStyle';
 import proposalDetailsStyle from './proposalDetailsStyle';
 
-
 export {
   palette,
-  contentStyle,
-  footerStyle,
+  appContentStyle,
+  appFooterStyle,
   appHeaderStyle,
   appRSiderStyle,
   appLSiderStyle,

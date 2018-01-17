@@ -32,12 +32,8 @@ class HeaderNav extends Component {
   render() {
     const classes = this.props.classes;
     const { currentUser } = this.props.app;
-    const { chatIcon } = require('../../assets/img/png_menu_chat.png');
-    const { homeIcon } = require('../../assets/img/png_menu_home.png');
-    const { contectIcon } = require('../../assets/img/png_menu_contact.png');
-    console.log(currentUser);
     return (
-      <Grid container md={3} className={classes.root} >
+      <Grid container md={4} className={classes.root} >
 
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
@@ -56,7 +52,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.toggleChat()}
             >
-              <img src={{chatIcon}} height="30" />
+              <img src={require('../../assets/img/png_menu_chat.png')} className="icon" />
             </Button>
             <Button
               size={'large'}
@@ -65,7 +61,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.setPage('home')}
             >
-              <img src={homeIcon} height="30" />
+              <img src={require('../../assets/img/png_menu_home.png')} className="icon"/>
             </Button>
             <Button
 
@@ -74,14 +70,14 @@ class HeaderNav extends Component {
               ghost
               className="button"
             >
-              <img src={contectIcon} height="30" />
+              <img src={require('../../assets/img/png_menu_contact.png')} className="icon"/>
             </Button>
             {currentUser ? (
               <Button
                 size={'large'}
                 type="primary"
                 ghost
-                className="button"
+                className="button logout-btn"
                 onClick={() => this.doLogout()}
               >
                 <div className={headerNavStyle.common}>Logout</div>
@@ -91,7 +87,7 @@ class HeaderNav extends Component {
                   size={'large'}
                   type="primary"
                   ghost
-                  className="button"
+                  className="button login-btn"
                   onClick={() => this.setPage('login')}
                 >
                   <div className="common">Login</div>

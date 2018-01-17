@@ -9,10 +9,10 @@ import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from './proposalCardStyle';
 import proposalPaymentStyle from './proposalPaymentStyle';
-
-
 import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
+import userDeleteStyle from './userDeleteStyle';
+import userTwoFactorStyle from './userTwoFactorStyle';
 
 export {
   palette,
@@ -25,7 +25,9 @@ export {
   welcomeBoxStyle,
   deshBoardHeaderStyle,
   proposalCardStyle,
+  proposalPaymentStyle,
   userProfileStyle,
   userChangePswStyle,
-  proposalPaymentStyle
+  userDeleteStyle,
+  userTwoFactorStyle,
 };

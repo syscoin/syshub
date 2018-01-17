@@ -17,8 +17,5 @@ export default {
   },
   contentWraper: { 
     marginTop: '40px'
-   },
-   __container: {
-     width: '60%'
    }
 };
