@@ -31,7 +31,7 @@ const initialState = {
       btc_dash: '0.06783726',
     },
   },
-  valueOldCopy: {
+  /* valueOldCopy: {
     general: {
       consensus_blockheight: '805694',
       consensus_version: '120202',
@@ -45,26 +45,22 @@ const initialState = {
       btc_usd: '10502.64',
       btc_dash: '0.06783726',
     },
-  },
-  valueDiff: {},
+  }, */
   cards: [
     {
       img: 'png_stasts_sys.png',
       key: 'changeRate',
       text: 'BTC/1000 USD',
-      percentage: '9%',
     },
     {
       img: 'png_menu_masternodes_selected.png',
       key: 'masternodes',
       text: 'REGISTERED MASTERNODES',
-      percentage: '10%',
     },
     {
       img: 'png_stats_users.png',
       key: 'totUsers',
       text: 'ALL USERS',
-      percentage: '9%',
     },
   ],
 };
