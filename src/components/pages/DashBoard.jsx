@@ -5,6 +5,9 @@ import actions from '../../redux/actions';
 import PropTypes from 'prop-types';
 import { Grid , withStyles } from 'material-ui';
 import { ProposalList  } from '../containers/ProposalList';
+import { ProposalDetail  } from '../containers/ProposalDetail';
+import { DashBoardHeader  } from '../functionals/';
+
 
 // import components
 import { dashboardStyle  } from './styles';
@@ -18,12 +21,13 @@ class DashBoard extends Component {
 
     return (
 
-      <Grid container className={classes.root}>
+      <Grid md={12} className={classes.root}>
         {' '}
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
         <h1 className="heading">PROPOSAL DASHBOARD</h1>
 
-          <ProposalList />
+          <ProposalList  />
+          {/* <ProposalDetail /> */}
       </Grid>
     );
   }

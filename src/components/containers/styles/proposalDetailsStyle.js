@@ -4,9 +4,9 @@ const greyDark = palette.greyDark;
 const white = palette.white;
 
 export default {
-  root: {
+  proposalDetailRoot: {
     background:'white',
     height:"100vh",
-    padding:"10px"
+    paddingTop:"10px",
   },
 };

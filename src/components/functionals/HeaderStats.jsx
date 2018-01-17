@@ -19,8 +19,6 @@ class HeaderStats extends Component {
 
   render() {
     const classes = this.props.classes;
-     console.clear();
-     console.log("this.props --------" ,classes)
     return (
       <Grid container   md={7} className={classes.root}>
         <Grid item className="common">

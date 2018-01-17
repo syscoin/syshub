@@ -56,7 +56,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.toggleChat()}
             >
-              <img src={chatIcon} height="30" />
+              <img src={{chatIcon}} height="30" />
             </Button>
             <Button
               size={'large'}

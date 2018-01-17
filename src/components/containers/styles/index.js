@@ -5,6 +5,7 @@ import appHeaderStyle from './appHeaderStyle';
 import appRSiderStyle from './appRSiderStyle';
 import appLSiderStyle from './appLSiderStyle';
 import proposalStyle from './proposalStyle';
+import proposalDetailsStyle from './proposalDetailsStyle';
 
 
 export {
@@ -15,4 +16,5 @@ export {
   appRSiderStyle,
   appLSiderStyle,
   proposalStyle,
+  proposalDetailsStyle,
 };

@@ -8,6 +8,7 @@ import statsStyle from './statsStyle';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from './proposalCardStyle';
+import proposalPaymentStyle from './proposalPaymentStyle';
 
 
 import userProfileStyle from './userProfileStyle';
@@ -25,5 +26,6 @@ export {
   deshBoardHeaderStyle,
   proposalCardStyle,
   userProfileStyle,
-  userChangePswStyle
+  userChangePswStyle,
+  proposalPaymentStyle
 };

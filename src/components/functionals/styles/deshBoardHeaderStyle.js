@@ -7,30 +7,45 @@ const white = palette.white;
 
 
 export default {
-  root:{
-     "& .headingView" : {
+  root: {
+    margin: 0,
+    "& .headingView": {
       backgroundColor: '#1991CC',
       height: "50px",
-      marginLeft: "30px",
-      marginTop: "20px",
-      marginBottom: "30px",
-
-      "& .headingRow" : {
+      marginLeft: "10px",
+      marginTop: "10px",
+      marginLeft:'10px',
+      marginBottom: "20px",
+      fontSize: "20px",
+      maxWidth: 'calc(100% - 20px)',
+      "& .headingRow": {
         color: white,
         paddingLeft: "7px",
       },
-      "& .headingDiv" : {
+      "& .headingDiv": {
         display: "initial",
         color: white,
         marginLeft: "20px",
       },
-      "& .activeText" : {
+      "& .ownerDetails": {
+        float: "right",
+        color: white,
+        fontWeight: "bold",
+        "& .ownerName": {
+          fontWeight: "normal",
+          display: "inline",
+          marginLeft: "10px",
+          color: white,
+
+        },
+      },
+      "& .activeText": {
         fontSize: "26px",
         color: white,
       }
-
-
-
+    },
+    '& .no-margin':{
+      margin: 0
     }
   }
- };
+};

@@ -14,18 +14,18 @@ import { proposalStyle  } from './styles';
 
 export class ProposalList extends Component {
   constructor(props){
-    super(props)
+    super(props);
   }
   render() {
 
    const  classes  = this.props.classes;
-  //  console.clear();
-  //  console.log("-- this.props "  ,this.props);
+   console.clear();
+   console.log("-- ProposalList this.props  "  ,this.props);
 
     return (
-      <Grid container style={{background:'white',height:"100vh"}}>
-       {/* <Grid container className={classes.root}> */}
-        <DashBoardHeader />
+      <Grid md={12} style={proposalStyle.root}>
+          <DashBoardHeader data={{showHeader:"proposalList"}} />
+
       </Grid>
     );
   }
