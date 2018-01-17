@@ -1,6 +1,7 @@
 import palette from './palette';
 
 const primary = palette.primary;
+const primaryLight = palette.primaryLight;
 const white = palette.white;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
@@ -22,7 +23,7 @@ export default {
         '& .changePsw-credential-grid': {
             marginTop: '-20px',
             '& .changedPsw-note': {
-                color: primary,
+                color: primaryLight,
                 margin: '20px 40px',
                 display: 'block'
             },
@@ -40,6 +41,7 @@ export default {
                     paddingRight: '10px'
                 },
                 '& .input-field': {
+                    color:primaryLight,
                     width: 'calc(40% - 100px)',
                     margin: '0px 10px',
                     display: 'inline-block',

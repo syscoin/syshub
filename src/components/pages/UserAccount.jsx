@@ -9,6 +9,9 @@ import { userAccountStyle } from './styles'
 import { Grid} from 'material-ui';
 import UserProfile from '../functionals/UserProfile'
 import UserChangePsw from '../functionals/UserChangePsw'
+import UserDelete from '../functionals/UserDelete'
+import UserTwoFactor from '../functionals/UserTwoFactor'
+
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 
@@ -22,6 +25,8 @@ class UserAccount extends Component {
         <Paper className='paper-container' elevation={4}>
          <UserProfile/>
          <UserChangePsw/>
+         <UserTwoFactor/>
+         <UserDelete/>
         </Paper>
       </div>
     );

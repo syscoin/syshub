@@ -12,6 +12,10 @@ import proposalCardStyle from './proposalCardStyle';
 
 import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
+import userDeleteStyle from './userDeleteStyle';
+import userTwoFactorStyle from './userTwoFactorStyle';
+
+
 
 export {
   palette,
@@ -25,5 +29,7 @@ export {
   deshBoardHeaderStyle,
   proposalCardStyle,
   userProfileStyle,
-  userChangePswStyle
+  userChangePswStyle,
+  userDeleteStyle,
+  userTwoFactorStyle
 };

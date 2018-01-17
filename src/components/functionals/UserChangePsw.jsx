@@ -26,7 +26,7 @@ class UserChangePassword extends Component {
                     </Grid>
                     {/* profile credential grid */}
                     <Grid md={12} className='changePsw-credential-grid'>
-                        <span className="changedPsw-note">Note: You will be recognized to login on successfull completion of password change</span>
+                        <span className="changedPsw-note">Note: You will be redirected to login on successfull completion of password change</span>
                         {/* For User Name */}
                         <FormGroup className="form-group">
                             <span htmlFor="user-name" className="label">
