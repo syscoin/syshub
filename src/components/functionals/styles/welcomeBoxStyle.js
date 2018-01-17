@@ -4,11 +4,10 @@ const white = palette.white;
 const primary = palette.primary;
 const grey = palette.textLignt;
 
-
 export default {
   root: {
-    '& .welcome-box__wrapper':{
-      height: '100px'
+    '& .welcome-box__wrapper': {
+      height: '100px',
     },
     listStyleType: 'disc',
     '& .Paper': {
@@ -21,23 +20,23 @@ export default {
       padding: '20px',
 
       '& .heading': {
-        color: '#3498db'
+        color: '#3498db',
       },
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: '100%'
-        }
+          width: '100%',
+        },
       },
       '& .addvertiseText': {
         marginTop: '20px',
         fontSize: '16px',
         '& .wellcomBoxTextList': {
           paddingLeft: '25px',
-          listStyleType: 'disc'
+          listStyleType: 'disc',
         },
         '& .listItem': {
-          padding: '10px 0px'
+          padding: '10px 0px',
         },
       },
       '& .joinBtn': {
@@ -46,9 +45,10 @@ export default {
           color: '#ffff',
         },
         '& .btn': {
-          borderRadius: '8px'
-        }
+          borderRadius: '8px',
+          background: primary,
+        },
       },
-    }
-  }
-}
+    },
+  },
+};
