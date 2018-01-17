@@ -7,6 +7,9 @@ const grey = palette.textLignt;
 
 export default {
   root: {
+    '& .welcome-box__wrapper':{
+      height: '100px'
+    },
     listStyleType: 'disc',
     '& .Paper': {
       minHeight: '100px',
@@ -21,7 +24,10 @@ export default {
         color: '#3498db'
       },
       '& .logoDiv': {
-        textAlign: 'center'
+        textAlign: 'center',
+        '& img': {
+          width: '100%'
+        }
       },
       '& .addvertiseText': {
         marginTop: '20px',
@@ -34,8 +40,6 @@ export default {
           padding: '10px 0px'
         },
       },
-
-
       '& .joinBtn': {
         textAlign: 'right',
         '& .btnText': {
@@ -45,8 +49,6 @@ export default {
           borderRadius: '8px'
         }
       },
-
-
-    },
+    }
   }
 }
