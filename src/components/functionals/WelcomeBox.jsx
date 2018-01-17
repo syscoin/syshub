@@ -11,10 +11,6 @@ import PropTypes from 'prop-types';
 import { welcomeBoxStyle } from './styles';
 
 class WelcomeBox extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const classes = this.props.classes;
     const logo = require('../../assets/img/png_logo.png');

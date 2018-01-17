@@ -24,6 +24,7 @@ export default {
       },
       '& .logoDiv': {
         textAlign: 'center',
+        textAlign: 'center',
         '& img': {
           width: '100%',
         },
@@ -39,6 +40,7 @@ export default {
           padding: '10px 0px',
         },
       },
+
       '& .joinBtn': {
         textAlign: 'right',
         '& .btnText': {

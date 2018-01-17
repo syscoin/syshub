@@ -17,6 +17,27 @@ import { bindActionCreators } from 'redux';
 // import style
 import { statsStyle } from './styles';
 
+const StatCard = (classes, key, item) => {
+  <Card key={key} className={classes.statsCard}>
+    <CardHeader
+      className={classes.statsCardHeader}
+      title={
+        <img src={require('./../../assets/img/' + item.img)} height="40" />
+      }
+    />
+    <CardContent style={{ position: 'relative' }}>
+      <Typography className={classes.statsTextHeading}>
+        <h1 style={{ color: '#3498db' }}> {item.num} </h1>
+      </Typography>
+      <Typography className={classes.statsText}>{item.text}</Typography>
+      <Typography className={classes.statsPercentage}>
+        <img src={require('./../../assets/img/' + item.arrow)} height="20" />
+        {item.percentage}
+      </Typography>
+    </CardContent>
+  </Card>;
+};
+
 class Stats extends Component {
   constructor(props) {
     super(props);
@@ -32,34 +53,7 @@ class Stats extends Component {
         <div className={classes.statsMainDiv}>
           <GridList cols={4} cellHeight={300} className={classes.statsGridDiv}>
             {this.props.SysStats.map((item, key) => {
-              return (
-                <Card key={key} className={classes.statsCard}>
-                  <CardHeader
-                    className={classes.statsCardHeader}
-                    title={
-                      <img
-                        src={require('./../../assets/img/' + item.img)}
-                        height="40"
-                      />
-                    }
-                  />
-                  <CardContent style={{ position: 'relative' }}>
-                    <Typography className={classes.statsTextHeading}>
-                      <h1 style={{ color: '#3498db' }}> {item.num} </h1>
-                    </Typography>
-                    <Typography className={classes.statsText}>
-                      {item.text}
-                    </Typography>
-                    <Typography className={classes.statsPercentage}>
-                      <img
-                        src={require('./../../assets/img/' + item.arrow)}
-                        height="20"
-                      />
-                      {item.percentage}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              );
+              return <StatCard classes={classes} key={key} item={item} />;
             })}
           </GridList>
         </div>
@@ -71,7 +65,7 @@ class Stats extends Component {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    SysStats: state.sysStats.values,
+    SysStats: state.sysStats.cards,
   };
 }
 
