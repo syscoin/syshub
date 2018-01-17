@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Equalizer, AccountCircle, Usb, TrendingUp } from 'material-ui-icons';
 import injectSheet from 'react-jss';
 
-import { GridList, GridListTile } from 'material-ui/GridList';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import Card, {
   CardHeader,
   CardMedia,
