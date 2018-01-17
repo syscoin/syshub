@@ -7,12 +7,11 @@ const grey = palette.textLignt;
 
 export default {
   root: {
-    paddingLeft: '25px',
     listStyleType: 'disc',
     '& .Paper': {
       minHeight: '100px',
       width: '100px',
-      margin: '20px 5px',
+      margin: '20px 0px',
       display: 'inline-block',
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
       width: '100%',

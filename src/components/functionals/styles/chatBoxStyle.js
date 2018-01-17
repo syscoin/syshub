@@ -7,7 +7,6 @@ const grey = palette.textLignt;
 export default {
   root: {
     '& .chat_box_container': {
-      padding: '10px',
       wraper: {
         position: 'absolute',
         bottom: '0px',
@@ -16,7 +15,7 @@ export default {
         textAlign: 'center',
         display: 'inline-block',
         position: 'relative',
-        minWidth: '95%',
+        width: '100%',
         '& .chatbox-Header': {
           backgroundColor: primary,
           height: '35px',
