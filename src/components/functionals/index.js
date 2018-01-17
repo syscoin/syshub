@@ -6,5 +6,18 @@ import SiderMenu from './SiderMenu';
 import WelcomeBox from './WelcomeBox';
 import Stats from './Stats';
 import FooterInfo from './FooterInfo';
+import DashBoardHeader from './DashBoardHeader';
+import ProposalCard from './ProposalCard';
 
-export { ChatBox, HeaderStats, HeaderNav, SiderLogo, SiderMenu, WelcomeBox, Stats, FooterInfo };
+export {
+  ChatBox,
+  HeaderStats,
+  HeaderNav,
+  SiderLogo,
+  SiderMenu,
+  WelcomeBox,
+  Stats,
+  FooterInfo,
+  DashBoardHeader,
+  ProposalCard
+};

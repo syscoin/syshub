@@ -15,7 +15,7 @@ import { registerStyle } from './styles';
 class Register extends Component {
   state = {
     disabled: false,
-    username: null,
+    username: null
   };
 
   // specifying your onload callback function
@@ -33,7 +33,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning',
+        icon: 'warning'
       });
 
       this.registerForm.reset();
@@ -41,21 +41,26 @@ class Register extends Component {
     }
 
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
+
+    const username = this.registerName.value;
 
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.child(event.target.value).on('value', snap => {
-        if (snap.val() != null) {
-          this.setState({
-            disabled: true,
-          });
-        } else if (snap.val() == null) {
-          this.setState({
-            disabled: false,
-          });
-        }
+      usernameRef.on('value', snapshot => {
+        snapshot.forEach(snap => {
+          if (snap.val() === username) {
+            this.setState({
+              disabled: true
+            });
+            return;
+          } else {
+            this.setState({
+              disabled: false
+            });
+          }
+        });
       });
     }
   }
@@ -63,7 +68,7 @@ class Register extends Component {
   register(event) {
     event.preventDefault();
     this.setState({
-      username: '',
+      username: ''
     });
     const username = this.registerName.value;
     const email = this.registerEmail.value;
@@ -73,7 +78,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Must provide a username',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
@@ -87,14 +92,14 @@ class Register extends Component {
 
         if (user.uid === currentUser.uid) {
           const usernameRef = fire.database().ref('usernames');
-          usernameRef.child(username).set(user.uid);
+          usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
 
           this.registerForm.reset();
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
-            icon: 'success',
+            icon: 'success'
           });
         }
       })
@@ -102,7 +107,7 @@ class Register extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error',
+          icon: 'error'
         });
       });
   }
@@ -125,12 +130,7 @@ class Register extends Component {
             }}
             className="wrapper"
           >
-            <Grid
-              item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
-              justify="center"
-            >
+            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -147,11 +147,7 @@ class Register extends Component {
                 <span className="validation-message">
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
-                      (!this.state.disabled ? (
-                        <img src={checkIcon} />
-                      ) : (
-                        <img src={closeIcon} />
-                      ))}
+                      (!this.state.disabled ? <img src={checkIcon} /> : <img src={closeIcon} />)}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
@@ -231,11 +227,7 @@ class Register extends Component {
 
               {/* Form Action Button */}
               <FormGroup className="form-group form-button-group">
-                <Button
-                  type="submit"
-                  color="primary"
-                  className={classes.button}
-                >
+                <Button type="submit" color="primary" className={classes.button}>
                   Register
                 </Button>
                 <Button type="submit" color="accent" className={classes.button}>
@@ -251,6 +243,6 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 export default withStyles(registerStyle)(Register);

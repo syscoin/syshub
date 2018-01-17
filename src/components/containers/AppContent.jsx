@@ -42,7 +42,7 @@ class AppContent extends Component {
               ['dashBoard']: <DashBoard />,
               ['newProposal']: <NewProposal />,
               ['news']: <News />,
-              ['userAccount']: <UserAccountTest />,
+              ['userAccount']: <UserAccount />,
               ['faq']: <Faq />,
               ['masterNode']: <MasterNode />,
               ['login']: <Login />,

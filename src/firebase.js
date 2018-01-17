@@ -18,6 +18,7 @@ const fire = firebase;
 const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = firebase.database().ref('messages');
+const usernames = fire.database().ref('usernames');
 // const currentUser
 
 //Some useful functions
@@ -58,4 +59,4 @@ const doLogout = () => {
     });
 };
 
-export { fire, base, messages, doRegister, doLogin, doLogout };
+export { fire, base, messages, doRegister, doLogin, doLogout, usernames };
