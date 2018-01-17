@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import { GridList, GridListTile } from 'material-ui/GridList';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
-
-
 
 // import style
 import { welcomeBoxStyle } from './styles';
@@ -18,8 +16,8 @@ class WelcomeBox extends Component {
   }
 
   render() {
-    const  classes  = this.props.classes;
-    const  logo  = require('../../assets/img/png_logo.png');
+    const classes = this.props.classes;
+    const logo = require('../../assets/img/png_logo.png');
 
     return (
       <div className={classes.root}>
@@ -72,4 +70,3 @@ WelcomeBox.propTypes = {
 };
 
 export default withStyles(welcomeBoxStyle)(WelcomeBox);
-
