@@ -6,7 +6,6 @@ const white = palette.white;
 
 export default {
   wraper: {
-    marginTop:'50px',
     //border: '1px solid red',
     display: 'flex',
     flexDirection: 'row',

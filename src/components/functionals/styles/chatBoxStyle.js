@@ -6,6 +6,7 @@ const grey = palette.textLignt;
 
 export default {
   root: {
+    marginTop: 20,
     '& .chat_box_container': {
       wraper: {
         position: 'absolute',
