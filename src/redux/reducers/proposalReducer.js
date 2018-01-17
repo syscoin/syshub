@@ -45,6 +45,7 @@ const initialState = {
       fCachedEndorsed: false,
     },
   },
+  list: {},
 };
 
 const proposals = (state = initialState, action) => {

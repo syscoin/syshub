@@ -17,30 +17,44 @@ import { bindActionCreators } from 'redux';
 // import style
 import { statsStyle } from './styles';
 
-const StatCard = (classes, key, item) => {
-  <Card key={key} className={classes.statsCard}>
-    <CardHeader
-      className={classes.statsCardHeader}
-      title={
-        <img src={require('./../../assets/img/' + item.img)} height="40" />
-      }
-    />
-    <CardContent style={{ position: 'relative' }}>
-      <Typography className={classes.statsTextHeading}>
-        <h1 style={{ color: '#3498db' }}> {item.num} </h1>
-      </Typography>
-      <Typography className={classes.statsText}>{item.text}</Typography>
-      <Typography className={classes.statsPercentage}>
-        <img src={require('./../../assets/img/' + item.arrow)} height="20" />
-        {item.percentage}
-      </Typography>
-    </CardContent>
-  </Card>;
-};
-
 class Stats extends Component {
-  constructor(props) {
-    super(props);
+  getValue(field) {
+    const value = {
+      changeRate: (1000 / this.props.value.exchange_rates.btc_usd).toFixed(5),
+
+      masternodes: `${
+        this.props.value.general.registered_masternodes_verified
+      } / ${this.props.value.general.registered_masternodes}`,
+      totUsers: this.props.value.general.all_user,
+    }[field];
+    return value;
+  }
+
+  percentages(field) {
+    const changeRateNew = parseFloat(this.props.value.exchange_rates.btc_usd);
+    const changeRateOld = parseFloat(
+      this.props.valueOld.exchange_rates.btc_usd
+    );
+
+    const masternodeNew =
+      parseFloat(this.props.value.general.registered_masternodes_verified) /
+      parseFloat(this.props.value.general.registered_masternodes);
+    const masternodeOld =
+      parseFloat(this.props.valueOld.general.registered_masternodes_verified) /
+      parseFloat(this.props.valueOld.general.registered_masternodes);
+    const usersNew = parseFloat(this.props.value.general.all_user);
+    const usersOld = parseFloat(this.props.valueOld.general.all_user);
+
+    const value = {
+      changeRate: (changeRateNew - changeRateOld) / changeRateOld * 100,
+      masternodes: (masternodeNew - masternodeOld) / masternodeOld * 100,
+      totUsers: (usersNew - usersOld) / usersOld * 100,
+    }[field];
+
+    let arrow = value > 0 ? 'png_button_up.png' : 'png_button_down.png';
+    arrow = value === 0 ? 'png_button_updown.png' : arrow;
+
+    return { arrow, value: Math.abs(value).toFixed(2) };
   }
   render() {
     const { classes } = this.props;
@@ -52,8 +66,36 @@ class Stats extends Component {
         </h1>
         <div className={classes.statsMainDiv}>
           <GridList cols={4} cellHeight={300} className={classes.statsGridDiv}>
-            {this.props.SysStats.map((item, key) => {
-              return <StatCard classes={classes} key={key} item={item} />;
+            {this.props.sysStats.map((item, key) => {
+              return (
+                <Card key={key} className={classes.statsCard}>
+                  <CardHeader
+                    className={classes.statsCardHeader}
+                    title={
+                      <img
+                        src={require('./../../assets/img/' + item.img)}
+                        height="40"
+                      />
+                    }
+                  />
+                  <CardContent style={{ position: 'relative' }}>
+                    <Typography className={classes.statsTextHeading}>
+                      <h1> {this.getValue(item.key)} </h1>
+                    </Typography>
+                    <Typography className={classes.statsText}>
+                      {item.text}
+                    </Typography>
+                    <Typography className={classes.statsPercentage}>
+                      <img
+                        src={require('./../../assets/img/' +
+                          this.percentages(item.key).arrow)}
+                        height="20"
+                      />
+                      {`${this.percentages(item.key).value}%`}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
             })}
           </GridList>
         </div>
@@ -65,7 +107,9 @@ class Stats extends Component {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    SysStats: state.sysStats.cards,
+    sysStats: state.sysStats.cards,
+    value: state.sysStats.value,
+    valueOld: state.sysStats.valueOld,
   };
 }
 
