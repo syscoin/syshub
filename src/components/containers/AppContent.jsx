@@ -37,15 +37,15 @@ class AppContent extends Component {
         <Content style={contentStyle.wraper}>
           {
             {
-              ['home']: <Home />,
-              ['dashBoard']: <DashBoard />,
-              ['newProposal']: <NewProposal />,
-              ['news']: <News />,
-              ['userAccount']: <UserAccount />,
-              ['faq']: <Faq />,
-              ['masterNode']: <MasterNode />,
-              ['login']: <Login />,
-              ['register']: <Register />,
+              home: <Home />,
+              dashBoard: <DashBoard />,
+              newProposal: <NewProposal />,
+              news: <News />,
+              userAccount: <UserAccount />,
+              faq: <Faq />,
+              masterNode: <MasterNode />,
+              login: <Login />,
+              register: <Register />,
             }[this.props.app.showPage]
           }
         </Content>

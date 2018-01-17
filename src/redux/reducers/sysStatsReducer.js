@@ -1,6 +1,22 @@
 import constants from '../constants';
 
 const initialState = {
+  valueNew: {
+    general: {
+      consensus_blockheight: '805650',
+      consensus_version: '120202',
+      consensus_protocolversion: '70208',
+      all_user: '3648',
+      registered_masternodes: '3036',
+      registered_masternodes_verified: '1087',
+    },
+    exchange_rates: {
+      dash_usd: 717.9151045,
+      btc_usd: '10450.00',
+      btc_dash: '0.06870001',
+    },
+  },
+  valueOld: {},
   values: [
     {
       img: 'png_stasts_sys.png',

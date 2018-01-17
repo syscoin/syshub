@@ -4,7 +4,6 @@ const white = palette.white;
 const primary = palette.primary;
 const grey = palette.textLignt;
 
-
 export default {
   root: {
     paddingLeft: '25px',
@@ -19,23 +18,22 @@ export default {
       padding: '20px',
 
       '& .heading': {
-        color: '#3498db'
+        color: '#3498db',
       },
       '& .logoDiv': {
-        textAlign: 'center'
+        textAlign: 'center',
       },
       '& .addvertiseText': {
         marginTop: '20px',
         fontSize: '16px',
         '& .wellcomBoxTextList': {
           paddingLeft: '25px',
-          listStyleType: 'disc'
+          listStyleType: 'disc',
         },
         '& .listItem': {
-          padding: '10px 0px'
+          padding: '10px 0px',
         },
       },
-
 
       '& .joinBtn': {
         textAlign: 'right',
@@ -43,11 +41,10 @@ export default {
           color: '#ffff',
         },
         '& .btn': {
-          borderRadius: '8px'
-        }
+          borderRadius: '8px',
+          background: primary,
+        },
       },
-
-
     },
-  }
-}
+  },
+};
