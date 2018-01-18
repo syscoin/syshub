@@ -20,30 +20,21 @@ class HeaderStats extends Component {
     const classes = this.props.classes;
     //console.clear();
     return (
-      <Grid container md={7} className={classes.root}>
+      <Grid container md={8} className={classes.root}>
         <Grid item className="common">
-          <img
-            src={require('../../assets/img/png_stasts_sys.png')}
-            height="30"
-          />
+          <img src={require('../../assets/img/png_stasts_sys.png')} className="icon"/>
           <span className="TxtBold">{`SYSCOIN: `}</span>
           {this.state.syscoinStat}
         </Grid>
         <Divider className="divider" type="vertical" />
-        <Grid item className="common">
-          <img
-            src={require('../../assets/img/png_stats_masternodes.png')}
-            height="30"
-          />
-          <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+        <Grid item  className="common">
+          <img src={require('../../assets/img/png_stats_masternodes.png')} className="icon"/>
+          <span className= "TxtBold">{`REGISTERED MASTERNODES: `}</span>
           {this.state.regMasterNods}
         </Grid>
         <Divider className="divider" type="vertical" />
         <Grid item className="common">
-          <img
-            src={require('../../assets/img/png_stats_users.png')}
-            height="30"
-          />
+          <img src={require('../../assets/img/png_stats_users.png')} className="icon"/>
           <span className="TxtBold">{`USERS: `}</span>
           {this.state.sysUsers}
         </Grid>

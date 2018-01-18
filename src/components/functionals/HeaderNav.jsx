@@ -31,11 +31,13 @@ class HeaderNav extends Component {
   render() {
     const classes = this.props.classes;
     const { currentUser } = this.props.app;
-    const { chatIcon } = require('../../assets/img/png_menu_chat.png');
-    const { homeIcon } = require('../../assets/img/png_menu_home.png');
-    const { contectIcon } = require('../../assets/img/png_menu_contact.png');
+    const chatIcon  = require('../../assets/img/png_menu_chat.png');
+    const homeIcon  = require('../../assets/img/png_menu_home.png');
+    const contactIcon  = require('../../assets/img/png_menu_contact.png');
+    console.log(currentUser);
     return (
-      <Grid container md={3} className={classes.root}>
+      <Grid container md={4} className={classes.root} >
+
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">
@@ -53,7 +55,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.toggleChat()}
             >
-              <img src={chatIcon} height="30" />
+              <img src={chatIcon} alt="chat icon" height="30" />
             </Button>
             <Button
               size={'large'}
@@ -62,32 +64,38 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.setPage('home')}
             >
-              <img src={homeIcon} height="30" />
+              <img src={homeIcon} height="30"  alt="home icon"/>
             </Button>
-            <Button size={'large'} type="primary" ghost className="button">
-              <img src={contectIcon} height="30" />
+            <Button
+
+              size={'large'}
+              type="primary"
+              ghost
+              className="button"
+            >
+              <img src={contactIcon} height="30" alt="contact icon" />
             </Button>
             {currentUser ? (
               <Button
                 size={'large'}
                 type="primary"
                 ghost
-                className="button"
+                className="button logout-btn"
                 onClick={() => this.doLogout()}
               >
                 <div className={headerNavStyle.common}>Logout</div>
               </Button>
             ) : (
-              <Button
-                size={'large'}
-                type="primary"
-                ghost
-                className="button"
-                onClick={() => this.setPage('login')}
-              >
-                <div className="common">Login</div>
-              </Button>
-            )}
+                <Button
+                  size={'large'}
+                  type="primary"
+                  ghost
+                  className="button login-btn"
+                  onClick={() => this.setPage('login')}
+                >
+                  <div className="common">Login</div>
+                </Button>
+              )}
           </ButtonGroup>
         </Grid>
       </Grid>

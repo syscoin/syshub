@@ -9,11 +9,19 @@ export default {
     //border: '1px solid red',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'start',
-    minWidth: '100vw',
+    minWidth: 'calc(100vw - 20px)',
   },
-  appContent__container: {
-    width: '55%',
+  appContent: {
+    width: 'calc(60vw - 60px)',
+    marginLeft: '20px'
   },
+  leftSlider:{
+    width: '20vw'
+  },
+  rightSlider: {
+    width: '20vw',
+    position: 'fixed',
+    right: 0
+  }
 };

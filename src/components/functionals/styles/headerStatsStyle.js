@@ -6,28 +6,28 @@ const white = palette.white;
 
 
 export default {
-  root:{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-     "& .common" : {
-      padding: '0 30px',
-      color: white
-    },
+    root: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        "& .common": {
+            padding: 0,
+            color: white,
+            "& .icon": {
+                height: 20,
+                margin: '0px 10px'
+            }
+        },
+        "& .TxtBold": {
+            color: white,
+            fontWeight: 'bold'
+        },
+        "& .divider ": {
+            height: '75%',
+            borderLeft: `1px solid ${primaryDark}`,
+            borderRight: `1px solid ${primaryLight}`
+        }
 
-     "& .TxtBold" : {
-      padding: '0 30px',
-      color: white,
-      padding: '0 0 0 10px',
-      fontWeight: 'bold'
-    },
-
-    "& .divider " : {
-      height: '75%',
-      borderLeft: `1px solid ${primaryDark}`,
-      borderRight: `1px solid ${primaryLight}`
     }
-
-  }
- };
+};
