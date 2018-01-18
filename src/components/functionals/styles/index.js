@@ -14,6 +14,14 @@ import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
 import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
+import newsCardStyle from './newsCardStyle';
+import newsBodyStyle from './newsBodyStyle';
+import newsDetailStyle from './newsDetailStyle';
+import newsAboutStyle from './newsAboutStyle';
+import newsFooterStyle from './newsFooterStyle';
+import newsHeaderStyle from './newsHeaderStyle';
+
+
 
 
 
@@ -31,5 +39,11 @@ export {
   userProfileStyle,
   userChangePswStyle,
   userDeleteStyle,
-  userTwoFactorStyle
+  userTwoFactorStyle,
+  newsCardStyle,
+  newsBodyStyle,
+  newsDetailStyle,
+  newsAboutStyle,
+  newsFooterStyle,
+  newsHeaderStyle
 };

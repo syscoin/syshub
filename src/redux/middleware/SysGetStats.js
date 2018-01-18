@@ -9,7 +9,7 @@ const SysGetStats = store => next => action => {
   let SysStat = null;
 
   axios
-    .get('https://www.dashcentral.org/api/v1/public', {
+    .get('http://www.dashcentral.org/api/v1/public', {
       withCredentials: true,
     })
     .then(res => {
@@ -18,6 +18,7 @@ const SysGetStats = store => next => action => {
       return result;
     })
     .catch(err => console.log('ERROR: ', err));
+  
 };
 
 export default SysGetStats;
