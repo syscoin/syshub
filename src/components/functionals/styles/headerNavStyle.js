@@ -12,8 +12,11 @@ export default {
     justifyContent: 'space-between',
     alignItems: 'stretch',
     "& .common" : {
-      padding: '0 15px',
       color: white,
+      padding: 0,
+      '& .icon':{
+        height: 20
+      },
       "& .TxtRegular":{
         padding: '0 15px',
         color: white,
@@ -31,7 +34,12 @@ export default {
         border: 'none',
         padding: '0 15px',
       },
-
+      '& .login-btn , .logout-btn':{
+        padding: 0,
+        '& div': {
+          color: '#fff'
+        }
+      }
 
     },
   }
