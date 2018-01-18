@@ -86,7 +86,7 @@ class ProposalPayment extends Component {
         </Grid>
 
 
-
+{/*
         <Grid item className="approvalStatus">
           <div className="heading">APPROVAL STATUS </div>
         </Grid>
@@ -149,7 +149,7 @@ class ProposalPayment extends Component {
           <Grid item md={12} className="proposalDetails" >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor.
           </Grid>
-        </Grid>
+        </Grid> */}
 
 
 

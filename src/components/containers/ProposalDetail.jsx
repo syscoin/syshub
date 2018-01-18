@@ -5,16 +5,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 
-import { Grid , withStyles } from 'material-ui';
-import { DashBoardHeader  } from '../functionals/';
-import { ProposalPayment  } from '../functionals/';
+import { Grid, withStyles } from 'material-ui';
+import { DashBoardHeader } from '../functionals/';
+import { ProposalPayment } from '../functionals/';
+import { ProposalApprovalStat } from '../functionals/';
+import { ProposalDescription } from '../functionals/';
+import { ProposalComments } from '../functionals/';
 
 // import components
-import { proposalDetailsStyle  } from './styles';
+import { proposalDetailsStyle } from './styles';
 
 
 export class ProposalDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       data: this.props.data
@@ -22,15 +25,21 @@ export class ProposalDetail extends Component {
   }
   render() {
 
-   const  classes  = this.props.classes;
-   console.clear();
-   console.log("-- ProposalDetail this.props "  ,this.props);
+    const classes = this.props.classes;
+    console.clear();
+    console.log("-- ProposalDetail this.props ", this.props);
 
     return (
-      <Grid container lg={11} style={proposalDetailsStyle.proposalDetailRoot} >
-            <DashBoardHeader data={{showHeader:"ProposalDetail",name:"proposal 1"}} />
+      <Grid container md={12} style={proposalDetailsStyle.proposalDetailRoot} >
+        <DashBoardHeader data={{ showHeader: "ProposalDetail", name: "Proposal 1" }} />
 
-            <ProposalPayment />
+        <Grid container md={12} style={proposalDetailsStyle.proposalDetails} >
+          <ProposalPayment />
+          <ProposalApprovalStat />
+          <ProposalDescription />
+          <ProposalComments />
+        </Grid>
+
 
       </Grid>
     );

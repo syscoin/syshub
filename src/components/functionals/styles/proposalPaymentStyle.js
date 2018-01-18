@@ -10,12 +10,16 @@ const greyDark = palette.greyDark;
 export default {
   proposalPaymentRoot: {
     // height: "75%",
-    height: "90%",
-    overflowY: "scroll",
-    margin: 0,
-    marginLeft: 15,
-    paddingTop: 70,
-    maxWidth: "97%",
+
+
+    // height: "90%",
+    // overflowY: "scroll",
+    // margin: 0,
+    // marginLeft: 15,
+    // paddingTop: 70,
+    // maxWidth: "97%",
+
+    height:0,
     '& .no-margin': {
       margin: 0,
       '& .heading': {

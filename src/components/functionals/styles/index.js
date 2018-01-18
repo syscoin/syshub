@@ -13,6 +13,9 @@ import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
 import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
+import proposalApprovalStyle from './proposalApprovalStyle';
+import proposalDescriptionStyle from './proposalDescriptionStyle';
+import proposalCommentsStyle from './proposalCommentsStyle';
 
 export {
   palette,
@@ -30,4 +33,7 @@ export {
   userChangePswStyle,
   userDeleteStyle,
   userTwoFactorStyle,
+  proposalDescriptionStyle,
+  proposalApprovalStyle,
+  proposalCommentsStyle,
 };
