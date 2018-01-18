@@ -8,4 +8,7 @@ export default {
 
   // Sys Stats states
   SYS_STATS_SET: 'SYS_STATS_SET',
+
+  //SYS Proposals
+  SYS_PROPOSALS_GET: 'SYS_PROPOSALS_GET',
 };

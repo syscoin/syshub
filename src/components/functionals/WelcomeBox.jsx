@@ -18,13 +18,13 @@ class WelcomeBox extends Component {
     return (
       <div className={classes.root}>
         <Paper className="Paper" elevation={4}>
-          <GridList cols={2} cellHeight={300}>
-            <GridListTile>
+          <GridList cols={5}>
+            <GridListTile cols={2} style={{ height: '100%' }}>
               <div className="logoDiv">
-                <img src={logo} height="250" />
+                <img src={logo} />
               </div>
             </GridListTile>
-            <GridListTile>
+            <GridListTile cols={3} style={{ height: '100%' }}>
               <h1 className="heading">Advertisement Text here</h1>
               <Divider />
               <div className="addvertiseText">

@@ -6,12 +6,14 @@ const grey = palette.textLignt;
 
 export default {
   root: {
-    paddingLeft: '25px',
+    '& .welcome-box__wrapper': {
+      height: '100px',
+    },
     listStyleType: 'disc',
     '& .Paper': {
       minHeight: '100px',
       width: '100px',
-      margin: '20px 5px',
+      margin: '20px 0px',
       display: 'inline-block',
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
       width: '100%',
@@ -22,6 +24,10 @@ export default {
       },
       '& .logoDiv': {
         textAlign: 'center',
+        textAlign: 'center',
+        '& img': {
+          width: '100%',
+        },
       },
       '& .addvertiseText': {
         marginTop: '20px',

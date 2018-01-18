@@ -23,7 +23,7 @@ import {
 } from '../pages';
 
 //Import Styles
-import { contentStyle } from './styles';
+import { appContentStyle } from './styles';
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;
@@ -33,8 +33,8 @@ class AppContent extends Component {
     const page = this.props.app.showPage;
 
     return (
-      <div style={contentStyle.__container}>
-        <Content style={contentStyle.wraper}>
+      <div style={appContentStyle.__container}>
+        <Content style={appContentStyle.wraper}>
           {
             {
               home: <Home />,
