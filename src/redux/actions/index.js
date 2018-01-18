@@ -1,3 +1,4 @@
 import appActions from './appActions';
+import sysStatsActions from './sysStatsActions';
 
-export default { ...appActions };
+export default { ...appActions, ...sysStatsActions };

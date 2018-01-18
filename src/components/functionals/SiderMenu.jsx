@@ -32,9 +32,21 @@ class SiderMenu extends Component {
             item.key === this.props.active
               ? classes.buttonActive
               : classes.button;
-          const showMe = item.private;
-
-          return showMe && !this.props.logged ? null : (
+          let showMe = item.private;
+          switch (item.showWhen) {
+            case 'always':
+              showMe = true;
+              break;
+            case 'login':
+              showMe = this.props.logged;
+              break;
+            case 'logout':
+              showMe = !this.props.logged;
+              break;
+            default:
+              showMe = true;
+          }
+          return showMe ? (
             <button
               key={item.key}
               className={btnStyle}
@@ -43,7 +55,7 @@ class SiderMenu extends Component {
               <img src={require(`../../assets/img/${icon}.png`)} width="25" />
               <span className={txt}>{`${item.title.toUpperCase()}`}</span>
             </button>
-          );
+          ) : null;
         })}
         <div className={classes.lastBorder} /> {/*Last border*/}
         <div />

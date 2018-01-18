@@ -1,3 +1,5 @@
 import { applyMiddleware } from 'redux';
 
-export default applyMiddleware();
+import sysStatsMiddleware from './sysStatsMiddleware';
+
+export default applyMiddleware(sysStatsMiddleware);

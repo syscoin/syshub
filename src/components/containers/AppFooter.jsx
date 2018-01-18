@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import { withRoot } from '../HOC';
 import { Layout } from 'antd';
 
-import { footerStyle } from './styles';
+import { appFooterStyle } from './styles';
 
 const { Footer } = Layout;
 
 class AppFooter extends Component {
   render() {
     return (
-      <div style={footerStyle.footer}>
-        <Footer style={footerStyle.footerWraper}>{` `} </Footer>
+      <div style={appFooterStyle.footer}>
+        <Footer style={appFooterStyle.wraper}>{` `} </Footer>
       </div>
     );
   }

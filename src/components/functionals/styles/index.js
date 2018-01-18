@@ -6,6 +6,13 @@ import siderMenuStyle from './siderMenuStyle';
 import chatBoxStyle from './chatBoxStyle';
 import statsStyle from './statsStyle';
 import welcomeBoxStyle from './welcomeBoxStyle';
+import deshBoardHeaderStyle from './deshBoardHeaderStyle';
+import proposalCardStyle from './proposalCardStyle';
+import proposalPaymentStyle from './proposalPaymentStyle';
+import userProfileStyle from './userProfileStyle';
+import userChangePswStyle from './userChangePswStyle';
+import userDeleteStyle from './userDeleteStyle';
+import userTwoFactorStyle from './userTwoFactorStyle';
 
 export {
   palette,
@@ -16,4 +23,11 @@ export {
   chatBoxStyle,
   statsStyle,
   welcomeBoxStyle,
+  deshBoardHeaderStyle,
+  proposalCardStyle,
+  proposalPaymentStyle,
+  userProfileStyle,
+  userChangePswStyle,
+  userDeleteStyle,
+  userTwoFactorStyle,
 };
