@@ -67,7 +67,7 @@ const initialState = {
 
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
-    case constants.SYS_STATS_SET:
+    case constants.SYS_STATS_GET:
       return {
         ...state,
       };

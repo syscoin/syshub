@@ -21,6 +21,7 @@ class App extends Component {
         this.props.setCurrentUser(null);
       }
     });
+    //this.props.
   }
   render() {
     return (

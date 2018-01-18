@@ -7,7 +7,7 @@ export default {
   APP_CHAT_TOGGLE: 'APP_CHAT_TOGGLE',
 
   // Sys Stats states
-  SYS_STATS_SET: 'SYS_STATS_SET',
+  SYS_STATS_GET: 'SYS_STATS_GET',
 
   //SYS Proposals
   SYS_PROPOSALS_GET: 'SYS_PROPOSALS_GET',
