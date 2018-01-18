@@ -57,7 +57,6 @@ class HeaderNav extends Component {
               onClick={() => this.props.toggleChat()}
             >
               <img src={chatIcon} alt="chat icon" height="30" />
-              <img src={require('../../assets/img/png_menu_chat.png')} className="icon" />
             </Button>
             <Button
               size={'large'}
@@ -66,11 +65,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.setPage('home')}
             >
-<<<<<<< HEAD
               <img src={homeIcon} height="30"  alt="home icon"/>
-=======
-              <img src={require('../../assets/img/png_menu_home.png')} className="icon"/>
->>>>>>> e237931d74ddc9d7ccc8ec2b16fe1d1434b4e744
             </Button>
             <Button
 
@@ -79,11 +74,7 @@ class HeaderNav extends Component {
               ghost
               className="button"
             >
-<<<<<<< HEAD
               <img src={contactIcon} height="30" alt="contact icon" />
-=======
-              <img src={require('../../assets/img/png_menu_contact.png')} className="icon"/>
->>>>>>> e237931d74ddc9d7ccc8ec2b16fe1d1434b4e744
             </Button>
             {currentUser ? (
               <Button
