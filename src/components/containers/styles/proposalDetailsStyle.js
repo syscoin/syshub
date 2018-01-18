@@ -6,7 +6,7 @@ const white = palette.white;
 export default {
   proposalDetailRoot: {
     background:'white',
-    height:"100vh",
+    height:"90vh",
     paddingTop:"10px",
   },
 };

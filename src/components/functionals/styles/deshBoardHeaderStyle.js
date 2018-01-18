@@ -15,7 +15,7 @@ export default {
       marginLeft: "10px",
       marginTop: "10px",
       marginLeft:'10px',
-      marginBottom: "20px",
+      // marginBottom: "20px",
       fontSize: "20px",
       maxWidth: 'calc(100% - 20px)',
       "& .headingRow": {

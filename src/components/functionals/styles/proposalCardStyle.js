@@ -12,6 +12,7 @@ export default {
     // height: "90%",
     // height: "515px",
     height: "100%",
+    marginTop:10,
 
     "& .proposalRow": {
       flexBasis: 'calc(100% - 40px)',

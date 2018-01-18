@@ -82,10 +82,10 @@ class ProposalCard extends Component {
           this.state.proposalList.map((proposal, index) => {
 
             return (
-              <Grid container md={12} className="proposalRow" key={index}>
+              <Grid container md={11} className="proposalRow" key={index}>
                 <Grid item md={2} className="proposalView">
                   <Progress type="circle" percent={proposal.progress} format={percent => <img src={docIcon} className="progressIcon" />} className="progress-dial" status="exception" />
-                  <div className="proposalStatusNo"><span className="proposalStatusActiveNo">25 </span>/100</div>
+                  <div className="proposalStatusNo"><span className="proposalStatusActiveNo">{proposal.progress } </span>/100</div>
                 </Grid>
                 <Grid item md={6} className="proposalInfoView">
                   <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button>

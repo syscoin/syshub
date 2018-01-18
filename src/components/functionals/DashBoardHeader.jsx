@@ -30,7 +30,7 @@ class DashBoardHeader extends Component {
 
         {
           this.state.data.showHeader == "ProposalDetail" ?
-            <Grid container>
+            <Grid container className="no-margin">
 
               <Grid item md={11} className="headingView">
                 <Grid item md={11} className="headingRow">
