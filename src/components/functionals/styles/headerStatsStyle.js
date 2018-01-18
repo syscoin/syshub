@@ -12,7 +12,7 @@ export default {
       justifyContent: 'space-between',
       alignItems: 'center',
      "& .common" : {
-      padding: '0 30px',
+      padding: '0 20px',
       color: white
     },
 

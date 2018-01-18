@@ -32,9 +32,9 @@ class HeaderNav extends Component {
   render() {
     const classes = this.props.classes;
     const { currentUser } = this.props.app;
-    const { chatIcon } = require('../../assets/img/png_menu_chat.png');
-    const { homeIcon } = require('../../assets/img/png_menu_home.png');
-    const { contectIcon } = require('../../assets/img/png_menu_contact.png');
+    const chatIcon  = require('../../assets/img/png_menu_chat.png');
+    const homeIcon  = require('../../assets/img/png_menu_home.png');
+    const contactIcon  = require('../../assets/img/png_menu_contact.png');
     console.log(currentUser);
     return (
       <Grid container md={3} className={classes.root} >
@@ -56,7 +56,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.toggleChat()}
             >
-              <img src={chatIcon} height="30" />
+              <img src={chatIcon} alt="chat icon" height="30" />
             </Button>
             <Button
               size={'large'}
@@ -65,7 +65,7 @@ class HeaderNav extends Component {
               className="button"
               onClick={() => this.props.setPage('home')}
             >
-              <img src={homeIcon} height="30" />
+              <img src={homeIcon} height="30"  alt="home icon"/>
             </Button>
             <Button
 
@@ -74,7 +74,7 @@ class HeaderNav extends Component {
               ghost
               className="button"
             >
-              <img src={contectIcon} height="30" />
+              <img src={contactIcon} height="30" alt="contact icon" />
             </Button>
             {currentUser ? (
               <Button
