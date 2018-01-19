@@ -15,7 +15,7 @@ export default {
             fontWeight:'lighter',
         },
         '& .paper-container': {
-            padding:'20px 30px',
+            padding:'20px 20px',
             height: "80vh",
             overflowY: 'auto'
             ,
