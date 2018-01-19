@@ -22,8 +22,10 @@ class UserProfile extends Component {
             <h1 className='profile-text'>Profile</h1>
           </Grid>
           {/* profile image grid */}
-          <Grid md={2} className="profile-image-grid">
-            <img src={avatar} alt="no user image" className="user-image" />
+          <Grid md={3} className="profile-image-grid">
+            <div className="avatar-container">
+              <img src={avatar} alt="no user image" className="user-image" />
+            </div>
             <span className="changePhoto-span"><a className="link-color"> click to change photo</a></span>
           </Grid>
           {/* profile credential grid */}

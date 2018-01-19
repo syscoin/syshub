@@ -11,19 +11,25 @@ export default {
     root: {
         "& button span": {
             color: 'white',
-            textTransform: 'capitalize'
-
+            textTransform: 'capitalize',
+            padding: '3px 0px'
         },
         '& .profile-text': {
-            marginLeft: '20px',
-            fontWeight: 'lighter',
-            fontSize: '21px'
+            margin: '10px 20px 20px 20px',
+            fontWeight: 100,
+            fontSize: '21px',
+            borderBottom: '0.1px solid ' + greyLight,
         },
         '& .profile-image-grid': {
+            '& .avatar-container': {
+                maxWidth: 150,
+                marginLeft: 20,
+                padding: 10,
+                border: 'thin solid ' + greyLight
+            },
             '& .user-image': {
-                width: '80%',
-                paddingBottom: '5px',
-                marginLeft: '20px'
+                width: '100%',
+
             },
             '& .changePhoto-span': {
                 fontSize: '12px',
@@ -34,20 +40,18 @@ export default {
             }
         },
         '& .profile-credential-grid': {
-            marginTop: '-20px',
+            marginTop: -10,
             '& .form-group': {
                 flexDirection: 'row',
                 marginTop: '10px',
                 display: 'block',
                 '& .label': {
-                    width: '10%',
+                    width: 75,
                     display: 'inline-block',
                     textAlign: 'left',
-                    fontSize: '15px',
-                    marginTop: '15px',
-                    marginLeft: '25px',
+                    fontSize: 15,
+                    fontWeight: 100,
                     color: primary,
-                    paddingRight: '10px'
                 },
                 '& .input-field': {
                     width: 'calc(45% - 20px)',
@@ -60,11 +64,8 @@ export default {
                     }
                 },
                 '& .validation-message': {
-                    width: '35%',
-                    marginLeft: '21px',
                     display: 'inline-block',
-                    fontSize: '15px',
-                    marginTop: '15px',
+                    fontSize: 15,
                     color: greyDark,
                 }
             },
