@@ -23,6 +23,8 @@ import {
   UserAccountTest
 } from '../pages';
 
+import SMSTest from '../pages/SMSTest';
+
 //Import Styles
 import { contentStyle } from './styles';
 //import EmailModal from './the-modal';
@@ -38,7 +40,7 @@ class AppContent extends Component {
         <Content style={contentStyle.wraper}>
           {
             {
-              ['home']: <Home />,
+              ['home']: <SMSTest />,
               ['dashBoard']: <DashBoard />,
               ['newProposal']: <NewProposal />,
               ['news']: <News />,
