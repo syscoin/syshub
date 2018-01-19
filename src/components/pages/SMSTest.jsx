@@ -34,7 +34,7 @@ class SMSTest extends Component {
         <Recaptcha
           style={{ marginLeft: '10px' }}
           id="captcha"
-          sitekey="6LeNoEAUAAAAADaWqXweDPiSR-8HnWCQ3ZMrNp1o"
+          sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
           render="explicit"
           callback={value => {
             console.log(value);
