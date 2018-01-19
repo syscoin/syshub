@@ -26,8 +26,8 @@ class DashBoard extends Component {
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
 
-          {/* <ProposalList  /> */}
-          <ProposalDetail />
+          <ProposalList  />
+          {/* <ProposalDetail /> */}
       </Grid>
     );
   }

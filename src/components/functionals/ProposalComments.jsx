@@ -29,7 +29,7 @@ class ProposalComments extends Component {
         <Grid item className="commentHeadingDiv">
           <div className="heading">COMMENTS SECTIONS </div>
         </Grid>
-        <Grid item md={11} className="no-margin">
+        <Grid item md={11} className="section-separate">
           <hr />
         </Grid>
         <Grid container md={8} className="commentSectionslView" >
@@ -37,12 +37,12 @@ class ProposalComments extends Component {
             Add Comment
           </Grid>
           <Grid item md={12} className="proposalDetails" >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor.
+            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 
-            {/* <textarea rows="4" cols="50" > Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor.</textarea> */}
+            <textarea rows="2" cols="75" className="userComment" > Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor.</textarea>
           <hr className="proposalDetailsHr" />
 
-            <Button type="submit" color="primary" className="formSubmiButton">
+            <Button type="submit" color="primary">
               Submit
               </Button>
 
@@ -50,8 +50,8 @@ class ProposalComments extends Component {
         </Grid>
 
 
-        <Grid item md={9} className="no-margin">
-          <hr className="proposalHr" />
+        <Grid item md={9} className="section-separate">
+          <hr className="separate-with-margin" />
         </Grid>
 
 
@@ -64,13 +64,13 @@ class ProposalComments extends Component {
           </Grid>
             <Grid item md={4} className="votesView" >
               <img src={require('../../assets/img/png_button_up.png')} className="upVoteICon" />
-              11
+              <div className="votingNumber">11</div>
               <img src={require('../../assets/img/png_button_down.png')} className="downVoteICon" />
-              66
+              <div className="votingNumber">66</div>
             </Grid>
           </Grid>
           <Grid item md={12} className="commentlHrView">
-            <hr className="commentlHr" />
+            <hr className="hr" />
           </Grid>
           <Grid item md={10} className="newYearView"> Happy New Year!!! ..</Grid>
           <Grid item md={10} className="replyView"> Reply</Grid>
@@ -81,13 +81,15 @@ class ProposalComments extends Component {
           </Grid>
 
             <Grid item md={12} className="proposalDetails" >
-              Having Fun ?
+              {/* Having Fun ? */}
+              <textarea rows="1" cols="55" className="userComment" >Having Fun ? </textarea>
           <hr className="proposalDetailsHr" />
 
-              <Button type="submit" color="primary" className="formSubmiButton">
+              {/* <Button type="submit" color="primary" className="formSubmiButton"> */}
+              <Button type="submit" color="primary">
                 Submit
               </Button>
-              <Button type="submit" color="primary" className="formSubmiButton">
+              <Button type="submit" color="primary">
                 Cancel
               </Button>
 
@@ -105,9 +107,9 @@ class ProposalComments extends Component {
           </Grid>
             <Grid item md={4} className="votesView" >
               <img src={require('../../assets/img/png_button_up.png')} className="upVoteICon" />
-              23
+              <div className="votingNumber">23</div>
               <img src={require('../../assets/img/png_button_down.png')} className="downVoteICon" />
-              8
+              <div className="votingNumber">8</div>
             </Grid>
           </Grid>
           <Grid item md={12} className="commentlHrView">

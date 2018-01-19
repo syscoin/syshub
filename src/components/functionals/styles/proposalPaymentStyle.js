@@ -14,7 +14,8 @@ export default {
       margin: 0,
       '& .heading': {
         fontSize: 20,
-        color: greyDark
+        color: greyDark,
+        fontWeight: 200,
       },
     },
     "& .paymentsView": {
@@ -56,114 +57,7 @@ export default {
       },
 
     },
-    '& .approvalStatus': {
-      margin: 0,
-      marginTop: 100,
-      '& .heading': {
-        fontSize: 20,
-        color: greyDark
-      },
-    },
-    "& .topApprovalView": {
-      margin: 0,
-      marginTop: 40,
-      "& .approvalKey": {
-        marginLeft: "4%",
-        padding: 0,
-        color: primaryDark,
-        fontSize: 16,
-      },
-      "& .approvalValue": {
-        color: greyDark,
-        fontSize: 16,
-        padding: 0,
-        display: "-webkit-box",
-        "& .approvalRedColorFont": {
-          color: "red",
-        },
-        "& .voteRedColorFont": {
-          color: "red",
-          marginRight: "6%",
-        },
-        "& .voteGreenColorFont": {
-          color: "green",
-          marginRight: "6%",
-        },
-
-
-      }
-
-    },
-    "& .approvalView": {
-      margin: 0,
-      marginTop: 15,
-      "& .approvalKey": {
-        marginLeft: "4%",
-        padding: 0,
-        color: primaryDark,
-        fontSize: 16,
-      },
-      "& .approvalValue": {
-        color: greyDark,
-        fontSize: 16,
-        padding: 0,
-        display: "-webkit-box",
-        "& .approvalRedColorFont": {
-          color: "red",
-        },
-        "& .voteRedColorFont": {
-          color: "red",
-          marginRight: "6%",
-        },
-        "& .voteGreenColorFont": {
-          color: "green",
-          marginRight: "6%",
-        },
-
-
-      }
-
-    },
-    "& .proposalView": {
-      margin: 0,
-      marginTop: 15,
-      "& .proposalDetails": {
-        marginLeft: "4%",
-        padding: 0,
-        color: gray,
-        maxWidth: "89.6667%",
-        fontSize: 15
-      },
-
-    },
-
-    "& .commentSectionslView": {
-      margin: 0,
-      marginLeft: "4%",
-      marginTop: 40,
-      borderRadius: 5,
-      background: "rgb(240, 242, 245)",
-      height: "30%",
-      "& .commentHeading": {
-        color: greyDark,
-        padding:"10px 28px",
-        fontWeight: 500,
-      },
-      "& .proposalDetails": {
-        marginLeft: 8,
-        padding: 0,
-        color: gray,
-        maxWidth: "89.6667%",
-        fontSize: 15,
-        background: white,
-        maxWidth: "100%",
-        padding: "10px 20px",
-        height: "70%",
-
-      },
-
     },
 
 
-  }
 };

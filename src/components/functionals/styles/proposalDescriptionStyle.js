@@ -13,7 +13,9 @@ export default {
     '& .approvalStatus': {
       '& .heading': {
         fontSize: 20,
-        color: greyDark
+        color: greyDark,
+        fontWeight: 200,
+
       },
     },
     '& .no-margin': {
