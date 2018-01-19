@@ -9,8 +9,8 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        "& .MuiButton-label-17":{
-            color:'white',
+        "& button span": {
+            color: 'white',
             textTransform: 'capitalize'
 
         },
@@ -28,8 +28,8 @@ export default {
             '& .changePhoto-span': {
                 fontSize: '12px',
                 marginLeft: '21px',
-                '& .link-color':{
-                  color : primary          
+                '& .link-color': {
+                    color: primary
                 }
             }
         },
@@ -69,11 +69,15 @@ export default {
                 }
             },
         },
-        '& .update-button-grid':{
+        '& .update-button-grid': {
             padding: '20px',
-            '& .update-button':{
-                borderRadius: "5px"
-            }  
+            '& .update-button': {
+                borderRadius: "5px",
+                padding: '5px',
+                minHeight: '25px',
+                width: '150px',
+                fontSize: '16px'
+            }
         }
 
     }

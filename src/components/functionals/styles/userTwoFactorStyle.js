@@ -12,9 +12,10 @@ const secondary = palette.secondary;
 export default {
     root: {
         paddingTop: "20px",
-        "& .MuiButton-label-17": {
+        "& button span": {
             color: 'white',
             textTransform: 'capitalize'
+
         },
         '& .userTwoFactor-heading': {
             marginLeft: '20px',
@@ -28,7 +29,7 @@ export default {
             marginTop: '-20px',
             '& .enable2FA-note': {
                 color: primaryLight,
-                margin: '20px 40px',
+                margin: '20px 0px 10px 40px',
                 display: 'block'
             },
             '& .div-margin': {
@@ -80,7 +81,7 @@ export default {
                 '& .code-Input-field': {
                     color: primaryLight,
                     width: 'calc(50% - 20px)',
-                    marginLeft: '30px',
+                    marginLeft: '10px',
                     display: 'inline-block',
                     border: 'thin solid ' + greyLight,
                     padding: '5px',
@@ -124,11 +125,15 @@ export default {
         '& .twoFactor-button-grid': {
             padding: '20px',
             '& .twoFactor-button': {
-                borderRadius: "5px"
-            }
+                borderRadius: "5px",
+                padding: ' 4px 25px',
+                fontSize: '17px',
+                minHeight:'30px'
+            
         }
-
     }
+
+}
 }
 
 

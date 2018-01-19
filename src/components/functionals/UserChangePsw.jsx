@@ -28,6 +28,7 @@ class UserChangePassword extends Component {
                     <Grid md={12} className='changePsw-credential-grid'>
                         <span className="changedPsw-note">Note: You will be redirected to login on successfull completion of password change</span>
                         {/* For User Name */}
+                        <div className="formGroup-div">
                         <FormGroup className="form-group">
                             <span htmlFor="user-name" className="label">
                                 {`Currrent Password: `}
@@ -64,7 +65,7 @@ class UserChangePassword extends Component {
                         {/* For User Email */}
                         <FormGroup className="form-group">
                             <span htmlFor="user-email" className="label">
-                                {`Confirm Password: `}
+                                {`Confirm New Password: `}
                             </span>
                             <input
                                 ref={input => (this.registerEmail = input)}
@@ -75,9 +76,10 @@ class UserChangePassword extends Component {
                                 placeholder="******"
                             />
                         </FormGroup>
+                        </div>
                     </Grid>
-                    <Grid className="update-button-grid">
-                        <Button raised color="primary" className="update-button">Confirm Changes</Button>
+                    <Grid className="confirmChange-button-grid">
+                        <Button raised color="primary" className="confirmChange-button" style={{color:'white'}}>Confirm Changes</Button>
                     </Grid>
                 </Grid>
 
