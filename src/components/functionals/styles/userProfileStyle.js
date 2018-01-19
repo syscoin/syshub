@@ -14,7 +14,7 @@ export default {
             textTransform: 'capitalize',
             padding: '3px 0px'
         },
-        '& .profile-text': {
+        '& .profile-heading': {
             margin: '10px 20px 20px 20px',
             fontWeight: 100,
             fontSize: '21px',
@@ -33,9 +33,10 @@ export default {
             },
             '& .changePhoto-span': {
                 fontSize: '12px',
-                marginLeft: '21px',
+                marginLeft: '38px',
                 '& .link-color': {
-                    color: primary
+                    color: primary,
+                    fontWeight:'100'
                 }
             }
         },
@@ -67,6 +68,7 @@ export default {
                     display: 'inline-block',
                     fontSize: 15,
                     color: greyDark,
+                    fontWeight:'100'
                 }
             },
         },

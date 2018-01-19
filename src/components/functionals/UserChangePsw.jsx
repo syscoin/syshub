@@ -22,7 +22,7 @@ class UserChangePassword extends Component {
                 <Grid container>
                     {/* change password text */}
                     <Grid md={12}>
-                        <h1 className='changePsw-text'>Change Password</h1>
+                        <h1 className='changePsw-heading'>Change Password</h1>
                     </Grid>
                     {/* profile credential grid */}
                     <Grid md={12} className='changePsw-credential-grid'>

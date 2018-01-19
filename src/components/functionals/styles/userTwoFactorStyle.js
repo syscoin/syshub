@@ -19,8 +19,10 @@ export default {
         },
         '& .userTwoFactor-heading': {
             marginLeft: '20px',
-            fontWeight: 'lighter',
+            fontWeight: '100',
             fontSize: '21px',
+            borderBottom: '0.1px solid ' + greyLight,
+
         },
         '& .heading-2FA': {
             color: primaryLight,
@@ -30,7 +32,9 @@ export default {
             '& .enable2FA-note': {
                 color: primaryLight,
                 margin: '20px 0px 10px 40px',
-                display: 'block'
+                display: 'block',
+                fontWeight: '100',
+
             },
             '& .div-margin': {
                 marginLeft: '40px',
@@ -97,18 +101,21 @@ export default {
             },
             '& .qr-div': {
                 marginLeft: '150px',
-                marginTop: '-50px'
+                marginTop: '-10px'
             }
         },
         '& .userTwoFactor-right-grid': {
             marginTop: '50px',
+            '& ol':{
+                fontWeight:'100'
+            },
             '& .enableInstruction-heading': {
                 fontSize: '20px',
                 color: primary,
                 fontWeight: 'bold',
                 padding: '0px 30px'
             },
-            '& .gogleAuthApp-text': {
+            '& .googleAuthApp-text': {
                 color: primary,
                 fontWeight: 'bold'
             },
@@ -126,14 +133,15 @@ export default {
             padding: '20px',
             '& .twoFactor-button': {
                 borderRadius: "5px",
-                padding: ' 4px 25px',
-                fontSize: '17px',
-                minHeight:'30px'
-            
-        }
-    }
+                padding: '8px',
+                minHeight: '25px',
+                width: '150px',
+                fontSize: '16px'
 
-}
+            }
+        }
+
+    }
 }
 
 

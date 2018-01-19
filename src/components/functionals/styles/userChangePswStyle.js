@@ -15,17 +15,21 @@ export default {
             color: 'white',
             textTransform: 'capitalize'
         },
-        '& .changePsw-text': {
+        '& .changePsw-heading': {
             marginLeft: '20px',
-            fontWeight: 'lighter',
-            fontSize: '21px'
+            fontWeight: '100',
+            fontSize: '21px',
+            borderBottom: '0.1px solid ' + greyLight,
+
         },
         '& .changePsw-credential-grid': {
             marginTop: '-20px',
             '& .changedPsw-note': {
                 color: primaryLight,
                 margin: '20px 40px',
-                display: 'block'
+                display: 'block',
+                fontWeight: 100,
+
             },
 
             '& .formGroup-div': {
@@ -41,7 +45,8 @@ export default {
                         fontSize: '15px',
                         marginTop: '15px',
                         color: primary,
-                        paddingRight: '10px'
+                        paddingRight: '10px',
+                        fontWeight: 100,
                     },
                     '& .input-field': {
                         color: primaryLight,
@@ -61,6 +66,7 @@ export default {
                         fontSize: '15px',
                         marginTop: '15px',
                         color: greyDark,
+                        fontWeight:'100',
                         '& img': {
                             width: '20px',
                             marginRight: '5px'
@@ -78,9 +84,10 @@ export default {
             padding: '20px',
             '& .confirmChange-button': {
                 borderRadius: "5px",
-                padding: ' 5px 10px',
-                fontSize: '16px',
-                minHeight: ' 0px'
+                padding: '8px',
+                minHeight: '25px',
+                width: '150px',
+                fontSize: '16px'
             }
         }
 

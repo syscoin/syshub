@@ -19,7 +19,7 @@ class UserProfile extends Component {
         <Grid container>
           {/* profile text */}
           <Grid md={12}>
-            <h1 className='profile-text'>Profile</h1>
+            <h1 className='profile-heading'>Profile</h1>
           </Grid>
           {/* profile image grid */}
           <Grid md={3} className="profile-image-grid">
@@ -41,7 +41,6 @@ class UserProfile extends Component {
                 id="user-name"
                 className="input-field"
                 placeholder="Enter Username"
-                onChange={e => this.checkUsername(e)}
               />
             </FormGroup>
 
@@ -64,7 +63,7 @@ class UserProfile extends Component {
 
           </Grid>
           <Grid className="update-button-grid">
-            <Button raised color="primary" className="update-button" innerTextColor="red">Update Profile</Button>
+            <Button raised color="primary" className="update-button">Update Profile</Button>
           </Grid>
         </Grid>
 

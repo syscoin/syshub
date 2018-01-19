@@ -17,17 +17,20 @@ export default {
         },
         '& .userDelete-heading': {
             marginLeft: '20px',
-            fontWeight: 'lighter',
-            fontSize: '21px'
+            fontWeight: '100',
+            fontSize: '21px',
+            borderBottom: '0.1px solid ' + greyLight,
+
         },
         '& .UserDelete-text': {
-            marginLeft: '35px'
+            marginLeft: '35px',
+            fontWeight:'100'
         },
         '& .delete-button-grid': {
             padding: '20px',
             '& .delete-button': {
                 borderRadius: "5px",
-                padding: '5px',
+                padding: '8px',
                 minHeight: '25px',
                 width: '150px',
                 fontSize: '16px'
