@@ -10,23 +10,21 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        marginTop: '20px',
-        "& .MuiButton-label-17": {
+        // marginTop: '20px',
+        "& button span": {
             color: 'white',
             textTransform: 'capitalize'
         },
         '& .newsCard-grid': {
-            padding: '20px 0px 25px 0px',
+            padding:' 35px 0px 25px 0px',
             '& .newsCardImage-grid': {
-                padding: "20px 10px",
+                padding: '20px 0px 0px 10px',
                 '& img': {
                     width: '100%'
                 }
 
             },
             '& .newsCardContent-grid': {
-                // maxHeight :'145px',
-                // overflow:'hidden',
                 '& .card': {
 
                     '& .newsHeading': {

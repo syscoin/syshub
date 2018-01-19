@@ -5,6 +5,7 @@ import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import NewsList  from '../containers/NewsList'
+import NewsDetial from '../functionals/NewsDetail'
 
 // import style
 import {newsStyle} from './styles'
@@ -17,9 +18,10 @@ class News extends Component {
     
     return (
       <div className={classes.root}>
-        <h1 className='title'>NEWS AND ANNOUCEMENTS</h1>
+        <h1 className='title'>NEWS AND ANNOUNCEMENTS</h1>
         <Paper className='paper-container' elevation={4}>
-          <NewsList/>
+          {/* <NewsList/> */}
+          <NewsDetial/>
         </Paper>
       </div>
     );

@@ -11,15 +11,13 @@ const secondary = palette.secondary;
 export default {
     root: {
         marginTop:'20px',
-        '& .title':{
-            fontWeight:'lighter',
+        height :'20vh',
+        '& .newBody-grid':{
+            border:'2px solid black'
         },
-        '& .paper-container': {
-            padding:'20px 30px',
-            height: "80vh",
-            overflowY: 'auto'
-        }
+ 
     }
+
 
 
 

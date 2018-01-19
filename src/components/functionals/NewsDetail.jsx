@@ -5,18 +5,31 @@ import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 
 // import style
-import {newsDetailStyle} from './styles'
+import { newsDetailStyle } from './styles'
+
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
+import NewsHeader from './NewsHeader'
+import NewsBody from './NewsBody'
+import NewsAbout from './NewsAbout'
+import NewsFooter from './NewsFooter'
+
+
+
+
+
+
 class NewsDetail extends Component {
   render() {
     const { classes } = this.props;
-    
+
     return (
       <div>
-        {' '}
-        Do you want to read some <strong>NEWS DETAIL</strong>?{' '}
+        <NewsHeader />
+        <NewsBody />
+        <NewsAbout />
+        <NewsFooter />
       </div>
     );
   }

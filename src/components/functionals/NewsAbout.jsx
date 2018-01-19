@@ -5,18 +5,23 @@ import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 
 // import style
-import {newsAboutStyle} from './styles'
+import { newsAboutStyle } from './styles'
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 class NewsAbout extends Component {
   render() {
     const { classes } = this.props;
-    
+
     return (
       <div>
-        {' '}
-        Do you want to read some <strong>NEWS ABOUT</strong>?{' '}
+        <Grid container className={classes.root}>
+          <Grid md={12} className='newAbout-grid'>
+            <div>
+              News About is coming
+            </div>
+          </Grid>
+        </Grid>
       </div>
     );
   }

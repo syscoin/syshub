@@ -15,8 +15,13 @@ class NewsFooter extends Component {
     
     return (
       <div>
-        {' '}
-        Do you want to read some <strong>NEWS LIST</strong>?{' '}
+        <Grid container className={classes.root}>
+        <Grid md={12} className='newsFooter-grid'>
+            <div>
+              News Footer is coming
+            </div>
+        </Grid>
+      </Grid>
       </div>
     );
   }

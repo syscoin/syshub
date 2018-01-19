@@ -5,18 +5,23 @@ import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 
 // import style
-import {newsAboutStyle} from './styles'
+import {newsBodyStyle} from './styles'
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
-class NewsAbout extends Component {
+class NewsBody extends Component {
   render() {
     const { classes } = this.props;
     
     return (
       <div>
-        {' '}
-        Do you want to read some <strong>NEWS BODY</strong>?{' '}
+        <Grid container className={classes.root}>
+        <Grid md={12} className='newBody-grid'>
+            <div>
+              News Body is coming
+            </div>
+        </Grid>
+      </Grid>
       </div>
     );
   }
@@ -30,4 +35,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(newsAboutStyle)(NewsAbout));
+export default connect(stateToProps, dispatchToProps)(withStyles(newsBodyStyle)(NewsBody));
