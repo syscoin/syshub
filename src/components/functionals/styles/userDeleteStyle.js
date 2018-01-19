@@ -45,6 +45,9 @@ export default {
             marginTop: 10,
             marginLeft: 35,
             verticalAlign: 'top'
+        },
+        '& button': {
+            backgroundColor: primary
         }
 
 

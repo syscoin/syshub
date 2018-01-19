@@ -79,7 +79,7 @@ class UserChangePassword extends Component {
                         </div>
                     </Grid>
                     <Grid className="confirmChange-button-grid">
-                        <Button raised color="primary" className="confirmChange-button" style={{color:'white'}}>Confirm Changes</Button>
+                        <Button raised className="confirmChange-button">Confirm Changes</Button>
                     </Grid>
                 </Grid>
 

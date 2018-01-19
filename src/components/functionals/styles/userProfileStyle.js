@@ -93,13 +93,14 @@ export default {
         },
         '& .update-button-grid': {
             padding: '20px',
-            '& .update-button': {
-                borderRadius: "5px",
-                padding: '5px',
-                minHeight: '25px',
-                width: '150px',
-                fontSize: '16px'
-            }
+        },
+        '& button': {
+            borderRadius: "5px",
+            padding: '5px',
+            minHeight: '25px',
+            width: '150px',
+            fontSize: '16px',
+            backgroundColor: primary
         }
 
     }

@@ -141,8 +141,10 @@ export default {
                 fontSize: '16px'
 
             }
+        },
+        '& button': {
+            backgroundColor: primary
         }
-
     }
 }
 

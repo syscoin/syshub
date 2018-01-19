@@ -30,7 +30,7 @@ class UserDelete extends Component {
                     </Grid>
 
                     <Grid className="delete-button-grid">
-                        <Button raised color="primary" className="delete-button">Delete Account</Button>
+                        <Button raised className="delete-button">Delete Account</Button>
                     </Grid>
                 </Grid>
 

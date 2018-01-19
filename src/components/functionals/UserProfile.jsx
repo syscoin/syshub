@@ -67,7 +67,7 @@ class UserProfile extends Component {
 
           </Grid>
           <Grid className="update-button-grid">
-            <Button raised color="primary" className="update-button">Update Profile</Button>
+            <Button raised className="update-button">Update Profile</Button>
           </Grid>
         </Grid>
 

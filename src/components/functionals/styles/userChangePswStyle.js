@@ -81,16 +81,17 @@ export default {
             }
         },
         '& .confirmChange-button-grid': {
-            padding: '20px',
-            '& .confirmChange-button': {
-                borderRadius: "5px",
-                padding: '8px',
-                minHeight: '25px',
-                width: '150px',
-                fontSize: '16px'
-            }
+            padding: '20px'
+        },
+        '& button': {
+            borderRadius: 5,
+            padding: 8,
+            minHeight: 25,
+            width: 150,
+            fontSize: 16,
+            color: white,
+            backgroundColor: primary
         }
-
     }
 }
 
