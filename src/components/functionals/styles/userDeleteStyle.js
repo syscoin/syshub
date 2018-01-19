@@ -35,7 +35,18 @@ export default {
                 width: '150px',
                 fontSize: '16px'
             }
+        },
+        '& .input-field': {
+            color: primary,
+            width: 200,
+            border: 'thin solid' + greyLight,
+            display: 'inline-block',
+            padding: 5,
+            marginTop: 10,
+            marginLeft: 35,
+            verticalAlign: 'top'
         }
+
 
     }
 }

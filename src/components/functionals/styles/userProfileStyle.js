@@ -31,12 +31,31 @@ export default {
                 width: '100%',
 
             },
-            '& .changePhoto-span': {
+            '& .change-photo-btn': {
                 fontSize: '12px',
                 marginLeft: '38px',
                 '& .link-color': {
                     color: primary,
                     fontWeight:'100'
+                },
+                
+            },
+            '& .upload-image-container':{
+                overflow: 'hidden',
+                position: 'relative',
+                '& input[type=file]':{
+                    cursor: 'inherit',
+                    display: 'block',
+                    fontSize: 999,
+                    filter: 'alpha(opacity=0)',
+                    minHeight: '100%',
+                    minWidth: '100%',
+                    opacity: 0,
+                    position: 'absolute',
+                    right: 0,
+                    textAlign: 'right',
+                    top: 0,
+                    height: '100%'
                 }
             }
         },

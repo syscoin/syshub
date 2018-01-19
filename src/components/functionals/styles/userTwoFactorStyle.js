@@ -89,6 +89,8 @@ export default {
                     display: 'inline-block',
                     border: 'thin solid ' + greyLight,
                     padding: '5px',
+                    verticalAlign: 'top',
+                    marginTop: 20,
                     '&::before': {
                         backgroundColor: 'transparent'
                     }

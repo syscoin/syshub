@@ -23,10 +23,14 @@ class UserProfile extends Component {
           </Grid>
           {/* profile image grid */}
           <Grid md={3} className="profile-image-grid">
-            <div className="avatar-container">
+            <div className="avatar-container upload-image-container">
+              <input type="file"/>
               <img src={avatar} alt="no user image" className="user-image" />
             </div>
-            <span className="changePhoto-span"><a className="link-color"> click to change photo</a></span>
+            <span className="change-photo-btn upload-image-container">
+              <input type="file"/>
+              <a className="link-color"> click to change photo</a>
+            </span>
           </Grid>
           {/* profile credential grid */}
           <Grid md={9} className='profile-credential-grid'>
