@@ -27,10 +27,14 @@ class SMSTest extends Component {
   }
 
   render() {
+    const siteKeyRecap = process.env.RECAPTCHA_SITE;
+    const siteKeyFire = process.env.REACT_APP_FIREBASE_SENDER_ID;
     return (
       <div style={{ marginTop: '200px' }}>
         <h2>Auth</h2>
-        SMS Test
+        <p>SMS Test</p>
+        <p>Test Key Recap: {siteKeyRecap}</p>
+        <p>Test Key Fire: {siteKeyFire}</p>
         <Recaptcha
           style={{ marginLeft: '10px' }}
           id="captcha"
