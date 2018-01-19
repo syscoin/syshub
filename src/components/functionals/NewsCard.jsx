@@ -49,7 +49,7 @@ class NewsCard extends Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, selectNews } = this.props;
     const noImage = require('../../assets/img/no-user-image.gif')
     return (
       <div className={classes.root}>
@@ -58,7 +58,7 @@ class NewsCard extends Component {
           this.state.news.map((data, index) => (
             <div key={index}>
               {/* news card */}
-              <Grid container className="newsCard-grid" >
+              <Grid container className="news-card-grid" >
                 {/* news image grid */}
                 <Grid md={2} className='newsCardImage-grid' >
                   <img src={noImage} alt="news image" />
@@ -68,7 +68,7 @@ class NewsCard extends Component {
                   <Card className='card'>
                     <CardContent>
                       {/* content heading */}
-                      <Typography type="headline" component="h2" className='newsHeading'>
+                      <Typography type="headline" component="h2" className='news-heading'>
                         1 Jan ,2018 - <span className='cardSubHeading'>{data.newsHeading}</span>
                       </Typography>
                       {/* content text */}
@@ -80,9 +80,7 @@ class NewsCard extends Component {
                 </Grid>
                 {/* show more button */}
                 <Grid md={12} className='showMoreButton-grid'>
-                  <Button raised color='primary'>
-                    Show More
-            </Button>
+                  <Button raised onClick={()=>selectNews(1)}> Show More </Button>
                 </Grid>
               </Grid>
               <Divider />
