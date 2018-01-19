@@ -10,7 +10,7 @@ export default {
   root: {
     marginTop:"6%",
     marginLeft: "4%",
-    '& .heading':{
+    '& .dashBoardheading':{
       color:greyDark,
       fontSize:20,
       marginBottom:20,

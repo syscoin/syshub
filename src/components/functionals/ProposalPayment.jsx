@@ -13,6 +13,12 @@ import { proposalPaymentStyle } from './styles';
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      onTimePayment:'abc',
+      compeletePayment:'abc',
+      Paymentdate:'abc',
+
+    }
 
 
   }
@@ -35,7 +41,7 @@ class ProposalPayment extends Component {
             <form className="form">
               <FormGroup className="FormGroup">
                 <input
-                  ref={(ref) => { }}
+                  ref={(ref) => { this.state.compeletePayment = ref }}
                   name="onTimePayment"
                   id="onTimePayment"
                   className="input-field"
@@ -53,9 +59,9 @@ class ProposalPayment extends Component {
             <form className="form">
               <FormGroup className="FormGroup">
                 <input
-                  ref={(ref) => { }}
-                  name="onTimePayment"
-                  id="onTimePayment"
+                  ref={(ref) => { this.state.compeletePayment = ref}}
+                  name="compeletePayment"
+                  id="compeletePayment"
                   className="input-field"
                   placeholder="no payments occurred yet"
                   onChange={e => { }}
@@ -71,8 +77,8 @@ class ProposalPayment extends Component {
               <FormGroup className="FormGroup">
                 <input
                   ref={(ref) => { }}
-                  name="onTimePayment"
-                  id="onTimePayment"
+                  name="Paymentdate"
+                  id="Paymentdate"
                   className="input-field"
                   placeholder="18-01-17 / 2018-02-16"
                   onChange={e => { }}

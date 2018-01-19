@@ -9,12 +9,19 @@ const greyDark = palette.greyDark;
 
 export default {
   proposalDescriptionRoot: {
-    marginTop: 150,
+    marginTop: 40,
+    '& .approvalStatus': {
+      '& .heading': {
+        fontSize: 20,
+        color: greyDark
+      },
+    },
     '& .no-margin': {
       margin: 0,
       '& .heading': {
         fontSize: 20,
-        color: greyDark
+        color: greyDark,
+
       },
     },
 

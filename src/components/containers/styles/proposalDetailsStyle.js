@@ -1,6 +1,7 @@
 import palette from './palette';
 
 const greyDark = palette.greyDark;
+const grey = grey;
 const white = palette.white;
 
 export default {
@@ -9,14 +10,15 @@ export default {
     // height:"90vh",
     height:"100vh",
     paddingTop:"10px",
+    boxShadow: "0px 3px 3px 3px " + grey,
   },
   proposalDetails: {
-    // height: "90%",
-    height: "75%",
+    height: "calc(100% - 70px)",
     overflowY: "scroll",
     margin: 0,
     marginLeft: 15,
     paddingTop: 70,
-    maxWidth: "97%",
+    paddingLeft: "0.4%",
+    maxWidth: "98%",
   },
 };

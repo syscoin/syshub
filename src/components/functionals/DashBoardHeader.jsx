@@ -32,7 +32,7 @@ class DashBoardHeader extends Component {
           this.state.data.showHeader == "ProposalDetail" ?
             <Grid container className="no-margin">
 
-              <Grid item md={11} className="headingView">
+              <Grid item md={11} className="proposalDetailHeadingView">
                 <Grid item md={11} className="headingRow">
                 <img src={require('../../assets/img/png_icon_proposal.png')}height="30" />
                   <div className="headingDiv"> {this.state.data.name}</div>

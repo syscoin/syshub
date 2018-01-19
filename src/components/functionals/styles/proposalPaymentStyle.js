@@ -6,20 +6,10 @@ const primaryLight = palette.primaryLight;
 const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
+const greyLight = palette.greyLight;
 
 export default {
   proposalPaymentRoot: {
-    // height: "75%",
-
-
-    // height: "90%",
-    // overflowY: "scroll",
-    // margin: 0,
-    // marginLeft: 15,
-    // paddingTop: 70,
-    // maxWidth: "97%",
-
-    height:0,
     '& .no-margin': {
       margin: 0,
       '& .heading': {
@@ -29,7 +19,7 @@ export default {
     },
     "& .paymentsView": {
       margin: 0,
-      marginTop: 20,
+      marginTop: 30,
       "& .OnTimePaymentView": {
         flexBasis: "35% !important",
         maxWidth: "26.6%",
@@ -39,15 +29,14 @@ export default {
         "& .heading": {
           color: gray,
           fontSize: 14,
-          marginBottom: 10,
-
-
+          marginBottom: 2,
         },
         "& .form": {
           "& .FormGroup": {
             "& .input-field": {
               color: primaryLight,
               padding: 5,
+              border:"1px solid " + gray,
 
             },
             "& .input-field::-webkit-input-placeholder": { /* Chrome/Opera/Safari */

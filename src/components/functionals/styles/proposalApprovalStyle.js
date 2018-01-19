@@ -9,8 +9,8 @@ const greyDark = palette.greyDark;
 
 export default {
   proposalPaymentRoot: {
-    height: "20%",
-    marginTop: 90,
+    // height: "20%",
+    // marginTop: 90,
     '& .no-margin': {
       margin: 0,
       '& .heading': {
@@ -20,7 +20,7 @@ export default {
     },
     '& .approvalStatus': {
       margin: 0,
-      marginTop: 100,
+      marginTop: 60,
       '& .heading': {
         fontSize: 20,
         color: greyDark

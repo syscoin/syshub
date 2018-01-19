@@ -24,7 +24,7 @@ class DashBoard extends Component {
       <Grid md={12} className={classes.root}>
         {' '}
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
-        <h1 className="heading">PROPOSAL DASHBOARD</h1>
+        <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
 
           {/* <ProposalList  /> */}
           <ProposalDetail />
