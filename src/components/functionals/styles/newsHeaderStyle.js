@@ -46,8 +46,13 @@ export default {
                     marginLeft: 20,
                     marginTop: 20,
                     verticalAlign: 'super',
+                    color: greyDark,
                     '& .date':{
+                        color: greyDark,
                         marginBottom: 0
+                    },
+                    '& .by': {
+                        color: greyDark
                     }
                 }
             }

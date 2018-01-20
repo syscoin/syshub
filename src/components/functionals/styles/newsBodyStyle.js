@@ -15,14 +15,13 @@ export default {
         marginTop: 20,
         borderBottom: 'thin solid' + greyDark,
         '& p': {
-            marginLeft: 28
+            marginLeft: 28,
+            fontSize: 15,
+            color: greyDark
+        },
+        '& ul':{
+            fontSize: 15,
+            color: greyDark
         }
     }
-
-
-
-
-
-
-
 }
