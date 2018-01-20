@@ -38,6 +38,18 @@ class NewsCard extends Component {
         {
           newsHeading: 'Mujhe Kuin Nikala',
           newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
         }
       ]
     }
@@ -56,15 +68,15 @@ class NewsCard extends Component {
 
         {
           this.state.news.map((data, index) => (
-            <div key={index}>
+            <div className="card-item" key={index}>
               {/* news card */}
-              <Grid container className="news-card-grid" >
+              <Grid item className="news-card-grid" >
                 {/* news image grid */}
-                <Grid md={2} className='newsCardImage-grid' >
+                <Grid md={2} inline className='newsCardImage-grid inline-block' >
                   <img src={noImage} alt="news image" />
                 </Grid>
                 {/* News Content Grid */}
-                <Grid md={10} className='newsCardContent-grid'>
+                <Grid md={10} className='newsCardContent-grid inline-block'>
                   <Card className='card'>
                     <CardContent>
                       {/* content heading */}
@@ -83,7 +95,7 @@ class NewsCard extends Component {
                   <Button raised onClick={()=>selectNews(1)}> Show More </Button>
                 </Grid>
               </Grid>
-              <Divider />
+              <Divider className={classes.divider}/>
             </div>
           ))
 

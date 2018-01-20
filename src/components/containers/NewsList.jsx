@@ -16,7 +16,7 @@ class NewsList extends Component {
     const { classes, selectNews } = this.props;
     
     return (
-      <div>
+      <div className={classes.root}>
         <NewsCard selectNews={selectNews}/>
       </div>
     );

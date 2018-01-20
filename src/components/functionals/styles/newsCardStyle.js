@@ -10,20 +10,27 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        // marginTop: '20px',
+        width: 'calc(100% - 40px)',
+        marginLeft: 20,
+        marginTop: 20,
+        marginBottom: 20,
+        '& card-item':{
+
+        },
         "& button span": {
             color: 'white',
             textTransform: 'capitalize'
         },
         '& .news-card-grid': {
-            padding:'25px 0px 25px 0px',
             '& .newsCardImage-grid': {
+                
                 padding: '20px 0px 0px 10px',
                 '& img': {
                     width: '100%'
                 }
             },
             '& .newsCardContent-grid': {
+                verticalAlign: 'middle',
                 '& .card': {
                     '& .news-heading': {
                         marginBottom: '10px',
@@ -55,6 +62,12 @@ export default {
         },
         '& button':{
             backgroundColor: primary
+        },
+        '& .inline-block': {
+            display: 'inline-block'
         }
+    },
+    divider:{
+        marginTop: 10
     }
 }
