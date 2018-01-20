@@ -13,11 +13,11 @@ import NewsCard from '../functionals/NewsCard'
 
 class NewsList extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, selectNews } = this.props;
     
     return (
-      <div>
-    <NewsCard/>
+      <div className={classes.root}>
+        <NewsCard selectNews={selectNews}/>
       </div>
     );
   }

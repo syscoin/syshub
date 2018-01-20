@@ -5,8 +5,8 @@ const white = palette.white;
 
 export default {
   root: {
-    '& .heading':{
-      color:greyDark
-    }
+    background:'white',
+    height:"100vh",
+    padding:"10px"
   },
 };

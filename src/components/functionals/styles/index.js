@@ -8,12 +8,14 @@ import statsStyle from './statsStyle';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from './proposalCardStyle';
-
-
+import proposalPaymentStyle from './proposalPaymentStyle';
 import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
 import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
+import proposalApprovalStyle from './proposalApprovalStyle';
+import proposalDescriptionStyle from './proposalDescriptionStyle';
+import proposalCommentsStyle from './proposalCommentsStyle';
 import newsCardStyle from './newsCardStyle';
 import newsBodyStyle from './newsBodyStyle';
 import newsDetailStyle from './newsDetailStyle';
@@ -36,10 +38,14 @@ export {
   welcomeBoxStyle,
   deshBoardHeaderStyle,
   proposalCardStyle,
+  proposalPaymentStyle,
   userProfileStyle,
   userChangePswStyle,
   userDeleteStyle,
   userTwoFactorStyle,
+  proposalDescriptionStyle,
+  proposalApprovalStyle,
+  proposalCommentsStyle,
   newsCardStyle,
   newsBodyStyle,
   newsDetailStyle,

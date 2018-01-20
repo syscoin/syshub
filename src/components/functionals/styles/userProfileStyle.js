@@ -6,7 +6,6 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const secondary = palette.secondary;
 
-
 export default {
     root: {
         "& button span": {
@@ -36,14 +35,14 @@ export default {
                 marginLeft: '38px',
                 '& .link-color': {
                     color: primary,
-                    fontWeight:'100'
+                    fontWeight: '100'
                 },
-                
+
             },
-            '& .upload-image-container':{
+            '& .upload-image-container': {
                 overflow: 'hidden',
                 position: 'relative',
-                '& input[type=file]':{
+                '& input[type=file]': {
                     cursor: 'inherit',
                     display: 'block',
                     fontSize: 999,
@@ -87,7 +86,7 @@ export default {
                     display: 'inline-block',
                     fontSize: 15,
                     color: greyDark,
-                    fontWeight:'100'
+                    fontWeight: '100'
                 }
             },
         },
@@ -105,9 +104,3 @@ export default {
 
     }
 }
-
-
-
-
-
-

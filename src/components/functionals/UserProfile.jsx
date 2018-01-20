@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userProfileStyle } from './styles'
 import { Button, Grid, FormGroup, Input, } from 'material-ui';
+
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 

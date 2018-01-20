@@ -7,7 +7,6 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const secondary = palette.secondary;
 
-
 export default {
     root: {
         paddingTop: "20px",
@@ -60,7 +59,6 @@ export default {
                         }
                     },
                     '& .validation-message': {
-                        width: '25%',
                         marginLeft: '21px',
                         display: 'inline-block',
                         fontSize: '15px',

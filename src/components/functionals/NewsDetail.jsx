@@ -25,7 +25,7 @@ class NewsDetail extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <NewsHeader />
         <NewsBody />
         <NewsAbout />

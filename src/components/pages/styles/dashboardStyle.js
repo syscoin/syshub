@@ -8,9 +8,10 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    '& .heading':{
+    '& .dashBoardheading':{
       color:greyDark,
-      fontSize:"20px"
+      fontSize:20,
+      marginBottom:20,
     }
 
   },

@@ -10,15 +10,8 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        marginTop:'20px',
-        '& .title':{
-            fontWeight:'lighter',
-        },
-        '& .paper-container': {
-            padding:'20px 30px',
-            height: "80vh",
-            overflowY: 'auto'
-        }
+        width: 'calc(100% - 40px)',
+        marginLeft: 20
     }
 
 

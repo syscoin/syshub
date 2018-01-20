@@ -10,42 +10,45 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        // marginTop: '20px',
+        width: 'calc(100% - 40px)',
+        marginLeft: 20,
+        marginTop: 20,
+        marginBottom: 20,
+        '& card-item':{
+
+        },
         "& button span": {
             color: 'white',
             textTransform: 'capitalize'
         },
-        '& .newsCard-grid': {
-            padding:' 35px 0px 25px 0px',
+        '& .news-card-grid': {
             '& .newsCardImage-grid': {
+                
                 padding: '20px 0px 0px 10px',
                 '& img': {
                     width: '100%'
                 }
-
             },
             '& .newsCardContent-grid': {
+                verticalAlign: 'middle',
                 '& .card': {
-
-                    '& .newsHeading': {
+                    '& .news-heading': {
                         marginBottom: '10px',
+                        fontWeight: 600,
+                        color: greyDark,
                         '& .cardSubHeading': {
-                            fontWeight: 'lighter',
+                            fontWeight: 100,
                             fontSize: '90%',
                             color: primary,
                         }
-
                     },
                     '& .newsContent': {
-                        maxHeight: '80px',
-                        overflow: 'hidden'
+                        maxHeight: 55,
+                        overflow: 'hidden',
+                        fontWeight: 100,
+                        color: greyDark
                     }
-
-
                 }
-
-
-
             },
             '& .showMoreButton-grid': {
                 textAlign: 'right',
@@ -56,14 +59,15 @@ export default {
                     minHeight: '28px'
                 }
             }
-
-
+        },
+        '& button':{
+            backgroundColor: primary
+        },
+        '& .inline-block': {
+            display: 'inline-block'
         }
+    },
+    divider:{
+        marginTop: 10
     }
-
-
-
-
-
-
 }

@@ -8,6 +8,10 @@ import Stats from './Stats';
 import FooterInfo from './FooterInfo';
 import DashBoardHeader from './DashBoardHeader';
 import ProposalCard from './ProposalCard';
+import ProposalPayment from './ProposalPayment';
+import ProposalApprovalStat from './ProposalApprovalStat';
+import ProposalDescription from './ProposalDescription';
+import ProposalComments from './ProposalComments';
 
 export {
   ChatBox,
@@ -20,4 +24,8 @@ export {
   FooterInfo,
   DashBoardHeader,
   ProposalCard,
+  ProposalPayment,
+  ProposalApprovalStat,
+  ProposalDescription,
+  ProposalComments,
 };

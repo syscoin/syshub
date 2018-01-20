@@ -10,18 +10,18 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        marginTop:'20px',
-        height :'20vh',
-        '& .newBody-grid':{
-            border:'2px solid black'
+        width: '100%',
+        margin: 0,
+        marginTop: 20,
+        borderBottom: 'thin solid' + greyDark,
+        '& p': {
+            marginLeft: 28,
+            fontSize: 15,
+            color: greyDark
         },
- 
+        '& ul':{
+            fontSize: 15,
+            color: greyDark
+        }
     }
-
-
-
-
-
-
-
 }

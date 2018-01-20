@@ -11,10 +11,6 @@ import PropTypes from 'prop-types';
 import { welcomeBoxStyle } from './styles';
 
 class WelcomeBox extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const classes = this.props.classes;
     const logo = require('../../assets/img/png_logo.png');
@@ -23,16 +19,12 @@ class WelcomeBox extends Component {
       <div className={classes.root}>
         <Paper className="Paper" elevation={4}>
           <GridList cols={5}>
-            <GridListTile 
-              cols={2}
-              style={{height: '100%'}}>
+            <GridListTile cols={2} style={{ height: '100%' }}>
               <div className="logoDiv">
-                <img src={logo}/>
+                <img src={logo} />
               </div>
             </GridListTile>
-            <GridListTile
-              cols={3} 
-              style={{height: '100%'}}>
+            <GridListTile cols={3} style={{ height: '100%' }}>
               <h1 className="heading">Advertisement Text here</h1>
               <Divider />
               <div className="addvertiseText">
@@ -51,18 +43,15 @@ class WelcomeBox extends Component {
                   </li>
                 </ul>
               </div>
-              <div className="joinBtn">
-                <Button
-                  raised
-                  className="btn"
-                  onClick={this.props.onJoin}
-                  disabled={this.props.logged}
-                >
-                  <span className="btnText"> Join SysHub </span>
-                </Button>
-              </div>
             </GridListTile>
           </GridList>
+          {!this.props.logged && (
+            <div className="joinBtn">
+              <Button raised className="btn" onClick={this.props.onJoin}>
+                <span className="btnText"> Join SysHub </span>
+              </Button>
+            </div>
+          )}
         </Paper>
       </div>
     );

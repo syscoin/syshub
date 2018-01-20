@@ -38,6 +38,18 @@ class NewsCard extends Component {
         {
           newsHeading: 'Mujhe Kuin Nikala',
           newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
+        },
+        {
+          newsHeading: 'Mujhe Kuin Nikala',
+          newsContent: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!'
         }
       ]
     }
@@ -49,26 +61,26 @@ class NewsCard extends Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, selectNews } = this.props;
     const noImage = require('../../assets/img/no-user-image.gif')
     return (
       <div className={classes.root}>
 
         {
           this.state.news.map((data, index) => (
-            <div key={index}>
+            <div className="card-item" key={index}>
               {/* news card */}
-              <Grid container className="newsCard-grid" >
+              <Grid item className="news-card-grid" >
                 {/* news image grid */}
-                <Grid md={2} className='newsCardImage-grid' >
+                <Grid md={2} inline className='newsCardImage-grid inline-block' >
                   <img src={noImage} alt="news image" />
                 </Grid>
                 {/* News Content Grid */}
-                <Grid md={10} className='newsCardContent-grid'>
+                <Grid md={10} className='newsCardContent-grid inline-block'>
                   <Card className='card'>
                     <CardContent>
                       {/* content heading */}
-                      <Typography type="headline" component="h2" className='newsHeading'>
+                      <Typography type="headline" component="h2" className='news-heading'>
                         1 Jan ,2018 - <span className='cardSubHeading'>{data.newsHeading}</span>
                       </Typography>
                       {/* content text */}
@@ -80,12 +92,10 @@ class NewsCard extends Component {
                 </Grid>
                 {/* show more button */}
                 <Grid md={12} className='showMoreButton-grid'>
-                  <Button raised color='primary'>
-                    Show More
-            </Button>
+                  <Button raised onClick={()=>selectNews(1)}> Show More </Button>
                 </Grid>
               </Grid>
-              <Divider />
+              <Divider className={classes.divider}/>
             </div>
           ))
 
