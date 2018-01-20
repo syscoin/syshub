@@ -14,7 +14,16 @@ import { dashboardStyle  } from './styles';
 
 class DashBoard extends Component {
   constructor(props){
-    super(props)
+    super(props);
+    this.state={
+      view: 'list'
+    }
+    
+    this.switchView = this.switchView.bind(this);
+  }
+
+  switchView(view, proposal_id){
+    this.setState({ view: view });
   }
   render() {
    const { classes } = this.props;
@@ -25,9 +34,9 @@ class DashBoard extends Component {
         {' '}
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
-
-          <ProposalList  />
-          {/* <ProposalDetail /> */}
+          {
+            this.state.view =='list' ? <ProposalList  switchView={ this.switchView }/> : <ProposalDetail />
+          }
       </Grid>
     );
   }

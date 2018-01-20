@@ -28,11 +28,6 @@ class UserDelete extends Component {
                         <p className="UserDelete-text">Type "DELETE" to confirm delete Action</p>
                     </Grid>
 
-
-
-
-
-
                     <Grid className="delete-button-grid">
                         <Button raised color="primary" className="delete-button">Delete Account</Button>
                     </Grid>

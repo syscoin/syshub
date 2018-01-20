@@ -13,7 +13,9 @@ export default {
     minWidth: 'calc(100vw - 20px)',
   },
   appContent: {
-    width: 'calc(60vw - 60px)',
+    width: 'calc(60vw - 40px)',
+    height: 'calc(100vh - 115px)',
+    overflowY: 'auto',
     marginLeft: '20px'
   },
   leftSlider:{

@@ -6,9 +6,6 @@ import PropTypes from 'prop-types';
 //import antd components
 import { Divider } from 'antd';
 import { Grid, withStyles } from 'material-ui';
-import { ProposalCard } from '../functionals/';
-
-
 import { deshBoardHeaderStyle } from './styles';
 
 class DashBoardHeader extends Component {
@@ -40,8 +37,6 @@ class DashBoardHeader extends Component {
                 </Grid>
               </Grid>
             </Grid>
-
-
             :
             <Grid container md={12} className="no-margin">
 
@@ -50,7 +45,6 @@ class DashBoardHeader extends Component {
                   <span className="activeText">! </span> <div className="headingDiv"> Currently have <span className="activeText"> 12 </span>  Active Proposal</div>
                 </Grid>
               </Grid>
-              <ProposalCard />
             </Grid>
 
 

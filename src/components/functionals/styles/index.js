@@ -16,6 +16,16 @@ import userTwoFactorStyle from './userTwoFactorStyle';
 import proposalApprovalStyle from './proposalApprovalStyle';
 import proposalDescriptionStyle from './proposalDescriptionStyle';
 import proposalCommentsStyle from './proposalCommentsStyle';
+import newsCardStyle from './newsCardStyle';
+import newsBodyStyle from './newsBodyStyle';
+import newsDetailStyle from './newsDetailStyle';
+import newsAboutStyle from './newsAboutStyle';
+import newsFooterStyle from './newsFooterStyle';
+import newsHeaderStyle from './newsHeaderStyle';
+
+
+
+
 
 export {
   palette,
@@ -36,4 +46,10 @@ export {
   proposalDescriptionStyle,
   proposalApprovalStyle,
   proposalCommentsStyle,
+  newsCardStyle,
+  newsBodyStyle,
+  newsDetailStyle,
+  newsAboutStyle,
+  newsFooterStyle,
+  newsHeaderStyle
 };

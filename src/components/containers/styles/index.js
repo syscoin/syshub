@@ -6,6 +6,8 @@ import appRSiderStyle from './appRSiderStyle';
 import appLSiderStyle from './appLSiderStyle';
 import proposalStyle from './proposalStyle';
 import proposalDetailsStyle from './proposalDetailsStyle';
+import newsListStyle from './newsListStyle';
+import newsDetailStyle from './newsDetailStyle';
 
 export {
   palette,
@@ -16,4 +18,6 @@ export {
   appLSiderStyle,
   proposalStyle,
   proposalDetailsStyle,
+  newsListStyle,
+  newsDetailStyle
 };

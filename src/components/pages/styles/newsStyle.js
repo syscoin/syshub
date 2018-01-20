@@ -11,24 +11,9 @@ const secondary = palette.secondary;
 export default {
     root: {
         marginTop:'20px',
+        marginBottom: '30px',
         '& .title':{
             fontWeight:'lighter',
         },
-        '& .paper-container': {
-            padding:'20px 30px',
-            overflowY: 'auto'
-            ,
-            '& .gridList':{
-                width: 500,
-                height: 450,
-            }
-
-        }
     }
-
-
-
-
-
-
 }

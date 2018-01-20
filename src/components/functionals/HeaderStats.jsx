@@ -20,6 +20,7 @@ class HeaderStats extends Component {
       this.props.value.general.registered_masternodes_verified
     } / ${this.props.value.general.registered_masternodes}`;
     const totUsers = this.props.value.general.all_user;
+    //console.clear();
     return (
       <Grid container md={8} className={classes.root}>
         <Grid item className="common">

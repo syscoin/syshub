@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 import { Grid , withStyles } from 'material-ui';
-import { DashBoardHeader  } from '../functionals/';
+import { DashBoardHeader, ProposalCard  } from '../functionals/';
 
 // import components
 import { proposalStyle  } from './styles';
@@ -18,14 +18,14 @@ export class ProposalList extends Component {
   }
   render() {
 
-   const  classes  = this.props.classes;
+   const { classes , switchView}  = this.props;
    console.clear();
    console.log("-- ProposalList this.props  "  ,this.props);
 
     return (
       <Grid md={12} style={proposalStyle.root}>
           <DashBoardHeader data={{showHeader:"proposalList"}} />
-
+          <ProposalCard switchView={ switchView }/>
       </Grid>
     );
   }

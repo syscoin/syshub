@@ -9,7 +9,6 @@ const white = palette.white;
 export default {
   root: {
     margin: 0,
-    maxWidth: 'calc(100% - 20px)',
     "& .headingView": {
       backgroundColor: '#1991CC',
       height: "50px",
