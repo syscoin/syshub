@@ -9,17 +9,10 @@ class SMSTest extends Component {
   constructor() {
     super();
 
-<<<<<<< HEAD
-=======
-    this.state = {
-      appVerifier: null,
-    };
->>>>>>> e55fcddef2f2207d394b9845725c16bfa1b891f2
     this.registerPhone = this.registerPhone.bind(this);
   }
 
   componentDidMount() {
-<<<<<<< HEAD
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha);
 
     window.recaptchaVerifier.render().then(function(widgetId) {
@@ -29,24 +22,6 @@ class SMSTest extends Component {
 
   comonentWillMount() {
     fire.auth().useDeviceLanguage();
-=======
-    /* fire.auth().useDeviceLanguage(); */
-    const reCaptchaCont = document.getElementById('submitBtn');
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(reCaptchaCont, {
-      size: 'invisible',
-      callback: function(response) {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // ...
-        alert(response);
-      },
-      'expired-callback': function() {
-        // Response expired. Ask user to solve reCAPTCHA again.
-        // ...
-      },
-    });
-    console.log('ACZ (window) --> ', window);
-    console.log('ACZ (this) --> ', this);
->>>>>>> e55fcddef2f2207d394b9845725c16bfa1b891f2
   }
 
   registerPhone() {
@@ -57,49 +32,59 @@ class SMSTest extends Component {
       alert('Please include area code as well as your 7 digit phone number');
     }
 
-    if (appVerifier && userPhone) {
-      fire
-        .auth()
-        .signInWithPhoneNumber(`+${userPhone}`, appVerifier)
-        .then(confirmResult => {
-          return confirmResult;
-        })
-        .then(confirmResult => {
-          return swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Success',
-            text: 'Please provide use the verification code to continue',
-            icon: 'success',
-            buttons: true,
-            dangerMode: false,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Confirmation code here',
-                type: 'text'
-              }
+    fire
+      .auth()
+      .signInWithPhoneNumber(`+1${userPhone}`, appVerifier)
+      .then(function(confirmationResult) {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        console.log(confirmationResult);
+        return confirmationResult;
+      })
+      .then(confirmResult => {
+        swal({
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Success',
+          text: 'Please provide use the verification code to continue',
+          icon: 'success',
+          buttons: true,
+          dangerMode: false,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Confirmation code here',
+              type: 'text'
             }
-          })
-            .then(code => {
-              if (code) {
-                return confirmResult.confirm(code);
-              }
-            })
-            .then(result => {
-              console.log(result);
-            })
-            .catch(err => {
-              swal({ title: 'Error', text: `${err}`, icon: 'error' });
-            });
+          }
         })
-        .catch(err => {
-          swal({ title: 'Error', text: `${err}`, icon: 'error' });
-        });
-    }
-  }
+          .then(value => {
+            return confirmResult.confirm(value);
+          })
+          .then(result => {
+            return fire.auth().signOut();
+          })
+          .then(() => {
+            const email = this.email.value;
+            const password = this.password.value;
 
-  callback() {}
+            return fire.auth().signInWithEmailAndPassword(email, password);
+          })
+          .then(user => {
+            swal({
+              title: 'Sucess',
+              text: `${user.email} signed in with sms verification`,
+              icon: 'success'
+            });
+          })
+          .catch(err => {
+            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+          });
+      })
+      .catch(function(error) {
+        swal({ title: 'Oops...', text: `${error}`, icon: 'error' });
+      });
+  }
 
   render() {
     const siteKeyRecap = process.env.RECAPTCHA_SITE;
@@ -108,18 +93,11 @@ class SMSTest extends Component {
       <div style={{ marginTop: '200px' }}>
         <h2>Auth</h2>
         <p>SMS Test</p>
-<<<<<<< HEAD
+        <input ref={input => (this.email = input)} type="text" placeholder="Email" />
+        <input ref={input => (this.password = input)} type="text" placeholder="Password" />
         <input ref={input => (this.phoneInput = input)} type="tel" />
         <div ref={ref => (this.recaptcha = ref)} />
         <button onClick={this.registerPhone}>SMS</button>
-=======
-        <p>Test Key Recap: {siteKeyRecap}</p>
-        <p>Test Key Fire: {siteKeyFire}</p>
-        <div id="recaptcha-container" style={{ height: '100px' }} />
-        <button id="submitBtn" onClick={this.registerPhone}>
-          SMS
-        </button>
->>>>>>> e55fcddef2f2207d394b9845725c16bfa1b891f2
       </div>
     );
   }
