@@ -15,26 +15,21 @@ import { Stats, WelcomeBox } from '../functionals';
 class News extends Component {
   constructor(props){
     super(props);
-
-    this.state = { view: 'list', newsId: null };
-    this.selectNews = this.selectNews.bind(this);
-  }
-
-  selectNews(newId){
-    this.setState({
-      newsId: newId,
-      view: 'details'
-    });
   }
 
   render() {
-    const { classes } = this.props;
-    
+    const { classes, app } = this.props;
+    console.log('News -> Props:', this.props.app.showPage);
     return (
       <div className={classes.root}>
-        <h1 className='title'>NEWS AND ANNOUNCEMENTS {this.state.view}</h1>
+        <h1 className='title'>NEWS AND ANNOUNCEMENTS </h1>
         <Paper className='paper-container' elevation={4}>
-          {this.state.view === 'list'? <NewsList selectNews={this.selectNews}/> : <NewsDetial/>}
+          {
+            {
+              news: <NewsList/>,
+              newsDetail: <NewsDetial/>
+            }[this.props.app.showPage]
+          }
         </Paper>
       </div>
     );
@@ -42,7 +37,9 @@ class News extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    app: state.app
+  };
 };
 
 const dispatchToProps = dispatch => {

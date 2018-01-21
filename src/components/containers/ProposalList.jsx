@@ -16,11 +16,11 @@ export class ProposalList extends Component {
     super(props);
   }
   render() {
-    const { classes, switchView } = this.props;
+    const { classes } = this.props;
     return (
       <Grid md={12} style={proposalStyle.root}>
         <DashBoardHeader data={{ showHeader: "proposalList" }} />
-        <ProposalCard switchView={switchView} />
+        <ProposalCard />
       </Grid>
     );
   }

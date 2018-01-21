@@ -2,13 +2,15 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import actions from '../../redux/actions';
+import { connect } from 'react-redux';
 
 //import antd components
 import { Divider, Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
 
-
+// import style
 import { proposalCardStyle } from './styles';
 
 class ProposalCard extends Component {
@@ -52,11 +54,11 @@ class ProposalCard extends Component {
   }
 
   render() {
-    const {classes, switchView} = this.props,
-      docIcon = require('../../assets/img/png_stats_propposal_votes.png'),
+    const {classes, setPage} = this.props;
+    const docIcon = require('../../assets/img/png_stats_propposal_votes.png'),
       voteUpIcon = require('../../assets/img/png_button_up.png'),
       voteDownIcon = require('../../assets/img/png_button_down.png');
-
+    console.log('Props', this.props);
     return (
       <Grid container className={classes.proposalRoot}>
 
@@ -78,7 +80,7 @@ class ProposalCard extends Component {
                 <Grid item md={7} className="proposalInfoView">
                   {/* <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button> */}
                   <Button className={proposal.active ? "activeVoteButton" : "voteButton"}>Vote on Proposal</Button>
-                  <h1 className="proposalHeading" onClick={()=>{ switchView('details') }}> {proposal.name}</h1>
+                  <h1 className="proposalHeading" onClick={()=> setPage('proposalDetail')}> {proposal.name}</h1>
                   <div className="proposalDetail">{proposal.detail}</div>
                 </Grid>
 
@@ -114,8 +116,15 @@ class ProposalCard extends Component {
   }
 }
 
-ProposalCard.propTypes = {
-  classes: PropTypes.object.isRequired,
+const stateToProps = state => {
+  return {};
 };
 
-export default withStyles(proposalCardStyle)(ProposalCard);
+const dispatchToProps = dispatch => {
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
+};
+
+
+export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));
