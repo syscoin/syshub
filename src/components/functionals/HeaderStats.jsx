@@ -22,7 +22,7 @@ class HeaderStats extends Component {
     const totUsers = this.props.value.general.all_user;
     //console.clear();
     return (
-      <Grid container md={8} className={classes.root}>
+      <Grid container md={7} className={classes.root}>
         <Grid item className="common">
           <img
             src={require('../../assets/img/png_stasts_sys.png')}

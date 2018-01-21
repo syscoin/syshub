@@ -36,7 +36,7 @@ class HeaderNav extends Component {
     const contactIcon  = require('../../assets/img/png_menu_contact.png');
     console.log(currentUser);
     return (
-      <Grid container md={4} className={classes.root} >
+      <Grid container md={5} className={classes.root} >
 
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
