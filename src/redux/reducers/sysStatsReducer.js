@@ -67,10 +67,19 @@ const initialState = {
 
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
-    case constants.SYS_STATS_SET:
-      return {
-        ...state,
-      };
+    case constants.SYS_STATS_GET:
+      const value = state.value;
+      const newValue = action.data;
+      const statsChanged = value === newValue ? false : true;
+      console.log('ACZ (Value): ', value);
+      console.log('ACZ (newValue): ', newValue);
+      console.log('ACZ (ValueSelector): ', statsChanged);
+
+      return statsChanged
+        ? { ...state, value: newValue, valueOld: value }
+        : {
+            ...state,
+          };
 
     default:
       return state;

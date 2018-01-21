@@ -46,7 +46,6 @@ class SiderMenu extends Component {
             default:
               showMe = true;
           }
-          console.log('ACZ (showMe) --> ', showMe);
           return showMe ? (
             <button
               key={item.key}

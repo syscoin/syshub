@@ -73,10 +73,6 @@ const menuItems = [
 ];
 
 class AppLSider extends Component {
-  state = {
-    pageActive: 'account',
-  };
-
   itemClick(pageActive) {
     this.props.setPage(pageActive);
   }
