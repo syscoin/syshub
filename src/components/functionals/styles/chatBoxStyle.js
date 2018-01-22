@@ -3,6 +3,8 @@ import palette from './palette';
 const white = palette.white;
 const primary = palette.primary;
 const grey = palette.textLignt;
+const greyDark = palette.greyDark;
+
 
 export default {
   root: {
@@ -49,8 +51,9 @@ export default {
               color: primary,
             },
             '& .chatContent-secondaryText': {
-              color: grey,
+              color: greyDark,
               padding: '0px 0px 0px 5px',
+              fontWeight:'100'
             },
           },
         },

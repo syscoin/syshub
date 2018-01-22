@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userProfileStyle } from './styles'
 import { Button, Grid, FormGroup, Input, } from 'material-ui';
+
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 
@@ -19,12 +20,18 @@ class UserProfile extends Component {
         <Grid container>
           {/* profile text */}
           <Grid md={12}>
-            <h1 className='profile-text'>Profile</h1>
+            <h1 className='profile-heading'>Profile</h1>
           </Grid>
           {/* profile image grid */}
-          <Grid md={2} className="profile-image-grid">
-            <img src={avatar} alt="no user image" className="user-image" />
-            <span className="changePhoto-span"><a className="link-color"> click to change photo</a></span>
+          <Grid md={3} className="profile-image-grid">
+            <div className="avatar-container upload-image-container">
+              <input type="file"/>
+              <img src={avatar} alt="no user image" className="user-image" />
+            </div>
+            <span className="change-photo-btn upload-image-container">
+              <input type="file"/>
+              <a className="link-color"> click to change photo</a>
+            </span>
           </Grid>
           {/* profile credential grid */}
           <Grid md={9} className='profile-credential-grid'>
@@ -39,7 +46,6 @@ class UserProfile extends Component {
                 id="user-name"
                 className="input-field"
                 placeholder="Enter Username"
-                onChange={e => this.checkUsername(e)}
               />
             </FormGroup>
 
@@ -62,7 +68,7 @@ class UserProfile extends Component {
 
           </Grid>
           <Grid className="update-button-grid">
-            <Button raised color="primary" className="update-button" innerTextColor="red">Update Profile</Button>
+            <Button raised className="update-button">Update Profile</Button>
           </Grid>
         </Grid>
 

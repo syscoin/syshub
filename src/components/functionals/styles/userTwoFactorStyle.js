@@ -11,14 +11,15 @@ const secondary = palette.secondary;
 export default {
   root: {
     paddingTop: '20px',
-    '& .MuiButton-label-17': {
+    '& button span': {
       color: 'white',
       textTransform: 'capitalize',
     },
     '& .userTwoFactor-heading': {
       marginLeft: '20px',
-      fontWeight: 'lighter',
+      fontWeight: '100',
       fontSize: '21px',
+      borderBottom: '0.1px solid ' + greyLight,
     },
     '& .heading-2FA': {
       color: primaryLight,
@@ -27,8 +28,9 @@ export default {
       marginTop: '-20px',
       '& .enable2FA-note': {
         color: primaryLight,
-        margin: '20px 40px',
+        margin: '20px 0px 10px 40px',
         display: 'block',
+        fontWeight: '100',
       },
       '& .div-margin': {
         marginLeft: '40px',
@@ -79,10 +81,12 @@ export default {
         '& .code-Input-field': {
           color: primaryLight,
           width: 'calc(50% - 20px)',
-          marginLeft: '30px',
+          marginLeft: '10px',
           display: 'inline-block',
           border: 'thin solid ' + greyLight,
           padding: '5px',
+          verticalAlign: 'top',
+          marginTop: 20,
           '&::before': {
             backgroundColor: 'transparent',
           },
@@ -92,22 +96,24 @@ export default {
         padding: '0px 10px',
         minHeight: '25px',
         borderRadius: '5px',
-        background: primary,
       },
       '& .qr-div': {
         marginLeft: '150px',
-        marginTop: '-50px',
+        marginTop: '-10px',
       },
     },
     '& .userTwoFactor-right-grid': {
       marginTop: '50px',
+      '& ol': {
+        fontWeight: '100',
+      },
       '& .enableInstruction-heading': {
         fontSize: '20px',
         color: primary,
         fontWeight: 'bold',
         padding: '0px 30px',
       },
-      '& .gogleAuthApp-text': {
+      '& .googleAuthApp-text': {
         color: primary,
         fontWeight: 'bold',
       },
@@ -124,7 +130,16 @@ export default {
       padding: '20px',
       '& .twoFactor-button': {
         borderRadius: '5px',
-        background: primary,
+        padding: '8px',
+        minHeight: '25px',
+        width: '150px',
+        fontSize: '16px',
+      },
+    },
+    '& button': {
+      backgroundColor: primary,
+      '&:hover': {
+        backgroundColor: primaryLight,
       },
     },
   },

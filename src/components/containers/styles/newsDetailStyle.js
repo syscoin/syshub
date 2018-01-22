@@ -15,12 +15,8 @@ export default {
             fontWeight:'lighter',
         },
         '& .paper-container': {
-            padding:'20px 20px',
-            '& .gridList':{
-                width: 500,
-                height: 450,
-            }
-
+            padding:'20px 30px',
+            overflowY: 'auto'
         }
     }
 
