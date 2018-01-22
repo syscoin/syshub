@@ -79,7 +79,9 @@ class ProposalCard extends Component {
   }
 
   render() {
-    const { classes, selectProposal } = this.props;
+    const { classes, selectProposal, user } = this.props;
+
+
     const docIcon = require('../../assets/img/png_stats_propposal_votes.png'),
       voteUpIcon = require('../../assets/img/png_button_up.png'),
       voteDownIcon = require('../../assets/img/png_button_down.png');
@@ -88,7 +90,7 @@ class ProposalCard extends Component {
       <Grid container className={classes.proposalRoot}>
         {this.state.proposalList.map((proposal, index) => {
           return (
-            <Grid container md={12} className="proposalRow" key={index}>
+            <Grid container md={12} className="proposalRow" key={proposal.id}>
               <Grid item md={2} className="proposalView">
                 <Progress
                   type="circle"
@@ -125,7 +127,7 @@ class ProposalCard extends Component {
                 <div className="proposalDetail">{proposal.detail}</div>
               </Grid>
 
-              {proposal.id == 1 ? (
+              {index == 0 && user ? (
                 <Grid item md={3} className="top-vote__wrapper">
                   <div className="vote-up">
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
