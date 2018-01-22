@@ -23,7 +23,7 @@ import {
   UserAccountTest
 } from '../pages';
 
-import SMSTest from '../pages/SMSTest';
+import UserTwoFactorTest from '../functionals/UserTwoFactorTest';
 
 //Import Styles
 import { contentStyle } from './styles';
@@ -40,7 +40,7 @@ class AppContent extends Component {
         <Content style={contentStyle.wraper}>
           {
             {
-              ['home']: <SMSTest />,
+              ['home']: <Home />,
               ['dashBoard']: <DashBoard />,
               ['newProposal']: <NewProposal />,
               ['news']: <News />,

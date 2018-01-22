@@ -28,13 +28,13 @@ class SMSTest extends Component {
     const appVerifier = window.recaptchaVerifier;
     const userPhone = this.phoneInput.value;
 
-    if (userPhone.length !== 10) {
-      alert('Please include area code as well as your 7 digit phone number');
+    if (userPhone.length === 0) {
+      alert('Please include a phone number to recieve sms notification');
     }
 
     fire
       .auth()
-      .signInWithPhoneNumber(`+1${userPhone}`, appVerifier)
+      .signInWithPhoneNumber(`+${userPhone}`, appVerifier)
       .then(function(confirmationResult) {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
