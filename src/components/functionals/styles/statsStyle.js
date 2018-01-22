@@ -38,10 +38,13 @@ export default {
   },
   statsTextHeading: {
     lineHeight: '2em',
-    fontSize: '1.1em',
+    fontSize: '1.2em',
     fontWeight: 'bold',
     marginTop: '20px',
     height: '60px',
+    '& h1': {
+      color: primary,
+    },
   },
   statsText: {
     color: 'rgb(189, 195, 199)',

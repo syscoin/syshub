@@ -233,7 +233,6 @@ class Register extends Component {
               <FormGroup className="form-group form-button-group">
                 <Button
                   type="submit"
-                  color="primary"
                   className={classes.button}
                 >
                   Register

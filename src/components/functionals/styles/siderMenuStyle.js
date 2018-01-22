@@ -22,10 +22,16 @@ export default {
     borderWidth: '1px 0 0 0',
     borderStyle: 'solid',
     borderColor: grey,
+    '&:hover': {
+      background: `linear-gradient(${greyLight}, ${white})`,
+    },
   },
   buttonActive: {
     extend: 'button',
     background: primary,
+    '&:hover': {
+      background: primary,
+    },
   },
   lastBorder: {
     borderTop: `1px solid ${grey}`,

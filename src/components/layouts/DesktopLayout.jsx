@@ -20,11 +20,21 @@ class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <AppHeader />
+        <AppHeader/>
         <div style={desktopLayoutStyle.wraper}>
-          <AppLSider />
-          <AppContent/>
-          <AppRSider />
+
+          <div  style={desktopLayoutStyle.leftSlider}>
+            <AppLSider/>
+          </div>
+          
+          <div style={desktopLayoutStyle.appContent}>
+            <AppContent/>
+          </div>
+          
+          <div style={desktopLayoutStyle.rightSlider}>
+          <AppRSider/>
+          </div>
+        
         </div>
         <AppFooter />
       </Layout>

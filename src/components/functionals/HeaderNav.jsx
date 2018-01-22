@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 import { doLogout } from '../../firebase';
+import { Grid, withStyles } from 'material-ui';
 
 //Import UI Framework components
 import { Button } from 'antd';
@@ -28,79 +29,76 @@ class HeaderNav extends Component {
   }
 
   render() {
+    const classes = this.props.classes;
     const { currentUser } = this.props.app;
+    const chatIcon  = require('../../assets/img/png_menu_chat.png');
+    const homeIcon  = require('../../assets/img/png_menu_home.png');
+    const contactIcon  = require('../../assets/img/png_menu_contact.png');
     console.log(currentUser);
     return (
-      <div style={headerNavStyle.wraper}>
-        <div style={headerNavStyle.common}>
-          <span style={headerNavStyle.TxtRegular}>{`Welcome  `}</span>
-          <span style={headerNavStyle.TxtBold}>
+      <Grid container md={4} className={classes.root} >
+
+        <Grid item className="common">
+          <span className="TxtRegular">{`Welcome  `}</span>
+          <span className="TxtBold">
             {currentUser
               ? currentUser.displayName || currentUser.email
               : 'Guest'}
           </span>
-        </div>
-        <div style={headerNavStyle.common}>
+        </Grid>
+        <Grid item className="common">
           <ButtonGroup>
             <Button
               size={'large'}
               type="primary"
               ghost
-              style={headerNavStyle.button}
+              className="button"
               onClick={() => this.props.toggleChat()}
             >
-              <img
-                src={require('../../assets/img/png_menu_chat.png')}
-                height="30"
-              />
+              <img src={chatIcon} alt="chat icon" height="30" />
             </Button>
             <Button
               size={'large'}
               type="primary"
               ghost
-              style={headerNavStyle.button}
+              className="button"
               onClick={() => this.props.setPage('home')}
             >
-              <img
-                src={require('../../assets/img/png_menu_home.png')}
-                height="30"
-              />
+              <img src={homeIcon} height="30"  alt="home icon"/>
             </Button>
             <Button
+
               size={'large'}
               type="primary"
               ghost
-              style={headerNavStyle.button}
+              className="button"
             >
-              <img
-                src={require('../../assets/img/png_menu_contact.png')}
-                height="30"
-              />
+              <img src={contactIcon} height="30" alt="contact icon" />
             </Button>
             {currentUser ? (
               <Button
                 size={'large'}
                 type="primary"
                 ghost
-                style={headerNavStyle.button}
+                className="button logout-btn"
                 onClick={() => this.doLogout()}
               >
-                <div style={headerNavStyle.common}>Logout</div>
+                <div className={headerNavStyle.common}>Logout</div>
               </Button>
             ) : (
-              <Button
-                size={'large'}
-                type="primary"
-                ghost
-                style={headerNavStyle.button}
-                onClick={() => this.setPage('login')}
-              >
-                <div style={headerNavStyle.common}>Login</div>
-              </Button>
-            )}
+                <Button
+                  size={'large'}
+                  type="primary"
+                  ghost
+                  className="button login-btn"
+                  onClick={() => this.setPage('login')}
+                >
+                  <div className="common">Login</div>
+                </Button>
+              )}
           </ButtonGroup>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -119,4 +117,10 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(HeaderNav);
+HeaderNav.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(headerNavStyle)(HeaderNav)
+);

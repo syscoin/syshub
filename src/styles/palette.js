@@ -6,13 +6,13 @@ const basicColors = {
   greyDark: '#464745',
   grey: '#bdc3c7',
   greyLight: '#F0F2F5',
-  secondary: '#1abc9c'
+  secondary: '#1abc9c',
 };
 
-const textColors = {
+const themeColors = {
   textBlue: basicColors.primary,
   text: basicColors.greyDark,
   textLight: basicColors.grey,
 };
 
-export default { ...basicColors, ...textColors };
+export default { ...basicColors, ...themeColors };

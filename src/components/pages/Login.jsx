@@ -75,7 +75,7 @@ class Login extends Component {
               {/* For Confirm Password */}
               <FormGroup className="form-group">
                 <span htmlFor="confirm-password" className="label">
-                  {`Confirm Password: `}
+                  {`Captcha: `}
                 </span>
                 <div className="recaptcha">
                   <Recaptcha
