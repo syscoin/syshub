@@ -54,7 +54,7 @@ class ProposalCard extends Component {
   }
 
   render() {
-    const {classes, setPage} = this.props;
+    const {classes, selectProposal} = this.props;
     const docIcon = require('../../assets/img/png_stats_propposal_votes.png'),
       voteUpIcon = require('../../assets/img/png_button_up.png'),
       voteDownIcon = require('../../assets/img/png_button_down.png');
@@ -80,7 +80,7 @@ class ProposalCard extends Component {
                 <Grid item md={7} className="proposalInfoView">
                   {/* <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button> */}
                   <Button className={proposal.active ? "activeVoteButton" : "voteButton"}>Vote on Proposal</Button>
-                  <h1 className="proposalHeading" onClick={()=> setPage('proposalDetail')}> {proposal.name}</h1>
+                  <h1 className="proposalHeading" onClick={(index)=> selectProposal(index)}> {proposal.name}</h1>
                   <div className="proposalDetail">{proposal.detail}</div>
                 </Grid>
 
@@ -122,7 +122,6 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
   };
 };
 

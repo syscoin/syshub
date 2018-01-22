@@ -3,23 +3,34 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import PropTypes from 'prop-types';
-import { Grid , withStyles } from 'material-ui';
-import { ProposalList  } from '../containers/ProposalList';
-import { ProposalDetail  } from '../containers/ProposalDetail';
-import { DashBoardHeader  } from '../functionals/';
+import { Grid, withStyles } from 'material-ui';
+import { ProposalList } from '../containers/ProposalList';
+import { ProposalDetail } from '../containers/ProposalDetail';
+import { DashBoardHeader } from '../functionals/';
 
 
 // import components
-import { dashboardStyle  } from './styles';
+import { dashboardStyle } from './styles';
 
 class DashBoard extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.state = {
+      showContainer: 'dashBoard',
+      proposalID: ''
+    }
+    this.handleDashboard = this.handleDashboard.bind(this)
+  }
+  //changing state with this function
+  handleDashboard(value) {
+    this.setState({
+      showContainer: 'proposalDetail',
+      proposalID: value
+    })
   }
 
-  
   render() {
-   const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
 
@@ -27,15 +38,15 @@ class DashBoard extends Component {
         {' '}
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
-          {/* {
+        {/* {
             this.state.view =='list' ? <ProposalList  switchView={ this.switchView }/> : <ProposalDetail />
           } */}
+        {
           {
-            {
-              dashBoard: <ProposalList/>,
-              proposalDetail: <ProposalDetail />
-            }[this.props.app.showPage]
-          }
+            dashBoard: <ProposalList selectProposal={this.handleDashboard} />,
+            proposalDetail: <ProposalDetail />
+          }[this.state.showContainer]
+        }
       </Grid>
     );
   }
@@ -43,7 +54,6 @@ class DashBoard extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app
   };
 };
 
