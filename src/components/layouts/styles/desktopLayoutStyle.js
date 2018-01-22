@@ -11,6 +11,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'start',
     minWidth: 'calc(100vw - 20px)',
+    minHeight: 750
   },
   appContent: {
     width: 'calc(60vw - 40px)',

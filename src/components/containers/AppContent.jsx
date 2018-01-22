@@ -39,8 +39,10 @@ class AppContent extends Component {
             {
               home: <Home />,
               dashBoard: <DashBoard />,
+              proposalDetail: <DashBoard />, // Todo: Quite Confusion that how we are going to manage for sub page
               newProposal: <NewProposal />,
               news: <News />,
+              newsDetail: <News />, // Todo: Quite Confusion that how we are going to manage for sub page
               userAccount: <UserAccount />,
               faq: <Faq />,
               masterNode: <MasterNode />,

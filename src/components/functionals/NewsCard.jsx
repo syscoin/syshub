@@ -61,7 +61,7 @@ class NewsCard extends Component {
 
   render() {
 
-    const { classes, selectNews } = this.props;
+    const { classes, setPage } = this.props;
     const noImage = require('../../assets/img/no-user-image.gif')
     return (
       <div className={classes.root}>
@@ -92,7 +92,7 @@ class NewsCard extends Component {
                 </Grid>
                 {/* show more button */}
                 <Grid md={12} className='showMoreButton-grid'>
-                  <Button raised onClick={()=>selectNews(1)}> Show More </Button>
+                  <Button raised onClick={()=> setPage('newsDetail')}> Show More </Button>
                 </Grid>
               </Grid>
               <Divider className={classes.divider}/>
@@ -111,7 +111,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(newsCardStyle)(NewsCard));

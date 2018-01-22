@@ -80,9 +80,8 @@ export default {
                 },
                 "& .proposalHeading": {
                     color: primaryDark,
-                    margin: "0px",
-                    marginTop: "10px",
-                    cursor: 'pointer'
+                    margin: 0,
+                   cursor: 'pointer'
                 },
                 "& .proposalDetail": {
                     color: gray,
