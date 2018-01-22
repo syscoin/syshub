@@ -18,43 +18,58 @@ class ProposalCard extends Component {
     super(props);
     this.state = {
       proposalList: [{
-          name: "Proposal 1",
-          detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
-          upVote: 23,
-          downVote: 8,
-          progress: 10,
-          active: true,
-          id: 1
-        },{
-          name: "Proposal 2",
-          detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
-          upVote: 12,
-          downVote: 1,
-          progress: 20,
-          active: false,
-          id: 2
-        },{
-          name: "Proposal 3",
-          detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
-          upVote: 36,
-          downVote: 9,
-          progress: 60,
-          active: false,
-          id: 3
-        },{
-          name: "Proposal 4",
-          detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
-          upVote: 23,
-          downVote: 8,
-          progress: 90,
-          active: false,
-          id: 4
-        }]
+        name: "Proposal 1",
+        detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
+        upVote: 23,
+        downVote: 8,
+        progress: 10,
+        active: true,
+        id: 1
+      }, {
+        name: "Proposal 2",
+        detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
+        upVote: 12,
+        downVote: 1,
+        progress: 20,
+        active: false,
+        id: 2
+      }, {
+        name: "Proposal 3",
+        detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
+        upVote: 36,
+        downVote: 9,
+        progress: 60,
+        active: false,
+        id: 3
+      }, {
+        name: "Proposal 4",
+        detail: "Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.",
+        upVote: 23,
+        downVote: 8,
+        progress: 90,
+        active: false,
+        id: 4
+      }]
+    }
+  }
+
+
+  voteUp(vote) {
+    if (this.props.user) {
+      console.log(this.props.user.displayName + " Voted For Up " + " for id " + vote.id)
+    }
+  }
+
+
+  voteDown(vote) {
+    if (this.props.user) {
+      console.log(this.props.user.displayName + " Voted For Down " + " for id " + vote.id)
     }
   }
 
   render() {
-    const {classes, selectProposal} = this.props;
+    console.log('Props User', this.props.user)
+    const { classes, selectProposal } = this.props;
     const docIcon = require('../../assets/img/png_stats_propposal_votes.png'),
       voteUpIcon = require('../../assets/img/png_button_up.png'),
       voteDownIcon = require('../../assets/img/png_button_down.png');
@@ -68,19 +83,19 @@ class ProposalCard extends Component {
             return (
               <Grid container md={12} className="proposalRow" key={index}>
                 <Grid item md={2} className="proposalView">
-                  <Progress 
-                    type="circle" 
-                    percent={proposal.progress} 
-                    format={percent => <img src={docIcon} className="progressIcon" />} 
-                    className="progress-dial" 
+                  <Progress
+                    type="circle"
+                    percent={proposal.progress}
+                    format={percent => <img src={docIcon} className="progressIcon" />}
+                    className="progress-dial"
                     strokeWidth={8}
-                    status={proposal.progress<50?'exception':'success'} />
+                    status={proposal.progress < 50 ? 'exception' : 'success'} />
                   <div className="proposalStatusNo"><span className="proposalStatusActiveNo">{proposal.progress} </span>/100</div>
                 </Grid>
                 <Grid item md={7} className="proposalInfoView">
                   {/* <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button> */}
                   <Button className={proposal.active ? "activeVoteButton" : "voteButton"}>Vote on Proposal</Button>
-                  <h1 className="proposalHeading" onClick={(index)=> selectProposal(index)}> {proposal.name}</h1>
+                  <h1 className="proposalHeading" onClick={(index) => selectProposal(index)}> {proposal.name}</h1>
                   <div className="proposalDetail">{proposal.detail}</div>
                 </Grid>
 
@@ -97,11 +112,11 @@ class ProposalCard extends Component {
                   </Grid>
                   :
                   <Grid item md={3} className="vote__wrapper">
-                    <div className='vote-up'>
+                    <div className='vote-up' onClick={() => this.voteUp(proposal)}>
                       <img src={voteUpIcon} className="smallUpVoteIcon" />
                       <span className="voteNumber">{proposal.upVote}</span>
                     </div>
-                    <div className='vote-down'>
+                    <div className='vote-down' onClick={() => this.voteDown(proposal)} >
                       <img src={voteDownIcon} className="smallDownVoteIcon" />
                       <span className="voteNumber">{proposal.downVote}</span>
                     </div>
@@ -117,7 +132,10 @@ class ProposalCard extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  console.log("state ============>>>> ", state)
+  return {
+    user: state.app.currentUser
+  };
 };
 
 const dispatchToProps = dispatch => {
