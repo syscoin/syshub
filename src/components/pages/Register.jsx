@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
+import { Input } from 'antd';
 
 import { fire } from '../../firebase';
 
@@ -136,7 +137,7 @@ class Register extends Component {
                 <span htmlFor="user-name" className="label">
                   {`Username: `}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerName = input)}
                   name="usernames"
                   id="user-name"
@@ -164,7 +165,7 @@ class Register extends Component {
                 <span htmlFor="user-email" className="label">
                   {`Email: `}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerEmail = input)}
                   name="email"
                   id="user-name"
@@ -178,7 +179,7 @@ class Register extends Component {
                 <span htmlFor="password" className="label">
                   Password:{' '}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerPsw = input)}
                   type="password"
                   id="password"
@@ -197,10 +198,11 @@ class Register extends Component {
                 <span htmlFor="confirm-password" className="label">
                   Confirm Password:{' '}
                 </span>
-                <input
+                <Input
                   type="password"
                   id="confirm-password"
                   className="input-field"
+                  type="password"
                   placeholder="**************"
                 />
               </FormGroup>

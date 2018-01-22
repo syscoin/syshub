@@ -33,6 +33,7 @@ export default {
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
         padding: '10px',
+        marginTop: '10px',
         '&::before':{
           backgroundColor: 'transparent'
         }
@@ -81,5 +82,5 @@ export default {
     }
 
   },
-  
+
 };
