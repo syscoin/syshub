@@ -13,7 +13,7 @@ export default {
     '& .common': {
       padding: '0 15px',
       color: white,
-      fontSize: 15,
+      fontSize: 14,
       '& .icon': {
         height: 25,
         margin: '0px 10px',

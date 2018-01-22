@@ -12,5 +12,8 @@ export default {
     '& .title': {
       fontWeight: 'lighter',
     },
+    '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
+    '& .icon': { color: primary },
+    '& .iconTxt': { color: primary },
   },
 };

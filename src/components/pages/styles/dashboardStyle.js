@@ -9,9 +9,10 @@ const secondary = palette.secondary;
 export default {
   root: {
     '& .dashBoardheading': {
-      fontWeight: 'lighter'
-    }
-
+      fontWeight: 'lighter',
+    },
+    '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
+    '& .icon': { color: primary },
+    '& .iconTxt': { color: primary },
   },
-
 };

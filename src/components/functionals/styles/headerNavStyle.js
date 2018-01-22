@@ -13,7 +13,7 @@ export default {
     '& .common': {
       color: white,
       padding: '0 15px',
-      fontSize: 15,
+      fontSize: 14,
       '& .icon': {
         height: 25,
       },
@@ -40,7 +40,7 @@ export default {
       '& .login-btn , .logout-btn': {
         padding: 0,
         '& div': {
-          fontSize: 16,
+          fontSize: 15,
           color: white,
         },
       },

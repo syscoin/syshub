@@ -23,8 +23,4 @@ class AppRSider extends Component {
   }
 }
 
-AppRSider.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default withRoot(AppRSider);
