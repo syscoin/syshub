@@ -8,7 +8,6 @@ import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 import { DashBoardHeader } from '../functionals/';
 
-
 // import components
 import { dashboardStyle } from './styles';
 
@@ -17,23 +16,24 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: ''
-    }
-    this.handleDashboard = this.handleDashboard.bind(this)
+      proposalID: '',
+    };
+    this.handleDashboard = this.handleDashboard.bind(this);
   }
   //changing state with this function
   handleDashboard(value) {
+    const container =
+      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
-      showContainer: 'proposalDetail',
-      proposalID: value
-    })
+      showContainer: container,
+      proposalID: value,
+    });
   }
 
   render() {
     const { classes } = this.props;
 
     return (
-
       <Grid md={12} className={classes.root}>
         {' '}
         {/* You can see the <strong>PROPOSAL DASHBOARD</strong> page{' '} */}
@@ -44,7 +44,9 @@ class DashBoard extends Component {
         {
           {
             dashBoard: <ProposalList selectProposal={this.handleDashboard} />,
-            proposalDetail: <ProposalDetail />
+            proposalDetail: (
+              <ProposalDetail backDashBoard={this.handleDashboard} />
+            ),
           }[this.state.showContainer]
         }
       </Grid>
@@ -53,8 +55,7 @@ class DashBoard extends Component {
 }
 
 const stateToProps = state => {
-  return {
-  };
+  return {};
 };
 
 const dispatchToProps = dispatch => {
@@ -64,4 +65,6 @@ DashBoard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(dashboardStyle)(DashBoard)
+);
