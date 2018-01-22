@@ -17,7 +17,8 @@ export default {
     width: 'calc(60vw - 40px)',
     height: 'calc(100vh - 115px)',
     overflowY: 'auto',
-    marginLeft: '20px'
+    marginLeft: 20,
+    marginTop: 10
   },
   leftSlider:{
     width: '20vw'

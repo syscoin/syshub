@@ -21,7 +21,7 @@ class UserAccount extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <h1 className='title'>Account Settings</h1>
+        <h1 className='title'>ACCOUNTS SETTINGS</h1>
         <Paper className='paper-container' elevation={4}>
          <UserProfile/>
          <UserChangePsw/>

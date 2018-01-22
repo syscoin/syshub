@@ -10,8 +10,6 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        marginTop:'20px',
-        marginBottom: '30px',
         '& .title':{
             fontWeight:'lighter',
         },

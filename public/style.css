@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,500,700,900');
-=======
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,200,400,500,700,900');
->>>>>>> c79845ff8417060a42f4c90ca7677690ae7ead6a
 
 html *:not(i) {
   font-family: 'Roboto', sans-serif !important;
