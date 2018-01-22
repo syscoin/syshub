@@ -15,12 +15,12 @@ class HeaderStats extends Component {
   render() {
     const classes = this.props.classes;
     const changeRate = `${(
-      1000 / this.props.value.exchange_rates.btc_usd
+      1000 / this.props.sysStatsValue.exchange_rates.btc_usd
     ).toFixed(5)} BTC/1000 USD`;
     const masternodes = `${
-      this.props.value.general.registered_masternodes_verified
-    } / ${this.props.value.general.registered_masternodes}`;
-    const totUsers = this.props.value.general.all_user;
+      this.props.sysStatsValue.general.registered_masternodes_verified
+    } / ${this.props.sysStatsValue.general.registered_masternodes}`;
+    const totUsers = this.props.sysStatsValue.general.all_user;
     //console.clear();
     return (
       <Grid container md={8} className={classes.root}>
@@ -62,7 +62,7 @@ HeaderStats.propTypes = {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    value: state.sysStats.value,
+    sysStatsValue: state.sysStats.value,
   };
 }
 
