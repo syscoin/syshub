@@ -88,7 +88,7 @@ class ProposalCard extends Component {
     console.log('Props', this.props);
     return (
       <Grid container className={classes.proposalRoot}>
-        {this.state.proposalList.map((proposal, index) => {
+        {this.state.proposalList.map((proposal) => {
           return (
             <Grid container md={12} className="proposalRow" key={proposal.id}>
               <Grid item md={2} className="proposalView">
@@ -110,47 +110,36 @@ class ProposalCard extends Component {
               </Grid>
               <Grid item md={7} className="proposalInfoView">
                 {/* <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button> */}
-                <Button
-                  className={
-                    proposal.active ? 'activeVoteButton' : 'voteButton'
-                  }
-                >
+                {/* <Button className={ proposal.active ? 'activeVoteButton' : 'voteButton' }>
                   Vote on Proposal
-                </Button>
-                <h1
-                  className="proposalHeading"
-                  onClick={index => selectProposal(index)}
-                >
-                  {' '}
-                  {proposal.name}
+                </Button> */}
+                <h1 className="proposalHeading" onClick={() => selectProposal(proposal.id)}>
+                  {' '} {proposal.name}
                 </h1>
                 <div className="proposalDetail">{proposal.detail}</div>
               </Grid>
 
-              {index == 0 && user ? (
+              {user ? (
                 <Grid item md={3} className="top-vote__wrapper">
-                  <div className="vote-up">
+                  {user?<div className="vote-text">Vote on Proposal</div>:null}
+                  <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                    <div className="voteNumber">{proposal.upVote}</div>
-                  </div>
-                  <div className="vote-down">
+                  </Button>
+                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
                     <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                    <div className="voteNumber">{proposal.downVote}</div>
+                  </Button>
+                  <div className="vote-count">
+                    <div className="vote-number">{proposal.upVote}</div>
+                    <div className="vote-number">{proposal.downVote}</div>
                   </div>
                 </Grid>
               ) : (
                 <Grid item md={3} className="vote__wrapper">
-                  <div
-                    className="vote-up"
-                    onClick={() => this.voteUp(proposal)}
-                  >
+                  <div className="vote-up">
                     <img src={voteUpIcon} className="smallUpVoteIcon" />
                     <span className="voteNumber">{proposal.upVote}</span>
                   </div>
-                  <div
-                    className="vote-down"
-                    onClick={() => this.voteDown(proposal)}
-                  >
+                  <div className="vote-down">
                     <img src={voteDownIcon} className="smallDownVoteIcon" />
                     <span className="voteNumber">{proposal.downVote}</span>
                   </div>
