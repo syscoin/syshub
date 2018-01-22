@@ -1,5 +1,5 @@
 import Rebase from 're-base';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import swal from 'sweetalert';
 
 const config = {
@@ -8,13 +8,17 @@ const config = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-const fire = firebase.initializeApp(config);
+firebase.initializeApp(config);
+
+const fire = firebase;
+
 const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = firebase.database().ref('messages');
+const usernames = fire.database().ref('usernames');
 // const currentUser
 
 //Some useful functions
@@ -29,7 +33,7 @@ const doLogin = (email, password) => {
       swal({
         title: 'Success',
         text: `Account: ${user.email} logged in.`,
-        icon: 'success',
+        icon: 'success'
       });
       //this.loginForm.reset();
     })
@@ -37,7 +41,7 @@ const doLogin = (email, password) => {
       swal({
         title: 'Oops...',
         text: `${err}`,
-        icon: 'error',
+        icon: 'error'
       });
     });
 };
@@ -50,9 +54,9 @@ const doLogout = () => {
       swal({
         title: 'Success',
         text: `Hope to see you soon`,
-        icon: 'success',
+        icon: 'success'
       });
     });
 };
 
-export { fire, base, messages, doRegister, doLogin, doLogout };
+export { fire, base, messages, doRegister, doLogin, doLogout, usernames };

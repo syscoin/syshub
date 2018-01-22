@@ -4,7 +4,7 @@ const initialState = {
   currentUser: null,
   showPage: 'home',
   showChat: true,
-  loading: false,
+  loading: false
 };
 
 const app = (state = initialState, action) => {
@@ -13,8 +13,7 @@ const app = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.data,
-        showPage: 'home',
-        loading: false,
+        loading: false
       };
 
     case constants.APP_USER_LOGOUT:
@@ -22,19 +21,19 @@ const app = (state = initialState, action) => {
         ...state,
         currentUser: action.data,
         showPage: 'home',
-        loading: false,
+        loading: false
       };
 
     case constants.APP_PAGE_SHOW:
       return {
         ...state,
-        showPage: action.data,
+        showPage: action.data
       };
 
     case constants.APP_CHAT_TOGGLE:
       return {
         ...state,
-        showChat: !state.showChat,
+        showChat: !state.showChat
       };
 
     case constants.APP_LOADING:

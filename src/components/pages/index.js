@@ -10,14 +10,4 @@ import UserAccount from './UserAccount';
 
 //Import testing components
 
-export {
-  Home,
-  Login,
-  Register,
-  DashBoard,
-  Faq,
-  MasterNode,
-  NewProposal,
-  News,
-  UserAccount,
-};
+export { Home, Login, Register, DashBoard, Faq, MasterNode, NewProposal, News, UserAccount };
