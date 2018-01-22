@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,400,500,700,900');
 
 html *:not(i) {
   font-family: 'Roboto', sans-serif !important;
   color: #464745;
-  primary-color: #ff0000;
 }

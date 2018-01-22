@@ -11,10 +11,14 @@ export default {
     flexDirection: 'row',
     alignItems: 'start',
     minWidth: 'calc(100vw - 20px)',
+    minHeight: 750
   },
   appContent: {
-    width: 'calc(60vw - 60px)',
-    marginLeft: '20px'
+    width: 'calc(60vw - 40px)',
+    height: 'calc(100vh - 115px)',
+    overflowY: 'auto',
+    marginLeft: 20,
+    marginTop: 10
   },
   leftSlider:{
     width: '20vw'

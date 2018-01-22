@@ -51,7 +51,7 @@ class UserTwoFactor extends Component {
                         </div>
                         {/* QR code div */}
                         <div className='div-margin'>
-                            <Button raised color="primary" className="generate-button">Generate New</Button>
+                            <Button raised className="generate-button">Generate New</Button>
                            <div className="qr-div">
                             <QRCode value="http://www.google.com/" />,                               
                            </div>
@@ -77,7 +77,7 @@ class UserTwoFactor extends Component {
                         <div>
                             {/* instruction list */}
                             <ol>
-                                <li>Download and Install <span className="gogleAuthApp-text">Google Authenticator App</span>
+                                <li>Download and Install <span className="googleAuthApp-text">Google Authenticator App</span>
                                 <div>
                                     <img src={appStore} alt="app-store-pic"/>
                                     <img src={playStore} alt="play-store-pic"/>
@@ -85,13 +85,13 @@ class UserTwoFactor extends Component {
                                 </div>
                                 </li>
                                 <li>Generate a new 2FA secret key</li>
-                                <li>Scan the generated QR code with the <span className="gogleAuthApp-text">Google Authenticator App</span></li>
+                                <li>Scan the generated QR code with the <span className="googleAuthApp-text">Google Authenticator App</span></li>
                                 <li>Input the 2FA code from the app</li>
                             </ol>
                         </div>
                     </Grid>
                     <Grid className="twoFactor-button-grid">
-                        <Button raised color="primary" className="twoFactor-button">Enable 2FA</Button>
+                        <Button raised className="twoFactor-button">Enable 2FA</Button>
                     </Grid>
                 </Grid>
 

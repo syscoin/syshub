@@ -10,17 +10,8 @@ const secondary = palette.secondary;
 
 export default {
     root: {
-        '& .title':{
-            fontWeight:'lighter',
-        },
-        '& .paper-container': {
-            padding:'20px 20px',
-            '& .gridList':{
-                width: 500,
-                height: 450,
-            }
-
-        }
+        width: 'calc(100% - 40px)',
+        marginLeft: 20
     }
 
 

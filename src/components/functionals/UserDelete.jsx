@@ -26,15 +26,11 @@ class UserDelete extends Component {
                         <p className="UserDelete-text">Your account will be deleted completely, after a 7 day grace period. Your username will become available for registration and all your information will be remove from our database. This action cannot be undone</p>
                         <p className="UserDelete-text">Kindly Send us feedback if you are unsatisfied</p>
                         <p className="UserDelete-text">Type "DELETE" to confirm delete Action</p>
+                        <input type="text" className="input-field"/>
                     </Grid>
 
-
-
-
-
-
                     <Grid className="delete-button-grid">
-                        <Button raised color="primary" className="delete-button">Delete Account</Button>
+                        <Button raised className="delete-button">Delete Account</Button>
                     </Grid>
                 </Grid>
 

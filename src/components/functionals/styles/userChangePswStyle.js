@@ -10,14 +10,15 @@ const secondary = palette.secondary;
 export default {
   root: {
     paddingTop: '20px',
-    '& .MuiButton-label-17': {
+    '& button span': {
       color: 'white',
       textTransform: 'capitalize',
     },
-    '& .changePsw-text': {
+    '& .changePsw-heading': {
       marginLeft: '20px',
-      fontWeight: 'lighter',
+      fontWeight: '100',
       fontSize: '21px',
+      borderBottom: '0.1px solid ' + greyLight,
     },
     '& .changePsw-credential-grid': {
       marginTop: '-20px',
@@ -25,56 +26,93 @@ export default {
         color: primaryLight,
         margin: '20px 40px',
         display: 'block',
+        fontWeight: 100,
       },
-      '& .form-group': {
-        flexDirection: 'row',
-        marginTop: '10px',
-        display: 'block',
-        '& .label': {
-          width: '20%',
-          display: 'inline-block',
-          textAlign: 'right',
-          fontSize: '15px',
-          marginTop: '15px',
-          color: primary,
-          paddingRight: '10px',
-        },
-        '& .input-field': {
-          color: primaryLight,
-          width: 'calc(40% - 100px)',
-          margin: '0px 10px',
-          display: 'inline-block',
-          border: 'thin solid ' + greyLight,
-          padding: '10px',
-          '&::before': {
-            backgroundColor: 'transparent',
+
+      '& .formGroup-div': {
+        marginLeft: '20px',
+        '& .form-group': {
+          flexDirection: 'row',
+          marginTop: '10px',
+          display: 'block',
+          '& .label': {
+            width: '21%',
+            display: 'inline-block',
+            textAlign: 'right',
+            fontSize: '15px',
+            marginTop: '15px',
+            color: primary,
+            paddingRight: '10px',
+            fontWeight: 100,
           },
-        },
-        '& .validation-message': {
-          width: '25%',
-          marginLeft: '21px',
-          display: 'inline-block',
-          fontSize: '15px',
-          marginTop: '15px',
-          color: greyDark,
-          '& img': {
-            width: '20px',
-            marginRight: '5px',
+          '& .input-field': {
+            color: primaryLight,
+            width: 'calc(40% - 100px)',
+            margin: '0px 10px',
+            display: 'inline-block',
+            border: 'thin solid ' + greyLight,
+            padding: '10px',
+            '&::before': {
+              backgroundColor: 'transparent',
+            },
           },
-          '& .strong': {
-            color: secondary,
-            fontWeight: 'bold',
-            marginLeft: 5,
+          '& .validation-message': {
+            marginLeft: '21px',
+            display: 'inline-block',
+            fontSize: '15px',
+            marginTop: '15px',
+            color: greyDark,
+            fontWeight: '100',
+            '& img': {
+              width: '20px',
+              marginRight: '5px',
+            },
+            '& .strong': {
+              color: secondary,
+              fontWeight: 'bold',
+              marginLeft: 5,
+            },
           },
         },
       },
+      '& .input-password-feild': {
+        color: primaryLight,
+        width: 'calc(40% - 100px)',
+        margin: '0px 10px',
+        display: 'inline-block',
+        border: 'thin solid ' + greyLight,
+        '& .ReactPasswordStrength-input': {
+          width: '100%',
+          padding: '9px',
+          fontSize: '12px'
+        },
+        '& .ReactPasswordStrength-strength-desc': {
+          width: '100%',
+          marginRight: '-270px',
+          textTransform: 'capitalize',
+          padding: '5px',
+          fontStyle: 'normal'
+        }
+      },
+      '& .ant-form-explain': {
+        marginLeft: '220px',
+        padding: '5px'
+      }
     },
-    '& .update-button-grid': {
+    '& .confirmChange-button-grid': {
       padding: '20px',
-      '& .update-button': {
-        borderRadius: '5px',
-        background: primary,
-        color: `${white} !important`,
+    },
+    '& button': {
+      borderRadius: 5,
+      padding: 8,
+      minHeight: 25,
+      width: 150,
+      fontSize: 16,
+      height: 40,
+      color: white,
+      backgroundColor: primary,
+      '&:hover': {
+        backgroundColor: primaryLight,
       },
     },
   },

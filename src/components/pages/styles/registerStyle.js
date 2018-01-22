@@ -29,7 +29,7 @@ export default {
       },
       '& .input-field': {
         width: 'calc(45% - 20px)',
-        margin: '0px 10px',
+        margin: '10px 10px 0px ,10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
         padding: '10px',
@@ -81,5 +81,5 @@ export default {
     }
 
   },
-  
+
 };

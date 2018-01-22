@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 //Reducer imports
-import app from './appReducer';
-import sysStats from './sysStatsReducer';
-import proposals from './proposalReducer';
+import app from './appReducers';
+import sysStats from './sysStatsReducers';
+import proposals from './proposalReducers';
 
 export default combineReducers({
   app,

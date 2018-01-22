@@ -54,10 +54,6 @@ class AppContent extends Component {
   }
 }
 
-AppContent.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 const stateToProps = state => {
   return {
     app: state.app,
