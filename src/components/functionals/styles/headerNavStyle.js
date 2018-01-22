@@ -13,10 +13,9 @@ export default {
     '& .common': {
       color: white,
       padding: '0 15px',
-      fontSize: 12,
-      fontWeight: 100,
+      fontSize: 15,
       '& .icon': {
-        height: 22,
+        height: 25,
       },
       '& .TxtRegular': {
         padding: '0 15px',
@@ -34,15 +33,14 @@ export default {
       '& .button': {
         border: 'none',
         padding: '0 15px',
-        fontSize: 12,
-        fontWeight: 'bold',
         '& img': {
-          height: 22
-        }
+          height: 25,
+        },
       },
       '& .login-btn , .logout-btn': {
         padding: 0,
         '& div': {
+          fontSize: 16,
           color: white,
         },
       },

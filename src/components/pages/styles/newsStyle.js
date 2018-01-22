@@ -7,11 +7,10 @@ const greyLight = palette.greyLight;
 const grey = palette.grey;
 const secondary = palette.secondary;
 
-
 export default {
-    root: {
-        '& .title':{
-            fontWeight:'lighter',
-        },
-    }
-}
+  root: {
+    '& .title': {
+      fontWeight: 'lighter',
+    },
+  },
+};
