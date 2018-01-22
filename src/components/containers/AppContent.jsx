@@ -23,8 +23,6 @@ import {
   UserAccountTest
 } from '../pages';
 
-import UserTwoFactorTest from '../functionals/UserTwoFactorTest';
-
 //Import Styles
 import { contentStyle } from './styles';
 //import EmailModal from './the-modal';

@@ -13,6 +13,15 @@ import PropTypes from 'prop-types';
 import { registerStyle } from './styles';
 
 class Register extends Component {
+  constructor(props) {
+    super(props);
+
+    this.checkUsername = this.checkUsername.bind(this);
+    this.callback = this.callback.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
+    this.register = this.register.bind(this);
+  }
+
   state = {
     disabled: false,
     username: null
@@ -68,6 +77,15 @@ class Register extends Component {
 
   register(event) {
     event.preventDefault();
+
+    if (this.state.disabled) {
+      swal({
+        title: 'Oops...',
+        text: 'Username already taken',
+        icon: 'error'
+      });
+      return;
+    }
 
     if (!this.verify) {
       swal({
@@ -239,10 +257,20 @@ class Register extends Component {
 
               {/* Form Action Button */}
               <FormGroup className="form-group form-button-group">
-                <Button type="submit" color="primary" className={classes.button}>
+                <Button
+                  disabled={this.state.disabled}
+                  type="submit"
+                  color="primary"
+                  className={classes.button}
+                >
                   Register
                 </Button>
-                <Button type="submit" color="accent" className={classes.button}>
+                <Button
+                  disabled={this.state.disabled}
+                  type="submit"
+                  color="accent"
+                  className={classes.button}
+                >
                   Register & Login
                 </Button>
               </FormGroup>

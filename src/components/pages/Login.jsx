@@ -3,6 +3,8 @@ import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
 import swal from 'sweetalert';
 import { doLogin, fire } from '../../firebase';
+import { connect } from 'react-redux';
+import actions from '../../redux/actions';
 
 // import style
 import { loginStyle } from './styles';
@@ -83,16 +85,22 @@ class Login extends Component {
                 text: `${user.email} signed in with sms verification`,
                 icon: 'success'
               });
+
+              this.props.setPage('home');
             })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
+
+          return;
         }
         swal({
           title: 'Success',
           text: `Account logged in.`,
           icon: 'success'
         });
+
+        this.props.setPage('home');
       })
       .catch(err => {
         swal({
@@ -169,4 +177,16 @@ class Login extends Component {
   }
 }
 
-export default withStyles(loginStyle)(Login);
+const stateToProps = state => {
+  return {
+    app: state.app
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    setPage: page => dispatch(actions.setPage(page))
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));

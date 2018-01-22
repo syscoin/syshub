@@ -19,10 +19,32 @@ class UserTwoFactor extends Component {
     super(props);
 
     this.addPhone = this.addPhone.bind(this);
+
+    this.state = {
+      checked: false
+    };
+  }
+
+  componentDidMount() {
+    fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.verify = response;
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
   }
 
   addPhone(event) {
     const user = fire.auth().currentUser;
+    if (!this.verify) {
+      swal({ title: 'Oops...', text: 'Please complete reCAPTCHA', icon: 'error' });
+      return;
+    }
 
     if (event.target.checked) {
       swal({
@@ -42,14 +64,25 @@ class UserTwoFactor extends Component {
         }
       }).then(value => {
         if (value) {
-          user
-            .updateProfile({ phoneNumber: `${value}` })
+          const appVerifier = window.recaptchaVerifier;
+          const provider = new fire.auth.PhoneAuthProvider();
+          provider
+            .verifyPhoneNumber(`+${value}`, appVerifier)
+            .then(verificationId => {
+              const verificationCode = window.prompt(
+                'Please enter the verification code that was sent to your mobile device.'
+              );
+
+              return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+            })
+            .then(phoneCredential => {
+              return user.updatePhoneNumber(phoneCredential);
+            })
             .then(() => {
-              swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
-              console.log(user);
+              alert('Success');
             })
             .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              alert(`${err}`);
             });
         }
       });
@@ -74,6 +107,8 @@ class UserTwoFactor extends Component {
 
     const { currentUser } = this.props.app;
 
+    console.log(currentUser);
+
     return (
       <div className={classes.root}>
         <Grid container>
@@ -92,13 +127,20 @@ class UserTwoFactor extends Component {
               <span className="statusText-span">Status:</span>
               <input
                 type="checkbox"
+                id="addPhone"
                 onChange={e => this.addPhone(e)}
-                checked={currentUser ? (currentUser.phoneNumber ? true : false) : false}
-              />
+                checked={
+                  this.state.checked
+                    ? true
+                    : currentUser ? (currentUser.phoneNumber ? true : false) : false
+                }
+              />{' '}
+              <label for="addPhone">Enable</label>
               <span className="status-span">
                 Disabled <span className="lowSecurity-span">(Low Security)</span>
               </span>
             </div>
+            <div ref={ref => (this.recaptcha = ref)} />
             <div className="div-margin">
               <FormGroup className="form-group">
                 <span htmlFor="2FA-Secret" className="label">
