@@ -219,7 +219,7 @@ class Register extends Component {
                   <Recaptcha
                     style={{ marginLeft: '10px' }}
                     id="captcha"
-                    sitekey={process.env.RECAPTCHA_SITE}
+                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
                     verifyCallback={this.verifyCallback.bind(this)}
                     onloadCallback={this.callback.bind(this)}

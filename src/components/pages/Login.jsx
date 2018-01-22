@@ -81,7 +81,7 @@ class Login extends Component {
                   <Recaptcha
                     style={{ marginLeft: '10px' }}
                     id="captcha"
-                    sitekey={process.env.RECAPTCHA_SITE}
+                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
                     verifyCallback={() => this.verifyCallback}
                     onloadCallback={() => this.callback}
