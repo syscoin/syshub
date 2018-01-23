@@ -6,6 +6,7 @@ const primaryLight = palette.primaryLight;
 const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
+const greyLight = palette.greyLight;
 
 export default {
     proposalRoot: {
@@ -60,7 +61,7 @@ export default {
                     padding: "5px 10px",
                     marginRight: "10px",
                     '& span': {
-                      color: white
+                        color: white
                     }
                 },
                 "& .activeVoteButton": {
@@ -81,7 +82,7 @@ export default {
                 "& .proposalHeading": {
                     color: primaryDark,
                     margin: 0,
-                   cursor: 'pointer'
+                    cursor: 'pointer'
                 },
                 "& .proposalDetail": {
                     color: gray,
@@ -90,20 +91,30 @@ export default {
                 },
             },
             "& .top-vote__wrapper": {
-                marginTop: "10px",
                 textAlign: 'center',
-                '& .vote-up, .vote-down':{
-                  maxWidth: 60,
-                  width: '100%',
-                  display: 'inline-block',
-                  margin: '0px 5px'
+                paddingTop: 0,
+                '& .vote-text': {
+                    color: primaryDark,
                 },
-                "& .voteNumber": {
+                '& .vote-up, .vote-down': {
+                    maxWidth: 60,
+                    width: '100%',
+                    display: 'inline-block',
+                    margin: 0,
+                    border: 'thin solid' + greyLight,
+                    padding: 5,
+                    height: 60,
+                    '& img':{
+                        height: '100%'
+                    }
+                },
+                "& .vote-number": {
                     color: gray,
                     fontSize: 20,
                     display: 'inline-block',
                     verticalAlign: 'middle',
                     marginTop: 5,
+                    maxWidth: 60,
                     width: '100%'
                 },
                 "& .smallUpVoteIcon": {
@@ -141,19 +152,19 @@ export default {
                 },
             },
             '& .vote__wrapper': {
-              textAlign: 'center',
-              marginTop: 35,
-              '& .vote-up, .vote-down': {
-                width: 60,
-                display: 'inline-block'
-              },
-              '& img': {
-                height: 30,
-                marginRight: 5,
-                verticalAlign: 'middle'
-              }
+                textAlign: 'center',
+                marginTop: 35,
+                '& .vote-up, .vote-down': {
+                    width: 60,
+                    display: 'inline-block'
+                },
+                '& img': {
+                    height: 30,
+                    marginRight: 5,
+                    verticalAlign: 'middle'
+                }
             }
         }
-        
+
     }
 };

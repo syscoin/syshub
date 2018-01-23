@@ -91,10 +91,6 @@ class AppLSider extends Component {
   }
 }
 
-AppLSider.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 const stateToProps = state => {
   return {
     logged: state.app.currentUser ? true : false,
