@@ -6,6 +6,12 @@ import actions from '../../redux/actions';
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 class Faq extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+
   render() {
     return (
       <div>
@@ -15,6 +21,9 @@ class Faq extends Component {
     );
   }
 }
+
+
+
 
 const stateToProps = state => {
   return {};
