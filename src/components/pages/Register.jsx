@@ -25,7 +25,7 @@ class Register extends Component {
 
   state = {
     disabled: false,
-    username: null
+    username: null,
   };
 
   // specifying your onload callback function
@@ -44,7 +44,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning'
+        icon: 'warning',
       });
 
       this.registerForm.reset();
@@ -52,7 +52,7 @@ class Register extends Component {
     }
 
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
 
     const username = this.registerName.value;
@@ -63,12 +63,12 @@ class Register extends Component {
         snapshot.forEach(snap => {
           if (snap.val() === username) {
             this.setState({
-              disabled: true
+              disabled: true,
             });
             return;
           } else {
             this.setState({
-              disabled: false
+              disabled: false,
             });
           }
         });
@@ -83,7 +83,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Username already taken',
-        icon: 'error'
+        icon: 'error',
       });
       return;
     }
@@ -92,24 +92,24 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error'
+        icon: 'error',
       });
 
       return;
     }
 
     this.setState({
-      username: ''
+      username: '',
     });
-    const username = this.registerName.value;
-    const email = this.registerEmail.value;
-    const password = this.registerPsw.value;
+    const username = this.registerName.input.value;
+    const email = this.registerEmail.input.value;
+    const password = this.registerPsw.input.value;
 
     if (!username) {
       swal({
         title: 'Oops...',
         text: 'Must provide a username',
-        icon: 'error'
+        icon: 'error',
       });
 
       return;
@@ -130,7 +130,7 @@ class Register extends Component {
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
-            icon: 'success'
+            icon: 'success',
           });
         }
       })
@@ -138,7 +138,7 @@ class Register extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error'
+          icon: 'error',
         });
       });
   }
@@ -161,7 +161,12 @@ class Register extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid
+              item
+              lg={{ size: 8, offset: 2 }}
+              md={{ size: 10, offset: 1 }}
+              justify="center"
+            >
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -178,7 +183,11 @@ class Register extends Component {
                 <span className="validation-message">
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
-                      (!this.state.disabled ? <img src={checkIcon} /> : <img src={closeIcon} />)}
+                      (!this.state.disabled ? (
+                        <img src={checkIcon} />
+                      ) : (
+                        <img src={closeIcon} />
+                      ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
@@ -284,6 +293,6 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 export default withStyles(registerStyle)(Register);
