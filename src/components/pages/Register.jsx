@@ -14,6 +14,11 @@ import PropTypes from 'prop-types';
 import { registerStyle } from './styles';
 
 class Register extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     disabled: false,
     username: null,
@@ -66,10 +71,9 @@ class Register extends Component {
     this.setState({
       username: '',
     });
-    const username = this.registerName.value;
-    const email = this.registerEmail.value;
-    const password = this.registerPsw.value;
-
+    const username = this.registerName.input.value;
+    const email = this.registerEmail.input.value;
+    const password = this.registerPsw.input.value;
     if (!username) {
       swal({
         title: 'Oops...',
@@ -151,8 +155,8 @@ class Register extends Component {
                       (!this.state.disabled ? (
                         <img src={checkIcon} />
                       ) : (
-                        <img src={closeIcon} />
-                      ))}
+                          <img src={closeIcon} />
+                        ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
