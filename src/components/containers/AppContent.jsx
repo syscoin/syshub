@@ -20,6 +20,7 @@ import {
   NewProposal,
   News,
   UserAccount,
+  UserAccountTest
 } from '../pages';
 
 //Import Styles
@@ -56,7 +57,7 @@ class AppContent extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
