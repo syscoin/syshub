@@ -21,7 +21,7 @@ class UserTwoFactor extends Component {
     this.addPhone = this.addPhone.bind(this);
 
     this.state = {
-      checked: false
+      checked: false,
     };
   }
 
@@ -31,7 +31,7 @@ class UserTwoFactor extends Component {
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.verify = response;
-      }
+      },
     });
 
     window.recaptchaVerifier.render().then(function(widgetId) {
@@ -40,9 +40,15 @@ class UserTwoFactor extends Component {
   }
 
   addPhone(event) {
+    event.preventDefault();
+
     const user = fire.auth().currentUser;
     if (!this.verify) {
-      swal({ title: 'Oops...', text: 'Please complete reCAPTCHA', icon: 'error' });
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error',
+      });
       return;
     }
 
@@ -59,9 +65,9 @@ class UserTwoFactor extends Component {
           element: 'input',
           attributes: {
             placeholder: 'Provide Phone Number',
-            type: 'number'
-          }
-        }
+            type: 'number',
+          },
+        },
       }).then(value => {
         if (value) {
           const appVerifier = window.recaptchaVerifier;
@@ -73,7 +79,10 @@ class UserTwoFactor extends Component {
                 'Please enter the verification code that was sent to your mobile device.'
               );
 
-              return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+              return fire.auth.PhoneAuthProvider.credential(
+                verificationId,
+                verificationCode
+              );
             })
             .then(phoneCredential => {
               return user.updatePhoneNumber(phoneCredential);
@@ -132,12 +141,15 @@ class UserTwoFactor extends Component {
                 checked={
                   this.state.checked
                     ? true
-                    : currentUser ? (currentUser.phoneNumber ? true : false) : false
+                    : currentUser
+                      ? currentUser.phoneNumber ? true : false
+                      : false
                 }
-              />{' '}
+              />
               <label for="addPhone">Enable</label>
               <span className="status-span">
-                Disabled <span className="lowSecurity-span">(Low Security)</span>
+                Disabled{' '}
+                <span className="lowSecurity-span">(Low Security)</span>
               </span>
             </div>
             <div ref={ref => (this.recaptcha = ref)} />
@@ -146,7 +158,11 @@ class UserTwoFactor extends Component {
                 <span htmlFor="2FA-Secret" className="label">
                   {`2FA-Secret: `}
                 </span>
-                <input name="usernames" id="2FA-Secret" className="secret-Input-field" />
+                <input
+                  name="usernames"
+                  id="2FA-Secret"
+                  className="secret-Input-field"
+                />
               </FormGroup>
             </div>
             {/* QR code div */}
@@ -162,7 +178,8 @@ class UserTwoFactor extends Component {
             <div className="div-margin">
               <FormGroup className="form-group">
                 <span htmlFor="2FA-Code" className="label">
-                  {`Enter 2FA Code: `} <span className="fromApp-span">(From App)</span>
+                  {`Enter 2FA Code: `}{' '}
+                  <span className="fromApp-span">(From App)</span>
                 </span>
                 <input id="2FA-Code" className="code-Input-field" />
               </FormGroup>
@@ -176,7 +193,9 @@ class UserTwoFactor extends Component {
               <ol>
                 <li>
                   Download and Install{' '}
-                  <span className="gogleAuthApp-text">Google Authenticator App</span>
+                  <span className="gogleAuthApp-text">
+                    Google Authenticator App
+                  </span>
                   <div>
                     <img src={appStore} alt="app-store-pic" />
                     <img src={playStore} alt="play-store-pic" />
@@ -186,7 +205,9 @@ class UserTwoFactor extends Component {
                 <li>Generate a new 2FA secret key</li>
                 <li>
                   Scan the generated QR code with the{' '}
-                  <span className="gogleAuthApp-text">Google Authenticator App</span>
+                  <span className="gogleAuthApp-text">
+                    Google Authenticator App
+                  </span>
                 </li>
                 <li>Input the 2FA code from the app</li>
               </ol>
@@ -205,13 +226,13 @@ class UserTwoFactor extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    setCurrentUser: user => dispatch(actions.setCurrentUser(user))
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
   };
 };
 

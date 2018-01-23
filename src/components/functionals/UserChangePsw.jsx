@@ -181,10 +181,6 @@ class UserChangePassword extends Component {
                           className: 'form-control',
                         }}
                       />
-                      <span className="validation-message">
-                        <img src={checkIcon} />
-                        Password Strength
-                      </span>
                     </div>
                   )}
                 </FormItem>
