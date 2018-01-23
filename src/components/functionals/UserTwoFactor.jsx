@@ -19,14 +19,12 @@ class UserTwoFactor extends Component {
     super(props);
 
     this.addPhone = this.addPhone.bind(this);
-
-    this.state = {
-      checked: false,
-    };
+    this.disableAuth = this.disableAuth.bind(this);
   }
 
   componentDidMount() {
     fire.auth().useDeviceLanguage();
+    const user = fire.auth().currentUser;
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
@@ -37,11 +35,16 @@ class UserTwoFactor extends Component {
     window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
+
+    fire
+      .database()
+      .ref('2FA/' + user.uid)
+      .on('value', snap => {
+        this.props.setAuth(snap.val());
+      });
   }
 
-  addPhone(event) {
-    event.preventDefault();
-
+  addPhone() {
     const user = fire.auth().currentUser;
     if (!this.verify) {
       swal({
@@ -52,57 +55,104 @@ class UserTwoFactor extends Component {
       return;
     }
 
-    if (event.target.checked) {
-      swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Add Phone Number',
-        text: 'Please include your country code as well as area code as well.',
-        icon: 'info',
-        buttons: true,
-        dangerMode: true,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Provide Phone Number',
-            type: 'number',
-          },
-        },
-      }).then(value => {
-        if (value) {
-          const appVerifier = window.recaptchaVerifier;
-          const provider = new fire.auth.PhoneAuthProvider();
-          provider
-            .verifyPhoneNumber(`+${value}`, appVerifier)
-            .then(verificationId => {
-              const verificationCode = window.prompt(
-                'Please enter the verification code that was sent to your mobile device.'
-              );
+    if (user.phoneNumber != null) {
+      fire
+        .database()
+        .ref('2FA/' + user.uid)
+        .set(true);
 
-              return fire.auth.PhoneAuthProvider.credential(
-                verificationId,
-                verificationCode
-              );
-            })
-            .then(phoneCredential => {
-              return user.updatePhoneNumber(phoneCredential);
-            })
-            .then(() => {
-              alert('Success');
-            })
-            .catch(err => {
-              alert(`${err}`);
-            });
-        }
-      });
-    } else if (event.target.checked === false) {
-      user
-        .updateProfile({ phoneNumber: null })
-        .then()
-        .catch(err => {
-          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-        });
+      return;
     }
+
+    swal({
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+      title: '1 - Add Phone Number',
+      text: 'Please include your country code as well as area code as well.',
+      icon: 'info',
+      buttons: true,
+      dangerMode: true,
+      content: {
+        element: 'input',
+        attributes: {
+          placeholder: 'Provide Phone Number',
+          type: 'number',
+        },
+      },
+    }).then(value => {
+      if (value) {
+        const appVerifier = window.recaptchaVerifier;
+        const provider = new fire.auth.PhoneAuthProvider();
+        provider
+          .verifyPhoneNumber(`+${value}`, appVerifier)
+          .then(verificationId => {
+            /* const verificationCode = window.prompt(
+              'Please enter the verification code that was sent to your mobile device.'
+            ); */
+            swal({
+              closeOnClickOutside: false,
+              closeOnEsc: false,
+              title: '2 - Verify',
+              text:
+                'Please enter the verification code sent to your mobile device',
+              icon: 'info',
+              buttons: true,
+              dangerMode: false,
+              content: {
+                element: 'input',
+                attributes: {
+                  placeholder: 'Confirmation code here',
+                  type: 'text',
+                },
+              },
+            })
+              .then(verificationCode => {
+                return fire.auth.PhoneAuthProvider.credential(
+                  verificationId,
+                  verificationCode
+                );
+              })
+              .then(phoneCredential => {
+                return user.updatePhoneNumber(phoneCredential);
+              })
+              .then(() => {
+                fire
+                  .database()
+                  .ref('2FA/' + user.uid)
+                  .set(true);
+                swal({
+                  title: 'Sucess',
+                  text: `Two Factor Authentication Enabled`,
+                  icon: 'success',
+                });
+              })
+              .catch(err => {
+                throw err;
+              });
+          })
+          .catch(err => {
+            alert(`${err}`);
+          });
+      }
+    });
+  }
+
+  disableAuth() {
+    const user = fire.auth().currentUser;
+
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error',
+      });
+      return;
+    }
+
+    fire
+      .database()
+      .ref('2FA/' + user.uid)
+      .set(false);
   }
 
   render() {
@@ -115,17 +165,14 @@ class UserTwoFactor extends Component {
     const playStore = require('../../assets/img/png_icon_google.png');
 
     const { currentUser } = this.props.app;
-
-    console.log(currentUser);
+    console.log(this.props.app.auth);
 
     return (
       <div className={classes.root}>
         <Grid container>
           {/* change password text */}
           <Grid md={12}>
-            <h1 className="userTwoFactor-heading">
-              2-Factor-Authentication <span className="heading-2FA">2FA</span>{' '}
-            </h1>
+            <h1 className="userTwoFactor-heading">2-Factor-Authentication</h1>
           </Grid>
           {/* userTwofactor left grid */}
           <Grid md={6} className="userTwoFactor-left-grid">
@@ -134,90 +181,44 @@ class UserTwoFactor extends Component {
             </span>
             <div className="div-margin">
               <span className="statusText-span">Status:</span>
-              <input
-                type="checkbox"
-                id="addPhone"
-                onChange={e => this.addPhone(e)}
-                checked={
-                  this.state.checked
-                    ? true
-                    : currentUser
-                      ? currentUser.phoneNumber ? true : false
-                      : false
-                }
-              />
-              <label for="addPhone">Enable</label>
-              <span className="status-span">
-                Disabled{' '}
-                <span className="lowSecurity-span">(Low Security)</span>
+              <span>
+                {this.props.app.auth ? (
+                  <span className="status-enable">Enable</span>
+                ) : (
+                  <span className="status-disable">
+                    Disabled
+                    <span className="lowSecurity-span">(Low Security)</span>
+                  </span>
+                )}
               </span>
+              <div
+                className="reCapthaWraper"
+                ref={ref => (this.recaptcha = ref)}
+              />
             </div>
-            <div ref={ref => (this.recaptcha = ref)} />
-            <div className="div-margin">
-              <FormGroup className="form-group">
-                <span htmlFor="2FA-Secret" className="label">
-                  {`2FA-Secret: `}
-                </span>
-                <input
-                  name="usernames"
-                  id="2FA-Secret"
-                  className="secret-Input-field"
-                />
-              </FormGroup>
-            </div>
-            {/* QR code div */}
-            <div className="div-margin">
-              <Button raised color="primary" className="generate-button">
-                Generate New
-              </Button>
-              <div className="qr-div">
-                <QRCode value="http://www.google.com/" />,
-              </div>
-            </div>
-            {/* 2FA code div */}
-            <div className="div-margin">
-              <FormGroup className="form-group">
-                <span htmlFor="2FA-Code" className="label">
-                  {`Enter 2FA Code: `}{' '}
-                  <span className="fromApp-span">(From App)</span>
-                </span>
-                <input id="2FA-Code" className="code-Input-field" />
-              </FormGroup>
-            </div>
+            <Grid className="twoFactor-button-grid">
+              {this.props.app.auth ? (
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.disableAuth}
+                >
+                  Disable 2F Auth
+                </Button>
+              ) : (
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.addPhone}
+                >
+                  Enable 2F Auth
+                </Button>
+              )}
+            </Grid>
           </Grid>
           {/* userTwofactor right grid */}
-          <Grid md={6} className="userTwoFactor-right-grid">
-            <h1 className="enableInstruction-heading">How to Enable 2FA</h1>
-            <div>
-              {/* instruction list */}
-              <ol>
-                <li>
-                  Download and Install{' '}
-                  <span className="gogleAuthApp-text">
-                    Google Authenticator App
-                  </span>
-                  <div>
-                    <img src={appStore} alt="app-store-pic" />
-                    <img src={playStore} alt="play-store-pic" />
-                    <img src={windowsStore} alt="window-store-pic" />
-                  </div>
-                </li>
-                <li>Generate a new 2FA secret key</li>
-                <li>
-                  Scan the generated QR code with the{' '}
-                  <span className="gogleAuthApp-text">
-                    Google Authenticator App
-                  </span>
-                </li>
-                <li>Input the 2FA code from the app</li>
-              </ol>
-            </div>
-          </Grid>
-          <Grid className="twoFactor-button-grid">
-            <Button raised color="primary" className="twoFactor-button">
-              Enable 2FA
-            </Button>
-          </Grid>
         </Grid>
       </div>
     );
@@ -233,6 +234,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
+    setAuth: value => dispatch(actions.setAuth(value)),
   };
 };
 

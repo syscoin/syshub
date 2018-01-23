@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Recaptcha from 'react-recaptcha';
 import { connect } from 'react-redux';
+import Recaptcha from 'react-recaptcha';
 import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 
-import { fire } from '../../firebase';
 import actions from '../../redux/actions';
+import { fire } from '../../firebase';
 
 import PropTypes from 'prop-types';
 
@@ -135,6 +135,7 @@ class Register extends Component {
             icon: 'success',
           });
         }
+        this.props.setPage('home');
       })
       .catch(err => {
         swal({
@@ -291,18 +292,18 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-function mapStateToProps(state) {
-  //pass the providers
-  return {};
-}
+const stateToProps = state => {
+  return {
+    app: state.app,
+  };
+};
 
-/* Map Actions to Props */
-function mapDispatchToProps(dispatch) {
+const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
   };
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(stateToProps, dispatchToProps)(
   withStyles(registerStyle)(Register)
 );
