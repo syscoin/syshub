@@ -8,8 +8,7 @@ const initialState = {
       DataString:
         '[["proposal",{"name":"Thrifa_First_Proposal","type":1,"start_epoch":1516127589,"end_epoch":1518805914,"payment_address":"TQ5Eo1cc2iYq5zgV83QYaaaQ27KiqXndAW","payment_amount":1000,"url":"https://www.thrifa.io"}]]',
       Hash: 'f221880ff80918208d16613b0f7d66f05de3a4f5d0499465f692eee8469c6369',
-      CollateralHash:
-        '79f6c080a9baccd438b2dcb96bb4d8c15671213433525449120d6af1155aa96e',
+      CollateralHash: '79f6c080a9baccd438b2dcb96bb4d8c15671213433525449120d6af1155aa96e',
       ObjectType: 1,
       CreationTime: 1516127692,
       AbsoluteYesCount: 1,
@@ -21,7 +20,7 @@ const initialState = {
       fCachedValid: true,
       fCachedFunding: false,
       fCachedDelete: false,
-      fCachedEndorsed: false,
+      fCachedEndorsed: false
     },
     '4bc087b56f993a44a89be707333dc52d19279bd8e0f9f425b19c16f782eaf0d7': {
       DataHex:
@@ -29,8 +28,7 @@ const initialState = {
       DataString:
         '[["proposal",{"name":"Thrifa_three_Proposal","type":1,"start_epoch":1516127589,"end_epoch":1518805914,"payment_address":"TQ5Eo1cc2iYq5zgV83QYaaaQ27KiqXndAW","payment_amount":1000,"url":"https://www.thrifa.io"}]]',
       Hash: '4bc087b56f993a44a89be707333dc52d19279bd8e0f9f425b19c16f782eaf0d7',
-      CollateralHash:
-        '32934db6764208652b12e48bd17985e3d46eda7306f916211ebdfcd1e6ade7ac',
+      CollateralHash: '32934db6764208652b12e48bd17985e3d46eda7306f916211ebdfcd1e6ade7ac',
       ObjectType: 1,
       CreationTime: 1516133620,
       AbsoluteYesCount: 0,
@@ -42,10 +40,13 @@ const initialState = {
       fCachedValid: true,
       fCachedFunding: false,
       fCachedDelete: false,
-      fCachedEndorsed: false,
-    },
+      fCachedEndorsed: false
+    }
   },
   list: {},
+  status: null,
+  prepareReceipt: null,
+  submitReceipt: null
 };
 
 const proposals = (state = initialState, action) => {
@@ -53,7 +54,17 @@ const proposals = (state = initialState, action) => {
     case constants.SYS_PROPOSALS_GET:
       return {
         ...state,
+        list: action.data.concat(...this.state.list)
       };
+
+    case constants.SYS_PROPOSALS_CHECK:
+      return { ...state, status: action.data };
+
+    case constants.SYS_PROPOSALS_PREPARE:
+      return { ...state, prepareReceipt: action.data };
+
+    case constants.SYS_PROPOSALS_SUBMIT:
+      return { ...state, submitReceipt: action.data };
 
     default:
       return state;
