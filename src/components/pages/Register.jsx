@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { connect } from 'react-redux';
 import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 
 import actions from '../../redux/actions';
 import { fire } from '../../firebase';
-import actions from '../../redux/actions';
 
 import PropTypes from 'prop-types';
 
