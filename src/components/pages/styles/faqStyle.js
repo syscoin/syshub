@@ -17,7 +17,7 @@ export default {
       padding: '20px 20px 0px 20px',
       '& .search-question': {
         width: '30%',
-        border: '1px solid grey',
+        border: '1px solid ' + greyDark,
         borderRadius: 3,
         '& .ant-input-group-addon': {
           borderRight: 0,
@@ -59,7 +59,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -85,7 +85,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -111,7 +111,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -137,7 +137,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -163,7 +163,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -189,7 +189,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
@@ -215,7 +215,7 @@ export default {
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
-            color: '#57606f',
+            color: greyDark,
             marginLeft: 40,
           },
           '& .ant-collapse-item': {
