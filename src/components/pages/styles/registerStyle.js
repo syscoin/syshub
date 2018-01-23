@@ -10,6 +10,11 @@ export default {
   root: {
     padding: '10px 0px 0px 20px',
     height: '50vh',
+    '& .title': {
+      fontWeight: 'lighter',
+      color: greyDark,
+      fontSize:20
+    },
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
@@ -33,7 +38,7 @@ export default {
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
         padding: '10px',
-        '&::before':{
+        '&::before': {
           backgroundColor: 'transparent'
         }
       },
@@ -57,14 +62,14 @@ export default {
         }
       }
       ,
-      '& .terms-of-condition  ':{
+      '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid'
       },
-      '& .form-button-group':{
+      '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
-        '&>button':{
+        '&>button': {
           backgroundColor: primary,
           margin: '0 10px',
           borderRadius: 10,
@@ -75,11 +80,11 @@ export default {
         }
       }
     },
-    '& .title':{
+    '& .title': {
       display: "inline-block",
       fontWeight: 'lighter'
     }
 
   },
-  
+
 };
