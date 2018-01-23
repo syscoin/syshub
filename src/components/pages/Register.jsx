@@ -214,7 +214,7 @@ class Register extends Component {
                   <Recaptcha
                     style={{ marginLeft: '10px' }}
                     id="captcha"
-                    sitekey="6LeNoEAUAAAAADaWqXweDPiSR-8HnWCQ3ZMrNp1o"
+                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
                     verifyCallback={this.verifyCallback.bind(this)}
                     onloadCallback={this.callback.bind(this)}
@@ -231,10 +231,7 @@ class Register extends Component {
 
               {/* Form Action Button */}
               <FormGroup className="form-group form-button-group">
-                <Button
-                  type="submit"
-                  className={classes.button}
-                >
+                <Button type="submit" className={classes.button}>
                   Register
                 </Button>
                 <Button type="submit" color="accent" className={classes.button}>
