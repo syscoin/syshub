@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
+import { connect } from 'react-redux';
 import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 
 import { fire } from '../../firebase';
+import actions from '../../redux/actions';
 
 import PropTypes from 'prop-types';
 
@@ -125,8 +127,8 @@ class Register extends Component {
           const usernameRef = fire.database().ref('usernames');
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
-
           this.registerForm.reset();
+          this.props.setPage('home');
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
@@ -271,13 +273,6 @@ class Register extends Component {
                 <Button
                   disabled={this.state.disabled}
                   type="submit"
-                  className={classes.button}
-                >
-                  Register
-                </Button>
-                <Button
-                  disabled={this.state.disabled}
-                  type="submit"
                   color="accent"
                   className={classes.button}
                 >
@@ -295,4 +290,19 @@ class Register extends Component {
 Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(registerStyle)(Register);
+
+function mapStateToProps(state) {
+  //pass the providers
+  return {};
+}
+
+/* Map Actions to Props */
+function mapDispatchToProps(dispatch) {
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(registerStyle)(Register)
+);
