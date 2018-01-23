@@ -23,11 +23,13 @@ class UserDelete extends Component {
           <Grid md={12}>
             <h1 className="userDelete-heading">Delete Account</h1>
             <p className="UserDelete-text">
-              Your account will be deleted completely, after a 7 day grace
-              period. Your username will become available for registration and
-              all your information will be remove from our database. This action
-              cannot be undone
+              YOUR ACCOUNT WILL BE DELETED COMPLETELY.
             </p>
+            <p className="UserDelete-text">
+              Your username will become available for registration and all your
+              information will be remove from our database.
+            </p>
+            <p className="UserDelete-text"> THIS ACCTION CANNOT BE UNDONE</p>
             <p className="UserDelete-text">
               Kindly Send us feedback if you are unsatisfied
             </p>
