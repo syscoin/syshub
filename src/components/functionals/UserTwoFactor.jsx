@@ -116,8 +116,6 @@ class UserTwoFactor extends Component {
 
     const { currentUser } = this.props.app;
 
-    console.log(currentUser);
-
     return (
       <div className={classes.root}>
         <Grid container>

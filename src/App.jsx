@@ -30,6 +30,7 @@ class App extends Component {
   }
 
   tick() {
+    
     this.props.getSysStats();
   }
 
