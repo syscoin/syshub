@@ -11,4 +11,7 @@ export default {
 
   //SYS Proposals
   SYS_PROPOSALS_GET: 'SYS_PROPOSALS_GET',
+
+  //2FA
+  SET_AUTH: 'SET_AUTH'
 };

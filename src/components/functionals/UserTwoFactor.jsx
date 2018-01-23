@@ -19,14 +19,12 @@ class UserTwoFactor extends Component {
     super(props);
 
     this.addPhone = this.addPhone.bind(this);
-
-    this.state = {
-      checked: false
-    };
+    this.disableAuth = this.disableAuth.bind(this);
   }
 
   componentDidMount() {
     fire.auth().useDeviceLanguage();
+    const user = fire.auth().currentUser;
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
@@ -37,11 +35,16 @@ class UserTwoFactor extends Component {
     window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
+
+    fire
+      .database()
+      .ref('2FA/' + user.uid)
+      .on('value', snap => {
+        this.props.setAuth(snap.val());
+      });
   }
 
-  addPhone(event) {
-    event.preventDefault();
-
+  addPhone() {
     const user = fire.auth().currentUser;
     if (!this.verify) {
       swal({
@@ -52,55 +55,76 @@ class UserTwoFactor extends Component {
       return;
     }
 
-    if (event.target.checked) {
-      console.log(true);
-      swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Add Phone Number',
-        text: 'Please include your country code as well as area code as well.',
-        icon: 'info',
-        buttons: true,
-        dangerMode: true,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Provide Phone Number',
-            type: 'number'
-          }
-        }
-      }).then(value => {
-        if (value) {
-          const appVerifier = window.recaptchaVerifier;
-          const provider = new fire.auth.PhoneAuthProvider();
-          provider
-            .verifyPhoneNumber(`+${value}`, appVerifier)
-            .then(verificationId => {
-              const verificationCode = window.prompt(
-                'Please enter the verification code that was sent to your mobile device.'
-              );
+    if (user.phoneNumber != null) {
+      fire
+        .database()
+        .ref('2FA/' + user.uid)
+        .set(true);
 
-              return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
-            })
-            .then(phoneCredential => {
-              return user.updatePhoneNumber(phoneCredential);
-            })
-            .then(() => {
-              alert('Success');
-            })
-            .catch(err => {
-              alert(`${err}`);
-            });
-        }
-      });
-    } else if (event.target.checked === false) {
-      user
-        .updateProfile({ phoneNumber: null })
-        .then()
-        .catch(err => {
-          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-        });
+      return;
     }
+
+    swal({
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+      title: 'Add Phone Number',
+      text: 'Please include your country code as well as area code as well.',
+      icon: 'info',
+      buttons: true,
+      dangerMode: true,
+      content: {
+        element: 'input',
+        attributes: {
+          placeholder: 'Provide Phone Number',
+          type: 'number'
+        }
+      }
+    }).then(value => {
+      if (value) {
+        const appVerifier = window.recaptchaVerifier;
+        const provider = new fire.auth.PhoneAuthProvider();
+        provider
+          .verifyPhoneNumber(`+${value}`, appVerifier)
+          .then(verificationId => {
+            const verificationCode = window.prompt(
+              'Please enter the verification code that was sent to your mobile device.'
+            );
+
+            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+          })
+          .then(phoneCredential => {
+            return user.updatePhoneNumber(phoneCredential);
+          })
+          .then(() => {
+            alert('Success');
+            fire
+              .database()
+              .ref('2FA/' + user.uid)
+              .set(true);
+          })
+          .catch(err => {
+            alert(`${err}`);
+          });
+      }
+    });
+  }
+
+  disableAuth() {
+    const user = fire.auth().currentUser;
+
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error'
+      });
+      return;
+    }
+
+    fire
+      .database()
+      .ref('2FA/' + user.uid)
+      .set(false);
   }
 
   render() {
@@ -113,8 +137,7 @@ class UserTwoFactor extends Component {
     const playStore = require('../../assets/img/png_icon_google.png');
 
     const { currentUser } = this.props.app;
-
-    console.log(currentUser);
+    console.log(this.props.app.auth);
 
     return (
       <div className={classes.root}>
@@ -132,13 +155,9 @@ class UserTwoFactor extends Component {
             </span>
             <div className="div-margin">
               <span className="statusText-span">Status:</span>
-              <input
-                type="checkbox"
-                id="addPhone"
-                onChange={e => this.addPhone(e)}
-                checked={currentUser ? (currentUser.phoneNumber ? true : false) : false}
-              />
-              <label for="addPhone">Enable</label>
+              <button onClick={this.addPhone}>Enable 2FAuth</button>
+              <button onClick={this.disableAuth}>Disable 2FAuth</button>
+              <span>{this.props.app.auth ? 'Enable' : 'Disabled'}</span>
               <span className="status-span">
                 Disabled <span className="lowSecurity-span">(Low Security)</span>
               </span>
@@ -214,7 +233,8 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    setCurrentUser: user => dispatch(actions.setCurrentUser(user))
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
+    setAuth: value => dispatch(actions.setAuth(value))
   };
 };
 
