@@ -22,11 +22,16 @@ class UserDelete extends Component {
           {/* change password text */}
           <Grid md={12}>
             <h1 className="userDelete-heading">Delete Account</h1>
-                        <p className="UserDelete-text">Your account will be deleted completely, after a 7 day grace period. Your username will become available for registration and all your information will be remove from our database. This action cannot be undone</p>
-                        <p className="UserDelete-text">Kindly Send us feedback if you are unsatisfied</p>
-                        <p className="UserDelete-text">Type "DELETE" to confirm delete Action</p>
-                        <input type="text" className="input-field"/>
-                    </Grid>
+            <p className="UserDelete-text">
+              Your account will be deleted completely, after a 7 day grace
+              period. Your username will become available for registration and
+              all your information will be remove from our database. This action
+              cannot be undone
+            </p>
+            <p className="UserDelete-text">
+              Kindly Send us feedback if you are unsatisfied
+            </p>
+          </Grid>
           <Grid className="delete-button-grid">
             <Button
               onClick={this.props.onDeleteProfile}
@@ -51,4 +56,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userDeleteStyle)(UserDelete));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(userDeleteStyle)(UserDelete)
+);
