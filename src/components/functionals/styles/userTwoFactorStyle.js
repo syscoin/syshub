@@ -6,6 +6,8 @@ const white = palette.white;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const grey = palette.grey;
+const red = palette.red;
+const green = palette.green;
 const secondary = palette.secondary;
 
 export default {
@@ -33,22 +35,39 @@ export default {
         fontWeight: '100',
       },
       '& .div-margin': {
-        marginLeft: '40px',
-        marginTop: '12px',
+        margin: '12px 0 12px 40px',
         '& .statusText-span': {
           display: 'inline-block',
           textAlign: 'right',
           fontSize: '15px',
-          marginTop: '15px',
+          margin: '15px 0 0px 0',
           color: primary,
           paddingRight: '10px',
         },
-        '& .status-span': {
-          marginLeft: '22%',
-          color: '#D61414',
+        '& .status-enable': {
+          margin: '0 1%',
+          color: green,
+          fontWeight: 'bold',
+          fontSize: '1.3em',
           '& .lowSecurity-span': {
             color: greyDark,
+            margin: '0 1%',
           },
+        },
+        '& .status-disable': {
+          margin: '0 1%',
+          color: red,
+          fontWeight: 'bold',
+          fontSize: '1.3em',
+          '& .lowSecurity-span': {
+            color: greyDark,
+            fontWeight: 'normal',
+            fontSize: '0.8em',
+            margin: '0 1%',
+          },
+        },
+        '& .reCapthaWraper': {
+          margin: '15px 0',
         },
       },
       '& .form-group': {
