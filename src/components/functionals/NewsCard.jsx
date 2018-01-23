@@ -92,7 +92,7 @@ class NewsCard extends Component {
                 </Grid>
                 {/* show more button */}
                 <Grid md={12} className='showMoreButton-grid'>
-                  <Button raised onClick={()=>selectNews(1)}> Show More </Button>
+                  <Button raised onClick={(index)=> selectNews(index)}> Show More </Button>
                 </Grid>
               </Grid>
               <Divider className={classes.divider}/>
@@ -111,7 +111,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(newsCardStyle)(NewsCard));

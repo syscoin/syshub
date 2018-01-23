@@ -24,13 +24,10 @@ export class ProposalDetail extends Component {
     }
   }
   render() {
-
-    const classes = this.props.classes;
-    console.clear();
-    console.log("-- ProposalDetail this.props ", this.props);
+    const {classes} = this.props;
 
     return (
-      <Grid container md={12} style={proposalDetailsStyle.proposalDetailRoot} >
+      <Grid  md={12} style={proposalDetailsStyle.root} >
         <DashBoardHeader data={{ showHeader: "ProposalDetail", name: "Proposal 1" }} />
 
         <Grid container md={12} style={proposalDetailsStyle.proposalDetails} >

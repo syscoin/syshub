@@ -5,7 +5,7 @@ const grey = grey;
 const white = palette.white;
 
 export default {
-  proposalDetailRoot: {
+  root: {
     background:'white',
     paddingTop:"10px",
     boxShadow: "0px 3px 3px 3px " + grey,

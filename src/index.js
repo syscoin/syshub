@@ -4,6 +4,7 @@ import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
 
+import { fire } from './firebase';
 // Redux Imports
 import reducers from './redux/reducers';
 import middlewares from './redux/middleware';

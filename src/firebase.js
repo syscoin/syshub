@@ -1,5 +1,5 @@
 import Rebase from 're-base';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import swal from 'sweetalert';
 
 const config = {
@@ -11,10 +11,14 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
 };
 
-const fire = firebase.initializeApp(config);
+firebase.initializeApp(config);
+
+const fire = firebase;
+
 const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = firebase.database().ref('messages');
+const usernames = fire.database().ref('usernames');
 // const currentUser
 
 //Some useful functions
@@ -42,17 +46,190 @@ const doLogin = (email, password) => {
     });
 };
 
-const doLogout = () => {
+const doLogout = update => {
   fire
     .auth()
     .signOut()
     .then(() => {
-      swal({
-        title: 'Success',
-        text: `Hope to see you soon`,
-        icon: 'success',
-      });
+      if (!update) {
+        swal({
+          title: 'Success',
+          text: `Hope to see you soon`,
+          icon: 'success',
+        });
+      }
     });
 };
 
-export { fire, base, messages, doRegister, doLogin, doLogout };
+const doUpdatePassword = (user, callback) => {
+  const currentUser = fire.auth().currentUser;
+
+  if (currentUser) {
+    const credentials = fire.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      user.currentPass
+    );
+    currentUser
+      .reauthenticateWithCredential(credentials)
+      .then(() => {
+        return currentUser.updatePassword(user.newPass);
+      })
+      .then(() => {
+        doLogout('fromUpdate');
+        callback(null, 'success');
+      })
+      .catch(err => callback(err));
+  }
+};
+
+const doUpdateProfile = (user, callback) => {
+  const currentUser = fire.auth().currentUser;
+
+  if (currentUser) {
+    if (user.email) {
+      swal({
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        title: 'Warning',
+        text:
+          'You are about to change your email, you must input your password first',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        content: {
+          element: 'input',
+          attributes: {
+            placeholder: 'Type your password',
+            type: 'password',
+          },
+        },
+      }).then(password => {
+        const credentials = fire.auth.EmailAuthProvider.credential(
+          currentUser.email,
+          password
+        );
+
+        currentUser
+          .reauthenticateWithCredential(credentials)
+          .then(() => {
+            return currentUser.updateEmail(user.email);
+          })
+          .then(() => {
+            if (user.username) {
+              return;
+            }
+            swal({
+              title: 'Success',
+              text: 'Account Updated',
+              icon: 'success',
+            });
+          })
+          .catch(err => {
+            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+          });
+      });
+    }
+
+    if (user.username) {
+      usernames.update({ [currentUser.uid]: user.username });
+      currentUser
+        .updateProfile({ displayName: user.username })
+        .then(() => {
+          callback(null, currentUser);
+        })
+        .catch(err => callback(err));
+    }
+  }
+};
+
+const doDeleteAccount = () => {
+  const currentUser = fire.auth().currentUser;
+
+  if (currentUser) {
+    swal({
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+      title: 'Authentication Required',
+      text: 'Please provide your password',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+      content: {
+        element: 'input',
+        attributes: {
+          placeholder: 'Type your password',
+          type: 'password',
+        },
+      },
+    })
+      .then(password => {
+        const credentials = fire.auth.EmailAuthProvider.credential(
+          currentUser.email,
+          password
+        );
+
+        return currentUser.reauthenticateWithCredential(credentials);
+      })
+      .then(() => {
+        swal({
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'WARNING',
+          text:
+            'Type "DELETE" to delete your account permantly, this cannot be undone!',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Type "DELETE"',
+              type: 'text',
+            },
+          },
+        }).then(value => {
+          if (value === 'DELETE') {
+            currentUser
+              .delete()
+              .then(() => {
+                swal({
+                  title: 'Success',
+                  text: 'Account Deleted',
+                  icon: 'success',
+                });
+              })
+              .catch(err => {
+                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              });
+
+            return;
+          }
+
+          if (value !== 'DELETE') {
+            swal({
+              title: 'Oops...',
+              text: 'Make sure to type "DELETE" with all caps',
+              icon: 'error',
+            });
+          }
+        });
+      })
+      .catch(err => {
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+      });
+  }
+};
+
+//Check if neccessary
+export {
+  messages,
+  usernames,
+  fire,
+  base,
+  doRegister,
+  doLogin,
+  doLogout,
+  doUpdateProfile,
+  doUpdatePassword,
+  doDeleteAccount,
+};

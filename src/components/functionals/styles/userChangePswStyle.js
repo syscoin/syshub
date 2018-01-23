@@ -75,6 +75,29 @@ export default {
           },
         },
       },
+      '& .input-password-feild': {
+        color: primaryLight,
+        width: 'calc(40% - 100px)',
+        margin: '0px 10px',
+        display: 'inline-block',
+        border: 'thin solid ' + greyLight,
+        '& .ReactPasswordStrength-input': {
+          width: '100%',
+          padding: '9px',
+          fontSize: '12px'
+        },
+        '& .ReactPasswordStrength-strength-desc': {
+          width: '100%',
+          marginRight: '-270px',
+          textTransform: 'capitalize',
+          padding: '5px',
+          fontStyle: 'normal'
+        }
+      },
+      '& .ant-form-explain': {
+        marginLeft: '220px',
+        padding: '5px'
+      }
     },
     '& .confirmChange-button-grid': {
       padding: '20px',
@@ -85,6 +108,7 @@ export default {
       minHeight: 25,
       width: 150,
       fontSize: 16,
+      height: 40,
       color: white,
       backgroundColor: primary,
       '&:hover': {

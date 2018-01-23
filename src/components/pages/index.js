@@ -3,7 +3,7 @@ import Login from './Login';
 import Register from './Register';
 import DashBoard from './DashBoard';
 import Faq from './Faq';
-import MasterNode from './MasterNode';
+import MasternodeSetting from './MasternodeSetting';
 import NewProposal from './NewProposal';
 import News from './News';
 import UserAccount from './UserAccount';
@@ -16,7 +16,7 @@ export {
   Register,
   DashBoard,
   Faq,
-  MasterNode,
+  MasternodeSetting,
   NewProposal,
   News,
   UserAccount,

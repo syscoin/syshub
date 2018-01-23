@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
+import { Input } from 'antd';
 
 import { fire } from '../../firebase';
 
@@ -13,6 +14,15 @@ import PropTypes from 'prop-types';
 import { registerStyle } from './styles';
 
 class Register extends Component {
+  constructor(props) {
+    super(props);
+
+    this.checkUsername = this.checkUsername.bind(this);
+    this.callback = this.callback.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
+    this.register = this.register.bind(this);
+  }
+
   state = {
     disabled: false,
     username: null,
@@ -26,6 +36,7 @@ class Register extends Component {
   // specifying verify callback function
   verifyCallback(response) {
     console.log('Recaptcha Verify CallBack: ', response);
+    this.verify = response;
   }
 
   checkUsername(event) {
@@ -44,30 +55,55 @@ class Register extends Component {
       [event.target.name]: event.target.value,
     });
 
+    const username = this.registerName.value;
+
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.child(event.target.value).on('value', snap => {
-        if (snap.val() != null) {
-          this.setState({
-            disabled: true,
-          });
-        } else if (snap.val() == null) {
-          this.setState({
-            disabled: false,
-          });
-        }
+      usernameRef.on('value', snapshot => {
+        snapshot.forEach(snap => {
+          if (snap.val() === username) {
+            this.setState({
+              disabled: true,
+            });
+            return;
+          } else {
+            this.setState({
+              disabled: false,
+            });
+          }
+        });
       });
     }
   }
 
   register(event) {
     event.preventDefault();
+
+    if (this.state.disabled) {
+      swal({
+        title: 'Oops...',
+        text: 'Username already taken',
+        icon: 'error',
+      });
+      return;
+    }
+
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'You forgot to complete the reCAPTCHA',
+        icon: 'error',
+      });
+
+      return;
+    }
+
     this.setState({
       username: '',
     });
-    const username = this.registerName.value;
-    const email = this.registerEmail.value;
-    const password = this.registerPsw.value;
+    const username = this.registerName.input.value;
+    const email = this.registerEmail.input.value;
+    const password = this.registerPsw.input.value;
 
     if (!username) {
       swal({
@@ -87,7 +123,7 @@ class Register extends Component {
 
         if (user.uid === currentUser.uid) {
           const usernameRef = fire.database().ref('usernames');
-          usernameRef.child(username).set(user.uid);
+          usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
 
           this.registerForm.reset();
@@ -136,7 +172,7 @@ class Register extends Component {
                 <span htmlFor="user-name" className="label">
                   {`Username: `}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerName = input)}
                   name="usernames"
                   id="user-name"
@@ -164,7 +200,7 @@ class Register extends Component {
                 <span htmlFor="user-email" className="label">
                   {`Email: `}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerEmail = input)}
                   name="email"
                   id="user-name"
@@ -178,7 +214,7 @@ class Register extends Component {
                 <span htmlFor="password" className="label">
                   Password:{' '}
                 </span>
-                <input
+                <Input
                   ref={input => (this.registerPsw = input)}
                   type="password"
                   id="password"
@@ -197,10 +233,11 @@ class Register extends Component {
                 <span htmlFor="confirm-password" className="label">
                   Confirm Password:{' '}
                 </span>
-                <input
+                <Input
                   type="password"
                   id="confirm-password"
                   className="input-field"
+                  type="password"
                   placeholder="**************"
                 />
               </FormGroup>
@@ -231,10 +268,19 @@ class Register extends Component {
 
               {/* Form Action Button */}
               <FormGroup className="form-group form-button-group">
-                <Button type="submit" className={classes.button}>
+                <Button
+                  disabled={this.state.disabled}
+                  type="submit"
+                  className={classes.button}
+                >
                   Register
                 </Button>
-                <Button type="submit" color="accent" className={classes.button}>
+                <Button
+                  disabled={this.state.disabled}
+                  type="submit"
+                  color="accent"
+                  className={classes.button}
+                >
                   Register & Login
                 </Button>
               </FormGroup>
