@@ -43,18 +43,37 @@ const initialState = {
       fCachedEndorsed: false
     }
   },
-  list: {},
+  list: [],
   status: null,
   prepareReceipt: null,
   submitReceipt: null
 };
 
+function smartParse(json) {
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    return json;
+  }
+}
+
 const proposals = (state = initialState, action) => {
   switch (action.type) {
     case constants.SYS_PROPOSALS_GET:
+      let proposal = {};
+      let list = [];
+      Object.keys(action.data).forEach(key1 => {
+        Object.keys(action.data[key1]).forEach(key2 => {
+          proposal[key2] = smartParse(action.data[key1][key2]);
+        });
+        list.push(proposal);
+        proposal = {};
+      });
+
       return {
         ...state,
-        listRaw: action.data
+        listRaw: action.data,
+        list: list
       };
 
     case constants.SYS_PROPOSALS_CHECK:

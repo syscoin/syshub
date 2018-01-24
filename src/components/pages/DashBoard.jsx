@@ -37,8 +37,16 @@ class DashBoard extends Component {
 
   render() {
     const { classes, proposals } = this.props;
-    Object.keys(proposals.list).forEach(key => {
-      console.log('PROPOSAL -->', proposals.list[key]);
+    console.log('TBA RAW PROPOSAL OBJECT -->', proposals.listRaw);
+
+    console.log('TBA PARSED PROPOSAL ARRAY -->', proposals.list);
+
+    Object.keys(proposals.listRaw).forEach(key => {
+      console.log('TBA PROPOSAL RAW -->', proposals.listRaw[key]);
+    });
+
+    proposals.list.map(proposal => {
+      console.log('TBA PROPOSAL PARSED -->', proposal);
     });
 
     return (
