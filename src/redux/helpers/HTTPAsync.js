@@ -5,11 +5,6 @@ const getRequest = (url, params) => {
     axios
       .get(url, { params })
       .then(response => {
-        console.log('Get response: ', response);
-
-        if (response.data.confirmation !== 'success') {
-          throw new Error(response.data.message);
-        }
         resolve(response.data);
       })
       .catch(err => {
@@ -23,9 +18,6 @@ const postRequest = (url, params) => {
     axios
       .post(url, params)
       .then(response => {
-        if (response.data.confirmation !== 'success') {
-          throw new Error(response.data.message);
-        }
         resolve(response.data);
       })
       .catch(err => {
@@ -39,9 +31,6 @@ const putRequest = (url, params) => {
     axios
       .put(url, params)
       .then(response => {
-        if (response.data.confirmation !== 'success') {
-          throw new Error(response.data.message);
-        }
         resolve(response.data);
       })
       .catch(err => {
@@ -55,9 +44,6 @@ const deleteRequest = url => {
     axios
       .delete(url)
       .then(response => {
-        if (response.data.confirmation !== 'success') {
-          throw new Error(response.data.message);
-        }
         resolve(response.data);
       })
       .catch(err => {
@@ -74,7 +60,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data,
+              data: data
             });
           }
 
@@ -92,7 +78,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data,
+              data: data
             });
           }
 
@@ -110,7 +96,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data,
+              data: data
             });
           }
 
@@ -128,7 +114,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data,
+              data: data
             });
           }
 
@@ -137,5 +123,5 @@ export default {
         .catch(err => {
           throw err;
         });
-  },
+  }
 };
