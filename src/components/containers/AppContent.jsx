@@ -16,10 +16,11 @@ import {
   Register,
   DashBoard,
   Faq,
-  MasterNode,
+  MasternodeSetting,
   NewProposal,
   News,
   UserAccount,
+  UserAccountTest,
 } from '../pages';
 
 //Import Styles
@@ -43,7 +44,7 @@ class AppContent extends Component {
               news: <News />,
               userAccount: <UserAccount />,
               faq: <Faq />,
-              masterNode: <MasterNode />,
+              masterNode: <MasternodeSetting />,
               login: <Login />,
               register: <Register />,
             }[this.props.app.showPage]

@@ -73,7 +73,7 @@ const sysStats = (state = initialState, action) => {
       const newValue = action.data;
       const statsChanged =
         JSON.stringify(value) === JSON.stringify(newValue) ? false : true;
-
+   
       return statsChanged
         ? { ...state, value: newValue, valueOld: value }
         : { ...state, value, valueOld };

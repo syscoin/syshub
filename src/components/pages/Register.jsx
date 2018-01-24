@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
+import { connect } from 'react-redux';
 import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 
 import { fire } from '../../firebase';
+import actions from '../../redux/actions';
 
 import PropTypes from 'prop-types';
 
@@ -14,9 +16,13 @@ import PropTypes from 'prop-types';
 import { registerStyle } from './styles';
 
 class Register extends Component {
-
   constructor(props) {
     super(props);
+
+    this.checkUsername = this.checkUsername.bind(this);
+    this.callback = this.callback.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
+    this.register = this.register.bind(this);
   }
 
   state = {
@@ -32,6 +38,7 @@ class Register extends Component {
   // specifying verify callback function
   verifyCallback(response) {
     console.log('Recaptcha Verify CallBack: ', response);
+    this.verify = response;
   }
 
   checkUsername(event) {
@@ -50,30 +57,56 @@ class Register extends Component {
       [event.target.name]: event.target.value,
     });
 
+    const username = this.registerName.value;
+
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.child(event.target.value).on('value', snap => {
-        if (snap.val() != null) {
-          this.setState({
-            disabled: true,
-          });
-        } else if (snap.val() == null) {
-          this.setState({
-            disabled: false,
-          });
-        }
+      usernameRef.on('value', snapshot => {
+        snapshot.forEach(snap => {
+          if (snap.val() === username) {
+            this.setState({
+              disabled: true,
+            });
+            return;
+          } else {
+            this.setState({
+              disabled: false,
+            });
+          }
+        });
       });
     }
   }
 
   register(event) {
     event.preventDefault();
+
+    if (this.state.disabled) {
+      swal({
+        title: 'Oops...',
+        text: 'Username already taken',
+        icon: 'error',
+      });
+      return;
+    }
+
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'You forgot to complete the reCAPTCHA',
+        icon: 'error',
+      });
+
+      return;
+    }
+
     this.setState({
       username: '',
     });
     const username = this.registerName.input.value;
     const email = this.registerEmail.input.value;
     const password = this.registerPsw.input.value;
+
     if (!username) {
       swal({
         title: 'Oops...',
@@ -92,10 +125,10 @@ class Register extends Component {
 
         if (user.uid === currentUser.uid) {
           const usernameRef = fire.database().ref('usernames');
-          usernameRef.child(username).set(user.uid);
+          usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
-
           this.registerForm.reset();
+          this.props.setPage('home');
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
@@ -220,7 +253,7 @@ class Register extends Component {
                   <Recaptcha
                     style={{ marginLeft: '10px' }}
                     id="captcha"
-                    sitekey="6LeNoEAUAAAAADaWqXweDPiSR-8HnWCQ3ZMrNp1o"
+                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
                     verifyCallback={this.verifyCallback.bind(this)}
                     onloadCallback={this.callback.bind(this)}
@@ -238,12 +271,11 @@ class Register extends Component {
               {/* Form Action Button */}
               <FormGroup className="form-group form-button-group">
                 <Button
+                  disabled={this.state.disabled}
                   type="submit"
+                  color="accent"
                   className={classes.button}
                 >
-                  Register
-                </Button>
-                <Button type="submit" color="accent" className={classes.button}>
                   Register & Login
                 </Button>
               </FormGroup>
@@ -258,4 +290,19 @@ class Register extends Component {
 Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(registerStyle)(Register);
+
+function mapStateToProps(state) {
+  //pass the providers
+  return {};
+}
+
+/* Map Actions to Props */
+function mapDispatchToProps(dispatch) {
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(registerStyle)(Register)
+);
