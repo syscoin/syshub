@@ -168,7 +168,7 @@ class UserChangePassword extends Component {
                     )}
                 </FormItem>
                 <Grid className="confirmChange-button-grid">
-                  <Button htmlType="submit" raised className="confirmChange-button" disabled={this.hasErrors(getFieldsError())}>Confirm Changes</Button>
+                  <Button htmlType="submit" raised="true" className="confirmChange-button" disabled={this.hasErrors(getFieldsError())}>Confirm Changes</Button>
                 </Grid>
               </Form>
             </div>

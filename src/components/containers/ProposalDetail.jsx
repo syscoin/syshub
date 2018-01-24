@@ -27,10 +27,10 @@ export class ProposalDetail extends Component {
     const {classes} = this.props;
 
     return (
-      <Grid  md={12} style={proposalDetailsStyle.root} >
+      <Grid style={proposalDetailsStyle.root} >
         <DashBoardHeader data={{ showHeader: "ProposalDetail", name: "Proposal 1" }} />
 
-        <Grid container md={12} style={proposalDetailsStyle.proposalDetails} >
+        <Grid container style={proposalDetailsStyle.proposalDetails} >
           <ProposalPayment />
           <ProposalApprovalStat />
           <ProposalDescription />
@@ -50,9 +50,9 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-ProposalDetail.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// ProposalDetail.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 
 export default connect(stateToProps, dispatchToProps)(withStyles(proposalDetailsStyle)(ProposalDetail));

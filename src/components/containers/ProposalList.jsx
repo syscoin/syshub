@@ -16,9 +16,10 @@ export class ProposalList extends Component {
     super(props);
   }
   render() {
-    const { classes ,selectProposal } = this.props;
+    const classes = this.props.classes;
+    const selectProposal = this.props.selectProposal;
     return (
-      <Grid md={12} style={proposalStyle.root}>
+      <Grid style={proposalStyle.root}>
         <DashBoardHeader data={{ showHeader: "proposalList" }} />
         <ProposalCard selectProposal={selectProposal} />
       </Grid>
@@ -33,9 +34,9 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-ProposalList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// ProposalList.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(proposalStyle)(ProposalList));
 
