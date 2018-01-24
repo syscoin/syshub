@@ -24,8 +24,8 @@ class HeaderNav extends Component {
     }
   }
 
-  setPage(Page) {
-    this.props.setPage(Page);
+  setPage() {
+    this.props.setPage('home');
   }
 
   render() {
@@ -105,7 +105,7 @@ const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
     setPage: page => dispatch(actions.setPage(page)),
-    toggleChat: page => dispatch(actions.toggleChat()),
+    toggleChat: () => dispatch(actions.toggleChat()),
   };
 };
 
