@@ -24,7 +24,6 @@ const getSysStats = store => next => action => {
 
         const data = smartParse(res.data.data, store.getState().sysStats.value);
         const newAction = { ...action, data };
-        //console.log('ACZ (newAction): ', newAction);
         const result = next(newAction);
         return result;
       })

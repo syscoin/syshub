@@ -188,8 +188,8 @@ class Register extends Component {
                       (!this.state.disabled ? (
                         <img src={checkIcon} />
                       ) : (
-                        <img src={closeIcon} />
-                      ))}
+                          <img src={closeIcon} />
+                        ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
