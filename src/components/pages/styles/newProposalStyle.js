@@ -11,6 +11,9 @@ const secondary = palette.secondary;
 export default {
     root: {
         marginTop: '20px',
+        '& StepLabel':{
+            color:'red'
+        },
         '& .title': {
             fontWeight: 'lighter',
             color: greyDark,

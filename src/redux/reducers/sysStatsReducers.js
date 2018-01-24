@@ -73,10 +73,7 @@ const sysStats = (state = initialState, action) => {
       const newValue = action.data;
       const statsChanged =
         JSON.stringify(value) === JSON.stringify(newValue) ? false : true;
-      console.log('ACZ (Value): ', value);
-      console.log('ACZ (newValue): ', newValue);
-      console.log('ACZ (ValueSelector): ', statsChanged);
-
+   
       return statsChanged
         ? { ...state, value: newValue, valueOld: value }
         : { ...state, value, valueOld };

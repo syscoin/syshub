@@ -7,6 +7,8 @@ const basicColors = {
   grey: '#bdc3c7',
   greyLight: '#F0F2F5',
   secondary: '#1abc9c',
+  red: '#D61414',
+  green: '#97CB54',
 };
 
 const themeColors = {

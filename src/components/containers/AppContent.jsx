@@ -16,10 +16,11 @@ import {
   Register,
   DashBoard,
   Faq,
-  MasterNode,
+  MasternodeSetting,
   NewProposal,
   News,
   UserAccount,
+  UserAccountTest,
 } from '../pages';
 
 //Import Styles
@@ -39,13 +40,11 @@ class AppContent extends Component {
             {
               home: <Home />,
               dashBoard: <DashBoard />,
-              proposalDetail: <DashBoard />, // Todo: Quite Confusion that how we are going to manage for sub page
               newProposal: <NewProposal />,
               news: <News />,
-              newsDetail: <News />, // Todo: Quite Confusion that how we are going to manage for sub page
               userAccount: <UserAccount />,
               faq: <Faq />,
-              masterNode: <MasterNode />,
+              masterNode: <MasternodeSetting />,
               login: <Login />,
               register: <Register />,
             }[this.props.app.showPage]
@@ -55,10 +54,6 @@ class AppContent extends Component {
     );
   }
 }
-
-AppContent.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 const stateToProps = state => {
   return {

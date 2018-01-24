@@ -1,27 +1,122 @@
 import React, { Component } from 'react';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
-
-import { doLogin } from '../../firebase';
+import swal from 'sweetalert';
+import { doLogin, fire } from '../../firebase';
+import { connect } from 'react-redux';
+import actions from '../../redux/actions';
 
 // import style
 import { loginStyle } from './styles';
 
 class Login extends Component {
-  // specifying your onload callback function
-  callback() {
-    console.log('Recaptcha onLoad CallBack: Done!!!!');
+  constructor(props) {
+    super(props);
+
+    this.login = this.login.bind(this);
   }
 
-  // specifying verify callback function
-  verifyCallback(response) {
-    console.log('Recaptcha Verify CallBack: ', response);
+  componentDidMount() {
+    fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.verify = response;
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
   }
+
   login(event) {
     event.preventDefault();
+    const currentUser = fire.auth().currentUser;
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
-    doLogin(email, password);
+    const appVerifier = window.recaptchaVerifier;
+
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'You forgot to complete the reCAPTCHA',
+        icon: 'error'
+      });
+
+      return;
+    }
+
+    fire
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        if (this.props.app.auth) {
+          if (user.phoneNumber == null) {
+            swal({
+              title: 'Oops...',
+              text: 'Add phone number to the account first in account settings',
+              icon: 'error'
+            });
+            return;
+          }
+          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+        }
+      })
+      .then(confirmationResult => {
+        if (confirmationResult) {
+          swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Success',
+            text: 'Please provide use the verification code to continue',
+            icon: 'success',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Confirmation code here',
+                type: 'text'
+              }
+            }
+          })
+            .then(value => {
+              return confirmationResult.confirm(value);
+            })
+            .then(result => {
+              return fire.auth().signInWithEmailAndPassword(email, password);
+            })
+            .then(user => {
+              swal({
+                title: 'Sucess',
+                text: `${user.email} signed in with sms verification`,
+                icon: 'success'
+              });
+
+              this.props.setPage('home');
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+
+          return;
+        }
+        swal({
+          title: 'Success',
+          text: `Account logged in.`,
+          icon: 'success'
+        });
+
+        this.props.setPage('home');
+      })
+      .catch(err => {
+        swal({
+          title: 'Oops...',
+          text: `${err}`,
+          icon: 'error'
+        });
+      });
   }
   render() {
     const captcha = require('../../assets/img/captcha.jpg'),
@@ -39,12 +134,7 @@ class Login extends Component {
             }}
             className="wrapper"
           >
-            <Grid
-              item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
-              justify="center"
-            >
+            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -77,16 +167,7 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div className="recaptcha">
-                  <Recaptcha
-                    style={{ marginLeft: '10px' }}
-                    id="captcha"
-                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
-                    render="explicit"
-                    verifyCallback={() => this.verifyCallback}
-                    onloadCallback={() => this.callback}
-                  />
-                </div>
+                <div ref={ref => (this.recaptcha = ref)} />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -104,4 +185,16 @@ class Login extends Component {
   }
 }
 
-export default withStyles(loginStyle)(Login);
+const stateToProps = state => {
+  return {
+    app: state.app
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    setPage: page => dispatch(actions.setPage(page))
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));

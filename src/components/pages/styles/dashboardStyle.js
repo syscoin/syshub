@@ -8,13 +8,11 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    marginTop:'20px',
-    '& .dashBoardheading':{
-      color:greyDark,
-      fontSize:20,
-      marginBottom:20,
-    }
-
+    '& .dashBoardheading': {
+      fontWeight: 'lighter',
+    },
+    '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
+    '& .icon': { color: primary },
+    '& .iconTxt': { color: primary },
   },
-
 };
