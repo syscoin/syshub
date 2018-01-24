@@ -83,7 +83,7 @@ class HeaderNav extends Component {
                 type="primary"
                 ghost
                 className="button login-btn"
-                onClick={() => this.setPage('login')}
+                onClick={() => this.props.setPage('login')}
               >
                 <div className="common">Login</div>
               </Button>
