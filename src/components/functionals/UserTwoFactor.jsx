@@ -80,14 +80,12 @@ class UserTwoFactor extends Component {
         },
       },
     }).then(value => {
-      console.log('ACZ (Phone value) --> ', value);
       if (value) {
         const appVerifier = window.recaptchaVerifier;
         const provider = new fire.auth.PhoneAuthProvider();
         provider
           .verifyPhoneNumber(`+${value}`, appVerifier)
           .then(verificationId => {
-            console.log('ACZ (verificationId) --> ', verificationId);
             swal({
               closeOnClickOutside: false,
               closeOnEsc: false,
@@ -106,16 +104,12 @@ class UserTwoFactor extends Component {
               },
             })
               .then(verificationCode => {
-                console.log('ACZ (verificationCode) --> ', verificationCode);
-
                 return fire.auth.PhoneAuthProvider.credential(
                   verificationId,
                   verificationCode
                 );
               })
               .then(phoneCredential => {
-                console.log('ACZ (phoneCredential) --> ', phoneCredential);
-
                 return user.updatePhoneNumber(phoneCredential);
               })
               .then(() => {
@@ -134,7 +128,7 @@ class UserTwoFactor extends Component {
               });
           })
           .catch(err => {
-            console.log('ACZ (err) --> ', err);
+            console.log('err) --> ', err);
 
             alert(`${err}`);
           });
