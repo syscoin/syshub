@@ -21,11 +21,8 @@ class HeaderNav extends Component {
     const { currentUser } = this.props.app;
     if (currentUser) {
       doLogout();
+      this.props.doLogout();
     }
-  }
-
-  setPage() {
-    this.props.setPage('home');
   }
 
   render() {
