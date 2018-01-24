@@ -34,7 +34,6 @@ class HeaderNav extends Component {
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const homeIcon = require('../../assets/img/png_menu_home.png');
     const contactIcon = require('../../assets/img/png_menu_contact.png');
-    console.log(currentUser);
     return (
       <Grid container md={5} className={classes.root}>
         <Grid item className="common">
