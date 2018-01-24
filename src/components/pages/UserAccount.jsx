@@ -60,8 +60,8 @@ class UserAccount extends Component {
   }
 
   deleteProfile() {
-    doDeleteAccount();
     this.props.setPage('home');
+    doDeleteAccount();
   }
 
   render() {
