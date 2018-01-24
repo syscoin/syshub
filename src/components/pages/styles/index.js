@@ -4,6 +4,7 @@ import loginStyle from './loginStyle';
 import dashboardStyle from './dashboardStyle';
 import userAccountStyle from './userAccountStyle';
 import newsStyle from './newsStyle';
+import masterNodeStyle from "./masterNodeStyle";
 
 
-export { palette, registerStyle, loginStyle, userAccountStyle, dashboardStyle,newsStyle };
+export { palette, registerStyle, loginStyle, userAccountStyle, dashboardStyle, newsStyle, masterNodeStyle };
