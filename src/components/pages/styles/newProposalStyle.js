@@ -11,8 +11,8 @@ const secondary = palette.secondary;
 export default {
     root: {
         marginTop: '20px',
-        '& StepLabel':{
-            color:'red'
+        '& StepLabel': {
+            color: 'red'
         },
         '& .title': {
             fontWeight: 'lighter',
@@ -21,6 +21,23 @@ export default {
         },
         '& .paper-container': {
             padding: '20px 20px',
+
+            '& .next-btn-div': {
+                textAlign: 'right',
+                margin: "10px 60px 10px 0px",
+                '& Button': {
+                        borderRadius: '7px',
+                        height: '35px',
+                        margin:10
+                    },
+                    '& button span': {
+                        textTransform: 'capitalize',
+                        padding: '3px 0px',
+                        fontSize: '18px',
+                        color:white
+                    },
+
+            },
             '& .proposal-title': {
                 fontWeight: 100,
                 fontSize: '22px',
@@ -64,9 +81,10 @@ export default {
             },
             '& .proposal-details-row': {
                 '& .preview-edit-button': {
-                    marginLeft: '20px',
-                    height: '30px',
-                    borderRadius: '8px'
+                    marginLeft: 20,
+                    height: 25,
+                    fontSize: 10,
+                    borderRadius: 8
                 },
                 '& .editor-title': {
                     position: 'absolute',
@@ -109,6 +127,20 @@ export default {
                 },
                 '& .confirm-button span': {
                     color: white
+                },
+                '& .proposalDetail-title': {
+                    marginTop: 15,
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: greyDark,
+
+                },
+                '& .proposalContent-div': {
+                    marginLeft: 15,
+                    padding: 12,
+                    height: 100,
+                    overflow: 'auto',
+                    color: grey
                 }
             }
         },
