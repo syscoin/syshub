@@ -54,7 +54,7 @@ const proposals = (state = initialState, action) => {
     case constants.SYS_PROPOSALS_GET:
       return {
         ...state,
-        list: action.data
+        listRaw: action.data
       };
 
     case constants.SYS_PROPOSALS_CHECK:
