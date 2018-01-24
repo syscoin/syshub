@@ -5,6 +5,8 @@ const getRequest = (url, params) => {
     axios
       .get(url, { params })
       .then(response => {
+        console.log('Get response: ', response);
+
         if (response.data.confirmation !== 'success') {
           throw new Error(response.data.message);
         }
@@ -72,7 +74,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data
+              data: data,
             });
           }
 
@@ -90,7 +92,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data
+              data: data,
             });
           }
 
@@ -108,7 +110,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data
+              data: data,
             });
           }
 
@@ -126,7 +128,7 @@ export default {
           if (actionType != null) {
             dispatch({
               type: actionType,
-              data: data
+              data: data,
             });
           }
 
@@ -135,5 +137,5 @@ export default {
         .catch(err => {
           throw err;
         });
-  }
+  },
 };
