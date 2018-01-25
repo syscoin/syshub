@@ -17,7 +17,7 @@ class UserProfile extends Component {
     super(props);
 
     this.state = {
-      disabled: false
+      disabled: false,
     };
 
     this.submitProfile = this.submitProfile.bind(this);
@@ -42,7 +42,7 @@ class UserProfile extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning'
+        icon: 'warning',
       });
 
       return;
@@ -54,12 +54,12 @@ class UserProfile extends Component {
         snapshot.forEach(snap => {
           if (snap.val() === username) {
             this.setState({
-              disabled: true
+              disabled: true,
             });
             return;
           } else {
             this.setState({
-              disabled: false
+              disabled: false,
             });
           }
         });
@@ -75,16 +75,16 @@ class UserProfile extends Component {
         <Grid container>
           {/* profile text */}
           <Grid md={12}>
-            <h1 className='profile-heading'>Profile</h1>
+            <h1 className="profile-heading">Profile</h1>
           </Grid>
           {/* profile image grid */}
           <Grid md={3} className="profile-image-grid">
             <div className="avatar-container upload-image-container">
-              <input type="file"/>
+              {/* <input type="file"/> */}
               <img src={avatar} alt="no user image" className="user-image" />
             </div>
             <span className="change-photo-btn upload-image-container">
-              <input type="file"/>
+              {/* <input type="file"/> */}
               <a className="link-color"> click to change photo</a>
             </span>
           </Grid>
@@ -119,7 +119,9 @@ class UserProfile extends Component {
                 className="input-field"
                 placeholder="Enter email"
               />
-              <span className="validation-message">*required for password change</span>
+              <span className="validation-message">
+                *required for password change
+              </span>
             </FormGroup>
           </Grid>
           <Grid className="update-button-grid">
@@ -148,4 +150,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(userProfileStyle)(UserProfile)
+);

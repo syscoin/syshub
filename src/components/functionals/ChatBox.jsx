@@ -116,7 +116,7 @@ class ChatBox extends Component {
       <div className={classes.root}>
       {/* chat box container */}
         <div className='chat_box_container'>
-          <Paper className='paper-style' zDepth={2}>
+          <Paper className='paper-style'>
             <div className='chatbox-Header'>
               <span>
                 <img src={chat_icon} className='chatBox-headerIcon' />
@@ -137,20 +137,20 @@ class ChatBox extends Component {
                     key={index}
                     className='chatContent-listItemText'
                     primary={
-                      <Typography className='chatContent-primaryText'>
+                      <div className='chatContent-primaryText'>
                         {message.user.displayName}
-                      </Typography>
+                      </div>
                     }
                     secondary={
-                      <Typography className='chatContent-secondaryText'>
+                      <div className='chatContent-secondaryText'>
                         {message.body}
-                      </Typography>
+                      </div>
                     }
                   />
                 ))}
               </div>
             </List>
-            
+
 
             {/* input field for chat */}
             <form className='form' onSubmit={this.onSubmit}>
@@ -161,12 +161,12 @@ class ChatBox extends Component {
                 onClick={() => {
                   return !currentUser ? this.loginAlert() : null;
                 }}
-                multiLine=" true"
+                multiline={true}
                 placeholder={
                   currentUser ? 'Tell something' : 'login to write message'
                 }
               />
-              <Send className="send-button" onClick={this.onSubmit}/> 
+              <Send className="send-button" onClick={this.onSubmit}/>
             </form>
           </Paper>
         </div>

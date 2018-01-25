@@ -21,11 +21,8 @@ class HeaderNav extends Component {
     const { currentUser } = this.props.app;
     if (currentUser) {
       doLogout();
+      this.props.doLogout();
     }
-  }
-
-  setPage(Page) {
-    this.props.setPage(Page);
   }
 
   render() {
@@ -34,7 +31,6 @@ class HeaderNav extends Component {
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const homeIcon = require('../../assets/img/png_menu_home.png');
     const contactIcon = require('../../assets/img/png_menu_contact.png');
-    console.log(currentUser);
     return (
       <Grid container md={5} className={classes.root}>
         <Grid item className="common">
@@ -84,7 +80,7 @@ class HeaderNav extends Component {
                 type="primary"
                 ghost
                 className="button login-btn"
-                onClick={() => this.setPage('login')}
+                onClick={() => this.props.setPage('login')}
               >
                 <div className="common">Login</div>
               </Button>
@@ -106,7 +102,7 @@ const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
     setPage: page => dispatch(actions.setPage(page)),
-    toggleChat: page => dispatch(actions.toggleChat()),
+    toggleChat: () => dispatch(actions.toggleChat()),
   };
 };
 

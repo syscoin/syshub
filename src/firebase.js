@@ -8,7 +8,7 @@ const config = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
 firebase.initializeApp(config);
@@ -17,7 +17,7 @@ const fire = firebase;
 
 const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
-const messages = firebase.database().ref('messages');
+const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 // const currentUser
 
@@ -33,7 +33,7 @@ const doLogin = (email, password) => {
       swal({
         title: 'Success',
         text: `Account: ${user.email} logged in.`,
-        icon: 'success',
+        icon: 'success'
       });
       //this.loginForm.reset();
     })
@@ -41,7 +41,7 @@ const doLogin = (email, password) => {
       swal({
         title: 'Oops...',
         text: `${err}`,
-        icon: 'error',
+        icon: 'error'
       });
     });
 };
@@ -55,7 +55,7 @@ const doLogout = update => {
         swal({
           title: 'Success',
           text: `Hope to see you soon`,
-          icon: 'success',
+          icon: 'success'
         });
       }
     });
@@ -65,10 +65,7 @@ const doUpdatePassword = (user, callback) => {
   const currentUser = fire.auth().currentUser;
 
   if (currentUser) {
-    const credentials = fire.auth.EmailAuthProvider.credential(
-      currentUser.email,
-      user.currentPass
-    );
+    const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, user.currentPass);
     currentUser
       .reauthenticateWithCredential(credentials)
       .then(() => {
@@ -91,8 +88,7 @@ const doUpdateProfile = (user, callback) => {
         closeOnClickOutside: false,
         closeOnEsc: false,
         title: 'Warning',
-        text:
-          'You are about to change your email, you must input your password first',
+        text: 'You are about to change your email, you must input your password first',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
@@ -100,14 +96,11 @@ const doUpdateProfile = (user, callback) => {
           element: 'input',
           attributes: {
             placeholder: 'Type your password',
-            type: 'password',
-          },
-        },
+            type: 'password'
+          }
+        }
       }).then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(
-          currentUser.email,
-          password
-        );
+        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
         currentUser
           .reauthenticateWithCredential(credentials)
@@ -121,7 +114,7 @@ const doUpdateProfile = (user, callback) => {
             swal({
               title: 'Success',
               text: 'Account Updated',
-              icon: 'success',
+              icon: 'success'
             });
           })
           .catch(err => {
@@ -158,15 +151,12 @@ const doDeleteAccount = () => {
         element: 'input',
         attributes: {
           placeholder: 'Type your password',
-          type: 'password',
-        },
-      },
+          type: 'password'
+        }
+      }
     })
       .then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(
-          currentUser.email,
-          password
-        );
+        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
         return currentUser.reauthenticateWithCredential(credentials);
       })
@@ -175,8 +165,7 @@ const doDeleteAccount = () => {
           closeOnClickOutside: false,
           closeOnEsc: false,
           title: 'WARNING',
-          text:
-            'Type "DELETE" to delete your account permantly, this cannot be undone!',
+          text: 'Type "DELETE" to delete your account permantly, this cannot be undone!',
           icon: 'warning',
           buttons: true,
           dangerMode: true,
@@ -184,9 +173,9 @@ const doDeleteAccount = () => {
             element: 'input',
             attributes: {
               placeholder: 'Type "DELETE"',
-              type: 'text',
-            },
-          },
+              type: 'text'
+            }
+          }
         }).then(value => {
           if (value === 'DELETE') {
             currentUser
@@ -195,7 +184,7 @@ const doDeleteAccount = () => {
                 swal({
                   title: 'Success',
                   text: 'Account Deleted',
-                  icon: 'success',
+                  icon: 'success'
                 });
               })
               .catch(err => {
@@ -209,7 +198,7 @@ const doDeleteAccount = () => {
             swal({
               title: 'Oops...',
               text: 'Make sure to type "DELETE" with all caps',
-              icon: 'error',
+              icon: 'error'
             });
           }
         });
@@ -231,5 +220,5 @@ export {
   doLogout,
   doUpdateProfile,
   doUpdatePassword,
-  doDeleteAccount,
+  doDeleteAccount
 };

@@ -4,7 +4,8 @@ const initialState = {
   currentUser: null,
   showPage: 'home',
   showChat: true,
-  loading: false
+  loading: false,
+  auth: false
 };
 
 const app = (state = initialState, action) => {
@@ -38,6 +39,9 @@ const app = (state = initialState, action) => {
 
     case constants.APP_LOADING:
       return { ...state, loading: action.data };
+
+    case constants.SET_AUTH:
+      return { ...state, auth: action.data };
 
     default:
       return state;

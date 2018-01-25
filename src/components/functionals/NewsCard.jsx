@@ -72,7 +72,7 @@ class NewsCard extends Component {
               {/* news card */}
               <Grid item className="news-card-grid" >
                 {/* news image grid */}
-                <Grid md={2} inline className='newsCardImage-grid inline-block' >
+                <Grid md={2} inline="true" className='newsCardImage-grid inline-block' >
                   <img src={noImage} alt="news image" />
                 </Grid>
                 {/* News Content Grid */}
@@ -112,7 +112,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    
+
   };
 };
 
