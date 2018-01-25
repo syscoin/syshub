@@ -8,6 +8,7 @@ import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 import { DashBoardHeader } from '../functionals/';
+import axios from 'axios';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -17,22 +18,36 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: '',
+      proposalID: ''
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getProposals();
+  }
   //changing state with this function
   handleDashboard(value) {
-    const container =
-      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
-      proposalID: value,
+      proposalID: value
     });
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes, proposals } = this.props;
+    console.log('TBA RAW PROPOSAL OBJECT -->', proposals.listRaw);
+
+    console.log('TBA PARSED PROPOSAL ARRAY -->', proposals.list);
+
+    Object.keys(proposals.listRaw).forEach(key => {
+      console.log('TBA PROPOSAL RAW -->', proposals.listRaw[key]);
+    });
+
+    proposals.list.map(proposal => {
+      console.log('TBA PROPOSAL PARSED -->', proposal);
+    });
 
     return (
       <Grid className={classes.root}>
@@ -46,7 +61,7 @@ class DashBoard extends Component {
         {
           {
             dashBoard: <ProposalList selectProposal={this.handleDashboard} />,
-            proposalDetail: <ProposalDetail />,
+            proposalDetail: <ProposalDetail />
           }[this.state.showContainer]
         }
       </Grid>
@@ -55,16 +70,18 @@ class DashBoard extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    proposals: state.proposals
+  };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    getProposals: () => dispatch(actions.getProposals())
+  };
 };
 DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));
