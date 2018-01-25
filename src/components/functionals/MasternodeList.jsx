@@ -9,41 +9,91 @@ import { Grid, withStyles, FormGroup, Input, } from 'material-ui';
 import { masternodeListStyle } from "./styles";
 import { Table, Icon, Divider, Card, Col, Row, Modal, Button } from 'antd';
 
-
+const confirm = Modal.confirm;
 
 class MasterNodeList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      editNode: false
+      editNode: false,
+      editNodeRecord: {
+        name: '',
+        address: ''
+      }
     }
+    this.editNode = {}
     this.showEditModal = this.showEditModal.bind(this)
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.showDeleteConfirm = this.showDeleteConfirm.bind(this);
+    this.deleteMasterNode = this.deleteMasterNode.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-
-  showEditModal() {
+  showEditModal(record) {
+    this.editNode = record;
+    console.log("record", record);
     this.setState({
-      editNode: true,
+      editNodeModal: true,
+      editNodeRecord: {
+        name: record.name,
+        address: record.address,
+        key: record.key
+      }
     });
-
   }
 
   handleOk = (e) => {
-    console.log(e);
+    this.props.editNode(this.state.editNodeRecord);
     this.setState({
-      editNode: false,
+      editNodeModal: false,
     });
   }
   handleCancel = (e) => {
     console.log(e);
     this.setState({
-      editNode: false,
+      editNodeRecord: {
+        name: '',
+        address: ''
+      },
+      editNodeModal: false,
     });
   }
 
+  deleteMasterNode(node) {
+    this.props.deleteNode(node)
+  }
+
+
+  showDeleteConfirm(node) {
+
+    let confrimDelete = () => {
+      this.deleteMasterNode(node);
+    }
+    confirm({
+      title: 'Are you sure delete this Masternode?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        confrimDelete();
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+
+  onChange(e) {
+    this.setState({
+      editNodeRecord: {
+        ...this.state.editNodeRecord,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
 
 
   render() {
@@ -60,32 +110,14 @@ class MasterNodeList extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Button className="edit-btn" onClick={this.showEditModal}>
+          <Button className="edit-btn" onClick={() => this.showEditModal(record)}>
             Edit
           </Button>
-          <Button className="delete-btn">
+          <Button className="delete-btn" onClick={() => this.showDeleteConfirm(record)}>
             Delete
           </Button>
         </span>
       ),
-    }];
-
-    const data = [{
-      key: '1',
-      name: 'Mnode1',
-      address: '12.12.322.11.12123',
-    }, {
-      key: '2',
-      name: 'Mnode2',
-      address: '11.21.112.22.12345',
-    }, {
-      key: '3',
-      name: 'Mnode3',
-      address: '13.21.332.52.55642',
-    }, {
-      key: '4',
-      name: 'Mnode4',
-      address: '22.44.132.12.00987',
     }];
 
     const { classes } = this.props;
@@ -95,7 +127,7 @@ class MasterNodeList extends Component {
         {/* Edit Modal */}
         <Modal
           title="Edit Modal"
-          visible={this.state.editNode}
+          visible={this.state.editNodeModal}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           className={classes.modal}
@@ -123,8 +155,11 @@ class MasterNodeList extends Component {
                   <input
                     ref={name => (this.nodeName = name)}
                     id="name"
+                    name="name"
                     className="input-field"
                     placeholder="e.g Mnode1"
+                    value={this.state.editNodeRecord.name}
+                    onChange={this.onChange}
                   />
                 </FormGroup>
 
@@ -136,8 +171,11 @@ class MasterNodeList extends Component {
                   <input
                     ref={address => (this.nodeAddress = address)}
                     id="address"
+                    name="address"
                     className="input-field"
                     placeholder="123.45.67.891.12345"
+                    value={this.state.editNodeRecord.address}
+                    onChange={this.onChange}
                   />
                 </FormGroup>
               </Grid>
@@ -150,10 +188,10 @@ class MasterNodeList extends Component {
           <div className="heading">
             <h2 className="title">
               Masternode List
-        </h2>
+            </h2>
           </div>
           <div className="node-list-table">
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={this.props.nodes} />
           </div>
 
         </div>

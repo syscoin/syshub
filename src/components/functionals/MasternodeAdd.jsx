@@ -12,19 +12,31 @@ class MasterNodeAdd extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      newNode: {}
+    }
+
 
     this.addNode = this.addNode.bind(this);
-
+    this.onChange = this.onChange.bind(this);
   }
 
   addNode(event) {
     event.preventDefault();
-    const masterNodeName = this.nodeName.value;
-    const masterNodeAddress = this.nodeAddress.value;
-
-    if (masterNodeName && masterNodeAddress) {
-      console.log("Master Node name " + masterNodeName + "Master Node Address " + masterNodeAddress)
+    if (this.state.newNode.name && this.state.newNode.address) {
+      console.log("Master Node name " + this.state.newNode.name + " Master Node Address " + this.state.newNode.address)
+      this.props.addNode(this.state.newNode)
+      this.setState({ newNode: { name: '', address: '' } })
     }
+  }
+
+  onChange(e) {
+    this.setState({
+      newNode: {
+        ...this.state.newNode,
+        [e.target.name]: e.target.value
+      }
+    });
   }
 
 
@@ -57,8 +69,11 @@ class MasterNodeAdd extends Component {
                 <input
                   ref={name => (this.nodeName = name)}
                   id="name"
+                  name="name"
                   className="input-field"
                   placeholder="e.g Mnode1"
+                  value={this.state.newNode.name}
+                  onChange={this.onChange}
                 />
               </FormGroup>
 
@@ -70,8 +85,11 @@ class MasterNodeAdd extends Component {
                 <input
                   ref={address => (this.nodeAddress = address)}
                   id="address"
+                  name="address"
                   className="input-field"
                   placeholder="123.45.67.891.12345"
+                  value={this.state.newNode.address}
+                  onChange={this.onChange}
                 />
               </FormGroup>
 
