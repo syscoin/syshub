@@ -14,6 +14,16 @@ export default {
         '& StepLabel': {
             color: 'red'
         },
+        '& .step-label': {
+            color: primary,
+            marginTop: 12,
+            display: 'inline'
+        },
+        '& .steper__container': {
+            ' & > span > span:nth-child(2)': {
+                width: '100%'
+            }
+        },
         '& .title': {
             fontWeight: 'lighter',
             color: greyDark,
@@ -22,27 +32,46 @@ export default {
         '& .paper-container': {
             padding: '20px 20px',
 
+
+            //next step button styling
             '& .next-btn-div': {
                 textAlign: 'right',
                 margin: "10px 60px 10px 0px",
                 '& Button': {
-                        borderRadius: '7px',
-                        height: '35px',
-                        margin:10
-                    },
-                    '& button span': {
-                        textTransform: 'capitalize',
-                        padding: '3px 0px',
-                        fontSize: '18px',
-                        color:white
-                    },
+                    borderRadius: '7px',
+                    height: '35px',
+                    margin: 10
+                },
+                '& button span': {
+                    textTransform: 'capitalize',
+                    padding: '3px 0px',
+                    fontSize: '18px',
+                    color: white
+                },
+
+            },
+            //confirm button styling
+            '& .confirm-btn-div': {
+                margin: "10px 60px 10px 0px",
+                '& Button': {
+                    borderRadius: '7px',
+                    height: '35px',
+                    margin: 10
+                },
+                '& button span': {
+                    textTransform: 'capitalize',
+                    padding: '3px 0px',
+                    fontSize: '18px',
+                    color: white
+                },
 
             },
             '& .proposal-title': {
                 fontWeight: 100,
                 fontSize: '22px',
                 color: primaryLight,
-                display: 'inline-block'
+                display: 'inline-block',
+                marginLeft: 'calc(50% - 210px)'
             },
             '& .proposalHeading-dot': {
                 backgroundColor: primary,
@@ -52,6 +81,7 @@ export default {
                 display: 'inline-block',
                 marginRight: "15px"
             },
+            //step 1 proposal-title-row
             '& .proposal-title-row': {
                 '& .form-item': {
                     marginLeft: '30px',
@@ -79,7 +109,10 @@ export default {
                     },
                 }
             },
+
+            //step 2 proposal-details-row'
             '& .proposal-details-row': {
+                marginBottom: 20,
                 '& .preview-edit-button': {
                     marginLeft: 20,
                     height: 25,
@@ -141,7 +174,21 @@ export default {
                     height: 100,
                     overflow: 'auto',
                     color: grey
-                }
+                },
+            },
+            //paymentDetail-row
+            '& .paymentDetail-row': {
+                height: 100,
+                marginTop: 15,
+                '& label': {
+                    display: 'block',
+                },
+            }
+            ,
+            //amount-row
+            '& .amount-row': {
+                height: 50,
+                marginTop: 15
             }
         },
 
