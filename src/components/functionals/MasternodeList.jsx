@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { Grid, withStyles, FormGroup, Input, } from 'material-ui';
-
+import { Grid, withStyles, FormGroup, Input } from 'material-ui';
 
 // import style
-import { masternodeListStyle } from "./styles";
+import { masternodeListStyle } from './styles';
 import { Table, Icon, Divider, Card, Col, Row, Modal, Button } from 'antd';
 
 const confirm = Modal.confirm;
@@ -19,11 +18,11 @@ class MasterNodeList extends Component {
       editNode: false,
       editNodeRecord: {
         name: '',
-        address: ''
-      }
-    }
-    this.editNode = {}
-    this.showEditModal = this.showEditModal.bind(this)
+        address: '',
+      },
+    };
+    this.editNode = {};
+    this.showEditModal = this.showEditModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.showDeleteConfirm = this.showDeleteConfirm.bind(this);
@@ -33,44 +32,42 @@ class MasterNodeList extends Component {
 
   showEditModal(record) {
     this.editNode = record;
-    console.log("record", record);
+    console.log('record', record);
     this.setState({
       editNodeModal: true,
       editNodeRecord: {
         name: record.name,
         address: record.address,
-        key: record.key
-      }
+        key: record.key,
+      },
     });
   }
 
-  handleOk = (e) => {
+  handleOk = e => {
     this.props.editNode(this.state.editNodeRecord);
     this.setState({
       editNodeModal: false,
     });
-  }
-  handleCancel = (e) => {
+  };
+  handleCancel = e => {
     console.log(e);
     this.setState({
       editNodeRecord: {
         name: '',
-        address: ''
+        address: '',
       },
       editNodeModal: false,
     });
-  }
+  };
 
   deleteMasterNode(node) {
-    this.props.deleteNode(node)
+    this.props.deleteNode(node);
   }
 
-
   showDeleteConfirm(node) {
-
     let confrimDelete = () => {
       this.deleteMasterNode(node);
-    }
+    };
     confirm({
       title: 'Are you sure delete this Masternode?',
       okText: 'Yes',
@@ -90,35 +87,44 @@ class MasterNodeList extends Component {
     this.setState({
       editNodeRecord: {
         ...this.state.editNodeRecord,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   }
 
-
   render() {
-    const columns = [{
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <span>{text}</span>,
-    }, {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    }, {
-      key: 'action',
-      render: (text, record) => (
-        <span>
-          <Button className="edit-btn" onClick={() => this.showEditModal(record)}>
-            Edit
-          </Button>
-          <Button className="delete-btn" onClick={() => this.showDeleteConfirm(record)}>
-            Delete
-          </Button>
-        </span>
-      ),
-    }];
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: text => <span>{text}</span>,
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        key: 'action',
+        render: (text, record) => (
+          <span>
+            <Button
+              className="edit-btn"
+              onClick={() => this.showEditModal(record)}
+            >
+              Edit
+            </Button>
+            <Button
+              className="delete-btn"
+              onClick={() => this.showDeleteConfirm(record)}
+            >
+              Delete
+            </Button>
+          </span>
+        ),
+      },
+    ];
 
     const { classes } = this.props;
 
@@ -132,7 +138,9 @@ class MasterNodeList extends Component {
           onCancel={this.handleCancel}
           className={classes.modal}
           footer={[
-            <Button key="submit" type="primary" onClick={this.handleOk}>Confirm & Save</Button>,
+            <Button key="submit" type="primary" onClick={this.handleOk}>
+              Confirm & Save
+            </Button>,
             <Button key="back" onClick={this.handleCancel}>
               Close
             </Button>,
@@ -146,7 +154,12 @@ class MasterNodeList extends Component {
               }}
               className="wrapper"
             >
-              <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+              <Grid
+                item
+                lg={{ size: 8, offset: 2 }}
+                md={{ size: 10, offset: 1 }}
+                justify="center"
+              >
                 {/* For User Name */}
                 <FormGroup className="form-group">
                   <span htmlFor="user-name" className="label">
@@ -181,29 +194,27 @@ class MasterNodeList extends Component {
               </Grid>
             </form>
           </Grid>
-
         </Modal>
         <div className={classes.root}>
-
           <div className="heading">
-            <h2 className="title">
-              Masternode List
-            </h2>
+            <h2 className="title">Masternode List</h2>
           </div>
           <div className="node-list-table">
-            <Table columns={columns} dataSource={this.props.nodes} />
+            <Table
+              pagination={{
+                pageSize: 4,
+                hideOnSinglePage: true,
+                size: 'small',
+              }}
+              columns={columns}
+              dataSource={this.props.nodes}
+            />
           </div>
-
         </div>
       </div>
-    )
+    );
   }
 }
-
-
-
-
-
 
 const stateToProps = state => {
   return {};
@@ -213,4 +224,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(masternodeListStyle)(MasterNodeList));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(masternodeListStyle)(MasterNodeList)
+);
