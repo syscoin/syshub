@@ -4,9 +4,9 @@ const basicColors = {
   primaryDark: '#0073a8',
   primaryLight: '#53a5cc',
   greyDark: '#464745',
-  grey: '#bdc3c7',
+  grey: '#BDC3C7',
   greyLight: '#F0F2F5',
-  secondary: '#1abc9c',
+  secondary: '#1ABC9C',
   red: '#D61414',
   green: '#97CB54',
 };
