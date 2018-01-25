@@ -65,15 +65,23 @@ const initialState = {
   ],
 };
 
+function smartParse(json, def) {
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    return def;
+  }
+}
+
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
     case constants.SYS_STATS_GET:
       const value = state.value;
       const valueOld = state.valueOld;
-      const newValue = action.data;
+      const newValue = smartParse(action.data.data, value);
       const statsChanged =
         JSON.stringify(value) === JSON.stringify(newValue) ? false : true;
-   
+
       return statsChanged
         ? { ...state, value: newValue, valueOld: value }
         : { ...state, value, valueOld };

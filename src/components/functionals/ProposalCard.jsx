@@ -48,7 +48,9 @@ class ProposalCard extends Component {
             <Progress
               type="circle"
               percent={progress}
-              format={percent => <img src={docIcon} className="progressIcon" />}
+              format={percent => (
+                <img alt="a" src={docIcon} className="progressIcon" />
+              )}
               className="progress-dial"
               strokeWidth={8}
               status={
@@ -97,11 +99,11 @@ class ProposalCard extends Component {
           ) : (
             <Grid item md={3} className="vote__wrapper">
               <div className="vote-up">
-                <img src={voteUpIcon} className="smallUpVoteIcon" />
+                <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
                 <span className="voteNumber">{proposal.upVote}</span>
               </div>
               <div className="vote-down">
-                <img src={voteDownIcon} className="smallDownVoteIcon" />
+                <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
                 <span className="voteNumber">{proposal.downVote}</span>
               </div>
             </Grid>

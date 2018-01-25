@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Recaptcha from 'react-recaptcha';
 import { connect } from 'react-redux';
+import Recaptcha from 'react-recaptcha';
 import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 
-import { fire } from '../../firebase';
 import actions from '../../redux/actions';
+import { fire } from '../../firebase';
 
 import PropTypes from 'prop-types';
 
@@ -135,6 +135,7 @@ class Register extends Component {
             icon: 'success',
           });
         }
+        this.props.setPage('home');
       })
       .catch(err => {
         swal({
@@ -186,9 +187,9 @@ class Register extends Component {
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
                       (!this.state.disabled ? (
-                        <img src={checkIcon} />
+                        <img alt="a" src={checkIcon} />
                       ) : (
-                        <img src={closeIcon} />
+                        <img alt="a" src={closeIcon} />
                       ))}
                     {this.state.usernames}
                     {this.state.usernames &&
@@ -224,7 +225,7 @@ class Register extends Component {
                   placeholder="**************"
                 />
                 <span className="validation-message">
-                  <img src={checkIcon} />
+                  <img alt="a" src={checkIcon} />
                   Password Strength
                   <span className="strong">Strong</span>
                 </span>

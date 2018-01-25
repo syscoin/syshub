@@ -51,7 +51,7 @@ class DashBoard extends Component {
     });
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid className={classes.root}>
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>

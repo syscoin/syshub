@@ -82,9 +82,9 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-ProposalList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// ProposalList.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default connect(stateToProps, dispatchToProps)(
   withStyles(proposalStyle)(ProposalList)
