@@ -11,7 +11,11 @@ class SiderLogo extends Component {
     return (
       <div style={siderLogoStyle.wraper}>
         <div>
-          <img src={require('../../assets/img/png_logo.png')} width="100%" />
+          <img
+            alt="a"
+            src={require('../../assets/img/png_logo.png')}
+            width="100%"
+          />
         </div>
         <div style={siderLogoStyle.txtArea}>
           <p>brought to you by</p>

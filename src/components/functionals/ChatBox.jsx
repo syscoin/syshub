@@ -5,9 +5,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
-import { AccessAlarm ,Send } from 'material-ui-icons';
-
-
+import { AccessAlarm, Send } from 'material-ui-icons';
 
 import { fire, messages } from '../../firebase';
 
@@ -114,46 +112,45 @@ class ChatBox extends Component {
       { classes } = this.props;
     return (
       <div className={classes.root}>
-      {/* chat box container */}
-        <div className='chat_box_container'>
-          <Paper className='paper-style'>
-            <div className='chatbox-Header'>
+        {/* chat box container */}
+        <div className="chat_box_container">
+          <Paper className="paper-style">
+            <div className="chatbox-Header">
               <span>
-                <img src={chat_icon} className='chatBox-headerIcon' />
+                <img alt="a" src={chat_icon} className="chatBox-headerIcon" />
               </span>
-              <span className='chatBox-headerText'>CHATBOX</span>
+              <span className="chatBox-headerText">CHATBOX</span>
             </div>
             {/* chat list */}
-            <List className='list'>
+            <List className="list">
               <div
                 ref={el => {
                   this.messagesContainer = el;
                 }}
                 id="chat-messages-container"
-                className='chat-list'
+                className="chat-list"
               >
                 {this.state.messages.map((message, index) => (
                   <ListItemText
                     key={index}
-                    className='chatContent-listItemText'
+                    className="chatContent-listItemText"
                     primary={
-                      <div className='chatContent-primaryText'>
+                      <p className="chatContent-primaryText">
                         {message.user.displayName}
-                      </div>
+                      </p>
                     }
                     secondary={
-                      <div className='chatContent-secondaryText'>
+                      <p className="chatContent-secondaryText">
                         {message.body}
-                      </div>
+                      </p>
                     }
                   />
                 ))}
               </div>
             </List>
 
-
             {/* input field for chat */}
-            <form className='form' onSubmit={this.onSubmit}>
+            <form className="form" onSubmit={this.onSubmit}>
               <TextField
                 value={this.state.message}
                 name="message"
@@ -166,12 +163,11 @@ class ChatBox extends Component {
                   currentUser ? 'Tell something' : 'login to write message'
                 }
               />
-              <Send className="send-button" onClick={this.onSubmit}/>
+              <Send className="send-button" onClick={this.onSubmit} />
             </form>
           </Paper>
         </div>
       </div>
-
     );
   }
 }

@@ -187,10 +187,10 @@ class Register extends Component {
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
                       (!this.state.disabled ? (
-                        <img src={checkIcon} />
+                        <img alt="a" src={checkIcon} />
                       ) : (
-                          <img src={closeIcon} />
-                        ))}
+                        <img alt="a" src={closeIcon} />
+                      ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
@@ -225,7 +225,7 @@ class Register extends Component {
                   placeholder="**************"
                 />
                 <span className="validation-message">
-                  <img src={checkIcon} />
+                  <img alt="a" src={checkIcon} />
                   Password Strength
                   <span className="strong">Strong</span>
                 </span>

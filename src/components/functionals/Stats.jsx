@@ -73,6 +73,7 @@ class Stats extends Component {
                     className={classes.statsCardHeader}
                     title={
                       <img
+                        alt="a"
                         src={require('./../../assets/img/' + item.img)}
                         height="40"
                       />
@@ -82,11 +83,10 @@ class Stats extends Component {
                     <div className={classes.statsTextHeading}>
                       <h1> {this.getValue(item.key)} </h1>
                     </div>
-                    <div className={classes.statsText}>
-                      {item.text}
-                    </div>
+                    <div className={classes.statsText}>{item.text}</div>
                     <div className={classes.statsPercentage}>
                       <img
+                        alt="a"
                         src={require('./../../assets/img/' +
                           this.percentages(item.key).arrow)}
                         height="20"

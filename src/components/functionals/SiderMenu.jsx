@@ -52,7 +52,11 @@ class SiderMenu extends Component {
               className={btnStyle}
               onClick={() => this.tests(item.key)}
             >
-              <img src={require(`../../assets/img/${icon}.png`)} width="25" />
+              <img
+                alt="a"
+                src={require(`../../assets/img/${icon}.png`)}
+                width="25"
+              />
               <span className={txt}>{`${item.title.toUpperCase()}`}</span>
             </button>
           ) : null;
