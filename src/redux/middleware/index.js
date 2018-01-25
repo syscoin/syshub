@@ -1,6 +1,6 @@
 import { applyMiddleware } from 'redux';
+
 import thunk from 'redux-thunk';
+import nullMiddleware from './nullMiddleware';
 
-import sysStatsMiddleware from './sysStatsMiddleware';
-
-export default applyMiddleware(thunk, sysStatsMiddleware);
+export default applyMiddleware(thunk, nullMiddleware);
