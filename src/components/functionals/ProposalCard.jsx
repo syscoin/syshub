@@ -52,15 +52,16 @@ class ProposalCard extends Component {
                 <img alt="a" src={docIcon} className="progressIcon" />
               )}
               className="progress-dial"
-              strokeWidth={8}
+              strokeWidth={12}
               status={
-                progress < 50
+                progress < 25
                   ? 'exception'
-                  : progress < 100 ? 'active' : 'success'
+                  : progress < 50 ? 'active' : 'success'
               }
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">{proposal.upVote}</span>/{' '}
+              <span className="proposalStatusActiveNo">{proposal.upVote}</span>
+              {' / '}
               {this.props.totalNodes}
             </div>
           </Grid>

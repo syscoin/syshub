@@ -27,7 +27,7 @@ export class ProposalList extends Component {
         name: 'Proposal 2',
         detail:
           'Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.',
-        upVote: 300,
+        upVote: 400,
         downVote: 1,
         active: false,
         id: 2,
@@ -58,6 +58,7 @@ export class ProposalList extends Component {
     return (
       <Grid md={12} style={proposalStyle.root}>
         <DashBoardHeader data={{ showHeader: 'proposalList' }} />
+
         {this.state.proposalList.map(proposal => {
           return (
             <ProposalCard

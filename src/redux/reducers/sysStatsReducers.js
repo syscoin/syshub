@@ -8,7 +8,7 @@ const initialState = {
       consensus_protocolversion: '70208',
       all_user: '3648',
       registered_masternodes: '3036',
-      registered_masternodes_verified: '1087',
+      registered_masternodes_verified: '787',
     },
     exchange_rates: {
       dash_usd: 717.9151045,
