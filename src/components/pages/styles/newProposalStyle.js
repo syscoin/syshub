@@ -91,12 +91,9 @@ export default {
       },
       //step 1 proposal-title-row
       '& .proposal-title-row': {
-        '& .form-item': {
-          marginLeft: '30px',
-          '& Input': {
-            width: '85%',
-            height: '40px',
-          },
+        '& .proposal-title-input, .proposal-url-input':{
+          width: 'calc(100% - 40px)',
+          height: '40px'
         },
         '& .proposal-description-url': {
           display: 'block',

@@ -146,13 +146,13 @@ class NewProposal extends Component {
               {/* proposal title input field */}
               <Form>
                 <FormItem className='form-item'>
-                  <Input placeholder="Insert Reference Title" value={this.state.proposalTitle} onChange={this.proposalTitle} />
+                  <Input className="proposal-title-input" placeholder="Insert Reference Title" value={this.state.proposalTitle} onChange={this.proposalTitle} />
                 </FormItem>
               </Form>
             </Col>
             {/* Proposal Description Url Colomn */}
             <Col span={14}>
-              <span className="proposal-description-url">http://www.syshub.com/p/proposal-title</span>
+              <Input className="proposal-url-input" placeholder="Enter Proposal Description Url" defaultValue={this.state.proposallink} />
             </Col>
 
           </Row>);
@@ -194,7 +194,7 @@ class NewProposal extends Component {
                 // proposal detail preview
                 <Row>
                   <Col span={22} offset={1}>
-                    <h1 className='proposalDetail-title'>Proposal Title</h1>
+                    <h1 className='proposalDetail-title'>{this.state.proposalTitle}</h1>
                   </Col>
                   <Col span={22}>
                     <div className="proposalContent-div" id="preview-html-container">
