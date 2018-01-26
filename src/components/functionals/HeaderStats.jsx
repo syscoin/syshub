@@ -26,6 +26,7 @@ class HeaderStats extends Component {
       <Grid container className={classes.root}>
         <Grid item className="common">
           <img
+            alt="a"
             src={require('../../assets/img/png_stasts_sys.png')}
             className="icon"
           />
@@ -35,6 +36,7 @@ class HeaderStats extends Component {
         <Divider className="divider" type="vertical" />
         <Grid item className="common">
           <img
+            alt="a"
             src={require('../../assets/img/png_stats_masternodes.png')}
             className="icon"
           />
@@ -44,6 +46,7 @@ class HeaderStats extends Component {
         <Divider className="divider" type="vertical" />
         <Grid item className="common">
           <img
+            alt="a"
             src={require('../../assets/img/png_stats_users.png')}
             className="icon"
           />
