@@ -16,7 +16,7 @@ develop:
    - gem install dpl
    - dpl --provider=heroku --app=$HEROKU_APP_DEV --api-key=$HEROKU_API_KEY
   except:
-   - master
+   - staging
 
 staging:
   stage: staging
@@ -25,5 +25,5 @@ staging:
    - gem install dpl
    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
-   - master
+   - staging
 
