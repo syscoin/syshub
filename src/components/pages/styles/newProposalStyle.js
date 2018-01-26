@@ -120,7 +120,7 @@ export default {
           position: 'absolute',
           marginLeft: 60,
           fontSize: 18,
-          marginTop: 30,
+          marginTop: 10,
           fontWeight: 'bold',
           color: greyDark,
         },
