@@ -2,24 +2,24 @@ import palette from './palette';
 
 const white = palette.white;
 const primary = palette.primary;
+const primaryLight = palette.primaryLight;
 const greyLight = palette.greyLight;
 const greyDark = palette.greyDark;
-
 
 export default {
   root: {
     '& .title': {
-      display: "inline-block",
-      fontWeight: 'lighter'
+      display: 'inline-block',
+      fontWeight: 'lighter',
     },
     '& .heading': {
-      borderBottom: '1px solid ' + greyLight
+      borderBottom: '1px solid ' + greyLight,
     },
     '& .form__container': {
       padding: '20px',
       '& .form-group': {
         flexDirection: 'row',
-        marginTop: '10px'
+        marginTop: '10px',
       },
       '& .label': {
         width: '40%',
@@ -30,7 +30,7 @@ export default {
         color: primary,
         paddingLeft: '50px',
         textAlign: 'left',
-        fontWeight: 'lighter'
+        fontWeight: 'lighter',
       },
       '& .input-field': {
         width: 'calc(45% - 80px)',
@@ -40,7 +40,7 @@ export default {
         padding: '10px 25px',
         marginTop: '10px',
         '&::before': {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         },
       },
       '& .form-button-group': {
@@ -53,12 +53,15 @@ export default {
           borderRadius: 6,
           fontSize: 17,
           textTransform: 'capitalize',
+          '&:hover': {
+            backgroundColor: primaryLight,
+          },
           '& span': {
             color: white,
-            fontWeight: 'bold'
-          }
-        }
-      }
+            fontWeight: 'bold',
+          },
+        },
+      },
     },
-  }
-}
+  },
+};
