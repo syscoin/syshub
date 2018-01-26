@@ -34,7 +34,7 @@ class ProposalCard extends Component {
     const voteDownIcon = require('../../assets/img/png_button_down.png');
 
     // Some Maths ;P
-    const progress = parseInt(proposal.YesCount) / parseInt(this.props.totalNodes) * 100;
+    const progress = parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={classes.proposalRoot}>
@@ -49,8 +49,7 @@ class ProposalCard extends Component {
               status={progress < 25 ? 'exception' : progress < 50 ? 'active' : 'success'}
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">{proposal.YesCount}</span>
-              {' / '}
+              <span className="proposalStatusActiveNo">{proposal.YesCount + 30}</span>
               {this.props.totalNodes.toFixed(0)}
             </div>
           </Grid>
