@@ -51,7 +51,15 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        if (user.phoneNumber != null) {
+        if (this.props.app.auth) {
+          if (user.phoneNumber == null) {
+            swal({
+              title: 'Oops...',
+              text: 'Add phone number to the account first in account settings',
+              icon: 'error'
+            });
+            return;
+          }
           return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
         }
       })

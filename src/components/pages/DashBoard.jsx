@@ -8,6 +8,7 @@ import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 import { DashBoardHeader } from '../functionals/';
+import axios from 'axios';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -21,6 +22,10 @@ class DashBoard extends Component {
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getProposals();
+  }
   //changing state with this function
   handleDashboard(value) {
     const container =
@@ -32,10 +37,21 @@ class DashBoard extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, proposals } = this.props;
+    console.log('TBA RAW PROPOSAL OBJECT -->', proposals.listRaw);
+
+    console.log('TBA PARSED PROPOSAL ARRAY -->', proposals.list);
+
+    Object.keys(proposals.listRaw).forEach(key => {
+      console.log('TBA PROPOSAL RAW -->', proposals.listRaw[key]);
+    });
+
+    proposals.list.map(proposal => {
+      console.log('TBA PROPOSAL PARSED -->', proposal);
+    });
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid className={classes.root}>
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
@@ -45,8 +61,14 @@ class DashBoard extends Component {
         )}
         {
           {
-            dashBoard: <ProposalList selectProposal={this.handleDashboard} />,
-            proposalDetail: <ProposalDetail />,
+            dashBoard: (
+              <ProposalList
+                selectProposal={this.handleDashboard}
+                proposalList={proposals.list}
+                totalNodes={this.props.totalNodes}
+              />
+            ),
+            proposalDetail: <ProposalDetail proposal={this.state.proposalID} />,
           }[this.state.showContainer]
         }
       </Grid>
@@ -55,11 +77,16 @@ class DashBoard extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    proposals: state.proposals,
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified,
+  };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    getProposals: () => dispatch(actions.getProposals()),
+  };
 };
 DashBoard.propTypes = {
   classes: PropTypes.object.isRequired,

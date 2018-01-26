@@ -20,7 +20,7 @@ import {
   NewProposal,
   News,
   UserAccount,
-  UserAccountTest,
+  UserAccountTest
 } from '../pages';
 
 //Import Styles
@@ -46,7 +46,7 @@ class AppContent extends Component {
               faq: <Faq />,
               masterNode: <MasternodeSetting />,
               login: <Login />,
-              register: <Register />,
+              register: <Register />
             }[this.props.app.showPage]
           }
         </Content>
@@ -57,7 +57,7 @@ class AppContent extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 

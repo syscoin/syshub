@@ -60,6 +60,7 @@ class UserAccount extends Component {
   }
 
   deleteProfile() {
+    this.props.setPage('home');
     doDeleteAccount();
   }
 

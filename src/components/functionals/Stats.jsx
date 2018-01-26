@@ -73,26 +73,26 @@ class Stats extends Component {
                     className={classes.statsCardHeader}
                     title={
                       <img
+                        alt="a"
                         src={require('./../../assets/img/' + item.img)}
                         height="40"
                       />
                     }
                   />
                   <CardContent style={{ position: 'relative' }}>
-                    <Typography className={classes.statsTextHeading}>
+                    <div className={classes.statsTextHeading}>
                       <h1> {this.getValue(item.key)} </h1>
-                    </Typography>
-                    <Typography className={classes.statsText}>
-                      {item.text}
-                    </Typography>
-                    <Typography className={classes.statsPercentage}>
+                    </div>
+                    <div className={classes.statsText}>{item.text}</div>
+                    <div className={classes.statsPercentage}>
                       <img
+                        alt="a"
                         src={require('./../../assets/img/' +
                           this.percentages(item.key).arrow)}
                         height="20"
                       />
                       {`${this.percentages(item.key).value}%`}
-                    </Typography>
+                    </div>
                   </CardContent>
                 </Card>
               );
