@@ -20,7 +20,7 @@ export default {
       display: 'inline',
     },
     '& .steper__container': {
-      ' & > span > span:nth-child(2)': {
+      '& > div > div:nth-child(2)': {
         width: '100%',
       },
     },
@@ -136,6 +136,7 @@ export default {
           marginTop: 20,
           boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
           height: 200,
+          minWidth: 500
         },
         '& .toolbarClassName': {
           visibility: 'visible',
@@ -143,6 +144,13 @@ export default {
           marginLeft: 'calc(100% - 300px)',
           display: 'inline-flex',
           backgroundColor: greyLight,
+          marginTop: 5,
+          marginBottom: 0,
+          '& .rdw-option-wrapper':{
+            backgroundColor: 'transparent',
+            border: 'none',
+            boxShadow: 'none'
+          }
         },
         '& .confirm-button': {
           marginLeft: 'calc(100% - 105px)',
