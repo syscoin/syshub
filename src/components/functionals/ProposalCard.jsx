@@ -51,7 +51,7 @@ class ProposalCard extends Component {
             <div className="proposalStatusNo">
               <span className="proposalStatusActiveNo">{proposal.YesCount}</span>
               {' / '}
-              {this.props.totalNodes}
+              {this.props.totalNodes.toFixed(0)}
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">

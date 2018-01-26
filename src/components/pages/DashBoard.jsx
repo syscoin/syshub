@@ -67,7 +67,7 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes: state.sysStats.value.general.registered_masternodes_verified
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1
   };
 };
 
