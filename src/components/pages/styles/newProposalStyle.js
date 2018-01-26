@@ -18,11 +18,22 @@ export default {
       color: primary,
       marginTop: 12,
       display: 'inline',
+      fontWeight: 300
     },
     '& .steper__container': {
       '& > div > div:nth-child(2)': {
         width: '100%',
+        '& .preview-edit-button': {
+          height: 25,
+          fontSize: 10,
+          marginLeft: 25,
+          borderRadius: 10
+        }
       },
+      '& path': {
+        fill: primary
+      },
+
     },
     '& .title': {
       fontWeight: 'lighter',
@@ -110,12 +121,6 @@ export default {
       //step 2 proposal-details-row'
       '& .proposal-details-row': {
         marginBottom: 20,
-        '& .preview-edit-button': {
-          marginLeft: 20,
-          height: 25,
-          fontSize: 10,
-          borderRadius: 8,
-        },
         '& .editor-title': {
           position: 'absolute',
           marginLeft: 60,
@@ -146,7 +151,7 @@ export default {
           backgroundColor: greyLight,
           marginTop: 5,
           marginBottom: 0,
-          '& .rdw-option-wrapper':{
+          '& .rdw-option-wrapper': {
             backgroundColor: 'transparent',
             border: 'none',
             boxShadow: 'none'
@@ -190,5 +195,9 @@ export default {
         marginTop: 15,
       },
     },
+    '& .ant-btn-primary': {
+      backgroundColor: primary,
+      borderColor: primary
+    }
   },
 };

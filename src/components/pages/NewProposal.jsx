@@ -70,7 +70,7 @@ class NewProposal extends Component {
       activeStep: this.state.activeStep - 1,
       proposal__detail: this.state.proposal__detail
     }, () => {
-      if (this.state.activeStep == 1){
+      if (this.state.activeStep == 1 || this.state.activeStep == 0) {
         this.previewHTML()
       }
 
@@ -139,7 +139,7 @@ class NewProposal extends Component {
   getStepContent(step) {
     switch (step) {
       case 0:
-        return ( //Proposal Title Row 
+        return ( //Proposal Title Row
           <Row className="proposal-title-row">
             {/* Proposal Title Colomn */}
             <Col span={10}>
@@ -158,17 +158,17 @@ class NewProposal extends Component {
           </Row>);
       case 1:
         return (
-          // Proposal Detail Row 
+          // Proposal Detail Row
           <Row className="proposal-details-row">
             {/* Proposal Detail Colomn */}
             <Col span={20}>
-              {this.state.showEditor ?
+              {/* {this.state.showEditor ?
 
                 <Button className='preview-edit-button' onClick={this.previewHTML.bind(this)}>PREVIEW</Button>
                 :
                 <Button className='preview-edit-button' onClick={() => { this.setState({ showEditor: true }) }}>EDITOR</Button>
 
-              }
+              } */}
               {this.state.showEditor ? <div>
                 <h2 className="editor-title">Write proposal details</h2>
                 {/* proposal detail editor */}
@@ -191,7 +191,7 @@ class NewProposal extends Component {
 
               </div>
                 :
-                // proposal detail preview 
+                // proposal detail preview
                 <Row>
                   <Col span={22} offset={1}>
                     <h1 className='proposalDetail-title'>Proposal Title</h1>
@@ -259,6 +259,10 @@ class NewProposal extends Component {
                   <StepLabel className="steper__label">
                     <h2 className='step-label'> {label} </h2>
                     {this.state.activeStep == 0 && label == "Proposal Title" ? <h3 className="proposal-title">Proposal Discription Url</h3> : null}
+                    {this.state.activeStep == 1 && label == "Proposal Details" ?
+                      (this.state.showEditor ? <Button className='preview-edit-button' onClick={this.previewHTML.bind(this)}>PREVIEW</Button>
+                        : <Button className='preview-edit-button' onClick={() => { this.setState({ showEditor: true }) }}>EDITOR</Button>)
+                      : null}
                   </StepLabel>
                   <StepContent>
                     <div>{this.getStepContent(index)}</div>
