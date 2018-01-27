@@ -86,9 +86,6 @@ class UserTwoFactor extends Component {
         provider
           .verifyPhoneNumber(`+${value}`, appVerifier)
           .then(verificationId => {
-            /* const verificationCode = window.prompt(
-              'Please enter the verification code that was sent to your mobile device.'
-            ); */
             swal({
               closeOnClickOutside: false,
               closeOnEsc: false,
@@ -131,6 +128,8 @@ class UserTwoFactor extends Component {
               });
           })
           .catch(err => {
+            console.log('err) --> ', err);
+
             alert(`${err}`);
           });
       }

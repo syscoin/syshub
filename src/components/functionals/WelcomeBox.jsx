@@ -21,7 +21,7 @@ class WelcomeBox extends Component {
           <GridList cols={5}>
             <GridListTile cols={2} style={{ height: '100%' }}>
               <div className="logoDiv">
-                <img src={logo} />
+                <img alt="a" src={logo} />
               </div>
             </GridListTile>
             <GridListTile cols={3} style={{ height: '100%' }}>

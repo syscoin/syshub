@@ -187,9 +187,9 @@ class Register extends Component {
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
                       (!this.state.disabled ? (
-                        <img src={checkIcon} />
+                        <img alt="a" src={checkIcon} />
                       ) : (
-                        <img src={closeIcon} />
+                        <img alt="a" src={closeIcon} />
                       ))}
                     {this.state.usernames}
                     {this.state.usernames &&
@@ -225,7 +225,7 @@ class Register extends Component {
                   placeholder="**************"
                 />
                 <span className="validation-message">
-                  <img src={checkIcon} />
+                  <img alt="a" src={checkIcon} />
                   Password Strength
                   <span className="strong">Strong</span>
                 </span>
@@ -292,18 +292,18 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const stateToProps = state => {
-  return {
-    app: state.app,
-  };
-};
+function mapStateToProps(state) {
+  //pass the providers
+  return {};
+}
 
-const dispatchToProps = dispatch => {
+/* Map Actions to Props */
+function mapDispatchToProps(dispatch) {
   return {
     setPage: page => dispatch(actions.setPage(page)),
   };
-};
+}
 
-export default connect(stateToProps, dispatchToProps)(
+export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(registerStyle)(Register)
 );

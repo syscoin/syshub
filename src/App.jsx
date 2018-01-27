@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import HttpsRedirect from 'react-https-redirect';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 
@@ -35,22 +36,24 @@ class App extends Component {
 
   render() {
     return (
-      <div style={appStyles.wraper}>
-        <Platform rules={{ DeviceType: undefined }}>
-          <DesktopLayout />
-          <h1
-            style={{
-              color: 'white',
-              zIndex: '10000',
-            }}
-          >
-            {this.state.timer}
-          </h1>
-        </Platform>
-        <Platform rules={{ DeviceType: 'mobile' }}>
-          <MobileLayout />
-        </Platform>
-      </div>
+      <HttpsRedirect>
+        <div style={appStyles.wraper}>
+          <Platform rules={{ DeviceType: undefined }}>
+            <DesktopLayout />
+            <h1
+              style={{
+                color: 'white',
+                zIndex: '10000',
+              }}
+            >
+              {this.state.timer}
+            </h1>
+          </Platform>
+          <Platform rules={{ DeviceType: 'mobile' }}>
+            <MobileLayout />
+          </Platform>
+        </div>
+      </HttpsRedirect>
     );
   }
 }

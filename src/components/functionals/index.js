@@ -12,6 +12,8 @@ import ProposalPayment from './ProposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat';
 import ProposalDescription from './ProposalDescription';
 import ProposalComments from './ProposalComments';
+import MasternodeAdd from "./MasternodeAdd";
+import MasternodeList from "./MasternodeList";
 
 export {
   ChatBox,
@@ -28,4 +30,6 @@ export {
   ProposalApprovalStat,
   ProposalDescription,
   ProposalComments,
+  MasternodeAdd,
+  MasternodeList
 };
