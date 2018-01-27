@@ -18,7 +18,7 @@ export default {
       color: primary,
       marginTop: 12,
       display: 'inline',
-      fontWeight: 300
+      fontWeight: 300,
     },
     '& .steper__container': {
       '& > div > div:nth-child(2)': {
@@ -27,13 +27,12 @@ export default {
           height: 25,
           fontSize: 10,
           marginLeft: 25,
-          borderRadius: 10
-        }
+          borderRadius: 10,
+        },
       },
       '& path': {
-        fill: primary
+        fill: primary,
       },
-
     },
     '& .title': {
       fontWeight: 'lighter',
@@ -79,7 +78,7 @@ export default {
         fontSize: '22px',
         color: primaryLight,
         display: 'inline-block',
-        marginLeft: 'calc(50% - 210px)',
+        paddingLeft: 'calc(50% + 50px )',
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,
@@ -91,9 +90,9 @@ export default {
       },
       //step 1 proposal-title-row
       '& .proposal-title-row': {
-        '& .proposal-title-input, .proposal-url-input':{
+        '& .proposal-title-input, .proposal-url-input': {
           width: 'calc(100% - 40px)',
-          height: '40px'
+          height: '40px',
         },
         '& .proposal-description-url': {
           display: 'block',
@@ -138,7 +137,7 @@ export default {
           marginTop: 20,
           boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
           height: 200,
-          minWidth: 500
+          minWidth: 500,
         },
         '& .toolbarClassName': {
           visibility: 'visible',
@@ -151,8 +150,8 @@ export default {
           '& .rdw-option-wrapper': {
             backgroundColor: 'transparent',
             border: 'none',
-            boxShadow: 'none'
-          }
+            boxShadow: 'none',
+          },
         },
         '& .confirm-button': {
           marginLeft: 'calc(100% - 105px)',
@@ -194,7 +193,7 @@ export default {
     },
     '& .ant-btn-primary': {
       backgroundColor: primary,
-      borderColor: primary
-    }
+      borderColor: primary,
+    },
   },
 };
