@@ -18,7 +18,7 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: '',
+      proposalID: ''
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
@@ -28,27 +28,15 @@ class DashBoard extends Component {
   }
   //changing state with this function
   handleDashboard(value) {
-    const container =
-      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
-      proposalID: value,
+      proposalID: value
     });
   }
 
   render() {
     const { classes, proposals } = this.props;
-    console.log('TBA RAW PROPOSAL OBJECT -->', proposals.listRaw);
-
-    console.log('TBA PARSED PROPOSAL ARRAY -->', proposals.list);
-
-    Object.keys(proposals.listRaw).forEach(key => {
-      console.log('TBA PROPOSAL RAW -->', proposals.listRaw[key]);
-    });
-
-    proposals.list.map(proposal => {
-      console.log('TBA PROPOSAL PARSED -->', proposal);
-    });
 
     return (
       <Grid className={classes.root}>
@@ -68,7 +56,7 @@ class DashBoard extends Component {
                 totalNodes={this.props.totalNodes}
               />
             ),
-            proposalDetail: <ProposalDetail proposal={this.state.proposalID} />,
+            proposalDetail: <ProposalDetail proposal={this.state.proposalID} />
           }[this.state.showContainer]
         }
       </Grid>
@@ -79,19 +67,17 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes: state.sysStats.value.general.registered_masternodes_verified,
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    getProposals: () => dispatch(actions.getProposals()),
+    getProposals: () => dispatch(actions.getProposals())
   };
 };
 DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));

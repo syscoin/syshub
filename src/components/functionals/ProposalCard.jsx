@@ -39,11 +39,11 @@ class ProposalCard extends Component {
 
     // Some Maths ;P
     const progress =
-      parseInt(proposal.upVote) / parseInt(this.props.totalNodes) * 100;
+      parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={classes.proposalRoot}>
-        <Grid container md={12} className="proposalRow" key={proposal.id}>
+        <Grid container md={12} className="proposalRow" key={proposal.Hash}>
           <Grid item md={2} className="proposalView">
             <Progress
               type="circle"
@@ -54,15 +54,17 @@ class ProposalCard extends Component {
               className="progress-dial"
               strokeWidth={12}
               status={
-                progress < 25
+                progress < 35
                   ? 'exception'
-                  : progress < 50 ? 'active' : 'success'
+                  : progress < 100 ? 'active' : 'success'
               }
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">{proposal.upVote}</span>
-              {' / '}
-              {this.props.totalNodes}
+              <span className="proposalStatusActiveNo">
+                {proposal.YesCount + 30}
+              </span>
+              {` / `}
+              {this.props.totalNodes.toFixed(0)}
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
@@ -72,12 +74,21 @@ class ProposalCard extends Component {
                 </Button> */}
             <h1
               className="proposalHeading"
-              onClick={() => selectProposal(proposal.id)}
+              onClick={() => selectProposal(proposal.Hash)}
             >
-              {' '}
-              {proposal.name}
+              {proposal.DataString[0][1].name ? (
+                proposal.DataString[0][1].name.split('\n', 1)[0]
+              ) : (
+                <span style={{ color: 'grey' }}>
+                  No name available for this proposal.
+                </span>
+              )}
             </h1>
-            <div className="proposalDetail">{proposal.detail}</div>
+            <div className="proposalDetail">
+              {proposal.DataString[0][1].description
+                ? `${proposal.DataString[0][1].description.substr(0, 120)}...`
+                : 'No description available for this proposal.'}
+            </div>
           </Grid>
 
           {user ? (
@@ -93,19 +104,19 @@ class ProposalCard extends Component {
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
               </Button>
               <div className="vote-count">
-                <div className="vote-number">{proposal.upVote}</div>
-                <div className="vote-number">{proposal.downVote}</div>
+                <div className="vote-number">{proposal.YesCount}</div>
+                <div className="vote-number">{proposal.NoCount}</div>
               </div>
             </Grid>
           ) : (
             <Grid item md={3} className="vote__wrapper">
               <div className="vote-up">
                 <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                <span className="voteNumber">{proposal.upVote}</span>
+                <span className="voteNumber">{proposal.YesCount}</span>
               </div>
               <div className="vote-down">
                 <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                <span className="voteNumber">{proposal.downVote}</span>
+                <span className="voteNumber">{proposal.NoCount}</span>
               </div>
             </Grid>
           )}
