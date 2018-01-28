@@ -8,6 +8,7 @@ import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 import { DashBoardHeader } from '../functionals/';
+import axios from 'axios';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -17,25 +18,28 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: '',
+      proposalID: ''
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getProposals();
+  }
   //changing state with this function
   handleDashboard(value) {
-    const container =
-      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
-      proposalID: value,
+      proposalID: value
     });
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, proposals } = this.props;
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid className={classes.root}>
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
@@ -45,8 +49,14 @@ class DashBoard extends Component {
         )}
         {
           {
-            dashBoard: <ProposalList selectProposal={this.handleDashboard} />,
-            proposalDetail: <ProposalDetail />,
+            dashBoard: (
+              <ProposalList
+                selectProposal={this.handleDashboard}
+                proposalList={proposals.list}
+                totalNodes={this.props.totalNodes}
+              />
+            ),
+            proposalDetail: <ProposalDetail proposal={this.state.proposalID} />
           }[this.state.showContainer]
         }
       </Grid>
@@ -55,16 +65,19 @@ class DashBoard extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    proposals: state.proposals,
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1
+  };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    getProposals: () => dispatch(actions.getProposals())
+  };
 };
 DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));

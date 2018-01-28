@@ -15,6 +15,9 @@ export default {
     marginTop: 20,
     marginBottom: 20,
     '& card-item': {},
+    '& .readed': {
+      color: `${grey} !Important`,
+    },
     '& button span': {
       color: 'white',
       textTransform: 'capitalize',
@@ -32,11 +35,11 @@ export default {
           '& .news-heading': {
             marginBottom: '10px',
             fontWeight: 600,
-            color: greyDark,
+            color: primary,
             '& .cardSubHeading': {
               fontWeight: 100,
               fontSize: '90%',
-              color: primary,
+              color: greyDark,
             },
           },
           '& .newsContent': {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import HttpsRedirect from 'react-https-redirect';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 
@@ -24,7 +25,9 @@ class App extends Component {
 
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
+    this.props.getMediumPosts();
   }
+
   componentWillUnmount() {
     this.clearInterval(this.state.timer);
   }
@@ -35,22 +38,24 @@ class App extends Component {
 
   render() {
     return (
-      <div style={appStyles.wraper}>
-        <Platform rules={{ DeviceType: undefined }}>
-          <DesktopLayout />
-          <h1
-            style={{
-              color: 'white',
-              zIndex: '10000',
-            }}
-          >
-            {this.state.timer}
-          </h1>
-        </Platform>
-        <Platform rules={{ DeviceType: 'mobile' }}>
-          <MobileLayout />
-        </Platform>
-      </div>
+      /* <HttpsRedirect> */
+        <div style={appStyles.wraper}>
+          <Platform rules={{ DeviceType: undefined }}>
+            <DesktopLayout />
+            <h1
+              style={{
+                color: 'white',
+                zIndex: '10000',
+              }}
+            >
+              {this.state.timer}
+            </h1>
+          </Platform>
+          <Platform rules={{ DeviceType: 'mobile' }}>
+            <MobileLayout />
+          </Platform>
+        </div>
+      /* </HttpsRedirect> */
     );
   }
 }
@@ -65,6 +70,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
+    getMediumPosts: () => dispatch(actions.getMediumPosts()),
   };
 };
 
