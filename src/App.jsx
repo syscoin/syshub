@@ -38,7 +38,7 @@ class App extends Component {
 
   render() {
     return (
-      <HttpsRedirect>
+      /* <HttpsRedirect> */
         <div style={appStyles.wraper}>
           <Platform rules={{ DeviceType: undefined }}>
             <DesktopLayout />
@@ -55,7 +55,7 @@ class App extends Component {
             <MobileLayout />
           </Platform>
         </div>
-      </HttpsRedirect>
+      /* </HttpsRedirect> */
     );
   }
 }
