@@ -17,95 +17,70 @@ import { Stats, WelcomeBox } from '../functionals';
 class NewsCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      news: [
-        {
-          newsHeading: 'Price of BitCoin Decrease',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'Price of BitCoin Increase',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'SysCoin is Best',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'Mujhe Kuin Nikala',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'Mujhe Kuin Nikala',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'Mujhe Kuin Nikala',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-        {
-          newsHeading: 'Mujhe Kuin Nikala',
-          newsContent:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim animi suscipit laudantium itaque necessitatibus harum incidunt iure qui rerum fugit repellendus esse ea, beatae impedit facilis deserunt! Ab, ducimus!',
-        },
-      ],
-    };
+    this.state = {};
   }
 
   render() {
-    const { classes, selectNews } = this.props;
+    const { classes, post, index, selectNews, channel, image } = this.props;
     const noImage = require('../../assets/img/no-user-image.gif');
+
     return (
       <div className={classes.root}>
-        {this.state.news.map((data, index) => (
-          <div className="card-item" key={index}>
-            {/* news card */}
-            <Grid item className="news-card-grid">
-              {/* news image grid */}
-              <Grid
-                md={2}
-                inline="true"
-                className="newsCardImage-grid inline-block"
-              >
-                <img src={noImage} alt="news image" />
-              </Grid>
-              {/* News Content Grid */}
-              <Grid md={10} className="newsCardContent-grid inline-block">
-                <Card className="card">
-                  <CardContent>
-                    {/* content heading */}
-                    <Typography
-                      type="headline"
-                      component="h2"
-                      className="news-heading"
-                    >
-                      1 Jan ,2018 -{' '}
-                      <span className="cardSubHeading">{data.newsHeading}</span>
-                    </Typography>
-                    {/* content text */}
-                    <Typography component="p" className="newsContent">
-                      {data.newsContent}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              {/* show more button */}
-              <Grid md={12} className="showMoreButton-grid">
-                <Button raised onClick={index => selectNews(index)}>
-                  {' '}
-                  Show More{' '}
-                </Button>
-              </Grid>
+        <div className={'card-item'} key={post.guid}>
+          {/* news card */}
+          <Grid item className="news-card-grid">
+            {/* news image grid */}
+            <Grid
+              md={2}
+              inline="true"
+              className="newsCardImage-grid inline-block"
+            >
+              {
+                <img
+                  src={image ? image.url : noImage}
+                  alt={image ? image.title : 'No Image'}
+                  title={image ? image.title : 'No Image'}
+                />
+              }
             </Grid>
-            <Divider className={classes.divider} />
-          </div>
-        ))}
+            {/* News Content Grid */}
+            <Grid md={10} className="newsCardContent-grid inline-block">
+              <Card className="card">
+                <CardContent>
+                  {/* content heading */}
+                  <Typography
+                    type="headline"
+                    component="h3"
+                    className={`news-heading ${
+                      this.props.readed ? 'readed' : ''
+                    }`}
+                  >
+                    {post.title}
+                  </Typography>
+                  <Typography
+                    type="subheading"
+                    component="p"
+                    className="cardSubHeading"
+                  >
+                    {post.pubDate}
+                  </Typography>
+                  {/* content text */}
+                  <Typography component="p" className="newsContent">
+                    {post.newsContent}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            {/* show more button */}
+            <Grid md={12} className="showMoreButton-grid">
+              <Button raised onClick={index => selectNews(post.guid)}>
+                {' '}
+                Show More{' '}
+              </Button>
+            </Grid>
+          </Grid>
+          <Divider className={classes.divider} />
+        </div>
       </div>
     );
   }

@@ -11,7 +11,7 @@ import { newsHeaderStyle } from './styles';
 import { Stats, WelcomeBox } from '../functionals';
 class NewsHeader extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, header } = this.props;
 
     return (
       <div>
@@ -22,21 +22,28 @@ class NewsHeader extends Component {
               <img
                 alt="a"
                 className="cover-img"
-                src="https://www.cryptocoinsnews.com/wp-content/uploads/2016/09/Fb-cover2-X2-1440x548.png"
+                src={header.image}
+                //'https://www.cryptocoinsnews.com/wp-content/uploads/2016/09/Fb-cover2-X2-1440x548.png'
+                //'https://cdn-images-1.medium.com/max/1024/1*YqNm0p75A84qf7szszQGEQ.png'
+
                 alt="Cover Image"
               />
-              <div className="info">
-                <h2 className="title">Header Title</h2>
-                <h3 className="sub-title">Header Subtitle</h3>
-              </div>
+            </div>
+            <div className="info">
+              <h2 className="title">{header.title}</h2>
             </div>
 
             {/* About Auther */}
             <div className="author">
-              <Avatar shape="square" size="large" icon="user" />
+              <Avatar
+                shape="square"
+                size="large"
+                icon="user"
+                src={header.avatar}
+              />
               <div className="info">
-                <h4 className="date">Posted on JAN 02,2016</h4>
-                <h5 className="by">by: Author</h5>
+                <p className="date">{`Posted on ${header.pubDate}`}</p>
+                <h5 className="by">{`by: ${header.name}`}</h5>
               </div>
             </div>
           </Grid>

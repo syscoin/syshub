@@ -25,7 +25,9 @@ class App extends Component {
 
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
+    this.props.getMediumPosts();
   }
+
   componentWillUnmount() {
     this.clearInterval(this.state.timer);
   }
@@ -36,7 +38,7 @@ class App extends Component {
 
   render() {
     return (
-      <HttpsRedirect>
+      /* <HttpsRedirect> */
         <div style={appStyles.wraper}>
           <Platform rules={{ DeviceType: undefined }}>
             <DesktopLayout />
@@ -53,7 +55,7 @@ class App extends Component {
             <MobileLayout />
           </Platform>
         </div>
-      </HttpsRedirect>
+      /* </HttpsRedirect> */
     );
   }
 }
@@ -68,6 +70,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
+    getMediumPosts: () => dispatch(actions.getMediumPosts()),
   };
 };
 

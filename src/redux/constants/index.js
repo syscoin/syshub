@@ -17,4 +17,7 @@ export default {
 
   //2FA
   SET_AUTH: 'SET_AUTH',
+
+  // MEDIUM Connect
+  MEDIUM_POSTS_GET: 'MEDIUM_POSTS_GET',
 };
