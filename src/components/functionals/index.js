@@ -12,8 +12,12 @@ import ProposalPayment from './ProposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat';
 import ProposalDescription from './ProposalDescription';
 import ProposalComments from './ProposalComments';
-import MasternodeAdd from "./MasternodeAdd";
-import MasternodeList from "./MasternodeList";
+import MasternodeAdd from './MasternodeAdd';
+import MasternodeList from './MasternodeList';
+import NewsHeader from './NewsHeader';
+import NewsBody from './NewsBody';
+import NewsAbout from './NewsAbout';
+import NewsFooter from './NewsFooter';
 
 export {
   ChatBox,
@@ -31,5 +35,9 @@ export {
   ProposalDescription,
   ProposalComments,
   MasternodeAdd,
-  MasternodeList
+  MasternodeList,
+  NewsHeader,
+  NewsBody,
+  NewsAbout,
+  NewsFooter,
 };

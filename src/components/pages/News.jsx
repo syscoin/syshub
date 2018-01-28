@@ -5,8 +5,7 @@ import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import Paper from 'material-ui/Paper';
-import NewsList from '../containers/NewsList';
-import NewsDetial from '../functionals/NewsDetail';
+import { NewsList, NewsDetail } from '../containers';
 
 // import style
 import { newsStyle } from './styles';
@@ -60,7 +59,7 @@ class News extends Component {
                 />
               ),
               details: (
-                <NewsDetial
+                <NewsDetail
                   channel={channel}
                   post={this.state.post}
                   goBack={() => this.handleSelectNews()}

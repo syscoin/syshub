@@ -35,7 +35,6 @@ class ProposalComments extends Component {
             {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 
             <textarea rows="2" cols="75" className="userComment">
-              {' '}
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus
               eleifend velit, et dapibus nulla interdum tempor.
             </textarea>
@@ -100,7 +99,7 @@ class ProposalComments extends Component {
             <Grid item md={12} className="proposalDetails">
               {/* Having Fun ? */}
               <textarea rows="1" cols="55" className="userComment">
-                Having Fun ?{' '}
+                Having Fun ?
               </textarea>
               <hr className="proposalDetailsHr" />
 
