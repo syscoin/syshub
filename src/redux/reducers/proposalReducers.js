@@ -46,7 +46,8 @@ const initialState = {
   list: [],
   status: null,
   prepareReceipt: null,
-  submitReceipt: null
+  submitReceipt: null,
+  voteStatus: null
 };
 
 function smartParse(json) {
@@ -86,7 +87,7 @@ const proposals = (state = initialState, action) => {
       return { ...state, submitReceipt: action.data };
 
     case constants.SYS_PROPOSAL_VOTE:
-      return { ...state };
+      return { ...state, voteStatus: action.data };
 
     default:
       return state;
