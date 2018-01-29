@@ -33,5 +33,13 @@ export default {
         HTTPAsync.post('159.89.141.35:3000/submit', params, constants.SYS_PROPOSALS_SUBMIT)
       );
     };
+  },
+
+  voteOnProposal: params => {
+    return dispatch => {
+      return dispatch(
+        HTTPAsync.post('http://159.89.141.35:3000/vote', params, constants.SYS_PROPOSAL_VOTE)
+      );
+    };
   }
 };

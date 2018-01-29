@@ -19,6 +19,7 @@ const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
+const votes = fire.database().ref('votes');
 // const currentUser
 
 //Some useful functions
@@ -220,5 +221,6 @@ export {
   doLogout,
   doUpdateProfile,
   doUpdatePassword,
-  doDeleteAccount
+  doDeleteAccount,
+  votes
 };

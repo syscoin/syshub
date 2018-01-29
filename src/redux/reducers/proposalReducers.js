@@ -85,6 +85,9 @@ const proposals = (state = initialState, action) => {
     case constants.SYS_PROPOSALS_SUBMIT:
       return { ...state, submitReceipt: action.data };
 
+    case constants.SYS_PROPOSAL_VOTE:
+      return { ...state };
+
     default:
       return state;
   }
