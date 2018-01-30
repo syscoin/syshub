@@ -13,8 +13,8 @@ import NewsCard from '../functionals/NewsCard';
 
 class NewsList extends Component {
   render() {
-    const { classes, selectNews, channel, readedList } = this.props;
-    const image = channel.image;
+    const { classes, selectNews, channel, readedList, deviceType } = this.props;
+    const image = channel.image || null;
     return (
       <div className={classes.root}>
         {channel.item.map((post, index) => {
@@ -24,6 +24,7 @@ class NewsList extends Component {
 
           return (
             <NewsCard
+              deviceType={deviceType}
               readed={readed}
               key={index}
               index={index}

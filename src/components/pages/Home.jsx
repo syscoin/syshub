@@ -12,8 +12,9 @@ class Home extends Component {
         <WelcomeBox
           onJoin={() => this.props.setPage('register')}
           logged={this.props.logged}
+          deviceType={this.props.deviceType}
         />
-        <Stats />
+        <Stats deviceType={this.props.deviceType} />
       </div>
     );
   }

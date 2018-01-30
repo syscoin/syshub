@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
-import NewProposalStyle from './styles/newProposalStyle';
+import newProposalStyle from './styles/newProposalStyle';
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -294,12 +294,15 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const steps = this.getSteps();
     const { activeStep } = this.state;
     console.log(this.state.proposal__detail, 'detail');
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <h1 className="title">Proposal Configuration</h1>
         <Paper className="paper-container" elevation={4}>
           <Stepper activeStep={activeStep} orientation="vertical">
@@ -349,7 +352,7 @@ class NewProposal extends Component {
                             raised={true}
                             type="primary"
                             onClick={this.handleBack}
-                            className={classes.button}
+                            className="button"
                           >
                             Back
                           </Button>
@@ -358,7 +361,7 @@ class NewProposal extends Component {
                           raised={true}
                           type="primary"
                           onClick={this.handleNext}
-                          className={classes.button}
+                          className="button"
                         >
                           {activeStep === steps.length - 1
                             ? 'Confirm'
@@ -371,14 +374,6 @@ class NewProposal extends Component {
               );
             })}
           </Stepper>
-          {/* {activeStep === steps.length && (
-            <Paper square elevation={0} className={classes.resetContainer}>
-              <Typography>All steps completed - you&quot;re finished</Typography>
-              <Button onClick={this.handleReset} className={classes.button}>
-                Reset
-            </Button>
-            </Paper>
-          )} */}
         </Paper>
       </div>
     );
@@ -394,5 +389,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(NewProposalStyle)(NewProposal)
+  withStyles(newProposalStyle)(NewProposal)
 );

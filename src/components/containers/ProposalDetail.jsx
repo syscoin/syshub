@@ -22,7 +22,8 @@ export class ProposalDetail extends Component {
     };
   }
   render() {
-    console.log('ACZ (proposal) --> ', this.props);
+    const { deviceType } = this.props;
+    //Platform style switcher
     return (
       <Grid style={proposalDetailsStyle.root}>
         <DashBoardHeader
@@ -30,10 +31,10 @@ export class ProposalDetail extends Component {
         />
 
         <Grid container style={proposalDetailsStyle.proposalDetails}>
-          <ProposalPayment />
-          <ProposalApprovalStat />
-          <ProposalDescription />
-          <ProposalComments />
+          <ProposalPayment deviceType={deviceType} />
+          <ProposalApprovalStat deviceType={deviceType} />
+          <ProposalDescription deviceType={deviceType} />
+          <ProposalComments deviceType={deviceType} />
         </Grid>
       </Grid>
     );

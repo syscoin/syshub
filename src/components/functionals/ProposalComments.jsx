@@ -17,10 +17,12 @@ class ProposalComments extends Component {
     };
   }
   render() {
-    const classes = this.props.classes;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid md={12} className={style}>
         <Grid item className="commentHeadingDiv">
           <div className="heading">COMMENTS SECTIONS </div>
         </Grid>

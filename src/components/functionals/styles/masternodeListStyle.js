@@ -5,57 +5,55 @@ const primary = palette.primary;
 const greyLight = palette.greyLight;
 const greyDark = palette.greyDark;
 
-
 export default {
   root: {
     marginTop: 30,
     '& .title': {
-      display: "inline-block",
+      display: 'inline-block',
       fontWeight: 'lighter',
-      color: greyDark
+      color: greyDark,
     },
     '& .heading': {
-      borderBottom: '1px solid ' + greyLight
+      borderBottom: '1px solid ' + greyLight,
     },
     '& .node-list-table': {
       '& .ant-table-thead': {
         '&>tr': {
           '&>th': {
             background: white,
-            fontWeight: 'lighter'
-          }
-        }
+            fontWeight: 'lighter',
+          },
+        },
       },
       '& .ant-table-tbody': {
         '&>tr>td:first-child': {
-          borderLeft: '1px solid #e8e8e8'
+          borderLeft: '1px solid #e8e8e8',
         },
         '&>tr>td:last-child': {
           borderRight: '1px solid #e8e8e8',
-          textAlign: 'right'
+          textAlign: 'right',
         },
-
       },
       '& .ant-radio-button-wrapper': {
         margin: '0px 10px',
         borderRadius: '10px !important',
         fontSize: 18,
-        position: 'inherit'
-      }
+        position: 'inherit',
+      },
     },
   },
   modal: {
     '& .ant-modal-content': {
       '& .ant-modal-close-x': {
-        color: white
-      }
+        color: white,
+      },
     },
     '& .ant-modal-header': {
       background: primary,
       '& .ant-modal-title': {
         color: white,
-        fontSize: 22
-      }
+        fontSize: 22,
+      },
     },
     '& .ant-modal-body': {
       '& .form__container': {
@@ -70,7 +68,7 @@ export default {
           color: primary,
           textAlign: 'left',
           fontWeight: 'lighter',
-          marginTop: 15
+          marginTop: 15,
         },
         '& .input-field': {
           width: '50%',
@@ -79,9 +77,9 @@ export default {
           padding: '5px 15px',
           marginTop: '10px',
           '&::before': {
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
           },
-        }
+        },
       },
     },
     '& .ant-modal-footer': {
@@ -92,12 +90,14 @@ export default {
       '& .ant-btn-primary span': {
         color: white,
         fontSize: 17,
-        fontWeight: 500
+        fontWeight: 500,
       },
       '& .ant-btn': {
         fontWeight: 500,
         fontSize: 17,
-      }
-    }
-  }
-}
+      },
+    },
+  },
+
+  mRoot: { extend: 'root' },
+};

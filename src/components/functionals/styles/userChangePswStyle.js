@@ -84,20 +84,20 @@ export default {
         '& .ReactPasswordStrength-input': {
           width: '100%',
           padding: '9px',
-          fontSize: '12px'
+          fontSize: '12px',
         },
         '& .ReactPasswordStrength-strength-desc': {
           width: '100%',
           marginRight: '-270px',
           textTransform: 'capitalize',
           padding: '5px',
-          fontStyle: 'normal'
-        }
+          fontStyle: 'normal',
+        },
       },
       '& .ant-form-explain': {
         marginLeft: '220px',
-        padding: '5px'
-      }
+        padding: '5px',
+      },
     },
     '& .confirmChange-button-grid': {
       padding: '20px',
@@ -116,4 +116,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

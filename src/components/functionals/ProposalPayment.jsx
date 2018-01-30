@@ -19,10 +19,12 @@ class ProposalPayment extends Component {
     };
   }
   render() {
-    const classes = this.props.classes;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid md={12} className={style}>
         <Grid item className="no-margin">
           <div className="heading">PAYMENTS</div>
         </Grid>
@@ -82,71 +84,6 @@ class ProposalPayment extends Component {
             </form>
           </Grid>
         </Grid>
-
-        {/*
-        <Grid item className="approvalStatus">
-          <div className="heading">APPROVAL STATUS </div>
-        </Grid>
-        <Grid item md={11} className="no-margin">
-          <hr />
-        </Grid>
-        <Grid container md={12} className="topApprovalView" >
-          <Grid item md={3} className="approvalKey" >
-            Stauts:
-          </Grid>
-          <Grid item md={6} className="approvalValue" >
-            <span className="approvalRedColorFont">UNFUNNDED</span> - Isufficient Votes (<span className="approvalRedColorFont">2</span>5/ votes)
-          </Grid>
-        </Grid>
-
-        <Grid container md={12} className="approvalView" >
-          <Grid item md={3} className="approvalKey" >
-            Voting Deadline:
-          </Grid>
-          <Grid item md={6} className="approvalValue" >
-            <span className="approvalRedColorFont">12</span> Days Remaining (01/18/2018)
-          </Grid>
-        </Grid>
-
-        <Grid container md={12} className="approvalView" >
-          <Grid item md={3} className="approvalKey" >
-            Vote Breakdown:
-          </Grid>
-          <Grid item md={6} className="approvalValue" >
-            <div className="voteGreenColorFont">30 Yes </div> <div className="voteRedColorFont"> 5 No </div> 0 Abstain
-          </Grid>
-        </Grid>
-
-
-
-
-        <Grid item className="approvalStatus">
-          <div className="heading">PROPOSAL DESCRIPTIONS </div>
-        </Grid>
-        <Grid item md={11} className="no-margin">
-          <hr />
-        </Grid>
-        <Grid container md={12} className="proposalView" >
-          <Grid item md={11} className="proposalDetails" >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. Fusce condimentum leo eget ultricies lacinia. Nullam rutrum mattis iaculis. Ut nec felis lacinia, dignissim enim vel, feugiat quam. Curabitur ac aliquet nisi, suscipit rutrum enim.
-          </Grid>
-        </Grid>
-
-
-        <Grid item className="approvalStatus">
-          <div className="heading">COMMENTS SECTIONS </div>
-        </Grid>
-        <Grid item md={11} className="no-margin">
-          <hr />
-        </Grid>
-        <Grid container md={8} className="commentSectionslView" >
-          <Grid item md={12} className="commentHeading" >
-            Add Comment
-          </Grid>
-          <Grid item md={12} className="proposalDetails" >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor.
-          </Grid>
-        </Grid> */}
       </Grid>
     );
   }

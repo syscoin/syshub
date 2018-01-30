@@ -12,11 +12,13 @@ import { newsAboutStyle } from './styles';
 import { Stats, WelcomeBox } from '../functionals';
 class NewsAbout extends Component {
   render() {
-    const { classes, about } = this.props;
+    const { classes, about, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>
-        <Grid container className={classes.root}>
+        <Grid container className={style}>
           <Grid md={12}>
             <Avatar
               shape="square"

@@ -113,7 +113,6 @@ function mapStateToProps(state) {
     sysStats: state.sysStats.cards,
     value: state.sysStats.value,
     valueOld: state.sysStats.valueOld,
-    deviceType: state.app.platform.deviceType,
   };
 }
 

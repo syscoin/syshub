@@ -10,7 +10,10 @@ import { siderLogoStyle } from './styles';
 
 class SiderLogo extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
       <div className={classes.root}>
         <div>

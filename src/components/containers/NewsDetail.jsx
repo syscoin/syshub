@@ -30,7 +30,11 @@ const splitContent = content => {
 
 class NewsDetail extends Component {
   render() {
-    const { classes, post, channel, goBack } = this.props;
+    const { classes, post, channel, goBack, deviceType } = this.props;
+
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const splittedContent = splitContent(post['content:encoded']);
     const header = {
       image: splittedContent.image,
@@ -45,11 +49,11 @@ class NewsDetail extends Component {
       text: channel.description,
     };
     return (
-      <div className={classes.root}>
-        <NewsHeader header={header} />
-        <NewsBody body={body} />
-        <NewsAbout about={about} />
-        <NewsFooter goBack={goBack} />
+      <div className={style}>
+        <NewsHeader deviceType={deviceType} header={header} />
+        <NewsBody deviceType={deviceType} body={body} />
+        <NewsAbout deviceType={deviceType} about={about} />
+        <NewsFooter deviceType={deviceType} goBack={goBack} />
       </div>
     );
   }

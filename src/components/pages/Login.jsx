@@ -22,7 +22,7 @@ class Login extends Component {
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.verify = response;
-      }
+      },
     });
 
     window.recaptchaVerifier.render().then(function(widgetId) {
@@ -41,7 +41,7 @@ class Login extends Component {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error'
+        icon: 'error',
       });
 
       return;
@@ -56,11 +56,13 @@ class Login extends Component {
             swal({
               title: 'Oops...',
               text: 'Add phone number to the account first in account settings',
-              icon: 'error'
+              icon: 'error',
             });
             return;
           }
-          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+          return fire
+            .auth()
+            .signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
         }
       })
       .then(confirmationResult => {
@@ -77,9 +79,9 @@ class Login extends Component {
               element: 'input',
               attributes: {
                 placeholder: 'Confirmation code here',
-                type: 'text'
-              }
-            }
+                type: 'text',
+              },
+            },
           })
             .then(value => {
               return confirmationResult.confirm(value);
@@ -91,7 +93,7 @@ class Login extends Component {
               swal({
                 title: 'Sucess',
                 text: `${user.email} signed in with sms verification`,
-                icon: 'success'
+                icon: 'success',
               });
 
               this.props.setPage('home');
@@ -105,7 +107,7 @@ class Login extends Component {
         swal({
           title: 'Success',
           text: `Account logged in.`,
-          icon: 'success'
+          icon: 'success',
         });
 
         this.props.setPage('home');
@@ -114,17 +116,19 @@ class Login extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error'
+          icon: 'error',
         });
       });
   }
   render() {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/checkIcon.png'),
-      { classes } = this.props;
+      { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={classes.root} md={12}>
+      <Grid container className={style} md={12}>
         <h1 className="title">Login to SysHub</h1>
         <Grid item md={12} className="form__container">
           <form
@@ -134,7 +138,12 @@ class Login extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid
+              item
+              lg={{ size: 8, offset: 2 }}
+              md={{ size: 10, offset: 1 }}
+              justify="center"
+            >
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -187,14 +196,16 @@ class Login extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page))
+    setPage: page => dispatch(actions.setPage(page)),
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(loginStyle)(Login)
+);
