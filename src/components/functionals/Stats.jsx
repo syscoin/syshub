@@ -59,18 +59,18 @@ class Stats extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="stats__container">
+      <div className={classes.root}>
         {/* <Icon color="accent">add_circle</Icon> */}
-        <h1 className={classes.statsHeading}>
-          <Equalizer className={classes.headingIcon} /> SYSHub Stats
+        <h1 className="statsHeading">
+          <Equalizer className="headingIcon" /> SYSHub Stats
         </h1>
-        <div className={classes.statsMainDiv}>
-          <GridList cols={4} cellHeight={300} className={classes.statsGridDiv}>
+        <div className="statsMainDiv">
+          <GridList cols={4} cellHeight={300} className="statsGridDiv">
             {this.props.sysStats.map((item, key) => {
               return (
-                <Card key={key} className={classes.statsCard}>
+                <Card key={key} className="statsCard">
                   <CardHeader
-                    className={classes.statsCardHeader}
+                    className="statsCardHeader"
                     title={
                       <img
                         alt="a"
@@ -80,11 +80,11 @@ class Stats extends Component {
                     }
                   />
                   <CardContent style={{ position: 'relative' }}>
-                    <div className={classes.statsTextHeading}>
+                    <div className={'statsTextHeading'}>
                       <h1> {this.getValue(item.key)} </h1>
                     </div>
-                    <div className={classes.statsText}>{item.text}</div>
-                    <div className={classes.statsPercentage}>
+                    <div className="statsText">{item.text}</div>
+                    <div className="statsPercentage">
                       <img
                         alt="a"
                         src={require('./../../assets/img/' +

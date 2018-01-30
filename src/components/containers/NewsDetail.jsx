@@ -27,6 +27,7 @@ const splitContent = content => {
   const bodyA = HTMLParser.parseFromString(bodyA, 'text/html');
   return { image, body };
 };
+
 class NewsDetail extends Component {
   render() {
     const { classes, post, channel, goBack } = this.props;

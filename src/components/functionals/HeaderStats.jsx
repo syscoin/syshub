@@ -14,6 +14,8 @@ import { headerStatsStyle } from './styles';
 class HeaderStats extends Component {
   render() {
     const classes = this.props.classes;
+    const style =
+      this.props.deviceType === 'mobile' ? classes.mRoot : classes.root;
     const changeRate = `${(
       1000 / this.props.sysStatsValue.exchange_rates.btc_usd
     ).toFixed(5)} BTC/1000 USD`;
@@ -23,12 +25,7 @@ class HeaderStats extends Component {
     const totUsers = this.props.sysStatsValue.general.all_user;
     //console.clear();
     return (
-      <Grid
-        container
-        className={
-          this.props.deviceType === 'mobile' ? classes.mRoot : classes.root
-        }
-      >
+      <Grid container className={style}>
         <Grid item className="common">
           <img
             alt="a"

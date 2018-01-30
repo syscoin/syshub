@@ -7,22 +7,8 @@ const greyLight = palette.greyLight;
 const grey = palette.grey;
 const secondary = palette.secondary;
 
-
 export default {
-    root: {
-        marginTop:'20px',
-        '& .title':{
-            fontWeight:'lighter',
-        },
-        '& .paper-container': {
-            padding:'20px 30px',
-            overflowY: 'auto'
-        }
-    }
-
-
-
-
-
-
-}
+  root: {
+    marginTop: '20px',
+  },
+};
