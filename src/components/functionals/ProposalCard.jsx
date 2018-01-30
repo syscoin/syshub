@@ -32,7 +32,7 @@ class ProposalCard extends Component {
     const proposalVoteYes = {
       mnPrivateKey: '936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg',
       vinMasternode: 'db49df667763cc726c9f0375ada3fd91bb36ac9e0f9ddea7efd8c13f9b634460-0',
-      gObjectHash: 'f221880ff80918208d16613b0f7d66f05de3a4f5d0499465f692eee8469c6369',
+      gObjectHash: proposal.Hash,
       voteOutcome: 1
     };
 
@@ -78,7 +78,7 @@ class ProposalCard extends Component {
     const proposalVoteNo = {
       mnPrivateKey: '936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg',
       vinMasternode: 'db49df667763cc726c9f0375ada3fd91bb36ac9e0f9ddea7efd8c13f9b634460-0',
-      gObjectHash: 'f221880ff80918208d16613b0f7d66f05de3a4f5d0499465f692eee8469c6369',
+      gObjectHash: proposal.Hash,
       voteOutcome: 2
     };
 
