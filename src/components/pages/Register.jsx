@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { Button, Grid, FormGroup, withStyles } from 'material-ui';
+import { Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
-import { Input } from 'antd';
+import { Form, Input, Button } from 'antd';
+import ReactPasswordStrength from 'react-password-strength';
+
+
 
 import actions from '../../redux/actions';
 import { fire } from '../../firebase';
@@ -15,6 +18,9 @@ import PropTypes from 'prop-types';
 // import style
 import { registerStyle } from './styles';
 
+const FormItem = Form.Item;
+
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -23,12 +29,41 @@ class Register extends Component {
     this.callback = this.callback.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
     this.register = this.register.bind(this);
+    this.state = {
+      disabled: false,
+      username: null,
+      confirmDirty: '',
+    };
+    console.log("FromItem", FormItem)
   }
 
-  state = {
-    disabled: false,
-    username: null,
+
+  componentDidMount() {
+    // To disabled submit button at the beginning.
+    this.props.form.validateFields();
+  }
+
+  checkPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
   };
+  checkConfirm = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
+  };
+
+  hasErrors(fieldsError) {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  }
+
+
 
   // specifying your onload callback function
   callback() {
@@ -48,8 +83,6 @@ class Register extends Component {
         text: 'Must be an alphanumeric character',
         icon: 'warning',
       });
-
-      this.registerForm.reset();
       return;
     }
 
@@ -80,7 +113,6 @@ class Register extends Component {
 
   register(event) {
     event.preventDefault();
-
     if (this.state.disabled) {
       swal({
         title: 'Oops...',
@@ -103,9 +135,15 @@ class Register extends Component {
     this.setState({
       username: '',
     });
-    const username = this.registerName.input.value;
-    const email = this.registerEmail.input.value;
-    const password = this.registerPsw.input.value;
+    let username, email, password;
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        username = values.username;
+        email = values.email;
+        password = values.password
+      }
+    })
 
     if (!username) {
       swal({
@@ -151,11 +189,28 @@ class Register extends Component {
       checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes } = this.props;
+    const {
+        getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+      } = this.props.form;
+
+    // Only show error after a field is touched.
+    const username =
+      isFieldTouched('username') && getFieldError('username');
+    const email =
+      isFieldTouched('email') && getFieldError('email');
+    const password =
+      isFieldTouched('password') && getFieldError('password');
+    const confirmPassword =
+      isFieldTouched('confirm') && getFieldError('confirm');
+
     return (
       <Grid container className={classes.root} md={12}>
         <h1 className="title">Join SysHub</h1>
         <Grid item md={12} className="form__container">
-          <form
+          <Form
             ref={form => {
               this.registerForm = form;
             }}
@@ -171,82 +226,159 @@ class Register extends Component {
               justify="center"
             >
               {/* For User Name */}
-              <FormGroup className="form-group">
+              <FormItem
+                className="form-group"
+                validateStatus={username ? 'error' : ''}
+                help={username || ''}
+              >
                 <span htmlFor="user-name" className="label">
                   {`Username: `}
                 </span>
-                <Input
-                  ref={input => (this.registerName = input)}
-                  name="usernames"
-                  id="user-name"
-                  className="input-field"
-                  placeholder="Enter Username"
-                  onChange={e => this.checkUsername(e)}
-                />
+                {getFieldDecorator('username', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Enter a Username!',
+                    },
+                  ],
+                })(
+                  <Input
+                    ref={input => (this.registerName = input)}
+                    name="usernames"
+                    id="user-name"
+                    className="input-field"
+                    placeholder="Enter Username"
+                    onChange={e => this.checkUsername(e)}
+                  />
+                  )}
+
                 <span className="validation-message">
                   <div style={this.state.disabled ? { color: 'red' } : null}>
                     {this.state.usernames &&
                       (!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                        <img alt="a" src={closeIcon} />
-                      ))}
+                          <img alt="a" src={closeIcon} />
+                        ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
                   </div>
                 </span>
-              </FormGroup>
+              </FormItem>
 
               {/* For User Email */}
-              <FormGroup className="form-group">
+              <FormItem
+                className="form-group"
+                validateStatus={email ? 'error' : ''}
+                help={email || ''}
+              >
                 <span htmlFor="user-email" className="label">
-                  {`Email: `}
+                  {`Email: `}verify
                 </span>
-                <Input
-                  ref={input => (this.registerEmail = input)}
-                  name="email"
-                  id="user-name"
-                  className="input-field"
-                  placeholder="Enter email"
-                />
-              </FormGroup>
+                {getFieldDecorator('email', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Enter your email!',
+                    },
+                  ],
+                })(
+                  <Input
+                    ref={input => (this.registerEmail = input)}
+                    name="email"
+                    id="user-name"
+                    className="input-field"
+                    placeholder="Enter email"
+                  />
+                  )}
+              </FormItem>
 
               {/* For Password */}
-              <FormGroup className="form-group">
+              <FormItem
+                className="form-group"
+                validateStatus={password ? 'error' : ''}
+                help={password || ''}
+              >
                 <span htmlFor="password" className="label">
                   Password:{' '}
                 </span>
-                <Input
-                  ref={input => (this.registerPsw = input)}
-                  type="password"
-                  id="password"
-                  className="input-field"
-                  placeholder="**************"
-                />
-                <span className="validation-message">
+                {getFieldDecorator('password', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Enter a password!',
+                    },
+                    {
+                      validator: this.checkConfirm,
+                    }
+                  ],
+                })(
+                  <div style={{ display: 'inline' }}>
+                    <ReactPasswordStrength
+                      name="email"
+                      id="user-name"
+                      type="password"
+                      ref={input => (this.registerPsw = input)}
+                      className="input-password-feild"
+                      style={{ height: '34px', borderRadius: '3px' }}
+                      placeholder="******"
+                      minLength={5}
+                      minScore={2}
+                      scoreWords={[
+                        'weak',
+                        'okay',
+                        'good',
+                        'strong',
+                        'stronger',
+                      ]}
+                      inputProps={{
+                        name: 'password_input',
+                        autoComplete: 'off',
+                        className: 'form-control',
+                      }}
+                    />
+                  </div>
+                  )}
+                {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
                   <span className="strong">Strong</span>
-                </span>
-              </FormGroup>
+                </span> */}
+              </FormItem>
 
               {/* For Confirm Password */}
-              <FormGroup className="form-group">
+              <FormItem
+                className="form-group"
+                validateStatus={confirmPassword ? 'error' : ''}
+                help={confirmPassword || ''}
+              >
                 <span htmlFor="confirm-password" className="label">
                   Confirm Password:{' '}
                 </span>
-                <Input
-                  type="password"
-                  id="confirm-password"
-                  className="input-field"
-                  type="password"
-                  placeholder="**************"
-                />
-              </FormGroup>
+                {getFieldDecorator('confirm', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Reenter your password!',
+                    },
+                    {
+                      validator: this.checkPassword,
+                    }
+                  ],
+                })(
+                  <Input
+                    type="password"
+                    id="confirm-password"
+                    className="input-field"
+                    type="password"
+                    placeholder="**************"
+                  />
+                  )}
+              </FormItem>
 
               {/* For Confirm Password */}
-              <FormGroup className="form-group">
+              <FormItem className="form-group">
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
@@ -260,28 +392,29 @@ class Register extends Component {
                     onloadCallback={this.callback.bind(this)}
                   />
                 </div>
-              </FormGroup>
+              </FormItem>
 
               {/* Terms and Service */}
-              <FormGroup className="form-group terms-of-condition">
+              <FormItem className="form-group terms-of-condition">
                 <p>
-                  I have read and accepted the <a href="#">Terms of Service</a>
+                  I have read and accepted the <a>Terms of Service</a>
                 </p>
-              </FormGroup>
+              </FormItem>
 
               {/* Form Action Button */}
-              <FormGroup className="form-group form-button-group">
+              <FormItem className="form-group form-button-group">
                 <Button
-                  disabled={this.state.disabled}
-                  type="submit"
+                  disabled={this.hasErrors(getFieldsError())}
+                  type="primary"
                   color="accent"
+                  htmlType="submit"
                   className={classes.button}
                 >
                   Register & Login
                 </Button>
-              </FormGroup>
+              </FormItem>
             </Grid>
-          </form>
+          </Form>
         </Grid>
       </Grid>
     );
@@ -304,6 +437,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+// Todo: Antd form
+const _RegisterForm = Form.create()(Register); // Need to add component like this due to antd Form
+
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(registerStyle)(Register)
+  withStyles(registerStyle)(_RegisterForm)
 );
