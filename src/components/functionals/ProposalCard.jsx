@@ -23,6 +23,10 @@ class ProposalCard extends Component {
     this.voteDown = this.voteDown.bind(this);
   }
 
+  componentDidMount() {
+    const user = fire.auth().currentUser;
+  }
+
   voteUp(vote) {
     const { proposal, user } = this.props;
     const proposalVoteYes = {
@@ -36,21 +40,37 @@ class ProposalCard extends Component {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    if (user) {
-      this.props
-        .voteOnProposal(proposalVoteYes)
-        .then(data => {
-          swal({ title: 'Success', text: `${data}`, icon: 'success' });
+    fire
+      .database()
+      .ref('votes/' + user.uid)
+      .child(proposal.Hash)
+      .once('value')
+      .then(snap => {
+        if (snap.val() !== null) {
+          swal({
+            title: 'Oops...',
+            text: 'You already voted.',
+            icon: 'error'
+          });
 
-          fire
-            .database()
-            .ref('votes/' + user.uid)
-            .set({ proposalId: proposal.Hash, vote: 'Yes' });
-        })
-        .catch(err => {
-          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-        });
-    }
+          return;
+        } else if (user) {
+          this.props
+            .voteOnProposal(proposalVoteYes)
+            .then(data => {
+              swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+              fire
+                .database()
+                .ref('votes/' + user.uid)
+                .child(proposal.Hash)
+                .set({ proposalId: proposal.Hash, voteTxt: 'Yes', voteId: 1 });
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        }
+      });
   }
 
   voteDown(vote) {
@@ -66,21 +86,37 @@ class ProposalCard extends Component {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    if (user) {
-      this.props
-        .voteOnProposal(proposalVoteNo)
-        .then(data => {
-          swal({ title: 'Success', text: `${data}`, icon: 'success' });
+    fire
+      .database()
+      .ref('votes/' + user.uid)
+      .child(proposal.Hash)
+      .once('value')
+      .then(snap => {
+        if (snap.val() !== null) {
+          swal({
+            title: 'Oops...',
+            text: 'You already voted.',
+            icon: 'error'
+          });
 
-          fire
-            .database()
-            .ref('votes/' + user.uid)
-            .set({ proposalId: proposal.Hash, vote: 'No' });
-        })
-        .catch(err => {
-          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-        });
-    }
+          return;
+        } else if (user) {
+          this.props
+            .voteOnProposal(proposalVoteNo)
+            .then(data => {
+              swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+              fire
+                .database()
+                .ref('votes/' + user.uid)
+                .child(proposal.Hash)
+                .set({ proposalId: proposal.Hash, voteTxt: 'No', voteId: 2 });
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        }
+      });
   }
 
   render() {
