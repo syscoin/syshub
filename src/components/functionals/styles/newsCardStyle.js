@@ -69,8 +69,9 @@ export default {
     '& .inline-block': {
       display: 'inline-block',
     },
+    '& .divider': {
+      marginTop: 10,
+    },
   },
-  divider: {
-    marginTop: 10,
-  },
+  mRoot: { extend: 'root' },
 };

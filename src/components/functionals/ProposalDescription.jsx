@@ -14,10 +14,12 @@ class ProposalDescription extends Component {
     super(props);
   }
   render() {
-    const classes = this.props.classes;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={classes.root}>
+      <Grid md={12} className={style}>
         <Grid item className="approvalStatus">
           <div className="heading">PROPOSAL DESCRIPTIONS </div>
         </Grid>

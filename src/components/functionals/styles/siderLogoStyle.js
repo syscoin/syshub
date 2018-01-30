@@ -16,4 +16,5 @@ export default {
       fontSize: '1.2em',
     },
   },
+  mRoot: { extend: 'root' },
 };

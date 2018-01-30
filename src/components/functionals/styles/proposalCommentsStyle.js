@@ -276,4 +276,5 @@ export default {
       verticalAlign: 'bottom',
     },
   },
+  mRoot: { extend: 'root' },
 };

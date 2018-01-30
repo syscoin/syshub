@@ -77,4 +77,5 @@ export default {
       margin: 0,
     },
   },
+  mRoot: { extend: 'root' },
 };

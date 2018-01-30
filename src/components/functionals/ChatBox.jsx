@@ -108,8 +108,11 @@ class ChatBox extends Component {
 
   render() {
     const { currentUser } = this.props.app;
-    const chat_icon = require('../../assets/img/png_menu_chat.png'),
-      { classes } = this.props;
+    const chat_icon = require('../../assets/img/png_menu_chat.png');
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
       <div className={classes.root}>
         {/* chat box container */}

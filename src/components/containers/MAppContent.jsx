@@ -31,23 +31,23 @@ const { Content } = Layout;
 
 class AppContent extends Component {
   render() {
-    const page = this.props.app.showPage;
+    const { showPage, deviceType } = this.props;
 
     return (
       <div style={mAppContentStyle.__container}>
         <Content style={mAppContentStyle.wraper}>
           {
             {
-              home: <Home />,
-              dashBoard: <DashBoard />,
-              newProposal: <NewProposal />,
-              news: <News />,
-              userAccount: <UserAccount />,
-              faq: <Faq />,
-              masterNode: <MasternodeSetting />,
-              login: <Login />,
-              register: <Register />,
-            }[this.props.app.showPage]
+              home: <Home deviceType={deviceType} />,
+              dashBoard: <DashBoard deviceType={deviceType} />,
+              newProposal: <NewProposal deviceType={deviceType} />,
+              news: <News deviceType={deviceType} />,
+              userAccount: <UserAccount deviceType={deviceType} />,
+              faq: <Faq deviceType={deviceType} />,
+              masterNode: <MasternodeSetting deviceType={deviceType} />,
+              login: <Login deviceType={deviceType} />,
+              register: <Register deviceType={deviceType} />,
+            }[showPage]
           }
         </Content>
       </div>
@@ -57,7 +57,8 @@ class AppContent extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    showPage: state.app.showPage,
+    deviceType: state.app.platform.deviceType,
   };
 };
 

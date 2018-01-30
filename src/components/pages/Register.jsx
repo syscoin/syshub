@@ -150,9 +150,11 @@ class Register extends Component {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
-      { classes } = this.props;
+      { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <Grid container className={classes.root} md={12}>
+      <Grid container className={style} md={12}>
         <h1 className="title">Join SysHub</h1>
         <Grid item md={12} className="form__container">
           <form

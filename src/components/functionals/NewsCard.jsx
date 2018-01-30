@@ -21,11 +21,22 @@ class NewsCard extends Component {
   }
 
   render() {
-    const { classes, post, index, selectNews, channel, image } = this.props;
+    const {
+      classes,
+      post,
+      index,
+      selectNews,
+      channel,
+      image,
+      deviceType,
+    } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const noImage = require('../../assets/img/no-user-image.gif');
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <div className={'card-item'} key={post.guid}>
           {/* news card */}
           <Grid item className="news-card-grid">
@@ -79,7 +90,7 @@ class NewsCard extends Component {
               </Button>
             </Grid>
           </Grid>
-          <Divider className={classes.divider} />
+          <Divider className="divider" />
         </div>
       </div>
     );

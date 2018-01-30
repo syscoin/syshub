@@ -155,19 +155,21 @@ class UserTwoFactor extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const avatar = require('../../assets/img/no-user-image.gif');
     const checkIcon = require('../../assets/img/check.png');
     const closeIcon = require('../../assets/img/close.png');
     const appStore = require('../../assets/img/png_icon_apple.png');
     const windowsStore = require('../../assets/img/png_icon_windows.png');
     const playStore = require('../../assets/img/png_icon_google.png');
-
     const { currentUser } = this.props.app;
     console.log(this.props.app.auth);
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Grid container>
           {/* change password text */}
           <Grid md={12}>

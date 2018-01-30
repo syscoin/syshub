@@ -27,4 +27,5 @@ export default {
       fontStyle: 'italic',
     },
   },
+  mRoot: { extend: 'root' },
 };
