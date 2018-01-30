@@ -57,9 +57,12 @@ class Stats extends Component {
     return { arrow, value: Math.abs(value).toFixed(2) };
   }
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
-      <div className={classes.root}>
+      <div className={style}>
         {/* <Icon color="accent">add_circle</Icon> */}
         <h1 className="statsHeading">
           <Equalizer className="headingIcon" /> SYSHub Stats
@@ -110,6 +113,7 @@ function mapStateToProps(state) {
     sysStats: state.sysStats.cards,
     value: state.sysStats.value,
     valueOld: state.sysStats.valueOld,
+    deviceType: state.app.platform.deviceType,
   };
 }
 
