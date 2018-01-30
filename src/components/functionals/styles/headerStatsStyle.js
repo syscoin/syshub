@@ -29,4 +29,19 @@ export default {
       borderRight: `1px solid ${primaryLight}`,
     },
   },
+
+  mRoot: {
+    extend: 'root',
+    '& .common': {
+      color: 'red',
+      fontSize: 7,
+      '& .icon': {
+        height: 14,
+      },
+    },
+    '& .TxtBold': {
+      color: 'red',
+      fontWeight: 'bold',
+    },
+  },
 };

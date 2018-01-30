@@ -23,7 +23,12 @@ class HeaderStats extends Component {
     const totUsers = this.props.sysStatsValue.general.all_user;
     //console.clear();
     return (
-      <Grid container className={classes.root}>
+      <Grid
+        container
+        className={
+          this.props.deviceType === 'mobile' ? classes.mRoot : classes.root
+        }
+      >
         <Grid item className="common">
           <img
             alt="a"
@@ -66,6 +71,7 @@ function mapStateToProps(state) {
   //pass the providers
   return {
     sysStatsValue: state.sysStats.value,
+    deviceType: state.app.platform.deviceType,
   };
 }
 

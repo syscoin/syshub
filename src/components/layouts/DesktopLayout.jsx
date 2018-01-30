@@ -11,6 +11,7 @@ import {
 } from '../containers/';
 
 //Import Styles
+import 'antd/dist/antd.css';
 import { desktopLayoutStyle } from './styles';
 
 const { SubMenu } = Menu;
@@ -20,21 +21,19 @@ class DesktopLayout extends Component {
   render() {
     return (
       <Layout>
-        <AppHeader/>
+        <AppHeader />
         <div style={desktopLayoutStyle.wraper}>
+          <div style={desktopLayoutStyle.leftSlider}>
+            <AppLSider />
+          </div>
 
-          <div  style={desktopLayoutStyle.leftSlider}>
-            <AppLSider/>
-          </div>
-          
           <div style={desktopLayoutStyle.appContent}>
-            <AppContent/>
+            <AppContent />
           </div>
-          
+
           <div style={desktopLayoutStyle.rightSlider}>
-          <AppRSider/>
+            <AppRSider />
           </div>
-        
         </div>
         <AppFooter />
       </Layout>

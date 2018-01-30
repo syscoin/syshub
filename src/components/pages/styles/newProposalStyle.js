@@ -6,7 +6,6 @@ const white = palette.white;
 const grey = palette.grey;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 export default {
   root: {
