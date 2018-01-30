@@ -20,7 +20,7 @@ class ProposalComments extends Component {
     const classes = this.props.classes;
 
     return (
-      <Grid md={12} className={classes.proposalCommentRoot}>
+      <Grid md={12} className={classes.root}>
         <Grid item className="commentHeadingDiv">
           <div className="heading">COMMENTS SECTIONS </div>
         </Grid>

@@ -3,13 +3,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import injectSheet from 'react-jss';
+
 //Import Styles
 import { siderLogoStyle } from './styles';
 
 class SiderLogo extends Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div style={siderLogoStyle.wraper}>
+      <div className={classes.root}>
         <div>
           <img
             alt="a"
@@ -17,13 +20,13 @@ class SiderLogo extends Component {
             width="100%"
           />
         </div>
-        <div style={siderLogoStyle.txtArea}>
+        <div className="txtArea">
           <p>brought to you by</p>
-          <p style={siderLogoStyle.txtBig}>Blockchain Foundry</p>
+          <p className="txtBig">Blockchain Foundry</p>
         </div>
       </div>
     );
   }
 }
 
-export default SiderLogo;
+export default injectSheet(siderLogoStyle)(SiderLogo);

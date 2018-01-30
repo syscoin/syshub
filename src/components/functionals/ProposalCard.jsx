@@ -42,7 +42,7 @@ class ProposalCard extends Component {
       parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
-      <Grid container className={classes.proposalRoot}>
+      <Grid container className={classes.root}>
         <Grid container md={12} className="proposalRow" key={proposal.Hash}>
           <Grid item md={2} className="proposalView">
             <Progress

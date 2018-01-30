@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 import { DashBoardHeader } from '../functionals/';
 import { ProposalPayment } from '../functionals/';
 import { ProposalApprovalStat } from '../functionals/';
@@ -22,8 +22,7 @@ export class ProposalDetail extends Component {
     };
   }
   render() {
-    const { classes } = this.props;
-    console.log('ACZ (proposal) --> ', this.props.proposal);
+    console.log('ACZ (proposal) --> ', this.props);
     return (
       <Grid style={proposalDetailsStyle.root}>
         <DashBoardHeader
@@ -52,6 +51,4 @@ const dispatchToProps = dispatch => {
 //   classes: PropTypes.object.isRequired,
 // };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalDetailsStyle)(ProposalDetail)
-);
+export default connect(stateToProps, dispatchToProps)(ProposalDetail);

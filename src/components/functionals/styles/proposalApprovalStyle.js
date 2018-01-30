@@ -8,13 +8,12 @@ const gray = palette.grey;
 const greyDark = palette.greyDark;
 
 export default {
-  proposalPaymentRoot: {
+  root: {
     '& .no-margin': {
       margin: 0,
       '& .heading': {
         fontSize: 20,
         color: greyDark,
-
       },
     },
     '& .approvalStatus': {
@@ -26,65 +25,59 @@ export default {
         fontWeight: 200,
       },
     },
-    "& .topApprovalView": {
+    '& .topApprovalView': {
       margin: 0,
       marginTop: 40,
-      "& .approvalKey": {
-        marginLeft: "4%",
+      '& .approvalKey': {
+        marginLeft: '4%',
         padding: 0,
         color: primaryDark,
         fontSize: 16,
       },
-      "& .approvalValue": {
+      '& .approvalValue': {
         color: greyDark,
         fontSize: 16,
         padding: 0,
-        display: "-webkit-box",
-        "& .approvalRedColorFont": {
-          color: "red",
+        display: '-webkit-box',
+        '& .approvalRedColorFont': {
+          color: 'red',
         },
-        "& .voteRedColorFont": {
-          color: "red",
-          marginRight: "6%",
+        '& .voteRedColorFont': {
+          color: 'red',
+          marginRight: '6%',
         },
-        "& .voteGreenColorFont": {
-          color: "green",
-          marginRight: "6%",
+        '& .voteGreenColorFont': {
+          color: 'green',
+          marginRight: '6%',
         },
-
-
-      }
-
+      },
     },
-    "& .approvalView": {
+    '& .approvalView': {
       margin: 0,
       marginTop: 15,
-      "& .approvalKey": {
-        marginLeft: "4%",
+      '& .approvalKey': {
+        marginLeft: '4%',
         padding: 0,
         color: primaryDark,
         fontSize: 16,
       },
-      "& .approvalValue": {
+      '& .approvalValue': {
         color: greyDark,
         fontSize: 16,
         padding: 0,
-        display: "-webkit-box",
-        "& .approvalRedColorFont": {
-          color: "red",
+        display: '-webkit-box',
+        '& .approvalRedColorFont': {
+          color: 'red',
         },
-        "& .voteRedColorFont": {
-          color: "red",
-          marginRight: "6%",
+        '& .voteRedColorFont': {
+          color: 'red',
+          marginRight: '6%',
         },
-        "& .voteGreenColorFont": {
-          color: "green",
-          marginRight: "6%",
+        '& .voteGreenColorFont': {
+          color: 'green',
+          marginRight: '6%',
         },
-
-
-      }
-
-    }
-  }
+      },
+    },
+  },
 };

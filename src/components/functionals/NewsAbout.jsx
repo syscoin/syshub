@@ -22,9 +22,9 @@ class NewsAbout extends Component {
               shape="square"
               size="large"
               src={about.avatar}
-              className={classes.avatar}
+              className="avatar"
             />
-            <p className={classes.about}>{about.text}</p>
+            <p className="about">{about.text}</p>
           </Grid>
         </Grid>
       </div>
