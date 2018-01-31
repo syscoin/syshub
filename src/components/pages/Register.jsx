@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
 import { Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 
@@ -30,9 +30,12 @@ class Register extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.register = this.register.bind(this);
     this.state = {
+      checked: false,
       disabled: false,
       username: null,
       confirmDirty: '',
+      disableRegisterButton: true,
+      verify: null
     };
     console.log("FromItem", FormItem)
   }
@@ -63,6 +66,25 @@ class Register extends Component {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   }
 
+  onChange = (e) => {
+    console.log('checked = ', e.target.checked);
+    // this.setState({
+    //   checked: e.target.checked,
+    //   enableRegisterButton: false
+    // });
+    if (this.state.disableRegisterButton === false) {
+      this.setState({
+        checked: e.target.checked,
+        disableRegisterButton: true,
+      })
+    } else {
+      this.setState({
+        checked: e.target.checked,
+        disableRegisterButton: false
+      });
+    }
+  }
+
 
 
   // specifying your onload callback function
@@ -73,7 +95,8 @@ class Register extends Component {
   // specifying verify callback function
   verifyCallback(response) {
     console.log('Recaptcha Verify CallBack: ', response);
-    this.verify = response;
+    this.setState({ verify: response })
+    console.log(this.verify, "captcha verify")
   }
 
   checkUsername(event) {
@@ -122,7 +145,7 @@ class Register extends Component {
       return;
     }
 
-    if (!this.verify) {
+    if (!this.state.verify) {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
@@ -393,18 +416,20 @@ class Register extends Component {
                   />
                 </div>
               </FormItem>
-
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
-                <p>
+                <Checkbox
+                  checked={this.state.checked}
+                  onChange={this.onChange}
+                >
                   I have read and accepted the <a>Terms of Service</a>
-                </p>
+                </Checkbox>
               </FormItem>
 
               {/* Form Action Button */}
               <FormItem className="form-group form-button-group">
                 <Button
-                  disabled={this.hasErrors(getFieldsError())}
+                  disabled={(this.hasErrors(getFieldsError()) || (!this.state.checked || !this.state.verify)) ? true : false}
                   type="primary"
                   color="accent"
                   htmlType="submit"

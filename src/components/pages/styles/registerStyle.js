@@ -40,7 +40,7 @@ export default {
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
-        padding: '10px',
+        padding: '6px',
         '&::before': {
           backgroundColor: 'transparent'
         }

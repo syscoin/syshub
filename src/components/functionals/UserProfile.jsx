@@ -18,6 +18,7 @@ class UserProfile extends Component {
 
     this.state = {
       disabled: false,
+      image: null
     };
 
     this.submitProfile = this.submitProfile.bind(this);
@@ -66,6 +67,17 @@ class UserProfile extends Component {
       });
     }
   }
+  // upload profile image function
+  onImageChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.setState({ image: e.target.result });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    console.log(this.state.image,"state image")
+  }
 
   render() {
     const { classes } = this.props;
@@ -77,17 +89,26 @@ class UserProfile extends Component {
           <Grid md={12}>
             <h1 className="profile-heading">Profile</h1>
           </Grid>
+
+
           {/* profile image grid */}
           <Grid md={3} className="profile-image-grid">
             <div className="avatar-container upload-image-container">
-              {/* <input type="file"/> */}
-              <img src={avatar} alt="no user image" className="user-image" />
+              {
+                this.state.image === null?
+                  <img src={avatar} alt="no user image" className="user-image" />
+                  :
+                  <img src={this.state.image} alt="no user image" className="user-image" />
+
+              }
             </div>
             <span className="change-photo-btn upload-image-container">
-              {/* <input type="file"/> */}
+              <input type="file" onChange={this.onImageChange.bind(this)} className="filetype" id="group_image" />
               <a className="link-color"> click to change photo</a>
             </span>
           </Grid>
+
+
           {/* profile credential grid */}
           <Grid md={9} className="profile-credential-grid">
             {/* For User Name */}
