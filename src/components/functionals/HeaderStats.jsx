@@ -62,13 +62,13 @@ class HeaderStats extends Component {
 }
 
 HeaderStats.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStatsValue: state.sysStats.value,
+    sysStatsValue: state.sysStats.value
   };
 }
 

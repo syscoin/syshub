@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { withStyles } from 'material-ui/styles';
 
 import { withRoot } from '../HOC';
@@ -20,7 +21,7 @@ import {
   NewProposal,
   News,
   UserAccount,
-  UserAccountTest,
+  UserAccountTest
 } from '../pages';
 
 //Import Styles
@@ -46,7 +47,7 @@ class AppContent extends Component {
               faq: <Faq deviceType={deviceType} />,
               masterNode: <MasternodeSetting deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
-              register: <Register deviceType={deviceType} />,
+              register: <Register deviceType={deviceType} />
             }[showPage]
           }
         </Content>
@@ -58,7 +59,7 @@ class AppContent extends Component {
 const stateToProps = state => {
   return {
     showPage: state.app.showPage,
-    deviceType: state.app.platform.deviceType,
+    deviceType: state.app.platform.deviceType
   };
 };
 

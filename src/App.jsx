@@ -36,7 +36,7 @@ class App extends Component {
       deviceType: Platform.DeviceType || 'desktop',
       deviceModel: Platform.DeviceModel || '',
       deviceVendor: Platform.DeviceVendor || '',
-      ua: Platform.UA || '',
+      ua: Platform.UA || ''
     });
   }
 
@@ -57,7 +57,7 @@ class App extends Component {
           <h1
             style={{
               color: 'white',
-              zIndex: '10000',
+              zIndex: '10000'
             }}
           >
             {this.state.timer}
@@ -74,7 +74,7 @@ class App extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
@@ -83,7 +83,7 @@ const dispatchToProps = dispatch => {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
     getMediumPosts: () => dispatch(actions.getMediumPosts()),
-    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
+    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
   };
 };
 
