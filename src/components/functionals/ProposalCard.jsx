@@ -6,6 +6,7 @@ import actions from '../../redux/actions';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
 import { fire } from '../../firebase';
+import { checkVoted, voted } from '../API';
 
 //import antd components
 import { Divider, Button } from 'antd';
@@ -40,13 +41,9 @@ class ProposalCard extends Component {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    fire
-      .database()
-      .ref('votes/' + user.uid)
-      .child(proposal.Hash)
-      .once('value')
-      .then(snap => {
-        if (snap.val() !== null) {
+    checkVoted(user, proposal)
+      .then(value => {
+        if (value) {
           swal({
             title: 'Oops...',
             text: 'You already voted.',
@@ -54,22 +51,21 @@ class ProposalCard extends Component {
           });
 
           return;
-        } else if (user) {
+        } else if (!value) {
           this.props
             .voteOnProposal(proposalVoteYes)
             .then(data => {
               swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
-              fire
-                .database()
-                .ref('votes/' + user.uid)
-                .child(proposal.Hash)
-                .set({ proposalId: proposal.Hash, voteTxt: 'Yes', voteId: 1 });
+              voted(user, proposal, 'Yes', 1);
             })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
         }
+      })
+      .catch(err => {
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 
@@ -86,13 +82,9 @@ class ProposalCard extends Component {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    fire
-      .database()
-      .ref('votes/' + user.uid)
-      .child(proposal.Hash)
-      .once('value')
-      .then(snap => {
-        if (snap.val() !== null) {
+    checkVoted(user, proposal)
+      .then(value => {
+        if (value) {
           swal({
             title: 'Oops...',
             text: 'You already voted.',
@@ -100,22 +92,21 @@ class ProposalCard extends Component {
           });
 
           return;
-        } else if (user) {
+        } else if (!value) {
           this.props
             .voteOnProposal(proposalVoteNo)
             .then(data => {
               swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
-              fire
-                .database()
-                .ref('votes/' + user.uid)
-                .child(proposal.Hash)
-                .set({ proposalId: proposal.Hash, voteTxt: 'No', voteId: 2 });
+              voted(user, proposal, 'No', 2);
             })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
         }
+      })
+      .catch(err => {
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 
