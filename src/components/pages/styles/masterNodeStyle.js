@@ -11,11 +11,14 @@ export default {
     marginRight: 15,
     '& .title': {
       display: "inline-block",
-      fontWeight: 'lighter'
+      fontWeight: 'lighter',
+      textTransform: 'uppercase'
     },
     '& .masternode-div':{
       background: white,
-      padding: 25
+      padding: 25,
+      overflowY: 'auto',
+      height: '80vh',
     },
   },
 }

@@ -10,7 +10,7 @@ const greyLight = palette.greyLight;
 
 export default {
   proposalRoot: {
-    height: '100%',
+    height: 170,
     marginTop: 20,
     '& .proposalRow': {
       maxWidth: 'calc(100% - 35px)',
@@ -39,8 +39,14 @@ export default {
           marginTop: '10px',
         },
         '& .proposalStatusActiveNo': {
-          color: 'red',
+          color: '#1890ff',
         },
+        '& .proposalStatusExecptionNo':{
+          color: 'red'
+        },
+        '& .proposalStatusSuccessNo':{
+          color: '#2ecc71'
+        }
       },
       '& .proposalInfoView': {
         borderRight: '1px solid ' + gray,

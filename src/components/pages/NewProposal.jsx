@@ -30,6 +30,7 @@ class NewProposal extends Component {
       showEditor: true,
       proposalTitle: '',
       paymentQuantity: 0,
+      proposalDate: '',
       address: '',
       amount: '',
       stepperSubHeading: '',
@@ -46,6 +47,7 @@ class NewProposal extends Component {
     this.getAddress = this.getAddress.bind(this);
     this.getAmount = this.getAmount.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.disabledNextBtn = this.disabledNextBtn.bind(this);
   }
 
   handleNext = () => {
@@ -81,6 +83,9 @@ class NewProposal extends Component {
   //date change function
   onDateChange(date, dateString) {
     console.log(date, dateString);
+    this.setState({
+      proposalDate: dateString
+    })
   }
 
   //proposal title function
@@ -176,7 +181,7 @@ class NewProposal extends Component {
                   this.state.proposalTitle
                     ? this.state.proposalTitle.toLowerCase()
                     : 'proposal-title'
-                }`}
+                  }`}
               />
             </Col>
           </Row>
@@ -222,21 +227,21 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                // proposal detail preview
-                <Row>
-                  <Col span={22} offset={1}>
-                    <h1 className="proposalDetail-title">
-                      {this.state.proposalTitle}
-                    </h1>
-                  </Col>
-                  <Col span={22}>
-                    <div
-                      className="proposalContent-div"
-                      id="preview-html-container"
-                    />
-                  </Col>
-                </Row>
-              )}
+                  // proposal detail preview
+                  <Row>
+                    <Col span={22} offset={1}>
+                      <h1 className="proposalDetail-title">
+                        {this.state.proposalTitle}
+                      </h1>
+                    </Col>
+                    <Col span={22}>
+                      <div
+                        className="proposalContent-div"
+                        id="preview-html-container"
+                      />
+                    </Col>
+                  </Row>
+                )}
             </Col>
           </Row>
         );
@@ -293,6 +298,42 @@ class NewProposal extends Component {
     console.log(this.state.editorState, 'editor state');
   }
 
+
+  disabledNextBtn(step) {
+    switch (step) {
+      case 0:
+        if (this.state.proposalTitle && this.state.proposallink) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 1:
+        if (this.state.proposal__detail) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 2:
+        if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 3:
+        if (this.state.amount) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      default:
+        return false;
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const steps = this.getSteps();
@@ -314,25 +355,25 @@ class NewProposal extends Component {
                       </h3>
                     ) : null}
                     {this.state.activeStep == 1 &&
-                    label == 'Proposal Details' ? (
-                      this.state.showEditor ? (
-                        <Button
-                          className="preview-edit-button"
-                          onClick={this.previewHTML.bind(this)}
-                        >
-                          PREVIEW
+                      label == 'Proposal Details' ? (
+                        this.state.showEditor ? (
+                          <Button
+                            className="preview-edit-button"
+                            onClick={this.previewHTML.bind(this)}
+                          >
+                            PREVIEW
                         </Button>
-                      ) : (
-                        <Button
-                          className="preview-edit-button"
-                          onClick={() => {
-                            this.setState({ showEditor: true });
-                          }}
-                        >
-                          EDITOR
+                        ) : (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={() => {
+                                this.setState({ showEditor: true });
+                              }}
+                            >
+                              EDITOR
                         </Button>
-                      )
-                    ) : null}
+                          )
+                      ) : null}
                   </StepLabel>
                   <StepContent>
                     <div>{this.getStepContent(index)}</div>
@@ -359,6 +400,7 @@ class NewProposal extends Component {
                           type="primary"
                           onClick={this.handleNext}
                           className={classes.button}
+                          disabled={this.disabledNextBtn(index)}
                         >
                           {activeStep === steps.length - 1
                             ? 'Confirm'

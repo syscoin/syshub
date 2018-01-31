@@ -60,7 +60,7 @@ class ProposalCard extends Component {
               }
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">
+              <span className={ progress < 35 ? "proposalStatusExecptionNo" : progress < 100 ? "proposalStatusActiveNo" : "proposalStatusSuccessNo" }>
                 {proposal.YesCount + 30}
               </span>
               {` / `}
