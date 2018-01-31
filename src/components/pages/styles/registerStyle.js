@@ -13,7 +13,7 @@ export default {
     '& .title': {
       fontWeight: 'lighter',
       color: greyDark,
-      fontSize:20
+      fontSize: 20
     },
     '& .form__container': {
       backgroundColor: white,
@@ -86,5 +86,17 @@ export default {
     }
 
   },
-
+  mRoot: {
+    extend: 'root',
+    marginTop: '100px',
+    '& .input-field': {
+      width: '62% !important'
+    },
+    '& .label': {
+      marginTop: '10px !important'
+    },
+    '& .form__container': {
+      marginBottom: '100px'
+    }
+  }
 };
