@@ -12,6 +12,11 @@ import { proposalApprovalStyle } from './styles';
 class ProposalApprovalStat extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      yesCount: this.props.yesCount,
+      noCount: this.props.noCount,
+      abstrainCount: this.props.abstrainCount
+    }
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -52,8 +57,8 @@ class ProposalApprovalStat extends Component {
             Vote Breakdown:
           </Grid>
           <Grid item md={6} className="approvalValue">
-            <div className="voteGreenColorFont">30 Yes </div>{' '}
-            <div className="voteRedColorFont"> 5 No </div> 0 Abstain
+            <div className="voteGreenColorFont">{ this.state.yesCount } Yes </div>{' '}
+            <div className="voteRedColorFont"> {this.state.noCount} No </div> {this.state.abstrainCount} Abstain
           </Grid>
         </Grid>
       </Grid>

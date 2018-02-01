@@ -72,7 +72,7 @@ class ProposalCard extends Component {
           <Grid item md={7} className="proposalInfoView">
             <h1
               className="proposalHeading"
-              onClick={() => selectProposal(proposal.Hash)}
+              onClick={() => selectProposal(proposal)}
             >
               {proposal.DataString[0][1].name ? (
                 proposal.DataString[0][1].name.split('\n', 1)[0]

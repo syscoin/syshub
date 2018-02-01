@@ -22,6 +22,7 @@ export class ProposalDetail extends Component {
     };
   }
   render() {
+    console.log("Data",this.state.data)
     const { deviceType } = this.props;
     //Platform style switcher
     return (
@@ -31,8 +32,8 @@ export class ProposalDetail extends Component {
         />
 
         <Grid container style={proposalDetailsStyle.proposalDetails}>
-          <ProposalPayment deviceType={deviceType} />
-          <ProposalApprovalStat deviceType={deviceType} />
+          <ProposalPayment deviceType={deviceType} data={this.state.data.DataString[0][1]} />
+          <ProposalApprovalStat deviceType={deviceType} noCount={this.state.data.NoCount} yesCount={this.state.data.YesCount} abstrainCount={this.state.data.AbstainCount} />
           <ProposalDescription deviceType={deviceType} />
           <ProposalComments deviceType={deviceType} />
         </Grid>
