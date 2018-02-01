@@ -8,7 +8,6 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    marginRight: 15,
     '& .title': {
       display: "inline-block",
       fontWeight: 'lighter',

@@ -44,6 +44,8 @@ export default {
     },
     '& .paper-container': {
       padding: '20px 20px',
+      overflowY: 'auto',
+      maxHeight: '80vh',
 
       //next step button styling
       '& .next-btn-div': {

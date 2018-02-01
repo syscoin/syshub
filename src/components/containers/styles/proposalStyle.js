@@ -8,6 +8,6 @@ export default {
     background:'white',
     padding:"10px 10px 45px 10px",
     overflowY: 'auto',
-    height: 'calc(100vh - 150px)'
+    maxHeight: '80vh'
   },
 };
