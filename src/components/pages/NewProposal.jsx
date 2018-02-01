@@ -53,6 +53,7 @@ class NewProposal extends Component {
   handleNext = () => {
     this.setState({
       activeStep: this.state.activeStep + 1,
+      showEditor: true
     });
     console.log(this.state.proposalTitle, 'proposalTitle');
     console.log(this.state.address, 'address');
@@ -61,14 +62,19 @@ class NewProposal extends Component {
   };
 
   handleBack = () => {
+    if (this.state.activeStep == 2) {
+      console.log("active step")
+      this.setState({ showEditor: true })
+    }
     this.setState(
       {
+        
         activeStep: this.state.activeStep - 1,
         proposal__detail: this.state.proposal__detail,
       },
       () => {
         if (this.state.activeStep == 1 || this.state.activeStep == 0) {
-          this.previewHTML();
+          this.setState({showEditor:true})
         }
       }
     );
