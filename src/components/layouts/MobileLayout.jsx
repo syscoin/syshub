@@ -27,7 +27,7 @@ class MobileLayout extends Component {
     });
   };
 
-  render() {
+  render () {
     const { classes, app } = this.props;
     return (
       <div className={classes.root}>
