@@ -36,10 +36,10 @@ export default {
       color: 'white',
       height: '25px',
       padding: '0',
-      fontSize: 7,
+      fontSize: 13,
       '& .icon': {
-        height: 14,
-        width: 20
+        height: 15,
+        width: 15
       },
       '& .TxtBold': {
         marginLeft: '5px'

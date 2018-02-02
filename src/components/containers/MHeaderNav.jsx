@@ -85,7 +85,7 @@ class MHeaderNav extends Component {
         //Platform style switcher
         const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
         const chatIcon = require('../../assets/img/png_menu_chat.png');
-        const logo = require('../../assets/img/png_logo.png');
+        const logo = require('../../assets/img/png_logo_white.png');
         const menu = (
             <Menu>
                 {menuItems.map((item) => {
