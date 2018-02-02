@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
 import swal from 'sweetalert';
-import { doLogin, fire } from '../../firebase';
+import { doLogin, fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 

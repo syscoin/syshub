@@ -7,14 +7,14 @@ import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
 import { AccessAlarm, Send } from 'material-ui-icons';
 
-import { fire, messages } from '../../firebase';
+import { fire, messages } from '../../API/firebase';
 
 import List, {
   ListItem,
   ListItemAvatar,
   ListItemIcon,
   ListItemSecondaryAction,
-  ListItemText,
+  ListItemText
 } from 'material-ui/List';
 import ListSubheader from 'material-ui/List/ListSubheader';
 import { chatBoxStyle } from './styles';
@@ -24,7 +24,7 @@ const style = {
   textAlign: 'center',
   display: 'inline-block',
   position: 'relative',
-  minWidth: '95%',
+  minWidth: '95%'
 };
 
 class ChatBox extends Component {
@@ -33,7 +33,7 @@ class ChatBox extends Component {
     this.state = {
       messages: [],
 
-      message: '',
+      message: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -47,7 +47,7 @@ class ChatBox extends Component {
         updated.push(message.val());
       });
       this.setState({
-        messages: updated,
+        messages: updated
       });
     });
   }
@@ -69,7 +69,7 @@ class ChatBox extends Component {
     swal({
       title: 'Oops...',
       text: 'Must be signed in to chat',
-      icon: 'warning',
+      icon: 'warning'
     });
   }
 
@@ -86,8 +86,8 @@ class ChatBox extends Component {
       user: {
         displayName: currentUser.displayName,
         id: currentUser.uid,
-        email: currentUser.email,
-      },
+        email: currentUser.email
+      }
     };
 
     messages.push(updated);
@@ -95,7 +95,7 @@ class ChatBox extends Component {
 
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -134,16 +134,8 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={
-                      <p className="chatContent-primaryText">
-                        {message.user.displayName}
-                      </p>
-                    }
-                    secondary={
-                      <p className="chatContent-secondaryText">
-                        {message.body}
-                      </p>
-                    }
+                    primary={<p className="chatContent-primaryText">{message.user.displayName}</p>}
+                    secondary={<p className="chatContent-secondaryText">{message.body}</p>}
                   />
                 ))}
               </div>
@@ -159,9 +151,7 @@ class ChatBox extends Component {
                   return !currentUser ? this.loginAlert() : null;
                 }}
                 multiline={true}
-                placeholder={
-                  currentUser ? 'Tell something' : 'login to write message'
-                }
+                placeholder={currentUser ? 'Tell something' : 'login to write message'}
               />
               <Send className="send-button" onClick={this.onSubmit} />
             </form>
@@ -174,7 +164,7 @@ class ChatBox extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 

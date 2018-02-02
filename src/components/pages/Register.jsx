@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import { Input } from 'antd';
 
 import actions from '../../redux/actions';
-import { fire } from '../../firebase';
+import { fire } from '../../API/firebase';
 
 import PropTypes from 'prop-types';
 
@@ -27,7 +27,7 @@ class Register extends Component {
 
   state = {
     disabled: false,
-    username: null,
+    username: null
   };
 
   // specifying your onload callback function
@@ -46,7 +46,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning',
+        icon: 'warning'
       });
 
       this.registerForm.reset();
@@ -54,7 +54,7 @@ class Register extends Component {
     }
 
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
 
     const username = this.registerName.value;
@@ -65,12 +65,12 @@ class Register extends Component {
         snapshot.forEach(snap => {
           if (snap.val() === username) {
             this.setState({
-              disabled: true,
+              disabled: true
             });
             return;
           } else {
             this.setState({
-              disabled: false,
+              disabled: false
             });
           }
         });
@@ -85,7 +85,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Username already taken',
-        icon: 'error',
+        icon: 'error'
       });
       return;
     }
@@ -94,14 +94,14 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
     }
 
     this.setState({
-      username: '',
+      username: ''
     });
     const username = this.registerName.input.value;
     const email = this.registerEmail.input.value;
@@ -111,7 +111,7 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'Must provide a username',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
@@ -132,7 +132,7 @@ class Register extends Component {
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
-            icon: 'success',
+            icon: 'success'
           });
         }
         this.props.setPage('home');
@@ -141,7 +141,7 @@ class Register extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error',
+          icon: 'error'
         });
       });
   }
@@ -164,12 +164,7 @@ class Register extends Component {
             }}
             className="wrapper"
           >
-            <Grid
-              item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
-              justify="center"
-            >
+            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -289,7 +284,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -300,10 +295,8 @@ function mapStateToProps(state) {
 /* Map Actions to Props */
 function mapDispatchToProps(dispatch) {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(registerStyle)(Register)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(registerStyle)(Register));

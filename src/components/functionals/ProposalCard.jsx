@@ -6,7 +6,7 @@ import actions from '../../redux/actions';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
 import { fire } from '../../firebase';
-import { checkVoted, voted } from '../API';
+import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
 import { Divider, Button } from 'antd';

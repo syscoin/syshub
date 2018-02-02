@@ -10,14 +10,14 @@ import { Button, Grid, FormGroup, Input } from 'material-ui';
 import swal from 'sweetalert';
 // import components
 import { Stats, WelcomeBox } from '../functionals';
-import { fire } from '../../firebase';
+import { fire } from '../../API/firebase';
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      disabled: false,
+      disabled: false
     };
 
     this.submitProfile = this.submitProfile.bind(this);
@@ -42,7 +42,7 @@ class UserProfile extends Component {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning',
+        icon: 'warning'
       });
 
       return;
@@ -54,12 +54,12 @@ class UserProfile extends Component {
         snapshot.forEach(snap => {
           if (snap.val() === username) {
             this.setState({
-              disabled: true,
+              disabled: true
             });
             return;
           } else {
             this.setState({
-              disabled: false,
+              disabled: false
             });
           }
         });
@@ -119,9 +119,7 @@ class UserProfile extends Component {
                 className="input-field"
                 placeholder="Enter email"
               />
-              <span className="validation-message">
-                *required for password change
-              </span>
+              <span className="validation-message">*required for password change</span>
             </FormGroup>
           </Grid>
           <Grid className="update-button-grid">
@@ -150,6 +148,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(userProfileStyle)(UserProfile)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));
