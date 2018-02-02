@@ -73,11 +73,8 @@ export default {
     extend: 'root',
     marginBottom: '15% !important',
     '& .statsCard': {
-      margin: '2%',
-      width: '45% !important'
-    },
-    '& .statsCard:last-child': {
-      margin: '2% 25%',
+      margin: '20px 10%',
+      width: '80% !important',
     }
   },
 };

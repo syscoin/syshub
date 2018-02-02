@@ -57,7 +57,11 @@ export default {
     extend: 'root',
     "& .Paper": {
       marginTop: '100px',
-      padding: '30px'
+      padding: '30px',
+      '& .heading':{
+        fontSize: 22,
+        textAlign: 'center'
+      }
     },
     '& .joinBtn': {
       textAlign: 'center !important'
