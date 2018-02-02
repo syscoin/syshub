@@ -9,8 +9,8 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 
 export default {
-  proposalRoot: {
-    height: 170,
+  root: {
+    height: '100%',
     marginTop: 20,
     '& .proposalRow': {
       maxWidth: 'calc(100% - 35px)',
@@ -172,4 +172,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

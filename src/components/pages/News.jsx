@@ -53,6 +53,7 @@ class News extends Component {
             {
               list: (
                 <NewsList
+                  deviceType={this.props.deviceType}
                   channel={channel}
                   readedList={this.state.readedList}
                   selectNews={guid => this.handleSelectNews(guid)}
@@ -60,6 +61,7 @@ class News extends Component {
               ),
               details: (
                 <NewsDetail
+                  deviceType={this.props.deviceType}
                   channel={channel}
                   post={this.state.post}
                   goBack={() => this.handleSelectNews()}

@@ -11,11 +11,13 @@ import { newsHeaderStyle } from './styles';
 import { Stats, WelcomeBox } from '../functionals';
 class NewsHeader extends Component {
   render() {
-    const { classes, header } = this.props;
+    const { classes, header, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>
-        <Grid container className={classes.root}>
+        <Grid container className={style}>
           <Grid md={12} className="new-header-grid">
             {/* Cover Image */}
             <div className="cover">

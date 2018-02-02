@@ -126,7 +126,9 @@ class MasterNodeList extends Component {
       },
     ];
 
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>
@@ -195,7 +197,7 @@ class MasterNodeList extends Component {
             </form>
           </Grid>
         </Modal>
-        <div className={classes.root}>
+        <div className={style}>
           <div className="heading">
             <h2 className="title">Masternode List</h2>
           </div>

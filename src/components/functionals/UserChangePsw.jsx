@@ -25,6 +25,7 @@ class UserChangePassword extends Component {
 
     // this.checkPassword = this.confirmDirty.bind(this);
     // this.checkConfirm = this.checkConfirm.bind(this);
+    console.log("FromItem",FormItem)
   }
   componentDidMount() {
     // To disabled submit button at the beginning.
@@ -74,7 +75,10 @@ class UserChangePassword extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const avatar = require('../../assets/img/no-user-image.gif');
     const checkIcon = require('../../assets/img/check.png');
     const closeIcon = require('../../assets/img/close.png');
@@ -94,7 +98,7 @@ class UserChangePassword extends Component {
       isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Grid container>
           {/* change password text */}
           <Grid md={12}>

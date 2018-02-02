@@ -24,7 +24,7 @@ import {
 } from '../pages';
 
 //Import Styles
-import { appContentStyle } from './styles';
+import { mAppContentStyle } from './styles';
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;
@@ -34,8 +34,8 @@ class AppContent extends Component {
     const { showPage, deviceType } = this.props;
 
     return (
-      <div style={appContentStyle.__container}>
-        <Content style={appContentStyle.wraper}>
+      <div style={mAppContentStyle.__container}>
+        <Content style={mAppContentStyle.wraper}>
           {
             {
               home: <Home deviceType={deviceType} />,

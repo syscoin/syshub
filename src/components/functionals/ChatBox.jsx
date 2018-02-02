@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import { Input } from 'antd';
 import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
 import { AccessAlarm, Send } from 'material-ui-icons';
@@ -72,25 +73,36 @@ class ChatBox extends Component {
       icon: 'warning',
     });
   }
+  blankMessageAlert() {
+    swal({
+      title: 'Oops...',
+      text: 'Must write something to chat',
+      icon: 'warning',
+    });
+  }
 
   addMessage(message) {
     const { currentUser } = this.props.app;
-
+    console.log(message, "message")
     if (!currentUser) {
       this.loginAlert();
       return;
+    } else if (message === null || message === '') {
+      this.blankMessageAlert()
+    } else {
+      const updated = {
+        body: message,
+        user: {
+          displayName: currentUser.displayName,
+          id: currentUser.uid,
+          email: currentUser.email,
+        },
+      };
+
+      messages.push(updated);
     }
 
-    const updated = {
-      body: message,
-      user: {
-        displayName: currentUser.displayName,
-        id: currentUser.uid,
-        email: currentUser.email,
-      },
-    };
 
-    messages.push(updated);
   }
 
   onChange(e) {
@@ -108,8 +120,11 @@ class ChatBox extends Component {
 
   render() {
     const { currentUser } = this.props.app;
-    const chat_icon = require('../../assets/img/png_menu_chat.png'),
-      { classes } = this.props;
+    const { TextArea } = Input;
+    const { classes, deviceType } = this.props;
+    const chat_icon = require('../../assets/img/png_menu_chat.png');
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={classes.root}>
         {/* chat box container */}
@@ -151,14 +166,14 @@ class ChatBox extends Component {
 
             {/* input field for chat */}
             <form className="form" onSubmit={this.onSubmit}>
-              <TextField
+              <TextArea
                 value={this.state.message}
                 name="message"
                 onChange={this.onChange}
                 onClick={() => {
                   return !currentUser ? this.loginAlert() : null;
                 }}
-                multiline={true}
+                onPressEnter={this.onSubmit}
                 placeholder={
                   currentUser ? 'Tell something' : 'login to write message'
                 }

@@ -46,4 +46,5 @@ export default {
     extend: 'menuTxt',
     color: white,
   },
+  mRoot: { extend: 'root' },
 };

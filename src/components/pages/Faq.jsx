@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { Input, Icon, Collapse } from 'antd';
 
-
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 
-
 // import components
 import { Stats, WelcomeBox } from '../functionals';
-import { faqStyle } from "./styles";
-
+import { faqStyle } from './styles';
 
 const Panel = Collapse.Panel;
 
@@ -172,21 +169,24 @@ const faqQuestions = [
 
 
 class Faq extends Component {
-
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <h1 className="title">SysHub FAQ</h1>
 
         <div className="faqs-div">
           <div className="search-question">
-            <Input addonBefore={<Icon type="search" />} placeholder="Enter your Question" />
+            <Input
+              addonBefore={<Icon type="search" />}
+              placeholder="Enter your Question"
+            />
           </div>
 
           <Collapse bordered={false}>
@@ -226,9 +226,6 @@ class Faq extends Component {
   }
 }
 
-
-
-
 const stateToProps = state => {
   return {};
 };
@@ -237,4 +234,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(faqStyle)(Faq));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(faqStyle)(Faq)
+);

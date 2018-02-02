@@ -12,11 +12,13 @@ import { welcomeBoxStyle } from './styles';
 
 class WelcomeBox extends Component {
   render() {
-    const classes = this.props.classes;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const logo = require('../../assets/img/png_logo.png');
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Paper className="Paper" elevation={4}>
           <GridList cols={5}>
             <GridListTile cols={2} style={{ height: '100%' }}>

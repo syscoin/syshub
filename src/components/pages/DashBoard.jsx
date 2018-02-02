@@ -18,7 +18,7 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: ''
+      proposalID: '',
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
@@ -28,18 +28,21 @@ class DashBoard extends Component {
   }
   //changing state with this function
   handleDashboard(value) {
-    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container =
+      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
-      proposalID: value
+      proposalID: value,
     });
   }
 
   render() {
-    const { classes, proposals } = this.props;
+    const { classes, proposals, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid className={classes.root}>
+      <Grid className={style}>
         <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
@@ -51,12 +54,18 @@ class DashBoard extends Component {
           {
             dashBoard: (
               <ProposalList
+                deviceType={this.props.deviceType}
                 selectProposal={this.handleDashboard}
                 proposalList={proposals.list}
                 totalNodes={this.props.totalNodes}
               />
             ),
-            proposalDetail: <ProposalDetail proposal={this.state.proposalID} />
+            proposalDetail: (
+              <ProposalDetail
+                deviceType={this.props.deviceType}
+                proposal={this.state.proposalID}
+              />
+            ),
           }[this.state.showContainer]
         }
       </Grid>
@@ -67,17 +76,20 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1
+    totalNodes:
+      state.sysStats.value.general.registered_masternodes_verified * 0.1,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    getProposals: () => dispatch(actions.getProposals())
+    getProposals: () => dispatch(actions.getProposals()),
   };
 };
 DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(dashboardStyle)(DashBoard)
+);

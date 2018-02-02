@@ -6,7 +6,6 @@ const white = palette.white;
 const grey = palette.grey;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 export default {
   root: {
@@ -21,7 +20,7 @@ export default {
       fontWeight: 300,
     },
     '& .steper__container': {
-      '& > div > div:nth-child(2)': {
+      '& > span > span:nth-child(2)': {
         width: '100%',
         '& .preview-edit-button': {
           height: 25,
@@ -83,7 +82,8 @@ export default {
         fontSize: '22px',
         color: primaryLight,
         display: 'inline-block',
-        paddingLeft: 'calc(50% + 50px )',
+        // paddingLeft: 'calc(50% + 50px )',
+        marginLeft: "calc(50% - 220px)"
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,
