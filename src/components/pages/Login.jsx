@@ -38,19 +38,19 @@ class Login extends Component {
     const mnPrivateKeys = [
       {
         mnPrivateKey: '92YPhw71K9MgH22EHQMWKmfyeyUn5dBaHkYJK59GfSaoikzpBPe',
-        vinMasternode: '6d85fc329e378410fd838de2d3b3f737d37bb09b59a4e7acc3bc1c0fa6f838d8'
+        vinMasternode: '6d85fc329e378410fd838de2d3b3f737d37bb09b59a4e7acc3bc1c0fa6f838d8-0'
       },
       {
         mnPrivateKey: '91e25Yfw2MRZka8pqsLA73C7nGzzcFRYewdpdgB397TiCSgAwUR',
-        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f'
+        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f-0'
       },
       {
         mnPrivateKey: '93UimiJFDQTTLsyPeu8BRN9EdzKHJJ3Y2kcxc33oBU4yiRy7FYQ',
-        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f'
+        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f-0'
       },
       {
         mnPrivateKey: '92LhW3cNd8VZmsHhgsaKX8GUeSArnJP5MNt4SLpsDX3uB1Gb983',
-        vinMasternode: '4683812d19ca7035c551301b55e7bf9ab6fb80fc045fa92649333d4a00683224'
+        vinMasternode: '4683812d19ca7035c551301b55e7bf9ab6fb80fc045fa92649333d4a00683224-0'
       }
     ];
 
