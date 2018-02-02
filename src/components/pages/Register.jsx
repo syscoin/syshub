@@ -6,8 +6,6 @@ import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
-
-
 import actions from '../../redux/actions';
 import { fire } from '../../firebase';
 
@@ -19,7 +17,6 @@ import PropTypes from 'prop-types';
 import { registerStyle } from './styles';
 
 const FormItem = Form.Item;
-
 
 class Register extends Component {
   constructor(props) {
@@ -37,9 +34,8 @@ class Register extends Component {
       disableRegisterButton: true,
       verify: null
     };
-    console.log("FromItem", FormItem)
+    console.log('FromItem', FormItem);
   }
-
 
   componentDidMount() {
     // To disabled submit button at the beginning.
@@ -66,7 +62,7 @@ class Register extends Component {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   }
 
-  onChange = (e) => {
+  onChange = e => {
     console.log('checked = ', e.target.checked);
     // this.setState({
     //   checked: e.target.checked,
@@ -75,42 +71,40 @@ class Register extends Component {
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
-        disableRegisterButton: true,
-      })
+        disableRegisterButton: true
+      });
     } else {
       this.setState({
         checked: e.target.checked,
         disableRegisterButton: false
       });
     }
-  }
-
-
+  };
 
   // specifying your onload callback function
-  callback () {
+  callback() {
     console.log('Recaptcha onLoad CallBack: Done!!!!');
   }
 
   // specifying verify callback function
-  verifyCallback (response) {
+  verifyCallback(response) {
     console.log('Recaptcha Verify CallBack: ', response);
-    this.setState({ verify: response })
-    console.log(this.verify, "captcha verify")
+    this.setState({ verify: response });
+    console.log(this.verify, 'captcha verify');
   }
 
-  checkUsername (event) {
+  checkUsername(event) {
     if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
-        icon: 'warning',
+        icon: 'warning'
       });
       return;
     }
 
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
 
     const username = this.registerName.value;
@@ -121,12 +115,12 @@ class Register extends Component {
         snapshot.forEach(snap => {
           if (snap.val() === username) {
             this.setState({
-              disabled: true,
+              disabled: true
             });
             return;
           } else {
             this.setState({
-              disabled: false,
+              disabled: false
             });
           }
         });
@@ -134,13 +128,13 @@ class Register extends Component {
     }
   }
 
-  register (event) {
+  register(event) {
     event.preventDefault();
     if (this.state.disabled) {
       swal({
         title: 'Oops...',
         text: 'Username already taken',
-        icon: 'error',
+        icon: 'error'
       });
       return;
     }
@@ -149,14 +143,14 @@ class Register extends Component {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
     }
 
     this.setState({
-      username: '',
+      username: ''
     });
     let username, email, password;
     this.props.form.validateFields((err, values) => {
@@ -164,15 +158,15 @@ class Register extends Component {
         console.log('Received values of form: ', values);
         username = values.username;
         email = values.email;
-        password = values.password
+        password = values.password;
       }
-    })
+    });
 
     if (!username) {
       swal({
         title: 'Oops...',
         text: 'Must provide a username',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
@@ -193,7 +187,7 @@ class Register extends Component {
           swal({
             title: 'Success',
             text: `Account ${currentUser.email} created`,
-            icon: 'success',
+            icon: 'success'
           });
         }
         this.props.setPage('home');
@@ -202,32 +196,29 @@ class Register extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error',
+          icon: 'error'
         });
       });
   }
 
-  render () {
+  render() {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes, deviceType } = this.props;
     const {
-        getFieldDecorator,
+      getFieldDecorator,
       getFieldsError,
       getFieldError,
-      isFieldTouched,
-      } = this.props.form;
+      isFieldTouched
+    } = this.props.form;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     // Only show error after a field is touched.
-    const username =
-      isFieldTouched('username') && getFieldError('username');
-    const email =
-      isFieldTouched('email') && getFieldError('email');
-    const password =
-      isFieldTouched('password') && getFieldError('password');
+    const username = isFieldTouched('username') && getFieldError('username');
+    const email = isFieldTouched('email') && getFieldError('email');
+    const password = isFieldTouched('password') && getFieldError('password');
     const confirmPassword =
       isFieldTouched('confirm') && getFieldError('confirm');
 
@@ -235,7 +226,7 @@ class Register extends Component {
       <Grid container className={style} md={12} xs={12}>
         <h1 className="title">Join SysHub</h1>
         <Grid item md={12} xs={12} className="form__container">
-          <form
+          <Form
             ref={form => {
               this.registerForm = form;
             }}
@@ -264,9 +255,9 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter a Username!',
-                    },
-                  ],
+                      message: 'Enter a Username!'
+                    }
+                  ]
                 })(
                   <Input
                     ref={input => (this.registerName = input)}
@@ -276,7 +267,7 @@ class Register extends Component {
                     placeholder="Enter Username"
                     onChange={e => this.checkUsername(e)}
                   />
-                  )}
+                )}
 
                 <span className="validation-message">
                   <div style={this.state.disabled ? { color: 'red' } : null}>
@@ -284,8 +275,8 @@ class Register extends Component {
                       (!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                          <img alt="a" src={closeIcon} />
-                        ))}
+                        <img alt="a" src={closeIcon} />
+                      ))}
                     {this.state.usernames}
                     {this.state.usernames &&
                       (this.state.disabled ? ` Not Available` : ` Available`)}
@@ -306,9 +297,9 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter your email!',
-                    },
-                  ],
+                      message: 'Enter your email!'
+                    }
+                  ]
                 })(
                   <Input
                     ref={input => (this.registerEmail = input)}
@@ -317,7 +308,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="Enter email"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Password */}
@@ -333,12 +324,12 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter a password!',
+                      message: 'Enter a password!'
                     },
                     {
-                      validator: this.checkConfirm,
+                      validator: this.checkConfirm
                     }
-                  ],
+                  ]
                 })(
                   <div style={{ display: 'inline' }}>
                     <ReactPasswordStrength
@@ -356,16 +347,16 @@ class Register extends Component {
                         'okay',
                         'good',
                         'strong',
-                        'stronger',
+                        'stronger'
                       ]}
                       inputProps={{
                         name: 'password_input',
                         autoComplete: 'off',
-                        className: 'form-control',
+                        className: 'form-control'
                       }}
                     />
                   </div>
-                  )}
+                )}
                 {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
@@ -386,12 +377,12 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Reenter your password!',
+                      message: 'Reenter your password!'
                     },
                     {
-                      validator: this.checkPassword,
+                      validator: this.checkPassword
                     }
-                  ],
+                  ]
                 })(
                   <Input
                     type="password"
@@ -400,7 +391,7 @@ class Register extends Component {
                     type="password"
                     placeholder="**************"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -421,10 +412,7 @@ class Register extends Component {
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
-                <Checkbox
-                  checked={this.state.checked}
-                  onChange={this.onChange}
-                >
+                <Checkbox checked={this.state.checked} onChange={this.onChange}>
                   I have read and accepted the <a>Terms of Service</a>
                 </Checkbox>
               </FormItem>
@@ -432,7 +420,12 @@ class Register extends Component {
               {/* Form Action Button */}
               <FormItem className="form-group form-button-group">
                 <Button
-                  disabled={(this.hasErrors(getFieldsError()) || (!this.state.checked || !this.state.verify)) ? true : false}
+                  disabled={
+                    this.hasErrors(getFieldsError()) ||
+                    (!this.state.checked || !this.state.verify)
+                      ? true
+                      : false
+                  }
                   type="primary"
                   color="accent"
                   htmlType="submit"
@@ -450,18 +443,18 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   //pass the providers
   return {};
 }
 
 /* Map Actions to Props */
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 }
 
