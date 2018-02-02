@@ -32,14 +32,19 @@ export default {
       '& path': {
         fill: primary,
       },
+      '& circle': {
+        fill: primary,
+      }
     },
     '& .title': {
       fontWeight: 'lighter',
       color: greyDark,
-      fontSize: 20,
+      textTransform: 'uppercase'
     },
     '& .paper-container': {
       padding: '20px 20px',
+      overflowY: 'auto',
+      maxHeight: '80vh',
 
       //next step button styling
       '& .next-btn-div': {

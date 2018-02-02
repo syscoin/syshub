@@ -39,8 +39,14 @@ export default {
           marginTop: '10px',
         },
         '& .proposalStatusActiveNo': {
-          color: 'red',
+          color: '#1890ff',
         },
+        '& .proposalStatusExecptionNo':{
+          color: 'red'
+        },
+        '& .proposalStatusSuccessNo':{
+          color: '#2ecc71'
+        }
       },
       '& .proposalInfoView': {
         borderRight: '1px solid ' + gray,
