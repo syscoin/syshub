@@ -9,7 +9,7 @@ import {
   MAppContent,
   MAppLSider,
   MAppRSider,
-  MAppFooter,
+  MAppFooter
 } from '../containers/';
 
 //Import Styles
@@ -23,15 +23,15 @@ const { Content, Footer } = Layout;
 class MobileLayout extends Component {
   toggleBoolState = d => {
     this.setState({
-      [d]: !this.state[d],
+      [d]: !this.state[d]
     });
   };
 
-  render () {
+  render() {
     const { classes, app } = this.props;
     return (
       <div className={classes.root}>
-        <MAppHeader />
+        {/* <MAppHeader /> */}
         <MAppContent />
         <MAppFooter />
       </div>
@@ -41,7 +41,7 @@ class MobileLayout extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
