@@ -17,6 +17,7 @@ import mAppFooterStyle from './mAppFooterStyle';
 import mAppHeaderStyle from './mAppHeaderStyle';
 import mAppRSiderStyle from './mAppRSiderStyle';
 import mAppLSiderStyle from './mAppLSiderStyle';
+import mHeaderNavStyle from './mHeaderNavStyle';
 
 export {
   palette,
@@ -34,4 +35,5 @@ export {
   mAppHeaderStyle,
   mAppRSiderStyle,
   mAppLSiderStyle,
+  mHeaderNavStyle
 };
