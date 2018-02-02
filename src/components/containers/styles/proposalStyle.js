@@ -5,7 +5,7 @@ const white = palette.white;
 
 export default {
   root: {
-    background:'white',
-    padding:"10px"
+    background: white,
+    padding: '10px',
   },
 };

@@ -80,10 +80,13 @@ class UserProfile extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const avatar = require('../../assets/img/no-user-image.gif');
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Grid container>
           {/* profile text */}
           <Grid md={12}>

@@ -211,13 +211,15 @@ class Register extends Component {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
-      { classes } = this.props;
+      { classes, deviceType } = this.props;
     const {
         getFieldDecorator,
       getFieldsError,
       getFieldError,
       isFieldTouched,
       } = this.props.form;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     // Only show error after a field is touched.
     const username =
@@ -230,7 +232,7 @@ class Register extends Component {
       isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
-      <Grid container className={classes.root} md={12}>
+      <Grid container className={style} md={12}>
         <h1 className="title">Join SysHub</h1>
         <Grid item md={12} className="form__container">
           <Form

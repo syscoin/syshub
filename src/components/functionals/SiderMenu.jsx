@@ -17,21 +17,16 @@ class SiderMenu extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, active } = this.props;
     return (
-      <div className={classes.wraper}>
+      <div className={classes.root}>
         <SiderLogo />
-        {this.props.menuItems.map(item => {
-          const icon =
-            item.key === this.props.active ? item.iconSelected : item.icon;
+        {this.props.menuItems.map((item, i) => {
+          const icon = item.key === active ? item.iconSelected : item.icon;
           const txt =
-            item.key === this.props.active
-              ? classes.menuTxtActive
-              : classes.menuTxt;
+            item.key === active ? classes.menuTxtActive : classes.menuTxt;
           const btnStyle =
-            item.key === this.props.active
-              ? classes.buttonActive
-              : classes.button;
+            item.key === active ? classes.buttonActive : classes.button;
           let showMe = item.private;
           switch (item.showWhen) {
             case 'always':
@@ -46,9 +41,10 @@ class SiderMenu extends Component {
             default:
               showMe = true;
           }
+          console.log('ACZ (txt) --> ', txt);
           return showMe ? (
             <button
-              key={item.key}
+              key={i}
               className={btnStyle}
               onClick={() => this.tests(item.key)}
             >
@@ -61,7 +57,7 @@ class SiderMenu extends Component {
             </button>
           ) : null;
         })}
-        <div className={classes.lastBorder} /> {/*Last border*/}
+        <div className="lastBorder" /> {/*Last border*/}
         <div />
       </div>
     );

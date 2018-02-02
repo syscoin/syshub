@@ -5,7 +5,6 @@ const primary = palette.primary;
 const grey = palette.textLignt;
 const greyDark = palette.greyDark;
 
-
 export default {
   root: {
     marginTop: 20,
@@ -53,7 +52,7 @@ export default {
             '& .chatContent-secondaryText': {
               color: greyDark,
               padding: '0px 0px 0px 5px',
-              fontWeight:'100'
+              fontWeight: '100',
             },
           },
         },
@@ -81,4 +80,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

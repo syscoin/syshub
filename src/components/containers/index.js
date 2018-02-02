@@ -8,6 +8,13 @@ import ProposalDetail from './ProposalDetail';
 import NewsList from './NewsList';
 import NewsDetail from './NewsDetail';
 
+//Mobile Containers
+import MAppHeader from './MAppHeader';
+import MAppFooter from './MAppFooter';
+import MAppLSider from './MAppLSider';
+import MAppRSider from './MAppRSider';
+import MAppContent from './MAppContent';
+
 export {
   AppHeader,
   AppFooter,
@@ -18,4 +25,9 @@ export {
   ProposalDetail,
   NewsList,
   NewsDetail,
+  MAppHeader,
+  MAppFooter,
+  MAppLSider,
+  MAppRSider,
+  MAppContent,
 };

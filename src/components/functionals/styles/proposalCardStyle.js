@@ -9,7 +9,7 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 
 export default {
-  proposalRoot: {
+  root: {
     height: '100%',
     marginTop: 20,
     '& .proposalRow': {
@@ -166,4 +166,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

@@ -75,8 +75,12 @@ class MasterNode extends Component {
       <div className={classes.root}>
         <h1 className="title">Masternode Settings</h1>
         <div className="masternode-div">
-          <MasternodeAdd addNode={this.addNode} />
+          <MasternodeAdd
+            deviceType={this.props.deviceType}
+            addNode={this.addNode}
+          />
           <MasternodeList
+            deviceType={this.props.deviceType}
             nodes={this.state.nodes}
             deleteNode={this.deleteNode}
             editNode={this.editNode}

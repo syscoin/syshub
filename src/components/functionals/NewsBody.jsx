@@ -10,11 +10,14 @@ import { newsBodyStyle } from './styles';
 import { Stats, WelcomeBox } from '../functionals';
 class NewsBody extends Component {
   render() {
-    const { classes, body } = this.props;
+    const { classes, body, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     //console.log('ACZ (post) --> ', post);
     return (
       <div>
-        <Grid container className={classes.root}>
+        <Grid container className={style}>
           <Grid md={12} className="newBody-grid">
             <div dangerouslySetInnerHTML={{ __html: body }} />
           </Grid>
