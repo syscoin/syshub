@@ -16,7 +16,7 @@ class Login extends Component {
     this.login = this.login.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     fire.auth().useDeviceLanguage();
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
@@ -25,12 +25,12 @@ class Login extends Component {
       },
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
 
-  login(event) {
+  login (event) {
     event.preventDefault();
     const currentUser = fire.auth().currentUser;
     const email = this.loginEmail.value;
@@ -120,7 +120,7 @@ class Login extends Component {
         });
       });
   }
-  render() {
+  render () {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/checkIcon.png'),
       { classes, deviceType } = this.props;
@@ -128,9 +128,9 @@ class Login extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={style} md={12}>
+      <Grid container className={style} md={12} xs={12}>
         <h1 className="title">Login to SysHub</h1>
-        <Grid item md={12} className="form__container">
+        <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
             ref={form => {
@@ -142,6 +142,7 @@ class Login extends Component {
               item
               lg={{ size: 8, offset: 2 }}
               md={{ size: 10, offset: 1 }}
+              xs={12}
               justify="center"
             >
               {/* For User Name */}
@@ -176,7 +177,7 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} />
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha-div" />
               </FormGroup>
 
               {/* Form Action Button */}

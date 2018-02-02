@@ -30,7 +30,7 @@ import { mAppContentStyle } from './styles';
 const { Content } = Layout;
 
 class AppContent extends Component {
-  render() {
+  render () {
     const { showPage, deviceType } = this.props;
 
     return (

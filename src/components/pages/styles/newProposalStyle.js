@@ -201,4 +201,27 @@ export default {
       borderColor: primary,
     },
   },
+  mRoot: {
+    extend: 'root',
+    marginTop: '100px',
+    '& .proposal-title': {
+      paddingLeft: '0 !important'
+    },
+    '& .payment-input': {
+      width: '100%'
+    },
+    '& .toolbarClassName': {
+      marginTop: '30px !important'
+    },
+    '& .proposalEditor-wrapper': {
+      margin: '0 !important',
+      minWidth: '250px !important',
+      height: '230px !important'
+    },
+    '& .paper-container': {
+      padding: '0 !important'
+    }
+
+
+  }
 };

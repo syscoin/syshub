@@ -87,7 +87,7 @@ class NewProposal extends Component {
   };
 
   //date change function
-  onDateChange(date, dateString) {
+  onDateChange (date, dateString) {
     console.log(date, dateString);
     this.setState({
       proposalDate: dateString
@@ -95,35 +95,35 @@ class NewProposal extends Component {
   }
 
   //proposal title function
-  proposalTitle(e) {
+  proposalTitle (e) {
     this.setState({
       proposalTitle: e.target.value,
     });
   }
 
   //payment quantity
-  paymentQuantity(value) {
+  paymentQuantity (value) {
     this.setState({
       paymentQuantity: value,
     });
   }
 
   //get address function
-  getAddress(e) {
+  getAddress (e) {
     this.setState({
       address: e.target.value,
     });
   }
 
   //get amount function
-  getAmount(e) {
+  getAmount (e) {
     this.setState({
       amount: e.target.value,
     });
   }
 
   //
-  previewHTML() {
+  previewHTML () {
     this.setState(
       {
         showEditor: false,
@@ -143,12 +143,12 @@ class NewProposal extends Component {
     );
   }
 
-  confirmProposalDetail() {
+  confirmProposalDetail () {
     this.previewHTML();
   }
 
   // steps name in array in which we map
-  getSteps() {
+  getSteps () {
     return [
       'Proposal Title',
       'Proposal Details',
@@ -158,14 +158,15 @@ class NewProposal extends Component {
     ];
   }
   //all the step contents are coming from return of switch case
-  getStepContent(step) {
+  getStepContent (step) {
+    const { deviceType } = this.props;
     switch (step) {
       case 0:
         return (
           //Proposal Title Row
           <Row className="proposal-title-row">
             {/* Proposal Title Colomn */}
-            <Col span={10}>
+            <Col span={deviceType === 'mobile' ? 24 : 10}>
               {/* proposal title input field */}
               <Form>
                 <FormItem className="form-item">
@@ -179,7 +180,12 @@ class NewProposal extends Component {
               </Form>
             </Col>
             {/* Proposal Description Url Colomn */}
-            <Col span={14}>
+            <Col span={deviceType === 'mobile' ? 24 : 14}>
+              {deviceType === 'mobile' ?
+                <h3 className="proposal-title">
+                  Proposal Description Url
+                      </h3>
+                : null}
               <Input
                 className="proposal-url-input"
                 placeholder="Enter Proposal Description Url"
@@ -197,7 +203,7 @@ class NewProposal extends Component {
           // Proposal Detail Row
           <Row className="proposal-details-row">
             {/* Proposal Detail Colomn */}
-            <Col span={20}>
+            <Col span={deviceType === 'mobile' ? 24 : 20}>
               {/* {this.state.showEditor ?
 
                 <Button className='preview-edit-button' onClick={this.previewHTML.bind(this)}>PREVIEW</Button>
@@ -235,12 +241,12 @@ class NewProposal extends Component {
               ) : (
                   // proposal detail preview
                   <Row>
-                    <Col span={22} offset={1}>
+                    <Col span={deviceType === 'mobile' ? 24 : 22} offset={deviceType === 'mobile' ? 0 : 1}>
                       <h1 className="proposalDetail-title">
                         {this.state.proposalTitle}
                       </h1>
                     </Col>
-                    <Col span={22}>
+                    <Col span={deviceType === 'mobile' ? 24 : 22}>
                       <div
                         className="proposalContent-div"
                         id="preview-html-container"
@@ -254,21 +260,23 @@ class NewProposal extends Component {
       case 2:
         return (
           <Row className="paymentDetail-row">
-            <Col span={9}>
+            <Col span={deviceType === 'mobile' ? 10 : 9}>
               <label className="label">Date</label>
               <DatePicker onChange={this.onDateChange} />
             </Col>
-            <Col span={7}>
+            <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
               <label># of Payments</label>
               <InputNumber
                 min={1}
                 max={50}
                 defaultValue={3}
+                className="payment-input"
                 value={this.state.paymentQuantity}
                 onChange={this.paymentQuantity}
+                type="number"
               />
             </Col>
-            <Col span={8}>
+            <Col span={deviceType === 'mobile' ? 24 : 8}>
               <label>Address</label>
               <Input
                 type="text"
@@ -282,7 +290,7 @@ class NewProposal extends Component {
       case 3:
         return (
           <Row className="amount-row">
-            <Col span={4}>
+            <Col span={deviceType === 'mobile' ? 24 : 4}>
               <Input
                 type="text"
                 placeholder="0"
@@ -297,7 +305,7 @@ class NewProposal extends Component {
         <Button>Confirm</Button>;
     }
   }
-  onEditorStateChange(editorState) {
+  onEditorStateChange (editorState) {
     this.setState({
       editorState,
     });
@@ -358,7 +366,7 @@ class NewProposal extends Component {
                 <Step className="steper__container" key={label}>
                   <StepLabel className="steper__label">
                     <h2 className="step-label"> {label} </h2>
-                    {this.state.activeStep == 0 && label == 'Proposal Title' ? (
+                    {this.state.activeStep == 0 && label == 'Proposal Title' && deviceType !== 'mobile' ? (
                       <h3 className="proposal-title">
                         Proposal Description Url
                       </h3>
