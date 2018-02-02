@@ -86,7 +86,7 @@ export default {
       marginTop: 10,
       borderRadius: 10,
       border: '1px solid' + gray,
-      height: 320,
+      minHeight: 320,
       '& .commentlHrView': {
         margin: 0,
         marginLeft: '4%',
@@ -186,7 +186,27 @@ export default {
         },
       },
     },
-
+    '& .allReplies': {
+      marginTop: 10,
+      marginLeft: '8%',
+      '& .replyHeading': {
+        padding: '10px 10px',
+        '& .replyUserVeiw': {
+          padding: 0,
+          marginTop: 10,
+          '& .replyUserName': {
+            color: greyDark,
+            padding: '10px 28px',
+            fontWeight: 500,
+          },
+          '& .replyDate': {
+            display: 'inline-block',
+            marginLeft: '-20px',
+            color: gray,
+          },
+        }
+      }
+    },
     '& .commentWithReplyView': {
       margin: 0,
       marginTop: 5,

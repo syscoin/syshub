@@ -19,6 +19,8 @@ const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
+const comments = fire.database().ref('comments');
+const commentReplies = fire.database().ref('commentReplies')
 // const currentUser
 
 //Some useful functions
@@ -213,6 +215,8 @@ const doDeleteAccount = () => {
 export {
   messages,
   usernames,
+  comments,
+  commentReplies,
   fire,
   base,
   doRegister,
