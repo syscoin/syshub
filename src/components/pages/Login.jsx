@@ -35,6 +35,24 @@ class Login extends Component {
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
+    const mnPrivateKeys = [
+      {
+        mnPrivateKey: '92YPhw71K9MgH22EHQMWKmfyeyUn5dBaHkYJK59GfSaoikzpBPe',
+        vinMasternode: '6d85fc329e378410fd838de2d3b3f737d37bb09b59a4e7acc3bc1c0fa6f838d8'
+      },
+      {
+        mnPrivateKey: '91e25Yfw2MRZka8pqsLA73C7nGzzcFRYewdpdgB397TiCSgAwUR',
+        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f'
+      },
+      {
+        mnPrivateKey: '93UimiJFDQTTLsyPeu8BRN9EdzKHJJ3Y2kcxc33oBU4yiRy7FYQ',
+        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f'
+      },
+      {
+        mnPrivateKey: '92LhW3cNd8VZmsHhgsaKX8GUeSArnJP5MNt4SLpsDX3uB1Gb983',
+        vinMasternode: '4683812d19ca7035c551301b55e7bf9ab6fb80fc045fa92649333d4a00683224'
+      }
+    ];
 
     if (!this.verify) {
       swal({
@@ -64,7 +82,7 @@ class Login extends Component {
           fire
             .database()
             .ref('mnPrivateKey/' + user.uid)
-            .set('936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg');
+            .set(mnPrivateKeys);
         }
       })
       .then(confirmationResult => {
@@ -101,7 +119,7 @@ class Login extends Component {
               fire
                 .database()
                 .ref('mnPrivateKey/' + user.uid)
-                .set('936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg');
+                .set(mnPrivateKeys);
 
               this.props.setPage('home');
             })

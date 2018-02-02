@@ -24,24 +24,28 @@ class ProposalCard extends Component {
     this.voteDown = this.voteDown.bind(this);
   }
 
-  componentDidMount() {
-    const user = fire.auth().currentUser;
-  }
-
   voteUp(vote) {
+    const MNKEY = this.props.selectedMNKey;
+    const MNVIN = this.props.selectedVin;
     const { proposal, user } = this.props;
-    const proposalVoteYes = {
-      mnPrivateKey: '936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg',
-      vinMasternode: 'db49df667763cc726c9f0375ada3fd91bb36ac9e0f9ddea7efd8c13f9b634460-0',
-      gObjectHash: proposal.Hash,
-      voteOutcome: 1
-    };
 
     if (!user) {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    checkVoted(user, proposal)
+    if (!user.mnPrivateKey || !MNKEY) {
+      swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
+      return;
+    }
+
+    const proposalVoteYes = {
+      mnPrivateKey: MNKEY,
+      vinMasternode: MNVIN,
+      gObjectHash: proposal.Hash,
+      voteOutcome: 1
+    };
+
+    checkVoted(MNKEY, proposal)
       .then(value => {
         if (value) {
           swal({
@@ -57,7 +61,7 @@ class ProposalCard extends Component {
             .then(data => {
               swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
-              voted(user, proposal, 'Yes', 1);
+              voted(MNKEY, proposal, 'Yes', 1);
             })
             .then(() => {
               this.props.getProposals();
@@ -73,19 +77,27 @@ class ProposalCard extends Component {
   }
 
   voteDown(vote) {
+    const MNKEY = this.props.selectedMNKey;
+    const MNVIN = this.props.selectedVin;
     const { proposal, user } = this.props;
-    const proposalVoteNo = {
-      mnPrivateKey: '936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg',
-      vinMasternode: 'db49df667763cc726c9f0375ada3fd91bb36ac9e0f9ddea7efd8c13f9b634460-0',
-      gObjectHash: proposal.Hash,
-      voteOutcome: 2
-    };
 
     if (!user) {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    checkVoted(user, proposal)
+    if (!user.mnPrivateKey || !MNKEY) {
+      swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
+      return;
+    }
+
+    const proposalVoteNo = {
+      mnPrivateKey: MNKEY,
+      vinMasternode: MNVIN,
+      gObjectHash: proposal.Hash,
+      voteOutcome: 2
+    };
+
+    checkVoted(MNKEY, proposal)
       .then(value => {
         if (value) {
           swal({
@@ -101,7 +113,7 @@ class ProposalCard extends Component {
             .then(data => {
               swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
-              voted(user, proposal, 'No', 2);
+              voted(MNKEY, proposal, 'No', 2);
             })
             .then(() => {
               this.props.getProposals();

@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fire } from '../../API/firebase';
 import { Grid, withStyles } from 'material-ui';
 
 // import styles
@@ -12,61 +13,69 @@ import { proposalStyle } from './styles';
 import { DashBoardHeader, ProposalCard } from '../functionals/';
 
 export class ProposalList extends Component {
-  state = {
-    proposalList: [
-      {
-        name: 'Proposal 1',
-        detail:
-          'Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.',
-        upVote: 100,
-        downVote: 200,
-        active: true,
-        id: 1
-      },
-      {
-        name: 'Proposal 2',
-        detail:
-          'Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.',
-        upVote: 400,
-        downVote: 1,
-        active: false,
-        id: 2
-      },
-      {
-        name: 'Proposal 3',
-        detail:
-          'Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.',
-        upVote: 600,
-        downVote: 9,
-        active: false,
-        id: 3
-      },
-      {
-        name: 'Proposal 4',
-        detail:
-          'Proposal Details ....Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim justo at arcu viverra gravida.',
-        upVote: 2000,
-        downVote: 8,
-        active: false,
-        id: 4
+  constructor(props) {
+    super(props);
+
+    this.selectMNKey = this.selectMNKey.bind(this);
+
+    this.state = {
+      selectedMNKey: null
+    };
+  }
+
+  selectMNKey(mnObj) {
+    this.setState({
+      selectedMNKey: mnObj.mnPrivateKey,
+      selectedVin: mnObj.vinMasternode
+    });
+  }
+
+  componentDidMount() {
+    if (this.props.currentUser) {
+      if (this.props.currentUser.mnPrivateKey) {
+        this.setState({
+          selectedMNKey: this.props.currentUser.mnPrivateKey[0].mnPrivateKey,
+          selectedVin: this.props.currentUser.mnPrivateKey[0].vinMasternode
+        });
       }
-    ]
-  };
+    }
+  }
 
   render() {
     const { classes, selectProposal } = this.props;
+    const user = this.props.currentUser;
 
     return (
       <Grid md={12} style={proposalStyle.root}>
         <DashBoardHeader data={{ showHeader: 'proposalList' }} />
+        {user
+          ? user.mnPrivateKey
+            ? user.mnPrivateKey.map((mnObj, i) => {
+                return (
+                  <div>
+                    <button
+                      onClick={() => this.selectMNKey(mnObj)}
+                      style={
+                        mnObj.mnPrivateKey === this.state.selectedMNKey
+                          ? { backgroundColor: 'green' }
+                          : null
+                      }
+                    >{`MasterNode ${i + 1}`}</button>
+                  </div>
+                );
+              })
+            : null
+          : null}
 
         {this.props.proposalList.map(proposal => {
           return (
             <ProposalCard
               totalNodes={this.props.totalNodes}
-              logged={this.props.logged}
+              logged={this.props.user ? true : false}
               proposal={proposal}
               selectProposal={selectProposal}
+              selectedMNKey={this.state.selectedMNKey}
+              selectedVin={this.state.selectedVin}
             />
           );
         })}
@@ -77,7 +86,7 @@ export class ProposalList extends Component {
 
 const stateToProps = state => {
   return {
-    logged: state.app.currentUser ? true : false
+    user: state.app.currentUser
   };
 };
 const dispatchToProps = dispatch => {

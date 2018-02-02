@@ -17,6 +17,11 @@ class App extends Component {
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
 
+    if (currentUser) {
+      this.props.setCurrentUser(currentUser);
+      return;
+    }
+
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         fire
@@ -37,7 +42,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
+    // this.clearInterval(this.state.timer);
   }
 
   tick() {
@@ -45,7 +50,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('Current User ===>', this.props.app.currentUser);
+    // console.log('Current User ===>', this.props.app.currentUser);
     return (
       /* <HttpsRedirect> */
       <div style={appStyles.wraper}>

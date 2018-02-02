@@ -6,7 +6,7 @@ export default {
   getProposals: () => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.get('http://159.89.151.42:3000/list', null, constants.SYS_PROPOSALS_GET)
+        HTTPAsync.get('http://159.89.141.35:3000/list', null, constants.SYS_PROPOSALS_GET)
       );
     };
   },
