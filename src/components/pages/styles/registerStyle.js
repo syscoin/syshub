@@ -116,7 +116,8 @@ export default {
     extend: 'root',
     marginTop: '100px',
     '& .input-field': {
-      width: '100% !important'
+      width: '100% !important',
+      margin: '0px !important'
     },
     '& .label': {
       marginTop: '10px !important'
@@ -129,13 +130,22 @@ export default {
         textAlign: 'left'
       },
       '& .validation-message':{
-        width: '100%'
+        width: '100%',
+        marginTop: '0px !important'
       },
       '& .recaptcha':{
         marginLeft: 0
       },
       '& .form-group':{
-        marginTop: 0
+        margin: 0
+      },
+      '& .validation-message':{
+        width: '100% !important',
+        margin: '0px !important'
+      },
+      '& .recaptcha, .input-password-feild':{
+        width: '100% !important',
+        margin: 0
       }
 
     }
