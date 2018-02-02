@@ -30,6 +30,7 @@ class NewProposal extends Component {
       showEditor: true,
       proposalTitle: '',
       paymentQuantity: 0,
+      proposalDate: '',
       address: '',
       amount: '',
       stepperSubHeading: '',
@@ -46,11 +47,13 @@ class NewProposal extends Component {
     this.getAddress = this.getAddress.bind(this);
     this.getAmount = this.getAmount.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.disabledNextBtn = this.disabledNextBtn.bind(this);
   }
 
   handleNext = () => {
     this.setState({
       activeStep: this.state.activeStep + 1,
+      showEditor: true
     });
     console.log(this.state.proposalTitle, 'proposalTitle');
     console.log(this.state.address, 'address');
@@ -59,14 +62,19 @@ class NewProposal extends Component {
   };
 
   handleBack = () => {
+    if (this.state.activeStep == 2) {
+      console.log("active step")
+      this.setState({ showEditor: true })
+    }
     this.setState(
       {
+        
         activeStep: this.state.activeStep - 1,
         proposal__detail: this.state.proposal__detail,
       },
       () => {
         if (this.state.activeStep == 1 || this.state.activeStep == 0) {
-          this.previewHTML();
+          this.setState({showEditor:true})
         }
       }
     );
@@ -81,6 +89,9 @@ class NewProposal extends Component {
   //date change function
   onDateChange (date, dateString) {
     console.log(date, dateString);
+    this.setState({
+      proposalDate: dateString
+    })
   }
 
   //proposal title function
@@ -301,7 +312,43 @@ class NewProposal extends Component {
     console.log(this.state.editorState, 'editor state');
   }
 
-  render () {
+
+  disabledNextBtn(step) {
+    switch (step) {
+      case 0:
+        if (this.state.proposalTitle && this.state.proposallink) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 1:
+        if (this.state.proposal__detail) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 2:
+        if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      case 3:
+        if (this.state.amount) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      default:
+        return false;
+    }
+  }
+
+  render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -369,7 +416,8 @@ class NewProposal extends Component {
                           raised={true}
                           type="primary"
                           onClick={this.handleNext}
-                          className="button"
+                          className={classes.button}
+                          disabled={this.disabledNextBtn(index)}
                         >
                           {activeStep === steps.length - 1
                             ? 'Confirm'

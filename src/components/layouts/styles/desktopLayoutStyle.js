@@ -14,9 +14,9 @@ export default {
     minHeight: 750
   },
   appContent: {
-    width: 'calc(60vw - 40px)',
+    width: 'calc(60vw - 55px)',
     height: 'calc(100vh - 115px)',
-    overflowY: 'auto',
+    overflowY: 'hidden',
     marginLeft: 20,
     marginTop: 10
   },
