@@ -33,14 +33,20 @@ export default {
   mRoot: {
     extend: 'root',
     '& .common': {
-      color: 'red',
-      fontSize: 7,
+      color: 'white',
+      height: '25px',
+      padding: '0',
+      fontSize: 13,
       '& .icon': {
-        height: 14,
+        height: 15,
+        width: 15
       },
+      '& .TxtBold': {
+        marginLeft: '5px'
+      }
     },
     '& .TxtBold': {
-      color: 'red',
+      color: 'white',
       fontWeight: 'bold',
     },
   },
