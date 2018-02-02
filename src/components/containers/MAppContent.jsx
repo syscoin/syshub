@@ -36,7 +36,7 @@ class AppContent extends Component {
     return (
       <div style={mAppContentStyle.__container}>
         <Content style={mAppContentStyle.wraper}>
-          {/* 
+          {
             {
               home: <Home deviceType={deviceType} />,
               dashBoard: <DashBoard deviceType={deviceType} />,
@@ -47,9 +47,8 @@ class AppContent extends Component {
               masterNode: <MasternodeSetting deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
               register: <Register deviceType={deviceType} />
-            }[showPage] */}
-          <Login deviceType={deviceType} />,
-          <Register deviceType={deviceType} />
+            }[showPage]
+          }
         </Content>
       </div>
     );
