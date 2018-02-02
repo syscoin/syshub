@@ -58,6 +58,9 @@ export default {
           padding: '0px',
           minHeight: '28px',
         },
+        '& button:hover': {
+          backgroundColor: primaryLight
+        }
       },
     },
     '& button': {
