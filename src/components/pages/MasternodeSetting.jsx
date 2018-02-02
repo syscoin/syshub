@@ -18,24 +18,28 @@ class MasterNode extends Component {
         {
           key: 0,
           name: 'Mnode1',
-          address: '12.12.322.11.12123',
+          address:
+            '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
         },
         {
           key: 1,
           name: 'Mnode2',
-          address: '11.21.112.22.12345',
+          address:
+            'd5cc703fd3548d886445f9aba9f509a85ce0b918391052459aee292e98b8bb01-1'
         },
         {
           key: 2,
           name: 'Mnode3',
-          address: '13.21.332.52.55642',
+          address:
+            '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f-0'
         },
         {
           key: 3,
           name: 'Mnode4',
-          address: '22.44.132.12.00987',
-        },
-      ],
+          address:
+            'b794f039fd5e3f361f474580833412bc41a43bc1886ed060c077c0a2433cf0c-0'
+        }
+      ]
     };
 
     this.addNode = this.addNode.bind(this);
@@ -46,14 +50,14 @@ class MasterNode extends Component {
   addNode(masternode) {
     masternode.key = this.state.nodes.length + 1;
     this.setState({
-      nodes: [masternode, ...this.state.nodes],
+      nodes: [masternode, ...this.state.nodes]
     });
   }
 
   deleteNode(node) {
     let nodes = this.state.nodes.filter(obj => obj.key != node.key);
     this.setState({
-      nodes: [...nodes],
+      nodes: [...nodes]
     });
   }
 
@@ -65,7 +69,7 @@ class MasterNode extends Component {
       return obj;
     });
     this.setState({
-      nodes: [...nodes],
+      nodes: [...nodes]
     });
   }
   render() {

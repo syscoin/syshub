@@ -15,5 +15,10 @@ export default {
     '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
     '& .icon': { color: primary },
     '& .iconTxt': { color: primary },
+    '& .paper-container':{
+      padding: '0px 15px',
+      overflowY: 'auto',
+      height: '80vh',
+    }
   },
 };

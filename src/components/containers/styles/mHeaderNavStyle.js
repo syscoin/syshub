@@ -7,7 +7,7 @@ const white = palette.white;
 
 export default {
     mRoot: {
-        borderTop: 'thin solid '+ white,
+        borderTop: 'thin solid ' + white,
         marginTop: 25,
         '& .divider': {
             height: '100%',
@@ -15,15 +15,15 @@ export default {
         },
         '& .center-section': {
             textAlign: 'center',
-            borderLeft: 'thin solid '+ white,
-            borderRight: 'thin solid '+ white,
+            borderLeft: 'thin solid ' + white,
+            borderRight: 'thin solid ' + white,
             height: 70,
-            '& img':{
+            '& img': {
                 height: 50
             }
         },
-        '& button':{
+        '& button': {
             border: 'none'
         }
     }
-};
+}

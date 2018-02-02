@@ -24,7 +24,7 @@ export default {
     '& .statsCard': {
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
       padding: '0px !important',
-      margin: '25px',
+      // margin: '25px',
       textAlign: 'center',
       borderRadius: '10px',
     },
@@ -36,6 +36,7 @@ export default {
     '& .statsGridDiv': {
       width: '100%',
       justifyContent: 'space-between',
+      padding: '0 2%'
     },
     '& .statsTextHeading': {
       lineHeight: '2em',
@@ -49,7 +50,7 @@ export default {
     },
     '& .statsText': {
       color: 'rgb(189, 195, 199)',
-      padding: '10px 10px',
+      padding: '10px 0',
       fontSize: '1.4em',
       height: '100px',
     },
@@ -68,5 +69,15 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    marginBottom: '15% !important',
+    '& .statsCard': {
+      margin: '2%',
+      width: '45% !important'
+    },
+    '& .statsCard:last-child': {
+      margin: '2% 25%',
+    }
+  },
 };
