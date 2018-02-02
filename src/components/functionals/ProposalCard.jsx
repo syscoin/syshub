@@ -25,27 +25,18 @@ class ProposalCard extends Component {
   }
 
   voteUp(vote) {
-    const MNKEY = this.props.selectedMNKey;
-    const MNVIN = this.props.selectedVin;
     const { proposal, user } = this.props;
 
     if (!user) {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    if (!user.mnPrivateKey || !MNKEY) {
+    if (!user.mnPrivateKey) {
       swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
       return;
     }
 
-    const proposalVoteYes = {
-      mnPrivateKey: MNKEY,
-      vinMasternode: MNVIN,
-      gObjectHash: proposal.Hash,
-      voteOutcome: 1
-    };
-
-    checkVoted(MNKEY, proposal)
+    checkVoted(user, proposal)
       .then(value => {
         if (value) {
           swal({
@@ -56,20 +47,29 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          this.props
-            .voteOnProposal(proposalVoteYes)
-            .then(data => {
-              swal({ title: 'Success', text: `${data}`, icon: 'success' });
+          user.mnPrivateKey.map(mnObj => {
+            const proposalVoteYes = {
+              mnPrivateKey: mnObj.mnPrivateKey,
+              vinMasternode: mnObj.vinMasternode,
+              gObjectHash: proposal.Hash,
+              voteOutcome: 1
+            };
 
-              voted(MNKEY, proposal, 'Yes', 1);
-            })
-            .then(() => {
-              this.props.getProposals();
-            })
-            .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-            });
+            this.props
+              .voteOnProposal(proposalVoteYes)
+              .then(data => {
+                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+                voted(user, proposal, 'Yes', 1);
+              })
+              .catch(err => {
+                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              });
+          });
         }
+      })
+      .then(() => {
+        this.props.getProposals();
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -77,27 +77,18 @@ class ProposalCard extends Component {
   }
 
   voteDown(vote) {
-    const MNKEY = this.props.selectedMNKey;
-    const MNVIN = this.props.selectedVin;
     const { proposal, user } = this.props;
 
     if (!user) {
       swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
     }
 
-    if (!user.mnPrivateKey || !MNKEY) {
+    if (!user.mnPrivateKey) {
       swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
       return;
     }
 
-    const proposalVoteNo = {
-      mnPrivateKey: MNKEY,
-      vinMasternode: MNVIN,
-      gObjectHash: proposal.Hash,
-      voteOutcome: 2
-    };
-
-    checkVoted(MNKEY, proposal)
+    checkVoted(user, proposal)
       .then(value => {
         if (value) {
           swal({
@@ -108,20 +99,29 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          this.props
-            .voteOnProposal(proposalVoteNo)
-            .then(data => {
-              swal({ title: 'Success', text: `${data}`, icon: 'success' });
+          user.mnPrivateKey.map(mnObj => {
+            const proposalVoteNo = {
+              mnPrivateKey: mnObj.mnPrivateKey,
+              vinMasternode: mnObj.vinMasternode,
+              gObjectHash: proposal.Hash,
+              voteOutcome: 2
+            };
 
-              voted(MNKEY, proposal, 'No', 2);
-            })
-            .then(() => {
-              this.props.getProposals();
-            })
-            .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-            });
+            this.props
+              .voteOnProposal(proposalVoteNo)
+              .then(data => {
+                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+                voted(user, proposal, 'No', 2);
+              })
+              .catch(err => {
+                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              });
+          });
         }
+      })
+      .then(() => {
+        this.props.getProposals();
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });

@@ -15,57 +15,14 @@ import { DashBoardHeader, ProposalCard } from '../functionals/';
 export class ProposalList extends Component {
   constructor(props) {
     super(props);
-
-    this.selectMNKey = this.selectMNKey.bind(this);
-
-    this.state = {
-      selectedMNKey: null
-    };
-  }
-
-  selectMNKey(mnObj) {
-    this.setState({
-      selectedMNKey: mnObj.mnPrivateKey,
-      selectedVin: mnObj.vinMasternode
-    });
-  }
-
-  componentDidMount() {
-    if (this.props.currentUser) {
-      if (this.props.currentUser.mnPrivateKey) {
-        this.setState({
-          selectedMNKey: this.props.currentUser.mnPrivateKey[0].mnPrivateKey,
-          selectedVin: this.props.currentUser.mnPrivateKey[0].vinMasternode
-        });
-      }
-    }
   }
 
   render() {
     const { classes, selectProposal } = this.props;
-    const user = this.props.currentUser;
 
     return (
       <Grid md={12} style={proposalStyle.root}>
         <DashBoardHeader data={{ showHeader: 'proposalList' }} />
-        {user
-          ? user.mnPrivateKey
-            ? user.mnPrivateKey.map((mnObj, i) => {
-                return (
-                  <div>
-                    <button
-                      onClick={() => this.selectMNKey(mnObj)}
-                      style={
-                        mnObj.mnPrivateKey === this.state.selectedMNKey
-                          ? { backgroundColor: 'green' }
-                          : null
-                      }
-                    >{`MasterNode ${i + 1}`}</button>
-                  </div>
-                );
-              })
-            : null
-          : null}
 
         {this.props.proposalList.map(proposal => {
           return (
@@ -74,8 +31,6 @@ export class ProposalList extends Component {
               logged={this.props.user ? true : false}
               proposal={proposal}
               selectProposal={selectProposal}
-              selectedMNKey={this.state.selectedMNKey}
-              selectedVin={this.state.selectedVin}
             />
           );
         })}

@@ -24,11 +24,11 @@ const votes = fire.database().ref('votes');
 
 //Some useful functions
 
-const checkVoted = (MNKEY, proposal) => {
+const checkVoted = (user, proposal) => {
   return new Promise((resolve, reject) => {
     fire
       .database()
-      .ref('votes/' + MNKEY)
+      .ref('votes/' + user.uid)
       .child(proposal.Hash)
       .once('value')
       .then(snap => {
@@ -44,10 +44,10 @@ const checkVoted = (MNKEY, proposal) => {
   });
 };
 
-const voted = (MNKEY, proposal, voteTxt, voteId) => {
+const voted = (user, proposal, voteTxt, voteId) => {
   fire
     .database()
-    .ref('votes/' + MNKEY)
+    .ref('votes/' + user.uid)
     .child(proposal.Hash)
     .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
 };
