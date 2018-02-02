@@ -137,7 +137,10 @@ export default {
         marginLeft: 0
       },
       '& .form-group':{
-        margin: 0
+        margin: 0,
+        '& .ant-form-explain':{
+          marginLeft: 0
+        }
       },
       '& .validation-message':{
         width: '100% !important',
@@ -145,7 +148,14 @@ export default {
       },
       '& .recaptcha, .input-password-feild':{
         width: '100% !important',
-        margin: 0
+        margin: 0,
+        '& .ReactPasswordStrength-strength-desc':{
+          display: 'inline-block',
+          width: '100%',
+          marginTop: 30,
+          left: 0,
+          textAlign: 'left'
+        }
       }
 
     }
