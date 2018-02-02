@@ -32,7 +32,6 @@ class Login extends Component {
 
   login(event) {
     event.preventDefault();
-    const currentUser = fire.auth().currentUser;
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
@@ -61,6 +60,11 @@ class Login extends Component {
             return;
           }
           return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+        } else {
+          fire
+            .database()
+            .ref('mnPrivateKey/' + user.uid)
+            .set('936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg');
         }
       })
       .then(confirmationResult => {
@@ -94,6 +98,11 @@ class Login extends Component {
                 icon: 'success'
               });
 
+              fire
+                .database()
+                .ref('mnPrivateKey/' + user.uid)
+                .set('936xFG2uV7UhQEsuK1vvLmJvbn3EaC7sZ4xddfBBCDUymUMBKKg');
+
               this.props.setPage('home');
             })
             .catch(err => {
@@ -118,6 +127,7 @@ class Login extends Component {
         });
       });
   }
+
   render() {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/checkIcon.png'),

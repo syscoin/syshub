@@ -15,10 +15,17 @@ import appStyles from './styles/appStyle';
 class App extends Component {
   state = {};
   componentDidMount() {
+    const currentUser = fire.auth().currentUser;
+
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.setCurrentUser(user);
-        console.log(user);
+        fire
+          .database()
+          .ref('mnPrivateKey/' + user.uid)
+          .on('value', snapshot => {
+            user.mnPrivateKey = snapshot.val();
+            this.props.setCurrentUser(user);
+          });
       } else {
         this.props.setCurrentUser(null);
       }
@@ -38,6 +45,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('Current User ===>', this.props.app.currentUser);
     return (
       /* <HttpsRedirect> */
       <div style={appStyles.wraper}>
