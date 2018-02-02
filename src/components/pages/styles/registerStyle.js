@@ -21,29 +21,55 @@ export default {
       boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
       '& .form-group': {
         flexDirection: 'row',
-        marginTop: '10px'
+        marginTop: '10px',
+        '& .ant-form-explain': {
+          marginLeft: 185,
+          marginTop: 5
+        }
       },
       '& .label': {
         width: '20%',
         display: 'inline-block',
         textAlign: 'right',
         fontSize: '15px',
-        marginTop: '15px',
         color: primary,
         paddingRight: '10px'
       },
       '& .input-field': {
         width: 'calc(45% - 20px)',
-        margin: '10px 10px 0px ,10px',
+        margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
-        padding: '10px',
+        padding: '6px',
+        '&::before': {
+          backgroundColor: 'transparent'
+        }
+      },
+      '& .input-password-feild': {
+        width: 'calc(45% - 20px)',
+        margin: '10px 10px 0px 10px',
+        display: 'inline-block',
+        border: 'thin solid ' + greyLight,
+        padding: '9px 10px',
+        '& .ReactPasswordStrength-input': {
+          padding: 0
+        },
+        '& .ReactPasswordStrength-strength-desc': {
+          marginRight: -100,
+          textTransform: 'capitalize',
+          padding: '7px 12px',
+          width: '40%',
+          fontStyle: 'normal'
+        },
         '&::before': {
           backgroundColor: 'transparent'
         }
       },
       '& .recaptcha': {
-        marginLeft: 10
+        marginLeft: 10,
+        width: '78%',
+        display: 'inline-block',
+        float: 'right'
       },
       '& .validation-message': {
         width: '35%',
@@ -69,7 +95,7 @@ export default {
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
-        '&>button': {
+        '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
           margin: '0 10px',
           borderRadius: 10,
