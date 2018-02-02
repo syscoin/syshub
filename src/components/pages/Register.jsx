@@ -291,7 +291,7 @@ class Register extends Component {
                 help={email || ''}
               >
                 <span htmlFor="user-email" className="label">
-                  {`Email: `}verify
+                  {`Email: `}
                 </span>
                 {getFieldDecorator('email', {
                   rules: [
@@ -371,7 +371,7 @@ class Register extends Component {
                 help={confirmPassword || ''}
               >
                 <span htmlFor="confirm-password" className="label">
-                  Confirm Password:{' '}
+                  Confirm Password:
                 </span>
                 {getFieldDecorator('confirm', {
                   rules: [
