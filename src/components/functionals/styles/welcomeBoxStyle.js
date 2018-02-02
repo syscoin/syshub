@@ -53,5 +53,15 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    "& .Paper": {
+      marginTop: '100px',
+      padding: '30px'
+    },
+    '& .joinBtn': {
+      textAlign: 'center !important'
+    },
+
+  },
 };

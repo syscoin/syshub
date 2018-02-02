@@ -12,7 +12,7 @@ class MasterNodeAdd extends Component {
     super(props);
 
     this.state = {
-      newNode: {},
+      newNode: {}
     };
 
     this.addNode = this.addNode.bind(this);
@@ -37,8 +37,8 @@ class MasterNodeAdd extends Component {
     this.setState({
       newNode: {
         ...this.state.newNode,
-        [e.target.name]: e.target.value,
-      },
+        [e.target.name]: e.target.value
+      }
     });
   }
 
@@ -92,7 +92,7 @@ class MasterNodeAdd extends Component {
                   id="address"
                   name="address"
                   className="input-field"
-                  placeholder="123.45.67.891.12345"
+                  placeholder="enter a valid address"
                   value={this.state.newNode.address}
                   onChange={this.onChange}
                 />

@@ -15,6 +15,8 @@ export default {
     '& .faqs-div': {
       background: white,
       padding: '20px 20px 0px 20px',
+      overflowY: 'auto',
+      height: '80vh',
       '& .search-question': {
         width: '30%',
         border: '1px solid ' + greyDark,
@@ -54,7 +56,7 @@ export default {
       '& .ant-collapse-content-box': {
         paddingLeft: 25,
       },
-      '& .getting-started': {
+      '& .faq-category': {
         '& .ant-collapse-content-box': {
           paddingLeft: 0,
           position: 'relative',
@@ -80,162 +82,6 @@ export default {
           marginTop: 0
         }
       },
-      '& .general': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      },
-      '& .tutorials': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      },
-      '& .alises': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      },
-      '& .market-place': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      },
-      '& .digital-certificates': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      },
-      '& .encrypted-messaging': {
-        '& .ant-collapse-content-box': {
-          paddingLeft: 0,
-          position: 'relative',
-          '& .ant-collapse-header': {
-            color: greyDark,
-            marginLeft: 40,
-          },
-          '& .ant-collapse-item': {
-            borderBottom: 'none',
-            position: 'relative',
-          },
-          '& .list-dot': {
-            position: 'relative',
-            height: 12,
-            width: 12,
-            background: primary,
-            top: 28,
-            borderRadius: '50%',
-            left: 20,
-          }
-        },
-        '& .ant-collapse-borderless': {
-          marginTop: 0
-        }
-      }
     }
   },
 };
