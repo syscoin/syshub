@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import actions from '../../redux/actions';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { fire } from '../../firebase';
+import { fire } from '../../API/firebase';
 import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components

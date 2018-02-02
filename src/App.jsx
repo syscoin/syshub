@@ -8,7 +8,7 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { DesktopLayout, MobileLayout } from './components/layouts';
 
 import actions from './redux/actions';
-import { fire } from './firebase';
+import { fire } from './API/firebase';
 
 import appStyles from './styles/appStyle';
 
@@ -39,22 +39,22 @@ class App extends Component {
   render() {
     return (
       /* <HttpsRedirect> */
-        <div style={appStyles.wraper}>
-          <Platform rules={{ DeviceType: undefined }}>
-            <DesktopLayout />
-            <h1
-              style={{
-                color: 'white',
-                zIndex: '10000',
-              }}
-            >
-              {this.state.timer}
-            </h1>
-          </Platform>
-          <Platform rules={{ DeviceType: 'mobile' }}>
-            <MobileLayout />
-          </Platform>
-        </div>
+      <div style={appStyles.wraper}>
+        <Platform rules={{ DeviceType: undefined }}>
+          <DesktopLayout />
+          <h1
+            style={{
+              color: 'white',
+              zIndex: '10000'
+            }}
+          >
+            {this.state.timer}
+          </h1>
+        </Platform>
+        <Platform rules={{ DeviceType: 'mobile' }}>
+          <MobileLayout />
+        </Platform>
+      </div>
       /* </HttpsRedirect> */
     );
   }
@@ -62,7 +62,7 @@ class App extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
@@ -70,7 +70,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
-    getMediumPosts: () => dispatch(actions.getMediumPosts()),
+    getMediumPosts: () => dispatch(actions.getMediumPosts())
   };
 };
 
