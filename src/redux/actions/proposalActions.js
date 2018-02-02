@@ -6,7 +6,7 @@ export default {
   getProposals: () => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.get('http://159.89.141.35:3000/list', null, constants.SYS_PROPOSALS_GET)
+        HTTPAsync.get('http://159.89.151.42:3000/list', null, constants.SYS_PROPOSALS_GET)
       );
     };
   },
@@ -14,7 +14,7 @@ export default {
   checkProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post('159.89.141.35:3000/check', params, constants.SYS_PROPOSALS_CHECK)
+        HTTPAsync.post('http://159.89.151.42:3000/check', params, constants.SYS_PROPOSALS_CHECK)
       );
     };
   },
@@ -22,7 +22,7 @@ export default {
   prepareProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post('159.89.141.35:3000/prepare', params, constants.SYS_PROPOSALS_PREPARE)
+        HTTPAsync.post('http://159.89.151.42:3000/prepare', params, constants.SYS_PROPOSALS_PREPARE)
       );
     };
   },
@@ -30,7 +30,7 @@ export default {
   submitProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post('159.89.141.35:3000/submit', params, constants.SYS_PROPOSALS_SUBMIT)
+        HTTPAsync.post('http://159.89.151.42:3000/submit', params, constants.SYS_PROPOSALS_SUBMIT)
       );
     };
   },
@@ -38,7 +38,7 @@ export default {
   voteOnProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post('http://159.89.141.35:3000/vote', params, constants.SYS_PROPOSAL_VOTE)
+        HTTPAsync.post('http://159.89.151.42:3000/vote', params, constants.SYS_PROPOSAL_VOTE)
       );
     };
   }

@@ -59,6 +59,9 @@ class ProposalCard extends Component {
 
               voted(user, proposal, 'Yes', 1);
             })
+            .then(() => {
+              this.props.getProposals();
+            })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
@@ -99,6 +102,9 @@ class ProposalCard extends Component {
               swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
               voted(user, proposal, 'No', 2);
+            })
+            .then(() => {
+              this.props.getProposals();
             })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -196,7 +202,10 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return { voteOnProposal: params => dispatch(actions.voteOnProposal(params)) };
+  return {
+    voteOnProposal: params => dispatch(actions.voteOnProposal(params)),
+    getProposals: () => dispatch(actions.getProposals())
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));

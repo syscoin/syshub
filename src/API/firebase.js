@@ -161,6 +161,15 @@ const doUpdateProfile = (user, callback) => {
         })
         .catch(err => callback(err));
     }
+
+    if (user.photoURL) {
+      currentUser
+        .updateProfile({ photoURL: user.photoURL })
+        .then(() => {
+          callback(null, currentUser);
+        })
+        .catch(err => callback(err));
+    }
   }
 };
 

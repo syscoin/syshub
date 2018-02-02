@@ -17,7 +17,9 @@ class UserProfile extends Component {
     super(props);
 
     this.state = {
-      disabled: false
+      disabled: false,
+      image: null,
+      imageFile: null
     };
 
     this.submitProfile = this.submitProfile.bind(this);
@@ -27,13 +29,59 @@ class UserProfile extends Component {
   submitProfile() {
     const username = this.registerName.value;
     const email = this.registerEmail.value;
+    const image = this.state.imageFile;
     let updatedUser = {};
     updatedUser.username = username ? username : null;
     updatedUser.email = email ? email : null;
 
-    this.props.onUpdateProfile(updatedUser);
-    this.registerName.value = '';
-    this.registerEmail.value = '';
+    if (email || username || image) {
+      if (image != null) {
+        const fileName = this.state.imageFile.name;
+        const file = this.state.imageFile;
+        const uploadTask = fire
+          .storage()
+          .ref('/avatars/' + fileName)
+          .put(file);
+
+        uploadTask.on(
+          'state_changed',
+          function(snapshot) {
+            const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+            console.log('Upload is ' + progress + '% done');
+          },
+          function(error) {
+            switch (error.code) {
+              case 'storage/unauthorized':
+                // User doesn't have permission to access the object
+                alert('Permission denied');
+                break;
+
+              case 'storage/canceled':
+                // User canceled the upload
+                alert('User canceled the upload');
+                break;
+
+              case 'storage/unknown':
+                // Unknown error occurred, inspect error.serverResponse
+                alert('Unknown error occurred');
+                break;
+            }
+          },
+          () => {
+            const downloadURL = uploadTask.snapshot.downloadURL;
+            updatedUser.photoURL = downloadURL;
+            this.props.onUpdateProfile(updatedUser);
+            this.registerName.value = '';
+            this.registerEmail.value = '';
+          }
+        );
+
+        return;
+      }
+      this.props.onUpdateProfile(updatedUser);
+      this.registerName.value = '';
+      this.registerEmail.value = '';
+    }
   }
 
   checkUsername(event) {
@@ -66,28 +114,53 @@ class UserProfile extends Component {
       });
     }
   }
+  // upload profile image function
+  onImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = e => {
+        this.setState({ image: e.target.result, imageFile: file });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    console.log(this.state.image, 'state image');
+  }
 
   render() {
-    const { classes } = this.props;
-    const avatar = require('../../assets/img/no-user-image.gif');
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
+    const avatar = this.props.currentUser.photoURL || require('../../assets/img/no-user-image.gif');
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Grid container>
           {/* profile text */}
           <Grid md={12}>
             <h1 className="profile-heading">Profile</h1>
           </Grid>
+
           {/* profile image grid */}
           <Grid md={3} className="profile-image-grid">
             <div className="avatar-container upload-image-container">
-              {/* <input type="file"/> */}
-              <img src={avatar} alt="no user image" className="user-image" />
+              {this.state.image === null ? (
+                <img src={avatar} alt="no user image" className="user-image" />
+              ) : (
+                <img src={this.state.image} alt="no user image" className="user-image" />
+              )}
             </div>
             <span className="change-photo-btn upload-image-container">
-              {/* <input type="file"/> */}
+              <input
+                type="file"
+                onChange={this.onImageChange.bind(this)}
+                className="filetype"
+                id="group_image"
+              />
               <a className="link-color"> click to change photo</a>
             </span>
           </Grid>
+
           {/* profile credential grid */}
           <Grid md={9} className="profile-credential-grid">
             {/* For User Name */}
@@ -141,7 +214,9 @@ class UserProfile extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    currentUser: state.app.currentUser
+  };
 };
 
 const dispatchToProps = dispatch => {

@@ -18,6 +18,7 @@ class App extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.setCurrentUser(user);
+        console.log(user);
       } else {
         this.props.setCurrentUser(null);
       }
