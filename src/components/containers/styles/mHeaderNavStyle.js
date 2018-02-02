@@ -6,12 +6,14 @@ const primaryLight = palette.primaryLight;
 const white = palette.white;
 
 export default {
-    mRoot: {
-        '& .divider': {
-            height: '100%'
-        },
-        '& .align-center': {
-            textAlign: 'center',
-        },
+  mRoot: {
+    '& .divider': {
+      height: '100%',
+      borderLeft: `1px solid ${primaryDark}`,
+      borderRight: `1px solid ${primaryLight}`
+    },
+    '& .align-center': {
+      textAlign: 'center'
     }
+  }
 };

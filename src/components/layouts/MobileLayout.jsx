@@ -31,7 +31,7 @@ class MobileLayout extends Component {
     const { classes, app } = this.props;
     return (
       <div className={classes.root}>
-        {/* <MAppHeader /> */}
+        <MAppHeader />
         <MAppContent />
         <MAppFooter />
       </div>
