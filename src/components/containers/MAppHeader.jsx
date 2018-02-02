@@ -51,7 +51,6 @@ class AppHeader extends Component {
                       </Button>}
                   </Grid>
                 </Grid>
-                <Divider className="hdivider mb-0" />
                 <MHeaderNav />
               </div>
             </Toolbar>

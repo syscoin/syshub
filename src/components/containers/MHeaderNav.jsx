@@ -75,12 +75,12 @@ class MHeaderNav extends Component {
         this.itemClick = this.itemClick.bind(this);
     }
 
-    itemClick (e) {
+    itemClick(e) {
         console.log(e.target.id);
         this.props.setPage(e.target.id);
     }
 
-    render () {
+    render() {
         const { classes, deviceType } = this.props;
         //Platform style switcher
         const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -100,25 +100,19 @@ class MHeaderNav extends Component {
         );
         return (
             <Grid container className={style}>
-                <Grid item xs={2}>
-
+                <Grid item xs={3} className="left-section">
                     <Dropdown overlay={menu} placement="bottomRight">
-                        <IconButton
-                            color="inherit"
-                            aria-label="Menu"
-
-                        >
+                        <IconButton color="inherit" aria-label="Menu">
                             <Icon type="bars" className="menu-icon" />
                         </IconButton>
                     </Dropdown>
-
                 </Grid>
-                <Grid item xs={6} className="align-center">
-                    <Divider type="vertical" className="divider" />
+                
+                <Grid item xs={6} className="center-section" >
                     <img alt="a" src={logo} height="35px" width="100px" />
                 </Grid>
-                <Grid item xs={4}>
-                    <Divider type="vertical" className="divider" />
+                
+                <Grid item xs={3} className="right-section">
                     <Button
                         size={'large'}
                         type="primary"

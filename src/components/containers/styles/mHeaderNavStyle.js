@@ -7,11 +7,23 @@ const white = palette.white;
 
 export default {
     mRoot: {
+        borderTop: 'thin solid '+ white,
+        marginTop: 25,
         '& .divider': {
-            height: '100%'
+            height: '100%',
+            margin: 0
         },
-        '& .align-center': {
+        '& .center-section': {
             textAlign: 'center',
+            borderLeft: 'thin solid '+ white,
+            borderRight: 'thin solid '+ white,
+            height: 70,
+            '& img':{
+                height: 50
+            }
         },
+        '& button':{
+            border: 'none'
+        }
     }
 };
