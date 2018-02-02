@@ -88,18 +88,18 @@ class Register extends Component {
 
 
   // specifying your onload callback function
-  callback() {
+  callback () {
     console.log('Recaptcha onLoad CallBack: Done!!!!');
   }
 
   // specifying verify callback function
-  verifyCallback(response) {
+  verifyCallback (response) {
     console.log('Recaptcha Verify CallBack: ', response);
     this.setState({ verify: response })
     console.log(this.verify, "captcha verify")
   }
 
-  checkUsername(event) {
+  checkUsername (event) {
     if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
         title: 'Oops...',
@@ -134,7 +134,7 @@ class Register extends Component {
     }
   }
 
-  register(event) {
+  register (event) {
     event.preventDefault();
     if (this.state.disabled) {
       swal({
@@ -207,7 +207,7 @@ class Register extends Component {
       });
   }
 
-  render() {
+  render () {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
@@ -232,10 +232,10 @@ class Register extends Component {
       isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
-      <Grid container className={style} md={12}>
+      <Grid container className={style} md={12} xs={12}>
         <h1 className="title">Join SysHub</h1>
-        <Grid item md={12} className="form__container">
-          <Form
+        <Grid item md={12} xs={12} className="form__container">
+          <form
             ref={form => {
               this.registerForm = form;
             }}
@@ -248,6 +248,7 @@ class Register extends Component {
               item
               lg={{ size: 8, offset: 2 }}
               md={{ size: 10, offset: 1 }}
+              xs={12}
               justify="center"
             >
               {/* For User Name */}
@@ -409,7 +410,7 @@ class Register extends Component {
                 </span>
                 <div className="recaptcha">
                   <Recaptcha
-                    style={{ marginLeft: '10px' }}
+                    style={{ marginLeft: '10px', width: '20px' }}
                     id="captcha"
                     sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
@@ -452,13 +453,13 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   //pass the providers
   return {};
 }
 
 /* Map Actions to Props */
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     setPage: page => dispatch(actions.setPage(page)),
   };

@@ -112,5 +112,17 @@ export default {
     }
 
   },
-
+  mRoot: {
+    extend: 'root',
+    marginTop: '100px',
+    '& .input-field': {
+      width: '62% !important'
+    },
+    '& .label': {
+      marginTop: '10px !important'
+    },
+    '& .form__container': {
+      marginBottom: '100px'
+    }
+  }
 };

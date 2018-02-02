@@ -34,7 +34,7 @@ export default {
         border: 'thin solid ' + greyLight,
         padding: '10px',
         marginTop: '10px',
-        '&::before':{
+        '&::before': {
           backgroundColor: 'transparent'
         }
       },
@@ -58,14 +58,14 @@ export default {
         }
       }
       ,
-      '& .terms-of-condition  ':{
+      '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid'
       },
-      '& .form-button-group':{
+      '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
-        '&>button':{
+        '&>button': {
           backgroundColor: primary,
           margin: '0 10px',
           borderRadius: 10,
@@ -76,11 +76,17 @@ export default {
         }
       }
     },
-    '& .title':{
+    '& .title': {
       display: "inline-block",
       fontWeight: 'lighter'
     }
 
   },
-
+  mRoot: {
+    extend: 'root',
+    marginTop: '100px',
+    '& .input-field': {
+      width: '62% !important'
+    },
+  }
 };
