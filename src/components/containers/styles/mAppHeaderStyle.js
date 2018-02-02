@@ -20,9 +20,25 @@ export default {
       padding: '0 0 0 0'
     },
     '& .hdivider ': {
-      width: '110%',
+      width: '100%',
       borderTop: `1px solid ${primaryDark}`,
       borderBottom: `1px solid ${primaryLight}`
+    },
+    '& .name-header': {
+      textAlign: 'right',
+      '& .btn': {
+        textTransform: 'capitalize',
+        '& .text': {
+          color: white
+        }
+      }
+    },
+    '& .mb-0': {
+      marginBottom: 0
+    },
+    '& .menu-icon': {
+      color: white,
+      fontSize: '32px'
     }
   }
 };
