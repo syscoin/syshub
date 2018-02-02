@@ -90,13 +90,28 @@ export default {
     extend: 'root',
     marginTop: '100px',
     '& .input-field': {
-      width: '62% !important'
+      width: '100% !important'
     },
     '& .label': {
       marginTop: '10px !important'
     },
     '& .form__container': {
-      marginBottom: '100px'
+      marginBottom: '100px',
+      '& .label':{
+        width: '100%',
+        marginBottom: 10,
+        textAlign: 'left'
+      },
+      '& .validation-message':{
+        width: '100%'
+      },
+      '& .recaptcha':{
+        marginLeft: 0
+      },
+      '& .form-group':{
+        marginTop: 0
+      }
+
     }
   }
 };
