@@ -22,10 +22,8 @@ import newsDetailStyle from './newsDetailStyle';
 import newsAboutStyle from './newsAboutStyle';
 import newsFooterStyle from './newsFooterStyle';
 import newsHeaderStyle from './newsHeaderStyle';
-import masternodeAddStyle from "./masternodeAddStyle";
-import masternodeListStyle from "./masternodeListStyle";
-
-
+import masternodeAddStyle from './masternodeAddStyle';
+import masternodeListStyle from './masternodeListStyle';
 
 export {
   palette,
@@ -53,5 +51,5 @@ export {
   newsFooterStyle,
   newsHeaderStyle,
   masternodeAddStyle,
-  masternodeListStyle
+  masternodeListStyle,
 };

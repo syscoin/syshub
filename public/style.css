@@ -4,3 +4,9 @@ html *:not(i) {
   font-family: 'Roboto', sans-serif !important;
   color: #464745;
 }
+.ant-dropdown {
+  z-index: 9999 !important
+}
+.ant-dropdown .no-border{
+  border: none
+}

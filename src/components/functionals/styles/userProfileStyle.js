@@ -36,13 +36,14 @@ export default {
         '& .link-color': {
           color: primary,
           fontWeight: '100',
+          cursor:'pointer'
         },
       },
       '& .upload-image-container': {
         overflow: 'hidden',
         position: 'relative',
         '& input[type=file]': {
-          cursor: 'inherit',
+          cursor: 'pointer',
           display: 'block',
           fontSize: 999,
           filter: 'alpha(opacity=0)',
@@ -104,4 +105,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

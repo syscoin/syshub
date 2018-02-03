@@ -12,11 +12,13 @@ import { newsFooterStyle } from './styles';
 import { Stats, WelcomeBox } from '../functionals';
 class NewsFooter extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>
-        <Grid container className={classes.root}>
+        <Grid container className={style}>
           <Grid item md={6}>
             <div className="info">
               <Button
@@ -30,20 +32,6 @@ class NewsFooter extends Component {
               </Button>
             </div>
           </Grid>
-          {/* <Grid item md={6}> 
-            <Avatar shape="square" size="large" src="http://sinopale.org/wp-content/themes/arras-theme/images/thumbnail.png" className={classes.thumbnil}/>
-            <div className="info">
-              <div> <h1 className="title"> Jan 1, 2018 - <span className="sub-title">Header Title 1</span> </h1> </div>
-              <Button className="previous" size='large'> <Icon type="double-left" />Previous Article </Button>
-            </div>
-          </Grid> */}
-          {/* <Grid item md={6}> 
-          <Avatar shape="square" size="large" src="http://sinopale.org/wp-content/themes/arras-theme/images/thumbnail.png" className={classes.thumbnil}/>
-          <div className="info">
-            <div> <h1 className="title"> Jan 1, 2018 - <span className="sub-title">Header Title 2</span> </h1> </div>
-            <Button size='large'>Next Article <Icon type="double-right" /></Button>
-          </div>
-        </Grid> */}
         </Grid>
       </div>
     );

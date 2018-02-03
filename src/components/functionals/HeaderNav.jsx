@@ -26,7 +26,10 @@ class HeaderNav extends Component {
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const { currentUser } = this.props.app;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const homeIcon = require('../../assets/img/png_menu_home.png');
@@ -59,9 +62,7 @@ class HeaderNav extends Component {
             >
               <img src={homeIcon} height="30" alt="home icon" />
             </Button>
-            <Button size={'large'} type="primary" ghost className="button">
-              <img src={contactIcon} height="30" alt="contact icon" />
-            </Button>
+
             {currentUser ? (
               <Button
                 size="large"

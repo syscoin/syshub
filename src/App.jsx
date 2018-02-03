@@ -39,6 +39,18 @@ class App extends Component {
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
     this.props.getMediumPosts();
+    this.props.platformGet({
+      os: Platform.OS || '',
+      osVersion: Platform.OSVersion || '',
+      browser: Platform.Browser || '',
+      browserVersion: Platform.BrowserVersion || '',
+      engine: Platform.Engine || '',
+      cpu: Platform.CPU || '',
+      deviceType: Platform.DeviceType || 'desktop',
+      deviceModel: Platform.DeviceModel || '',
+      deviceVendor: Platform.DeviceVendor || '',
+      ua: Platform.UA || ''
+    });
   }
 
   componentWillUnmount() {
@@ -84,7 +96,8 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
-    getMediumPosts: () => dispatch(actions.getMediumPosts())
+    getMediumPosts: () => dispatch(actions.getMediumPosts()),
+    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
   };
 };
 

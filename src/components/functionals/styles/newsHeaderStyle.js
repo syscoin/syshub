@@ -40,6 +40,7 @@ export default {
         fontWeight: 100,
       },
       '& .author': {
+        margin: '0px 10px',
         '& .info': {
           display: 'inline-block',
           width: 'calc(100% - 100px)',
@@ -47,6 +48,7 @@ export default {
           marginTop: 20,
           verticalAlign: 'super',
           color: greyDark,
+          margin: '0px 15px',
           '& .date': {
             color: greyDark,
             marginBottom: 0,
@@ -58,4 +60,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

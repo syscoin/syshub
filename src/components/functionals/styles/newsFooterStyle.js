@@ -42,8 +42,5 @@ export default {
       },
     },
   },
-  thumbnil: {
-    height: 80,
-    width: 80,
-  },
+  mRoot: { extend: 'root' },
 };

@@ -129,7 +129,9 @@ class ProposalCard extends Component {
   }
 
   render() {
-    const { classes, selectProposal, user, proposal } = this.props;
+    const { classes, selectProposal, user, proposal, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const docIcon = require('../../assets/img/png_stats_propposal_votes.png');
     const voteUpIcon = require('../../assets/img/png_button_up.png');
@@ -139,7 +141,7 @@ class ProposalCard extends Component {
     const progress = parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
-      <Grid container className={classes.proposalRoot}>
+      <Grid container className={style}>
         <Grid container md={12} className="proposalRow" key={proposal.Hash}>
           <Grid item md={2} className="proposalView">
             <Progress
@@ -151,17 +153,18 @@ class ProposalCard extends Component {
               status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">{proposal.YesCount + 30}</span>
+              <span className={ progress < 35 ? "proposalStatusExecptionNo" : progress < 100 ? "proposalStatusActiveNo" : "proposalStatusSuccessNo" }>
+                {proposal.YesCount + 30}
+              </span>
               {` / `}
               {this.props.totalNodes.toFixed(0)}
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
-            {/* <button className={proposal.active ? "activeVoteButton" : "voteButton"}> Vote on Proposal </button> */}
-            {/* <Button className={ proposal.active ? 'activeVoteButton' : 'voteButton' }>
-                  Vote on Proposal
-                </Button> */}
-            <h1 className="proposalHeading" onClick={() => selectProposal(proposal.Hash)}>
+            <h1
+              className="proposalHeading"
+              onClick={() => selectProposal(proposal.Hash)}
+            >
               {proposal.DataString[0][1].name ? (
                 proposal.DataString[0][1].name.split('\n', 1)[0]
               ) : (

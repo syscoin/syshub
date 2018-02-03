@@ -11,20 +11,22 @@ import PropTypes from 'prop-types';
 import { welcomeBoxStyle } from './styles';
 
 class WelcomeBox extends Component {
-  render() {
-    const classes = this.props.classes;
+  render () {
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const logo = require('../../assets/img/png_logo.png');
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <Paper className="Paper" elevation={4}>
           <GridList cols={5}>
-            <GridListTile cols={2} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 2} style={{ height: '100%' }}>
               <div className="logoDiv">
                 <img alt="a" src={logo} />
               </div>
             </GridListTile>
-            <GridListTile cols={3} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 3} style={{ height: '100%' }}>
               <h1 className="heading">Advertisement Text here</h1>
               <Divider />
               <div className="addvertiseText">
@@ -53,7 +55,7 @@ class WelcomeBox extends Component {
             </div>
           )}
         </Paper>
-      </div>
+      </div >
     );
   }
 }

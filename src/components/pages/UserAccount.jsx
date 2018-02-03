@@ -70,10 +70,19 @@ class UserAccount extends Component {
       <div className={classes.root}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
-          <UserProfile onUpdateProfile={this.updateProfile} />
-          <UserChangePsw onUpdatePassword={this.updatePassword} />
-          <UserTwoFactor />
-          <UserDelete onDeleteProfile={this.deleteProfile} />
+          <UserProfile
+            deviceType={this.props.deviceType}
+            onUpdateProfile={this.updateProfile}
+          />
+          <UserChangePsw
+            deviceType={this.props.deviceType}
+            onUpdatePassword={this.updatePassword}
+          />
+          <UserTwoFactor deviceType={this.props.deviceType} />
+          <UserDelete
+            deviceType={this.props.deviceType}
+            onDeleteProfile={this.deleteProfile}
+          />
         </Paper>
       </div>
     );

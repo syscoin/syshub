@@ -9,7 +9,7 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 
 export default {
-  proposalRoot: {
+  root: {
     height: '100%',
     marginTop: 20,
     '& .proposalRow': {
@@ -39,8 +39,14 @@ export default {
           marginTop: '10px',
         },
         '& .proposalStatusActiveNo': {
-          color: 'red',
+          color: '#1890ff',
         },
+        '& .proposalStatusExecptionNo':{
+          color: 'red'
+        },
+        '& .proposalStatusSuccessNo':{
+          color: '#2ecc71'
+        }
       },
       '& .proposalInfoView': {
         borderRight: '1px solid ' + gray,
@@ -166,4 +172,5 @@ export default {
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

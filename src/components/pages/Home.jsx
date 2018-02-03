@@ -6,14 +6,15 @@ import actions from '../../redux/actions';
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 class Home extends Component {
-  render() {
+  render () {
     return (
       <div>
         <WelcomeBox
           onJoin={() => this.props.setPage('register')}
           logged={this.props.logged}
+          deviceType={this.props.deviceType}
         />
-        <Stats />
+        <Stats deviceType={this.props.deviceType} />
       </div>
     );
   }
