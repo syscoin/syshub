@@ -116,13 +116,48 @@ export default {
     extend: 'root',
     marginTop: '100px',
     '& .input-field': {
-      width: '62% !important'
+      width: '100% !important',
+      margin: '0px !important'
     },
     '& .label': {
       marginTop: '10px !important'
     },
     '& .form__container': {
-      marginBottom: '100px'
+      marginBottom: '100px',
+      '& .label':{
+        width: '100%',
+        marginBottom: 10,
+        textAlign: 'left'
+      },
+      '& .validation-message':{
+        width: '100%',
+        marginTop: '0px !important'
+      },
+      '& .recaptcha':{
+        marginLeft: 0
+      },
+      '& .form-group':{
+        margin: 0,
+        '& .ant-form-explain':{
+          marginLeft: 0
+        }
+      },
+      '& .validation-message':{
+        width: '100% !important',
+        margin: '0px !important'
+      },
+      '& .recaptcha, .input-password-feild':{
+        width: '100% !important',
+        margin: 0,
+        '& .ReactPasswordStrength-strength-desc':{
+          display: 'inline-block',
+          width: '100%',
+          marginTop: 30,
+          left: 0,
+          textAlign: 'left'
+        }
+      }
+
     }
   }
 };

@@ -269,19 +269,15 @@ class Register extends Component {
                   />
                 )}
 
+                {this.state.usernames?
                 <span className="validation-message">
                   <div style={this.state.disabled ? { color: 'red' } : null}>
-                    {this.state.usernames &&
-                      (!this.state.disabled ? (
-                        <img alt="a" src={checkIcon} />
-                      ) : (
-                        <img alt="a" src={closeIcon} />
-                      ))}
+                    {!this.state.disabled ? <img alt="a" src={checkIcon} /> : <img alt="a" src={closeIcon} />}
                     {this.state.usernames}
-                    {this.state.usernames &&
-                      (this.state.disabled ? ` Not Available` : ` Available`)}
+                    {this.state.disabled ? ` Not Available` : ` Available`}
                   </div>
-                </span>
+                </span>:null}
+                
               </FormItem>
 
               {/* For User Email */}
