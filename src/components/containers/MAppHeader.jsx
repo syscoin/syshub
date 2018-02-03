@@ -11,6 +11,12 @@ import Button from 'material-ui/Button';
 import { Layout, Divider } from 'antd';
 import injectSheet from 'react-jss';
 
+//API functions
+import { doLogout } from '../../firebase';
+
+//ReduxActions
+import actions from '../../redux/actions';
+
 //import components
 import { HeaderStats } from '../functionals';
 import { Grid } from 'material-ui';
@@ -22,10 +28,17 @@ import { mAppHeaderStyle } from './styles';
 const { Header } = Layout;
 
 class AppHeader extends Component {
-  render () {
+  doLogout() {
+    const { currentUser } = this.props.app;
+    if (currentUser) {
+      doLogout();
+      this.props.doLogout();
+    }
+  }
+  render() {
     const { classes, deviceType } = this.props;
     const { currentUser } = this.props.app;
-    console.log("AaaaaaaAAAAAAAAAAAAAAAAAA", this.props)
+    console.log('AaaaaaaAAAAAAAAAAAAAAAAAA', this.props);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -40,15 +53,18 @@ class AppHeader extends Component {
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
                   <Grid item xs={6} className="name-header">
-                    {currentUser ?
-                      <Button className="btn">
+                    {currentUser ? (
+                      <Button className="btn" onClick={() => this.doLogout()}>
                         <span className="text">Logout</span>
                       </Button>
-                      :
-                      <Button className="btn">
+                    ) : (
+                      <Button
+                        className="btn"
+                        onClick={() => this.props.setPage('login')}
+                      >
                         <span className="text">Login</span>
-
-                      </Button>}
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
                 <MHeaderNav />
@@ -69,7 +85,10 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    doLogout: () => dispatch(actions.doLogout()),
+    setPage: page => dispatch(actions.setPage(page))
+  };
 };
 export default connect(stateToProps, dispatchToProps)(
   injectSheet(mAppHeaderStyle)(AppHeader)
