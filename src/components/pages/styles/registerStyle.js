@@ -8,9 +8,10 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 0px 0px 20px',
+    padding: '10px 30px 30px 30px',
     height: '50vh',
     '& .title': {
+      display: 'inline-block',
       fontWeight: 'lighter',
       color: greyDark,
       fontSize: 20
@@ -86,8 +87,7 @@ export default {
           fontWeight: 'bold',
           marginLeft: 5
         }
-      }
-      ,
+      },
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid'
@@ -105,12 +105,7 @@ export default {
           }
         }
       }
-    },
-    '& .title': {
-      display: "inline-block",
-      fontWeight: 'lighter'
     }
-
   },
   mRoot: {
     extend: 'root',
@@ -124,32 +119,32 @@ export default {
     },
     '& .form__container': {
       marginBottom: '100px',
-      '& .label':{
+      '& .label': {
         width: '100%',
         marginBottom: 10,
         textAlign: 'left'
       },
-      '& .validation-message':{
+      '& .validation-message': {
         width: '100%',
         marginTop: '0px !important'
       },
-      '& .recaptcha':{
+      '& .recaptcha': {
         marginLeft: 0
       },
-      '& .form-group':{
+      '& .form-group': {
         margin: 0,
-        '& .ant-form-explain':{
+        '& .ant-form-explain': {
           marginLeft: 0
         }
       },
-      '& .validation-message':{
+      '& .validation-message': {
         width: '100% !important',
         margin: '0px !important'
       },
-      '& .recaptcha, .input-password-feild':{
+      '& .recaptcha, .input-password-feild': {
         width: '100% !important',
         margin: 0,
-        '& .ReactPasswordStrength-strength-desc':{
+        '& .ReactPasswordStrength-strength-desc': {
           display: 'inline-block',
           width: '100%',
           marginTop: 30,
@@ -157,7 +152,6 @@ export default {
           textAlign: 'left'
         }
       }
-
     }
   }
 };

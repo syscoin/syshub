@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userTwoFactorStyle } from './styles';
 import { Button, Grid, FormGroup, Input } from 'material-ui';
-import { fire } from '../../firebase';
+import { fire } from '../../API/firebase';
 import swal from 'sweetalert';
 
 // import components
@@ -29,7 +29,7 @@ class UserTwoFactor extends Component {
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.verify = response;
-      },
+      }
     });
 
     window.recaptchaVerifier.render().then(function(widgetId) {
@@ -50,7 +50,7 @@ class UserTwoFactor extends Component {
       swal({
         title: 'Oops...',
         text: 'Please complete reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
       return;
     }
@@ -76,9 +76,9 @@ class UserTwoFactor extends Component {
         element: 'input',
         attributes: {
           placeholder: 'Provide Phone Number',
-          type: 'number',
-        },
-      },
+          type: 'number'
+        }
+      }
     }).then(value => {
       if (value) {
         const appVerifier = window.recaptchaVerifier;
@@ -90,8 +90,7 @@ class UserTwoFactor extends Component {
               closeOnClickOutside: false,
               closeOnEsc: false,
               title: '2 - Verify',
-              text:
-                'Please enter the verification code sent to your mobile device',
+              text: 'Please enter the verification code sent to your mobile device',
               icon: 'info',
               buttons: true,
               dangerMode: false,
@@ -99,15 +98,12 @@ class UserTwoFactor extends Component {
                 element: 'input',
                 attributes: {
                   placeholder: 'Confirmation code here',
-                  type: 'text',
-                },
-              },
+                  type: 'text'
+                }
+              }
             })
               .then(verificationCode => {
-                return fire.auth.PhoneAuthProvider.credential(
-                  verificationId,
-                  verificationCode
-                );
+                return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
               })
               .then(phoneCredential => {
                 return user.updatePhoneNumber(phoneCredential);
@@ -120,7 +116,7 @@ class UserTwoFactor extends Component {
                 swal({
                   title: 'Sucess',
                   text: `Two Factor Authentication Enabled`,
-                  icon: 'success',
+                  icon: 'success'
                 });
               })
               .catch(err => {
@@ -143,7 +139,7 @@ class UserTwoFactor extends Component {
       swal({
         title: 'Oops...',
         text: 'Please complete reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
       return;
     }
@@ -192,10 +188,7 @@ class UserTwoFactor extends Component {
                   </span>
                 )}
               </span>
-              <div
-                className="reCapthaWraper"
-                ref={ref => (this.recaptcha = ref)}
-              />
+              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
             </div>
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
@@ -208,12 +201,7 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                <Button
-                  raised
-                  color="primary"
-                  className="twoFactor-button"
-                  onClick={this.addPhone}
-                >
+                <Button raised color="primary" className="twoFactor-button" onClick={this.addPhone}>
                   Enable 2F Auth
                 </Button>
               )}
@@ -228,14 +216,14 @@ class UserTwoFactor extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setAuth: value => dispatch(actions.setAuth(value)),
+    setAuth: value => dispatch(actions.setAuth(value))
   };
 };
 

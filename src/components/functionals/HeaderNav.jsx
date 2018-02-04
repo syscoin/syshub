@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
-import { doLogout } from '../../firebase';
+import { doLogout } from '../../API/firebase';
 import { Grid, withStyles } from 'material-ui';
 
 //Import UI Framework components
@@ -39,9 +39,7 @@ class HeaderNav extends Component {
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">
-            {currentUser
-              ? currentUser.displayName || currentUser.email
-              : 'Guest'}
+            {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
           </span>
         </Grid>
         <Grid item className="common">
@@ -111,6 +109,4 @@ HeaderNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(headerNavStyle)(HeaderNav)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(headerNavStyle)(HeaderNav));

@@ -12,7 +12,7 @@ import { Layout, Divider } from 'antd';
 import injectSheet from 'react-jss';
 
 //API functions
-import { doLogout } from '../../firebase';
+import { doLogout } from '../../API/firebase';
 
 //ReduxActions
 import actions from '../../redux/actions';
