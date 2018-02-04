@@ -22,7 +22,7 @@ export class ProposalList extends Component {
         upVote: 100,
         downVote: 200,
         active: true,
-        id: 1,
+        id: 1
       },
       {
         name: 'Proposal 2',
@@ -31,7 +31,7 @@ export class ProposalList extends Component {
         upVote: 400,
         downVote: 1,
         active: false,
-        id: 2,
+        id: 2
       },
       {
         name: 'Proposal 3',
@@ -40,7 +40,7 @@ export class ProposalList extends Component {
         upVote: 600,
         downVote: 9,
         active: false,
-        id: 3,
+        id: 3
       },
       {
         name: 'Proposal 4',
@@ -49,9 +49,9 @@ export class ProposalList extends Component {
         upVote: 2000,
         downVote: 8,
         active: false,
-        id: 4,
-      },
-    ],
+        id: 4
+      }
+    ]
   };
 
   render() {
@@ -82,8 +82,8 @@ export class ProposalList extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.app.currentUser
-    logged: state.app.currentUser ? true : false,
+    user: state.app.currentUser,
+    logged: state.app.currentUser ? true : false
   };
 };
 const dispatchToProps = dispatch => {

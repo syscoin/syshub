@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userProfileStyle } from './styles';
-import { Button, Grid, FormGroup, Input } from 'material-ui';
+import { Button, Grid, FormGroup } from 'material-ui';
 import swal from 'sweetalert';
 // import components
-import { Stats, WelcomeBox } from '../functionals';
 import { fire } from '../../API/firebase';
 
 class UserProfile extends Component {
@@ -46,7 +42,8 @@ class UserProfile extends Component {
         uploadTask.on(
           'state_changed',
           function(snapshot) {
-            const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+            const progress =
+              snapshot.bytesTransferred / snapshot.totalBytes * 100;
             console.log('Upload is ' + progress + '% done');
           },
           function(error) {
@@ -132,7 +129,9 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar = this.props.currentUser.photoURL || require('../../assets/img/no-user-image.gif');
+    const avatar =
+      this.props.currentUser.photoURL ||
+      require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
         <Grid container>
@@ -147,7 +146,11 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user image" className="user-image" />
               ) : (
-                <img src={this.state.image} alt="no user image" className="user-image" />
+                <img
+                  src={this.state.image}
+                  alt="no user image"
+                  className="user-image"
+                />
               )}
             </div>
             <span className="change-photo-btn upload-image-container">
@@ -192,7 +195,9 @@ class UserProfile extends Component {
                 className="input-field"
                 placeholder="Enter email"
               />
-              <span className="validation-message">*required for password change</span>
+              <span className="validation-message">
+                *required for password change
+              </span>
             </FormGroup>
           </Grid>
           <Grid className="update-button-grid">
@@ -223,4 +228,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(userProfileStyle)(UserProfile)
+);
