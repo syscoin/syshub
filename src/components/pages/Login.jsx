@@ -16,41 +16,30 @@ class Login extends Component {
     this.login = this.login.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     fire.auth().useDeviceLanguage();
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.verify = response;
-      },
+      }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
 
-  login (event) {
+  login(event) {
     event.preventDefault();
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
     const mnPrivateKeys = [
       {
-        mnPrivateKey: '92YPhw71K9MgH22EHQMWKmfyeyUn5dBaHkYJK59GfSaoikzpBPe',
-        vinMasternode: '6d85fc329e378410fd838de2d3b3f737d37bb09b59a4e7acc3bc1c0fa6f838d8-0'
-      },
-      {
-        mnPrivateKey: '91e25Yfw2MRZka8pqsLA73C7nGzzcFRYewdpdgB397TiCSgAwUR',
-        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f-0'
-      },
-      {
-        mnPrivateKey: '93UimiJFDQTTLsyPeu8BRN9EdzKHJJ3Y2kcxc33oBU4yiRy7FYQ',
-        vinMasternode: '4846fd20a1e97c44beaa4ab427ebec9d60741954006c35f8b9a959100755fe7f-0'
-      },
-      {
-        mnPrivateKey: '92LhW3cNd8VZmsHhgsaKX8GUeSArnJP5MNt4SLpsDX3uB1Gb983',
-        vinMasternode: '4683812d19ca7035c551301b55e7bf9ab6fb80fc045fa92649333d4a00683224-0'
+        mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
+        vinMasternode:
+          '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
       }
     ];
 
@@ -58,7 +47,7 @@ class Login extends Component {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
@@ -73,11 +62,13 @@ class Login extends Component {
             swal({
               title: 'Oops...',
               text: 'Add phone number to the account first in account settings',
-              icon: 'error',
+              icon: 'error'
             });
             return;
           }
-          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+          return fire
+            .auth()
+            .signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
         } else {
           fire
             .database()
@@ -99,9 +90,9 @@ class Login extends Component {
               element: 'input',
               attributes: {
                 placeholder: 'Confirmation code here',
-                type: 'text',
-              },
-            },
+                type: 'text'
+              }
+            }
           })
             .then(value => {
               return confirmationResult.confirm(value);
@@ -113,7 +104,7 @@ class Login extends Component {
               swal({
                 title: 'Sucess',
                 text: `${user.email} signed in with sms verification`,
-                icon: 'success',
+                icon: 'success'
               });
 
               fire
@@ -132,7 +123,7 @@ class Login extends Component {
         swal({
           title: 'Success',
           text: `Account logged in.`,
-          icon: 'success',
+          icon: 'success'
         });
 
         this.props.setPage('home');
@@ -141,7 +132,7 @@ class Login extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error',
+          icon: 'error'
         });
       });
   }
@@ -203,7 +194,10 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} className="recaptcha-div" />
+                <div
+                  ref={ref => (this.recaptcha = ref)}
+                  className="recaptcha-div"
+                />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -223,13 +217,13 @@ class Login extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 };
 
