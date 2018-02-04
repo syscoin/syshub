@@ -14,7 +14,7 @@ import NewsCard from '../functionals/NewsCard';
 class NewsList extends Component {
   render() {
     const { classes, selectNews, channel, readedList, deviceType } = this.props;
-    const image = channel.image || null;
+    const image = channel ? channel.image : null;
     return (
       <div className={classes.root}>
         {channel.item.map((post, index) => {
@@ -41,7 +41,7 @@ class NewsList extends Component {
 
 const stateToProps = state => {
   return {
-    channel: state.mediumPosts.posts.channel,
+    channel: state.mediumPosts.posts.channel
   };
 };
 
@@ -50,7 +50,7 @@ const dispatchToProps = dispatch => {
 };
 
 NewsList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(stateToProps, dispatchToProps)(

@@ -28,11 +28,19 @@ class ProposalCard extends Component {
     const { proposal, user } = this.props;
 
     if (!user) {
-      swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
+      swal({
+        title: 'Oops...',
+        text: 'Must be logged in to vote!',
+        icon: 'error'
+      });
     }
 
     if (!user.mnPrivateKey) {
-      swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
+      swal({
+        title: 'Oops...',
+        text: 'Must own a MasterNode in order to vote',
+        icon: 'error'
+      });
       return;
     }
 
@@ -61,15 +69,13 @@ class ProposalCard extends Component {
                 swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
                 voted(user, proposal, 'Yes', 1);
+                this.props.getProposals();
               })
               .catch(err => {
                 swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
               });
           });
         }
-      })
-      .then(() => {
-        this.props.getProposals();
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -80,11 +86,19 @@ class ProposalCard extends Component {
     const { proposal, user } = this.props;
 
     if (!user) {
-      swal({ title: 'Oops...', text: 'Must be logged in to vote!', icon: 'error' });
+      swal({
+        title: 'Oops...',
+        text: 'Must be logged in to vote!',
+        icon: 'error'
+      });
     }
 
     if (!user.mnPrivateKey) {
-      swal({ title: 'Oops...', text: 'Must own a MasterNode in order to vote', icon: 'error' });
+      swal({
+        title: 'Oops...',
+        text: 'Must own a MasterNode in order to vote',
+        icon: 'error'
+      });
       return;
     }
 
@@ -113,15 +127,13 @@ class ProposalCard extends Component {
                 swal({ title: 'Success', text: `${data}`, icon: 'success' });
 
                 voted(user, proposal, 'No', 2);
+                this.props.getProposals();
               })
               .catch(err => {
                 swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
               });
           });
         }
-      })
-      .then(() => {
-        this.props.getProposals();
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -138,7 +150,8 @@ class ProposalCard extends Component {
     const voteDownIcon = require('../../assets/img/png_button_down.png');
 
     // Some Maths ;P
-    const progress = parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
+    const progress =
+      parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={style}>
@@ -147,13 +160,27 @@ class ProposalCard extends Component {
             <Progress
               type="circle"
               percent={progress}
-              format={percent => <img alt="a" src={docIcon} className="progressIcon" />}
+              format={percent => (
+                <img alt="a" src={docIcon} className="progressIcon" />
+              )}
               className="progress-dial"
               strokeWidth={12}
-              status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
+              status={
+                progress < 35
+                  ? 'exception'
+                  : progress < 100 ? 'active' : 'success'
+              }
             />
             <div className="proposalStatusNo">
-              <span className={ progress < 35 ? "proposalStatusExecptionNo" : progress < 100 ? "proposalStatusActiveNo" : "proposalStatusSuccessNo" }>
+              <span
+                className={
+                  progress < 35
+                    ? 'proposalStatusExecptionNo'
+                    : progress < 100
+                      ? 'proposalStatusActiveNo'
+                      : 'proposalStatusSuccessNo'
+                }
+              >
                 {proposal.YesCount + 30}
               </span>
               {` / `}
@@ -168,7 +195,9 @@ class ProposalCard extends Component {
               {proposal.DataString[0][1].name ? (
                 proposal.DataString[0][1].name.split('\n', 1)[0]
               ) : (
-                <span style={{ color: 'grey' }}>No name available for this proposal.</span>
+                <span style={{ color: 'grey' }}>
+                  No name available for this proposal.
+                </span>
               )}
             </h1>
             <div className="proposalDetail">
@@ -184,7 +213,10 @@ class ProposalCard extends Component {
               <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
-              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+              <Button
+                className="vote-down"
+                onClick={() => this.voteDown(proposal)}
+              >
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
               </Button>
               <div className="vote-count">
@@ -223,4 +255,6 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(proposalCardStyle)(ProposalCard)
+);

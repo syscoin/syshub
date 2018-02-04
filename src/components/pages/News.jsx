@@ -16,9 +16,11 @@ class News extends Component {
   state = {
     readedList: [],
     showContainer: 'list',
-    post: '',
+    post: ''
   };
-
+  componentWillMount() {
+    this.props.getMediumPosts();
+  }
   //changing state with this function
   handleSelectNews(value) {
     const { app, channel } = this.props;
@@ -27,12 +29,12 @@ class News extends Component {
     const post = posts.find(p => p.guid === value);
     if (value) {
       this.setState({
-        readedList: [...this.state.readedList, value],
+        readedList: [...this.state.readedList, value]
       });
     }
     this.setState({
       showContainer: container,
-      post,
+      post
     });
   }
 
@@ -66,7 +68,7 @@ class News extends Component {
                   post={this.state.post}
                   goBack={() => this.handleSelectNews()}
                 />
-              ),
+              )
             }[this.state.showContainer]
           }
         </Paper>{' '}
@@ -77,12 +79,14 @@ class News extends Component {
 
 const stateToProps = state => {
   return {
-    channel: state.mediumPosts.posts.channel,
+    channel: state.mediumPosts.posts.channel
   };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    getMediumPosts: () => dispatch(actions.getMediumPosts())
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(
