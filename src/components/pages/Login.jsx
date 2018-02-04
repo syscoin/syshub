@@ -40,6 +40,16 @@ class Login extends Component {
         mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
         vinMasternode:
           '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
+      },
+      {
+        mnPrivateKey: 'cQJd7h2tBbSHjutVrYnc1GhvLgw8pF6e49TEYGFHxNRiQh87UKwd',
+        vinMasternode:
+          '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
+      },
+      {
+        mnPrivateKey: 'cPim54aykwQctacE4ipFFPQzL79vw4dVriGBRvN9Xwt3r9NrA16M',
+        vinMasternode:
+          'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
       }
     ];
 
