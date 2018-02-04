@@ -35,10 +35,12 @@ const hexToStr = hex => {
 export default {
   getProposals: () => {
     //---- Sample code --------------------------
-    const hex = strToHex('Hello HEX World');
+    const txt = 'Hello HEX World';
+    const hex = strToHex(txt);
     const str = hexToStr(hex);
-    console.log('ACZ To Hex', hex);
-    console.log('ACZ To Str', str);
+    console.log('ACZ Original String: ', txt);
+    console.log('ACZ To Hex: ', hex);
+    console.log('ACZ To Str: ', str);
     // -------------------------------------------
 
     return dispatch => {
