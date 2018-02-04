@@ -50,28 +50,30 @@ class News extends Component {
             <span className="iconTxt">{`  Back to List`}</span>
           </div>
         )}
-        <Paper className="paper-container" elevation={4}>
-          {
+        {channel && (
+          <Paper className="paper-container" elevation={4}>
             {
-              list: (
-                <NewsList
-                  deviceType={this.props.deviceType}
-                  channel={channel}
-                  readedList={this.state.readedList}
-                  selectNews={guid => this.handleSelectNews(guid)}
-                />
-              ),
-              details: (
-                <NewsDetail
-                  deviceType={this.props.deviceType}
-                  channel={channel}
-                  post={this.state.post}
-                  goBack={() => this.handleSelectNews()}
-                />
-              )
-            }[this.state.showContainer]
-          }
-        </Paper>{' '}
+              {
+                list: (
+                  <NewsList
+                    deviceType={this.props.deviceType}
+                    channel={channel}
+                    readedList={this.state.readedList}
+                    selectNews={guid => this.handleSelectNews(guid)}
+                  />
+                ),
+                details: (
+                  <NewsDetail
+                    deviceType={this.props.deviceType}
+                    channel={channel}
+                    post={this.state.post}
+                    goBack={() => this.handleSelectNews()}
+                  />
+                )
+              }[this.state.showContainer]
+            }
+          </Paper>
+        )}
       </div>
     );
   }

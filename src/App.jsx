@@ -38,7 +38,6 @@ class App extends Component {
 
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
-
     this.props.platformGet({
       os: Platform.OS || '',
       osVersion: Platform.OSVersion || '',
@@ -96,6 +95,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
+
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
   };
 };
