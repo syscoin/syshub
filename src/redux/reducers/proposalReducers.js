@@ -44,7 +44,7 @@ const initialState = {
     }
   },
   list: [],
-  status: null,
+  checkStatus: null,
   prepareReceipt: null,
   submitReceipt: null,
   voteStatus: null
@@ -78,7 +78,7 @@ const proposals = (state = initialState, action) => {
       };
 
     case constants.SYS_PROPOSALS_CHECK:
-      return { ...state, status: action.data };
+      return { ...state, checkStatus: action.data };
 
     case constants.SYS_PROPOSALS_PREPARE:
       return { ...state, prepareReceipt: action.data };

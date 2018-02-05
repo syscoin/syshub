@@ -17,7 +17,9 @@ import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
+import { Hex } from '../../redux/helpers';
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+
 //import style
 
 const FormItem = Form.Item;
@@ -36,7 +38,7 @@ class NewProposal extends Component {
       stepperSubHeading: '',
       proposallink: 'http://syshub.com/p/',
       editorState: EditorState.createEmpty(),
-      proposal__detail: '',
+      proposal__detail: ''
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -48,33 +50,62 @@ class NewProposal extends Component {
     this.getAmount = this.getAmount.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.disabledNextBtn = this.disabledNextBtn.bind(this);
+    this.createPropObj = this.createPropObj.bind(this);
   }
+
+  createPropObj = () => {
+    const { proposalTitle, address, amount } = this.state;
+    this.setState({
+      activeStep: this.state.activeStep + 1,
+      showEditor: true
+    });
+
+    let newProposal = [
+      [
+        'proposal',
+        {
+          name: proposalTitle,
+          type: 1,
+          start_epoch: 1513029546,
+          end_epoch: 1513375146,
+          payment_address: address,
+          payment_amount: Number(amount),
+          url: 'https://www.thrifa.io00000000000000000000000000000000000000000000000000000000000000'
+        }
+      ]
+    ];
+
+    const hexedProposal = Hex.strToHex(newProposal);
+    const dataHex = {
+      dataHex: hexedProposal
+    };
+    this.props.checkProposal(dataHex);
+  };
 
   handleNext = () => {
     this.setState({
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    console.log(this.state.proposalTitle, 'proposalTitle');
-    console.log(this.state.address, 'address');
-    console.log(this.state.amount, 'amount');
-    console.log(this.state.paymentQuantity, 'parment quantity');
+    // console.log(this.state.proposalTitle, 'proposalTitle');
+    // console.log(this.state.address, 'address');
+    // console.log(this.state.amount, 'amount');
+    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
     if (this.state.activeStep == 2) {
-      console.log("active step")
-      this.setState({ showEditor: true })
+      // console.log('active step');
+      this.setState({ showEditor: true });
     }
     this.setState(
       {
-        
         activeStep: this.state.activeStep - 1,
-        proposal__detail: this.state.proposal__detail,
+        proposal__detail: this.state.proposal__detail
       },
       () => {
         if (this.state.activeStep == 1 || this.state.activeStep == 0) {
-          this.setState({showEditor:true})
+          this.setState({ showEditor: true });
         }
       }
     );
@@ -82,83 +113,73 @@ class NewProposal extends Component {
 
   handleReset = () => {
     this.setState({
-      activeStep: 0,
+      activeStep: 0
     });
   };
 
   //date change function
-  onDateChange (date, dateString) {
-    console.log(date, dateString);
+  onDateChange(date, dateString) {
+    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
-    })
+    });
   }
 
   //proposal title function
-  proposalTitle (e) {
+  proposalTitle(e) {
     this.setState({
-      proposalTitle: e.target.value,
+      proposalTitle: e.target.value
     });
   }
 
   //payment quantity
-  paymentQuantity (value) {
+  paymentQuantity(value) {
     this.setState({
-      paymentQuantity: value,
+      paymentQuantity: value
     });
   }
 
   //get address function
-  getAddress (e) {
+  getAddress(e) {
     this.setState({
-      address: e.target.value,
+      address: e.target.value
     });
   }
 
   //get amount function
-  getAmount (e) {
+  getAmount(e) {
     this.setState({
-      amount: e.target.value,
+      amount: e.target.value
     });
   }
 
   //
-  previewHTML () {
+  previewHTML() {
     this.setState(
       {
         showEditor: false,
-        proposal__detail: draftToHtml(
-          convertToRaw(this.state.editorState.getCurrentContent())
-        ),
+        proposal__detail: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
       },
       () => {
-        let previewContainer = document.getElementById(
-          'preview-html-container'
-        );
+        let previewContainer = document.getElementById('preview-html-container');
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        console.log('----------------------');
+        // console.log('----------------------');
       }
     );
   }
 
-  confirmProposalDetail () {
+  confirmProposalDetail() {
     this.previewHTML();
   }
 
   // steps name in array in which we map
-  getSteps () {
-    return [
-      'Proposal Title',
-      'Proposal Details',
-      'Payment Details',
-      'Amount',
-      'Create Proposal',
-    ];
+  getSteps() {
+    return ['Proposal Title', 'Proposal Details', 'Payment Details', 'Amount', 'Create Proposal'];
   }
   //all the step contents are coming from return of switch case
-  getStepContent (step) {
+  getStepContent(step) {
     const { deviceType } = this.props;
     switch (step) {
       case 0:
@@ -181,11 +202,9 @@ class NewProposal extends Component {
             </Col>
             {/* Proposal Description Url Colomn */}
             <Col span={deviceType === 'mobile' ? 24 : 14}>
-              {deviceType === 'mobile' ?
-                <h3 className="proposal-title">
-                  Proposal Description Url
-                      </h3>
-                : null}
+              {deviceType === 'mobile' ? (
+                <h3 className="proposal-title">Proposal Description Url</h3>
+              ) : null}
               <Input
                 className="proposal-url-input"
                 placeholder="Enter Proposal Description Url"
@@ -193,7 +212,7 @@ class NewProposal extends Component {
                   this.state.proposalTitle
                     ? this.state.proposalTitle.toLowerCase()
                     : 'proposal-title'
-                  }`}
+                }`}
               />
             </Col>
           </Row>
@@ -226,9 +245,9 @@ class NewProposal extends Component {
                       inline: {
                         options: ['bold', 'italic', 'underline', 'monospace'],
                         list: {
-                          options: ['unordered', 'ordered'],
-                        },
-                      },
+                          options: ['unordered', 'ordered']
+                        }
+                      }
                     }}
                   />
                   <Button
@@ -239,21 +258,19 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col span={deviceType === 'mobile' ? 24 : 22} offset={deviceType === 'mobile' ? 0 : 1}>
-                      <h1 className="proposalDetail-title">
-                        {this.state.proposalTitle}
-                      </h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div
-                        className="proposalContent-div"
-                        id="preview-html-container"
-                      />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div className="proposalContent-div" id="preview-html-container" />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
         );
@@ -305,42 +322,37 @@ class NewProposal extends Component {
         <Button>Confirm</Button>;
     }
   }
-  onEditorStateChange (editorState) {
+  onEditorStateChange(editorState) {
     this.setState({
-      editorState,
+      editorState
     });
-    console.log(this.state.editorState, 'editor state');
+    // console.log(this.state.editorState, 'editor state');
   }
-
 
   disabledNextBtn(step) {
     switch (step) {
       case 0:
         if (this.state.proposalTitle && this.state.proposallink) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 1:
         if (this.state.proposal__detail) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 2:
         if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 3:
         if (this.state.amount) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       default:
@@ -349,13 +361,23 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, proposal } = this.props;
+    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    if (checkStatus) {
+      console.log('Check -->', checkStatus);
+    }
+    if (prepareReceipt) {
+      console.log('Prepare -->', prepareReceipt);
+    }
+    if (submitReceipt) {
+      console.log('Submit -->', submitReceipt);
+    }
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    console.log(this.state.proposal__detail, 'detail');
+    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>
@@ -366,40 +388,37 @@ class NewProposal extends Component {
                 <Step className="steper__container" key={label}>
                   <StepLabel className="steper__label">
                     <h2 className="step-label"> {label} </h2>
-                    {this.state.activeStep == 0 && label == 'Proposal Title' && deviceType !== 'mobile' ? (
-                      <h3 className="proposal-title">
-                        Proposal Description Url
-                      </h3>
+                    {this.state.activeStep == 0 &&
+                    label == 'Proposal Title' &&
+                    deviceType !== 'mobile' ? (
+                      <h3 className="proposal-title">Proposal Description Url</h3>
                     ) : null}
-                    {this.state.activeStep == 1 &&
-                      label == 'Proposal Details' ? (
-                        this.state.showEditor ? (
-                          <Button
-                            className="preview-edit-button"
-                            onClick={this.previewHTML.bind(this)}
-                          >
-                            PREVIEW
+                    {this.state.activeStep == 1 && label == 'Proposal Details' ? (
+                      this.state.showEditor ? (
+                        <Button
+                          className="preview-edit-button"
+                          onClick={this.previewHTML.bind(this)}
+                        >
+                          PREVIEW
                         </Button>
-                        ) : (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={() => {
-                                this.setState({ showEditor: true });
-                              }}
-                            >
-                              EDITOR
+                      ) : (
+                        <Button
+                          className="preview-edit-button"
+                          onClick={() => {
+                            this.setState({ showEditor: true });
+                          }}
+                        >
+                          EDITOR
                         </Button>
-                          )
-                      ) : null}
+                      )
+                    ) : null}
                   </StepLabel>
                   <StepContent>
                     <div>{this.getStepContent(index)}</div>
                     <div className={classes.actionsContainer}>
                       <div
                         className={
-                          activeStep === steps.length - 1
-                            ? 'confirm-btn-div'
-                            : 'next-btn-div'
+                          activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
                         }
                       >
                         {activeStep === 0 ? null : (
@@ -412,17 +431,27 @@ class NewProposal extends Component {
                             Back
                           </Button>
                         )}
-                        <Button
-                          raised={true}
-                          type="primary"
-                          onClick={this.handleNext}
-                          className={classes.button}
-                          disabled={this.disabledNextBtn(index)}
-                        >
-                          {activeStep === steps.length - 1
-                            ? 'Confirm'
-                            : 'Next Step'}
-                        </Button>
+                        {activeStep === steps.length - 1 ? (
+                          <Button
+                            raised={true}
+                            type="primary"
+                            className={classes.button}
+                            onClick={this.createPropObj}
+                            disabled={this.disabledNextBtn(index)}
+                          >
+                            Confirm
+                          </Button>
+                        ) : (
+                          <Button
+                            raised={true}
+                            type="primary"
+                            onClick={this.handleNext}
+                            className={classes.button}
+                            disabled={this.disabledNextBtn(index)}
+                          >
+                            Next Step
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </StepContent>
@@ -437,13 +466,17 @@ class NewProposal extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    proposal: state.proposals
+  };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    checkProposal: params => dispatch(actions.checkProposal(params)),
+    prepareProposal: params => dispatch(actions.prepareProposal(params)),
+    submitProposal: params => dispatch(actions.submitProposal(params))
+  };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(newProposalStyle)(NewProposal)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(newProposalStyle)(NewProposal));
