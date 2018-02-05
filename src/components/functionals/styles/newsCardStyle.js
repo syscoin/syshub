@@ -58,6 +58,9 @@ export default {
           padding: '0px',
           minHeight: '28px',
         },
+        '& button:hover': {
+          backgroundColor: primaryLight
+        }
       },
     },
     '& button': {
@@ -69,8 +72,9 @@ export default {
     '& .inline-block': {
       display: 'inline-block',
     },
+    '& .divider': {
+      marginTop: 10,
+    },
   },
-  divider: {
-    marginTop: 10,
-  },
+  mRoot: { extend: 'root' },
 };

@@ -14,8 +14,8 @@ import {
   doLogout,
   doUpdateProfile,
   doUpdatePassword,
-  doDeleteAccount,
-} from '../../firebase';
+  doDeleteAccount
+} from '../../API/firebase';
 import { userAccountStyle } from './styles';
 // import components
 import { Stats, WelcomeBox } from '../functionals';
@@ -39,7 +39,7 @@ class UserAccount extends Component {
         swal({
           title: 'Success',
           text: 'Account Updated',
-          icon: 'success',
+          icon: 'success'
         });
         this.props.setCurrentUser(data);
       } else {
@@ -70,10 +70,19 @@ class UserAccount extends Component {
       <div className={classes.root}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
-          <UserProfile onUpdateProfile={this.updateProfile} />
-          <UserChangePsw onUpdatePassword={this.updatePassword} />
-          <UserTwoFactor />
-          <UserDelete onDeleteProfile={this.deleteProfile} />
+          <UserProfile
+            deviceType={this.props.deviceType}
+            onUpdateProfile={this.updateProfile}
+          />
+          <UserChangePsw
+            deviceType={this.props.deviceType}
+            onUpdatePassword={this.updatePassword}
+          />
+          <UserTwoFactor deviceType={this.props.deviceType} />
+          <UserDelete
+            deviceType={this.props.deviceType}
+            onDeleteProfile={this.deleteProfile}
+          />
         </Paper>
       </div>
     );
@@ -87,10 +96,8 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(userAccountStyle)(UserAccount)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(userAccountStyle)(UserAccount));

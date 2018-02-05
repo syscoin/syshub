@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Equalizer, AccountCircle, Usb, TrendingUp } from 'material-ui-icons';
 import injectSheet from 'react-jss';
 
-import GridList, { GridListTile } from 'material-ui/GridList';
+import GridList, { GridTile } from 'material-ui/GridList';
 import Card, {
   CardHeader,
   CardMedia,
@@ -18,19 +18,19 @@ import { bindActionCreators } from 'redux';
 import { statsStyle } from './styles';
 
 class Stats extends Component {
-  getValue(field) {
+  getValue (field) {
     const value = {
       changeRate: (1000 / this.props.value.exchange_rates.btc_usd).toFixed(5),
 
       masternodes: `${
         this.props.value.general.registered_masternodes_verified
-      } / ${this.props.value.general.registered_masternodes}`,
+        } / ${this.props.value.general.registered_masternodes}`,
       totUsers: this.props.value.general.all_user,
     }[field];
     return value;
   }
 
-  percentages(field) {
+  percentages (field) {
     const changeRateNew = parseFloat(this.props.value.exchange_rates.btc_usd);
     const changeRateOld = parseFloat(
       this.props.valueOld.exchange_rates.btc_usd
@@ -56,21 +56,24 @@ class Stats extends Component {
 
     return { arrow, value: Math.abs(value).toFixed(2) };
   }
-  render() {
-    const { classes } = this.props;
+  render () {
+    const { classes, deviceType } = this.props;
+
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
-      <div className="stats__container">
+      <div className={style}>
         {/* <Icon color="accent">add_circle</Icon> */}
-        <h1 className={classes.statsHeading}>
-          <Equalizer className={classes.headingIcon} /> SYSHub Stats
+        <h1 className="statsHeading">
+          <Equalizer className="headingIcon" /> SYSHub Stats
         </h1>
-        <div className={classes.statsMainDiv}>
-          <GridList cols={4} cellHeight={300} className={classes.statsGridDiv}>
+        <div className="statsMainDiv">
+          <GridList cols={deviceType === 'mobile' ? 3 : 4} cellHeight={300} className="statsGridDiv">
             {this.props.sysStats.map((item, key) => {
               return (
-                <Card key={key} className={classes.statsCard}>
+                <Card key={key} className="statsCard">
                   <CardHeader
-                    className={classes.statsCardHeader}
+                    className="statsCardHeader"
                     title={
                       <img
                         alt="a"
@@ -80,11 +83,11 @@ class Stats extends Component {
                     }
                   />
                   <CardContent style={{ position: 'relative' }}>
-                    <div className={classes.statsTextHeading}>
+                    <div className={'statsTextHeading'}>
                       <h1> {this.getValue(item.key)} </h1>
                     </div>
-                    <div className={classes.statsText}>{item.text}</div>
-                    <div className={classes.statsPercentage}>
+                    <div className="statsText">{item.text}</div>
+                    <div className="statsPercentage">
                       <img
                         alt="a"
                         src={require('./../../assets/img/' +
@@ -104,7 +107,7 @@ class Stats extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   //pass the providers
   return {
     sysStats: state.sysStats.cards,
@@ -114,7 +117,7 @@ function mapStateToProps(state) {
 }
 
 /* Map Actions to Props */
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators({}, dispatch),
   };

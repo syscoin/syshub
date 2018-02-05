@@ -25,6 +25,19 @@ export default {
       data: null
     };
   },
+  toggleMenu: () => {
+    return {
+      type: constants.APP_MENU_TOGGLE,
+      data: null
+    };
+  },
+  platformGet: value => {
+    return {
+      type: constants.APP_PLATFORM_GET,
+      data: value
+    };
+  },
+
   loading: value => {
     return {
       type: constants.APP_LOADING_GLOBAL,

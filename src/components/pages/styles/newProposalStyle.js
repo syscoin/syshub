@@ -6,7 +6,6 @@ const white = palette.white;
 const grey = palette.grey;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 export default {
   root: {
@@ -21,7 +20,7 @@ export default {
       fontWeight: 300,
     },
     '& .steper__container': {
-      '& > div > div:nth-child(2)': {
+      '& > span > span:nth-child(2)': {
         width: '100%',
         '& .preview-edit-button': {
           height: 25,
@@ -33,14 +32,19 @@ export default {
       '& path': {
         fill: primary,
       },
+      '& circle': {
+        fill: primary,
+      }
     },
     '& .title': {
       fontWeight: 'lighter',
       color: greyDark,
-      fontSize: 20,
+      textTransform: 'uppercase'
     },
     '& .paper-container': {
       padding: '20px 20px',
+      overflowY: 'auto',
+      maxHeight: '80vh',
 
       //next step button styling
       '& .next-btn-div': {
@@ -78,7 +82,8 @@ export default {
         fontSize: '22px',
         color: primaryLight,
         display: 'inline-block',
-        paddingLeft: 'calc(50% + 50px )',
+        // paddingLeft: 'calc(50% + 50px )',
+        marginLeft: "calc(50% - 220px)"
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,
@@ -196,4 +201,27 @@ export default {
       borderColor: primary,
     },
   },
+  mRoot: {
+    extend: 'root',
+    marginTop: '100px',
+    '& .proposal-title': {
+      paddingLeft: '0 !important'
+    },
+    '& .payment-input': {
+      width: '100%'
+    },
+    '& .toolbarClassName': {
+      marginTop: '30px !important'
+    },
+    '& .proposalEditor-wrapper': {
+      margin: '0 !important',
+      minWidth: '250px !important',
+      height: '230px !important'
+    },
+    '& .paper-container': {
+      padding: '0 !important'
+    }
+
+
+  }
 };

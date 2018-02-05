@@ -5,7 +5,6 @@ const primary = palette.primary;
 const grey = palette.textLignt;
 const greyDark = palette.greyDark;
 
-
 export default {
   root: {
     marginTop: 20,
@@ -53,13 +52,16 @@ export default {
             '& .chatContent-secondaryText': {
               color: greyDark,
               padding: '0px 0px 0px 5px',
-              fontWeight:'100'
+              fontWeight: '100',
             },
           },
         },
         '& .form': {
           border: 'thin solid ' + grey,
           backgroundColor: white,
+          '& TextArea':{
+            height: '0px !important'
+          },
           '&>div': {
             width: 'calc(100% - 60px)',
             // marginLeft: '20px',
@@ -69,12 +71,14 @@ export default {
           },
           '& .send-button': {
             position: 'absolute',
-            marginTop: '3px',
+            marginTop: '4px',
             cursor: 'pointer',
             color: '#a8aba5',
+            right:6
           },
         },
       },
     },
   },
+  mRoot: { extend: 'root' },
 };

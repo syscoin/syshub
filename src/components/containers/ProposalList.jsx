@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fire } from '../../API/firebase';
 import { Grid, withStyles } from 'material-ui';
 
 // import styles
@@ -54,17 +55,21 @@ export class ProposalList extends Component {
   };
 
   render() {
-    const { classes, selectProposal } = this.props;
+    const { classes, selectProposal, deviceType } = this.props;
 
     return (
       <Grid md={12} style={proposalStyle.root}>
-        <DashBoardHeader data={{ showHeader: 'proposalList' }} />
+        <DashBoardHeader
+          deviceType={deviceType}
+          data={{ showHeader: 'proposalList' }}
+        />
 
         {this.props.proposalList.map(proposal => {
           return (
             <ProposalCard
+              deviceType={deviceType}
               totalNodes={this.props.totalNodes}
-              logged={this.props.logged}
+              logged={this.props.user ? true : false}
               proposal={proposal}
               selectProposal={selectProposal}
             />
@@ -77,6 +82,7 @@ export class ProposalList extends Component {
 
 const stateToProps = state => {
   return {
+    user: state.app.currentUser,
     logged: state.app.currentUser ? true : false
   };
 };
@@ -88,4 +94,6 @@ const dispatchToProps = dispatch => {
 //   classes: PropTypes.object.isRequired,
 // };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(proposalStyle)(ProposalList));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(proposalStyle)(ProposalList)
+);

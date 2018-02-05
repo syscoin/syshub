@@ -29,4 +29,25 @@ export default {
       borderRight: `1px solid ${primaryLight}`,
     },
   },
+
+  mRoot: {
+    extend: 'root',
+    '& .common': {
+      color: 'white',
+      height: '25px',
+      padding: '0',
+      fontSize: 13,
+      '& .icon': {
+        height: 15,
+        width: 15
+      },
+      '& .TxtBold': {
+        marginLeft: '5px'
+      }
+    },
+    '& .TxtBold': {
+      color: 'white',
+      fontWeight: 'bold',
+    },
+  },
 };

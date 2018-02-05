@@ -5,8 +5,7 @@ import actions from '../../redux/actions';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 
 // import style
-import { masternodeAddStyle } from "./styles";
-
+import { masternodeAddStyle } from './styles';
 
 class MasterNodeAdd extends Component {
   constructor(props) {
@@ -14,8 +13,7 @@ class MasterNodeAdd extends Component {
 
     this.state = {
       newNode: {}
-    }
-
+    };
 
     this.addNode = this.addNode.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -24,9 +22,14 @@ class MasterNodeAdd extends Component {
   addNode(event) {
     event.preventDefault();
     if (this.state.newNode.name && this.state.newNode.address) {
-      console.log("Master Node name " + this.state.newNode.name + " Master Node Address " + this.state.newNode.address)
-      this.props.addNode(this.state.newNode)
-      this.setState({ newNode: { name: '', address: '' } })
+      console.log(
+        'Master Node name ' +
+          this.state.newNode.name +
+          ' Master Node Address ' +
+          this.state.newNode.address
+      );
+      this.props.addNode(this.state.newNode);
+      this.setState({ newNode: { name: '', address: '' } });
     }
   }
 
@@ -39,18 +42,15 @@ class MasterNodeAdd extends Component {
     });
   }
 
-
   render() {
-
-    const { classes } = this.props;
-
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <div className="heading">
-          <h2 className="title">
-            Add New Masternode
-        </h2>
+          <h2 className="title">Add New Masternode</h2>
         </div>
         <Grid item md={12} className="form__container">
           <form
@@ -60,7 +60,12 @@ class MasterNodeAdd extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid
+              item
+              lg={{ size: 8, offset: 2 }}
+              md={{ size: 10, offset: 1 }}
+              justify="center"
+            >
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -87,7 +92,7 @@ class MasterNodeAdd extends Component {
                   id="address"
                   name="address"
                   className="input-field"
-                  placeholder="123.45.67.891.12345"
+                  placeholder="enter a valid address"
                   value={this.state.newNode.address}
                   onChange={this.onChange}
                 />
@@ -102,14 +107,10 @@ class MasterNodeAdd extends Component {
             </Grid>
           </form>
         </Grid>
-
       </div>
-    )
+    );
   }
-
 }
-
-
 
 const stateToProps = state => {
   return {};
@@ -119,4 +120,6 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(masternodeAddStyle)(MasterNodeAdd));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(masternodeAddStyle)(MasterNodeAdd)
+);

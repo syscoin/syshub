@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
 import swal from 'sweetalert';
-import { doLogin, fire } from '../../firebase';
+import { doLogin, fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
@@ -32,10 +32,26 @@ class Login extends Component {
 
   login(event) {
     event.preventDefault();
-    const currentUser = fire.auth().currentUser;
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
+    const mnPrivateKeys = [
+      {
+        mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
+        vinMasternode:
+          '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
+      },
+      {
+        mnPrivateKey: 'cQJd7h2tBbSHjutVrYnc1GhvLgw8pF6e49TEYGFHxNRiQh87UKwd',
+        vinMasternode:
+          '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
+      },
+      {
+        mnPrivateKey: 'cPim54aykwQctacE4ipFFPQzL79vw4dVriGBRvN9Xwt3r9NrA16M',
+        vinMasternode:
+          'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
+      }
+    ];
 
     if (!this.verify) {
       swal({
@@ -60,7 +76,14 @@ class Login extends Component {
             });
             return;
           }
-          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+          return fire
+            .auth()
+            .signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+        } else {
+          fire
+            .database()
+            .ref('mnPrivateKey/' + user.uid)
+            .set(mnPrivateKeys);
         }
       })
       .then(confirmationResult => {
@@ -94,6 +117,11 @@ class Login extends Component {
                 icon: 'success'
               });
 
+              fire
+                .database()
+                .ref('mnPrivateKey/' + user.uid)
+                .set(mnPrivateKeys);
+
               this.props.setPage('home');
             })
             .catch(err => {
@@ -118,15 +146,18 @@ class Login extends Component {
         });
       });
   }
+
   render() {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/checkIcon.png'),
-      { classes } = this.props;
+      { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={classes.root} md={12}>
+      <Grid container className={style} md={12} xs={12}>
         <h1 className="title">Login to SysHub</h1>
-        <Grid item md={12} className="form__container">
+        <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
             ref={form => {
@@ -134,7 +165,13 @@ class Login extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid
+              item
+              lg={{ size: 8, offset: 2 }}
+              md={{ size: 10, offset: 1 }}
+              xs={12}
+              justify="center"
+            >
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -167,7 +204,10 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} />
+                <div
+                  ref={ref => (this.recaptcha = ref)}
+                  className="recaptcha-div"
+                />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -197,4 +237,6 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(loginStyle)(Login)
+);

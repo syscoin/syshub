@@ -5,15 +5,12 @@ const primaryLight = palette.primaryLight;
 const white = palette.white;
 
 export default {
-  wraper: {
+  root: {
     //border: '1px solid red',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'start',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     minWidth: '100vw',
-  },
-  appContent__container: {
-    width: '55%',
   },
 };

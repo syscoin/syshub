@@ -3,18 +3,19 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import { Input } from 'antd';
 import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
 import { AccessAlarm, Send } from 'material-ui-icons';
 
-import { fire, messages } from '../../firebase';
+import { fire, messages } from '../../API/firebase';
 
 import List, {
   ListItem,
   ListItemAvatar,
   ListItemIcon,
   ListItemSecondaryAction,
-  ListItemText,
+  ListItemText
 } from 'material-ui/List';
 import ListSubheader from 'material-ui/List/ListSubheader';
 import { chatBoxStyle } from './styles';
@@ -24,7 +25,7 @@ const style = {
   textAlign: 'center',
   display: 'inline-block',
   position: 'relative',
-  minWidth: '95%',
+  minWidth: '95%'
 };
 
 class ChatBox extends Component {
@@ -33,7 +34,7 @@ class ChatBox extends Component {
     this.state = {
       messages: [],
 
-      message: '',
+      message: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -47,7 +48,7 @@ class ChatBox extends Component {
         updated.push(message.val());
       });
       this.setState({
-        messages: updated,
+        messages: updated
       });
     });
   }
@@ -69,33 +70,44 @@ class ChatBox extends Component {
     swal({
       title: 'Oops...',
       text: 'Must be signed in to chat',
+      icon: 'warning'
+    });
+  }
+  blankMessageAlert() {
+    swal({
+      title: 'Oops...',
+      text: 'Must write something to chat',
       icon: 'warning',
     });
   }
 
   addMessage(message) {
     const { currentUser } = this.props.app;
-
+    console.log(message, "message")
     if (!currentUser) {
       this.loginAlert();
       return;
+    } else if (message === null || message === '') {
+      this.blankMessageAlert()
+    } else {
+      const updated = {
+        body: message,
+        user: {
+          displayName: currentUser.displayName,
+          id: currentUser.uid,
+          email: currentUser.email,
+        },
+      };
+
+      messages.push(updated);
     }
 
-    const updated = {
-      body: message,
-      user: {
-        displayName: currentUser.displayName,
-        id: currentUser.uid,
-        email: currentUser.email,
-      },
-    };
 
-    messages.push(updated);
   }
 
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -108,8 +120,11 @@ class ChatBox extends Component {
 
   render() {
     const { currentUser } = this.props.app;
-    const chat_icon = require('../../assets/img/png_menu_chat.png'),
-      { classes } = this.props;
+    const { TextArea } = Input;
+    const { classes, deviceType } = this.props;
+    const chat_icon = require('../../assets/img/png_menu_chat.png');
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={classes.root}>
         {/* chat box container */}
@@ -134,16 +149,8 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={
-                      <p className="chatContent-primaryText">
-                        {message.user.displayName}
-                      </p>
-                    }
-                    secondary={
-                      <p className="chatContent-secondaryText">
-                        {message.body}
-                      </p>
-                    }
+                    primary={<p className="chatContent-primaryText">{message.user.displayName}</p>}
+                    secondary={<p className="chatContent-secondaryText">{message.body}</p>}
                   />
                 ))}
               </div>
@@ -151,14 +158,14 @@ class ChatBox extends Component {
 
             {/* input field for chat */}
             <form className="form" onSubmit={this.onSubmit}>
-              <TextField
+              <TextArea
                 value={this.state.message}
                 name="message"
                 onChange={this.onChange}
                 onClick={() => {
                   return !currentUser ? this.loginAlert() : null;
                 }}
-                multiline={true}
+                onPressEnter={this.onSubmit}
                 placeholder={
                   currentUser ? 'Tell something' : 'login to write message'
                 }
@@ -174,7 +181,7 @@ class ChatBox extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 

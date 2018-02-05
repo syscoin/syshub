@@ -19,9 +19,39 @@ const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
+const votes = fire.database().ref('votes');
 // const currentUser
 
 //Some useful functions
+
+const checkVoted = (user, proposal) => {
+  return new Promise((resolve, reject) => {
+    fire
+      .database()
+      .ref('votes/' + user.uid)
+      .child(proposal.Hash)
+      .once('value')
+      .then(snap => {
+        if (snap.val() !== null) {
+          //          resolve(true); // Original true if voted false if no
+          resolve(false); // Overrided
+          return;
+        }
+        resolve(false);
+      })
+      .catch(err => {
+        resolve(err);
+      });
+  });
+};
+
+const voted = (user, proposal, voteTxt, voteId) => {
+  fire
+    .database()
+    .ref('votes/' + user.uid)
+    .child(proposal.Hash)
+    .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
+};
 
 const doRegister = () => {};
 
@@ -65,7 +95,10 @@ const doUpdatePassword = (user, callback) => {
   const currentUser = fire.auth().currentUser;
 
   if (currentUser) {
-    const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, user.currentPass);
+    const credentials = fire.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      user.currentPass
+    );
     currentUser
       .reauthenticateWithCredential(credentials)
       .then(() => {
@@ -88,7 +121,8 @@ const doUpdateProfile = (user, callback) => {
         closeOnClickOutside: false,
         closeOnEsc: false,
         title: 'Warning',
-        text: 'You are about to change your email, you must input your password first',
+        text:
+          'You are about to change your email, you must input your password first',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
@@ -100,7 +134,10 @@ const doUpdateProfile = (user, callback) => {
           }
         }
       }).then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+        const credentials = fire.auth.EmailAuthProvider.credential(
+          currentUser.email,
+          password
+        );
 
         currentUser
           .reauthenticateWithCredential(credentials)
@@ -132,6 +169,15 @@ const doUpdateProfile = (user, callback) => {
         })
         .catch(err => callback(err));
     }
+
+    if (user.photoURL) {
+      currentUser
+        .updateProfile({ photoURL: user.photoURL })
+        .then(() => {
+          callback(null, currentUser);
+        })
+        .catch(err => callback(err));
+    }
   }
 };
 
@@ -156,7 +202,10 @@ const doDeleteAccount = () => {
       }
     })
       .then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+        const credentials = fire.auth.EmailAuthProvider.credential(
+          currentUser.email,
+          password
+        );
 
         return currentUser.reauthenticateWithCredential(credentials);
       })
@@ -165,7 +214,8 @@ const doDeleteAccount = () => {
           closeOnClickOutside: false,
           closeOnEsc: false,
           title: 'WARNING',
-          text: 'Type "DELETE" to delete your account permantly, this cannot be undone!',
+          text:
+            'Type "DELETE" to delete your account permantly, this cannot be undone!',
           icon: 'warning',
           buttons: true,
           dangerMode: true,
@@ -220,5 +270,8 @@ export {
   doLogout,
   doUpdateProfile,
   doUpdatePassword,
-  doDeleteAccount
+  doDeleteAccount,
+  votes,
+  checkVoted,
+  voted
 };
