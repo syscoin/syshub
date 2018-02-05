@@ -24,13 +24,39 @@ export default {
       borderTop: `1px solid ${primaryDark}`,
       borderBottom: `1px solid ${primaryLight}`
     },
+    '& .header-bitcoin-status': {
+      padding: '10px 4px',
+    },
     '& .name-header': {
-      textAlign: 'right',
+      textAlign: 'left',
+      padding: 0,
+      marginTop :20,
+      paddingLeft:10,
       '& .btn': {
         textTransform: 'capitalize',
+        minWidth: 55,
+        padding: 0,
         '& .text': {
           color: white
         }
+      },
+      '& .TxtRegular': {
+        padding: '0 15px',
+        color: white,
+        padding: '0',
+        fontSize: '12px',
+      },
+      '& .TxtBold': {
+        color: white,
+        padding: '0 0 0 4px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        maxWidth: 70,
+        display: 'inline-block',
+        overflowY: 'hidden',
+        height: 35
       }
     },
     '& .mb-0': {

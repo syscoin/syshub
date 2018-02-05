@@ -12,8 +12,8 @@ export default {
     listStyleType: 'disc',
     '& .Paper': {
       minHeight: '100px',
-      width: '95%',
-      margin: '20px 20px',
+      width: '100%',
+      // margin: '20px 20px',
       display: 'inline-block',
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
       padding: '20px',
