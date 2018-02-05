@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
-import { doLogout } from '../../firebase';
+import { doLogout } from '../../API/firebase';
 import { Grid, withStyles } from 'material-ui';
 
 //Import UI Framework components
@@ -39,9 +39,7 @@ class HeaderNav extends Component {
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">
-            {currentUser
-              ? currentUser.displayName || currentUser.email
-              : 'Guest'}
+            {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
           </span>
         </Grid>
         <Grid item className="common">
@@ -64,9 +62,7 @@ class HeaderNav extends Component {
             >
               <img src={homeIcon} height="30" alt="home icon" />
             </Button>
-            <Button size={'large'} type="primary" ghost className="button">
-              <img src={contactIcon} height="30" alt="contact icon" />
-            </Button>
+
             {currentUser ? (
               <Button
                 size="large"
@@ -97,7 +93,7 @@ class HeaderNav extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
@@ -105,14 +101,12 @@ const dispatchToProps = dispatch => {
   return {
     doLogout: () => dispatch(actions.doLogout()),
     setPage: page => dispatch(actions.setPage(page)),
-    toggleChat: () => dispatch(actions.toggleChat()),
+    toggleChat: () => dispatch(actions.toggleChat())
   };
 };
 
 HeaderNav.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(headerNavStyle)(HeaderNav)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(headerNavStyle)(HeaderNav));

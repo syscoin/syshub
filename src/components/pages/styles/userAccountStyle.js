@@ -15,6 +15,8 @@ export default {
         },
         '& .paper-container': {
             padding:'20px 20px',
+            overflowY: 'auto',
+            height: '80vh',
             '& .gridList':{
                 width: 500,
                 height: 450,

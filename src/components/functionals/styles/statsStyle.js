@@ -9,33 +9,34 @@ export default {
     '& .statsHeading': {
       alignItems: 'center',
       display: 'flex',
-      fontSiza: '32px',
+      fontSiza: '32px'
     },
     '& .headingIcon': {
       height: '50px',
-      width: '60px',
+      width: '60px'
     },
     '& .statsMainDiv': {
       display: 'flex',
       justifyContent: 'space-around',
       overflow: 'hidden',
-      width: '100%',
+      width: '100%'
     },
     '& .statsCard': {
       boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
       padding: '0px !important',
-      margin: '25px',
+      margin: '20px',
       textAlign: 'center',
-      borderRadius: '10px',
+      borderRadius: '10px'
     },
     '& .statsCardHeader': {
       background: primary,
       borderTopLeftRadius: '8px',
-      borderTopRightRadius: '8px',
+      borderTopRightRadius: '8px'
     },
     '& .statsGridDiv': {
       width: '100%',
       justifyContent: 'space-between',
+      padding: '0 2%'
     },
     '& .statsTextHeading': {
       lineHeight: '2em',
@@ -44,14 +45,14 @@ export default {
       marginTop: '20px',
       height: '60px',
       '& h1': {
-        color: primary,
-      },
+        color: primary
+      }
     },
     '& .statsText': {
       color: 'rgb(189, 195, 199)',
-      padding: '10px 10px',
+      padding: '10px 0',
       fontSize: '1.4em',
-      height: '100px',
+      height: '100px'
     },
     '& .statsPercentage': {
       //border: '1px solid red',
@@ -64,9 +65,16 @@ export default {
       margin: '0 0 6% 1%',
       '& >img': {
         //border: '1px solid blue',
-        margin: '0 3% 0 0',
-      },
-    },
+        margin: '0 3% 0 0'
+      }
+    }
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    marginBottom: '15% !important',
+    '& .statsCard': {
+      margin: '20px 10%',
+      width: '80% !important'
+    }
+  }
 };

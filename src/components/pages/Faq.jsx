@@ -11,166 +11,166 @@ import { faqStyle } from './styles';
 
 const Panel = Collapse.Panel;
 
+const faqQuestions = [
+  {
+    section: 'General',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+  },
+  {
+    section: 'Tutorials',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+  },
+  {
+    section: 'Getting Started',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+
+  },
+  {
+    section: 'Alises',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+
+  },
+  {
+    section: 'Market Place',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+
+  },
+  {
+    section: 'Digital Certificates',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+
+  },
+  {
+    section: 'Encrypted Messaging',
+    questions: [
+      {
+        question: 'HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      },
+      {
+        question: 'HOW DO I SEND SYSCOIN TO SOMEONE?',
+        answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      }
+    ]
+
+  },
+
+]
+
+
 class Faq extends Component {
   constructor(props) {
     super(props);
-    this.renderFaqDetails = this.renderFaqDetails.bind(this);
-  }
-
-  renderFaqDetails() {
-    return (
-      <Collapse bordered={false}>
-        <div className="list-dot" />
-        <Panel
-          header="HOW DO I CONVERT MT SYSCOIN 1.0 SYSCOIN 2.0?"
-          showArrow={false}
-        >
-          <div
-            style={{
-              padding: '15px',
-              border: '1px solid #a4b0be',
-              marginLeft: 35,
-            }}
-          >
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be' }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </Panel>
-        <div className="list-dot" />
-        <Panel
-          header="WHERE IS THE WALLET DATA DIRECTORY LOCATED ON WINDOWS?"
-          showArrow={false}
-        >
-          <div
-            style={{
-              padding: '15px',
-              border: '1px solid #a4b0be',
-              marginLeft: 35,
-            }}
-          >
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be' }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </Panel>
-        <div className="list-dot" />
-        <Panel
-          header="WHERE IS THE WALLET DATA DIRECTORY LOCATED ON MAC?"
-          showArrow={false}
-        >
-          <div
-            style={{
-              padding: '15px',
-              border: '1px solid #a4b0be',
-              marginLeft: 35,
-            }}
-          >
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be' }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </Panel>
-        <div className="list-dot" />
-        <Panel header="HOW DO I SEND SYSCOIN TO SOMEONE?" showArrow={false}>
-          <div
-            style={{
-              padding: '15px',
-              border: '1px solid #a4b0be',
-              marginLeft: 35,
-            }}
-          >
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div style={{ color: '#a4b0be' }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </Panel>
-      </Collapse>
-    );
   }
 
   render() {
@@ -190,35 +190,35 @@ class Faq extends Component {
           </div>
 
           <Collapse bordered={false}>
-            <Panel header="General" key="1" className="general">
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel header="Tutorials" key="2" className="tutorials">
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel header="Getting Started" key="3" className="getting-started">
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel header="Alises" key="4" className="alises">
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel header="Market Place" key="5" className="market-place">
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel
-              header="Digital Certificates"
-              key="6"
-              className="digital-certificates"
-            >
-              {this.renderFaqDetails()}
-            </Panel>
-            <Panel
-              header="Encrypted Messaging"
-              key="7"
-              className="encrypted-messaging"
-            >
-              {this.renderFaqDetails()}
-            </Panel>
+            {faqQuestions.map((cat, index) => {
+              return (
+                <Panel header={cat.section} key={index} className="faq-category">
+                  {cat.questions.map((ques, index) => {
+                    return (
+                      <Collapse bordered={false}>
+                        <div className="list-dot"></div>
+                        <Panel header={ques.question} key={index} showArrow={false}>
+                          <div style={{ padding: '15px', border: '1px solid #a4b0be', marginLeft: 35 }}>
+                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
+                              {ques.answer}
+                            </div>
+                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
+                              {ques.answer}
+                            </div>
+                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
+                              {ques.answer}
+                            </div>
+                            <div style={{ color: '#a4b0be' }}>
+                              {ques.answer}
+                            </div>
+                          </div>
+                        </Panel>
+                      </Collapse>
+                    )
+                  })}
+                </Panel>
+              )
+            })}
           </Collapse>
         </div>
       </div>

@@ -20,10 +20,40 @@ const base = Rebase.createClass(fire.database());
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 const comments = fire.database().ref('comments');
-const commentReplies = fire.database().ref('commentReplies')
+const commentReplies = fire.database().ref('commentReplies');
+const votes = fire.database().ref('votes');
 // const currentUser
 
 //Some useful functions
+const checkVoted = (user, proposal) => {
+  return new Promise((resolve, reject) => {
+    fire
+      .database()
+      .ref('votes/' + user.uid)
+      .child(proposal.Hash)
+      .once('value')
+      .then(snap => {
+        if (snap.val() !== null) {
+          //          resolve(true); // Original true if voted false if no
+          resolve(false); // Overrided
+          return;
+        }
+        resolve(false);
+      })
+      .catch(err => {
+        resolve(err);
+      });
+  });
+};
+
+const voted = (user, proposal, voteTxt, voteId) => {
+  fire
+    .database()
+    .ref('votes/' + user.uid)
+    .child(proposal.Hash)
+    .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
+};
+
 
 const doRegister = () => {};
 
@@ -134,6 +164,15 @@ const doUpdateProfile = (user, callback) => {
         })
         .catch(err => callback(err));
     }
+
+    if (user.photoURL) {
+      currentUser
+        .updateProfile({ photoURL: user.photoURL })
+        .then(() => {
+          callback(null, currentUser);
+        })
+        .catch(err => callback(err));
+    }
   }
 };
 
@@ -224,5 +263,8 @@ export {
   doLogout,
   doUpdateProfile,
   doUpdatePassword,
-  doDeleteAccount
+  doDeleteAccount,
+  votes,
+  checkVoted,
+  voted
 };

@@ -12,7 +12,7 @@ import { Grid, Button, FormGroup, Input, withStyles } from 'material-ui';
 
 
 // import firebase
-import { fire, comments, commentReplies } from '../../firebase';
+import { fire, comments, commentReplies } from '../../API/firebase';
 
 import { proposalCommentsStyle } from './styles';
 

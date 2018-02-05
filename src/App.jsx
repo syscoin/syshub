@@ -8,16 +8,29 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { DesktopLayout, MobileLayout } from './components/layouts';
 
 import actions from './redux/actions';
-import { fire } from './firebase';
+import { fire } from './API/firebase';
 
 import appStyles from './styles/appStyle';
 
 class App extends Component {
   state = {};
   componentDidMount() {
+    const currentUser = fire.auth().currentUser;
+
+    if (currentUser) {
+      this.props.setCurrentUser(currentUser);
+      return;
+    }
+
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.setCurrentUser(user);
+        fire
+          .database()
+          .ref('mnPrivateKey/' + user.uid)
+          .on('value', snapshot => {
+            user.mnPrivateKey = snapshot.val();
+            this.props.setCurrentUser(user);
+          });
       } else {
         this.props.setCurrentUser(null);
       }
@@ -25,7 +38,6 @@ class App extends Component {
 
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
-    this.props.getMediumPosts();
     this.props.platformGet({
       os: Platform.OS || '',
       osVersion: Platform.OSVersion || '',
@@ -36,12 +48,12 @@ class App extends Component {
       deviceType: Platform.DeviceType || 'desktop',
       deviceModel: Platform.DeviceModel || '',
       deviceVendor: Platform.DeviceVendor || '',
-      ua: Platform.UA || '',
+      ua: Platform.UA || ''
     });
   }
 
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
+    // this.clearInterval(this.state.timer);
   }
 
   tick() {
@@ -49,6 +61,7 @@ class App extends Component {
   }
 
   render() {
+    // console.log('Current User ===>', this.props.app.currentUser);
     return (
       /* <HttpsRedirect> */
       <div style={appStyles.wraper}>
@@ -57,7 +70,7 @@ class App extends Component {
           <h1
             style={{
               color: 'white',
-              zIndex: '10000',
+              zIndex: '10000'
             }}
           >
             {this.state.timer}
@@ -74,7 +87,7 @@ class App extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
@@ -82,8 +95,8 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
-    getMediumPosts: () => dispatch(actions.getMediumPosts()),
-    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
+
+    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
   };
 };
 

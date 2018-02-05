@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import actions from '../../redux/actions';
 import { connect } from 'react-redux';
+import swal from 'sweetalert';
+import { fire } from '../../API/firebase';
+import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
 import { Divider, Button } from 'antd';
@@ -14,20 +17,127 @@ import { Progress } from 'antd';
 import { proposalCardStyle } from './styles';
 
 class ProposalCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.voteUp = this.voteUp.bind(this);
+    this.voteDown = this.voteDown.bind(this);
+  }
+
   voteUp(vote) {
-    if (this.props.user) {
-      console.log(
-        this.props.user.displayName + ' Voted For Up ' + ' for id ' + vote.id
-      );
+    const { proposal, user } = this.props;
+
+    if (!user) {
+      swal({
+        title: 'Oops...',
+        text: 'Must be logged in to vote!',
+        icon: 'error'
+      });
     }
+
+    if (!user.mnPrivateKey) {
+      swal({
+        title: 'Oops...',
+        text: 'Must own a MasterNode in order to vote',
+        icon: 'error'
+      });
+      return;
+    }
+
+    checkVoted(user, proposal)
+      .then(value => {
+        if (value) {
+          swal({
+            title: 'Oops...',
+            text: 'You already voted.',
+            icon: 'error'
+          });
+
+          return;
+        } else if (!value) {
+          user.mnPrivateKey.map(mnObj => {
+            const proposalVoteYes = {
+              mnPrivateKey: mnObj.mnPrivateKey,
+              vinMasternode: mnObj.vinMasternode,
+              gObjectHash: proposal.Hash,
+              voteOutcome: 1
+            };
+
+            this.props
+              .voteOnProposal(proposalVoteYes)
+              .then(data => {
+                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+                voted(user, proposal, 'Yes', 1);
+                this.props.getProposals();
+              })
+              .catch(err => {
+                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              });
+          });
+        }
+      })
+      .catch(err => {
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+      });
   }
 
   voteDown(vote) {
-    if (this.props.user) {
-      console.log(
-        this.props.user.displayName + ' Voted For Down ' + ' for id ' + vote.id
-      );
+    const { proposal, user } = this.props;
+
+    if (!user) {
+      swal({
+        title: 'Oops...',
+        text: 'Must be logged in to vote!',
+        icon: 'error'
+      });
     }
+
+    if (!user.mnPrivateKey) {
+      swal({
+        title: 'Oops...',
+        text: 'Must own a MasterNode in order to vote',
+        icon: 'error'
+      });
+      return;
+    }
+
+    checkVoted(user, proposal)
+      .then(value => {
+        if (value) {
+          swal({
+            title: 'Oops...',
+            text: 'You already voted.',
+            icon: 'error'
+          });
+
+          return;
+        } else if (!value) {
+          user.mnPrivateKey.map(mnObj => {
+            const proposalVoteNo = {
+              mnPrivateKey: mnObj.mnPrivateKey,
+              vinMasternode: mnObj.vinMasternode,
+              gObjectHash: proposal.Hash,
+              voteOutcome: 2
+            };
+
+            this.props
+              .voteOnProposal(proposalVoteNo)
+              .then(data => {
+                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+
+                voted(user, proposal, 'No', 2);
+                this.props.getProposals();
+              })
+              .catch(err => {
+                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              });
+          });
+        }
+      })
+      .catch(err => {
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+      });
   }
 
   render() {
@@ -62,7 +172,15 @@ class ProposalCard extends Component {
               }
             />
             <div className="proposalStatusNo">
-              <span className="proposalStatusActiveNo">
+              <span
+                className={
+                  progress < 35
+                    ? 'proposalStatusExecptionNo'
+                    : progress < 100
+                      ? 'proposalStatusActiveNo'
+                      : 'proposalStatusSuccessNo'
+                }
+              >
                 {proposal.YesCount + 30}
               </span>
               {` / `}
@@ -126,12 +244,15 @@ class ProposalCard extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.app.currentUser,
+    user: state.app.currentUser
   };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    voteOnProposal: params => dispatch(actions.voteOnProposal(params)),
+    getProposals: () => dispatch(actions.getProposals())
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(

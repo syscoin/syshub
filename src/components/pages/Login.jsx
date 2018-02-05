@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
 import Recaptcha from 'react-recaptcha';
 import swal from 'sweetalert';
-import { doLogin, fire } from '../../firebase';
+import { doLogin, fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
@@ -22,7 +22,7 @@ class Login extends Component {
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.verify = response;
-      },
+      }
     });
 
     window.recaptchaVerifier.render().then(function(widgetId) {
@@ -32,16 +32,32 @@ class Login extends Component {
 
   login(event) {
     event.preventDefault();
-    const currentUser = fire.auth().currentUser;
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
+    const mnPrivateKeys = [
+      {
+        mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
+        vinMasternode:
+          '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
+      },
+      {
+        mnPrivateKey: 'cQJd7h2tBbSHjutVrYnc1GhvLgw8pF6e49TEYGFHxNRiQh87UKwd',
+        vinMasternode:
+          '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
+      },
+      {
+        mnPrivateKey: 'cPim54aykwQctacE4ipFFPQzL79vw4dVriGBRvN9Xwt3r9NrA16M',
+        vinMasternode:
+          'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
+      }
+    ];
 
     if (!this.verify) {
       swal({
         title: 'Oops...',
         text: 'You forgot to complete the reCAPTCHA',
-        icon: 'error',
+        icon: 'error'
       });
 
       return;
@@ -56,13 +72,18 @@ class Login extends Component {
             swal({
               title: 'Oops...',
               text: 'Add phone number to the account first in account settings',
-              icon: 'error',
+              icon: 'error'
             });
             return;
           }
           return fire
             .auth()
             .signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+        } else {
+          fire
+            .database()
+            .ref('mnPrivateKey/' + user.uid)
+            .set(mnPrivateKeys);
         }
       })
       .then(confirmationResult => {
@@ -79,9 +100,9 @@ class Login extends Component {
               element: 'input',
               attributes: {
                 placeholder: 'Confirmation code here',
-                type: 'text',
-              },
-            },
+                type: 'text'
+              }
+            }
           })
             .then(value => {
               return confirmationResult.confirm(value);
@@ -93,8 +114,13 @@ class Login extends Component {
               swal({
                 title: 'Sucess',
                 text: `${user.email} signed in with sms verification`,
-                icon: 'success',
+                icon: 'success'
               });
+
+              fire
+                .database()
+                .ref('mnPrivateKey/' + user.uid)
+                .set(mnPrivateKeys);
 
               this.props.setPage('home');
             })
@@ -107,7 +133,7 @@ class Login extends Component {
         swal({
           title: 'Success',
           text: `Account logged in.`,
-          icon: 'success',
+          icon: 'success'
         });
 
         this.props.setPage('home');
@@ -116,10 +142,11 @@ class Login extends Component {
         swal({
           title: 'Oops...',
           text: `${err}`,
-          icon: 'error',
+          icon: 'error'
         });
       });
   }
+
   render() {
     const captcha = require('../../assets/img/captcha.jpg'),
       checkIcon = require('../../assets/img/checkIcon.png'),
@@ -128,9 +155,9 @@ class Login extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={style} md={12}>
+      <Grid container className={style} md={12} xs={12}>
         <h1 className="title">Login to SysHub</h1>
-        <Grid item md={12} className="form__container">
+        <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
             ref={form => {
@@ -142,6 +169,7 @@ class Login extends Component {
               item
               lg={{ size: 8, offset: 2 }}
               md={{ size: 10, offset: 1 }}
+              xs={12}
               justify="center"
             >
               {/* For User Name */}
@@ -176,7 +204,10 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} />
+                <div
+                  ref={ref => (this.recaptcha = ref)}
+                  className="recaptcha-div"
+                />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -196,13 +227,13 @@ class Login extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 };
 
