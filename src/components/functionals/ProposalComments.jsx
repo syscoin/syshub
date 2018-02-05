@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Divider } from 'antd';
 import { Grid, Button, FormGroup, Input, withStyles } from 'material-ui';
 
-import { proposalCommentsStyle } from './styles';
+import { proposalCommentsStyle } from './styles'; 
 
 class ProposalComments extends Component {
   constructor(props) {
