@@ -10,6 +10,7 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
+import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col, Card } from 'antd';
 import { Form, Icon, Input, Button, InputNumber } from 'antd';
@@ -79,7 +80,60 @@ class NewProposal extends Component {
     const dataHex = {
       dataHex: hexedProposal
     };
-    this.props.checkProposal(dataHex);
+
+    const prepareObj = {
+      parentHash: '0',
+      revision: '1',
+      time: '1516597878',
+      dataHex: hexedProposal
+    };
+
+    this.props
+      .checkProposal(dataHex)
+      .then(data => {
+        if (data['Object status'] === 'OK') {
+          return this.props.prepareProposal(prepareObj);
+        }
+      })
+      .then(prepareResponse => {
+        if (prepareResponse) {
+          return swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Success',
+            text: `"${prepareResponse}" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+            icon: 'success',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Input payment id here',
+                type: 'text'
+              }
+            }
+          });
+        }
+      })
+      .then(paymentId => {
+        let submitObj = { ...prepareObj };
+        if (paymentId) {
+          submitObj.txid = paymentId;
+          return this.props.submitProposal(submitObj);
+        }
+      })
+      .then(submitResponse => {
+        if (submitResponse) {
+          swal({
+            title: 'Success',
+            text: `"${submitResponse}" \n \n Here is yoru submit receipt. Please copy it down.`,
+            icon: 'success'
+          });
+        }
+      })
+      .catch(err => {
+        alert(err);
+      });
   };
 
   handleNext = () => {
