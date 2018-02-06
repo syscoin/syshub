@@ -7,8 +7,12 @@ import { connect } from 'react-redux';
 
 
 //import antd components
-import { Divider } from 'antd';
+import { Divider, Pagination } from 'antd';
 import { Grid, Button, FormGroup, Input, withStyles } from 'material-ui';
+import AddIcon from 'material-ui-icons/Add';
+import Icon from 'material-ui/Icon';
+import DeleteIcon from 'material-ui-icons/Delete';
+import EditIcon from 'material-ui-icons/Edit';
 
 
 // import firebase
@@ -23,9 +27,12 @@ class ProposalComments extends Component {
       userComment: '',
       userReply: '',
       proposalID: this.props.data.proposalID,
-      comments: []
+      allComments: [],
+      editCommentState: false,
+      userEditComment: '',
+      selectedCommentID: null
     };
-
+    this.commentsCounts = 0;
     this.addComment = this.addComment.bind(this);
     this.setComment = this.setComment.bind(this);
     this.renderReplies = this.renderReplies.bind(this);
@@ -33,6 +40,13 @@ class ProposalComments extends Component {
     this.loadReplies = this.loadReplies.bind(this);
     this.addReply = this.addReply.bind(this);
     this.setReply = this.setReply.bind(this);
+    this.voteForComment = this.voteForComment.bind(this);
+    this.voteCount = this.voteCount.bind(this);
+    this.changePage = this.changePage.bind(this);
+    this.setComment = this.setComment.bind(this);
+    this.editedComment = this.editedComment.bind(this);
+    this.setEditComment = this.setEditComment.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
 
@@ -52,30 +66,33 @@ class ProposalComments extends Component {
     // Load comments from firebase in realtime
     // then set in state
     let _date = new Date();
+
     comments.child(this.props.data.proposalID)
       .orderByChild('createdAt')
       .on('value', (item) => {
         let commentsObjs = item.val(),
-          commentsArray = []
-
+          commentsArray = [];
+        console.log("commentsObjs", commentsObjs)
         for (var key in commentsObjs) {
           commentsObjs[key]._id = key;
           commentsArray.unshift(commentsObjs[key]);
         }
-
+        this.commentsCounts = commentsArray.length;
+        console.log('commentsCounts', this.commentsCounts)
         this.setState({
-          comments: commentsArray
+          allComments: commentsArray
         }, () => {
           this.loadReplies(0);
+          this.commentsLimit = this.commentsLimit;
         });
       });
   }
 
   // load replies
   loadReplies(index) {
-    if (this.state.comments.length > index) {
-      let _commentId = this.state.comments[index]._id,
-        _comments = Object.assign(this.state.comments);
+    if (this.state.allComments.length > index) {
+      let _commentId = this.state.allComments[index]._id,
+        _comments = Object.assign(this.state.allComments);
 
       commentReplies.child(_commentId).on('value', (item) => {
         let _replies = item.val(),
@@ -85,7 +102,7 @@ class ProposalComments extends Component {
           for (var key in _replies) {
             _comments[index].replies.push(_replies[key])
           }
-          this.setState({ comments: _comments }, () => {
+          this.setState({ allComments: _comments }, () => {
             this.loadReplies(index + 1);
           });
         }
@@ -129,22 +146,25 @@ class ProposalComments extends Component {
   }
 
   addReply(commentID) {
-    let date = new Date;
-    let _replyObj = {
-      createdBy: {
-        name: this.props.user.displayName,
-        uid: this.props.user.uid,
-      },
-      createdAt: date.getTime(),
-      updatedAt: date.getTime(),
-      message: this.state.userReply,
+    if (this.state.userReply && this.props.user) {
+      let date = new Date;
+      let _replyObj = {
+        createdBy: {
+          name: this.props.user.displayName,
+          uid: this.props.user.uid,
+        },
+        createdAt: date.getTime(),
+        updatedAt: date.getTime(),
+        message: this.state.userReply,
+      }
+      commentReplies.child(commentID).push(_replyObj, () => {
+        console.log('Successfully Reply');
+      })
+      this.setState({
+        userReply: ''
+      })
     }
-    commentReplies.child(commentID).push(_replyObj, () => {
-      console.log('Successfully Reply');
-    })
-    this.setState({
-      userReply: ''
-    })
+
   }
 
   setReply(e) {
@@ -156,27 +176,114 @@ class ProposalComments extends Component {
 
   addComment() {
     console.log("Comment", this.state.userComment)
-    let date = new Date
-    let _comment = {
-      createdBy: {
-        name: this.props.user.displayName,
-        uid: this.props.user.uid,
-      },
-      createdAt: date.getTime(),
-      updatedAt: date.getTime(),
-      voteUpBy: [],
-      voteDownBy: [],
-      message: this.state.userComment,
-      replies: []
+    if (this.state.userComment && this.props.user) {
+      let date = new Date
+      let _comment = {
+        createdBy: {
+          name: this.props.user.displayName,
+          uid: this.props.user.uid,
+        },
+        createdAt: date.getTime(),
+        updatedAt: date.getTime(),
+        voteUpBy: [],
+        voteDownBy: [],
+        message: this.state.userComment,
+        replies: [],
+        isEdited: false
+
+      }
+      console.log("New Comment", _comment)
+      comments.child(this.state.proposalID).push(_comment, () => {
+        console.log('Success')
+      })
+      this.setState({
+        userComment: ''
+      })
+    }
+
+  }
+
+  voteForComment(action, commentID) {
+    if (this.props.user) {
+      let itemIndex = null,
+        _item;
+
+      itemIndex = this.state.allComments.map((_item) => {
+        return _item._id;
+      }).indexOf(commentID);
+
+      if (itemIndex > -1) {
+        _item = Object.assign(this.state.allComments[itemIndex]);
+        let date = new Date();
+        _item.updatedAt = date.getTime();
+        if (!_item.votes) {
+          _item.votes = [{
+            by: {
+              name: this.props.user.displayName,
+              uid: this.props.user.uid,
+            },
+            action: action
+          }];
+        } else {
+          let _voteIndex = _item.votes.map((__item) => {
+            return __item.by.uid;
+          }).indexOf(this.props.user.uid);
+          if (_voteIndex > -1) {
+            _item.votes[_voteIndex].action = action;
+          }
+        }
+        comments.child(this.props.data.proposalID).child(commentID).set(_item);
+      }
+    }
+
+  }
+
+  voteCount(_for, _array) {
+    let counts = 0;
+    if (_array) {
+      _array.forEach((_item) => {
+        if (_item.action == _for) {
+          counts++
+        }
+      })
 
     }
-    console.log("New Comment", _comment)
-    comments.child(this.state.proposalID).push(_comment, () => {
-      console.log('Success')
+    return counts;
+  }
+
+  setEditComment(e) {
+    this.setState({ userEditComment: e.target.value })
+  }
+
+  editedComment(id, message) {
+    this.setState({ editCommentState: !this.state.editCommentState, selectedCommentID: id, userEditComment: message });
+  }
+
+  editComment(id) {
+    var editedCommentObj,
+      editCommentID, date = new Date;
+    this.state.allComments.map((comment, key) => {
+      if (id == comment._id) {
+        comment.message = this.state.userEditComment
+        editCommentID = comment._id;
+        comment.updatedAt = date.getTime();
+        comment.isEdited = true;
+        delete comment._id;
+        editedCommentObj = comment;
+      }
     })
-    this.setState({
-      userComment: ''
-    })
+    comments.child(this.props.data.proposalID).child(editCommentID).set(editedCommentObj);
+    this.setState({ editCommentState: !this.state.editCommentState })
+    console.log("editedCommentObj", editedCommentObj)
+  }
+
+  deleteComment(id) {
+    comments.child(this.state.proposalID).child(id).remove();
+  }
+
+
+  changePage(page, pageSize) {
+    console.log("page", page, "pageSize", pageSize)
   }
 
 
@@ -200,7 +307,7 @@ class ProposalComments extends Component {
           <Grid item md={12} className="proposalDetails">
             {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 
-            <textarea rows="2" cols="75" className="userComment" defaultValue={this.state.userComment} onChange={this.setComment}>
+            <textarea rows="2" cols="75" className="userComment" value={this.state.userComment} onChange={this.setComment}>
 
             </textarea>
             <hr className="proposalDetailsHr" />
@@ -278,9 +385,9 @@ class ProposalComments extends Component {
           </Grid>
         </Grid> */}
 
-        {this.state.comments.map((comment, key) => {
+        {this.state.allComments.map((comment, key) => {
           return (
-            <Grid container md={10} className="topCommentWithReplyView">
+            <Grid container md={10} className="topCommentWithReplyView" key={comment._id}>
               <Grid container md={12} className="commentHeading">
                 <Grid item md={8} className="userView">
                   <span className="userName">
@@ -299,23 +406,59 @@ class ProposalComments extends Component {
                     alt="a"
                     src={require('../../assets/img/png_button_up.png')}
                     className="upVoteICon"
+                    onClick={() => { this.voteForComment('up', comment._id) }}
                   />
-                  <div className="votingNumber">{comment.voteUpBy ? comment.voteUpBy.length : 0}</div>
+                  <div className="votingNumber">{this.voteCount('up', comment.votes)}</div>
                   <img
                     alt="a"
                     src={require('../../assets/img/png_button_down.png')}
                     className="downVoteICon"
+                    onClick={() => { this.voteForComment('down', comment._id) }}
                   />
-                  <div className="votingNumber">{comment.voteDownBy ? comment.voteDownBy.length : 0}</div>
+                  <div className="votingNumber">{this.voteCount('down', comment.votes)}</div>
                 </Grid>
               </Grid>
               <Grid item md={12} className="commentlHrView">
                 <hr className="hr" />
               </Grid>
-              <Grid item md={10} className="newYearView">
-                {' '}
-                {comment.message}
-              </Grid>
+              {this.state.editCommentState && this.state.selectedCommentID == comment._id ?
+                <Grid container md={8} className="commentSectionslView">
+                  <Grid item md={12} className="commentHeading">
+                    Edited Comment
+                  </Grid>
+                  <Grid item md={12} className="proposalDetails">
+                    {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
+
+                    <textarea rows="2" cols="75" className="userComment" value={this.state.userEditComment} onChange={this.setEditComment}>
+
+                    </textarea>
+                    <hr className="proposalDetailsHr" />
+                    <Button type="submit" color="primary" onClick={() => this.editComment(comment._id)}>
+                      Submit
+                    </Button>
+                    <Button color="primary" onClick={() => { this.setState({ editCommentState: !this.state.editCommentState }) }}>
+                      Cancel
+                    </Button>
+                  </Grid>
+                </Grid>
+                :
+                <Grid item md={8} className="newYearView">
+                  {' '}
+                  {comment.message}
+                  {this.props.user && this.props.user.uid === comment.createdBy.uid ?
+                    <Grid className="edit-delete-btn">
+                      <EditIcon onClick={() => { this.editedComment(comment._id, comment.message) }} />
+                      <DeleteIcon onClick={() => { this.deleteComment(comment._id) }} />
+                    </Grid> : null}
+                  {comment.isEdited ?
+                    <Button color="primary" className="show-edited">
+                      Edited
+                    </Button> : null}
+
+                </Grid>
+
+              }
+
               {comment.replies ? this.renderReplies(comment.replies) : null
               }
               <Grid item md={10} className="replyView">
@@ -330,7 +473,7 @@ class ProposalComments extends Component {
 
                 <Grid item md={12} className="proposalDetails">
                   {/* Having Fun ? */}
-                  <textarea rows="1" cols="55" className="userComment" defaultValue={this.state.userReply} onChange={this.setReply}>
+                  <textarea rows="1" cols="55" className="userComment" value={this.state.userReply} onChange={this.setReply}>
                   </textarea>
                   <hr className="proposalDetailsHr" />
 
@@ -342,7 +485,9 @@ class ProposalComments extends Component {
             </Grid>
           )
         })}
-
+        <Grid className="pagination" md={10}>
+          <Pagination defaultCurrent={1} total={this.commentsCounts} onChange={(page, pageSize) => { this.changePage(page, pageSize) }} />
+        </Grid>
       </Grid>
     );
   }

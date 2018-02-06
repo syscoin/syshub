@@ -138,6 +138,20 @@ export default {
         marginLeft: '7%',
         fontSize: 16,
         color: gray,
+        '& .show-edited': {
+          width: 5,
+          fontSize: 10,
+          backgroundColor: '#fff',
+          margin: 0,
+          padding: '5px 0px',
+          '& span': {
+            color: primaryLight
+          }
+        },
+        '& .edit-delete-btn': {
+          display: 'inline-block',
+          float: 'right',
+        }
       },
       '& .replyView': {
         padding: 0,
@@ -294,6 +308,11 @@ export default {
     '& .votingNumber': {
       display: 'inline',
       verticalAlign: 'bottom',
+      padding: '0px 3px'
+    },
+    '& .pagination': {
+      textAlign: 'right',
+      padding: '20px 0px'
     },
   },
   mRoot: { extend: 'root' },
