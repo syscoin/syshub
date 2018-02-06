@@ -20,7 +20,7 @@ class SiderMenu extends Component {
     const { classes, active } = this.props;
     return (
       <div className={classes.root}>
-        <SiderLogo />
+        {/* <SiderLogo /> */}
         {this.props.menuItems.map((item, i) => {
           const icon = item.key === active ? item.iconSelected : item.icon;
           const txt =

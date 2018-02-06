@@ -25,39 +25,56 @@ export default {
       borderBottom: `1px solid ${primaryLight}`
     },
     '& .header-bitcoin-status': {
-      padding: '10px 4px',
+      marginBottom: 15,
+      padding: '10px 4px 10px 4px',
     },
     '& .name-header': {
       textAlign: 'left',
       padding: 0,
-      marginTop :20,
-      paddingLeft:10,
-      '& .btn': {
+      marginTop: 15,
+      paddingLeft: 10,
+
+      '& .btn-logout': {
         textTransform: 'capitalize',
         minWidth: 55,
         padding: 0,
+        position: 'absolute',
+        right: 10,
+        top: 45,
         '& .text': {
           color: white
         }
       },
-      '& .TxtRegular': {
-        padding: '0 15px',
-        color: white,
-        padding: '0',
-        fontSize: '12px',
+      '& .btn-login': {
+        textTransform: 'capitalize',
+        minWidth: 55,
+        padding: 0,
+        position: 'absolute',
+        right: 10,
+        top: 25,
+        '& .text': {
+          color: white
+        }
       },
-      '& .TxtBold': {
-        color: white,
-        padding: '0 0 0 4px',
-        fontSize: '11px',
-        fontWeight: 'bold',
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        maxWidth: 70,
-        display: 'inline-block',
-        overflowY: 'hidden',
-        height: 35
-      }
+      '& .text-span': {
+        marginLeft: 15,
+        marginBottom: 5,
+        display: 'block',
+        marginBottom: 5,
+        textAlign: 'right',
+        '& .TxtRegular': {
+          padding: '0 15px',
+          color: white,
+          padding: '0',
+          fontSize: '12px',
+        },
+        '& .TxtBold': {
+          color: white,
+          padding: '0 0 0 4px',
+          fontSize: '11px',
+          fontWeight: 'bold',
+        }
+      },
     },
     '& .mb-0': {
       marginBottom: 0

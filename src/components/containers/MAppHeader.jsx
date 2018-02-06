@@ -54,7 +54,7 @@ class AppHeader extends Component {
                   </Grid>
                   <Grid item xs={7} className="name-header">
                     {currentUser ?
-                      <span>
+                      <span className='text-span'>
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
                           {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
@@ -62,12 +62,12 @@ class AppHeader extends Component {
 
 
                     {currentUser ? (
-                      <Button className="btn" onClick={() => this.doLogout()}>
+                      <Button className="btn-logout" onClick={() => this.doLogout()}>
                         <span className="text">Logout</span>
                       </Button>
                     ) : (
                         <Button
-                          className="btn"
+                          className="btn-login"
                           onClick={() => this.props.setPage('login')}
                         >
                           <span className="text">Login</span>

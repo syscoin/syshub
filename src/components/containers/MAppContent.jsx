@@ -20,9 +20,10 @@ import {
   NewProposal,
   News,
   UserAccount,
-  UserAccountTest
+  UserAccountTest,
 } from '../pages';
-
+import MAppLSider from './AppLSider'
+import ChatBox from '../functionals/ChatBox'
 //Import Styles
 import { mAppContentStyle } from './styles';
 //import EmailModal from './the-modal';
@@ -46,7 +47,9 @@ class AppContent extends Component {
               faq: <Faq deviceType={deviceType} />,
               masterNode: <MasternodeSetting deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
-              register: <Register deviceType={deviceType} />
+              register: <Register deviceType={deviceType} />,
+              sidebar: <MAppLSider deviceType={deviceType} />,
+              chatbox: <ChatBox deviceType={deviceType} />
             }[showPage]
           }
         </Content>
