@@ -4,6 +4,7 @@ import { HTTPAsync, Hex } from '../helpers';
 
 //const baseApiURL = 'http://159.89.141.35:3000'; //Old net, no SYS available
 const baseApiURL = 'http://159.89.151.42:3000';
+const QuangUrl = 'https://www.qnguyen.xyz/list';
 
 export default {
   getProposals: () => {
@@ -17,7 +18,7 @@ export default {
     // -------------------------------------------
 
     return dispatch => {
-      return dispatch(HTTPAsync.get(`${baseApiURL}/list`, null, constants.SYS_PROPOSALS_GET));
+      return dispatch(HTTPAsync.get(QuangUrl, null, constants.SYS_PROPOSALS_GET));
     };
   },
 

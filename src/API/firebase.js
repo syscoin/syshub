@@ -95,10 +95,7 @@ const doUpdatePassword = (user, callback) => {
   const currentUser = fire.auth().currentUser;
 
   if (currentUser) {
-    const credentials = fire.auth.EmailAuthProvider.credential(
-      currentUser.email,
-      user.currentPass
-    );
+    const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, user.currentPass);
     currentUser
       .reauthenticateWithCredential(credentials)
       .then(() => {
@@ -121,8 +118,7 @@ const doUpdateProfile = (user, callback) => {
         closeOnClickOutside: false,
         closeOnEsc: false,
         title: 'Warning',
-        text:
-          'You are about to change your email, you must input your password first',
+        text: 'You are about to change your email, you must input your password first',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
@@ -134,10 +130,7 @@ const doUpdateProfile = (user, callback) => {
           }
         }
       }).then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(
-          currentUser.email,
-          password
-        );
+        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
         currentUser
           .reauthenticateWithCredential(credentials)
@@ -202,10 +195,7 @@ const doDeleteAccount = () => {
       }
     })
       .then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(
-          currentUser.email,
-          password
-        );
+        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
         return currentUser.reauthenticateWithCredential(credentials);
       })
@@ -214,8 +204,7 @@ const doDeleteAccount = () => {
           closeOnClickOutside: false,
           closeOnEsc: false,
           title: 'WARNING',
-          text:
-            'Type "DELETE" to delete your account permantly, this cannot be undone!',
+          text: 'Type "DELETE" to delete your account permantly, this cannot be undone!',
           icon: 'warning',
           buttons: true,
           dangerMode: true,

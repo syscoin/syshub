@@ -19,6 +19,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
+import { fire, proposals } from '../../API/firebase';
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 //import style
@@ -55,23 +56,54 @@ class NewProposal extends Component {
   }
 
   createPropObj = () => {
-    const { proposalTitle, address, amount } = this.state;
+    const { app } = this.props;
+    const { currentUser } = app;
+    const {
+      proposalTitle,
+      address,
+      amount,
+      proposal__detail,
+      proposallink,
+      proposalDate
+    } = this.state;
+
+    if (!currentUser) {
+      swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
+      return;
+    }
+
     this.setState({
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
+
+    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+
+    let userProposal = {
+      name: proposalTitle,
+      description: proposal__detail,
+      type: 1,
+      start_epoch: new Date().getTime(),
+      end_epoch: new Date(proposalDate).getTime(),
+      payment_address: address,
+      payment_amount: Number(amount),
+      url: proposallink
+    };
+
+    proposalRef.set(userProposal);
 
     let newProposal = [
       [
         'proposal',
         {
           name: proposalTitle,
+          description: proposal__detail,
           type: 1,
-          start_epoch: 1513029546,
-          end_epoch: 1513375146,
+          start_epoch: new Date().getTime(),
+          end_epoch: new Date(proposalDate).getTime(),
           payment_address: address,
           payment_amount: Number(amount),
-          url: 'https://www.thrifa.io00000000000000000000000000000000000000000000000000000000000000'
+          url: proposallink
         }
       ]
     ];
@@ -97,6 +129,9 @@ class NewProposal extends Component {
       })
       .then(prepareResponse => {
         if (prepareResponse) {
+          userProposal.prepareReceipt = prepareResponse;
+          proposalRef.set(userProposal);
+
           return swal({
             closeOnClickOutside: false,
             closeOnEsc: false,
@@ -124,9 +159,12 @@ class NewProposal extends Component {
       })
       .then(submitResponse => {
         if (submitResponse) {
+          userProposal.submitReceipt = submitResponse;
+          proposalRef.set(userProposal);
+
           swal({
             title: 'Success',
-            text: `"${submitResponse}" \n \n Here is yoru submit receipt. Please copy it down.`,
+            text: `"${submitResponse}" \n \n Here is your submit receipt. Please copy it down.`,
             icon: 'success'
           });
         }
@@ -182,7 +220,8 @@ class NewProposal extends Component {
   //proposal title function
   proposalTitle(e) {
     this.setState({
-      proposalTitle: e.target.value
+      proposalTitle: e.target.value,
+      proposallink: `http://syshub.com/p/${e.target.value.trim().toLowerCase()}`
     });
   }
 
@@ -263,9 +302,7 @@ class NewProposal extends Component {
                 className="proposal-url-input"
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
-                  this.state.proposalTitle
-                    ? this.state.proposalTitle.toLowerCase()
-                    : 'proposal-title'
+                  this.state.proposalTitle ? '' : 'proposal-title'
                 }`}
               />
             </Col>
@@ -417,15 +454,6 @@ class NewProposal extends Component {
   render() {
     const { classes, deviceType, proposal } = this.props;
     const { checkStatus, prepareReceipt, submitReceipt } = proposal;
-    if (checkStatus) {
-      console.log('Check -->', checkStatus);
-    }
-    if (prepareReceipt) {
-      console.log('Prepare -->', prepareReceipt);
-    }
-    if (submitReceipt) {
-      console.log('Submit -->', submitReceipt);
-    }
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -521,7 +549,8 @@ class NewProposal extends Component {
 
 const stateToProps = state => {
   return {
-    proposal: state.proposals
+    proposal: state.proposals,
+    app: state.app
   };
 };
 
