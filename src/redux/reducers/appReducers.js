@@ -3,7 +3,7 @@ import constants from '../constants';
 const initialState = {
   currentUser: null,
   showPage: 'home',
-  showChat: true,
+  showChat: false,
   showMenu: false,
   platform: {},
   loading: false,

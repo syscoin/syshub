@@ -7,8 +7,13 @@ const white = palette.white;
 
 export default {
   mRoot: {
+    '& .app-bar': {
+      boxShadow: 'none',
+    },
     '& .header': {
-      backgroundColor: primary
+      backgroundColor: primary,
+      paddingLeft: 8,
+      paddingRight: 8,
     },
     '& .container': {
       // border: '1px solid red',
@@ -26,13 +31,14 @@ export default {
     },
     '& .header-bitcoin-status': {
       marginBottom: 15,
-      padding: '10px 4px 10px 4px',
+      padding: '10px 4px 10px 15px',
     },
     '& .name-header': {
       textAlign: 'left',
       padding: 0,
       marginTop: 15,
       paddingLeft: 10,
+      paddingRight: 15,
 
       '& .btn-logout': {
         textTransform: 'capitalize',

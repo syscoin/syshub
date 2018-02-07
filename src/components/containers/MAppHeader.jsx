@@ -45,7 +45,7 @@ class AppHeader extends Component {
     return (
       <div>
         <Header className={style}>
-          <AppBar position="fixed">
+          <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
                 <Grid container>

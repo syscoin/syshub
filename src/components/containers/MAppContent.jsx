@@ -48,10 +48,11 @@ class AppContent extends Component {
               masterNode: <MasternodeSetting deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
               register: <Register deviceType={deviceType} />,
-              sidebar: <MAppLSider deviceType={deviceType} />,
-              chatbox: <ChatBox deviceType={deviceType} />
+              sidebar: <MAppLSider deviceType={deviceType} />
+
             }[showPage]
           }
+          {this.props.showChat ? <ChatBox deviceType={deviceType} /> : null}
         </Content>
       </div>
     );
@@ -61,7 +62,8 @@ class AppContent extends Component {
 const stateToProps = state => {
   return {
     showPage: state.app.showPage,
-    deviceType: state.app.platform.deviceType
+    deviceType: state.app.platform.deviceType,
+    showChat: state.app.showChat
   };
 };
 

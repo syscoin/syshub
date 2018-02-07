@@ -103,24 +103,24 @@ class MHeaderNav extends Component {
       <Grid container className={style}>
         <Grid item xs={3} className="left-section">
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}
-            <IconButton color="inherit" aria-label="Menu">
-              <Icon type="bars" className="menu-icon" id="sidebar" onClick={this.itemClick}/>
-            </IconButton>
+          <IconButton color="inherit" aria-label="Menu">
+            <Icon type="bars" className="menu-icon" id="sidebar" onClick={this.itemClick} />
+          </IconButton>
           {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
           <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
         </Grid>
-        <Grid item xs={3} className="right-section">
+        <Grid item xs={3} className="right-section" style={this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC', height: 70 }}>
           <Button
             size={'large'}
             type="primary"
             ghost
             className="button"
-            /* onClick={() => this.props.toggleChat()} */
+            onClick={() => this.props.toggleChat()}
           >
-            <img src={chatIcon} alt="chat icon" height="30"  id="chatbox"
-             onClick={this.itemClick} />
+            <img src={chatIcon} alt="chat icon" height="30" id="chatbox" />
+            {/* Call function for toggle */}
           </Button>
         </Grid>
       </Grid>
@@ -130,7 +130,8 @@ class MHeaderNav extends Component {
 
 const stateToProps = state => {
   return {
-    deviceType: state.app.platform.deviceType
+    deviceType: state.app.platform.deviceType,
+    showChat: state.app.showChat
   };
 };
 
