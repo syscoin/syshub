@@ -7,8 +7,8 @@ import injectSheet from 'react-jss';
 import {
   MAppHeader,
   MAppContent,
-  MAppLSider,
-  MAppRSider,
+  AppLSider,
+  AppRSider,
   MAppFooter
 } from '../containers/';
 
@@ -32,7 +32,9 @@ class MobileLayout extends Component {
     return (
       <div className={classes.root}>
         <MAppHeader />
-        <MAppContent />
+        <AppLSider /> {/* Container for Menu */}
+        <AppRSider /> {/* Container for Chat */}
+        <MAppContent /> {/* Container for the rest of the page */}
         <MAppFooter />
       </div>
     );
