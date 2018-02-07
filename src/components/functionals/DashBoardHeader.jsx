@@ -42,10 +42,11 @@ class DashBoardHeader extends Component {
             <Grid item md={12} className="headingView">
               <Grid item md={12} className="headingRow">
                 <div className="headingDiv">
-                  Number Active Proposals :{' '}
                   <span className="activeText">
                     {proposal.list.length > 0 ? proposal.list.length : 0}
                   </span>
+                  {'  '}
+                  Active Proposals
                 </div>
               </Grid>
             </Grid>
