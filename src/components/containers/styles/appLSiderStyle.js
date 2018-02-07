@@ -17,7 +17,18 @@ const sider = {
   backgroundColor: primary, //'#ff0045',
 };
 
+const mWraper = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyAlign: 'flex-start',
+  flex: '0 1 15%',
+  background: greyLight,
+  borderRight: `1px solid ${grey}`,
+  position: 'absolute',
+}
+
 export default {
   wraper,
   sider,
+  mWraper
 };

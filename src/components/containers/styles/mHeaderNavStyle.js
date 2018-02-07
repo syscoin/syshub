@@ -10,6 +10,7 @@ export default {
   mRoot: {
     borderTop: 'thin solid ' + gery,
     marginTop: 25,
+    marginBottom: 0,
     '& .left-section': {
       textAlign: 'center'
     },
@@ -21,7 +22,6 @@ export default {
       textAlign: 'center',
       borderLeft: 'thin solid ' + gery,
       borderRight: 'thin solid ' + gery,
-      height: 70,
       '& img': {
         height: 50
       }

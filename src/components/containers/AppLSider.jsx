@@ -75,16 +75,22 @@ const menuItems = [
 class AppLSider extends Component {
   itemClick(pageActive) {
     this.props.setPage(pageActive);
+    this.props.toggleMenu();
   }
 
   render() {
+
+    const { deviceType } = this.props;
+    const style = deviceType === 'mobile' ? appLSiderStyle.mWraper : appLSiderStyle.wraper
+
     return (
-      <div style={appLSiderStyle.wraper}>
+      <div style={style}>
         <SiderMenu
           menuItems={menuItems}
           active={this.props.app.showPage}
           logged={this.props.logged}
           onItemClick={pageActive => this.itemClick(pageActive)}
+          deviceType={deviceType}
         />
       </div>
     );
@@ -101,6 +107,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
+    toggleMenu: () => dispatch(actions.toggleMenu()),
   };
 };
 
