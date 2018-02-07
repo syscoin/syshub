@@ -45,26 +45,34 @@ class AppHeader extends Component {
     return (
       <div>
         <Header className={style}>
-          <AppBar position="fixed">
+          <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
                 <Grid container>
-                  <Grid item xs={6}>
+                  <Grid item xs={5} className="header-bitcoin-status">
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
-                  <Grid item xs={6} className="name-header">
+                  <Grid item xs={7} className="name-header">
+                    {currentUser ?
+                      <span className='text-span'>
+                        <span className="TxtRegular">{`Welcome  `}</span>
+                        <span className="TxtBold">
+                          {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
+                        </span> </span> : null}
+
+
                     {currentUser ? (
-                      <Button className="btn" onClick={() => this.doLogout()}>
+                      <Button className="btn-logout" onClick={() => this.doLogout()}>
                         <span className="text">Logout</span>
                       </Button>
                     ) : (
-                      <Button
-                        className="btn"
-                        onClick={() => this.props.setPage('login')}
-                      >
-                        <span className="text">Login</span>
-                      </Button>
-                    )}
+                        <Button
+                          className="btn-login"
+                          onClick={() => this.props.setPage('login')}
+                        >
+                          <span className="text">Login</span>
+                        </Button>
+                      )}
                   </Grid>
                 </Grid>
                 <MHeaderNav />

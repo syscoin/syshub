@@ -8,6 +8,7 @@ export default {
     left: '0px',
     bottom: '0px',
     width: '100%',
+    position: 'fixed',
     '& .footer': {
       height: '60px',
       textAlign: 'center',

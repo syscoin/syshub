@@ -10,6 +10,9 @@ export default {
   mRoot: {
     borderTop: 'thin solid ' + gery,
     marginTop: 25,
+    '& .left-section': {
+      textAlign: 'center'
+    },
     '& .divider': {
       height: '100%',
       margin: 0

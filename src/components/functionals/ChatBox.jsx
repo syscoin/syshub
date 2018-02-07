@@ -126,7 +126,7 @@ class ChatBox extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <div className={classes.root}>
+      <div className={style}>
         {/* chat box container */}
         <div className="chat_box_container">
           <Paper className="paper-style">
