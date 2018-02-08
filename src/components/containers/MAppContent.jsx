@@ -20,11 +20,10 @@ import {
   NewProposal,
   News,
   UserAccount,
-  UserAccountTest,
+  UserAccountTest
 } from '../pages';
-import MAppLSider from './AppLSider'
-import MAppRSider from './MAppRSider'
-import ChatBox from '../functionals/ChatBox'
+import MAppLSider from './AppLSider';
+import MAppRSider from './AppRSider';
 //Import Styles
 import { mAppContentStyle } from './styles';
 //import EmailModal from './the-modal';
@@ -48,7 +47,7 @@ class AppContent extends Component {
               faq: <Faq deviceType={deviceType} />,
               masterNode: <MasternodeSetting deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
-              register: <Register deviceType={deviceType} />,
+              register: <Register deviceType={deviceType} />
             }[showPage]
           }
           {this.props.showMenu ? <MAppLSider deviceType={deviceType} /> : null}
