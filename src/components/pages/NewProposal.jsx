@@ -221,7 +221,10 @@ class NewProposal extends Component {
   proposalTitle(e) {
     this.setState({
       proposalTitle: e.target.value,
-      proposallink: `http://syshub.com/p/${e.target.value.trim().toLowerCase()}`
+      proposallink: `http://syshub.com/p/${e.target.value
+        .trim()
+        .toLowerCase()
+        .replace(/\s/g, '_')}`
     });
   }
 
@@ -251,10 +254,14 @@ class NewProposal extends Component {
     this.setState(
       {
         showEditor: false,
-        proposal__detail: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        proposal__detail: draftToHtml(
+          convertToRaw(this.state.editorState.getCurrentContent())
+        )
       },
       () => {
-        let previewContainer = document.getElementById('preview-html-container');
+        let previewContainer = document.getElementById(
+          'preview-html-container'
+        );
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
@@ -269,7 +276,13 @@ class NewProposal extends Component {
 
   // steps name in array in which we map
   getSteps() {
-    return ['Proposal Title', 'Proposal Details', 'Payment Details', 'Amount', 'Create Proposal'];
+    return [
+      'Proposal Title',
+      'Proposal Details',
+      'Payment Details',
+      'Amount',
+      'Create Proposal'
+    ];
   }
   //all the step contents are coming from return of switch case
   getStepContent(step) {
@@ -355,10 +368,15 @@ class NewProposal extends Component {
                     span={deviceType === 'mobile' ? 24 : 22}
                     offset={deviceType === 'mobile' ? 0 : 1}
                   >
-                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                    <h1 className="proposalDetail-title">
+                      {this.state.proposalTitle}
+                    </h1>
                   </Col>
                   <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div className="proposalContent-div" id="preview-html-container" />
+                    <div
+                      className="proposalContent-div"
+                      id="preview-html-container"
+                    />
                   </Col>
                 </Row>
               )}
@@ -372,7 +390,10 @@ class NewProposal extends Component {
               <label className="label">Date</label>
               <DatePicker onChange={this.onDateChange} />
             </Col>
-            <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
+            <Col
+              span={deviceType === 'mobile' ? 10 : 7}
+              offset={deviceType === 'mobile' ? 4 : 0}
+            >
               <label># of Payments</label>
               <InputNumber
                 min={1}
@@ -435,7 +456,11 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
+        if (
+          this.state.proposalDate &&
+          this.state.paymentQuantity &&
+          this.state.address
+        ) {
           return false;
         } else {
           return true;
@@ -473,9 +498,12 @@ class NewProposal extends Component {
                     {this.state.activeStep == 0 &&
                     label == 'Proposal Title' &&
                     deviceType !== 'mobile' ? (
-                      <h3 className="proposal-title">Proposal Description Url</h3>
+                      <h3 className="proposal-title">
+                        Proposal Description Url
+                      </h3>
                     ) : null}
-                    {this.state.activeStep == 1 && label == 'Proposal Details' ? (
+                    {this.state.activeStep == 1 &&
+                    label == 'Proposal Details' ? (
                       this.state.showEditor ? (
                         <Button
                           className="preview-edit-button"
@@ -500,7 +528,9 @@ class NewProposal extends Component {
                     <div className={classes.actionsContainer}>
                       <div
                         className={
-                          activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                          activeStep === steps.length - 1
+                            ? 'confirm-btn-div'
+                            : 'next-btn-div'
                         }
                       >
                         {activeStep === 0 ? null : (
@@ -562,4 +592,6 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(newProposalStyle)(NewProposal));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(newProposalStyle)(NewProposal)
+);

@@ -2,9 +2,14 @@ import constants from '../constants';
 
 import { HTTPAsync, Hex } from '../helpers';
 
+/**---------------------------------------------------------------------------- */
+/** TO CHANGE THE URL FOR THE API JUST COMMENT, UNCOMMENT OR ADD NEW LINES HERE */
+/**---------------------------------------------------------------------------- */
 //const baseApiURL = 'http://159.89.141.35:3000'; //Old net, no SYS available
-const baseApiURL = 'http://159.89.151.42:3000';
-const QuangUrl = 'https://www.qnguyen.xyz';
+//const baseApiURL = 'http://159.89.151.42:3000'; // New net
+const baseApiURL = 'https://www.qnguyen.xyz'; // Quang HTTPS server
+
+/**---------------------------------------------------------------------------- */
 
 export default {
   getProposals: () => {
@@ -18,33 +23,57 @@ export default {
     // -------------------------------------------
 
     return dispatch => {
-      return dispatch(HTTPAsync.get(`${QuangUrl}/list`, null, constants.SYS_PROPOSALS_GET));
+      return dispatch(
+        HTTPAsync.get(`${baseApiURL}/list`, null, constants.SYS_PROPOSALS_GET)
+      );
     };
   },
 
   checkProposal: params => {
     return dispatch => {
-      return dispatch(HTTPAsync.post(`${QuangUrl}/check`, params, constants.SYS_PROPOSALS_CHECK));
+      return dispatch(
+        HTTPAsync.post(
+          `${baseApiURL}/check`,
+          params,
+          constants.SYS_PROPOSALS_CHECK
+        )
+      );
     };
   },
 
   prepareProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post(`${QuangUrl}/prepare`, params, constants.SYS_PROPOSALS_PREPARE)
+        HTTPAsync.post(
+          `${baseApiURL}/prepare`,
+          params,
+          constants.SYS_PROPOSALS_PREPARE
+        )
       );
     };
   },
 
   submitProposal: params => {
     return dispatch => {
-      return dispatch(HTTPAsync.post(`${QuangUrl}/submit`, params, constants.SYS_PROPOSALS_SUBMIT));
+      return dispatch(
+        HTTPAsync.post(
+          `${baseApiURL}/submit`,
+          params,
+          constants.SYS_PROPOSALS_SUBMIT
+        )
+      );
     };
   },
 
   voteOnProposal: params => {
     return dispatch => {
-      return dispatch(HTTPAsync.post(`${QuangUrl}/vote`, params, constants.SYS_PROPOSAL_VOTE));
+      return dispatch(
+        HTTPAsync.post(
+          `${baseApiURL}/vote`,
+          params,
+          constants.SYS_PROPOSAL_VOTE
+        )
+      );
     };
   }
 };
