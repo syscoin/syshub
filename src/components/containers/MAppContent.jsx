@@ -23,6 +23,7 @@ import {
   UserAccountTest,
 } from '../pages';
 import MAppLSider from './AppLSider'
+import MAppRSider from './MAppRSider'
 import ChatBox from '../functionals/ChatBox'
 //Import Styles
 import { mAppContentStyle } from './styles';
@@ -51,7 +52,7 @@ class AppContent extends Component {
             }[showPage]
           }
           {this.props.showMenu ? <MAppLSider deviceType={deviceType} /> : null}
-          {this.props.showChat ? <ChatBox deviceType={deviceType} /> : null}
+          {this.props.showChat ? <MAppRSider deviceType={deviceType} /> : null}
         </Content>
       </div>
     );

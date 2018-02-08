@@ -16,7 +16,15 @@ const sider = {
   backgroundColor: primary, //'#ff0045',
 };
 
+const mWraper = {
+  position: 'absolute',
+  width: '100%',
+  zIndex: 99,
+}
+
+
 export default {
   wraper,
   sider,
+  mWraper
 };

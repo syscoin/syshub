@@ -15,9 +15,11 @@ const { Sider } = Layout;
 
 class AppRSider extends Component {
   render() {
+    const { deviceType } = this.props;
+    const style = deviceType === 'mobile' ? mAppRSiderStyle.mWraper : mAppRSiderStyle.wraper;
     return (
-      <div style={mAppRSiderStyle.wraper}>
-        <ChatBox />
+      <div style={style}>
+        <ChatBox deviceType={deviceType} />
       </div>
     );
   }
