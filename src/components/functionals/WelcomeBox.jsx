@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { welcomeBoxStyle } from './styles';
 
 class WelcomeBox extends Component {
-  render () {
+  render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -32,7 +32,7 @@ class WelcomeBox extends Component {
               <div className="addvertiseText">
                 <ul className="wellcomBoxTextList">
                   <li className="listItem">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                    The proposal generator has been updated to support 12.2 proposal submissions.{' '}
                   </li>
                   <li className="listItem">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit
@@ -55,13 +55,13 @@ class WelcomeBox extends Component {
             </div>
           )}
         </Paper>
-      </div >
+      </div>
     );
   }
 }
 
 WelcomeBox.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(welcomeBoxStyle)(WelcomeBox);
