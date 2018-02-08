@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 //import antd components
-import { Divider } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { deshBoardHeaderStyle } from './styles';
 
@@ -25,7 +24,7 @@ class DashBoardHeader extends Component {
 
     return (
       <Grid container md={12} className={style}>
-        {this.state.data.showHeader == 'ProposalDetail' ? (
+        {this.state.data.showHeader === 'ProposalDetail' ? (
           <Grid container md={12} className="no-margin">
             <Grid item md={12} className="headingView">
               <Grid item md={12} className="headingRow">
