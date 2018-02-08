@@ -7,6 +7,8 @@ const white = palette.white;
 
 export default {
   mRoot: {
+    height: 130,
+    width: '100vw',
     '& .app-bar': {
       boxShadow: 'none',
     },
@@ -22,7 +24,13 @@ export default {
       alignItem: 'center',
       minWidth: '100%',
       padding: '0 0 0 0',
-      height: '22vh'
+      height: 130,
+      '& .top-header__wrapper':{
+        height: 95,
+        marginTop: -8,
+        marginLeft: -10,
+        width: 'calc(100% + 16px)'
+      }
     },
     '& .hdivider ': {
       width: '100%',
@@ -30,8 +38,15 @@ export default {
       borderBottom: `1px solid ${primaryLight}`
     },
     '& .header-bitcoin-status': {
-      marginBottom: 15,
-      padding: '10px 4px 10px 15px',
+      marginBottom: 0,
+      padding: '8px 0px 0px 15px',
+      '& >div':{
+        margin: 0,
+        paddingTop:2,
+        '& .common':{
+          lineHeight: 2
+        }
+      }
     },
     '& .name-header': {
       textAlign: 'left',

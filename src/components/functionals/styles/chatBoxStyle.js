@@ -83,7 +83,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 97,
+    marginTop: 0,
     ' & .chat_box_container': {
       '& .paper-style': {
         '& .chatbox-Header': {

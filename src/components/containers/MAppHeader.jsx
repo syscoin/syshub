@@ -48,11 +48,11 @@ class AppHeader extends Component {
           <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
-                <Grid container>
-                  <Grid item xs={5} className="header-bitcoin-status">
+                <Grid className="top-header__wrapper">
+                  <Grid item xs={6} className="header-bitcoin-status">
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
-                  <Grid item xs={7} className="name-header">
+                  <Grid item xs={6} className="name-header">
                     {currentUser ?
                       <span className='text-span'>
                         <span className="TxtRegular">{`Welcome  `}</span>
@@ -75,7 +75,7 @@ class AppHeader extends Component {
                       )}
                   </Grid>
                 </Grid>
-                <MHeaderNav />
+                <MHeaderNav className="bottom-header__wrapper"/>
               </div>
             </Toolbar>
           </AppBar>
