@@ -18,10 +18,10 @@ class SiderMenu extends Component {
 
   render() {
     const { classes, active, deviceType } = this.props;
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={style}>
-        {/* <SiderLogo /> */}
+        {this.props.deviceType !== 'mobile' && <SiderLogo />}
         {this.props.menuItems.map((item, i) => {
           const icon = item.key === active ? item.iconSelected : item.icon;
           const txt =

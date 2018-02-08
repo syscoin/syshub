@@ -68,13 +68,11 @@ class MHeaderNav extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
     this.itemClick = this.itemClick.bind(this);
   }
 
   itemClick(e) {
-
     console.log(e.target.id);
     this.props.setPage(e.target.id);
   }
@@ -90,10 +88,7 @@ class MHeaderNav extends Component {
         {menuItems.map(item => {
           return (
             <Menu.Item>
-              <Button
-                className="no-border" >
-                {item.title}
-              </Button>
+              <Button className="no-border">{item.title}</Button>
             </Menu.Item>
           );
         })}
@@ -101,17 +96,46 @@ class MHeaderNav extends Component {
     );
     return (
       <Grid container className={style}>
-        <Grid item xs={3} className="left-section" style={this.props.showMenu ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }}>
+        <Grid
+          item
+          xs={3}
+          className="left-section"
+          style={
+            this.props.showMenu
+              ? { backgroundColor: '#53a5cc' }
+              : { backgroundColor: '#1991CC' }
+          }
+        >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}
-          <IconButton color="inherit" aria-label="Menu">
-            <Icon type="bars" className="menu-icon" id="sidebar" onClick={() => { this.props.toggleMenu() }} />
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            onClick={() => this.props.toggleMenu()}
+          >
+            <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>
           {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
+          <img
+            alt="a"
+            src={logo}
+            height="35px"
+            width="100px"
+            id="home"
+            onClick={this.itemClick}
+          />
         </Grid>
-        <Grid item xs={3} className="right-section" style={this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }}>
+        <Grid
+          item
+          xs={3}
+          className="right-section"
+          style={
+            this.props.showChat
+              ? { backgroundColor: '#53a5cc' }
+              : { backgroundColor: '#1991CC' }
+          }
+        >
           <Button
             size={'large'}
             type="primary"
@@ -132,7 +156,7 @@ const stateToProps = state => {
   return {
     deviceType: state.app.platform.deviceType,
     showChat: state.app.showChat,
-    showMenu: state.app.showMenu,
+    showMenu: state.app.showMenu
   };
 };
 
@@ -140,7 +164,7 @@ const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
     toggleChat: () => dispatch(actions.toggleChat()),
-    toggleMenu: () => dispatch(actions.toggleMenu()),
+    toggleMenu: () => dispatch(actions.toggleMenu())
   };
 };
 export default connect(stateToProps, dispatchToProps)(
