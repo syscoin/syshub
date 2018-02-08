@@ -65,9 +65,10 @@ class UserAccount extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, deviceType } = this.props;
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
           <UserProfile

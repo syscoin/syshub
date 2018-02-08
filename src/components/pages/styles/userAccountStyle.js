@@ -9,21 +9,34 @@ const secondary = palette.secondary;
 
 
 export default {
-    root: {
-        '& .title':{
-            fontWeight:'lighter',
-        },
-        '& .paper-container': {
-            padding:'20px 20px',
-            overflowY: 'auto',
-            height: '80vh',
-            '& .gridList':{
-                width: 500,
-                height: 450,
-            }
+  root: {
+    '& .title': {
+      fontWeight: 'lighter',
+    },
+    '& .paper-container': {
+      padding: '20px 20px',
+      overflowY: 'auto',
+      height: '80vh',
+      '& .gridList': {
+        width: 500,
+        height: 450,
+      }
 
-        }
     }
+  },
+  mRoot: {
+    extend: 'root',
+    marginTop: 100,
+    '& .title': {
+      margin: 0,
+      padding: 15,
+      background: white,
+      paddingLeft: 15,
+    },
+    '& .paper-container': {
+      height: 'auto'
+    }
+  }
 
 
 
