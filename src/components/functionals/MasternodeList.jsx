@@ -7,7 +7,6 @@ import { Grid, withStyles, FormGroup, Input } from 'material-ui';
 // import style
 import { masternodeListStyle } from './styles';
 import { Table, Icon, Divider, Card, Col, Row, Modal, Button } from 'antd';
-
 const confirm = Modal.confirm;
 
 class MasterNodeList extends Component {
@@ -30,7 +29,7 @@ class MasterNodeList extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  showEditModal(record) {
+  showEditModal (record) {
     this.editNode = record;
     console.log('record', record);
     this.setState({
@@ -60,11 +59,11 @@ class MasterNodeList extends Component {
     });
   };
 
-  deleteMasterNode(node) {
+  deleteMasterNode (node) {
     this.props.deleteNode(node);
   }
 
-  showDeleteConfirm(node) {
+  showDeleteConfirm (node) {
     let confrimDelete = () => {
       this.deleteMasterNode(node);
     };
@@ -73,17 +72,17 @@ class MasterNodeList extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk() {
+      onOk () {
         confrimDelete();
         console.log('OK');
       },
-      onCancel() {
+      onCancel () {
         console.log('Cancel');
       },
     });
   }
 
-  onChange(e) {
+  onChange (e) {
     this.setState({
       editNodeRecord: {
         ...this.state.editNodeRecord,
@@ -92,7 +91,11 @@ class MasterNodeList extends Component {
     });
   }
 
-  render() {
+  render () {
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     const columns = [
       {
         title: 'Name',
@@ -104,6 +107,7 @@ class MasterNodeList extends Component {
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
+        render: text => <span>{deviceType == 'mobile' ? text.substring(0, 7) + "..." : text}</span>,
       },
       {
         key: 'action',
@@ -125,10 +129,6 @@ class MasterNodeList extends Component {
         ),
       },
     ];
-
-    const { classes, deviceType } = this.props;
-    //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>

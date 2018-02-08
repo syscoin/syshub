@@ -99,5 +99,15 @@ export default {
     },
   },
 
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .ant-table-tbody > tr > td': {
+      wordBreak: 'inherit',
+      padding: 10,
+      border: 'none'
+    },
+    '& .edit-btn, .delete-btn': {
+      margin: '0 2px'
+    }
+  },
 };

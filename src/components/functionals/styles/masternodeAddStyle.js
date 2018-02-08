@@ -64,5 +64,16 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .form-group': {
+      '& .label': {
+        padding: '0 !important'
+      },
+      '& .input-field': {
+        width: '100% !important',
+        margin: '0 !important'
+      }
+    }
+  },
 };

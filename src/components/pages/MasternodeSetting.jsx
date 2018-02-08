@@ -47,21 +47,21 @@ class MasterNode extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
-  addNode(masternode) {
+  addNode (masternode) {
     masternode.key = this.state.nodes.length + 1;
     this.setState({
       nodes: [masternode, ...this.state.nodes]
     });
   }
 
-  deleteNode(node) {
+  deleteNode (node) {
     let nodes = this.state.nodes.filter(obj => obj.key != node.key);
     this.setState({
       nodes: [...nodes]
     });
   }
 
-  editNode(node) {
+  editNode (node) {
     let nodes = this.state.nodes.map((obj, index) => {
       if (obj.key == node.key) {
         return node;
@@ -72,7 +72,7 @@ class MasterNode extends Component {
       nodes: [...nodes]
     });
   }
-  render() {
+  render () {
     const { classes } = this.props;
 
     return (
