@@ -148,6 +148,8 @@ class NewProposal extends Component {
               }
             }
           });
+        } else {
+          throw new Error('No prepare receipt');
         }
       })
       .then(paymentId => {
@@ -157,6 +159,8 @@ class NewProposal extends Component {
           proposalRef.set(userProposal);
           submitObj.txid = paymentId;
           return this.props.submitProposal(submitObj);
+        } else {
+          throw new Error('No paymentId received');
         }
       })
       .then(submitResponse => {
@@ -169,6 +173,8 @@ class NewProposal extends Component {
             text: `"${submitResponse}" \n \n Here is your submit receipt. Please copy it down.`,
             icon: 'success'
           });
+        } else {
+          throw new Error('No submit receipt');
         }
       })
       .catch(err => {
