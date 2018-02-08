@@ -77,7 +77,6 @@ class MHeaderNav extends Component {
 
     console.log(e.target.id);
     this.props.setPage(e.target.id);
-    this.props.toggleMenu();
   }
 
   render() {

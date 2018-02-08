@@ -83,9 +83,9 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 119,
+    marginTop: 97,
     position: 'absolute',
-    marginLeft: 60,
+    width: '100%',
     zIndex: 99,
     ' & .chat_box_container': {
       '& .paper-style': {

@@ -16,13 +16,13 @@ export default {
       paddingRight: 8,
     },
     '& .container': {
-      // border: '1px solid red',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItem: 'center',
       minWidth: '100%',
-      padding: '0 0 0 0'
+      padding: '0 0 0 0',
+      height: '22vh'
     },
     '& .hdivider ': {
       width: '100%',
