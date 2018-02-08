@@ -3,6 +3,7 @@ import palette from './palette';
 const primary = palette.primary;
 const greyLight = palette.greyLight;
 const grey = palette.grey;
+const transparentBlack = palette.transparentBlack;
 
 const wraper = {
   //border: '1px solid green',
@@ -25,6 +26,9 @@ const mWraper = {
   background: greyLight,
   borderRight: `1px solid ${grey}`,
   position: 'absolute',
+  height: '100%',
+  backgroundColor: transparentBlack
+  
 }
 
 export default {
