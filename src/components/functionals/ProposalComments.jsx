@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //import antd components
-import { Divider } from 'antd';
-import { Grid, Button, FormGroup, Input, withStyles } from 'material-ui';
+import { Grid, Button, withStyles } from 'material-ui';
 
 import { proposalCommentsStyle } from './styles';
 
