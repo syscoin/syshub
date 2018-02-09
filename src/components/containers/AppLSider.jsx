@@ -33,7 +33,7 @@ const menuItems = [
     icon: 'png_menu_create',
     iconSelected: 'png_menu_create_selected',
     title: 'Create Proposal',
-    showWhen: 'always'
+    showWhen: 'login'
   },
   {
     key: 'news',
