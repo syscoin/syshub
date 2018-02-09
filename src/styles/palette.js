@@ -9,6 +9,7 @@ const basicColors = {
   secondary: '#1ABC9C',
   red: '#D61414',
   green: '#97CB54',
+  transparentBlack: 'rgba(0, 0, 0, 0.70)'
 };
 
 const themeColors = {

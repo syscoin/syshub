@@ -22,7 +22,8 @@ import {
   UserAccount,
   UserAccountTest
 } from '../pages';
-
+import MAppLSider from './AppLSider';
+import MAppRSider from './AppRSider';
 //Import Styles
 import { mAppContentStyle } from './styles';
 //import EmailModal from './the-modal';
@@ -49,6 +50,8 @@ class AppContent extends Component {
               register: <Register deviceType={deviceType} />
             }[showPage]
           }
+          {this.props.showMenu ? <MAppLSider deviceType={deviceType} /> : null}
+          {this.props.showChat ? <MAppRSider deviceType={deviceType} /> : null}
         </Content>
       </div>
     );
@@ -58,7 +61,9 @@ class AppContent extends Component {
 const stateToProps = state => {
   return {
     showPage: state.app.showPage,
-    deviceType: state.app.platform.deviceType
+    deviceType: state.app.platform.deviceType,
+    showChat: state.app.showChat,
+    showMenu: state.app.showMenu
   };
 };
 

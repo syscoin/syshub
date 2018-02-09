@@ -203,7 +203,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: '100px',
+    marginTop: 0,
     '& .proposal-title': {
       paddingLeft: '0 !important'
     },
