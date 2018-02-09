@@ -51,5 +51,16 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .userDelete-heading': {
+      marginLeft: 5
+    },
+    '& .UserDelete-text': {
+      marginLeft: 5
+    },
+    '& .delete-button-grid': {
+      margin: 'auto'
+    }
+  },
 };
