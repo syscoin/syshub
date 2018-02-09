@@ -314,6 +314,12 @@ export default {
       textAlign: 'right',
       padding: '20px 0px'
     },
+    '& .add-comment-btn': {
+      float: 'none'
+    },
+    '& .replyView': {
+      cursor: 'pointer'
+    }
   },
   mRoot: { extend: 'root' },
 };
