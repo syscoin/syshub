@@ -10,13 +10,21 @@ const wraper = {
   flexDirection: 'column',
   justifyAlign: 'flex-start',
   flex: '0 1 20%',
-  background: greyLight,
+  background: greyLight
 };
 const sider = {
-  backgroundColor: primary, //'#ff0045',
+  backgroundColor: primary //'#ff0045',
+};
+
+const mWraper = {
+  position: 'fixed',
+  width: '100%',
+  zIndex: 99,
+  height: '100%'
 };
 
 export default {
   wraper,
   sider,
+  mWraper
 };

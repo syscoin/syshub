@@ -18,7 +18,7 @@ import CommentForm from './commentForm';
 // import firebase
 import { fire, comments, commentReplies } from '../../API/firebase';
 
-import { proposalCommentsStyle } from './styles';
+import { proposalCommentsStyle } from './styles'; 
 
 class ProposalComments extends Component {
   constructor(props) {
