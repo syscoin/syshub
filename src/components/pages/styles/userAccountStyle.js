@@ -26,7 +26,6 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 100,
     '& .title': {
       margin: 0,
       padding: 15,
@@ -34,7 +33,8 @@ export default {
       paddingLeft: 15,
     },
     '& .paper-container': {
-      height: 'auto'
+      overflowX: 'hidden',
+      height: 'auto',
     }
   }
 
