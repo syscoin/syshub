@@ -10,10 +10,11 @@ export default {
   mRoot: {
     borderTop: 'thin solid ' + gery,
     marginBottom: 0,
+    marginTop: 0,
     '& .left-section': {
       textAlign: 'center',
       padding: 0,
-      '& button':{
+      '& button': {
         height: 30,
         marginTop: -15
       }
@@ -35,8 +36,8 @@ export default {
     '& .right-section': {
       padding: 0,
       textAlign: 'center',
-      '& button':{
-        '& img':{
+      '& button': {
+        '& img': {
           marginTop: -10,
         }
 
