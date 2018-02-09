@@ -83,9 +83,12 @@ export default {
   },
   mRoot: {
     extend: 'root',
+    height: '100%',
     marginTop: 0,
     ' & .chat_box_container': {
+      height: '100%',
       '& .paper-style': {
+        height: '100%',
         '& .chatbox-Header': {
           textAlign: 'center !important',
           height: '50px  !important',
@@ -102,7 +105,7 @@ export default {
         },
         '& .list': {
           '& .chat-list': {
-            height: 'calc(100vh - 280px) !important',
+            height: 'calc(100vh - 230px) !important',
           }
         }
       }

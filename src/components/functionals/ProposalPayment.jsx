@@ -12,11 +12,18 @@ import { proposalPaymentStyle } from './styles';
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
+    var sdate = new Date(this.props.data.start_epoch);
+    var startDate = sdate.toDateString();
+    var edate = new Date(this.props.data.end_epoch);
+    var endDate = edate.toDateString();
     this.state = {
-      onTimePayment: 'abc',
+      onTimePayment: this.props.data.payment_amount,
       compeletePayment: 'abc',
       Paymentdate: 'abc',
+      startDate: startDate,
+      endDate: endDate
     };
+    console.log("payment data", this.props.data)
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -43,8 +50,10 @@ class ProposalPayment extends Component {
                   name="onTimePayment"
                   id="onTimePayment"
                   className="input-field"
-                  placeholder="21 SYS (29209 USD)"
-                  onChange={e => {}}
+                  placeholder="Amount"
+                  onChange={e => { }}
+                  value={this.state.onTimePayment + " US"}
+                  disabled={true}
                 />
               </FormGroup>
             </form>
@@ -62,7 +71,8 @@ class ProposalPayment extends Component {
                   id="compeletePayment"
                   className="input-field"
                   placeholder="no payments occurred yet"
-                  onChange={e => {}}
+                  onChange={e => { }}
+                  disabled={true}
                 />
               </FormGroup>
             </form>
@@ -73,12 +83,14 @@ class ProposalPayment extends Component {
             <form className="form">
               <FormGroup className="FormGroup">
                 <input
-                  ref={ref => {}}
+                  ref={ref => { }}
                   name="Paymentdate"
                   id="Paymentdate"
                   className="input-field"
-                  placeholder="18-01-17 / 2018-02-16"
-                  onChange={e => {}}
+                  placeholder="Start Date / End Date"
+                  onChange={e => { }}
+                  value={this.state.startDate + " / " + this.state.endDate}
+                  disabled={true}
                 />
               </FormGroup>
             </form>

@@ -101,9 +101,7 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu
-              ? { backgroundColor: '#53a5cc' }
-              : { backgroundColor: '#1991CC' }
+            this.props.showMenu ? { backgroundColor: '#53a5cc' }: { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}

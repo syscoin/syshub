@@ -14,6 +14,8 @@ export default {
     '& .left-section': {
       textAlign: 'center',
       padding: 0,
+      height: 45,
+      borderRight: 'thin solid ' + gery,
       '& button': {
         height: 30,
         marginTop: -15
@@ -25,8 +27,7 @@ export default {
     },
     '& .center-section': {
       textAlign: 'center',
-      borderLeft: 'thin solid ' + gery,
-      borderRight: 'thin solid ' + gery,
+      height: 50,
       '& img': {
         height: 40,
         width: 70,
@@ -36,6 +37,8 @@ export default {
     '& .right-section': {
       padding: 0,
       textAlign: 'center',
+      height: 47,
+      borderLeft: 'thin solid ' + gery,
       '& button': {
         '& img': {
           marginTop: -10,

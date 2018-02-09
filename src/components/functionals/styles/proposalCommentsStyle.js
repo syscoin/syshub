@@ -86,7 +86,7 @@ export default {
       marginTop: 10,
       borderRadius: 10,
       border: '1px solid' + gray,
-      height: 320,
+      minHeight: 320,
       '& .commentlHrView': {
         margin: 0,
         marginLeft: '4%',
@@ -138,6 +138,20 @@ export default {
         marginLeft: '7%',
         fontSize: 16,
         color: gray,
+        '& .show-edited': {
+          width: 5,
+          fontSize: 10,
+          backgroundColor: '#fff',
+          margin: 0,
+          padding: '5px 0px',
+          '& span': {
+            color: primaryLight
+          }
+        },
+        '& .edit-delete-btn': {
+          display: 'inline-block',
+          float: 'right',
+        }
       },
       '& .replyView': {
         padding: 0,
@@ -186,7 +200,27 @@ export default {
         },
       },
     },
-
+    '& .allReplies': {
+      marginTop: 10,
+      marginLeft: '8%',
+      '& .replyHeading': {
+        padding: '10px 10px',
+        '& .replyUserVeiw': {
+          padding: 0,
+          marginTop: 10,
+          '& .replyUserName': {
+            color: greyDark,
+            padding: '10px 28px',
+            fontWeight: 500,
+          },
+          '& .replyDate': {
+            display: 'inline-block',
+            marginLeft: '-20px',
+            color: gray,
+          },
+        }
+      }
+    },
     '& .commentWithReplyView': {
       margin: 0,
       marginTop: 5,
@@ -274,7 +308,18 @@ export default {
     '& .votingNumber': {
       display: 'inline',
       verticalAlign: 'bottom',
+      padding: '0px 3px'
     },
+    '& .pagination': {
+      textAlign: 'right',
+      padding: '20px 0px'
+    },
+    '& .add-comment-btn': {
+      float: 'none'
+    },
+    '& .replyView': {
+      cursor: 'pointer'
+    }
   },
   mRoot: { extend: 'root' },
 };
