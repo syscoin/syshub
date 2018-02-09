@@ -168,7 +168,7 @@ class UserTwoFactor extends Component {
       <div className={style}>
         <Grid container>
           {/* change password text */}
-          <Grid md={12}>
+          <Grid md={12} className="heading-grid">
             <h1 className="userTwoFactor-heading">2-Factor-Authentication</h1>
           </Grid>
           {/* userTwofactor left grid */}

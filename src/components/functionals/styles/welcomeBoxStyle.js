@@ -55,7 +55,6 @@ export default {
   mRoot: {
     extend: 'root',
     '& .Paper': {
-      marginTop: '100px',
       padding: '30px',
       '& .heading': {
         fontSize: 22,

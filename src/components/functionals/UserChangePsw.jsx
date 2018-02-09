@@ -99,7 +99,7 @@ class UserChangePassword extends Component {
 
     return (
       <div className={style}>
-        <Grid container>
+        <Grid container className="userPwd-grid">
           {/* change password text */}
           <Grid md={12}>
             <h1 className="changePsw-heading">Change Password</h1>
