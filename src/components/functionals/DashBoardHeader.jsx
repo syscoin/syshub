@@ -31,7 +31,7 @@ class DashBoardHeader extends Component {
                 <img alt="a" src={require('../../assets/img/png_icon_proposal.png')} height="30" />
                 <div className="headingDiv"> {this.state.data.name}</div>
                 <div className="ownerDetails">
-                  Owner: <div className="ownerName">User1 </div>{' '}
+                  {/* Owner: <div className="ownerName">User1 </div>{' '} */}
                 </div>
               </Grid>
             </Grid>
@@ -47,10 +47,10 @@ class DashBoardHeader extends Component {
                   {'  '}
                   Active Proposals
                 </div>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
       </Grid>
     );
   }

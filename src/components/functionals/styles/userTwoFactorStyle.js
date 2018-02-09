@@ -162,5 +162,22 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .heading-grid': {
+      width: '100%',
+      '& .userTwoFactor-heading': {
+        marginLeft: 5,
+      }
+    },
+    '& .userTwoFactor-left-grid': {
+      textAlign: 'center',
+      '& .enable2FA-note': {
+        margin: '15px 0px 20px 10px',
+      },
+      '& .reCapthaWraper': {
+        margin: '15px 30px',
+      }
+    }
+  },
 };

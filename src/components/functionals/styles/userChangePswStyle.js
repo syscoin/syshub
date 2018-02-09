@@ -116,5 +116,50 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .userPwd-grid': {
+      width: '100%',
+      '& .changePsw-heading': {
+        marginLeft: 3,
+      },
+      '& .changePsw-credential-grid': {
+        '& .changedPsw-note': {
+          margin: '15px 8px',
+          fontSize: 13,
+        },
+        '& .formGroup-div': {
+          margin: 0,
+          '& .ant-form': {
+            '& .ant-form-item': {
+              '& .label': {
+                width: '100%',
+                display: 'block',
+                fontSize: 17,
+                textAlign: 'left',
+                paddingLeft: 15,
+
+              },
+              '& .input-field': {
+                width: '100%',
+              },
+              '& .input-password-feild': {
+                width: '100%',
+                '& .ReactPasswordStrength-strength-desc': {
+                  marginRight: '-275px',
+                  textAlign: 'left'
+                }
+              }
+            }
+          }
+        },
+        '& .ant-form-explain': {
+          marginLeft: 10
+        }
+      },
+      '& .confirmChange-button-grid': {
+        textAlign: 'center',
+      }
+    }
+  },
 };

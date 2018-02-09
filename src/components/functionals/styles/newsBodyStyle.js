@@ -19,9 +19,17 @@ export default {
             fontSize: 15,
             color: greyDark
         },
-        '& ul':{
+        '& ul': {
             fontSize: 15,
             color: greyDark
+        }
+    },
+    mRoot: {
+        extend: 'root',
+        '& .new-body__wrapper': {
+            '& img': {
+                width: '100%'
+            }
         }
     }
 }

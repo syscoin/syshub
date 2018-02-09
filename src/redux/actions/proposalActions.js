@@ -3,11 +3,10 @@ import constants from '../constants';
 import { HTTPAsync, Hex } from '../helpers';
 
 /**---------------------------------------------------------------------------- */
-/** TO CHANGE THE URL FOR THE API JUST COMMENT, UNCOMMENT OR ADD NEW LINES HERE */
+/** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
 /**---------------------------------------------------------------------------- */
-//const baseApiURL = 'http://159.89.141.35:3000'; //Old net, no SYS available
-//const baseApiURL = 'http://159.89.151.42:3000'; // New net
-const baseApiURL = 'https://www.qnguyen.xyz'; // Quang HTTPS server
+
+const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 
 /**---------------------------------------------------------------------------- */
 
