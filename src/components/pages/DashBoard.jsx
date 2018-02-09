@@ -23,11 +23,11 @@ class DashBoard extends Component {
     this.handleDashboard = this.handleDashboard.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getProposals();
   }
   //changing state with this function
-  handleDashboard(value) {
+  handleDashboard (value) {
     const container =
       this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
@@ -36,7 +36,7 @@ class DashBoard extends Component {
     });
   }
 
-  render() {
+  render () {
     const { classes, proposals, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -65,6 +65,7 @@ class DashBoard extends Component {
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={this.state.proposalID}
+                totalNodes={this.props.totalNodes}
               />
             ),
           }[this.state.showContainer]
