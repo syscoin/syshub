@@ -96,6 +96,7 @@ class MasterNodeList extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const modalStyle = deviceType === 'mobile' ? classes.mModal : classes.modal;
 
     const columns = [
       {
@@ -135,11 +136,11 @@ class MasterNodeList extends Component {
       <div>
         {/* Edit Modal */}
         <Modal
-          title="Edit Modal"
+          title="Edit Masternode"
           visible={this.state.editNodeModal}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          className={classes.modal}
+          className={modalStyle}
           footer={[
             <Button key="submit" type="primary" onClick={this.handleOk}>
               Confirm & Save

@@ -98,6 +98,25 @@ export default {
       },
     },
   },
+  mModal: {
+    extend: 'modal',
+    '& .ant-modal-body': {
+      padding: 10,
+      '& .form__container': {
+        '& .label': {
+          width: '100%',
+        },
+        '& .input-field': {
+          width: '100%',
+        }
+      }
+    },
+    '& .ant-modal-footer': {
+      textAlign: 'center',
+      borderTop: 'none',
+    }
+
+  },
   mRoot: {
     extend: 'root',
     '& .list-title': {
