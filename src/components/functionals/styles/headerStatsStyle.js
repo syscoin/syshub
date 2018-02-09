@@ -36,7 +36,7 @@ export default {
       color: 'white',
       height: '25px',
       padding: '0',
-      fontSize: 13,
+      fontSize: 12,
       '& .icon': {
         height: 15,
         width: 15

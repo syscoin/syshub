@@ -3,7 +3,7 @@ import constants from '../constants';
 const initialState = {
   currentUser: null,
   showPage: 'home',
-  showChat: true,
+  showChat: false,
   showMenu: false,
   platform: {},
   loading: false,
@@ -30,7 +30,9 @@ const app = (state = initialState, action) => {
     case constants.APP_PAGE_SHOW:
       return {
         ...state,
-        showPage: action.data
+        showPage: action.data,
+        showMenu: false,
+        showChat: false
       };
 
     case constants.APP_CHAT_TOGGLE:
