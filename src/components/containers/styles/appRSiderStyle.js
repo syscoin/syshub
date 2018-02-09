@@ -17,9 +17,10 @@ const sider = {
 };
 
 const mWraper = {
-  position: 'absolute',
+  position: 'fixed',
   width: '100%',
-  zIndex: 99
+  zIndex: 99,
+  height: '100%'
 };
 
 export default {
