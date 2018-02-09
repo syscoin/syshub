@@ -25,7 +25,7 @@ const mWraper = {
   flex: '0 1 15%',
   background: greyLight,
   borderRight: `1px solid ${grey}`,
-  position: 'absolute',
+  position: 'fixed',
   height: '100%',
   backgroundColor: transparentBlack
   
