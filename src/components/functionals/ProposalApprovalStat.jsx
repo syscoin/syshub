@@ -15,18 +15,27 @@ class ProposalApprovalStat extends Component {
     this.state = {
       days_remaining: 0,
       endDate: ''
-    }
+    };
   }
-  componentWillMount () {
+  componentWillMount() {
     let startDate = new Date();
     let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch);
     if (endDate > startDate) {
       let timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
-      this.setState({ days_remaining, endDate: endDate.getDate() + '/' + endDate.getMonth() + 1 + '/' + endDate.getFullYear() });
+      this.setState({
+        days_remaining,
+        endDate:
+          endDate.getDate() +
+          '/' +
+          endDate.getMonth() +
+          1 +
+          '/' +
+          endDate.getFullYear()
+      });
     }
   }
-  render () {
+  render() {
     const { classes, deviceType, totalNodes } = this.props;
     //Platform style switcher
     let { YesCount, NoCount, AbstainCount } = this.props.proposal;
@@ -45,17 +54,21 @@ class ProposalApprovalStat extends Component {
             Stauts:
           </Grid>
           <Grid item md={6} className="approvalValue">
-            {((YesCount + 30) / totalNodes * 100) >= 50 ?
+            {YesCount / totalNodes * 100 >= 50 ? (
               <span>
                 <span className="approvalGreenColorFont">FUNNDED</span> -
-                Sufficient Votes (<span className="approvalGreenColorFont">{YesCount + 30}</span>/{totalNodes})
+                Sufficient Votes (<span className="approvalGreenColorFont">
+                  {YesCount}
+                </span>/{Math.round(totalNodes)})
               </span>
-              :
+            ) : (
               <span>
                 <span className="approvalRedColorFont">UNFUNNDED</span> -
-                Isufficient Votes (<span className="approvalRedColorFont">{YesCount + 30}</span>/{totalNodes})
+                Isufficient Votes (<span className="approvalRedColorFont">
+                  {YesCount}
+                </span>/{Math.round(totalNodes)})
               </span>
-            }
+            )}
           </Grid>
         </Grid>
 
@@ -64,16 +77,14 @@ class ProposalApprovalStat extends Component {
             Voting Deadline:
           </Grid>
           <Grid item md={6} className="approvalValue">
-            {days_remaining != 0 ?
+            {days_remaining != 0 ? (
               <span>
-                <span className="approvalRedColorFont">{days_remaining}</span> Days Remaining
-                ({endDate})
+                <span className="approvalRedColorFont">{days_remaining}</span>{' '}
+                Days Remaining ({endDate})
               </span>
-              :
-              <span>
-                ---
-              </span>
-            }
+            ) : (
+              <span>---</span>
+            )}
           </Grid>
         </Grid>
 
@@ -83,7 +94,8 @@ class ProposalApprovalStat extends Component {
           </Grid>
           <Grid item md={6} className="approvalValue">
             <div className="voteGreenColorFont">{YesCount} Yes </div>{' '}
-            <div className="voteRedColorFont"> {NoCount} No </div> {AbstainCount} Abstain
+            <div className="voteRedColorFont"> {NoCount} No </div>{' '}
+            {AbstainCount} Abstain
           </Grid>
         </Grid>
       </Grid>
@@ -92,7 +104,7 @@ class ProposalApprovalStat extends Component {
 }
 
 ProposalApprovalStat.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(proposalApprovalStyle)(ProposalApprovalStat);
