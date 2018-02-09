@@ -29,7 +29,7 @@ class MasterNodeList extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  showEditModal (record) {
+  showEditModal(record) {
     this.editNode = record;
     console.log('record', record);
     this.setState({
@@ -59,11 +59,11 @@ class MasterNodeList extends Component {
     });
   };
 
-  deleteMasterNode (node) {
+  deleteMasterNode(node) {
     this.props.deleteNode(node);
   }
 
-  showDeleteConfirm (node) {
+  showDeleteConfirm(node) {
     let confrimDelete = () => {
       this.deleteMasterNode(node);
     };
@@ -72,17 +72,18 @@ class MasterNodeList extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk () {
+      wrapClassName: this.props.classes.deleteModal,
+      onOk() {
         confrimDelete();
         console.log('OK');
       },
-      onCancel () {
+      onCancel() {
         console.log('Cancel');
       },
     });
   }
 
-  onChange (e) {
+  onChange(e) {
     this.setState({
       editNodeRecord: {
         ...this.state.editNodeRecord,
@@ -91,7 +92,7 @@ class MasterNodeList extends Component {
     });
   }
 
-  render () {
+  render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -199,7 +200,7 @@ class MasterNodeList extends Component {
         </Modal>
         <div className={style}>
           <div className="heading">
-            <h2 className="title">Masternode List</h2>
+            <h2 className="list-title">Masternode List</h2>
           </div>
           <div className="node-list-table">
             <Table

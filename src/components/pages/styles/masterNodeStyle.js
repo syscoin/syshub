@@ -13,11 +13,27 @@ export default {
       fontWeight: 'lighter',
       textTransform: 'uppercase'
     },
-    '& .masternode-div':{
+    '& .masternode-div': {
       background: white,
       padding: 25,
       overflowY: 'auto',
       height: '80vh',
     },
   },
+  mRoot: {
+    extend: 'root',
+    marginTop: 100,
+    '& .title': {
+      width: '100%',
+      margin: 0,
+      padding: '10px 20px',
+      fontSize: 25,
+      backgroundColor: white,
+    },
+    '& .masternode-div': {
+      height: 'auto',
+      padding: 20,
+
+    }
+  }
 }

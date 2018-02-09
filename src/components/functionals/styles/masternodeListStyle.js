@@ -8,7 +8,7 @@ const greyDark = palette.greyDark;
 export default {
   root: {
     marginTop: 30,
-    '& .title': {
+    '& .list-title': {
       display: 'inline-block',
       fontWeight: 'lighter',
       color: greyDark,
@@ -44,6 +44,7 @@ export default {
   },
   modal: {
     '& .ant-modal-content': {
+      marginTop: 120,
       '& .ant-modal-close-x': {
         color: white,
       },
@@ -98,9 +99,18 @@ export default {
       },
     },
   },
-
+  deleteModal: {
+    '& .ant-modal-content': {
+      marginTop: 120,
+    }
+  },
   mRoot: {
     extend: 'root',
+    '& .list-title': {
+      padding: '5px 0px',
+      marginBottom: 0,
+      fontSize: 20,
+    },
     '& .ant-table-tbody > tr > td': {
       wordBreak: 'inherit',
       padding: 10,
