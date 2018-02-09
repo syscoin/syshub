@@ -32,17 +32,17 @@ class NewsCard extends Component {
     } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
     const noImage = require('../../assets/img/no-user-image.gif');
 
     return (
       <div className={style}>
         <div className={'card-item'} key={post.guid}>
           {/* news card */}
-          <Grid item className="news-card-grid">
+          <Grid item  spacing={24} className="news-card-grid">
             {/* news image grid */}
             <Grid
               md={2}
+              xs={2}
               inline="true"
               className="newsCardImage-grid inline-block"
             >
@@ -55,7 +55,7 @@ class NewsCard extends Component {
               }
             </Grid>
             {/* News Content Grid */}
-            <Grid md={10} className="newsCardContent-grid inline-block">
+            <Grid md={10} xs={10} className="newsCardContent-grid inline-block">
               <Card className="card">
                 <CardContent>
                   {/* content heading */}
@@ -83,7 +83,7 @@ class NewsCard extends Component {
               </Card>
             </Grid>
             {/* show more button */}
-            <Grid md={12} className="showMoreButton-grid">
+            <Grid md={12} xs={12}className="showMoreButton-grid">
               <Button raised onClick={index => selectNews(post.guid)}>
                 {' '}
                 Show More{' '}
