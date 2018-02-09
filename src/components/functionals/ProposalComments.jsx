@@ -13,7 +13,7 @@ import AddIcon from 'material-ui-icons/Add';
 import Icon from 'material-ui/Icon';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
-
+import CommentForm from './commentForm';
 
 // import firebase
 import { fire, comments, commentReplies } from '../../API/firebase';
@@ -28,9 +28,11 @@ class ProposalComments extends Component {
       userReply: '',
       proposalID: this.props.data.proposalID,
       allComments: [],
+      proposal: null,
       editCommentState: false,
       userEditComment: '',
-      selectedCommentID: null
+      selectedCommentID: null,
+      showAddComment: false
     };
     this.commentsCounts = 0;
     this.addComment = this.addComment.bind(this);
@@ -47,12 +49,13 @@ class ProposalComments extends Component {
     this.editedComment = this.editedComment.bind(this);
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
+    this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
   }
 
 
   // @params date: It will be number which represent data in string like (253453453245)
   // @method generateDate: It will convert date to readable date
-  generateDate(date) {
+  generateDate (date) {
     let today = new Date(),
       offset = -(today.getTimezoneOffset() / 60);
     //return (_date.getDay() + " / " + (_date.getMonth() + 1) + ' / ' + (_date.getFullYear()) + " ( " + _date.getHours() + ":" + _date.getMinutes() + " " + _date.getTimezoneOffset() + " ) ")
@@ -60,9 +63,12 @@ class ProposalComments extends Component {
     return new Date(date + offset * 3600 * 1000).toUTCString().replace(/ GMT$/, "")
   }
 
-  componentWillMount() {
+  componentWillMount () {
 
-
+    let proposal = this.props.proposals.find((proposal) => { return proposal.Hash == this.props.data.proposalID })
+    if (proposal) {
+      this.setState({ proposal })
+    }
     // Load comments from firebase in realtime
     // then set in state
     let _date = new Date();
@@ -75,6 +81,7 @@ class ProposalComments extends Component {
         console.log("commentsObjs", commentsObjs)
         for (var key in commentsObjs) {
           commentsObjs[key]._id = key;
+          commentsObjs[key].showAddReply = false;
           commentsArray.unshift(commentsObjs[key]);
         }
         this.commentsCounts = commentsArray.length;
@@ -89,7 +96,7 @@ class ProposalComments extends Component {
   }
 
   // load replies
-  loadReplies(index) {
+  loadReplies (index) {
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id,
         _comments = Object.assign(this.state.allComments);
@@ -110,7 +117,7 @@ class ProposalComments extends Component {
     }
   }
 
-  renderReplies(replies) {
+  renderReplies (replies) {
     return (
       replies.map((reply, key) => {
         return (
@@ -139,14 +146,14 @@ class ProposalComments extends Component {
 
 
 
-  setComment(e) {
+  setComment (e) {
     this.setState({
       userComment: e.target.value
     })
   }
 
-  addReply(commentID) {
-    if (this.state.userReply && this.props.user) {
+  addReply (commentID, message) {
+    if (this.props.user && message.length > 0) {
       let date = new Date;
       let _replyObj = {
         createdBy: {
@@ -155,10 +162,11 @@ class ProposalComments extends Component {
         },
         createdAt: date.getTime(),
         updatedAt: date.getTime(),
-        message: this.state.userReply,
+        message: message,
       }
       commentReplies.child(commentID).push(_replyObj, () => {
         console.log('Successfully Reply');
+        this.showAddReplyBtn(commentID, false);
       })
       this.setState({
         userReply: ''
@@ -167,14 +175,14 @@ class ProposalComments extends Component {
 
   }
 
-  setReply(e) {
+  setReply (e) {
     this.setState({
       userReply: e.target.value
     })
   }
 
 
-  addComment() {
+  addComment () {
     console.log("Comment", this.state.userComment)
     if (this.state.userComment && this.props.user) {
       let date = new Date
@@ -195,6 +203,7 @@ class ProposalComments extends Component {
       console.log("New Comment", _comment)
       comments.child(this.state.proposalID).push(_comment, () => {
         console.log('Success')
+        this.setState({ showAddComment: false })
       })
       this.setState({
         userComment: ''
@@ -203,7 +212,7 @@ class ProposalComments extends Component {
 
   }
 
-  voteForComment(action, commentID) {
+  voteForComment (action, commentID) {
     if (this.props.user) {
       let itemIndex = null,
         _item;
@@ -238,7 +247,7 @@ class ProposalComments extends Component {
 
   }
 
-  voteCount(_for, _array) {
+  voteCount (_for, _array) {
     let counts = 0;
     if (_array) {
       _array.forEach((_item) => {
@@ -251,15 +260,15 @@ class ProposalComments extends Component {
     return counts;
   }
 
-  setEditComment(e) {
+  setEditComment (e) {
     this.setState({ userEditComment: e.target.value })
   }
 
-  editedComment(id, message) {
+  editedComment (id, message) {
     this.setState({ editCommentState: !this.state.editCommentState, selectedCommentID: id, userEditComment: message });
   }
 
-  editComment(id) {
+  editComment (id) {
     var editedCommentObj,
       editCommentID, date = new Date;
     this.state.allComments.map((comment, key) => {
@@ -269,6 +278,7 @@ class ProposalComments extends Component {
         comment.updatedAt = date.getTime();
         comment.isEdited = true;
         delete comment._id;
+        delete comment.showAddReply;
         editedCommentObj = comment;
       }
     })
@@ -277,17 +287,29 @@ class ProposalComments extends Component {
     console.log("editedCommentObj", editedCommentObj)
   }
 
-  deleteComment(id) {
+  deleteComment (id) {
     comments.child(this.state.proposalID).child(id).remove();
   }
 
 
-  changePage(page, pageSize) {
+  changePage (page, pageSize) {
     console.log("page", page, "pageSize", pageSize)
   }
 
+  showAddReplyBtn (_commentID, showAddReply) {
+    let allComments = this.state.allComments.map((comment) => {
+      if (comment._id == _commentID) {
+        comment.showAddReply = showAddReply;
+        console.log(comment);
+        return comment;
+      }
+      return comment
+    })
+    console.log(allComments);
+    this.setState({ allComments })
+  }
 
-  render() {
+  render () {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -300,23 +322,31 @@ class ProposalComments extends Component {
         <Grid item md={11} className="section-separate">
           <hr />
         </Grid>
-        <Grid container md={8} className="commentSectionslView">
-          <Grid item md={12} className="commentHeading">
+        {this.state.showAddComment ?
+          <Grid container md={8} className="commentSectionslView">
+            <Grid item md={12} className="commentHeading">
+              Add Comment
+          </Grid>
+            <Grid item md={12} className="proposalDetails">
+              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
+
+              <textarea rows="2" cols="75" className="userComment" value={this.state.userComment} onChange={this.setComment}>
+
+              </textarea>
+              <hr className="proposalDetailsHr" />
+              <Button type="submit" color="primary" onClick={this.addComment}>
+                Submit
+              </Button>
+              <Button color="primary" onClick={() => { this.setState({ showAddComment: false }) }} >
+                Cancel
+              </Button>
+            </Grid>
+          </Grid>
+          :
+          <Button className="add-comment-btn" color="primary" onClick={() => { this.setState({ showAddComment: true }) }}>
             Add Comment
-          </Grid>
-          <Grid item md={12} className="proposalDetails">
-            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
-
-            <textarea rows="2" cols="75" className="userComment" value={this.state.userComment} onChange={this.setComment}>
-
-            </textarea>
-            <hr className="proposalDetailsHr" />
-
-            <Button type="submit" color="primary" onClick={this.addComment}>
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
+          </Button>
+        }
 
         <Grid item md={9} className="section-separate">
           <hr className="separate-with-margin" />
@@ -461,27 +491,29 @@ class ProposalComments extends Component {
 
               {comment.replies ? this.renderReplies(comment.replies) : null
               }
-              <Grid item md={10} className="replyView">
+              <Grid item md={10} className="replyView" onClick={() => { this.showAddReplyBtn(comment._id, true) }}>
                 {' '}
                 Reply
-          </Grid>
-
-              <Grid container md={8} className="topcommentSectionslView">
-                <Grid item md={12} className="commentHeading">
-                  Enter Reply
-            </Grid>
-
-                <Grid item md={12} className="proposalDetails">
-                  {/* Having Fun ? */}
-                  <textarea rows="1" cols="55" className="userComment" value={this.state.userReply} onChange={this.setReply}>
-                  </textarea>
-                  <hr className="proposalDetailsHr" />
-
-                  {/* <Button type="submit" color="primary" className="formSubmiButton"> */}
-                  <Button onClick={() => this.addReply(comment._id)}> Submit </Button>
-                  <Button > Cancel </Button>
-                </Grid>
               </Grid>
+              {comment.showAddReply ?
+                // <Grid container md={8} className="topcommentSectionslView">
+                //   <Grid item md={12} className="commentHeading">
+                //     Enter Reply
+                //   </Grid>
+
+                //   <Grid item md={12} className="proposalDetails">
+                //     {/* Having Fun ? */}
+                //     <textarea rows="1" cols="55" className="userComment" value={this.state.userReply} onChange={this.setReply}>
+                //     </textarea>
+                //     <hr className="proposalDetailsHr" />
+
+                //     {/* <Button type="submit" color="primary" className="formSubmiButton"> */}
+                //     <Button onClick={() => this.addReply(comment._id)}> Submit </Button>
+                //     <Button onClick={() => { this.showAddReplyBtn(comment, false) }}> Cancel </Button>
+                //   </Grid>
+                // </Grid>
+                <CommentForm comment={comment} add={this.addReply} cancel={this.showAddReplyBtn} />
+                : null}
             </Grid>
           )
         })}
@@ -495,7 +527,8 @@ class ProposalComments extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.app.currentUser
+    user: state.app.currentUser,
+    proposals: state.proposals.list
   };
 };
 
