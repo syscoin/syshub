@@ -84,4 +84,35 @@ export default {
       },
     }
   },
+  mRoot: {
+    extend: 'root',
+    marginTop: 100,
+    '& .title': {
+      padding: '10px 20px 0px 20px',
+      margin: 0,
+      background: white,
+      fontWeight: 300,
+    },
+    '& .faqs-div': {
+      padding: '15px 15px 0px 15px',
+      '& .search-question': {
+        width: '90%',
+        margin: 'auto',
+      },
+      '& .faq-subCategory': {
+        '& .ant-collapse-header': {
+          fontSize: 15,
+        },
+      },
+      '& .ant-collapse-header .arrow': {
+        width: '10% !important'
+      },
+      '& .faq-category': {
+        '& .ant-collapse-content': {
+          padding: 0,
+        }
+      }
+    },
+
+  }
 };

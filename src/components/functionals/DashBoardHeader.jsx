@@ -17,7 +17,7 @@ class DashBoardHeader extends Component {
     };
   }
 
-  render() {
+  render () {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -35,25 +35,25 @@ class DashBoardHeader extends Component {
                 />
                 <div className="headingDiv"> {this.state.data.name}</div>
                 <div className="ownerDetails">
-                  Owner: <div className="ownerName">User1 </div>{' '}
+                  {/* Owner: <div className="ownerName">User1 </div>{' '} */}
                 </div>
               </Grid>
             </Grid>
           </Grid>
         ) : (
-          <Grid container md={12} className="no-margin">
-            <Grid item md={12} className="headingView">
-              <Grid item md={12} className="headingRow">
-                <span className="activeText">! </span>{' '}
-                <div className="headingDiv">
-                  {' '}
-                  Currently have <span className="activeText"> 12 </span> Active
+            <Grid container md={12} className="no-margin">
+              <Grid item md={12} className="headingView">
+                <Grid item md={12} className="headingRow">
+                  <span className="activeText">! </span>{' '}
+                  <div className="headingDiv">
+                    {' '}
+                    Currently have <span className="activeText"> 12 </span> Active
                   Proposal
                 </div>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
       </Grid>
     );
   }

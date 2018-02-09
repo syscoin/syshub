@@ -19,7 +19,7 @@ class NewsAbout extends Component {
     return (
       <div>
         <Grid container className={style}>
-          <Grid md={12}>
+          <Grid md={12} xs={12}>
             <Avatar
               shape="square"
               size="large"

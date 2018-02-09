@@ -41,12 +41,12 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function(snapshot) {
+          function (snapshot) {
             const progress =
               snapshot.bytesTransferred / snapshot.totalBytes * 100;
             console.log('Upload is ' + progress + '% done');
           },
-          function(error) {
+          function (error) {
             switch (error.code) {
               case 'storage/unauthorized':
                 // User doesn't have permission to access the object
@@ -129,12 +129,10 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar =
-      this.props.currentUser.photoURL ||
-      require('../../assets/img/no-user-image.gif');
+    const avatar = this.props.currentUser && this.props.currentUser.photoURL ? this.props.currentUser.photoURL : require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
-        <Grid container>
+        <Grid container className="profile-grid">
           {/* profile text */}
           <Grid md={12}>
             <h1 className="profile-heading">Profile</h1>
@@ -146,12 +144,12 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user image" className="user-image" />
               ) : (
-                <img
-                  src={this.state.image}
-                  alt="no user image"
-                  className="user-image"
-                />
-              )}
+                  <img
+                    src={this.state.image}
+                    alt="no user image"
+                    className="user-image"
+                  />
+                )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <input
