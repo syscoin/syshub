@@ -4,8 +4,10 @@ import constants from '../constants';
 
 import { HTTPAsync } from '../helpers';
 
-//const baseApiURL = 'http://159.89.141.35:3000'; //Old net, no SYS available
-const baseApiURL = 'http://159.89.151.42:3000';
+
+//const baseApiURL = 'http://159.89.151.42:3000'; // New net
+const baseApiURL = 'https://www.qnguyen.xyz'; // Quang HTTPS server
+
 
 export default {
   getMediumPosts: () => {
