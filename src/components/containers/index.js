@@ -11,8 +11,6 @@ import NewsDetail from './NewsDetail';
 //Mobile Containers
 import MAppHeader from './MAppHeader';
 import MAppFooter from './MAppFooter';
-import MAppLSider from './MAppLSider';
-import MAppRSider from './MAppRSider';
 import MAppContent from './MAppContent';
 
 export {
@@ -27,7 +25,5 @@ export {
   NewsDetail,
   MAppHeader,
   MAppFooter,
-  MAppLSider,
-  MAppRSider,
-  MAppContent,
+  MAppContent
 };

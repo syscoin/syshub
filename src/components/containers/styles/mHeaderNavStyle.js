@@ -9,7 +9,16 @@ const gery = palette.grey;
 export default {
   mRoot: {
     borderTop: 'thin solid ' + gery,
-    marginTop: 25,
+    marginBottom: 0,
+    marginTop: 0,
+    '& .left-section': {
+      textAlign: 'center',
+      padding: 0,
+      '& button': {
+        height: 30,
+        marginTop: -15
+      }
+    },
     '& .divider': {
       height: '100%',
       margin: 0
@@ -18,9 +27,20 @@ export default {
       textAlign: 'center',
       borderLeft: 'thin solid ' + gery,
       borderRight: 'thin solid ' + gery,
-      height: 70,
       '& img': {
-        height: 50
+        height: 40,
+        width: 70,
+        marginTop: -29
+      }
+    },
+    '& .right-section': {
+      padding: 0,
+      textAlign: 'center',
+      '& button': {
+        '& img': {
+          marginTop: -10,
+        }
+
       }
     },
     '& button': {

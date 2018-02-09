@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //import antd components
 import { Grid, Button, withStyles } from 'material-ui';
 
-import { proposalCommentsStyle } from './styles';
+import { proposalCommentsStyle } from './styles'; 
 
 class ProposalComments extends Component {
   constructor(props) {
