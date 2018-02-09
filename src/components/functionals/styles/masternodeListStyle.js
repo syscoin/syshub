@@ -44,7 +44,6 @@ export default {
   },
   modal: {
     '& .ant-modal-content': {
-      marginTop: 120,
       '& .ant-modal-close-x': {
         color: white,
       },
@@ -98,11 +97,6 @@ export default {
         fontSize: 17,
       },
     },
-  },
-  deleteModal: {
-    '& .ant-modal-content': {
-      marginTop: 120,
-    }
   },
   mRoot: {
     extend: 'root',

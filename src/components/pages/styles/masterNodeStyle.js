@@ -22,7 +22,6 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 100,
     '& .title': {
       width: '100%',
       margin: 0,

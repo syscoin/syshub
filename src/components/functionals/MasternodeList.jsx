@@ -72,7 +72,7 @@ class MasterNodeList extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      wrapClassName: this.props.classes.deleteModal,
+      zIndex: 99999,
       onOk() {
         confrimDelete();
         console.log('OK');
@@ -148,6 +148,7 @@ class MasterNodeList extends Component {
               Close
             </Button>,
           ]}
+          zIndex={99999}
         >
           <Grid item md={12} className="form__container">
             <form
