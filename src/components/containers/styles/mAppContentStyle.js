@@ -13,9 +13,12 @@ export default {
     padding: '24px',
     background: greyLight,
     minWidth: '100%',
-    padding:'0px'
+    padding: '0px'
   },
-  contentWraper: { 
+  contentWraper: {
     marginTop: '40px'
-   }
+  },
+  __container: {
+    width: '100%'
+  }
 };
