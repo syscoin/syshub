@@ -59,6 +59,9 @@ class NewProposal extends Component {
 
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
+    if (!currentUser) {
+      return;
+    }
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     proposalRef.once('value', snapshot => {
@@ -90,6 +93,7 @@ class NewProposal extends Component {
               let userProposal = {
                 name: userProp.name,
                 description: userProp.description,
+                username: userProp.username,
                 type: 1,
                 start_epoch: userProp.start_epoch,
                 end_epoch: userProp.end_epoch,
@@ -158,7 +162,7 @@ class NewProposal extends Component {
                 const userProposalObj = {
                   parentHash: '0',
                   revision: '1',
-                  time: new Date().getTime(),
+                  time: Math.floor(new Date().getTime() / 1000),
                   dataHex: hexedUserProposal,
                   txid: userProp.txid
                 };
@@ -230,7 +234,7 @@ class NewProposal extends Component {
                       const userProposalObj2 = {
                         parentHash: '0',
                         revision: '1',
-                        time: new Date().getTime(),
+                        time: Math.floor(new Date().getTime() / 1000),
                         dataHex: hexedUserProposal,
                         txid: txid
                       };
@@ -278,6 +282,8 @@ class NewProposal extends Component {
                     alert(err);
                   });
               }
+            } else {
+              proposalRef.remove();
             }
           })
           .catch(err => {
@@ -313,11 +319,12 @@ class NewProposal extends Component {
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     let userProposal = {
-      name: proposalTitle,
+      name: proposalTitle.split(' ').join('_'),
       description: proposal__detail,
+      username: currentUser.displayName,
       type: 1,
-      start_epoch: new Date().getTime(),
-      end_epoch: new Date(proposalDate).getTime(),
+      start_epoch: Math.floor(new Date().getTime() / 1000),
+      end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
       payment_address: address,
       payment_amount: Number(amount),
       url: proposallink
@@ -329,11 +336,11 @@ class NewProposal extends Component {
       [
         'proposal',
         {
-          name: proposalTitle,
+          name: proposalTitle.split(' ').join('_'),
           description: proposal__detail,
           type: 1,
-          start_epoch: new Date().getTime(),
-          end_epoch: new Date(proposalDate).getTime(),
+          start_epoch: Math.floor(new Date().getTime() / 1000),
+          end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
           payment_address: address,
           payment_amount: Number(amount),
           url: proposallink
@@ -349,7 +356,7 @@ class NewProposal extends Component {
     const prepareObj = {
       parentHash: '0',
       revision: '1',
-      time: new Date().getTime(),
+      time: Math.floor(new Date().getTime() / 1000),
       dataHex: hexedProposal
     };
 

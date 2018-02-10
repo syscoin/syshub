@@ -63,6 +63,7 @@ const proposals = (state = initialState, action) => {
     case constants.SYS_PROPOSALS_GET:
       let proposal = {};
       let list = [];
+
       Object.keys(action.data).forEach(key1 => {
         Object.keys(action.data[key1]).forEach(key2 => {
           proposal[key2] = smartParse(action.data[key1][key2]);

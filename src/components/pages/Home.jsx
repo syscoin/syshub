@@ -6,7 +6,7 @@ import actions from '../../redux/actions';
 // import components
 import { Stats, WelcomeBox } from '../functionals';
 class Home extends Component {
-  render () {
+  render() {
     return (
       <div>
         <WelcomeBox
@@ -22,13 +22,13 @@ class Home extends Component {
 
 const stateToProps = state => {
   return {
-    logged: state.app.currentUser ? true : false,
+    logged: state.app.currentUser ? true : false
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page)),
+    setPage: page => dispatch(actions.setPage(page))
   };
 };
 
