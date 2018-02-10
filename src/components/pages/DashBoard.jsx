@@ -23,19 +23,25 @@ class DashBoard extends Component {
     this.handleDashboard = this.handleDashboard.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getProposals();
   }
   //changing state with this function
+<<<<<<< HEAD
   handleDashboard(value) {
     const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+=======
+  handleDashboard (value) {
+    const container =
+      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+>>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
     this.setState({
       showContainer: container,
       proposalID: value
     });
   }
 
-  render() {
+  render () {
     const { classes, proposals, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -61,8 +67,17 @@ class DashBoard extends Component {
               />
             ),
             proposalDetail: (
+<<<<<<< HEAD
               <ProposalDetail deviceType={this.props.deviceType} proposal={this.state.proposalID} />
             )
+=======
+              <ProposalDetail
+                deviceType={this.props.deviceType}
+                proposal={this.state.proposalID}
+                totalNodes={this.props.totalNodes}
+              />
+            ),
+>>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
           }[this.state.showContainer]
         }
       </Grid>

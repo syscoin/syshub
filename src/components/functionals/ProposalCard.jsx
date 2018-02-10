@@ -17,11 +17,28 @@ import { Progress } from 'antd';
 import { proposalCardStyle } from './styles';
 
 class ProposalCard extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    days_remaining: 0,
+    endDate: ''
+  };
 
-    this.voteUp = this.voteUp.bind(this);
-    this.voteDown = this.voteDown.bind(this);
+  componentWillMount() {
+    let startDate = new Date();
+    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch);
+    if (endDate > startDate) {
+      let timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      this.setState({
+        days_remaining,
+        endDate:
+          endDate.getDate() +
+          '/' +
+          endDate.getMonth() +
+          1 +
+          '/' +
+          endDate.getFullYear()
+      });
+    }
   }
 
   voteUp(vote) {
@@ -142,7 +159,11 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
+<<<<<<< HEAD
     const proposalTitle = proposal.DataString[0][1].name.split('_').join(' ');
+=======
+    let { days_remaining, endDate } = this.state;
+>>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -180,7 +201,14 @@ class ProposalCard extends Component {
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
+<<<<<<< HEAD
             <h1 className="proposalHeading" onClick={() => selectProposal(proposal.Hash)}>
+=======
+            <h1
+              className="proposalHeading"
+              onClick={() => selectProposal(proposal)}
+            >
+>>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
               {proposal.DataString[0][1].name ? (
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
@@ -189,9 +217,16 @@ class ProposalCard extends Component {
               )}
             </h1>
             <div className="proposalDetail">
-              {proposal.DataString[0][1].description
+              {/*proposal.DataString[0][1].description
                 ? `${proposal.DataString[0][1].description.substr(0, 120)}...`
-                : 'No description available for this proposal.'}
+              : 'No description available for this proposal.'*/}
+              {days_remaining != 0 ? (
+                <span>{`${days_remaining} Day${
+                  days_remaining > 1 ? 's' : ''
+                } Remaining (${endDate})`}</span>
+              ) : (
+                <span>---</span>
+              )}
             </div>
           </Grid>
 

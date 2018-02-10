@@ -19,11 +19,12 @@ const base = Rebase.createClass(fire.database());
 // const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
+const comments = fire.database().ref('comments');
+const commentReplies = fire.database().ref('commentReplies');
 const votes = fire.database().ref('votes');
 // const currentUser
 
 //Some useful functions
-
 const checkVoted = (user, proposal) => {
   return new Promise((resolve, reject) => {
     fire
@@ -52,6 +53,7 @@ const voted = (user, proposal, voteTxt, voteId) => {
     .child(proposal.Hash)
     .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
 };
+
 
 const doRegister = () => {};
 
@@ -252,6 +254,8 @@ const doDeleteAccount = () => {
 export {
   messages,
   usernames,
+  comments,
+  commentReplies,
   fire,
   base,
   doRegister,

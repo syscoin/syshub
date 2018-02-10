@@ -15,8 +15,6 @@ import newsDetailStyle from './newsDetailStyle';
 import mAppContentStyle from './mAppContentStyle';
 import mAppFooterStyle from './mAppFooterStyle';
 import mAppHeaderStyle from './mAppHeaderStyle';
-import mAppRSiderStyle from './mAppRSiderStyle';
-import mAppLSiderStyle from './mAppLSiderStyle';
 import mHeaderNavStyle from './mHeaderNavStyle';
 
 export {
@@ -33,7 +31,5 @@ export {
   mAppContentStyle,
   mAppFooterStyle,
   mAppHeaderStyle,
-  mAppRSiderStyle,
-  mAppLSiderStyle,
   mHeaderNavStyle
 };

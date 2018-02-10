@@ -197,7 +197,7 @@ class Faq extends Component {
                     return (
                       <Collapse bordered={false}>
                         <div className="list-dot"></div>
-                        <Panel header={ques.question} key={index} showArrow={false}>
+                        <Panel header={ques.question} key={index} showArrow={false} className="faq-subCategory">
                           <div style={{ padding: '15px', border: '1px solid #a4b0be', marginLeft: 35 }}>
                             <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
                               {ques.answer}

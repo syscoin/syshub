@@ -36,7 +36,7 @@ export default {
         '& .link-color': {
           color: primary,
           fontWeight: '100',
-          cursor:'pointer'
+          cursor: 'pointer'
         },
       },
       '& .upload-image-container': {
@@ -105,5 +105,48 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .profile-grid': {
+      display: 'inherit'
+    },
+    '& .profile-heading': {
+      margin: '0px 20px 20px 15px'
+    },
+    '& .profile-image-grid': {
+      paddingTop: 10,
+      paddingBottom: 30,
+      textAlign: 'center',
+      '& .upload-image-container': {
+        width: '100%',
+        margin: 'auto',
+      },
+      '& .upload-image-container': {
+        margin: 'auto',
+      }
+    },
+    '& .profile-credential-grid': {
+      '& .form-group': {
+        '& .label': {
+          display: 'block',
+          fontSize: 17,
+          display: 'block',
+          marginLeft: 25,
+        },
+        '& .input-field': {
+          display: 'block',
+          width: '90%',
+          margin: 'auto',
+        },
+        '& .validation-message': {
+          marginLeft: 25,
+          paddingTop: 5,
+          fontSize: 16,
+        }
+      }
+    },
+    '& .update-button-grid': {
+      textAlign: 'center'
+    }
+  },
 };
