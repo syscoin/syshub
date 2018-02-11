@@ -12,10 +12,10 @@ const wraper = {
   justifyAlign: 'flex-start',
   flex: '0 1 15%',
   background: greyLight,
-  borderRight: `1px solid ${grey}`,
+  borderRight: `1px solid ${grey}`
 };
 const sider = {
-  backgroundColor: primary, //'#ff0045',
+  backgroundColor: primary //'#ff0045',
 };
 
 const mWraper = {
@@ -28,8 +28,7 @@ const mWraper = {
   position: 'fixed',
   height: '100%',
   backgroundColor: transparentBlack
-  
-}
+};
 
 export default {
   wraper,
