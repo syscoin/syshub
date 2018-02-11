@@ -10,6 +10,7 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
+import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col, Card } from 'antd';
 import { Form, Icon, Input, Button, InputNumber } from 'antd';
@@ -17,7 +18,10 @@ import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
+import { Hex } from '../../redux/helpers';
+import { fire, proposals } from '../../API/firebase';
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+
 //import style
 
 const FormItem = Form.Item;
@@ -33,10 +37,12 @@ class NewProposal extends Component {
       proposalDate: '',
       address: '',
       amount: '',
+      recover: false,
       stepperSubHeading: '',
       proposallink: 'http://syshub.com/p/',
       editorState: EditorState.createEmpty(),
       proposal__detail: '',
+      savedProposal: null
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -48,33 +54,421 @@ class NewProposal extends Component {
     this.getAmount = this.getAmount.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.disabledNextBtn = this.disabledNextBtn.bind(this);
+    this.createPropObj = this.createPropObj.bind(this);
   }
+
+  componentDidMount() {
+    const currentUser = fire.auth().currentUser;
+    if (!currentUser) {
+      return;
+    }
+    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+
+    proposalRef.once('value', snapshot => {
+      const userProp = snapshot.val();
+
+      if (userProp) {
+        if (userProp.hash) {
+          proposalRef.remove();
+          return;
+        }
+
+        this.setState({
+          savedProposal: userProp
+        });
+
+        swal({
+          title: 'Recovery',
+          text:
+            'It seems you have some information saved in our db, would you like to recover the data?',
+          buttons: true,
+          icon: 'info'
+        })
+          .then(value => {
+            if (value) {
+              this.setState({
+                recover: value
+              });
+
+              let userProposal = {
+                name: userProp.name,
+                description: userProp.description,
+                username: userProp.username,
+                type: 1,
+                start_epoch: userProp.start_epoch,
+                end_epoch: userProp.end_epoch,
+                payment_address: userProp.payment_address,
+                payment_amount: userProp.payment_amount,
+                url: userProp.url
+              };
+
+              const newUserProposal = [
+                [
+                  'proposal',
+                  {
+                    name: userProp.name,
+                    description: userProp.description,
+                    type: 1,
+                    start_epoch: userProp.start_epoch,
+                    end_epoch: userProp.end_epoch,
+                    payment_address: userProp.payment_address,
+                    payment_amount: userProp.payment_amount,
+                    url: userProp.url
+                  }
+                ]
+              ];
+
+              const hexedUserProposal = Hex.strToHex(newUserProposal);
+
+              if (userProp.submitReceipt) {
+                swal({
+                  closeOnClickOutside: false,
+                  closeOnEsc: false,
+                  title: 'Success',
+                  text: `"${
+                    userProp.submitReceipt
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                  icon: 'success',
+                  buttons: true,
+                  dangerMode: false,
+                  content: {
+                    element: 'input',
+                    attributes: {
+                      placeholder: 'Input proposal hash here',
+                      type: 'text'
+                    }
+                  }
+                })
+                  .then(userProposalHash => {
+                    if (userProposalHash) {
+                      userProposal.hash = userProposalHash;
+                      proposalRef.set(userProposal);
+
+                      swal({
+                        title: 'Success',
+                        text: 'Proposal has been created.',
+                        icon: 'success'
+                      });
+                    }
+                  })
+                  .catch(err => {
+                    alert(err);
+                  });
+
+                return;
+              }
+
+              if (userProp.txid) {
+                const userProposalObj = {
+                  parentHash: '0',
+                  revision: '1',
+                  time: Math.floor(new Date().getTime() / 1000),
+                  dataHex: hexedUserProposal,
+                  txid: userProp.txid
+                };
+
+                userProposal.txid = userProp.txid;
+                proposalRef.set(userProposal);
+                this.props
+                  .submitProposal(userProposalObj)
+                  .then(userSubmitResponse2 => {
+                    return swal({
+                      closeOnClickOutside: false,
+                      closeOnEsc: false,
+                      title: 'Success',
+                      text: `"${userSubmitResponse2}" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                      icon: 'success',
+                      buttons: true,
+                      dangerMode: false,
+                      content: {
+                        element: 'input',
+                        attributes: {
+                          placeholder: 'Input proposal hash here',
+                          type: 'text'
+                        }
+                      }
+                    });
+                  })
+                  .then(userProposalHash2 => {
+                    if (userProposalHash2) {
+                      userProposal.hash = userProposalHash2;
+                      proposalRef.set(userProposal);
+
+                      swal({
+                        title: 'Success',
+                        text: 'Proposal has been created.',
+                        icon: 'success'
+                      });
+                    } else {
+                      throw new Error('No submit receipt');
+                    }
+                  })
+                  .catch(err => {
+                    alert(err);
+                  });
+
+                return;
+              }
+
+              if (userProp.prepareReceipt) {
+                swal({
+                  closeOnClickOutside: false,
+                  closeOnEsc: false,
+                  title: 'Success',
+                  text: `"${
+                    userProp.prepareReceipt
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+                  icon: 'success',
+                  buttons: true,
+                  dangerMode: false,
+                  content: {
+                    element: 'input',
+                    attributes: {
+                      placeholder: 'Input payment id here',
+                      type: 'text'
+                    }
+                  }
+                })
+                  .then(txid => {
+                    if (txid) {
+                      const userProposalObj2 = {
+                        parentHash: '0',
+                        revision: '1',
+                        time: Math.floor(new Date().getTime() / 1000),
+                        dataHex: hexedUserProposal,
+                        txid: txid
+                      };
+
+                      userProposal.txid = txid;
+                      proposalRef.set(userProposal);
+                      return this.props.submitProposal(userProposalObj2);
+                    } else {
+                      throw new Error('No paymentId received');
+                    }
+                  })
+                  .then(userSubmitResponse => {
+                    return swal({
+                      closeOnClickOutside: false,
+                      closeOnEsc: false,
+                      title: 'Success',
+                      text: `"${userSubmitResponse}" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                      icon: 'success',
+                      buttons: true,
+                      dangerMode: false,
+                      content: {
+                        element: 'input',
+                        attributes: {
+                          placeholder: 'Input proposal hash here',
+                          type: 'text'
+                        }
+                      }
+                    });
+                  })
+                  .then(userProposalHash3 => {
+                    if (userProposalHash3) {
+                      userProposal.hash = userProposalHash3;
+                      proposalRef.set(userProposal);
+
+                      swal({
+                        title: 'Success',
+                        text: 'Proposal has been created.',
+                        icon: 'success'
+                      });
+                    } else {
+                      throw new Error('No submit receipt');
+                    }
+                  })
+                  .catch(err => {
+                    alert(err);
+                  });
+              }
+            } else {
+              proposalRef.remove();
+            }
+          })
+          .catch(err => {
+            alert(err);
+          });
+      }
+    });
+  }
+
+  createPropObj = () => {
+    const { app } = this.props;
+    const { currentUser } = app;
+    const {
+      proposalTitle,
+      address,
+      amount,
+      proposal__detail,
+      proposallink,
+      proposalDate,
+      userProposalSaved
+    } = this.state;
+
+    if (!currentUser) {
+      swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
+      return;
+    }
+
+    this.setState({
+      activeStep: this.state.activeStep + 1,
+      showEditor: true
+    });
+
+    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+
+    let userProposal = {
+      name: proposalTitle.split(' ').join('_'),
+      description: proposal__detail,
+      username: currentUser.displayName,
+      type: 1,
+      start_epoch: Math.floor(new Date().getTime() / 1000),
+      end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
+      payment_address: address,
+      payment_amount: Number(amount),
+      url: proposallink
+    };
+
+    proposalRef.set(userProposal);
+
+    let newProposal = [
+      [
+        'proposal',
+        {
+          name: proposalTitle.split(' ').join('_'),
+          description: proposal__detail,
+          type: 1,
+          start_epoch: Math.floor(new Date().getTime() / 1000),
+          end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
+          payment_address: address,
+          payment_amount: Number(amount),
+          url: proposallink
+        }
+      ]
+    ];
+
+    const hexedProposal = Hex.strToHex(newProposal);
+    const dataHex = {
+      dataHex: hexedProposal
+    };
+
+    const prepareObj = {
+      parentHash: '0',
+      revision: '1',
+      time: Math.floor(new Date().getTime() / 1000),
+      dataHex: hexedProposal
+    };
+
+    this.props
+      .checkProposal(dataHex)
+      .then(data => {
+        if (data['Object status'] === 'OK') {
+          return this.props.prepareProposal(prepareObj);
+        }
+      })
+      .then(prepareResponse => {
+        if (prepareResponse) {
+          userProposal.prepareReceipt = prepareResponse;
+          proposalRef.set(userProposal);
+
+          return swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Success',
+            text: `"${prepareResponse}" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+            icon: 'success',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Input payment id here',
+                type: 'text'
+              }
+            }
+          });
+        } else {
+          throw new Error('No prepare receipt');
+        }
+      })
+      .then(paymentId => {
+        let submitObj = { ...prepareObj };
+        if (paymentId) {
+          userProposal.txid = paymentId;
+          proposalRef.set(userProposal);
+          submitObj.txid = paymentId;
+          return this.props.submitProposal(submitObj);
+        } else {
+          throw new Error('No paymentId received');
+        }
+      })
+      .then(submitResponse => {
+        if (submitResponse) {
+          userProposal.submitReceipt = submitResponse;
+          proposalRef.set(userProposal);
+
+          return swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Success',
+            text: `"${submitResponse}" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+            icon: 'success',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Input proposal hash here',
+                type: 'text'
+              }
+            }
+          });
+        } else {
+          throw new Error('No submit receipt');
+        }
+      })
+      .then(proposalHash => {
+        if (proposalHash) {
+          userProposal.hash = proposalHash;
+          proposalRef.set(userProposal);
+
+          swal({
+            title: 'Success',
+            text: 'Proposal has been created.',
+            icon: 'success'
+          });
+        }
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
 
   handleNext = () => {
     this.setState({
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    console.log(this.state.proposalTitle, 'proposalTitle');
-    console.log(this.state.address, 'address');
-    console.log(this.state.amount, 'amount');
-    console.log(this.state.paymentQuantity, 'parment quantity');
+    // console.log(this.state.proposalTitle, 'proposalTitle');
+    // console.log(this.state.address, 'address');
+    // console.log(this.state.amount, 'amount');
+    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
-    if (this.state.activeStep == 2) {
-      console.log("active step")
-      this.setState({ showEditor: true })
+    if (this.state.activeStep === 2) {
+      // console.log('active step');
+      this.setState({ showEditor: true });
     }
     this.setState(
       {
-        
         activeStep: this.state.activeStep - 1,
-        proposal__detail: this.state.proposal__detail,
+        proposal__detail: this.state.proposal__detail
       },
       () => {
-        if (this.state.activeStep == 1 || this.state.activeStep == 0) {
-          this.setState({showEditor:true})
+        if (this.state.activeStep === 1 || this.state.activeStep === 0) {
+          this.setState({ showEditor: true });
         }
       }
     );
@@ -82,54 +476,58 @@ class NewProposal extends Component {
 
   handleReset = () => {
     this.setState({
-      activeStep: 0,
+      activeStep: 0
     });
   };
 
   //date change function
-  onDateChange (date, dateString) {
-    console.log(date, dateString);
+  onDateChange(date, dateString) {
+    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
-    })
+    });
   }
 
   //proposal title function
-  proposalTitle (e) {
+  proposalTitle(e) {
     this.setState({
       proposalTitle: e.target.value,
+      proposallink: `http://syshub.com/p/${e.target.value
+        .trim()
+        .toLowerCase()
+        .replace(/\s/g, '_')}`
     });
   }
 
   //payment quantity
-  paymentQuantity (value) {
+  paymentQuantity(value) {
     this.setState({
-      paymentQuantity: value,
+      paymentQuantity: value
     });
   }
 
   //get address function
-  getAddress (e) {
+  getAddress(e) {
     this.setState({
-      address: e.target.value,
+      address: e.target.value
     });
   }
 
   //get amount function
-  getAmount (e) {
+  getAmount(e) {
     this.setState({
-      amount: e.target.value,
+      amount: e.target.value
     });
   }
 
   //
-  previewHTML () {
+  previewHTML() {
     this.setState(
       {
         showEditor: false,
         proposal__detail: draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
-        ),
+        )
       },
       () => {
         let previewContainer = document.getElementById(
@@ -138,27 +536,27 @@ class NewProposal extends Component {
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        console.log('----------------------');
+        // console.log('----------------------');
       }
     );
   }
 
-  confirmProposalDetail () {
+  confirmProposalDetail() {
     this.previewHTML();
   }
 
   // steps name in array in which we map
-  getSteps () {
+  getSteps() {
     return [
       'Proposal Title',
       'Proposal Details',
       'Payment Details',
       'Amount',
-      'Create Proposal',
+      'Create Proposal'
     ];
   }
   //all the step contents are coming from return of switch case
-  getStepContent (step) {
+  getStepContent(step) {
     const { deviceType } = this.props;
     switch (step) {
       case 0:
@@ -181,19 +579,15 @@ class NewProposal extends Component {
             </Col>
             {/* Proposal Description Url Colomn */}
             <Col span={deviceType === 'mobile' ? 24 : 14}>
-              {deviceType === 'mobile' ?
-                <h3 className="proposal-title">
-                  Proposal Description Url
-                      </h3>
-                : null}
+              {deviceType === 'mobile' ? (
+                <h3 className="proposal-title">Proposal Description Url</h3>
+              ) : null}
               <Input
                 className="proposal-url-input"
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
-                  this.state.proposalTitle
-                    ? this.state.proposalTitle.toLowerCase()
-                    : 'proposal-title'
-                  }`}
+                  this.state.proposalTitle ? '' : 'proposal-title'
+                }`}
               />
             </Col>
           </Row>
@@ -226,9 +620,9 @@ class NewProposal extends Component {
                       inline: {
                         options: ['bold', 'italic', 'underline', 'monospace'],
                         list: {
-                          options: ['unordered', 'ordered'],
-                        },
-                      },
+                          options: ['unordered', 'ordered']
+                        }
+                      }
                     }}
                   />
                   <Button
@@ -239,21 +633,24 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col span={deviceType === 'mobile' ? 24 : 22} offset={deviceType === 'mobile' ? 0 : 1}>
-                      <h1 className="proposalDetail-title">
-                        {this.state.proposalTitle}
-                      </h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div
-                        className="proposalContent-div"
-                        id="preview-html-container"
-                      />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">
+                      {this.state.proposalTitle}
+                    </h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div
+                      className="proposalContent-div"
+                      id="preview-html-container"
+                    />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
         );
@@ -264,7 +661,10 @@ class NewProposal extends Component {
               <label className="label">Date</label>
               <DatePicker onChange={this.onDateChange} />
             </Col>
-            <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
+            <Col
+              span={deviceType === 'mobile' ? 10 : 7}
+              offset={deviceType === 'mobile' ? 4 : 0}
+            >
               <label># of Payments</label>
               <InputNumber
                 min={1}
@@ -305,42 +705,41 @@ class NewProposal extends Component {
         <Button>Confirm</Button>;
     }
   }
-  onEditorStateChange (editorState) {
+  onEditorStateChange(editorState) {
     this.setState({
-      editorState,
+      editorState
     });
-    console.log(this.state.editorState, 'editor state');
+    // console.log(this.state.editorState, 'editor state');
   }
-
 
   disabledNextBtn(step) {
     switch (step) {
       case 0:
         if (this.state.proposalTitle && this.state.proposallink) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 1:
         if (this.state.proposal__detail) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 2:
-        if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
+        if (
+          this.state.proposalDate &&
+          this.state.paymentQuantity &&
+          this.state.address
+        ) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       case 3:
         if (this.state.amount) {
           return false;
-        }
-        else {
+        } else {
           return true;
         }
       default:
@@ -349,87 +748,104 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, proposal } = this.props;
+    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    console.log(this.state.proposal__detail, 'detail');
+    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>
         <Paper className="paper-container" elevation={4}>
-          <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((label, index) => {
-              return (
-                <Step className="steper__container" key={label}>
-                  <StepLabel className="steper__label">
-                    <h2 className="step-label"> {label} </h2>
-                    {this.state.activeStep == 0 && label == 'Proposal Title' && deviceType !== 'mobile' ? (
-                      <h3 className="proposal-title">
-                        Proposal Description Url
-                      </h3>
-                    ) : null}
-                    {this.state.activeStep == 1 &&
-                      label == 'Proposal Details' ? (
+          {this.state.recover === true ? (
+            <div>Recovery in process</div>
+          ) : (
+            <Stepper activeStep={activeStep} orientation="vertical">
+              {steps.map((label, index) => {
+                return (
+                  <Step className="steper__container" key={label}>
+                    <StepLabel className="steper__label">
+                      <h2 className="step-label"> {label} </h2>
+                      {this.state.activeStep === 0 &&
+                      label === 'Proposal Title' &&
+                      deviceType !== 'mobile' ? (
+                        <h3 className="proposal-title">
+                          Proposal Description Url
+                        </h3>
+                      ) : null}
+                      {this.state.activeStep === 1 &&
+                      label === 'Proposal Details' ? (
                         this.state.showEditor ? (
                           <Button
                             className="preview-edit-button"
                             onClick={this.previewHTML.bind(this)}
                           >
                             PREVIEW
-                        </Button>
-                        ) : (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={() => {
-                                this.setState({ showEditor: true });
-                              }}
-                            >
-                              EDITOR
-                        </Button>
-                          )
-                      ) : null}
-                  </StepLabel>
-                  <StepContent>
-                    <div>{this.getStepContent(index)}</div>
-                    <div className={classes.actionsContainer}>
-                      <div
-                        className={
-                          activeStep === steps.length - 1
-                            ? 'confirm-btn-div'
-                            : 'next-btn-div'
-                        }
-                      >
-                        {activeStep === 0 ? null : (
-                          <Button
-                            raised={true}
-                            type="primary"
-                            onClick={this.handleBack}
-                            className="button"
-                          >
-                            Back
                           </Button>
-                        )}
-                        <Button
-                          raised={true}
-                          type="primary"
-                          onClick={this.handleNext}
-                          className={classes.button}
-                          disabled={this.disabledNextBtn(index)}
+                        ) : (
+                          <Button
+                            className="preview-edit-button"
+                            onClick={() => {
+                              this.setState({ showEditor: true });
+                            }}
+                          >
+                            EDITOR
+                          </Button>
+                        )
+                      ) : null}
+                    </StepLabel>
+                    <StepContent>
+                      <div>{this.getStepContent(index)}</div>
+                      <div className={classes.actionsContainer}>
+                        <div
+                          className={
+                            activeStep === steps.length - 1
+                              ? 'confirm-btn-div'
+                              : 'next-btn-div'
+                          }
                         >
-                          {activeStep === steps.length - 1
-                            ? 'Confirm'
-                            : 'Next Step'}
-                        </Button>
+                          {activeStep === 0 ? null : (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              onClick={this.handleBack}
+                              className="button"
+                            >
+                              Back
+                            </Button>
+                          )}
+                          {activeStep === steps.length - 1 ? (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              className={classes.button}
+                              onClick={this.createPropObj}
+                              disabled={this.disabledNextBtn(index)}
+                            >
+                              Confirm
+                            </Button>
+                          ) : (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              onClick={this.handleNext}
+                              className={classes.button}
+                              disabled={this.disabledNextBtn(index)}
+                            >
+                              Next Step
+                            </Button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </StepContent>
-                </Step>
-              );
-            })}
-          </Stepper>
+                    </StepContent>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          )}
         </Paper>
       </div>
     );
@@ -437,11 +853,18 @@ class NewProposal extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    proposal: state.proposals,
+    app: state.app
+  };
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    checkProposal: params => dispatch(actions.checkProposal(params)),
+    prepareProposal: params => dispatch(actions.prepareProposal(params)),
+    submitProposal: params => dispatch(actions.submitProposal(params))
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(

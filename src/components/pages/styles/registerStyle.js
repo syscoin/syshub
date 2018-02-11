@@ -109,7 +109,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: '100px',
+    marginTop: 0,
     '& .input-field': {
       width: '100% !important',
       margin: '0px !important'

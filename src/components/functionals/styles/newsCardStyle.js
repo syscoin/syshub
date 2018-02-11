@@ -76,5 +76,58 @@ export default {
       marginTop: 10,
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& card-item': {},
+    '& .news-card-grid': {
+      width: '110%',
+      '& .newsCardImage-grid': {
+        padding: '0px 0px 0px 0px',
+        '& img': {
+          width: '110%',
+        },
+      },
+      '& .newsCardContent-grid': {
+        height: 110,
+        verticalAlign: 'middle',
+        '& .card': {
+          '& .news-heading': {
+            marginTop:10,
+            fontSize: 15,
+            marginBottom: '10px',
+            fontWeight: 600,
+            color: primary,
+          },
+          '& .cardSubHeading': {
+            fontWeight: 100,
+            fontSize: '90%',
+            color: greyDark,
+          },
+          '& .newsContent': {
+            maxHeight: 55,
+            overflow: 'hidden',
+            fontWeight: 100,
+            color: greyDark,
+          },
+        },
+      },
+      '& .showMoreButton-grid': {
+        textAlign: 'right',
+        marginRight: '20px',
+        '& button': {
+          marginTop: 10,
+          borderRadius: '5px',
+          padding: '0px',
+          minHeight: '25px',
+        },
+        '& button:hover': {
+          backgroundColor: primaryLight
+        }
+      },
+    },
+    '& .divider': {
+      marginTop: 10,
+      width:'105%'
+    },
+  },
 };

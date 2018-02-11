@@ -42,6 +42,9 @@ export default {
         '& .approvalRedColorFont': {
           color: 'red',
         },
+        '& .approvalGreenColorFont': {
+          color: 'green',
+        },
         '& .voteRedColorFont': {
           color: 'red',
           marginRight: '6%',

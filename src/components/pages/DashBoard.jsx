@@ -18,7 +18,7 @@ class DashBoard extends Component {
     super(props);
     this.state = {
       showContainer: 'dashBoard',
-      proposalID: '',
+      proposalID: ''
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
@@ -32,7 +32,7 @@ class DashBoard extends Component {
       this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
-      proposalID: value,
+      proposalID: value
     });
   }
 
@@ -65,8 +65,9 @@ class DashBoard extends Component {
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={this.state.proposalID}
+                totalNodes={this.props.totalNodes}
               />
-            ),
+            )
           }[this.state.showContainer]
         }
       </Grid>
@@ -77,18 +78,19 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
+    totalNodes:
+      state.sysStats.value.general.registered_masternodes_verified * 0.1,
     app: state.app
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    getProposals: () => dispatch(actions.getProposals()),
+    getProposals: () => dispatch(actions.getProposals())
   };
 };
 DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(stateToProps, dispatchToProps)(
