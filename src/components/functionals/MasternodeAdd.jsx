@@ -50,7 +50,7 @@ class MasterNodeAdd extends Component {
     return (
       <div className={style}>
         <div className="heading">
-          <h2 className="title">Add New Masternode</h2>
+          <h2 className="add-title">Add New Masternode</h2>
         </div>
         <Grid item md={12} className="form__container">
           <form
