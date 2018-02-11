@@ -14,6 +14,7 @@ class Login extends Component {
     super(props);
 
     this.login = this.login.bind(this);
+    this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,45 @@ class Login extends Component {
     });
   }
 
+  passwordRecovery() {
+    swal({
+      title: 'Password Recovery',
+      text:
+        'Please provide your email that you used for this account. You will be sent an email with instructions for recovering your password.',
+      icon: 'info',
+      buttons: true,
+      danger: false,
+      content: {
+        element: 'input',
+        attributes: {
+          placeholder: 'Type your email',
+          type: 'email'
+        }
+      }
+    })
+      .then(emailInput => {
+        if (emailInput) {
+          return fire.auth().sendPasswordResetEmail(emailInput);
+        } else {
+          swal({
+            title: 'No email was given.',
+            text: 'Please put an email in the input field.',
+            icon: 'error'
+          });
+        }
+      })
+      .then(() => {
+        swal({
+          title: 'Success',
+          text: 'An email has been sent.',
+          icon: 'success'
+        });
+      })
+      .catch(err => {
+        alert(err);
+      });
+  }
+
   login(event) {
     event.preventDefault();
     const email = this.loginEmail.value;
@@ -38,18 +78,15 @@ class Login extends Component {
     const mnPrivateKeys = [
       {
         mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
-        vinMasternode:
-          '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
+        vinMasternode: '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
       },
       {
         mnPrivateKey: 'cQJd7h2tBbSHjutVrYnc1GhvLgw8pF6e49TEYGFHxNRiQh87UKwd',
-        vinMasternode:
-          '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
+        vinMasternode: '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
       },
       {
         mnPrivateKey: 'cPim54aykwQctacE4ipFFPQzL79vw4dVriGBRvN9Xwt3r9NrA16M',
-        vinMasternode:
-          'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
+        vinMasternode: 'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
       }
     ];
 
@@ -76,9 +113,7 @@ class Login extends Component {
             });
             return;
           }
-          return fire
-            .auth()
-            .signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
         } else {
           fire
             .database()
@@ -204,10 +239,7 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div
-                  ref={ref => (this.recaptcha = ref)}
-                  className="recaptcha-div"
-                />
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha-div" />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -215,7 +247,7 @@ class Login extends Component {
                 <Button type="submit" color="primary">
                   Login
                 </Button>
-                <a>Forget Your Password?</a>
+                <a onClick={this.passwordRecovery}>Forget Your Password?</a>
               </FormGroup>
             </Grid>
           </form>
@@ -237,6 +269,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(loginStyle)(Login)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));
