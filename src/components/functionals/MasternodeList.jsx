@@ -7,7 +7,6 @@ import { Grid, withStyles, FormGroup, Input } from 'material-ui';
 // import style
 import { masternodeListStyle } from './styles';
 import { Table, Icon, Divider, Card, Col, Row, Modal, Button } from 'antd';
-
 const confirm = Modal.confirm;
 
 class MasterNodeList extends Component {
@@ -73,6 +72,7 @@ class MasterNodeList extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
+      zIndex: 99999,
       onOk() {
         confrimDelete();
         console.log('OK');
@@ -93,6 +93,11 @@ class MasterNodeList extends Component {
   }
 
   render() {
+    const { classes, deviceType } = this.props;
+    //Platform style switcher
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const modalStyle = deviceType === 'mobile' ? classes.mModal : classes.modal;
+
     const columns = [
       {
         title: 'Name',
@@ -104,6 +109,7 @@ class MasterNodeList extends Component {
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
+        render: text => <span>{deviceType == 'mobile' ? text.substring(0, 7) + "..." : text}</span>,
       },
       {
         key: 'action',
@@ -126,19 +132,15 @@ class MasterNodeList extends Component {
       },
     ];
 
-    const { classes, deviceType } = this.props;
-    //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
     return (
       <div>
         {/* Edit Modal */}
         <Modal
-          title="Edit Modal"
+          title="Edit Masternode"
           visible={this.state.editNodeModal}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          className={classes.modal}
+          className={modalStyle}
           footer={[
             <Button key="submit" type="primary" onClick={this.handleOk}>
               Confirm & Save
@@ -147,6 +149,7 @@ class MasterNodeList extends Component {
               Close
             </Button>,
           ]}
+          zIndex={99999}
         >
           <Grid item md={12} className="form__container">
             <form
@@ -199,7 +202,7 @@ class MasterNodeList extends Component {
         </Modal>
         <div className={style}>
           <div className="heading">
-            <h2 className="title">Masternode List</h2>
+            <h2 className="list-title">Masternode List</h2>
           </div>
           <div className="node-list-table">
             <Table

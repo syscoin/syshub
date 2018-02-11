@@ -8,7 +8,7 @@ const greyDark = palette.greyDark;
 
 export default {
   root: {
-    '& .title': {
+    '& .add-title': {
       display: 'inline-block',
       fontWeight: 'lighter',
     },
@@ -64,5 +64,29 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .add-title': {
+      marginBottom: 0,
+    },
+    '& .form__container': {
+      padding: 0,
+      '& .form-group': {
+        '& .label': {
+          padding: '0 !important',
+          width: '100%'
+        },
+        '& .input-field': {
+          width: '100%',
+          margin: 0,
+          padding: 10,
+        },
+      },
+      '& .form-button-group': {
+        marginLeft: 0,
+        textAlign: 'center',
+      }
+    },
+
+  },
 };

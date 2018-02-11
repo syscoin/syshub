@@ -73,10 +73,10 @@ class MasterNode extends Component {
     });
   }
   render() {
-    const { classes } = this.props;
-
+    const { classes, deviceType } = this.props;
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <h1 className="title">Masternode Settings</h1>
         <div className="masternode-div">
           <MasternodeAdd

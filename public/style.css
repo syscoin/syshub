@@ -10,3 +10,8 @@ html *:not(i) {
 .ant-dropdown .no-border{
   border: none
 }
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

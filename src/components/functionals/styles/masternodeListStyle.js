@@ -8,7 +8,7 @@ const greyDark = palette.greyDark;
 export default {
   root: {
     marginTop: 30,
-    '& .title': {
+    '& .list-title': {
       display: 'inline-block',
       fontWeight: 'lighter',
       color: greyDark,
@@ -98,6 +98,39 @@ export default {
       },
     },
   },
+  mModal: {
+    extend: 'modal',
+    '& .ant-modal-body': {
+      padding: 10,
+      '& .form__container': {
+        '& .label': {
+          width: '100%',
+        },
+        '& .input-field': {
+          width: '100%',
+        }
+      }
+    },
+    '& .ant-modal-footer': {
+      textAlign: 'center',
+      borderTop: 'none',
+    }
 
-  mRoot: { extend: 'root' },
+  },
+  mRoot: {
+    extend: 'root',
+    '& .list-title': {
+      padding: '5px 0px',
+      marginBottom: 0,
+      fontSize: 20,
+    },
+    '& .ant-table-tbody > tr > td': {
+      wordBreak: 'inherit',
+      padding: 10,
+      border: 'none'
+    },
+    '& .edit-btn, .delete-btn': {
+      margin: '0 2px'
+    }
+  },
 };
