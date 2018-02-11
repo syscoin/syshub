@@ -24,9 +24,11 @@ class ProposalCard extends Component {
 
   componentWillMount() {
     let startDate = new Date();
-    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch);
+    let endDate = new Date(
+      this.props.proposal.DataString[0][1].end_epoch * 1000
+    );
     if (endDate > startDate) {
-      let timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+      let timeDiff = endDate.getTime() - startDate.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       this.setState({
         days_remaining,
@@ -159,11 +161,8 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
-<<<<<<< HEAD
     const proposalTitle = proposal.DataString[0][1].name.split('_').join(' ');
-=======
     let { days_remaining, endDate } = this.state;
->>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -172,7 +171,8 @@ class ProposalCard extends Component {
     const voteDownIcon = require('../../assets/img/png_button_down.png');
 
     // Some Maths ;P
-    const progress = parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
+    const progress =
+      parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={style}>
@@ -181,17 +181,25 @@ class ProposalCard extends Component {
             <Progress
               type="circle"
               percent={progress}
-              format={percent => <img alt="a" src={docIcon} className="progressIcon" />}
+              format={percent => (
+                <img alt="a" src={docIcon} className="progressIcon" />
+              )}
               className="progress-dial"
               strokeWidth={12}
-              status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
+              status={
+                progress < 35
+                  ? 'exception'
+                  : progress < 100 ? 'active' : 'success'
+              }
             />
             <div className="proposalStatusNo">
               <span
                 className={
                   progress < 35
                     ? 'proposalStatusExecptionNo'
-                    : progress < 100 ? 'proposalStatusActiveNo' : 'proposalStatusSuccessNo'
+                    : progress < 100
+                      ? 'proposalStatusActiveNo'
+                      : 'proposalStatusSuccessNo'
                 }
               >
                 {proposal.YesCount + 30}
@@ -201,25 +209,20 @@ class ProposalCard extends Component {
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
-<<<<<<< HEAD
-            <h1 className="proposalHeading" onClick={() => selectProposal(proposal.Hash)}>
-=======
             <h1
               className="proposalHeading"
               onClick={() => selectProposal(proposal)}
             >
->>>>>>> bf40f66590bbca5665294964884f6e5cfad46387
               {proposal.DataString[0][1].name ? (
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                <span style={{ color: 'grey' }}>No name available for this proposal.</span>
+                <span style={{ color: 'grey' }}>
+                  No name available for this proposal.
+                </span>
               )}
             </h1>
             <div className="proposalDetail">
-              {/*proposal.DataString[0][1].description
-                ? `${proposal.DataString[0][1].description.substr(0, 120)}...`
-              : 'No description available for this proposal.'*/}
               {days_remaining != 0 ? (
                 <span>{`${days_remaining} Day${
                   days_remaining > 1 ? 's' : ''
@@ -236,7 +239,10 @@ class ProposalCard extends Component {
               <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
-              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+              <Button
+                className="vote-down"
+                onClick={() => this.voteDown(proposal)}
+              >
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
               </Button>
               <div className="vote-count">
@@ -275,4 +281,6 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(proposalCardStyle)(ProposalCard)
+);

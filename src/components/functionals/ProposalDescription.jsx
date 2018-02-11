@@ -7,14 +7,18 @@ import PropTypes from 'prop-types';
 import { Divider } from 'antd';
 import { Grid, FormGroup, Input, withStyles } from 'material-ui';
 
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+
 import { proposalDescriptionStyle } from './styles';
 
 class ProposalDescription extends Component {
   constructor(props) {
     super(props);
   }
-  render () {
-    const { classes, deviceType, discription } = this.props;
+  render() {
+    const { classes, deviceType, description } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -28,7 +32,7 @@ class ProposalDescription extends Component {
         </Grid>
         <Grid container md={12} className="proposalView">
           <Grid item md={11} className="proposalDetails">
-            {discription}
+            <div dangerouslySetInnerHTML={{ __html: description }} />
           </Grid>
         </Grid>
       </Grid>
@@ -37,7 +41,7 @@ class ProposalDescription extends Component {
 }
 
 ProposalDescription.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(proposalDescriptionStyle)(ProposalDescription);
