@@ -7,7 +7,7 @@ import {
   AppContent,
   AppLSider,
   AppRSider,
-  AppFooter,
+  AppFooter
 } from '../containers/';
 
 //Import Styles
@@ -31,9 +31,11 @@ class DesktopLayout extends Component {
             <AppContent />
           </div>
 
-          <div style={desktopLayoutStyle.rightSlider}>
-            <AppRSider />
-          </div>
+          {this.props.app.showChat && (
+            <div style={desktopLayoutStyle.rightSlider}>
+              <AppRSider />
+            </div>
+          )}
         </div>
         <AppFooter />
       </Layout>
@@ -43,7 +45,7 @@ class DesktopLayout extends Component {
 
 const stateToProps = state => {
   return {
-    app: state.app,
+    app: state.app
   };
 };
 
