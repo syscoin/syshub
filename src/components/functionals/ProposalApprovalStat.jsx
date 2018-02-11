@@ -19,9 +19,11 @@ class ProposalApprovalStat extends Component {
   }
   componentWillMount() {
     let startDate = new Date();
-    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch);
+    let endDate = new Date(
+      this.props.proposal.DataString[0][1].end_epoch * 1000
+    );
     if (endDate > startDate) {
-      let timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+      let timeDiff = endDate.getTime() - startDate.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       this.setState({
         days_remaining,

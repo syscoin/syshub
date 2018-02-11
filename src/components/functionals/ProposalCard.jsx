@@ -24,9 +24,11 @@ class ProposalCard extends Component {
 
   componentWillMount() {
     let startDate = new Date();
-    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch);
+    let endDate = new Date(
+      this.props.proposal.DataString[0][1].end_epoch * 1000
+    );
     if (endDate > startDate) {
-      let timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+      let timeDiff = endDate.getTime() - startDate.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       this.setState({
         days_remaining,
@@ -159,6 +161,7 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
+    const proposalTitle = proposal.DataString[0][1].name.split('_').join(' ');
     let { days_remaining, endDate } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -211,7 +214,8 @@ class ProposalCard extends Component {
               onClick={() => selectProposal(proposal)}
             >
               {proposal.DataString[0][1].name ? (
-                proposal.DataString[0][1].name.split('\n', 1)[0]
+                // proposal.DataString[0][1].name.split('\n', 1)[0]
+                proposalTitle.split('\n', 1)[0]
               ) : (
                 <span style={{ color: 'grey' }}>
                   No name available for this proposal.
@@ -219,9 +223,6 @@ class ProposalCard extends Component {
               )}
             </h1>
             <div className="proposalDetail">
-              {/*proposal.DataString[0][1].description
-                ? `${proposal.DataString[0][1].description.substr(0, 120)}...`
-              : 'No description available for this proposal.'*/}
               {days_remaining != 0 ? (
                 <span>{`${days_remaining} Day${
                   days_remaining > 1 ? 's' : ''
