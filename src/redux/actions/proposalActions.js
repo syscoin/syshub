@@ -1,43 +1,21 @@
 import constants from '../constants';
 
-import { HTTPAsync } from '../helpers';
+import { HTTPAsync, Hex } from '../helpers';
 
-//const baseApiURL = 'http://159.89.141.35:3000'; //Old net, no SYS available
-const baseApiURL = 'http://159.89.151.42:3000';
+/**---------------------------------------------------------------------------- */
+/** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
+/**---------------------------------------------------------------------------- */
 
-const strToHex = str => {
-  let hex = '';
-  let i = 0;
-  const str_len = str.length;
-  let c = '';
+const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 
-  for (; i < str_len; i += 1) {
-    c = str.charCodeAt(i);
-    hex += c.toString(16);
-  }
-  return hex;
-};
-
-const hexToStr = hex => {
-  let str = '';
-  let i = 0;
-  const arr_len = hex.length / 2;
-  let c = '';
-
-  for (; i < arr_len; i += 1) {
-    const chunk = hex.slice(2 * i, 2 * i + 2);
-    c = String.fromCharCode(parseInt(chunk, 16));
-    str += c;
-  }
-  return str;
-};
+/**---------------------------------------------------------------------------- */
 
 export default {
   getProposals: () => {
     //---- Sample code --------------------------
     const txt = 'Hello HEX World';
-    const hex = strToHex(txt);
-    const str = hexToStr(hex);
+    const hex = Hex.strToHex(txt);
+    const str = Hex.hexToStr(hex);
     console.log('ACZ Original String: ', txt);
     console.log('ACZ To Hex: ', hex);
     console.log('ACZ To Str: ', str);

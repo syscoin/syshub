@@ -24,12 +24,12 @@ export default {
       alignItem: 'center',
       minWidth: '100%',
       padding: '0 0 0 0',
-      height: 130,
-      '& .top-header__wrapper':{
-        height: 95,
-        marginTop: -8,
+      height: 135,
+      '& .top-header__wrapper': {
+        height: 126,
+        marginTop: -30,
         marginLeft: -10,
-        width: 'calc(100% + 16px)'
+        width: 'calc(100% + 100px)'
       }
     },
     '& .hdivider ': {
@@ -40,10 +40,12 @@ export default {
     '& .header-bitcoin-status': {
       marginBottom: 0,
       padding: '8px 0px 0px 15px',
-      '& >div':{
+      display: 'inline-block',
+      marginTop: 25,
+      '& >div': {
         margin: 0,
-        paddingTop:2,
-        '& .common':{
+        paddingTop: 2,
+        '& .common': {
           lineHeight: 2
         }
       }
@@ -54,7 +56,9 @@ export default {
       marginTop: 15,
       paddingLeft: 10,
       paddingRight: 15,
-
+      display: 'inline-block',
+      position: 'relative',
+      width: '32%',
       '& .btn-logout': {
         textTransform: 'capitalize',
         minWidth: 55,
@@ -72,16 +76,15 @@ export default {
         padding: 0,
         position: 'absolute',
         right: 10,
-        top: 25,
         '& .text': {
           color: white
         }
       },
       '& .text-span': {
-        marginLeft: 15,
         marginBottom: 5,
         display: 'block',
         marginBottom: 5,
+        marginTop: 0,
         textAlign: 'right',
         '& .TxtRegular': {
           padding: '0 15px',

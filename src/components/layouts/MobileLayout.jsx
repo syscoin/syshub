@@ -20,7 +20,7 @@ import { mobileLayoutStyle } from './styles';
 const { SubMenu } = Menu;
 const { Content, Footer } = Layout;
 
-class MobileLayout extends Component {
+class MobileLayout extends Component { 
   toggleBoolState = d => {
     this.setState({
       [d]: !this.state[d]

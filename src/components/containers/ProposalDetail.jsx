@@ -18,23 +18,39 @@ export class ProposalDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.proposal,
+      data: this.props.proposal
     };
   }
   render() {
-    const { deviceType } = this.props;
+    const { deviceType, totalNodes } = this.props;
     //Platform style switcher
     return (
       <Grid style={proposalDetailsStyle.root}>
         <DashBoardHeader
-          data={{ showHeader: 'ProposalDetail', name: 'Proposal 1' }}
+          data={{
+            showHeader: 'ProposalDetail',
+            name: this.state.data.DataString[0][1].name
+          }}
         />
 
         <Grid container style={proposalDetailsStyle.proposalDetails}>
-          <ProposalPayment deviceType={deviceType} />
-          <ProposalApprovalStat deviceType={deviceType} />
-          <ProposalDescription deviceType={deviceType} />
-          <ProposalComments deviceType={deviceType} />
+          <ProposalPayment
+            deviceType={deviceType}
+            data={this.state.data.DataString[0][1]}
+          />
+          <ProposalApprovalStat
+            deviceType={deviceType}
+            proposal={this.state.data}
+            totalNodes={totalNodes}
+          />
+          <ProposalDescription
+            deviceType={deviceType}
+            description={this.state.data.DataString[0][1].description}
+          />
+          <ProposalComments
+            deviceType={deviceType}
+            data={{ proposalID: this.state.data.Hash }}
+          />
         </Grid>
       </Grid>
     );
@@ -48,8 +64,8 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-// ProposalDetail.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
+ProposalDetail.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default connect(stateToProps, dispatchToProps)(ProposalDetail);

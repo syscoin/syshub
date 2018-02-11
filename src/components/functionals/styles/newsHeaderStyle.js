@@ -60,5 +60,8 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: { 
+    extend: 'root', 
+    marginBottom: 20
+  },
 };

@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 
 import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
-import AppBar from 'material-ui/AppBar';
 import { Grid } from 'material-ui';
-import { Divider, Icon } from 'antd';
+import { Icon } from 'antd';
 import { Menu, Dropdown, Button } from 'antd';
 import IconButton from 'material-ui/IconButton';
 import actions from '../../redux/actions';
@@ -101,9 +100,7 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu
-              ? { backgroundColor: '#53a5cc' }
-              : { backgroundColor: '#1991CC' }
+            this.props.showMenu ? { backgroundColor: '#53a5cc' }: { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}

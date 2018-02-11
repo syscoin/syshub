@@ -44,7 +44,7 @@ const initialState = {
     }
   },
   list: [],
-  status: null,
+  checkStatus: null,
   prepareReceipt: null,
   submitReceipt: null,
   voteStatus: null
@@ -63,6 +63,7 @@ const proposals = (state = initialState, action) => {
     case constants.SYS_PROPOSALS_GET:
       let proposal = {};
       let list = [];
+
       Object.keys(action.data).forEach(key1 => {
         Object.keys(action.data[key1]).forEach(key2 => {
           proposal[key2] = smartParse(action.data[key1][key2]);
@@ -78,7 +79,7 @@ const proposals = (state = initialState, action) => {
       };
 
     case constants.SYS_PROPOSALS_CHECK:
-      return { ...state, status: action.data };
+      return { ...state, checkStatus: action.data };
 
     case constants.SYS_PROPOSALS_PREPARE:
       return { ...state, prepareReceipt: action.data };
