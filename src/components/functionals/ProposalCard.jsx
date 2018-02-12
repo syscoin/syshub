@@ -176,8 +176,8 @@ class ProposalCard extends Component {
 
     return (
       <Grid container className={style}>
-        <Grid container md={12} className="proposalRow" key={proposal.Hash}>
-          <Grid item md={2} className="proposalView">
+        <Grid container md={12} xs={12}  className="proposalRow" key={proposal.Hash}>
+          <Grid item md={2} xs={2} className="proposalView">
             <Progress
               type="circle"
               percent={progress}
@@ -208,7 +208,7 @@ class ProposalCard extends Component {
               {this.props.totalNodes.toFixed(0)}
             </div>
           </Grid>
-          <Grid item md={7} className="proposalInfoView">
+          <Grid item md={7} xs={5} className="proposalInfoView">
             <h1
               className="proposalHeading"
               onClick={() => selectProposal(proposal)}
@@ -234,13 +234,13 @@ class ProposalCard extends Component {
           </Grid>
 
           {user ? (
-            <Grid item md={3} className="top-vote__wrapper">
+            <Grid item md={3} xs ={2} className="top-vote__wrapper">
               {user ? <div className="vote-text">Vote on Proposal</div> : null}
-              <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
+              <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
               <Button
-                className="vote-down"
+                className={deviceType === 'mobile' ? "login-vote-down" : 'vote-down'}
                 onClick={() => this.voteDown(proposal)}
               >
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
@@ -251,7 +251,7 @@ class ProposalCard extends Component {
               </div>
             </Grid>
           ) : (
-            <Grid item md={3} className="vote__wrapper">
+            <Grid item md={3} xs ={2} className="vote__wrapper">
               <div className="vote-up">
                 <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
                 <span className="voteNumber">{proposal.YesCount}</span>

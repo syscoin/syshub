@@ -7,7 +7,7 @@ const white = palette.white;
 
 export default {
   root: {
-    margin: 0,
+    // margin: 0,
     '& .headingView': {
       backgroundColor: '#1991CC',
       height: '50px',
@@ -77,5 +77,43 @@ export default {
       margin: 0,
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: { extend: 'root',
+  // margin: 0,  
+  '& .headingView': {
+    backgroundColor: '#1991CC',
+    height: '50px',
+    marginLeft: '20px',
+    marginTop: '10px',
+    width:'100%',
+    margin:'0 auto',
+    fontSize: '20px',
+    maxWidth: 'calc(100% - 20px)',
+    '& .headingRow': {
+      color: white,
+      paddingLeft: '7px',
+    },
+    '& .headingDiv': {
+      display: 'initial',
+      color: white,
+      marginLeft: '20px',
+    },
+    '& .ownerDetails': {
+      float: 'right',
+      color: white,
+      fontWeight: 'bold',
+      '& .ownerName': {
+        fontWeight: 'normal',
+        display: 'inline',
+        marginLeft: '10px',
+        color: white,
+      },
+    },
+    '& .activeText': {
+      fontSize: '26px',
+      color: white,
+    },
+  },
+
+
+},
 };

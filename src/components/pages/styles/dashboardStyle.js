@@ -15,4 +15,12 @@ export default {
     '& .icon': { color: primary },
     '& .iconTxt': { color: primary },
   },
+  mRoot: {
+    extend: 'root',
+    // padding:0,
+    '& .dashBoardheading': {
+      fontWeight: 'lighter',
+      marginLeft:20
+    },
+  }
 };

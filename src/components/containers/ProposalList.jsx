@@ -58,7 +58,7 @@ export class ProposalList extends Component {
     const { classes, selectProposal, deviceType } = this.props;
 
     return (
-      <Grid md={12} style={proposalStyle.root}>
+      <Grid md={12} xs={12} style={proposalStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
           data={{ showHeader: 'proposalList' }}

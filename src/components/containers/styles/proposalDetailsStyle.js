@@ -11,6 +11,9 @@ export default {
     overflowY: 'auto',
     height: '80vh',
     boxShadow: '0px 3px 3px 3px ' + grey,
+    '& .div':{
+        margin:0
+    }
   },
   proposalDetails: {
     margin: 0,
