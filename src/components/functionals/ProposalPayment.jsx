@@ -40,7 +40,7 @@ class ProposalPayment extends Component {
         </Grid>
         <Grid container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> On Time Payment </div>
+            <div className="heading"> One Time Payment </div>
             <form className="form">
               <FormGroup className="FormGroup">
                 <input
@@ -52,7 +52,7 @@ class ProposalPayment extends Component {
                   className="input-field"
                   placeholder="Amount"
                   onChange={e => { }}
-                  value={this.state.onTimePayment + " US"}
+                  value={this.state.onTimePayment + " SYS"}
                   disabled={true}
                 />
               </FormGroup>

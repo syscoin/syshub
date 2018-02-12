@@ -33,7 +33,7 @@ class NewProposal extends Component {
       activeStep: 0,
       showEditor: true,
       proposalTitle: '',
-      paymentQuantity: 0,
+      paymentQuantity: 1,
       proposalDate: '',
       address: '',
       amount: '',
@@ -127,7 +127,7 @@ class NewProposal extends Component {
                   title: 'Success',
                   text: `"${
                     userProp.submitReceipt
-                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -217,7 +217,7 @@ class NewProposal extends Component {
                   title: 'Success',
                   text: `"${
                     userProp.prepareReceipt
-                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -587,7 +587,7 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                }`}
+                  }`}
               />
             </Col>
           </Row>
@@ -628,29 +628,30 @@ class NewProposal extends Component {
                   <Button
                     className="confirm-button"
                     onClick={this.confirmProposalDetail.bind(this)}
+                    style={this.state.editorState && this.state.editorState.getCurrentContent().hasText() ? { backgroundColor: '#1991CC' } : { backgroundColor: '#BDC3C7', }}
                   >
                     Confirm
                   </Button>
                 </div>
               ) : (
-                // proposal detail preview
-                <Row>
-                  <Col
-                    span={deviceType === 'mobile' ? 24 : 22}
-                    offset={deviceType === 'mobile' ? 0 : 1}
-                  >
-                    <h1 className="proposalDetail-title">
-                      {this.state.proposalTitle}
-                    </h1>
-                  </Col>
-                  <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div
-                      className="proposalContent-div"
-                      id="preview-html-container"
-                    />
-                  </Col>
-                </Row>
-              )}
+                  // proposal detail preview
+                  <Row>
+                    <Col
+                      span={deviceType === 'mobile' ? 24 : 22}
+                      offset={deviceType === 'mobile' ? 0 : 1}
+                    >
+                      <h1 className="proposalDetail-title">
+                        {this.state.proposalTitle}
+                      </h1>
+                    </Col>
+                    <Col span={deviceType === 'mobile' ? 24 : 22}>
+                      <div
+                        className="proposalContent-div"
+                        id="preview-html-container"
+                      />
+                    </Col>
+                  </Row>
+                )}
             </Col>
           </Row>
         );
@@ -698,6 +699,7 @@ class NewProposal extends Component {
                 onChange={this.getAmount}
               />
             </Col>
+            <div style={{ display: 'inline-block', padding: '5px', fontWeight: 'bold' }}>SYS</div>
           </Row>
         );
       default:
@@ -706,10 +708,11 @@ class NewProposal extends Component {
     }
   }
   onEditorStateChange(editorState) {
+    console.log("editorState", editorState)
     this.setState({
       editorState
     });
-    // console.log(this.state.editorState, 'editor state');
+    console.log(this.state.editorState.getCurrentContent().hasText(), 'editor state');
   }
 
   disabledNextBtn(step) {
@@ -763,89 +766,89 @@ class NewProposal extends Component {
           {this.state.recover === true ? (
             <div>Recovery in process</div>
           ) : (
-            <Stepper activeStep={activeStep} orientation="vertical">
-              {steps.map((label, index) => {
-                return (
-                  <Step className="steper__container" key={label}>
-                    <StepLabel className="steper__label">
-                      <h2 className="step-label"> {label} </h2>
-                      {this.state.activeStep === 0 &&
-                      label === 'Proposal Title' &&
-                      deviceType !== 'mobile' ? (
-                        <h3 className="proposal-title">
-                          Proposal Description Url
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((label, index) => {
+                  return (
+                    <Step className="steper__container" key={label}>
+                      <StepLabel className="steper__label">
+                        <h2 className="step-label"> {label} </h2>
+                        {this.state.activeStep === 0 &&
+                          label === 'Proposal Title' &&
+                          deviceType !== 'mobile' ? (
+                            <h3 className="proposal-title">
+                              Proposal Description Url
                         </h3>
-                      ) : null}
-                      {this.state.activeStep === 1 &&
-                      label === 'Proposal Details' ? (
-                        this.state.showEditor ? (
-                          <Button
-                            className="preview-edit-button"
-                            onClick={this.previewHTML.bind(this)}
-                          >
-                            PREVIEW
+                          ) : null}
+                        {this.state.activeStep === 1 &&
+                          label === 'Proposal Details' ? (
+                            this.state.showEditor ? (
+                              <Button
+                                className="preview-edit-button"
+                                onClick={this.previewHTML.bind(this)}
+                              >
+                                PREVIEW
                           </Button>
-                        ) : (
-                          <Button
-                            className="preview-edit-button"
-                            onClick={() => {
-                              this.setState({ showEditor: true });
-                            }}
-                          >
-                            EDITOR
+                            ) : (
+                                <Button
+                                  className="preview-edit-button"
+                                  onClick={() => {
+                                    this.setState({ showEditor: true });
+                                  }}
+                                >
+                                  EDITOR
                           </Button>
-                        )
-                      ) : null}
-                    </StepLabel>
-                    <StepContent>
-                      <div>{this.getStepContent(index)}</div>
-                      <div className={classes.actionsContainer}>
-                        <div
-                          className={
-                            activeStep === steps.length - 1
-                              ? 'confirm-btn-div'
-                              : 'next-btn-div'
-                          }
-                        >
-                          {activeStep === 0 ? null : (
-                            <Button
-                              raised={true}
-                              type="primary"
-                              onClick={this.handleBack}
-                              className="button"
-                            >
-                              Back
+                              )
+                          ) : null}
+                      </StepLabel>
+                      <StepContent>
+                        <div>{this.getStepContent(index)}</div>
+                        <div className={classes.actionsContainer}>
+                          <div
+                            className={
+                              activeStep === steps.length - 1
+                                ? 'confirm-btn-div'
+                                : 'next-btn-div'
+                            }
+                          >
+                            {activeStep === 0 ? null : (
+                              <Button
+                                raised={true}
+                                type="primary"
+                                onClick={this.handleBack}
+                                className="button"
+                              >
+                                Back
                             </Button>
-                          )}
-                          {activeStep === steps.length - 1 ? (
-                            <Button
-                              raised={true}
-                              type="primary"
-                              className={classes.button}
-                              onClick={this.createPropObj}
-                              disabled={this.disabledNextBtn(index)}
-                            >
-                              Confirm
+                            )}
+                            {activeStep === steps.length - 1 ? (
+                              <Button
+                                raised={true}
+                                type="primary"
+                                className={classes.button}
+                                onClick={this.createPropObj}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Confirm
                             </Button>
-                          ) : (
-                            <Button
-                              raised={true}
-                              type="primary"
-                              onClick={this.handleNext}
-                              className={classes.button}
-                              disabled={this.disabledNextBtn(index)}
-                            >
-                              Next Step
+                            ) : (
+                                <Button
+                                  raised={true}
+                                  type="primary"
+                                  onClick={this.handleNext}
+                                  className={classes.button}
+                                  disabled={this.disabledNextBtn(index)}
+                                >
+                                  Next Step
                             </Button>
-                          )}
+                              )}
+                          </div>
                         </div>
-                      </div>
-                    </StepContent>
-                  </Step>
-                );
-              })}
-            </Stepper>
-          )}
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            )}
         </Paper>
       </div>
     );

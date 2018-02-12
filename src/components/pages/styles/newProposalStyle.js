@@ -163,7 +163,7 @@ export default {
           marginTop: -45,
           position: 'absolute',
           borderRadius: 6,
-          backgroundColor: grey,
+          backgroundColor: primary,
         },
         '& .confirm-button span': {
           color: white,
