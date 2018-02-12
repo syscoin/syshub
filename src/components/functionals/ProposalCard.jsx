@@ -26,9 +26,7 @@ class ProposalCard extends Component {
 
   componentWillMount() {
     let startDate = new Date();
-    let endDate = new Date(
-      this.props.proposal.DataString[0][1].end_epoch * 1000
-    );
+    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch * 1000);
     const payment_amount = this.props.proposal.DataString[0][1].payment_amount;
     if (endDate > startDate) {
       let timeDiff = endDate.getTime() - startDate.getTime();
@@ -37,13 +35,7 @@ class ProposalCard extends Component {
       this.setState({
         days_remaining,
         month_remaining,
-        endDate:
-          endDate.getDate() +
-          '/' +
-          endDate.getMonth() +
-          1 +
-          '/' +
-          endDate.getFullYear()
+        endDate: endDate.getDate() + '/' + endDate.getMonth() + 1 + '/' + endDate.getFullYear()
       });
     }
     this.setState({ payment_amount, payment_type: 'one-time payment' });
@@ -167,14 +159,8 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
-    const proposalTitle = proposal.DataString[0][1].name.split('_').join(' ');
-    let {
-      days_remaining,
-      month_remaining,
-      endDate,
-      payment_amount,
-      payment_type
-    } = this.state;
+    const proposalTitle = proposal.DataString[0][1].title || proposal.DataString[0][1].name;
+    let { days_remaining, month_remaining, endDate, payment_amount, payment_type } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -183,8 +169,7 @@ class ProposalCard extends Component {
     const voteDownIcon = require('../../assets/img/png_button_down.png');
 
     // Some Maths ;P
-    const progress =
-      parseInt(proposal.YesCount) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
+    const progress = parseInt(proposal.YesCount) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={style}>
@@ -193,25 +178,17 @@ class ProposalCard extends Component {
             <Progress
               type="circle"
               percent={progress}
-              format={percent => (
-                <img alt="a" src={docIcon} className="progressIcon" />
-              )}
+              format={percent => <img alt="a" src={docIcon} className="progressIcon" />}
               className="progress-dial"
               strokeWidth={12}
-              status={
-                progress < 35
-                  ? 'exception'
-                  : progress < 100 ? 'active' : 'success'
-              }
+              status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
             />
             <div className="proposalStatusNo">
               <span
                 className={
                   progress < 35
                     ? 'proposalStatusExecptionNo'
-                    : progress < 100
-                      ? 'proposalStatusActiveNo'
-                      : 'proposalStatusSuccessNo'
+                    : progress < 100 ? 'proposalStatusActiveNo' : 'proposalStatusSuccessNo'
                 }
               >
                 {proposal.YesCount}
@@ -221,26 +198,19 @@ class ProposalCard extends Component {
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
-            <h1
-              className="proposalHeading"
-              onClick={() => selectProposal(proposal)}
-            >
-              {proposal.DataString[0][1].name ? (
+            <h1 className="proposalHeading" onClick={() => selectProposal(proposal)}>
+              {proposalTitle ? (
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                <span style={{ color: 'grey' }}>
-                  No name available for this proposal.
-                </span>
+                <span style={{ color: 'grey' }}>No title available for this proposal.</span>
               )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
 
               {days_remaining < 30 ? (
-                <span>{`(${days_remaining} Day${
-                  days_remaining > 1 ? 's' : ''
-                } Remaining)`}</span>
+                <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
               ) : (
                 <span>{`(${month_remaining} Month${
                   month_remaining > 1 ? 's' : ''
@@ -255,10 +225,7 @@ class ProposalCard extends Component {
               <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
-              <Button
-                className="vote-down"
-                onClick={() => this.voteDown(proposal)}
-              >
+              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
               </Button>
               <div className="vote-count">
@@ -297,6 +264,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalCardStyle)(ProposalCard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));
