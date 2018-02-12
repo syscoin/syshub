@@ -691,7 +691,7 @@ class NewProposal extends Component {
       case 3:
         return (
           <Row className="amount-row">
-            <Col span={deviceType === 'mobile' ? 24 : 4}>
+            <Col span={deviceType === 'mobile' ? 18 : 4}>
               <Input
                 type="text"
                 placeholder="0"
