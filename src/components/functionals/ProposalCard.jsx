@@ -35,7 +35,12 @@ class ProposalCard extends Component {
       this.setState({
         days_remaining,
         month_remaining,
-        endDate: endDate.getDate() + '/' + endDate.getMonth() + 1 + '/' + endDate.getFullYear()
+        endDate:
+          endDate.getDate() +
+          '/' +
+          (parseInt(endDate.getMonth()) + 1) +
+          '/' +
+          endDate.getFullYear()
       });
     }
     this.setState({ payment_amount, payment_type: 'one-time payment' });

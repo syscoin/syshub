@@ -182,13 +182,6 @@ class Faq extends Component {
         <h1 className="title">SysHub FAQ</h1>
 
         <div className="faqs-div">
-          <div className="search-question">
-            <Input
-              addonBefore={<Icon type="search" />}
-              placeholder="Enter your Question"
-            />
-          </div>
-
           <Collapse bordered={false}>
             {faqQuestions.map((cat, index) => {
               return (

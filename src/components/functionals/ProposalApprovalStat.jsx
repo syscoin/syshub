@@ -30,8 +30,7 @@ class ProposalApprovalStat extends Component {
         endDate:
           endDate.getDate() +
           '/' +
-          endDate.getMonth() +
-          1 +
+          (parseInt(endDate.getMonth()) + 1) +
           '/' +
           endDate.getFullYear()
       });

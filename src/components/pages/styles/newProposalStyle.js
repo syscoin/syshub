@@ -163,7 +163,7 @@ export default {
           marginTop: -45,
           position: 'absolute',
           borderRadius: 6,
-          backgroundColor: grey,
+          backgroundColor: primary,
         },
         '& .confirm-button span': {
           color: white,
@@ -205,13 +205,19 @@ export default {
     extend: 'root',
     marginTop: 0,
     '& .proposal-title': {
-      paddingLeft: '0 !important'
+      paddingLeft: '0 !important',
+      marginLeft: '0px !important',
+    },
+    '& .editor-title': {
+      fontSize: 16,
+      marginTop: 8,
     },
     '& .payment-input': {
       width: '100%'
     },
     '& .toolbarClassName': {
-      marginTop: '30px !important'
+      marginTop: '30px !important',
+      margin: '10px auto auto auto !important',
     },
     '& .proposalEditor-wrapper': {
       margin: '0 !important',

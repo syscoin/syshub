@@ -35,9 +35,6 @@ export default {
           border: 'none'
         },
       },
-      '& .ant-collapse-borderless': {
-        marginTop: 20
-      },
       '& .ant-collapse-header': {
         fontSize: 20,
         color: primary,
@@ -86,7 +83,6 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 100,
     '& .title': {
       padding: '10px 20px 0px 20px',
       margin: 0,
