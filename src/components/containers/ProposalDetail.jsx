@@ -23,13 +23,16 @@ export class ProposalDetail extends Component {
   }
   render() {
     const { deviceType, totalNodes } = this.props;
+    const proposalTitle =
+      this.state.data.DataString[0][1].title ||
+      this.state.data.DataString[0][1].name;
     //Platform style switcher
     return (
       <Grid style={proposalDetailsStyle.root}>
         <DashBoardHeader
           data={{
             showHeader: 'ProposalDetail',
-            name: this.state.data.DataString[0][1].name
+            name: proposalTitle
           }}
         />
 
