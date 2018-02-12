@@ -33,6 +33,7 @@ class NewProposal extends Component {
       activeStep: 0,
       showEditor: true,
       proposalTitle: '',
+      proposalName: '',
       paymentQuantity: 1,
       proposalDate: '',
       address: '',
@@ -297,6 +298,7 @@ class NewProposal extends Component {
     const { app } = this.props;
     const { currentUser } = app;
     const {
+      proposalName,
       proposalTitle,
       address,
       amount,
@@ -336,7 +338,8 @@ class NewProposal extends Component {
       [
         'proposal',
         {
-          name: proposalTitle.split(' ').join('_'),
+          name: proposalName,
+          title: proposalTitle,
           description: proposal__detail,
           type: 1,
           start_epoch: Math.floor(new Date().getTime() / 1000),
@@ -490,12 +493,11 @@ class NewProposal extends Component {
 
   //proposal title function
   proposalTitle(e) {
+    const proposalName = e.target.value.trim().replace(/[^A-Za-z0-9]/g, '');
     this.setState({
+      proposalName,
       proposalTitle: e.target.value,
-      proposallink: `http://syshub.com/p/${e.target.value
-        .trim()
-        .toLowerCase()
-        .replace(/\s/g, '_')}`
+      proposallink: `http://syshub.com/p/${proposalName}`
     });
   }
 

@@ -182,7 +182,7 @@ class Register extends Component {
           const usernameRef = fire.database().ref('usernames');
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
-          this.registerForm.reset();
+          this.registerForm.resetFields();
           this.props.setPage('home');
           swal({
             title: 'Success',
@@ -269,15 +269,19 @@ class Register extends Component {
                   />
                 )}
 
-                {this.state.usernames?
-                <span className="validation-message">
-                  <div style={this.state.disabled ? { color: 'red' } : null}>
-                    {!this.state.disabled ? <img alt="a" src={checkIcon} /> : <img alt="a" src={closeIcon} />}
-                    {this.state.usernames}
-                    {this.state.disabled ? ` Not Available` : ` Available`}
-                  </div>
-                </span>:null}
-                
+                {this.state.usernames ? (
+                  <span className="validation-message">
+                    <div style={this.state.disabled ? { color: 'red' } : null}>
+                      {!this.state.disabled ? (
+                        <img alt="a" src={checkIcon} />
+                      ) : (
+                        <img alt="a" src={closeIcon} />
+                      )}
+                      {this.state.usernames}
+                      {this.state.disabled ? ` Not Available` : ` Available`}
+                    </div>
+                  </span>
+                ) : null}
               </FormItem>
 
               {/* For User Email */}
