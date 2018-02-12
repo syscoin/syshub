@@ -19,7 +19,9 @@ import { proposalCardStyle } from './styles';
 class ProposalCard extends Component {
   state = {
     days_remaining: 0,
-    endDate: ''
+    endDate: '',
+    payment_amount: 0,
+    payment_type: ''
   };
 
   componentWillMount() {
@@ -27,11 +29,14 @@ class ProposalCard extends Component {
     let endDate = new Date(
       this.props.proposal.DataString[0][1].end_epoch * 1000
     );
+    const payment_amount = this.props.proposal.DataString[0][1].payment_amount;
     if (endDate > startDate) {
       let timeDiff = endDate.getTime() - startDate.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
       this.setState({
         days_remaining,
+        month_remaining,
         endDate:
           endDate.getDate() +
           '/' +
@@ -41,6 +46,7 @@ class ProposalCard extends Component {
           endDate.getFullYear()
       });
     }
+    this.setState({ payment_amount, payment_type: 'one-time payment' });
   }
 
   voteUp(vote) {
@@ -162,7 +168,13 @@ class ProposalCard extends Component {
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
     const proposalTitle = proposal.DataString[0][1].name.split('_').join(' ');
-    let { days_remaining, endDate } = this.state;
+    let {
+      days_remaining,
+      month_remaining,
+      endDate,
+      payment_amount,
+      payment_type
+    } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -172,7 +184,7 @@ class ProposalCard extends Component {
 
     // Some Maths ;P
     const progress =
-      parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
+      parseInt(proposal.YesCount) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={style}>
@@ -202,7 +214,7 @@ class ProposalCard extends Component {
                       : 'proposalStatusSuccessNo'
                 }
               >
-                {proposal.YesCount + 30}
+                {proposal.YesCount}
               </span>
               {` / `}
               {this.props.totalNodes.toFixed(0)}
@@ -223,12 +235,16 @@ class ProposalCard extends Component {
               )}
             </h1>
             <div className="proposalDetail">
-              {days_remaining != 0 ? (
-                <span>{`${days_remaining} Day${
+              <span>{`${payment_amount} SYS ${payment_type} `}</span>
+
+              {days_remaining < 30 ? (
+                <span>{`(${days_remaining} Day${
                   days_remaining > 1 ? 's' : ''
-                } Remaining (${endDate})`}</span>
+                } Remaining)`}</span>
               ) : (
-                <span>---</span>
+                <span>{`(${month_remaining} Month${
+                  month_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
               )}
             </div>
           </Grid>
