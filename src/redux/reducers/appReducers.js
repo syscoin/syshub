@@ -7,6 +7,7 @@ const initialState = {
       icon: 'png_menu_proposals',
       iconSelected: 'png_menu_proposals_selected',
       title: 'Proposal Dashboard',
+      pageTitle: 'Dashboard',
       showWhen: 'always'
     },
     {
@@ -14,6 +15,7 @@ const initialState = {
       icon: 'png_menu_create',
       iconSelected: 'png_menu_create_selected',
       title: 'Create Proposal',
+      pageTitle: 'New Proposal',
       showWhen: 'login'
     },
     {
@@ -21,6 +23,7 @@ const initialState = {
       icon: 'png_menu_news',
       iconSelected: 'png_menu_news_selected',
       title: 'News and Announcements',
+      pageTitle: 'News',
       showWhen: 'always'
     },
     {
@@ -28,6 +31,7 @@ const initialState = {
       icon: 'png_menu_account',
       iconSelected: 'png_menu_account_selected',
       title: 'Account Settings',
+      pageTitle: 'Account',
       showWhen: 'login'
     },
     {
@@ -35,6 +39,7 @@ const initialState = {
       icon: 'png_menu_register',
       iconSelected: 'png_menu_register_selected',
       title: 'Register',
+      pageTitle: 'Register',
       showWhen: 'logout'
     },
     {
@@ -42,6 +47,7 @@ const initialState = {
       icon: 'png_menu_faq',
       iconSelected: 'png_menu_faq_selected',
       title: 'Faq',
+      pageTitle: 'FAQ',
       showWhen: 'always'
     },
     {
@@ -49,6 +55,7 @@ const initialState = {
       icon: 'png_menu_masternodes',
       iconSelected: 'png_menu_masternodes_selected',
       title: 'Masternode Setting',
+      pageTitle: 'Masternode',
       showWhen: 'login'
     }
   ],
@@ -78,13 +85,14 @@ const app = (state = initialState, action) => {
         loading: false
       };
 
-    case constants.APP_PAGE_SHOW:
+    case constants.APP_PAGE_SHOW: {
       return {
         ...state,
         showPage: action.data,
         showMenu: false,
         showChat: false
       };
+    }
 
     case constants.APP_CHAT_TOGGLE:
       return {

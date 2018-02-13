@@ -42,6 +42,11 @@ class SiderMenu extends Component {
             default:
               showMe = true;
           }
+          if (item.key === active) {
+            document.title = `Syshub | ${item.pageTitle}`;
+          } else if (active === 'home') {
+            document.title = 'Syshub';
+          }
           return showMe ? (
             <button
               key={i}
