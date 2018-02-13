@@ -35,6 +35,12 @@ class AppHeader extends Component {
       this.props.doLogout();
     }
   }
+
+  renderName(name) {
+    var name = name.substring(0, name.indexOf(' '));
+    return name;
+  }
+
   render() {
     const { classes, deviceType } = this.props;
     const { currentUser } = this.props.app;
@@ -57,7 +63,7 @@ class AppHeader extends Component {
                       <span className='text-span'>
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
-                          {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
+                          {currentUser ? this.renderName(currentUser.displayName) || currentUser.email : 'Guest'}
                         </span> </span> : null}
 
 
@@ -75,7 +81,7 @@ class AppHeader extends Component {
                       )}
                   </Grid>
                 </Grid>
-                <MHeaderNav className="bottom-header__wrapper"/>
+                <MHeaderNav className="bottom-header__wrapper" />
               </div>
             </Toolbar>
           </AppBar>

@@ -31,9 +31,14 @@ export class ProposalDetail extends Component {
             showHeader: 'ProposalDetail',
             name: this.state.data.DataString[0][1].name
           }}
+          deviceType={deviceType}
         />
 
-        <Grid container style={proposalDetailsStyle.proposalDetails}>
+        <Grid container style={deviceType === 'mobile' ? proposalDetailsStyle.proposalDetailsMRoot : proposalDetailsStyle.proposalDetailsRoot}>
+          {deviceType === 'mobile' ?
+            <h3 style={proposalDetailsStyle.proposalTitle}> Proposal Title: <span style={{ padding: '0px 10px' }}>{this.state.data.DataString[0][1].name}</span>  </h3>
+            : null
+          }
           <ProposalPayment
             deviceType={deviceType}
             data={this.state.data.DataString[0][1]}

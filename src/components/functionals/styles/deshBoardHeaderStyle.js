@@ -77,43 +77,48 @@ export default {
       margin: 0,
     },
   },
-  mRoot: { extend: 'root',
-  // margin: 0,  
-  '& .headingView': {
-    backgroundColor: '#1991CC',
-    height: '50px',
-    marginLeft: '20px',
-    marginTop: '10px',
-    width:'100%',
-    margin:'0 auto',
-    fontSize: '20px',
-    maxWidth: 'calc(100% - 20px)',
-    '& .headingRow': {
-      color: white,
-      paddingLeft: '7px',
-    },
-    '& .headingDiv': {
-      display: 'initial',
-      color: white,
-      marginLeft: '20px',
-    },
-    '& .ownerDetails': {
-      float: 'right',
-      color: white,
-      fontWeight: 'bold',
-      '& .ownerName': {
-        fontWeight: 'normal',
-        display: 'inline',
-        marginLeft: '10px',
+  mRoot: {
+    extend: 'root',
+    margin: 'auto',
+    '& .headingView': {
+      backgroundColor: '#1991CC',
+      height: '50px',
+      width: '100%',
+      marginLeft: 0,
+      marginTop: 0,
+      fontSize: '20px',
+      width: '100%',
+      maxWidth: '100%',
+      '& .headingRow': {
+        color: white,
+        paddingLeft: '7px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+      },
+      '& .headingDiv': {
+        display: 'initial',
+        color: white,
+        marginLeft: 0,
+        fontSize: 17,
+      },
+      '& .ownerDetails': {
+        float: 'right',
+        color: white,
+        fontWeight: 'bold',
+        '& .ownerName': {
+          fontWeight: 'normal',
+          display: 'inline',
+          marginLeft: '10px',
+          color: white,
+        },
+      },
+      '& .activeText': {
+        fontSize: '26px',
         color: white,
       },
     },
-    '& .activeText': {
-      fontSize: '26px',
-      color: white,
-    },
+
+
   },
-
-
-},
 };

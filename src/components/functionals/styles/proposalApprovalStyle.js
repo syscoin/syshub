@@ -83,5 +83,18 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    '& .topApprovalView': {
+      marginTop: 0,
+      '& .approvalKey': {
+        marginLeft: 0,
+      }
+    },
+    '& .approvalView': {
+      '& .approvalKey': {
+        marginLeft: 0,
+      }
+    }
+  },
 };

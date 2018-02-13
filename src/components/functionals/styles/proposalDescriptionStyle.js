@@ -62,5 +62,8 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    width: '100%',
+  },
 };

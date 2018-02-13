@@ -20,7 +20,13 @@ export default {
     // padding:0,
     '& .dashBoardheading': {
       fontWeight: 'lighter',
-      marginLeft:20
+      margin: 'auto',
+      padding: 15,
+      backgroundColor: white,
     },
+    '& .iconWraper': {
+      backgroundColor: white,
+      padding: '0px 10px',
+    }
   }
 };
