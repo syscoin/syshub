@@ -12,7 +12,7 @@ import actions from '../../redux/actions';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
-  render () {
+  render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -22,7 +22,7 @@ class HeaderStats extends Component {
     ).toFixed(5)} BTC/1000 USD`;
     const masternodes = `${
       this.props.sysStatsValue.general.registered_masternodes_verified
-      } / ${this.props.sysStatsValue.general.registered_masternodes}`;
+    } / ${this.props.sysStatsValue.general.registered_masternodes}`;
     const totUsers = this.props.sysStatsValue.general.all_user;
     //console.clear();
     return (
@@ -33,27 +33,39 @@ class HeaderStats extends Component {
             src={require('../../assets/img/png_stasts_sys.png')}
             className="icon"
           />
-          {deviceType === 'mobile' ? <span className="TxtBold">{`: `}</span> : <span className="TxtBold">{`SYSCOIN: `}</span>}
+          {deviceType === 'mobile' ? (
+            <span className="TxtBold">{`: `}</span>
+          ) : (
+            <span className="TxtBold">{`SYSCOIN: `}</span>
+          )}
           {changeRate}
         </Grid>
-        {deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />}
+        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : 0}>
           <img
             alt="a"
             src={require('../../assets/img/png_stats_masternodes.png')}
             className="icon"
           />
-          {deviceType === 'mobile' ? <span className="TxtBold">{`: `}</span> : <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>}
+          {deviceType === 'mobile' ? (
+            <span className="TxtBold">{`: `}</span>
+          ) : (
+            <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+          )}
           {masternodes}
         </Grid>
-        {deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />}
+        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : 0}>
           <img
             alt="a"
             src={require('../../assets/img/png_stats_users.png')}
             className="icon"
           />
-          {deviceType === 'mobile' ? <span className="TxtBold">{`: `}</span> : <span className="TxtBold">{`USERS: `}</span>}
+          {deviceType === 'mobile' ? (
+            <span className="TxtBold">{`: `}</span>
+          ) : (
+            <span className="TxtBold">{`USERS: `}</span>
+          )}
           {totUsers}
         </Grid>
       </Grid>
@@ -65,7 +77,7 @@ HeaderStats.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   //pass the providers
   return {
     sysStatsValue: state.sysStats.value
@@ -73,7 +85,7 @@ function mapStateToProps (state) {
 }
 
 /* Map Actions to Props */
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {};
 }
 
