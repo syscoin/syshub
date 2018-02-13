@@ -176,8 +176,8 @@ export default {
   },
   mRoot: { extend: 'root',
   '& .proposalRow': {
-    maxWidth: 'calc(100% - 35px)',
-    minWidth :'calc(100% + 110px)',
+     maxWidth: '100%',
+    // minWidth :'calc(100% + 110px)',
     height: 150,
     margin: '5px 0 0 0px',
     backgroundColor: 'white',
@@ -185,8 +185,9 @@ export default {
     borderRadius: '10px',
     border: '2px solid ghostwhite',
     '& .proposalView': {
-      marginRight:15,
+      marginRight:5,
       textAlign: '-webkit-center',
+      minWidth: 100,
       '& .progress-dial': {
         // width:"100px",
         '& .ant-progress-inner': {
@@ -205,6 +206,7 @@ export default {
       borderLeft: '1px solid ' + gray,
       paddingLeft: '20px',
       height: '99%',
+      minWidth: 'calc(100% - 195px)',
       '& .voteButton': {
         border: 'none',
         textAlign: 'right',
@@ -237,6 +239,7 @@ export default {
     '& .top-vote__wrapper': {
       textAlign: 'center',
       paddingTop: 0,
+      minWidth: 90,
       '& .vote-text': {
         color: primaryDark,
       },
