@@ -63,7 +63,7 @@ class AppHeader extends Component {
                       <span className='text-span'>
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
-                          {currentUser ? this.renderName(currentUser.displayName) || currentUser.email : 'Guest'}
+                          {currentUser ? this.renderName(currentUser.displayName) : 'Guest'}
                         </span> </span> : null}
 
 
