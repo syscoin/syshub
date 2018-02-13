@@ -12,9 +12,9 @@ import { proposalPaymentStyle } from './styles';
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
-    var sdate = new Date(this.props.data.start_epoch);
+    var sdate = new Date(this.props.data.start_epoch * 1000);
     var startDate = sdate.toDateString();
-    var edate = new Date(this.props.data.end_epoch);
+    var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
     this.state = {
       onTimePayment: this.props.data.payment_amount,
@@ -23,7 +23,7 @@ class ProposalPayment extends Component {
       startDate: startDate,
       endDate: endDate
     };
-    console.log("payment data", this.props.data)
+    console.log('payment data', this.props.data);
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -51,8 +51,8 @@ class ProposalPayment extends Component {
                   id="onTimePayment"
                   className="input-field"
                   placeholder="Amount"
-                  onChange={e => { }}
-                  value={this.state.onTimePayment + " SYS"}
+                  onChange={e => {}}
+                  value={this.state.onTimePayment + ' SYS'}
                   disabled={true}
                 />
               </FormGroup>
@@ -71,7 +71,7 @@ class ProposalPayment extends Component {
                   id="compeletePayment"
                   className="input-field"
                   placeholder="no payments occurred yet"
-                  onChange={e => { }}
+                  onChange={e => {}}
                   disabled={true}
                 />
               </FormGroup>
@@ -83,13 +83,13 @@ class ProposalPayment extends Component {
             <form className="form">
               <FormGroup className="FormGroup">
                 <input
-                  ref={ref => { }}
+                  ref={ref => {}}
                   name="Paymentdate"
                   id="Paymentdate"
                   className="input-field"
                   placeholder="Start Date / End Date"
-                  onChange={e => { }}
-                  value={this.state.startDate + " / " + this.state.endDate}
+                  onChange={e => {}}
+                  value={this.state.startDate + ' / ' + this.state.endDate}
                   disabled={true}
                 />
               </FormGroup>
@@ -102,7 +102,7 @@ class ProposalPayment extends Component {
 }
 
 ProposalPayment.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(proposalPaymentStyle)(ProposalPayment);

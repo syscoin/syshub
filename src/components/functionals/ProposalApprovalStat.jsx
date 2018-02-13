@@ -30,8 +30,7 @@ class ProposalApprovalStat extends Component {
         endDate:
           endDate.getDate() +
           '/' +
-          endDate.getMonth() +
-          1 +
+          (parseInt(endDate.getMonth()) + 1) +
           '/' +
           endDate.getFullYear()
       });
@@ -53,7 +52,7 @@ class ProposalApprovalStat extends Component {
         </Grid>
         <Grid container md={12} className="topApprovalView">
           <Grid item md={3} className="approvalKey">
-            Stauts:
+            Status:
           </Grid>
           <Grid item md={6} className="approvalValue">
             {YesCount / totalNodes * 100 >= 50 ? (
