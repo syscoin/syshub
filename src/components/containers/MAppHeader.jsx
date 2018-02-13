@@ -37,7 +37,9 @@ class AppHeader extends Component {
   }
 
   renderName(name) {
-    var name = name.substring(0, name.indexOf(' '));
+    if (name.indexOf(' ') >= 0) {
+      name = name.substring(0, name.indexOf(' '));
+    }
     return name;
   }
 
