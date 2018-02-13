@@ -32,7 +32,7 @@ class UserTwoFactor extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
 
@@ -182,13 +182,14 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                  <span className="status-disable">
-                    Disabled
+                    <span className="status-disable">
+                      Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                  </span>
-                )}
+                    </span>
+                  )}
               </span>
-              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
+              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} >
+              </div>
             </div>
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
@@ -201,10 +202,10 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                <Button raised color="primary" className="twoFactor-button" onClick={this.addPhone}>
-                  Enable 2F Auth
+                  <Button raised color="primary" className="twoFactor-button" onClick={this.addPhone}>
+                    Enable 2F Auth
                 </Button>
-              )}
+                )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}
