@@ -42,6 +42,7 @@ export default {
       '& .upload-image-container': {
         overflow: 'hidden',
         position: 'relative',
+        display: 'inline-block',
         '& input[type=file]': {
           cursor: 'pointer',
           display: 'block',
