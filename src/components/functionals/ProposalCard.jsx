@@ -12,9 +12,12 @@ import { checkVoted, voted } from '../../API/firebase';
 import { Divider, Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
+import Cryptr from 'cryptr';
 
 // import style
 import { proposalCardStyle } from './styles';
+
+const cryptr = new Cryptr('myTotalySecretKey');
 
 class ProposalCard extends Component {
   state = {
@@ -24,21 +27,13 @@ class ProposalCard extends Component {
 
   componentWillMount() {
     let startDate = new Date();
-    let endDate = new Date(
-      this.props.proposal.DataString[0][1].end_epoch * 1000
-    );
+    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch * 1000);
     if (endDate > startDate) {
       let timeDiff = endDate.getTime() - startDate.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       this.setState({
         days_remaining,
-        endDate:
-          endDate.getDate() +
-          '/' +
-          endDate.getMonth() +
-          1 +
-          '/' +
-          endDate.getFullYear()
+        endDate: endDate.getDate() + '/' + endDate.getMonth() + 1 + '/' + endDate.getFullYear()
       });
     }
   }
@@ -54,7 +49,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -74,10 +69,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteYes = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 1
             };
@@ -112,7 +107,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -132,10 +127,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteNo = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 2
             };
@@ -171,8 +166,7 @@ class ProposalCard extends Component {
     const voteDownIcon = require('../../assets/img/png_button_down.png');
 
     // Some Maths ;P
-    const progress =
-      parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
+    const progress = parseInt(proposal.YesCount + 30) / parseInt(this.props.totalNodes) * 100; //remove added counts later and below
 
     return (
       <Grid container className={style}>
@@ -181,25 +175,17 @@ class ProposalCard extends Component {
             <Progress
               type="circle"
               percent={progress}
-              format={percent => (
-                <img alt="a" src={docIcon} className="progressIcon" />
-              )}
+              format={percent => <img alt="a" src={docIcon} className="progressIcon" />}
               className="progress-dial"
               strokeWidth={12}
-              status={
-                progress < 35
-                  ? 'exception'
-                  : progress < 100 ? 'active' : 'success'
-              }
+              status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
             />
             <div className="proposalStatusNo">
               <span
                 className={
                   progress < 35
                     ? 'proposalStatusExecptionNo'
-                    : progress < 100
-                      ? 'proposalStatusActiveNo'
-                      : 'proposalStatusSuccessNo'
+                    : progress < 100 ? 'proposalStatusActiveNo' : 'proposalStatusSuccessNo'
                 }
               >
                 {proposal.YesCount + 30}
@@ -209,17 +195,12 @@ class ProposalCard extends Component {
             </div>
           </Grid>
           <Grid item md={7} className="proposalInfoView">
-            <h1
-              className="proposalHeading"
-              onClick={() => selectProposal(proposal)}
-            >
+            <h1 className="proposalHeading" onClick={() => selectProposal(proposal)}>
               {proposal.DataString[0][1].name ? (
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                <span style={{ color: 'grey' }}>
-                  No name available for this proposal.
-                </span>
+                <span style={{ color: 'grey' }}>No name available for this proposal.</span>
               )}
             </h1>
             <div className="proposalDetail">
@@ -239,10 +220,7 @@ class ProposalCard extends Component {
               <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
-              <Button
-                className="vote-down"
-                onClick={() => this.voteDown(proposal)}
-              >
+              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
               </Button>
               <div className="vote-count">
@@ -281,6 +259,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalCardStyle)(ProposalCard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));

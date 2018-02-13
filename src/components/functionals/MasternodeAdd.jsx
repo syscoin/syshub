@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
-
 // import style
 import { masternodeAddStyle } from './styles';
 
@@ -22,14 +21,14 @@ class MasterNodeAdd extends Component {
   addNode(event) {
     event.preventDefault();
     if (this.state.newNode.name && this.state.newNode.address) {
-      console.log(
-        'Master Node name ' +
-          this.state.newNode.name +
-          ' Master Node Address ' +
-          this.state.newNode.address
-      );
+      // console.log(
+      //   'Master Node name ' +
+      //     this.state.newNode.name +
+      //     ' Master Node Address ' +
+      //     this.state.newNode.address
+      // );
       this.props.addNode(this.state.newNode);
-      this.setState({ newNode: { name: '', address: '' } });
+      this.setState({ newNode: { name: '', address: '', vin: '' } });
     }
   }
 
@@ -60,12 +59,7 @@ class MasterNodeAdd extends Component {
             }}
             className="wrapper"
           >
-            <Grid
-              item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
-              justify="center"
-            >
+            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -85,15 +79,30 @@ class MasterNodeAdd extends Component {
               {/* For Password */}
               <FormGroup className="form-group">
                 <span htmlFor="password" className="label">
-                  {`Masternode 1000 SYS coin Address: `}
+                  {`MN Private Key: `}
                 </span>
                 <input
                   ref={address => (this.nodeAddress = address)}
                   id="address"
                   name="address"
                   className="input-field"
-                  placeholder="enter a valid address"
+                  placeholder="enter a valid key"
                   value={this.state.newNode.address}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+
+              <FormGroup className="form-group">
+                <span htmlFor="password" className="label">
+                  {`MN Vin: `}
+                </span>
+                <input
+                  ref={address => (this.nodeAddress = address)}
+                  id="address"
+                  name="vin"
+                  className="input-field"
+                  placeholder="enter a valid vin number"
+                  value={this.state.newNode.vin}
                   onChange={this.onChange}
                 />
               </FormGroup>

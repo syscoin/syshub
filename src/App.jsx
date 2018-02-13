@@ -26,9 +26,23 @@ class App extends Component {
       if (user) {
         fire
           .database()
-          .ref('mnPrivateKey/' + user.uid)
-          .on('value', snapshot => {
-            user.mnPrivateKey = snapshot.val();
+          .ref('2FA/' + user.uid)
+          .on('value', snap => {
+            if (snap.val() === true) {
+              fire
+                .database()
+                .ref('MasterNodes/' + user.uid)
+                .on('value', snapshot => {
+                  let list = [];
+                  snapshot.forEach(snap => {
+                    list.push(snap.val());
+                  });
+                  user.MasterNodes = list;
+                  this.props.setCurrentUser(user);
+                });
+
+              return;
+            }
             this.props.setCurrentUser(user);
           });
       } else {
