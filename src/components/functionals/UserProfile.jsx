@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui';
 import { userProfileStyle } from './styles';
 import { Button, Grid, FormGroup } from 'material-ui';
 import swal from 'sweetalert';
+import { Input } from 'antd';
 // import components
 import { fire } from '../../API/firebase';
 
@@ -152,7 +153,7 @@ class UserProfile extends Component {
                 )}
             </div>
             <span className="change-photo-btn upload-image-container">
-              <input
+              <Input
                 type="file"
                 onChange={this.onImageChange.bind(this)}
                 className="filetype"
