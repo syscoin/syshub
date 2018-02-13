@@ -7,8 +7,6 @@ import { Grid, withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
-import { DashBoardHeader } from '../functionals/';
-import axios from 'axios';
 
 // import components
 import { dashboardStyle } from './styles';

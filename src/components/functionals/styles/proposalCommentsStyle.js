@@ -1,5 +1,4 @@
 import palette from './palette';
-import { colors } from 'material-ui/styles';
 
 const primaryDark = palette.primaryDark;
 const primaryLight = palette.primaryLight;
@@ -46,12 +45,9 @@ export default {
       },
       '& .proposalDetails': {
         marginLeft: 5,
-        padding: 0,
         color: gray,
-        maxWidth: '89.6667%',
         fontSize: 15,
         background: white,
-        maxWidth: '100%',
         padding: '10px 20px',
         maxWidth: '99.2%',
         height: 135,
@@ -175,7 +171,6 @@ export default {
           marginLeft: 5,
           padding: 0,
           color: gray,
-          maxWidth: '89.6667%',
           fontSize: 15,
           background: white,
           maxWidth: '99%',

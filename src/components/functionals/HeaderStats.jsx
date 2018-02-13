@@ -8,7 +8,6 @@ import { connect } from 'react-redux'; //to pass functions
 import { Divider } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 
-import actions from '../../redux/actions';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
