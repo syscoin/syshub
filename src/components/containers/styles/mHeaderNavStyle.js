@@ -1,21 +1,19 @@
 import palette from './palette';
 
-const primary = palette.primary;
-const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
-const white = palette.white;
-const gery = palette.grey;
+
+
+const grey = palette.grey;
 
 export default {
   mRoot: {
-    borderTop: 'thin solid ' + gery,
+    borderTop: 'thin solid ' + grey,
     marginBottom: 0,
     marginTop: 0,
     '& .left-section': {
       textAlign: 'center',
       padding: 0,
       height: 45,
-      borderRight: 'thin solid ' + gery,
+      borderRight: 'thin solid ' + grey,
       '& button': {
         height: 30,
         marginTop: -15
@@ -38,7 +36,7 @@ export default {
       padding: 0,
       textAlign: 'center',
       height: 47,
-      borderLeft: 'thin solid ' + gery,
+      borderLeft: 'thin solid ' + grey,
       '& button': {
         '& img': {
           marginTop: -10,

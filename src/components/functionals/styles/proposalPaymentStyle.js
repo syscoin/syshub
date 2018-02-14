@@ -1,12 +1,8 @@
 import palette from './palette';
-import { colors } from 'material-ui/styles';
 
-const primaryDark = palette.primaryDark;
 const primaryLight = palette.primaryLight;
-const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
 
 export default {
   root: {

@@ -2,10 +2,9 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 
-//import antd components
-import { Divider } from 'antd';
-import { Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Grid, FormGroup, withStyles } from 'material-ui';
 
 import { proposalPaymentStyle } from './styles';
 
@@ -33,16 +32,30 @@ class ProposalPayment extends Component {
     return (
       <Grid md={12} className={style}>
         <Grid item className="no-margin">
-          <div className="heading">PAYMENTS</div>
+
+          
+          
+          <Typography variant="headline" gutterBottom>
+          PAYMENTS
+      </Typography>
+          
+  
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
         <Grid container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> One Time Payment </div>
+            <div className="heading"> 
+            
+          <Typography variant="subheading" gutterBottom>
+            One Time Payment
+          </Typography>
+            
+            </div>
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
                   ref={ref => {
                     this.state.compeletePayment = ref;
@@ -55,14 +68,20 @@ class ProposalPayment extends Component {
                   value={this.state.onTimePayment + ' SYS'}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> Complete Payment </div>
+            <div className="heading"> 
+            <Typography variant="subheading" gutterBottom>
+            Complete Payment 
+          </Typography>
+            </div>
 
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
                   ref={ref => {
                     this.state.compeletePayment = ref;
@@ -74,14 +93,20 @@ class ProposalPayment extends Component {
                   onChange={e => {}}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>
 
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> Start & End Date </div>
+            <div className="heading"> 
+            <Typography variant="subheading" gutterBottom>
+            Start & End Date 
+          </Typography>
+            </div>
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
                   ref={ref => {}}
                   name="Paymentdate"
@@ -92,6 +117,7 @@ class ProposalPayment extends Component {
                   value={this.state.startDate + ' / ' + this.state.endDate}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>

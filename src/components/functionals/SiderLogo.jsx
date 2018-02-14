@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import Typography from 'material-ui/Typography';
 import injectSheet from 'react-jss';
 
 //Import Styles
@@ -24,8 +24,12 @@ class SiderLogo extends Component {
           />
         </div>
         <div className="txtArea">
-          <p>brought to you by</p>
-          <p className="txtBig">Blockchain Foundry</p>
+        <Typography variant="body1" gutterBottom align='right'>
+          brought to you by
+        </Typography>
+        <Typography variant="body2" gutterBottom align='right'>
+          Blockchain Foundry
+        </Typography>
         </div>
       </div>
     );

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 
 // import style
 import { masternodeAddStyle } from './styles';

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import HttpsRedirect from 'react-https-redirect';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
-
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-
 import { DesktopLayout, MobileLayout } from './components/layouts';
 
 import actions from './redux/actions';

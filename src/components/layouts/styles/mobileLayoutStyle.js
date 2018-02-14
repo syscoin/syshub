@@ -1,8 +1,3 @@
-import palette from './palette';
-
-const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
-const white = palette.white;
 
 export default {
   root: {

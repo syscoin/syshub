@@ -14,6 +14,7 @@ import Icon from 'material-ui/Icon';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
 import CommentForm from './commentForm';
+import Typography from 'material-ui/Typography';
 
 // import firebase
 import { fire, comments, commentReplies } from '../../API/firebase';
@@ -135,7 +136,7 @@ class ProposalComments extends Component {
             </Grid>
             <Grid item md={10} className="newYearView">
               {' '}
-              {reply.message}
+              <Typography gutterBottom>{reply.message } </Typography>
             </Grid>
           </Grid>
         )
@@ -317,7 +318,13 @@ class ProposalComments extends Component {
     return (
       <Grid md={12} className={style}>
         <Grid item className="commentHeadingDiv">
-          <div className="heading">COMMENTS SECTIONS </div>
+          <div className="heading">
+
+                <Typography variant="headline" gutterBottom>
+                COMMENTS SECTION
+      </Typography>
+          
+          </div>
         </Grid>
         <Grid item md={11} className="section-separate">
           <hr />
@@ -352,69 +359,6 @@ class ProposalComments extends Component {
           <hr className="separate-with-margin" />
         </Grid>
 
-
-        {/* <Grid container md={10} className="topCommentWithReplyView">
-          <Grid container md={12} className="commentHeading">
-            <Grid item md={8} className="userView">
-              <span className="userName">
-                {' '}
-                User 6{' '}
-                <img
-                  alt="a"
-                  src={require('../../assets/img/png_icon_badge.png')}
-                  className="badgeIcon"
-                />
-              </span>
-              <div className="commentDate">Jan 1, 2018 - 10:21 A.M </div>
-            </Grid>
-            <Grid item md={4} className="votesView">
-              <img
-                alt="a"
-                src={require('../../assets/img/png_button_up.png')}
-                className="upVoteICon"
-              />
-              <div className="votingNumber">11</div>
-              <img
-                alt="a"
-                src={require('../../assets/img/png_button_down.png')}
-                className="downVoteICon"
-              />
-              <div className="votingNumber">66</div>
-            </Grid>
-          </Grid>
-          <Grid item md={12} className="commentlHrView">
-            <hr className="hr" />
-          </Grid>
-          <Grid item md={10} className="newYearView">
-            {' '}
-            Happy New Year!!! ..
-          </Grid>
-          <Grid item md={10} className="replyView">
-            {' '}
-            Reply
-          </Grid>
-
-          <Grid container md={8} className="topcommentSectionslView">
-            <Grid item md={12} className="commentHeading">
-              Enter Reply
-            </Grid>
-
-            <Grid item md={12} className="proposalDetails">
-              <textarea rows="1" cols="55" className="userComment">
-                Having Fun ?
-              </textarea>
-              <hr className="proposalDetailsHr" />
-
-              <Button type="submit" color="primary">
-                Submit
-              </Button>
-              <Button type="submit" color="primary">
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid> */}
-
         {this.state.allComments.map((comment, key) => {
           return (
             <Grid container md={10} className="topCommentWithReplyView" key={comment._id}>
@@ -423,11 +367,6 @@ class ProposalComments extends Component {
                   <span className="userName">
                     {' '}
                     {comment.createdBy.name}{' '}
-                    <img
-                      alt="a"
-                      src={require('../../assets/img/png_icon_badge.png')}
-                      className="badgeIcon"
-                    />
                   </span>
                   <div className="commentDate">{this.generateDate(comment.createdAt)}</div>
                 </Grid>
@@ -474,7 +413,10 @@ class ProposalComments extends Component {
                 :
                 <Grid item md={8} className="newYearView">
                   {' '}
-                  {comment.message}
+                  <Typography gutterBottom>
+                  {comment.message }
+                  </Typography>
+                  
                   {this.props.user && this.props.user.uid === comment.createdBy.uid ?
                     <Grid className="edit-delete-btn">
                       <EditIcon onClick={() => { this.editedComment(comment._id, comment.message) }} />
@@ -496,22 +438,6 @@ class ProposalComments extends Component {
                 Reply
               </Grid>
               {comment.showAddReply ?
-                // <Grid container md={8} className="topcommentSectionslView">
-                //   <Grid item md={12} className="commentHeading">
-                //     Enter Reply
-                //   </Grid>
-
-                //   <Grid item md={12} className="proposalDetails">
-                //     {/* Having Fun ? */}
-                //     <textarea rows="1" cols="55" className="userComment" value={this.state.userReply} onChange={this.setReply}>
-                //     </textarea>
-                //     <hr className="proposalDetailsHr" />
-
-                //     {/* <Button type="submit" color="primary" className="formSubmiButton"> */}
-                //     <Button onClick={() => this.addReply(comment._id)}> Submit </Button>
-                //     <Button onClick={() => { this.showAddReplyBtn(comment, false) }}> Cancel </Button>
-                //   </Grid>
-                // </Grid>
                 <CommentForm comment={comment} add={this.addReply} cancel={this.showAddReplyBtn} />
                 : null}
             </Grid>
