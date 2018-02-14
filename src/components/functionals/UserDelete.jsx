@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userDeleteStyle } from './styles';
-import { Button, Grid, FormGroup, Input } from 'material-ui';
-// import components
-import { Stats, WelcomeBox } from '../functionals';
+import { Button, Grid } from 'material-ui';
 
 class UserDelete extends Component {
   render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
-    const avatar = require('../../assets/img/no-user-image.gif');
-    const checkIcon = require('../../assets/img/check.png');
-    const closeIcon = require('../../assets/img/close.png');
     return (
       <div className={style}>
         <Grid container>

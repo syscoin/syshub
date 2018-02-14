@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Grid, withStyles, FormGroup, Input } from 'material-ui';
+import { Grid, withStyles, FormGroup } from 'material-ui';
 
 // import style
 import { masternodeListStyle } from './styles';
-import { Table, Icon, Divider, Card, Col, Row, Modal, Button } from 'antd';
+import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
 
 class MasterNodeList extends Component {
@@ -109,7 +108,7 @@ class MasterNodeList extends Component {
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
-        render: text => <span>{deviceType == 'mobile' ? text.substring(0, 7) + "..." : text}</span>,
+        render: text => <span>{deviceType === 'mobile' ? text.substring(0, 7) + "..." : text}</span>,
       },
       {
         key: 'action',

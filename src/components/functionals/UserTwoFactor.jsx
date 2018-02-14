@@ -2,18 +2,12 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userTwoFactorStyle } from './styles';
-import { Button, Grid, FormGroup, Input } from 'material-ui';
+import { Button, Grid } from 'material-ui';
 import { fire } from '../../API/firebase';
 import swal from 'sweetalert';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
-
-import QRCode from 'qrcode.react';
 class UserTwoFactor extends Component {
   constructor(props) {
     super(props);
@@ -154,16 +148,6 @@ class UserTwoFactor extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
-    const avatar = require('../../assets/img/no-user-image.gif');
-    const checkIcon = require('../../assets/img/check.png');
-    const closeIcon = require('../../assets/img/close.png');
-    const appStore = require('../../assets/img/png_icon_apple.png');
-    const windowsStore = require('../../assets/img/png_icon_windows.png');
-    const playStore = require('../../assets/img/png_icon_google.png');
-    const { currentUser } = this.props.app;
-    console.log(this.props.app.auth);
-
     return (
       <div className={style}>
         <Grid container>

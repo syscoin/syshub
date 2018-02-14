@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { Grid, withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import Paper from 'material-ui/Paper';
 import { NewsList, NewsDetail } from '../containers';
@@ -11,8 +11,6 @@ import Typography from 'material-ui/Typography';
 // import style
 import { newsStyle } from './styles';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 class News extends Component {
   state = {
     readedList: [],
@@ -24,7 +22,7 @@ class News extends Component {
   }
   //changing state with this function
   handleSelectNews(value) {
-    const { app, channel } = this.props;
+    const { channel } = this.props;
     const container = this.state.showContainer === 'list' ? 'details' : 'list';
     const posts = channel.item;
     const post = posts.find(p => p.guid === value);
@@ -40,11 +38,11 @@ class News extends Component {
   }
 
   render() {
-    const { classes, app, channel } = this.props;
+    const { classes, channel } = this.props;
     return (
       <div className={classes.root}>
-      <Typography variant="display1" gutterBottom>
-        NEWS AND ANNOUNCEMENTS
+        <Typography variant="display1" gutterBottom>
+          NEWS AND ANNOUNCEMENTS
       </Typography>
         {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>

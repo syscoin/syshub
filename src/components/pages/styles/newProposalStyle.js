@@ -11,13 +11,13 @@ export default {
   root: {
     marginTop: '20px',
     '& StepLabel': {
-      color: 'red',
+      color: 'red'
     },
     '& .step-label': {
       color: primary,
       marginTop: 12,
       display: 'inline',
-      fontWeight: 300,
+      fontWeight: 300
     },
     '& .steper__container': {
       '& > span > span:nth-child(2)': {
@@ -26,14 +26,14 @@ export default {
           height: 25,
           fontSize: 10,
           marginLeft: 25,
-          borderRadius: 10,
-        },
+          borderRadius: 10
+        }
       },
       '& path': {
-        fill: primary,
+        fill: primary
       },
       '& circle': {
-        fill: primary,
+        fill: primary
       }
     },
     '& .title': {
@@ -53,14 +53,14 @@ export default {
         '& Button': {
           borderRadius: '7px',
           height: '35px',
-          margin: 10,
+          margin: 10
         },
         '& button span': {
           textTransform: 'capitalize',
           padding: '3px 0px',
           fontSize: '18px',
-          color: white,
-        },
+          color: white
+        }
       },
       //confirm button styling
       '& .confirm-btn-div': {
@@ -68,14 +68,14 @@ export default {
         '& Button': {
           borderRadius: '7px',
           height: '35px',
-          margin: 10,
+          margin: 10
         },
         '& button span': {
           textTransform: 'capitalize',
           padding: '3px 0px',
           fontSize: '18px',
-          color: white,
-        },
+          color: white
+        }
       },
       '& .proposal-title': {
         fontWeight: 100,
@@ -83,7 +83,7 @@ export default {
         color: primaryLight,
         display: 'inline-block',
         // paddingLeft: 'calc(50% + 50px )',
-        marginLeft: "calc(50% - 220px)"
+        marginLeft: 'calc(50% - 220px)'
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,
@@ -91,32 +91,32 @@ export default {
         height: '20px',
         width: '20px',
         display: 'inline-block',
-        marginRight: '15px',
+        marginRight: '15px'
       },
       //step 1 proposal-title-row
       '& .proposal-title-row': {
         '& .proposal-title-input, .proposal-url-input': {
           width: 'calc(100% - 40px)',
-          height: '40px',
+          height: '40px'
         },
         '& .proposal-description-url': {
           display: 'block',
           marginLeft: '25px',
-          color: grey,
+          color: grey
         },
         '& .nextStep-button-div': {
           textAlign: 'center',
           margin: '40px 0px 0px 0px',
           '& Button': {
             borderRadius: '7px',
-            height: '35px',
+            height: '35px'
           },
           '& button span': {
             textTransform: 'capitalize',
             padding: '3px 0px',
-            fontSize: '18px',
-          },
-        },
+            fontSize: '18px'
+          }
+        }
       },
 
       //step 2 proposal-details-row'
@@ -128,13 +128,13 @@ export default {
           fontSize: 18,
           marginTop: 10,
           fontWeight: 'bold',
-          color: greyDark,
+          color: greyDark
         },
         '& .proposal-editor': {
           padding: '15px',
           marginTop: '10px',
           backgroundColor: white,
-          height: 100,
+          height: 100
         },
         '& .proposalEditor-wrapper': {
           marginLeft: '40px',
@@ -142,7 +142,7 @@ export default {
           marginTop: 20,
           boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
           height: 200,
-          minWidth: 500,
+          minWidth: 500
         },
         '& .toolbarClassName': {
           visibility: 'visible',
@@ -155,69 +155,69 @@ export default {
           '& .rdw-option-wrapper': {
             backgroundColor: 'transparent',
             border: 'none',
-            boxShadow: 'none',
-          },
+            boxShadow: 'none'
+          }
         },
         '& .confirm-button': {
           marginLeft: 'calc(100% - 105px)',
           marginTop: -45,
           position: 'absolute',
           borderRadius: 6,
-          backgroundColor: primary,
+          backgroundColor: primary
         },
         '& .confirm-button span': {
-          color: white,
+          color: white
         },
         '& .proposalDetail-title': {
           marginTop: 15,
           fontSize: 18,
           fontWeight: 'bold',
-          color: greyDark,
+          color: greyDark
         },
         '& .proposalContent-div': {
           marginLeft: 15,
           padding: 12,
           height: 100,
           overflow: 'auto',
-          color: grey,
-        },
+          color: grey
+        }
       },
       //paymentDetail-row
       '& .paymentDetail-row': {
         height: 100,
         marginTop: 15,
         '& label': {
-          display: 'block',
-        },
+          display: 'block'
+        }
       },
       //amount-row
       '& .amount-row': {
         height: 50,
-        marginTop: 15,
-      },
+        marginTop: 15
+      }
     },
     '& .ant-btn-primary': {
       backgroundColor: primary,
-      borderColor: primary,
-    },
+      borderColor: primary
+    }
   },
   mRoot: {
     extend: 'root',
     marginTop: 0,
     '& .proposal-title': {
       paddingLeft: '0 !important',
-      marginLeft: '0px !important',
+      marginLeft: '0px !important'
     },
     '& .editor-title': {
       fontSize: 16,
-      marginTop: 8,
+      marginTop: 8
     },
     '& .payment-input': {
       width: '100%'
     },
     '& .toolbarClassName': {
       marginTop: '30px !important',
-      margin: '10px auto auto auto !important',
+      margin: '10px auto auto auto !important'
     },
     '& .proposalEditor-wrapper': {
       margin: '0 !important',
@@ -227,7 +227,5 @@ export default {
     '& .paper-container': {
       padding: '0 !important'
     }
-
-
   }
 };

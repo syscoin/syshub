@@ -56,8 +56,7 @@ export default {
           fontWeight: 'bold',
           marginLeft: 5
         }
-      }
-      ,
+      },
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid'
@@ -77,16 +76,16 @@ export default {
       }
     },
     '& .title': {
-      display: "inline-block",
+      display: 'inline-block',
       fontWeight: 'lighter'
     }
-
   },
   mRoot: {
     extend: 'root',
-    marginTop: '100px',
+    height: 'calc(100vh - 220px)',
+    // marginTop: '36px',
     '& .input-field': {
       width: '62% !important'
-    },
+    }
   }
 };

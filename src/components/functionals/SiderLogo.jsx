@@ -1,7 +1,6 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import injectSheet from 'react-jss';
 
@@ -10,10 +9,7 @@ import { siderLogoStyle } from './styles';
 
 class SiderLogo extends Component {
   render() {
-    const { classes, deviceType } = this.props;
-    //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <div>

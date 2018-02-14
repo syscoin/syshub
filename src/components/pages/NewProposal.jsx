@@ -5,22 +5,19 @@ import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 import newProposalStyle from './styles/newProposalStyle';
 //import for text editor
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Row, Col, Card } from 'antd';
-import { Form, Icon, Input, Button, InputNumber } from 'antd';
+import { Row, Col } from 'antd';
+import { Form, Input, Button, InputNumber } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
-import { fire, proposals } from '../../API/firebase';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+import { fire } from '../../API/firebase';
 
 //import style
 
@@ -128,7 +125,7 @@ class NewProposal extends Component {
                   title: 'Success',
                   text: `"${
                     userProp.submitReceipt
-                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -218,7 +215,7 @@ class NewProposal extends Component {
                   title: 'Success',
                   text: `"${
                     userProp.prepareReceipt
-                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -305,7 +302,6 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
       proposalDate,
-      userProposalSaved
     } = this.state;
 
     if (!currentUser) {
@@ -589,7 +585,7 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                  }`}
+                }`}
               />
             </Col>
           </Row>
@@ -630,30 +626,35 @@ class NewProposal extends Component {
                   <Button
                     className="confirm-button"
                     onClick={this.confirmProposalDetail.bind(this)}
-                    style={this.state.editorState && this.state.editorState.getCurrentContent().hasText() ? { backgroundColor: '#1991CC' } : { backgroundColor: '#BDC3C7', }}
+                    style={
+                      this.state.editorState &&
+                      this.state.editorState.getCurrentContent().hasText()
+                        ? { backgroundColor: '#1991CC' }
+                        : { backgroundColor: '#BDC3C7' }
+                    }
                   >
                     Confirm
                   </Button>
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col
-                      span={deviceType === 'mobile' ? 24 : 22}
-                      offset={deviceType === 'mobile' ? 0 : 1}
-                    >
-                      <h1 className="proposalDetail-title">
-                        {this.state.proposalTitle}
-                      </h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div
-                        className="proposalContent-div"
-                        id="preview-html-container"
-                      />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">
+                      {this.state.proposalTitle}
+                    </h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div
+                      className="proposalContent-div"
+                      id="preview-html-container"
+                    />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
         );
@@ -701,20 +702,30 @@ class NewProposal extends Component {
                 onChange={this.getAmount}
               />
             </Col>
-            <div style={{ display: 'inline-block', padding: '5px', fontWeight: 'bold' }}>SYS</div>
+            <div
+              style={{
+                display: 'inline-block',
+                padding: '5px',
+                fontWeight: 'bold'
+              }}
+            >
+              SYS
+            </div>
           </Row>
         );
       default:
-        return;
-        <Button>Confirm</Button>;
+        return <Button>Confirm</Button>;
     }
   }
   onEditorStateChange(editorState) {
-    console.log("editorState", editorState)
+    console.log('editorState', editorState);
     this.setState({
       editorState
     });
-    console.log(this.state.editorState.getCurrentContent().hasText(), 'editor state');
+    console.log(
+      this.state.editorState.getCurrentContent().hasText(),
+      'editor state'
+    );
   }
 
   disabledNextBtn(step) {
@@ -753,8 +764,7 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
-    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -768,89 +778,89 @@ class NewProposal extends Component {
           {this.state.recover === true ? (
             <div>Recovery in process</div>
           ) : (
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => {
-                  return (
-                    <Step className="steper__container" key={label}>
-                      <StepLabel className="steper__label">
-                        <h2 className="step-label"> {label} </h2>
-                        {this.state.activeStep === 0 &&
-                          label === 'Proposal Title' &&
-                          deviceType !== 'mobile' ? (
-                            <h3 className="proposal-title">
-                              Proposal Description Url
+            <Stepper activeStep={activeStep} orientation="vertical">
+              {steps.map((label, index) => {
+                return (
+                  <Step className="steper__container" key={label}>
+                    <StepLabel className="steper__label">
+                      <h2 className="step-label"> {label} </h2>
+                      {this.state.activeStep === 0 &&
+                      label === 'Proposal Title' &&
+                      deviceType !== 'mobile' ? (
+                        <h3 className="proposal-title">
+                          Proposal Description Url
                         </h3>
-                          ) : null}
-                        {this.state.activeStep === 1 &&
-                          label === 'Proposal Details' ? (
-                            this.state.showEditor ? (
-                              <Button
-                                className="preview-edit-button"
-                                onClick={this.previewHTML.bind(this)}
-                              >
-                                PREVIEW
-                          </Button>
-                            ) : (
-                                <Button
-                                  className="preview-edit-button"
-                                  onClick={() => {
-                                    this.setState({ showEditor: true });
-                                  }}
-                                >
-                                  EDITOR
-                          </Button>
-                              )
-                          ) : null}
-                      </StepLabel>
-                      <StepContent>
-                        <div>{this.getStepContent(index)}</div>
-                        <div className={classes.actionsContainer}>
-                          <div
-                            className={
-                              activeStep === steps.length - 1
-                                ? 'confirm-btn-div'
-                                : 'next-btn-div'
-                            }
+                      ) : null}
+                      {this.state.activeStep === 1 &&
+                      label === 'Proposal Details' ? (
+                        this.state.showEditor ? (
+                          <Button
+                            className="preview-edit-button"
+                            onClick={this.previewHTML.bind(this)}
                           >
-                            {activeStep === 0 ? null : (
-                              <Button
-                                raised={true}
-                                type="primary"
-                                onClick={this.handleBack}
-                                className="button"
-                              >
-                                Back
+                            PREVIEW
+                          </Button>
+                        ) : (
+                          <Button
+                            className="preview-edit-button"
+                            onClick={() => {
+                              this.setState({ showEditor: true });
+                            }}
+                          >
+                            EDITOR
+                          </Button>
+                        )
+                      ) : null}
+                    </StepLabel>
+                    <StepContent>
+                      <div>{this.getStepContent(index)}</div>
+                      <div className={classes.actionsContainer}>
+                        <div
+                          className={
+                            activeStep === steps.length - 1
+                              ? 'confirm-btn-div'
+                              : 'next-btn-div'
+                          }
+                        >
+                          {activeStep === 0 ? null : (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              onClick={this.handleBack}
+                              className="button"
+                            >
+                              Back
                             </Button>
-                            )}
-                            {activeStep === steps.length - 1 ? (
-                              <Button
-                                raised={true}
-                                type="primary"
-                                className={classes.button}
-                                onClick={this.createPropObj}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Confirm
+                          )}
+                          {activeStep === steps.length - 1 ? (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              className={classes.button}
+                              onClick={this.createPropObj}
+                              disabled={this.disabledNextBtn(index)}
+                            >
+                              Confirm
                             </Button>
-                            ) : (
-                                <Button
-                                  raised={true}
-                                  type="primary"
-                                  onClick={this.handleNext}
-                                  className={classes.button}
-                                  disabled={this.disabledNextBtn(index)}
-                                >
-                                  Next Step
+                          ) : (
+                            <Button
+                              raised={true}
+                              type="primary"
+                              onClick={this.handleNext}
+                              className={classes.button}
+                              disabled={this.disabledNextBtn(index)}
+                            >
+                              Next Step
                             </Button>
-                              )}
-                          </div>
+                          )}
                         </div>
-                      </StepContent>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-            )}
+                      </div>
+                    </StepContent>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          )}
         </Paper>
       </div>
     );

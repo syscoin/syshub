@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 
 import { withRoot } from '../HOC';
 
@@ -20,7 +18,6 @@ import {
   NewProposal,
   News,
   UserAccount,
-  UserAccountTest
 } from '../pages';
 import MAppLSider from './AppLSider';
 import MAppRSider from './AppRSider';

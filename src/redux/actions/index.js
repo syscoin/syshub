@@ -7,5 +7,5 @@ export default {
   ...appActions,
   ...sysStatsActions,
   ...proposalActions,
-  ...mediumActions,
+  ...mediumActions
 };
