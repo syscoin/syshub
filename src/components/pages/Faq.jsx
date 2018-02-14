@@ -168,10 +168,6 @@ const faqQuestions = [
 
 
 class Faq extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes, deviceType } = this.props;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;

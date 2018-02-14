@@ -2,23 +2,17 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
-import { Grid } from 'material-ui';
 import swal from 'sweetalert';
 
 import actions from '../../redux/actions';
 import {
-  fire,
-  usernames,
-  doLogout,
   doUpdateProfile,
   doUpdatePassword,
   doDeleteAccount
 } from '../../API/firebase';
 import { userAccountStyle } from './styles';
-// import components
-import { Stats, WelcomeBox } from '../functionals';
+
 import UserProfile from '../functionals/UserProfile';
 import UserChangePsw from '../functionals/UserChangePsw';
 import UserDelete from '../functionals/UserDelete';

@@ -1,8 +1,5 @@
 import palette from './palette';
-
-const white = palette.white;
 const primary = palette.primary;
-const grey = palette.textLignt;
 
 export default {
   root: {
@@ -22,7 +19,6 @@ export default {
         color: '#3498db'
       },
       '& .logoDiv': {
-        textAlign: 'center',
         textAlign: 'center',
         '& img': {
           width: '100%'
@@ -53,8 +49,8 @@ export default {
     },
     '& .tile__wrapper': {
       height: '100% !important',
-      '&.logo':{
-        marginTop:55
+      '&.logo': {
+        marginTop: 55
       }
     }
   },
@@ -71,8 +67,8 @@ export default {
       textAlign: 'center !important'
     },
     '& .tile__wrapper': {
-      '&.logo':{
-        marginTop:5
+      '&.logo': {
+        marginTop: 5
       }
     }
   }

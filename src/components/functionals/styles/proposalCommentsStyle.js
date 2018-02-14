@@ -169,9 +169,7 @@ export default {
         },
         '& .proposalDetails': {
           marginLeft: 5,
-          padding: 0,
           color: gray,
-          maxWidth: '89.6667%',
           fontSize: 15,
           background: white,
           maxWidth: '99%',

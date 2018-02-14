@@ -1,7 +1,6 @@
 import palette from './palette';
 
 const primary = palette.primary;
-const primaryLight = palette.primaryLight;
 const white = palette.white;
 const grey = palette.grey;
 const greyLight = palette.greyLight;
@@ -48,7 +47,7 @@ export default {
     extend: 'menuTxt',
     color: white
   },
-  mRoot: { 
+  mRoot: {
     extend: 'root',
     marginTop: 0,
 

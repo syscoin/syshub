@@ -63,6 +63,9 @@ class UserProfile extends Component {
                 // Unknown error occurred, inspect error.serverResponse
                 alert('Unknown error occurred');
                 break;
+              default:
+                break;
+
             }
           },
           () => {
@@ -143,11 +146,11 @@ class UserProfile extends Component {
           <Grid md={3} className="profile-image-grid">
             <div className="avatar-container upload-image-container">
               {this.state.image === null ? (
-                <img src={avatar} alt="no user image" className="user-image" />
+                <img src={avatar} alt="no user" className="user-image" />
               ) : (
                   <img
                     src={this.state.image}
-                    alt="no user image"
+                    alt="no user"
                     className="user-image"
                   />
                 )}

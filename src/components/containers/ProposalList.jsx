@@ -1,9 +1,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fire } from '../../API/firebase';
 import { Grid, withStyles } from 'material-ui';
 
 // import styles
@@ -55,10 +53,10 @@ export class ProposalList extends Component {
   };
 
   render() {
-    const { classes, selectProposal, deviceType } = this.props;
+    const { selectProposal, deviceType } = this.props;
 
     return (
-      <Grid md={12} style={proposalStyle.root}>
+      <Grid md={12} xs={12} style={proposalStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
           data={{ showHeader: 'proposalList' }}

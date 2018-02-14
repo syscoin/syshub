@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 import { Avatar } from 'antd';
 
 // import style
 import { newsAboutStyle } from './styles';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 class NewsAbout extends Component {
   render() {
     const { classes, about, deviceType } = this.props;

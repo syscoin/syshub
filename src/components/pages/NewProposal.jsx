@@ -5,22 +5,19 @@ import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 import newProposalStyle from './styles/newProposalStyle';
 //import for text editor
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Row, Col, Card } from 'antd';
-import { Form, Icon, Input, Button, InputNumber } from 'antd';
+import { Row, Col } from 'antd';
+import { Form, Input, Button, InputNumber } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
-import { fire, proposals } from '../../API/firebase';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+import { fire } from '../../API/firebase';
 
 //import style
 
@@ -305,7 +302,6 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
       proposalDate,
-      userProposalSaved
     } = this.state;
 
     if (!currentUser) {
@@ -705,8 +701,7 @@ class NewProposal extends Component {
           </Row>
         );
       default:
-        return;
-        <Button>Confirm</Button>;
+        return <Button>Confirm</Button>;
     }
   }
   onEditorStateChange(editorState) {
@@ -753,8 +748,7 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
-    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 

@@ -33,90 +33,90 @@ class ProposalPayment extends Component {
       <Grid md={12} className={style}>
         <Grid item className="no-margin">
 
-          
-          
+
+
           <Typography variant="headline" gutterBottom>
-          PAYMENTS
+            PAYMENTS
       </Typography>
-          
-  
+
+
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
         <Grid container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> 
-            
-          <Typography variant="subheading" gutterBottom>
-            One Time Payment
+            <div className="heading">
+
+              <Typography variant="subheading" gutterBottom>
+                One Time Payment
           </Typography>
-            
+
             </div>
             <form className="form">
               <FormGroup className="FormGroup">
-              <Typography color='inherit'>
-                <input
-                  ref={ref => {
-                    this.state.compeletePayment = ref;
-                  }}
-                  name="onTimePayment"
-                  id="onTimePayment"
-                  className="input-field"
-                  placeholder="Amount"
-                  onChange={e => {}}
-                  value={this.state.onTimePayment + ' SYS'}
-                  disabled={true}
-                />
+                <Typography color='inherit'>
+                  <input
+                    ref={ref => {
+                      this.setState({ compeletePayment: ref })
+                    }}
+                    name="onTimePayment"
+                    id="onTimePayment"
+                    className="input-field"
+                    placeholder="Amount"
+                    onChange={e => { }}
+                    value={this.state.onTimePayment + ' SYS'}
+                    disabled={true}
+                  />
                 </Typography>
               </FormGroup>
             </form>
           </Grid>
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> 
-            <Typography variant="subheading" gutterBottom>
-            Complete Payment 
+            <div className="heading">
+              <Typography variant="subheading" gutterBottom>
+                Complete Payment
           </Typography>
             </div>
 
             <form className="form">
               <FormGroup className="FormGroup">
-              <Typography color='inherit'>
-                <input
-                  ref={ref => {
-                    this.state.compeletePayment = ref;
-                  }}
-                  name="compeletePayment"
-                  id="compeletePayment"
-                  className="input-field"
-                  placeholder="no payments occurred yet"
-                  onChange={e => {}}
-                  disabled={true}
-                />
+                <Typography color='inherit'>
+                  <input
+                    ref={ref => {
+                      this.setState({ compeletePayment: ref })
+                    }}
+                    name="compeletePayment"
+                    id="compeletePayment"
+                    className="input-field"
+                    placeholder="no payments occurred yet"
+                    onChange={e => { }}
+                    disabled={true}
+                  />
                 </Typography>
               </FormGroup>
             </form>
           </Grid>
 
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> 
-            <Typography variant="subheading" gutterBottom>
-            Start & End Date 
+            <div className="heading">
+              <Typography variant="subheading" gutterBottom>
+                Start & End Date
           </Typography>
             </div>
             <form className="form">
               <FormGroup className="FormGroup">
-              <Typography color='inherit'>
-                <input
-                  ref={ref => {}}
-                  name="Paymentdate"
-                  id="Paymentdate"
-                  className="input-field"
-                  placeholder="Start Date / End Date"
-                  onChange={e => {}}
-                  value={this.state.startDate + ' / ' + this.state.endDate}
-                  disabled={true}
-                />
+                <Typography color='inherit'>
+                  <input
+                    ref={ref => { }}
+                    name="Paymentdate"
+                    id="Paymentdate"
+                    className="input-field"
+                    placeholder="Start Date / End Date"
+                    onChange={e => { }}
+                    value={this.state.startDate + ' / ' + this.state.endDate}
+                    disabled={true}
+                  />
                 </Typography>
               </FormGroup>
             </form>

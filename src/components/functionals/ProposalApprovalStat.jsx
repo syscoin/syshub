@@ -3,9 +3,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
+
 //import antd components
-import { Divider } from 'antd';
-import { Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Grid, withStyles } from 'material-ui';
 
 import { proposalApprovalStyle } from './styles';
 
@@ -30,7 +30,7 @@ class ProposalApprovalStat extends Component {
         endDate:
           endDate.getDate() +
           '/' +
-          (parseInt(endDate.getMonth()) + 1) +
+          (parseInt(endDate.getMonth(), 10) + 1) +
           '/' +
           endDate.getFullYear()
       });
@@ -46,8 +46,8 @@ class ProposalApprovalStat extends Component {
       <Grid md={12} className={style}>
         <Grid item className="approvalStatus">
           <div className="heading">
-          <Typography variant="headline" gutterBottom>
-          APPROVAL STATUS 
+            <Typography variant="headline" gutterBottom>
+              APPROVAL STATUS
       </Typography>
           </div>
         </Grid>
@@ -56,8 +56,8 @@ class ProposalApprovalStat extends Component {
         </Grid>
         <Grid container md={12} className="topApprovalView">
           <Grid item md={3} className="approvalKey">
-          <Typography variant="subheading" gutterBottom color='inherit'>
-            Status:
+            <Typography variant="subheading" gutterBottom color='inherit'>
+              Status:
             </Typography>
           </Grid>
           <Grid item md={6} className="approvalValue">
@@ -69,48 +69,48 @@ class ProposalApprovalStat extends Component {
                 </span>/{Math.round(totalNodes)})
               </span>
             ) : (
-              <span>
-                <Typography gutterBottom >
-                <span className="approvalRedColorFont">UNFUNDED</span> -
+                <span>
+                  <Typography gutterBottom >
+                    <span className="approvalRedColorFont">UNFUNDED</span> -
                 Insufficient Votes  (<span className="approvalRedColorFont">
-                  {YesCount}
-                </span>/{Math.round(totalNodes)}) </Typography>
-              </span>
-            )}
+                      {YesCount}
+                    </span>/{Math.round(totalNodes)}) </Typography>
+                </span>
+              )}
           </Grid>
         </Grid>
 
         <Grid container md={12} className="approvalView">
           <Grid item md={3} className="approvalKey">
-          <Typography variant="subheading" gutterBottom color='inherit'> Voting Deadline:</Typography>
+            <Typography variant="subheading" gutterBottom color='inherit'> Voting Deadline:</Typography>
           </Grid>
           <Grid item md={6} className="approvalValue">
-          <Typography gutterBottom>
-            {days_remaining != 0 ? (
-              <span>
-                <span className="approvalRedColorFont">{days_remaining}</span>{' '}
-                Days Remaining ({endDate})
+            <Typography gutterBottom>
+              {days_remaining !== 0 ? (
+                <span>
+                  <span className="approvalRedColorFont">{days_remaining}</span>{' '}
+                  Days Remaining ({endDate})
               </span>
-            ) : (
-              <span>---</span>
-            )}
+              ) : (
+                  <span>---</span>
+                )}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid container md={12} className="approvalView">
           <Grid item md={3} className="approvalKey">
-          <Typography variant="subheading" gutterBottom color='inherit'>
-            Vote Breakdown:
+            <Typography variant="subheading" gutterBottom color='inherit'>
+              Vote Breakdown:
             </Typography>
           </Grid>
-          
+
           <Grid item md={6} className="approvalValue">
-            <div className="voteGreenColorFont"><Typography  color='inherit'> {YesCount} Yes </Typography></div>{'  '}
-            <div className="voteRedColorFont"> <Typography  color='inherit'> {NoCount} No </Typography></div>{'  '}
-            <Typography  color='inherit'> {AbstainCount} Abstain </Typography>
+            <div className="voteGreenColorFont"><Typography color='inherit'> {YesCount} Yes </Typography></div>{'  '}
+            <div className="voteRedColorFont"> <Typography color='inherit'> {NoCount} No </Typography></div>{'  '}
+            <Typography color='inherit'> {AbstainCount} Abstain </Typography>
           </Grid>
-          
+
         </Grid>
       </Grid>
     );

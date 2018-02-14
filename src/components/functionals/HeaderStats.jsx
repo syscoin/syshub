@@ -5,10 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; //to pass functions
 
 //import antd components
-import { Divider } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 
-import actions from '../../redux/actions';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {

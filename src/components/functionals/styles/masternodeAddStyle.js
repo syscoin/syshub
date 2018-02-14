@@ -4,7 +4,6 @@ const white = palette.white;
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
 const greyLight = palette.greyLight;
-const greyDark = palette.greyDark;
 
 export default {
   root: {
@@ -24,7 +23,6 @@ export default {
       '& .label': {
         width: '40%',
         display: 'inline-block',
-        textAlign: 'right',
         fontSize: '18px',
         marginTop: '20px',
         color: primary,

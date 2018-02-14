@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Grid, withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 // import style
 import { newsListStyle } from './styles';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 import NewsCard from '../functionals/NewsCard';
 
 class NewsList extends Component {

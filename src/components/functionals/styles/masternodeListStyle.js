@@ -63,7 +63,6 @@ export default {
         '& .label': {
           width: '50%',
           display: 'inline-block',
-          textAlign: 'right',
           fontSize: '15px',
           color: primary,
           textAlign: 'left',

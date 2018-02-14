@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 
 // import style
 import { masterNodeStyle } from './styles';
@@ -55,7 +54,7 @@ class MasterNode extends Component {
   }
 
   deleteNode(node) {
-    let nodes = this.state.nodes.filter(obj => obj.key != node.key);
+    let nodes = this.state.nodes.filter(obj => obj.key !== node.key);
     this.setState({
       nodes: [...nodes]
     });
@@ -63,7 +62,7 @@ class MasterNode extends Component {
 
   editNode(node) {
     let nodes = this.state.nodes.map((obj, index) => {
-      if (obj.key == node.key) {
+      if (obj.key === node.key) {
         return node;
       }
       return obj;

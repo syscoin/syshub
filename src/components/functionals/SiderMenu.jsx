@@ -1,7 +1,6 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import injectSheet from 'react-jss';
 import SiderLogo from './SiderLogo';
 import { connect } from 'react-redux';
 import {withStyles } from 'material-ui';
@@ -14,7 +13,7 @@ class SiderMenu extends Component {
   }
 
   render() {
-    const { classes, active, deviceType ,title } = this.props;
+    const { classes, active, deviceType } = this.props;
     console.log(deviceType ,"device")
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (

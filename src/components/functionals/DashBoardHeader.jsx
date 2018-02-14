@@ -23,11 +23,11 @@ class DashBoardHeader extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container md={12} className={style}>
+      <Grid container md={12} xs={12} className={style}>
         {this.state.data.showHeader === 'ProposalDetail' ? (
-          <Grid container md={12} className="no-margin">
-            <Grid item md={12} className="headingView">
-              <Grid item md={12} className="headingRow">
+          <Grid container md={12} xs={12} className="no-margin">
+            <Grid item md={12} xs={12} className="headingView">
+              <Grid item md={12} xs={12} className="headingRow">
                 <img alt="a" src={require('../../assets/img/png_icon_proposal.png')} height="30" />
                 <div className="headingDiv"> {this.state.data.name}</div>
                 <div className="ownerDetails">
@@ -37,15 +37,16 @@ class DashBoardHeader extends Component {
             </Grid>
           </Grid>
         ) : (
-          <Grid container md={12} className="no-margin">
-            <Grid item md={12} className="headingView">
-              <Grid item md={12} className="headingRow">
-                <div className="headingDiv">
-                  <span className="activeText">
-                    {proposal.list.length > 0 ? proposal.list.length : 0}
-                  </span>
-                  {'  '}
-                  Active Proposals
+            <Grid container md={12} xs={12} className="no-margin">
+              <Grid item md={12} xs={12} className="headingView">
+                <Grid item md={12} xs={12} className="headingRow">
+                  <div className="headingDiv">
+                    Currently have {' '}
+                    <span className="activeText">
+                      {proposal.list.length > 0 ? proposal.list.length : 0}
+                    </span>
+                    {'  '}
+                    Active Proposals
                 </div>
                 </Grid>
               </Grid>

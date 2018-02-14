@@ -1,7 +1,5 @@
 import palette from './palette';
 
-const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
 const white = palette.white;
 
 export default {
@@ -18,13 +16,11 @@ export default {
         height: 25,
       },
       '& .TxtRegular': {
-        padding: '0 15px',
         color: white,
         padding: '0',
         fontSize: '1.2em',
       },
       '& .TxtBold': {
-        padding: '0 15px',
         color: white,
         padding: '0 0 0 10px',
         fontSize: '1.3em',

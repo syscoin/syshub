@@ -79,5 +79,29 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    width: '100%',
+    '& .approvalStatus': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20,
+        }
+      }
+    },
+    '& .topApprovalView': {
+      marginTop: 0,
+      width: '100%',
+      '& .approvalKey': {
+        marginLeft: 0,
+        width: '30%',
+      }
+    },
+    '& .approvalView': {
+      '& .approvalKey': {
+        marginLeft: 0,
+        width: '30%',
+      }
+    }
+  },
 };

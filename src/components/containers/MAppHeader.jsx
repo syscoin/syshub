@@ -3,12 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 
-import { Layout, Divider } from 'antd';
+import { Layout } from 'antd';
 import injectSheet from 'react-jss';
 
 //API functions
@@ -35,6 +34,14 @@ class AppHeader extends Component {
       this.props.doLogout();
     }
   }
+
+  renderName(name) {
+    if (name.indexOf(' ') >= 0) {
+      name = name.substring(0, name.indexOf(' '));
+    }
+    return name;
+  }
+
   render() {
     const { classes, deviceType } = this.props;
     const { currentUser } = this.props.app;
@@ -57,7 +64,7 @@ class AppHeader extends Component {
                       <span className='text-span'>
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
-                          {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
+                          {currentUser ? this.renderName(currentUser.displayName) : 'Guest'}
                         </span> </span> : null}
 
 
@@ -75,7 +82,7 @@ class AppHeader extends Component {
                       )}
                   </Grid>
                 </Grid>
-                <MHeaderNav className="bottom-header__wrapper"/>
+                <MHeaderNav className="bottom-header__wrapper" />
               </div>
             </Toolbar>
           </AppBar>

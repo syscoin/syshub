@@ -2,10 +2,8 @@ import palette from './palette';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
-const white = palette.white;
 const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 export default {
   root: {
@@ -121,15 +119,11 @@ export default {
       '& .upload-image-container': {
         width: '100%',
         margin: 'auto',
-      },
-      '& .upload-image-container': {
-        margin: 'auto',
       }
     },
     '& .profile-credential-grid': {
       '& .form-group': {
         '& .label': {
-          display: 'block',
           fontSize: 17,
           display: 'block',
           marginLeft: 25,

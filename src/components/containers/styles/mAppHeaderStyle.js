@@ -81,13 +81,11 @@ export default {
         }
       },
       '& .text-span': {
-        marginBottom: 5,
         display: 'block',
         marginBottom: 5,
         marginTop: 0,
         textAlign: 'right',
         '& .TxtRegular': {
-          padding: '0 15px',
           color: white,
           padding: '0',
           fontSize: '12px',
