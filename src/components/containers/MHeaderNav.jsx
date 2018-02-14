@@ -7,7 +7,7 @@ import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
 import { Grid } from 'material-ui';
 import { Icon } from 'antd';
-import { Menu, Dropdown, Button } from 'antd';
+import { Menu, Button } from 'antd';
 import IconButton from 'material-ui/IconButton';
 import actions from '../../redux/actions';
 
@@ -82,17 +82,7 @@ class MHeaderNav extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const logo = require('../../assets/img/png_logo_white.png');
-    const menu = (
-      <Menu>
-        {menuItems.map(item => {
-          return (
-            <Menu.Item>
-              <Button className="no-border">{item.title}</Button>
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
+
     return (
       <Grid container className={style}>
         <Grid
@@ -100,37 +90,24 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu ? { backgroundColor: '#53a5cc' }: { backgroundColor: 'inherit' }
+            this.props.showMenu ? { backgroundColor: '#53a5cc' } : { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}
-          <IconButton
-            color="inherit"
-            aria-label="Menu"
-            onClick={() => this.props.toggleMenu()}
-          >
+          <IconButton color="inherit" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
             <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>
           {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img
-            alt="a"
-            src={logo}
-            height="35px"
-            width="100px"
-            id="home"
-            onClick={this.itemClick}
-          />
+          <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
         </Grid>
         <Grid
           item
           xs={3}
           className="right-section"
           style={
-            this.props.showChat
-              ? { backgroundColor: '#53a5cc' }
-              : { backgroundColor: '#1991CC' }
+            this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }
           }
         >
           <Button
@@ -164,6 +141,4 @@ const dispatchToProps = dispatch => {
     toggleMenu: () => dispatch(actions.toggleMenu())
   };
 };
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(mHeaderNavStyle)(MHeaderNav)
-);
+export default connect(stateToProps, dispatchToProps)(injectSheet(mHeaderNavStyle)(MHeaderNav));

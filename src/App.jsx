@@ -31,6 +31,13 @@ class App extends Component {
             user.mnPrivateKey = snapshot.val();
             this.props.setCurrentUser(user);
           });
+
+        fire
+          .database()
+          .ref('2FA/' + user.uid)
+          .on('value', snap => {
+            this.props.setAuth(snap.val());
+          });
       } else {
         this.props.setCurrentUser(null);
       }
@@ -96,7 +103,8 @@ const dispatchToProps = dispatch => {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
 
-    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
+    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
+    setAuth: auth => dispatch(actions.setAuth(auth))
   };
 };
 

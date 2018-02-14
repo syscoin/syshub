@@ -4,12 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //import antd components
-import { Divider } from 'antd';
-import { Grid, FormGroup, Input, withStyles } from 'material-ui';
-
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+import { Grid, withStyles } from 'material-ui';
 
 import { proposalDescriptionStyle } from './styles';
 

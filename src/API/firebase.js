@@ -35,7 +35,7 @@ const checkVoted = (user, proposal) => {
       .then(snap => {
         if (snap.val() !== null) {
           //          resolve(true); // Original true if voted false if no
-          resolve(false); // Overrided
+          resolve(true); // Overrided
           return;
         }
         resolve(false);
@@ -54,6 +54,55 @@ const voted = (user, proposal, voteTxt, voteId) => {
     .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
 };
 
+const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
+  provider
+    .verifyPhoneNumber(phoneNumber, appVerifier)
+    .then(verificationId => {
+      swal({
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        title: 'Verify',
+        text: 'Please enter the verification code sent to your mobile device',
+        icon: 'info',
+        buttons: true,
+        dangerMode: false,
+        content: {
+          element: 'input',
+          attributes: {
+            placeholder: 'Confirmation code here',
+            type: 'text'
+          }
+        }
+      })
+        .then(verificationCode => {
+          return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+        })
+        .then(phoneCredential => {
+          return user.updatePhoneNumber(phoneCredential);
+        })
+        .then(() => {
+          fire
+            .database()
+            .ref('2FA/' + user.uid)
+            .set(true);
+          swal({
+            title: 'Sucess',
+            text: `Two Factor Authentication Enabled`,
+            icon: 'success'
+          });
+
+          return true;
+        })
+        .catch(err => {
+          throw err;
+        });
+    })
+    .catch(err => {
+      console.log('err) --> ', err);
+
+      alert(`${err}`);
+    });
+};
 
 const doRegister = () => {};
 
@@ -256,6 +305,7 @@ export {
   usernames,
   comments,
   commentReplies,
+  phoneAuth,
   fire,
   base,
   doRegister,

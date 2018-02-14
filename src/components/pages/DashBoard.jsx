@@ -7,8 +7,6 @@ import { Grid, withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
-import { DashBoardHeader } from '../functionals/';
-import axios from 'axios';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -28,8 +26,7 @@ class DashBoard extends Component {
   }
   //changing state with this function
   handleDashboard(value) {
-    const container =
-      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
       proposalID: value
@@ -78,8 +75,7 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes:
-      state.sysStats.value.general.registered_masternodes_verified * 0.1,
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
     app: state.app
   };
 };
@@ -93,6 +89,4 @@ DashBoard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));
