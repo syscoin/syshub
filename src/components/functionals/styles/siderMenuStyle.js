@@ -16,9 +16,8 @@ export default {
     height:'100vh'
   },
   button: {
-    marginLeft:25,
     height: '50px',
-    width: '92%',
+    width: '100%',
     border: 'none',
     textAlign: 'left',
     background: `linear-gradient(${white}, ${greyLight})`,
