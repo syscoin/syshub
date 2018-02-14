@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
+import swal from 'sweetalert';
+
 class Home extends Component {
   render() {
     return (

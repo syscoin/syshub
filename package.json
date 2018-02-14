@@ -11,6 +11,7 @@
     "fast-xml-parser": "^2.9.3",
     "firebase": "^4.8.1",
     "font-awesome": "^4.7.0",
+    "google-libphonenumber": "^3.0.12",
     "html-to-draftjs": "^1.1.2",
     "jss": "^9.5.0",
     "jss-preset-default": "^4.0.1",
