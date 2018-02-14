@@ -2,19 +2,18 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 
-//import antd components
-import { Divider } from 'antd';
-import { Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Grid, FormGroup, withStyles } from 'material-ui';
 
 import { proposalPaymentStyle } from './styles';
 
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
-    var sdate = new Date(this.props.data.start_epoch);
+    var sdate = new Date(this.props.data.start_epoch * 1000);
     var startDate = sdate.toDateString();
-    var edate = new Date(this.props.data.end_epoch);
+    var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
     this.state = {
       onTimePayment: this.props.data.payment_amount,
@@ -23,7 +22,7 @@ class ProposalPayment extends Component {
       startDate: startDate,
       endDate: endDate
     };
-    console.log("payment data", this.props.data)
+    console.log('payment data', this.props.data);
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -33,16 +32,30 @@ class ProposalPayment extends Component {
     return (
       <Grid md={12} className={style}>
         <Grid item className="no-margin">
-          <div className="heading">PAYMENTS</div>
+
+          
+          
+          <Typography variant="headline" gutterBottom>
+          PAYMENTS
+      </Typography>
+          
+  
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
         <Grid container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> On Time Payment </div>
+            <div className="heading"> 
+            
+          <Typography variant="subheading" gutterBottom>
+            One Time Payment
+          </Typography>
+            
+            </div>
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
                   ref={ref => {
                     this.state.compeletePayment = ref;
@@ -51,18 +64,24 @@ class ProposalPayment extends Component {
                   id="onTimePayment"
                   className="input-field"
                   placeholder="Amount"
-                  onChange={e => { }}
-                  value={this.state.onTimePayment + " US"}
+                  onChange={e => {}}
+                  value={this.state.onTimePayment + ' SYS'}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> Complete Payment </div>
+            <div className="heading"> 
+            <Typography variant="subheading" gutterBottom>
+            Complete Payment 
+          </Typography>
+            </div>
 
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
                   ref={ref => {
                     this.state.compeletePayment = ref;
@@ -71,27 +90,34 @@ class ProposalPayment extends Component {
                   id="compeletePayment"
                   className="input-field"
                   placeholder="no payments occurred yet"
-                  onChange={e => { }}
+                  onChange={e => {}}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>
 
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading"> Start & End Date </div>
+            <div className="heading"> 
+            <Typography variant="subheading" gutterBottom>
+            Start & End Date 
+          </Typography>
+            </div>
             <form className="form">
               <FormGroup className="FormGroup">
+              <Typography color='inherit'>
                 <input
-                  ref={ref => { }}
+                  ref={ref => {}}
                   name="Paymentdate"
                   id="Paymentdate"
                   className="input-field"
                   placeholder="Start Date / End Date"
-                  onChange={e => { }}
-                  value={this.state.startDate + " / " + this.state.endDate}
+                  onChange={e => {}}
+                  value={this.state.startDate + ' / ' + this.state.endDate}
                   disabled={true}
                 />
+                </Typography>
               </FormGroup>
             </form>
           </Grid>
@@ -102,7 +128,7 @@ class ProposalPayment extends Component {
 }
 
 ProposalPayment.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(proposalPaymentStyle)(ProposalPayment);

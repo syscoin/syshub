@@ -1,10 +1,6 @@
 import palette from './palette';
-import { colors } from 'material-ui/styles';
 
 const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
-const white = palette.white;
-const gray = palette.grey;
 const greyDark = palette.greyDark;
 
 export default {
@@ -85,15 +81,26 @@ export default {
   },
   mRoot: {
     extend: 'root',
+    width: '100%',
+    '& .approvalStatus': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20,
+        }
+      }
+    },
     '& .topApprovalView': {
       marginTop: 0,
+      width: '100%',
       '& .approvalKey': {
         marginLeft: 0,
+        width: '30%',
       }
     },
     '& .approvalView': {
       '& .approvalKey': {
         marginLeft: 0,
+        width: '30%',
       }
     }
   },

@@ -8,7 +8,7 @@ import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
-
+import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 
 // import withRoot from '../containers/WithRoot';
@@ -182,7 +182,7 @@ class Register extends Component {
           const usernameRef = fire.database().ref('usernames');
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
-          this.registerForm.reset();
+          this.registerForm.resetFields();
           this.props.setPage('home');
           swal({
             title: 'Success',
@@ -224,7 +224,10 @@ class Register extends Component {
 
     return (
       <Grid container className={style} md={12} xs={12}>
-        <h1 className="title">Join SysHub</h1>
+        
+        <Typography variant="display1" gutterBottom>
+        JOIN SYSHUB
+      </Typography>
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {
@@ -269,15 +272,19 @@ class Register extends Component {
                   />
                 )}
 
-                {this.state.usernames?
-                <span className="validation-message">
-                  <div style={this.state.disabled ? { color: 'red' } : null}>
-                    {!this.state.disabled ? <img alt="a" src={checkIcon} /> : <img alt="a" src={closeIcon} />}
-                    {this.state.usernames}
-                    {this.state.disabled ? ` Not Available` : ` Available`}
-                  </div>
-                </span>:null}
-                
+                {this.state.usernames ? (
+                  <span className="validation-message">
+                    <div style={this.state.disabled ? { color: 'red' } : null}>
+                      {!this.state.disabled ? (
+                        <img alt="a" src={checkIcon} />
+                      ) : (
+                        <img alt="a" src={closeIcon} />
+                      )}
+                      {this.state.usernames}
+                      {this.state.disabled ? ` Not Available` : ` Available`}
+                    </div>
+                  </span>
+                ) : null}
               </FormItem>
 
               {/* For User Email */}

@@ -3,8 +3,6 @@ import palette from './palette';
 const primary = palette.primary;
 const white = palette.white;
 const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 
 export default {
@@ -34,9 +32,6 @@ export default {
         '& .ant-input': {
           border: 'none'
         },
-      },
-      '& .ant-collapse-borderless': {
-        marginTop: 20
       },
       '& .ant-collapse-header': {
         fontSize: 20,
@@ -86,7 +81,6 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 100,
     '& .title': {
       padding: '10px 20px 0px 20px',
       margin: 0,

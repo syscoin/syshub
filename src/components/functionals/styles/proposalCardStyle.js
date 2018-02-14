@@ -186,9 +186,7 @@ export default {
       borderRadius: '10px',
       border: '2px solid ghostwhite',
       '& .proposalView': {
-        marginRight: 5,
         textAlign: '-webkit-center',
-        minWidth: 100,
         '& .progress-dial': {
           // width:"100px",
           '& .ant-progress-inner': {
@@ -207,7 +205,7 @@ export default {
         borderLeft: '1px solid ' + gray,
         paddingLeft: '10px',
         height: '99%',
-        minWidth: 'calc(100% - 195px)',
+        // minWidth: 'calc(100% - 195px)',
         '& .voteButton': {
           border: 'none',
           textAlign: 'right',
@@ -250,25 +248,23 @@ export default {
           color: primaryDark,
         },
         '& .vote-up, .vote-down': {
-          maxWidth: 60,
-          width: '100%',
           display: 'inline-block',
           margin: 0,
           border: 'thin solid' + greyLight,
           padding: 5,
           height: 40,
+          width: '50%',
           '& img': {
             height: '100%',
           },
         },
         '& .login-vote-up, .login-vote-down': {
-          maxWidth: 60,
-          width: '50%',
           display: 'inline-block',
           margin: 0,
           border: 'thin solid' + greyLight,
           padding: 5,
           height: 40,
+          width: '50%',
           '& img': {
             height: '100%',
           },

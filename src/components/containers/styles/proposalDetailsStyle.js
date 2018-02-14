@@ -1,8 +1,6 @@
 import palette from './palette';
 
-const greyDark = palette.greyDark;
-const grey = grey;
-const white = palette.white;
+const grey = palette.grey;
 
 export default {
   root: {
@@ -11,6 +9,7 @@ export default {
     overflowY: 'auto',
     height: '80vh',
     boxShadow: '0px 3px 3px 3px ' + grey,
+    overflowX: 'hidden',
     '& .div': {
       margin: 0
     }

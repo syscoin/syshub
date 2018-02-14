@@ -8,7 +8,8 @@ export default {
       //border: '1px solid red',
       padding: '40px 0px 0px 10%',
       fontWeight: '100',
-      fontSize: '0.9em'
+      fontSize: '0.9em',
+      textAlign: 'right'
     },
     '& .txtBig': {
       fontSize: '1.2em'

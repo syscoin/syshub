@@ -11,10 +11,11 @@ export default {
     height: '60px',
     width: '100%',
     backgroundColor: greyDark,
+    color: white
   },
   footer: {
     textAlign: 'center',
     fontWeight: 'semibold',
-    color: white,
-  },
+    color: white
+  }
 };

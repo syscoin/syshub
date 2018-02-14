@@ -4,7 +4,6 @@ import loginStyle from './loginStyle';
 import dashboardStyle from './dashboardStyle';
 import userAccountStyle from './userAccountStyle';
 import newsStyle from './newsStyle';
-import newProposalStyle from './newProposalStyle'
 import masterNodeStyle from './masterNodeStyle';
 import faqStyle from './faqStyle';
 

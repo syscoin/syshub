@@ -319,6 +319,13 @@ export default {
   mRoot: {
     extend: 'root',
     width: '100%',
+    '& .commentHeadingDiv': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20,
+        }
+      }
+    },
     '& .commentSectionslView': {
       width: '98%',
       '& .proposalDetails': {
@@ -356,6 +363,9 @@ export default {
       },
       '& .newYearView': {
         marginRight: '7%',
+        '&>p': {
+          display: 'inline-block'
+        }
       },
       '& .topcommentSectionslView': {
         width: '100%',

@@ -1,12 +1,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-
-// Frameworks Import
-import { Menu, Icon, Button } from 'antd';
-
 import SiderLogo from './SiderLogo';
 
 import { siderMenuStyle } from './styles';
@@ -41,6 +36,11 @@ class SiderMenu extends Component {
               break;
             default:
               showMe = true;
+          }
+          if (item.key === active) {
+            document.title = `Syshub | ${item.pageTitle}`;
+          } else if (active === 'home') {
+            document.title = 'Syshub';
           }
           return showMe ? (
             <button

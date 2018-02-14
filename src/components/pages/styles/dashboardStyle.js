@@ -2,10 +2,7 @@ import palette from './palette';
 
 const primary = palette.primary;
 const white = palette.white;
-const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
-const secondary = palette.secondary;
-
+const grey = palette.greyDark;
 export default {
   root: {
     '& .dashBoardheading': {
@@ -17,7 +14,13 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    // padding:0,
+    '& .proposal-heading': {
+      padding: 15,
+      fontSize: 25,
+      backgroundColor: white,
+      color: grey,
+      fontWeight: 300,
+    },
     '& .dashBoardheading': {
       fontWeight: 'lighter',
       margin: 'auto',
@@ -26,7 +29,7 @@ export default {
     },
     '& .iconWraper': {
       backgroundColor: white,
-      padding: '0px 10px',
+      padding: '10px',
     }
   }
 };

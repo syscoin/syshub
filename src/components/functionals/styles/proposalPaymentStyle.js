@@ -1,12 +1,8 @@
 import palette from './palette';
-import { colors } from 'material-ui/styles';
 
-const primaryDark = palette.primaryDark;
 const primaryLight = palette.primaryLight;
-const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
 
 export default {
   root: {
@@ -63,6 +59,12 @@ export default {
   mRoot: {
     extend: 'root',
     width: '100%',
+    '& .no-margin': {
+      '&>p': {
+        fontSize: 20,
+      }
+
+    },
     '& .paymentsView': {
       marginTop: 0,
       width: '100%',
@@ -80,6 +82,7 @@ export default {
           '& .FormGroup': {
             '& .input-field': {
               height: 35,
+              width: '100%',
             }
           }
         }

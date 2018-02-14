@@ -65,5 +65,12 @@ export default {
   mRoot: {
     extend: 'root',
     width: '100%',
-  },
-};
+    '& .approvalStatus': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20,
+        }
+      }
+    }
+  }
+}
