@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -65,7 +65,7 @@ class Login extends Component {
         });
       })
       .catch(err => {
-        alert(err);
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 
@@ -119,7 +119,6 @@ class Login extends Component {
                         .then(value => {
                           if (!value) {
                             throw new Error('Must provide a code to login.');
-                            return;
                           }
 
                           return confirmationResult.confirm(value);

@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 import { userTwoFactorStyle } from './styles';
-import { Button, Grid, FormGroup, Input } from 'material-ui';
+import { Button, Grid, FormGroup } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
 import swal from 'sweetalert';
 
 // import components
-import { Stats, WelcomeBox } from '../functionals';
-import QRCode from 'qrcode.react';
 
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
@@ -39,6 +37,12 @@ class UserTwoFactor extends Component {
   componentDidMount() {
     fire.auth().useDeviceLanguage();
     const user = fire.auth().currentUser;
+    if (user.phoneNumber == null) {
+      fire
+        .database()
+        .ref('2FA/' + user.uid)
+        .set(false);
+    }
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
@@ -77,12 +81,21 @@ class UserTwoFactor extends Component {
 
     user
       .unlink(fire.auth.PhoneAuthProvider.PROVIDER_ID)
-      .then(data => {
-        console.log(data);
-        alert('success');
+      .then(user => {
+        this.props.setCurrentUser(user);
+        swal({
+          title: 'Success',
+          text: `Removed phone number from this account.`,
+          icon: 'success'
+        });
+
+        fire
+          .database()
+          .ref('2FA/' + user.uid)
+          .set(false);
       })
       .catch(err => {
-        alert(`${err}`);
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 
@@ -133,7 +146,20 @@ class UserTwoFactor extends Component {
     const appVerifier = window.recaptchaVerifier;
     const provider = new fire.auth.PhoneAuthProvider();
 
-    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
+    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), appVerifier)
+      .then(success => {
+        if (success) {
+          swal({
+            title: 'Sucess',
+            text: `Two Factor Authentication Enabled`,
+            icon: 'success'
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+      });
   }
 
   enableAuth() {
@@ -180,6 +206,9 @@ class UserTwoFactor extends Component {
     const { classes, deviceType, app } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
+    const { currentUser } = this.props.app;
+
     return (
       <div className={style}>
         <Grid container>
@@ -264,10 +293,7 @@ class UserTwoFactor extends Component {
                   </span>
                 )}
               </span>
-              <div
-                className="reCapthaWraper"
-                ref={ref => (this.recaptcha = ref)}
-              />
+              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
             </div>
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (

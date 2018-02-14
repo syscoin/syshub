@@ -1,7 +1,6 @@
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import swal from 'sweetalert';
 
-const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const phoneValidation = (phoneNumber, isoCode, user) => {

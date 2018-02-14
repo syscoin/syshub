@@ -16,9 +16,8 @@ import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
-import { fire, proposals } from '../../API/firebase';
+import { fire } from '../../API/firebase';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 //import style
 
@@ -102,7 +101,7 @@ class NewProposal extends Component {
             }
           })
           .catch(err => {
-            alert(`${err}`);
+            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
           });
       }
     } else {
@@ -250,7 +249,7 @@ class NewProposal extends Component {
             }
           })
           .catch(err => {
-            alert(`${err}`);
+            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
           });
       }
     });
@@ -350,7 +349,7 @@ class NewProposal extends Component {
         }
       })
       .catch(err => {
-        alert(`${err}`);
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   };
 
