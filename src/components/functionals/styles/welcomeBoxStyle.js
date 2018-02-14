@@ -1,8 +1,6 @@
 import palette from './palette';
 
-const white = palette.white;
 const primary = palette.primary;
-const grey = palette.textLignt;
 
 export default {
   root: {
@@ -22,7 +20,6 @@ export default {
         color: '#3498db'
       },
       '& .logoDiv': {
-        textAlign: 'center',
         textAlign: 'center',
         '& img': {
           width: '100%'

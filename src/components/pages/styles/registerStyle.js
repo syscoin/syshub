@@ -124,10 +124,7 @@ export default {
         marginBottom: 10,
         textAlign: 'left'
       },
-      '& .validation-message': {
-        width: '100%',
-        marginTop: '0px !important'
-      },
+
       '& .recaptcha': {
         marginLeft: 0
       },

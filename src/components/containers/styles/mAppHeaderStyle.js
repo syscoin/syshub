@@ -10,12 +10,12 @@ export default {
     height: 130,
     width: '100vw',
     '& .app-bar': {
-      boxShadow: 'none',
+      boxShadow: 'none'
     },
     '& .header': {
       backgroundColor: primary,
       paddingLeft: 8,
-      paddingRight: 8,
+      paddingRight: 8
     },
     '& .container': {
       display: 'flex',
@@ -83,22 +83,20 @@ export default {
       '& .text-span': {
         marginBottom: 5,
         display: 'block',
-        marginBottom: 5,
         marginTop: 0,
         textAlign: 'right',
         '& .TxtRegular': {
-          padding: '0 15px',
           color: white,
           padding: '0',
-          fontSize: '12px',
+          fontSize: '12px'
         },
         '& .TxtBold': {
           color: white,
           padding: '0 0 0 4px',
           fontSize: '11px',
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         }
-      },
+      }
     },
     '& .mb-0': {
       marginBottom: 0
