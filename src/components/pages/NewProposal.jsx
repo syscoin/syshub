@@ -11,7 +11,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col } from 'antd';
-import { Form, Input, Button, InputNumber } from 'antd';
+import { Form, Input, Button, InputNumber, Modal } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import { DatePicker } from 'antd';
@@ -266,7 +266,7 @@ class NewProposal extends Component {
       amount,
       proposal__detail,
       proposallink,
-      proposalDate,
+      proposalDate
     } = this.state;
 
     if (!currentUser) {
@@ -520,8 +520,7 @@ class NewProposal extends Component {
                     className="confirm-button"
                     onClick={this.confirmProposalDetail.bind(this)}
                     style={
-                      this.state.editorState &&
-                      this.state.editorState.getCurrentContent().hasText()
+                      this.state.editorState && this.state.editorState.getCurrentContent().hasText()
                         ? { backgroundColor: '#1991CC' }
                         : { backgroundColor: '#BDC3C7' }
                     }
@@ -536,15 +535,10 @@ class NewProposal extends Component {
                     span={deviceType === 'mobile' ? 24 : 22}
                     offset={deviceType === 'mobile' ? 0 : 1}
                   >
-                    <h1 className="proposalDetail-title">
-                      {this.state.proposalTitle}
-                    </h1>
+                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
                   </Col>
                   <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div
-                      className="proposalContent-div"
-                      id="preview-html-container"
-                    />
+                    <div className="proposalContent-div" id="preview-html-container" />
                   </Col>
                 </Row>
               )}
@@ -667,12 +661,9 @@ class NewProposal extends Component {
                       {this.state.activeStep === 0 &&
                       label === 'Proposal Title' &&
                       deviceType !== 'mobile' ? (
-                        <h3 className="proposal-title">
-                          Proposal Description Url
-                        </h3>
+                        <h3 className="proposal-title">Proposal Description Url</h3>
                       ) : null}
-                      {this.state.activeStep === 1 &&
-                      label === 'Proposal Details' ? (
+                      {this.state.activeStep === 1 && label === 'Proposal Details' ? (
                         this.state.showEditor ? (
                           <Button
                             className="preview-edit-button"
@@ -697,9 +688,7 @@ class NewProposal extends Component {
                       <div className={classes.actionsContainer}>
                         <div
                           className={
-                            activeStep === steps.length - 1
-                              ? 'confirm-btn-div'
-                              : 'next-btn-div'
+                            activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
                           }
                         >
                           {activeStep === 0 ? null : (
