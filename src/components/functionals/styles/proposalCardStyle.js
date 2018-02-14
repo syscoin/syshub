@@ -73,7 +73,6 @@ export default {
           background: primaryDark,
           borderStyle: 'solid',
           float: 'right',
-          padding: '5px',
           borderRadius: '5px',
           padding: '5px 10px',
           backgroundColor: white,
