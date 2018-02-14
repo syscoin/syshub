@@ -11,11 +11,13 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyAlign: 'flex-start',
-    width: '100%'
+    width: '100%',
+    marginTop :97,
   },
   button: {
+    marginLeft:25,
     height: '50px',
-    width: '100%',
+    width: '92%',
     border: 'none',
     textAlign: 'left',
     background: `linear-gradient(${white}, ${greyLight})`,
@@ -48,11 +50,7 @@ export default {
   },
   mRoot: { 
     extend: 'root',
-    marginTop: 0
-  },
+    marginTop: 0,
 
-
-  root:{
-    marginTop : 97
   }
 };
