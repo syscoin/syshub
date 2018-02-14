@@ -13,6 +13,7 @@ export default {
     justifyAlign: 'flex-start',
     width: '100%',
     marginTop :97,
+    height:'100vh'
   },
   button: {
     marginLeft:25,

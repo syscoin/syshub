@@ -50,6 +50,12 @@ export default {
           background: primary
         }
       }
+    },
+    '& .tile__wrapper': {
+      height: '100% !important',
+      '&.logo':{
+        marginTop:55
+      }
     }
   },
   mRoot: {
@@ -63,6 +69,11 @@ export default {
     },
     '& .joinBtn': {
       textAlign: 'center !important'
+    },
+    '& .tile__wrapper': {
+      '&.logo':{
+        marginTop:5
+      }
     }
   }
 };
