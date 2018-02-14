@@ -10,7 +10,6 @@ import { ProposalPayment } from '../functionals/';
 import { ProposalApprovalStat } from '../functionals/';
 import { ProposalDescription } from '../functionals/';
 import { ProposalComments } from '../functionals/';
-import Typography from 'material-ui/Typography';  
 
 // import components
 import { proposalDetailsStyle } from './styles';

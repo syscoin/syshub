@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
-import Recaptcha from 'react-recaptcha';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 import swal from 'sweetalert';
-import { doLogin, fire } from '../../API/firebase';
+import { fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
@@ -26,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -183,9 +182,7 @@ class Login extends Component {
   }
 
   render() {
-    const captcha = require('../../assets/img/captcha.jpg'),
-      checkIcon = require('../../assets/img/checkIcon.png'),
-      { classes, deviceType } = this.props;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Equalizer, AccountCircle, Usb, TrendingUp } from 'material-ui-icons';
+import { Equalizer } from 'material-ui-icons';
 import injectSheet from 'react-jss';
 
-import GridList, { GridTile } from 'material-ui/GridList';
+import GridList from 'material-ui/GridList';
 import Card, {
   CardHeader,
-  CardMedia,
   CardContent,
-  CardActions,
 } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
@@ -18,7 +15,7 @@ import { bindActionCreators } from 'redux';
 import { statsStyle } from './styles';
 
 class Stats extends Component {
-  getValue (field) {
+  getValue(field) {
     const value = {
       changeRate: (1000 / this.props.value.exchange_rates.btc_usd).toFixed(5),
 
@@ -30,7 +27,7 @@ class Stats extends Component {
     return value;
   }
 
-  percentages (field) {
+  percentages(field) {
     const changeRateNew = parseFloat(this.props.value.exchange_rates.btc_usd);
     const changeRateOld = parseFloat(
       this.props.valueOld.exchange_rates.btc_usd
@@ -56,7 +53,7 @@ class Stats extends Component {
 
     return { arrow, value: Math.abs(value).toFixed(2) };
   }
-  render () {
+  render() {
     const { classes, deviceType } = this.props;
 
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -107,7 +104,7 @@ class Stats extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   //pass the providers
   return {
     sysStats: state.sysStats.cards,
@@ -117,7 +114,7 @@ function mapStateToProps (state) {
 }
 
 /* Map Actions to Props */
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({}, dispatch),
   };
