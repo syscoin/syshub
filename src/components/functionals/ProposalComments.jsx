@@ -72,14 +72,12 @@ class ProposalComments extends Component {
       .on('value', (item) => {
         let commentsObjs = item.val(),
           commentsArray = [];
-        console.log("commentsObjs", commentsObjs)
         for (var key in commentsObjs) {
           commentsObjs[key]._id = key;
           commentsObjs[key].showAddReply = false;
           commentsArray.unshift(commentsObjs[key]);
         }
         this.commentsCounts = commentsArray.length;
-        console.log('commentsCounts', this.commentsCounts)
         this.setState({
           allComments: commentsArray
         }, () => {
@@ -158,7 +156,6 @@ class ProposalComments extends Component {
         message: message,
       }
       commentReplies.child(commentID).push(_replyObj, () => {
-        console.log('Successfully Reply');
         this.showAddReplyBtn(commentID, false);
       })
       this.setState({
@@ -176,7 +173,6 @@ class ProposalComments extends Component {
 
 
   addComment() {
-    console.log("Comment", this.state.userComment)
     if (this.state.userComment && this.props.user) {
       let date = new Date();
       let _comment = {
@@ -193,9 +189,7 @@ class ProposalComments extends Component {
         isEdited: false
 
       }
-      console.log("New Comment", _comment)
       comments.child(this.state.proposalID).push(_comment, () => {
-        console.log('Success')
         this.setState({ showAddComment: false })
       })
       this.setState({
@@ -278,7 +272,7 @@ class ProposalComments extends Component {
     })
     comments.child(this.props.data.proposalID).child(editCommentID).set(editedCommentObj);
     this.setState({ editCommentState: !this.state.editCommentState })
-    console.log("editedCommentObj", editedCommentObj)
+    ("editedCommentObj", editedCommentObj)
   }
 
   deleteComment(id) {
@@ -287,19 +281,16 @@ class ProposalComments extends Component {
 
 
   changePage(page, pageSize) {
-    console.log("page", page, "pageSize", pageSize)
   }
 
   showAddReplyBtn(_commentID, showAddReply) {
     let allComments = this.state.allComments.map((comment) => {
       if (comment._id === _commentID) {
         comment.showAddReply = showAddReply;
-        console.log(comment);
         return comment;
       }
       return comment
     })
-    console.log(allComments);
     this.setState({ allComments })
   }
 
@@ -315,7 +306,7 @@ class ProposalComments extends Component {
 
             <Typography variant="headline" gutterBottom>
               COMMENTS SECTION
-      </Typography>
+            </Typography>
 
           </div>
         </Grid>
@@ -326,7 +317,7 @@ class ProposalComments extends Component {
           <Grid container md={8} className="commentSectionslView">
             <Grid item md={12} className="commentHeading">
               Add Comment
-          </Grid>
+            </Grid>
             <Grid item md={12} className="proposalDetails">
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 

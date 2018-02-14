@@ -22,7 +22,6 @@ class ProposalPayment extends Component {
       startDate: startDate,
       endDate: endDate
     };
-    console.log('payment data', this.props.data);
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -32,14 +31,9 @@ class ProposalPayment extends Component {
     return (
       <Grid item md={12} className={style}>
         <Grid item className="no-margin">
-
-
-
           <Typography variant="headline" gutterBottom>
             PAYMENTS
-      </Typography>
-
-
+          </Typography>
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
@@ -47,21 +41,19 @@ class ProposalPayment extends Component {
         <Grid item container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
-
               <Typography variant="subheading" gutterBottom>
                 One Time Payment
-          </Typography>
-
+              </Typography>
             </div>
             <form className="form">
               <FormGroup className="FormGroup">
-                <Typography color='inherit'>
+                <Typography color="inherit">
                   <input
                     name="onTimePayment"
                     id="onTimePayment"
                     className="input-field"
                     placeholder="Amount"
-                    onChange={e => { }}
+                    onChange={e => {}}
                     value={this.state.onTimePayment + ' SYS'}
                     disabled={true}
                   />
@@ -73,18 +65,18 @@ class ProposalPayment extends Component {
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
                 Complete Payment
-          </Typography>
+              </Typography>
             </div>
 
             <form className="form">
               <FormGroup className="FormGroup">
-                <Typography color='inherit'>
+                <Typography color="inherit">
                   <input
                     name="compeletePayment"
                     id="compeletePayment"
                     className="input-field"
                     placeholder="no payments occurred yet"
-                    onChange={e => { }}
+                    onChange={e => {}}
                     disabled={true}
                   />
                 </Typography>
@@ -96,18 +88,18 @@ class ProposalPayment extends Component {
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
                 Start & End Date
-          </Typography>
+              </Typography>
             </div>
             <form className="form">
               <FormGroup className="FormGroup">
-                <Typography color='inherit'>
+                <Typography color="inherit">
                   <input
-                    ref={ref => { }}
+                    ref={ref => {}}
                     name="Paymentdate"
                     id="Paymentdate"
                     className="input-field"
                     placeholder="Start Date / End Date"
-                    onChange={e => { }}
+                    onChange={e => {}}
                     value={this.state.startDate + ' / ' + this.state.endDate}
                     disabled={true}
                   />

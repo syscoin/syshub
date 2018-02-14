@@ -449,15 +449,10 @@ class NewProposal extends Component {
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    // console.log(this.state.proposalTitle, 'proposalTitle');
-    // console.log(this.state.address, 'address');
-    // console.log(this.state.amount, 'amount');
-    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
     if (this.state.activeStep === 2) {
-      // console.log('active step');
       this.setState({ showEditor: true });
     }
     this.setState(
@@ -481,7 +476,6 @@ class NewProposal extends Component {
 
   //date change function
   onDateChange(date, dateString) {
-    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
     });
@@ -534,7 +528,6 @@ class NewProposal extends Component {
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        // console.log('----------------------');
       }
     );
   }
@@ -718,14 +711,9 @@ class NewProposal extends Component {
     }
   }
   onEditorStateChange(editorState) {
-    console.log('editorState', editorState);
     this.setState({
       editorState
     });
-    console.log(
-      this.state.editorState.getCurrentContent().hasText(),
-      'editor state'
-    );
   }
 
   disabledNextBtn(step) {
@@ -770,7 +758,6 @@ class NewProposal extends Component {
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>

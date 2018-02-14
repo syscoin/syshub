@@ -20,7 +20,6 @@ class MHeaderNav extends Component {
   }
 
   itemClick(e) {
-    console.log(e.target.id);
     this.props.setPage(e.target.id);
   }
 
@@ -37,7 +36,9 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu ? { backgroundColor: '#53a5cc' } : { backgroundColor: 'inherit' }
+            this.props.showMenu
+              ? { backgroundColor: '#53a5cc' }
+              : { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}

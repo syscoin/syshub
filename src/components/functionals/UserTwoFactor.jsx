@@ -26,7 +26,7 @@ class UserTwoFactor extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
 
@@ -84,7 +84,8 @@ class UserTwoFactor extends Component {
               closeOnClickOutside: false,
               closeOnEsc: false,
               title: '2 - Verify',
-              text: 'Please enter the verification code sent to your mobile device',
+              text:
+                'Please enter the verification code sent to your mobile device',
               icon: 'info',
               buttons: true,
               dangerMode: false,
@@ -97,7 +98,10 @@ class UserTwoFactor extends Component {
               }
             })
               .then(verificationCode => {
-                return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+                return fire.auth.PhoneAuthProvider.credential(
+                  verificationId,
+                  verificationCode
+                );
               })
               .then(phoneCredential => {
                 return user.updatePhoneNumber(phoneCredential);
@@ -118,8 +122,6 @@ class UserTwoFactor extends Component {
               });
           })
           .catch(err => {
-            console.log('err) --> ', err);
-
             alert(`${err}`);
           });
       }
@@ -166,14 +168,16 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                    <span className="status-disable">
-                      Disabled
+                  <span className="status-disable">
+                    Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                    </span>
-                  )}
+                  </span>
+                )}
               </span>
-              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} >
-              </div>
+              <div
+                className="reCapthaWraper"
+                ref={ref => (this.recaptcha = ref)}
+              />
             </div>
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
@@ -186,10 +190,15 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                  <Button raised color="primary" className="twoFactor-button" onClick={this.addPhone}>
-                    Enable 2F Auth
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.addPhone}
+                >
+                  Enable 2F Auth
                 </Button>
-                )}
+              )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}
