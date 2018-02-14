@@ -32,7 +32,7 @@ class HeaderNav extends Component {
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const homeIcon = require('../../assets/img/png_menu_home.png');
     return (
-      <Grid container md={5} className={classes.root}>
+      <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">

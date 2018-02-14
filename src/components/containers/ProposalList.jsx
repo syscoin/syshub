@@ -56,13 +56,13 @@ export class ProposalList extends Component {
     const { selectProposal, deviceType } = this.props;
 
     return (
-      <Grid md={12} xs={12} style={proposalStyle.root}>
+      <Grid item md={12} xs={12} style={proposalStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
           data={{ showHeader: 'proposalList' }}
         />
 
-        {this.props.proposalList.map(proposal => {
+        {this.props.proposalList.map((proposal, index) => {
           return (
             <ProposalCard
               deviceType={deviceType}
@@ -70,6 +70,7 @@ export class ProposalList extends Component {
               logged={this.props.user ? true : false}
               proposal={proposal}
               selectProposal={selectProposal}
+              key={index}
             />
           );
         })}

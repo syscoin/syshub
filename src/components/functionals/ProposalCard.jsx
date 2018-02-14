@@ -178,7 +178,7 @@ class ProposalCard extends Component {
 
     return (
       <Grid container className={style}>
-        <Grid container md={12} xs={12} className="proposalRow" key={proposal.Hash}>
+        <Grid item container md={12} xs={12} className="proposalRow" key={proposal.Hash}>
           <Grid item md={2} xs={3} className="proposalView">
             <Progress
               type="circle"

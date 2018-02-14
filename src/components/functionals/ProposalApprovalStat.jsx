@@ -43,7 +43,7 @@ class ProposalApprovalStat extends Component {
     let { days_remaining, endDate } = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <Grid md={12} className={style}>
+      <Grid item md={12} className={style}>
         <Grid item className="approvalStatus">
           <div className="heading">
             <Typography variant="headline" gutterBottom>
@@ -54,7 +54,7 @@ class ProposalApprovalStat extends Component {
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
-        <Grid container md={12} className="topApprovalView">
+        <Grid item container md={12} className="topApprovalView">
           <Grid item md={3} className="approvalKey">
             <Typography variant="subheading" gutterBottom color='inherit'>
               Status:
@@ -80,7 +80,7 @@ class ProposalApprovalStat extends Component {
           </Grid>
         </Grid>
 
-        <Grid container md={12} className="approvalView">
+        <Grid item container md={12} className="approvalView">
           <Grid item md={3} className="approvalKey">
             <Typography variant="subheading" gutterBottom color='inherit'> Voting Deadline:</Typography>
           </Grid>
@@ -98,7 +98,7 @@ class ProposalApprovalStat extends Component {
           </Grid>
         </Grid>
 
-        <Grid container md={12} className="approvalView">
+        <Grid item container md={12} className="approvalView">
           <Grid item md={3} className="approvalKey">
             <Typography variant="subheading" gutterBottom color='inherit'>
               Vote Breakdown:

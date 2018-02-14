@@ -114,8 +114,8 @@ class ProposalComments extends Component {
     return (
       replies.map((reply, key) => {
         return (
-          <Grid container md={11} className="allReplies" key={key}>
-            <Grid container md={12} className="replyHeading">
+          <Grid item container md={11} className="allReplies" key={key}>
+            <Grid item container md={12} className="replyHeading">
               <Grid item md={8} className="replyUserVeiw">
                 <span className="replyUserName">
                   {' '} {reply.createdBy.name} {' '}
@@ -309,7 +309,7 @@ class ProposalComments extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={style}>
+      <Grid item md={12} className={style}>
         <Grid item className="commentHeadingDiv">
           <div className="heading">
 
@@ -354,8 +354,8 @@ class ProposalComments extends Component {
 
         {this.state.allComments.map((comment, key) => {
           return (
-            <Grid container md={10} className="topCommentWithReplyView" key={comment._id}>
-              <Grid container md={12} className="commentHeading">
+            <Grid item container md={10} className="topCommentWithReplyView" key={comment._id}>
+              <Grid item container md={12} className="commentHeading">
                 <Grid item md={8} className="userView">
                   <span className="userName">
                     {' '}
@@ -384,7 +384,7 @@ class ProposalComments extends Component {
                 <hr className="hr" />
               </Grid>
               {this.state.editCommentState && this.state.selectedCommentID === comment._id ?
-                <Grid container md={8} className="commentSectionslView">
+                <Grid item container md={8} className="commentSectionslView">
                   <Grid item md={12} className="commentHeading">
                     Edited Comment
                   </Grid>

@@ -15,7 +15,7 @@ class ProposalDescription extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={style}>
+      <Grid item md={12} className={style}>
         <Grid item className="approvalStatus">
           <div className="heading">
 
@@ -29,7 +29,7 @@ class ProposalDescription extends Component {
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
-        <Grid container md={12} className="proposalView">
+        <Grid item container md={12} className="proposalView">
           <Grid item md={11} className="proposalDetails">
             <Typography gutterBottom><div dangerouslySetInnerHTML={{ __html: description }} /></Typography>
           </Grid>

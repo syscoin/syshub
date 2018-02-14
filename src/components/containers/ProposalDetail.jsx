@@ -1,7 +1,6 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Grid } from 'material-ui';
@@ -71,10 +70,6 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {};
-};
-
-ProposalDetail.propTypes = {
-  classes: PropTypes.object.isRequired
 };
 
 export default connect(stateToProps, dispatchToProps)(ProposalDetail);

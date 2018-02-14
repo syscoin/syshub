@@ -30,7 +30,7 @@ class ProposalPayment extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid md={12} className={style}>
+      <Grid item md={12} className={style}>
         <Grid item className="no-margin">
 
 
@@ -44,7 +44,7 @@ class ProposalPayment extends Component {
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
-        <Grid container md={12} className="paymentsView">
+        <Grid item container md={12} className="paymentsView">
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
 
@@ -57,9 +57,6 @@ class ProposalPayment extends Component {
               <FormGroup className="FormGroup">
                 <Typography color='inherit'>
                   <input
-                    ref={ref => {
-                      this.setState({ compeletePayment: ref })
-                    }}
                     name="onTimePayment"
                     id="onTimePayment"
                     className="input-field"
@@ -83,9 +80,6 @@ class ProposalPayment extends Component {
               <FormGroup className="FormGroup">
                 <Typography color='inherit'>
                   <input
-                    ref={ref => {
-                      this.setState({ compeletePayment: ref })
-                    }}
                     name="compeletePayment"
                     id="compeletePayment"
                     className="input-field"
