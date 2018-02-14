@@ -17,10 +17,6 @@ class UserChangePassword extends Component {
     this.state = {
       confirmDirty: '',
     };
-
-    // this.checkPassword = this.confirmDirty.bind(this);
-    // this.checkConfirm = this.checkConfirm.bind(this);
-    ("FromItem", FormItem)
   }
   componentDidMount() {
     // To disabled submit button at the beginning.

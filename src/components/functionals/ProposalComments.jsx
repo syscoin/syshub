@@ -272,7 +272,6 @@ class ProposalComments extends Component {
     })
     comments.child(this.props.data.proposalID).child(editCommentID).set(editedCommentObj);
     this.setState({ editCommentState: !this.state.editCommentState })
-    ("editedCommentObj", editedCommentObj)
   }
 
   deleteComment(id) {
