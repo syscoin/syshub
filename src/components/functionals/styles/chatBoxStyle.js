@@ -2,7 +2,7 @@ import palette from './palette';
 
 const white = palette.white;
 const primary = palette.primary;
-const primaryLight = palette.primaryLight
+const primaryLight = palette.primaryLight;
 const grey = palette.textLignt;
 const greyDark = palette.greyDark;
 

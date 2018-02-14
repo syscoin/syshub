@@ -1,14 +1,11 @@
 import palette from './palette';
 
-
 const white = palette.white;
-
-
 
 export default {
   root: {
     '& .title': {
-      fontWeight: 'lighter',
+      fontWeight: 'lighter'
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -16,9 +13,8 @@ export default {
       height: '80vh',
       '& .gridList': {
         width: 500,
-        height: 450,
+        height: 450
       }
-
     }
   },
   mRoot: {
@@ -27,17 +23,11 @@ export default {
       margin: 0,
       padding: 15,
       background: white,
-      paddingLeft: 15,
+      paddingLeft: 15
     },
     '& .paper-container': {
       overflowX: 'hidden',
-      height: 'auto',
+      height: 'auto'
     }
   }
-
-
-
-
-
-
-}
+};

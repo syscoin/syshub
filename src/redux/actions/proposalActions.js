@@ -1,6 +1,6 @@
 import constants from '../constants';
 
-import { HTTPAsync, Hex } from '../helpers';
+import { HTTPAsync } from '../helpers';
 
 /**---------------------------------------------------------------------------- */
 /** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
@@ -12,15 +12,6 @@ const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 
 export default {
   getProposals: () => {
-    //---- Sample code --------------------------
-    const txt = 'Hello HEX World';
-    const hex = Hex.strToHex(txt);
-    const str = Hex.hexToStr(hex);
-    console.log('ACZ Original String: ', txt);
-    console.log('ACZ To Hex: ', hex);
-    console.log('ACZ To Str: ', str);
-    // -------------------------------------------
-
     return dispatch => {
       return dispatch(
         HTTPAsync.get(`${baseApiURL}/list`, null, constants.SYS_PROPOSALS_GET)

@@ -1,7 +1,6 @@
 import palette from './palette';
 
 const primary = palette.primary;
-const primaryLight = palette.primaryLight;
 const white = palette.white;
 const grey = palette.grey;
 const greyLight = palette.greyLight;
@@ -11,7 +10,8 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyAlign: 'flex-start',
-    width: '100%'
+    width: '100%',
+    marginTop: 97
   },
   button: {
     height: '50px',
@@ -46,13 +46,8 @@ export default {
     extend: 'menuTxt',
     color: white
   },
-  mRoot: { 
+  mRoot: {
     extend: 'root',
     marginTop: 0
-  },
-
-
-  root:{
-    marginTop : 97
   }
 };
