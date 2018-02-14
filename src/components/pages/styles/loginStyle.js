@@ -82,7 +82,8 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: '100px',
+    height: 'calc(100vh - 220px)',
+    // marginTop: '36px',
     '& .input-field': {
       width: '62% !important'
     }

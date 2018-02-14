@@ -1,5 +1,6 @@
 import palette from './palette';
 
+
 const greyLight = palette.greyLight;
 
 export default {
@@ -10,8 +11,9 @@ export default {
     flex: '2 1 auto',
     background: greyLight,
     minWidth: '100%',
-    padding: '0px'
-  },
+    padding:'0px',
+  }
+  ,
   contentWraper: {
     marginTop: '40px'
   }

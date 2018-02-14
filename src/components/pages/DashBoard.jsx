@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import PropTypes from 'prop-types';
-import { Grid, withStyles } from 'material-ui';
+import { Grid, withStyles, Typography } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
-import { DashBoardHeader } from '../functionals/';
-import axios from 'axios';
-import Typography from 'material-ui/Typography';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -44,8 +40,8 @@ class DashBoard extends Component {
 
     return (
       <Grid className={style}>
-        <Typography variant="display1" gutterBottom>
-        PROPOSAL DASHBOARD
+        <Typography variant="display1" className="proposal-heading">
+          PROPOSAL DASHBOARD
       </Typography>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
@@ -92,10 +88,6 @@ const dispatchToProps = dispatch => {
     getProposals: () => dispatch(actions.getProposals())
   };
 };
-DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
 export default connect(stateToProps, dispatchToProps)(
   withStyles(dashboardStyle)(DashBoard)
 );

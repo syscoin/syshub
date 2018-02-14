@@ -26,16 +26,13 @@ class HeaderNav extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
-    //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const { classes } = this.props;
 
     const { currentUser } = this.props.app;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const homeIcon = require('../../assets/img/png_menu_home.png');
-    const contactIcon = require('../../assets/img/png_menu_contact.png');
     return (
-      <Grid container md={5} className={classes.root}>
+      <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
           <span className="TxtBold">

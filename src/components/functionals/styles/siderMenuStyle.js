@@ -11,7 +11,8 @@ export default {
     flexDirection: 'column',
     justifyAlign: 'flex-start',
     width: '100%',
-    marginTop: 97
+    marginTop :97,
+    height:'100vh'
   },
   button: {
     height: '50px',
@@ -48,6 +49,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    marginTop: 0
+    marginTop: 0,
+
   }
 };

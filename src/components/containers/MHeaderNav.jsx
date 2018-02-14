@@ -7,61 +7,9 @@ import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
 import { Grid } from 'material-ui';
 import { Icon } from 'antd';
-import { Menu, Dropdown, Button } from 'antd';
+import { Button } from 'antd';
 import IconButton from 'material-ui/IconButton';
 import actions from '../../redux/actions';
-
-const menuItems = [
-  {
-    key: 'dashBoard',
-    icon: 'png_menu_proposals',
-    iconSelected: 'png_menu_proposals_selected',
-    title: 'Proposal Dashboard',
-    showWhen: 'always'
-  },
-  {
-    key: 'newProposal',
-    icon: 'png_menu_create',
-    iconSelected: 'png_menu_create_selected',
-    title: 'Create Proposal',
-    showWhen: 'always'
-  },
-  {
-    key: 'news',
-    icon: 'png_menu_news',
-    iconSelected: 'png_menu_news_selected',
-    title: 'News and Announcements',
-    showWhen: 'always'
-  },
-  {
-    key: 'userAccount',
-    icon: 'png_menu_account',
-    iconSelected: 'png_menu_account_selected',
-    title: 'Account Settings',
-    showWhen: 'login'
-  },
-  {
-    key: 'register',
-    icon: 'png_menu_register',
-    iconSelected: 'png_menu_register_selected',
-    title: 'Register',
-    showWhen: 'logout'
-  },
-  {
-    key: 'faq',
-    icon: 'png_menu_faq',
-    iconSelected: 'png_menu_faq_selected',
-    title: 'Faq',
-    showWhen: 'always'
-  },
-  {
-    key: 'masterNode',
-    icon: 'png_menu_masternodes',
-    iconSelected: 'png_menu_masternodes_selected',
-    title: 'Masternode Setting',
-    showWhen: 'login'
-  }
-];
 
 class MHeaderNav extends Component {
   constructor(props) {
@@ -72,7 +20,6 @@ class MHeaderNav extends Component {
   }
 
   itemClick(e) {
-    console.log(e.target.id);
     this.props.setPage(e.target.id);
   }
 
@@ -82,17 +29,6 @@ class MHeaderNav extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const logo = require('../../assets/img/png_logo_white.png');
-    const menu = (
-      <Menu>
-        {menuItems.map(item => {
-          return (
-            <Menu.Item>
-              <Button className="no-border">{item.title}</Button>
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
     return (
       <Grid container className={style}>
         <Grid
@@ -100,7 +36,9 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu ? { backgroundColor: '#53a5cc' }: { backgroundColor: 'inherit' }
+            this.props.showMenu
+              ? { backgroundColor: '#53a5cc' }
+              : { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout } from 'antd';
 import { connect } from 'react-redux';
 
 import {
@@ -14,8 +14,6 @@ import {
 import 'antd/dist/antd.css';
 import { desktopLayoutStyle } from './styles';
 
-const { SubMenu } = Menu;
-const { Content, Footer } = Layout;
 
 class DesktopLayout extends Component {
   render() {

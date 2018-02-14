@@ -18,7 +18,6 @@ import Paper from 'material-ui/Paper';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 //import style
 
@@ -303,7 +302,6 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
       proposalDate,
-      userProposalSaved
     } = this.state;
 
     if (!currentUser) {
@@ -451,15 +449,10 @@ class NewProposal extends Component {
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    // console.log(this.state.proposalTitle, 'proposalTitle');
-    // console.log(this.state.address, 'address');
-    // console.log(this.state.amount, 'amount');
-    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
     if (this.state.activeStep === 2) {
-      // console.log('active step');
       this.setState({ showEditor: true });
     }
     this.setState(
@@ -483,7 +476,6 @@ class NewProposal extends Component {
 
   //date change function
   onDateChange(date, dateString) {
-    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
     });
@@ -536,7 +528,6 @@ class NewProposal extends Component {
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        // console.log('----------------------');
       }
     );
   }
@@ -716,19 +707,13 @@ class NewProposal extends Component {
           </Row>
         );
       default:
-        return;
-        <Button>Confirm</Button>;
+        return <Button>Confirm</Button>;
     }
   }
   onEditorStateChange(editorState) {
-    console.log('editorState', editorState);
     this.setState({
       editorState
     });
-    console.log(
-      this.state.editorState.getCurrentContent().hasText(),
-      'editor state'
-    );
   }
 
   disabledNextBtn(step) {
@@ -767,14 +752,12 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
-    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>

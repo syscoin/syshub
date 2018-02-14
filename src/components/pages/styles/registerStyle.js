@@ -124,7 +124,6 @@ export default {
         marginBottom: 10,
         textAlign: 'left'
       },
-
       '& .recaptcha': {
         marginLeft: 0
       },

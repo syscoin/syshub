@@ -3,12 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 
-import { Layout, Divider } from 'antd';
+import { Layout } from 'antd';
 import injectSheet from 'react-jss';
 
 //API functions
@@ -35,10 +34,17 @@ class AppHeader extends Component {
       this.props.doLogout();
     }
   }
+
+  renderName(name) {
+    if (name.indexOf(' ') >= 0) {
+      name = name.substring(0, name.indexOf(' '));
+    }
+    return name;
+  }
+
   render() {
     const { classes, deviceType } = this.props;
     const { currentUser } = this.props.app;
-    console.log('AaaaaaaAAAAAAAAAAAAAAAAAA', this.props);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -53,29 +59,35 @@ class AppHeader extends Component {
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
                   <Grid item xs={6} className="name-header">
-                    {currentUser ?
-                      <span className='text-span'>
+                    {currentUser ? (
+                      <span className="text-span">
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
-                          {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
-                        </span> </span> : null}
-
+                          {currentUser
+                            ? this.renderName(currentUser.displayName)
+                            : 'Guest'}
+                        </span>{' '}
+                      </span>
+                    ) : null}
 
                     {currentUser ? (
-                      <Button className="btn-logout" onClick={() => this.doLogout()}>
+                      <Button
+                        className="btn-logout"
+                        onClick={() => this.doLogout()}
+                      >
                         <span className="text">Logout</span>
                       </Button>
                     ) : (
-                        <Button
-                          className="btn-login"
-                          onClick={() => this.props.setPage('login')}
-                        >
-                          <span className="text">Login</span>
-                        </Button>
-                      )}
+                      <Button
+                        className="btn-login"
+                        onClick={() => this.props.setPage('login')}
+                      >
+                        <span className="text">Login</span>
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
-                <MHeaderNav className="bottom-header__wrapper"/>
+                <MHeaderNav className="bottom-header__wrapper" />
               </div>
             </Toolbar>
           </AppBar>
