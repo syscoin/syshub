@@ -1,15 +1,11 @@
 import palette from './palette';
 
-const primary = palette.primary;
 const white = palette.white;
-const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
-const secondary = palette.secondary;
 
 export default {
   root: {
     '& .title': {
-      display: "inline-block",
+      display: 'inline-block',
       fontWeight: 'lighter',
       textTransform: 'uppercase'
     },
@@ -17,8 +13,8 @@ export default {
       background: white,
       padding: 25,
       overflowY: 'auto',
-      height: '80vh',
-    },
+      height: '80vh'
+    }
   },
   mRoot: {
     extend: 'root',
@@ -27,12 +23,11 @@ export default {
       margin: 0,
       padding: '10px 20px',
       fontSize: 25,
-      backgroundColor: white,
+      backgroundColor: white
     },
     '& .masternode-div': {
       height: 'auto',
-      padding: 20,
-
+      padding: 20
     }
   }
-}
+};

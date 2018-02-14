@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Grid, withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 // import style
 import { newsDetailStyle } from './styles';
 
 // import components
 import {
-  Stats,
-  WelcomeBox,
   NewsHeader,
   NewsBody,
   NewsAbout,
@@ -23,8 +20,6 @@ const splitContent = content => {
     .split('<figure><img alt="" src="')[1];
   //const image = splited[0].split('<figure><img alt="" src="')[1];
   const body = content.slice(content.indexOf('<p>'));
-  const HTMLParser = new DOMParser();
-  const bodyA = HTMLParser.parseFromString(bodyA, 'text/html');
   return { image, body };
 };
 

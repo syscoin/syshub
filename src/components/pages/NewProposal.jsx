@@ -4,18 +4,16 @@ import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 import newProposalStyle from './styles/newProposalStyle';
 //import for text editor
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Row, Col, Card } from 'antd';
-import { Form, Icon, Input, Button, InputNumber, Modal } from 'antd';
+import { Row, Col } from 'antd';
+import { Form, Input, Button, InputNumber } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
 import { fire, proposals } from '../../API/firebase';
@@ -269,7 +267,6 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
       proposalDate,
-      userProposalSaved
     } = this.state;
 
     if (!currentUser) {
@@ -362,15 +359,10 @@ class NewProposal extends Component {
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    // console.log(this.state.proposalTitle, 'proposalTitle');
-    // console.log(this.state.address, 'address');
-    // console.log(this.state.amount, 'amount');
-    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
     if (this.state.activeStep === 2) {
-      // console.log('active step');
       this.setState({ showEditor: true });
     }
     this.setState(
@@ -394,7 +386,6 @@ class NewProposal extends Component {
 
   //date change function
   onDateChange(date, dateString) {
-    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
     });
@@ -443,7 +434,6 @@ class NewProposal extends Component {
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        // console.log('----------------------');
       }
     );
   }
@@ -530,7 +520,8 @@ class NewProposal extends Component {
                     className="confirm-button"
                     onClick={this.confirmProposalDetail.bind(this)}
                     style={
-                      this.state.editorState && this.state.editorState.getCurrentContent().hasText()
+                      this.state.editorState &&
+                      this.state.editorState.getCurrentContent().hasText()
                         ? { backgroundColor: '#1991CC' }
                         : { backgroundColor: '#BDC3C7' }
                     }
@@ -545,10 +536,15 @@ class NewProposal extends Component {
                     span={deviceType === 'mobile' ? 24 : 22}
                     offset={deviceType === 'mobile' ? 0 : 1}
                   >
-                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                    <h1 className="proposalDetail-title">
+                      {this.state.proposalTitle}
+                    </h1>
                   </Col>
                   <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div className="proposalContent-div" id="preview-html-container" />
+                    <div
+                      className="proposalContent-div"
+                      id="preview-html-container"
+                    />
                   </Col>
                 </Row>
               )}
@@ -596,20 +592,25 @@ class NewProposal extends Component {
                 onChange={this.getAmount}
               />
             </Col>
-            <div style={{ display: 'inline-block', padding: '5px', fontWeight: 'bold' }}>SYS</div>
+            <div
+              style={{
+                display: 'inline-block',
+                padding: '5px',
+                fontWeight: 'bold'
+              }}
+            >
+              SYS
+            </div>
           </Row>
         );
       default:
-        return;
-        <Button>Confirm</Button>;
+        return <Button>Confirm</Button>;
     }
   }
   onEditorStateChange(editorState) {
-    console.log('editorState', editorState);
     this.setState({
       editorState
     });
-    console.log(this.state.editorState.getCurrentContent().hasText(), 'editor state');
   }
 
   disabledNextBtn(step) {
@@ -644,14 +645,12 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
-    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>
@@ -668,9 +667,12 @@ class NewProposal extends Component {
                       {this.state.activeStep === 0 &&
                       label === 'Proposal Title' &&
                       deviceType !== 'mobile' ? (
-                        <h3 className="proposal-title">Proposal Description Url</h3>
+                        <h3 className="proposal-title">
+                          Proposal Description Url
+                        </h3>
                       ) : null}
-                      {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                      {this.state.activeStep === 1 &&
+                      label === 'Proposal Details' ? (
                         this.state.showEditor ? (
                           <Button
                             className="preview-edit-button"
@@ -695,7 +697,9 @@ class NewProposal extends Component {
                       <div className={classes.actionsContainer}>
                         <div
                           className={
-                            activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                            activeStep === steps.length - 1
+                              ? 'confirm-btn-div'
+                              : 'next-btn-div'
                           }
                         >
                           {activeStep === 0 ? null : (

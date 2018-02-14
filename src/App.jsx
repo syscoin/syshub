@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import HttpsRedirect from 'react-https-redirect';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
-
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-
 import { DesktopLayout, MobileLayout } from './components/layouts';
+import { withStyles } from 'material-ui';
 
 import actions from './redux/actions';
 import { fire } from './API/firebase';
@@ -68,18 +65,14 @@ class App extends Component {
   }
 
   render() {
-    // console.log('Current User ===>', this.props.app.currentUser);
+    const { classes } = this.props;
+
     return (
       /* <HttpsRedirect> */
-      <div style={appStyles.wraper}>
+      <div className={classes.root}>
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          <h1
-            style={{
-              color: 'white',
-              zIndex: '10000'
-            }}
-          >
+          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>
             {this.state.timer}
           </h1>
         </Platform>
@@ -108,4 +101,6 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(App);
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(appStyles)(App)
+);

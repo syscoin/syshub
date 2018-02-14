@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import PropTypes from 'prop-types';
-import { Grid, withStyles } from 'material-ui';
+import { Grid, withStyles, Typography } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
@@ -40,7 +39,9 @@ class DashBoard extends Component {
 
     return (
       <Grid className={style}>
-        <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
+        <Typography variant="display1" className="proposal-heading">
+          PROPOSAL DASHBOARD
+      </Typography>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />
@@ -85,8 +86,6 @@ const dispatchToProps = dispatch => {
     getProposals: () => dispatch(actions.getProposals())
   };
 };
-DashBoard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default connect(stateToProps, dispatchToProps)(withStyles(dashboardStyle)(DashBoard));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(dashboardStyle)(DashBoard)
+);

@@ -12,7 +12,8 @@ const wraper = {
   justifyAlign: 'flex-start',
   flex: '0 1 15%',
   background: greyLight,
-  borderRight: `1px solid ${grey}`
+  borderRight: `1px solid ${grey}`,
+  // height:'100vh',
 };
 const sider = {
   backgroundColor: primary //'#ff0045',

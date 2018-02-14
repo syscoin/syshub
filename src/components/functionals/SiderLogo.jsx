@@ -1,8 +1,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
+import Typography from 'material-ui/Typography';
 import injectSheet from 'react-jss';
 
 //Import Styles
@@ -10,10 +9,7 @@ import { siderLogoStyle } from './styles';
 
 class SiderLogo extends Component {
   render() {
-    const { classes, deviceType } = this.props;
-    //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <div>
@@ -24,8 +20,12 @@ class SiderLogo extends Component {
           />
         </div>
         <div className="txtArea">
-          <p>brought to you by</p>
-          <p className="txtBig">Blockchain Foundry</p>
+        <Typography variant="body1" gutterBottom align='right'>
+          brought to you by
+        </Typography>
+        <Typography variant="body2" gutterBottom align='right'>
+          Blockchain Foundry
+        </Typography>
         </div>
       </div>
     );

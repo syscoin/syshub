@@ -42,11 +42,10 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function (snapshot) {
-            // this variable can be used to show upload progress
-            //const progress =
-            //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
-          },
+          /* function (snapshot) {
+              const progress =
+                snapshot.bytesTransferred / snapshot.totalBytes * 100;
+            }, */
           function (error) {
             switch (error.code) {
               case 'storage/unauthorized':
@@ -64,7 +63,7 @@ class UserProfile extends Component {
                 alert('Unknown error occurred');
                 break;
               default:
-
+                break;
             }
           },
           () => {
@@ -131,7 +130,10 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar = this.props.currentUser && this.props.currentUser.photoURL ? this.props.currentUser.photoURL : require('../../assets/img/no-user-image.gif');
+    const avatar =
+      this.props.currentUser && this.props.currentUser.photoURL
+        ? this.props.currentUser.photoURL
+        : require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
         <Grid container className="profile-grid">

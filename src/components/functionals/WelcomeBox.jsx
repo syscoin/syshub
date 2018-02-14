@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemText } from 'material-ui/List';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
@@ -21,12 +20,12 @@ class WelcomeBox extends Component {
       <div className={style}>
         <Paper className="Paper" elevation={4}>
           <GridList cols={5}>
-            <GridListTile cols={deviceType === 'mobile' ? 5 : 2} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 2} className="tile__wrapper logo">
               <div className="logoDiv">
                 <img alt="a" src={logo} />
               </div>
             </GridListTile>
-            <GridListTile cols={deviceType === 'mobile' ? 5 : 3} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 3} className="tile__wrapper">
               <h1 className="heading">Advertisement Text here</h1>
               <Divider />
               <div className="addvertiseText">

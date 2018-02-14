@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 
-import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Card, { CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 
 // import style
 import { newsCardStyle } from './styles';
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 
 class NewsCard extends Component {
   constructor(props) {
@@ -24,9 +21,7 @@ class NewsCard extends Component {
     const {
       classes,
       post,
-      index,
       selectNews,
-      channel,
       image,
       deviceType,
     } = this.props;
@@ -38,7 +33,7 @@ class NewsCard extends Component {
       <div className={style}>
         <div className={'card-item'} key={post.guid}>
           {/* news card */}
-          <Grid item  spacing={24} className="news-card-grid">
+          <Grid item spacing={24} className="news-card-grid">
             {/* news image grid */}
             <Grid
               md={2}
@@ -64,7 +59,7 @@ class NewsCard extends Component {
                     component="h3"
                     className={`news-heading ${
                       this.props.readed ? 'readed' : ''
-                    }`}
+                      }`}
                   >
                     {post.title}
                   </Typography>
@@ -83,7 +78,7 @@ class NewsCard extends Component {
               </Card>
             </Grid>
             {/* show more button */}
-            <Grid md={12} xs={12}className="showMoreButton-grid">
+            <Grid md={12} xs={12} className="showMoreButton-grid">
               <Button raised onClick={index => selectNews(post.guid)}>
                 {' '}
                 Show More{' '}

@@ -1,13 +1,9 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import injectSheet from 'react-jss';
-
-// Frameworks Import
-import { Menu, Icon, Button } from 'antd';
-
 import SiderLogo from './SiderLogo';
+import { connect } from 'react-redux';
+import { withStyles } from 'material-ui';
 
 import { siderMenuStyle } from './styles';
 
@@ -42,6 +38,11 @@ class SiderMenu extends Component {
             default:
               showMe = true;
           }
+          if (item.key === active) {
+            document.title = `Syshub | ${item.pageTitle}`;
+          } else if (active === 'home') {
+            document.title = 'Syshub';
+          }
           return showMe ? (
             <button
               key={i}
@@ -57,11 +58,22 @@ class SiderMenu extends Component {
             </button>
           ) : null;
         })}
-        <div className="lastBorder" /> {/*Last border*/}
-        <div />
+        <div className={classes.lastBorder} />{/*Last border*/}
+
       </div>
     );
   }
 }
+const stateToProps = state => {
+  return {
+    menuItems: state.app.menuItems
+  };
+};
 
-export default injectSheet(siderMenuStyle)(SiderMenu);
+const dispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(withStyles(siderMenuStyle)(SiderMenu));
+// export default injectSheet(siderMenuStyle)(SiderMenu);

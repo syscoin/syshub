@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 
 // import style
 import { masternodeAddStyle } from './styles';
@@ -22,12 +21,6 @@ class MasterNodeAdd extends Component {
   addNode(event) {
     event.preventDefault();
     if (this.state.newNode.name && this.state.newNode.address) {
-      console.log(
-        'Master Node name ' +
-          this.state.newNode.name +
-          ' Master Node Address ' +
-          this.state.newNode.address
-      );
       this.props.addNode(this.state.newNode);
       this.setState({ newNode: { name: '', address: '' } });
     }

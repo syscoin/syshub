@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userTwoFactorStyle } from './styles';
 import { Button, Grid, FormGroup, Input } from 'material-ui';
@@ -182,16 +180,6 @@ class UserTwoFactor extends Component {
     const { classes, deviceType, app } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
-    const avatar = require('../../assets/img/no-user-image.gif');
-    const checkIcon = require('../../assets/img/check.png');
-    const closeIcon = require('../../assets/img/close.png');
-    const appStore = require('../../assets/img/png_icon_apple.png');
-    const windowsStore = require('../../assets/img/png_icon_windows.png');
-    const playStore = require('../../assets/img/png_icon_google.png');
-    const { currentUser } = this.props.app;
-    console.log(currentUser);
-
     return (
       <div className={style}>
         <Grid container>
@@ -276,7 +264,10 @@ class UserTwoFactor extends Component {
                   </span>
                 )}
               </span>
-              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
+              <div
+                className="reCapthaWraper"
+                ref={ref => (this.recaptcha = ref)}
+              />
             </div>
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (

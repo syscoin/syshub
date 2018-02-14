@@ -2,31 +2,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import { Input } from 'antd';
-import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
-import { AccessAlarm, Send } from 'material-ui-icons';
+import { Send } from 'material-ui-icons';
 
-import { fire, messages } from '../../API/firebase';
+import { messages } from '../../API/firebase';
 
-import List, {
-  ListItem,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText
-} from 'material-ui/List';
-import ListSubheader from 'material-ui/List/ListSubheader';
+import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
-
-const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  position: 'relative',
-  minWidth: '95%'
-};
 
 class ChatBox extends Component {
   constructor(props) {
@@ -77,32 +61,29 @@ class ChatBox extends Component {
     swal({
       title: 'Oops...',
       text: 'Must write something to chat',
-      icon: 'warning',
+      icon: 'warning'
     });
   }
 
   addMessage(message) {
     const { currentUser } = this.props.app;
-    console.log(message, "message")
     if (!currentUser) {
       this.loginAlert();
       return;
     } else if (message === null || message === '') {
-      this.blankMessageAlert()
+      this.blankMessageAlert();
     } else {
       const updated = {
         body: message,
         user: {
           displayName: currentUser.displayName,
           id: currentUser.uid,
-          email: currentUser.email,
-        },
+          email: currentUser.email
+        }
       };
 
       messages.push(updated);
     }
-
-
   }
 
   onChange(e) {
@@ -149,8 +130,16 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={<p className="chatContent-primaryText">{message.user.displayName}</p>}
-                    secondary={<p className="chatContent-secondaryText">{message.body}</p>}
+                    primary={
+                      <p className="chatContent-primaryText">
+                        {message.user.displayName}
+                      </p>
+                    }
+                    secondary={
+                      <p className="chatContent-secondaryText">
+                        {message.body}
+                      </p>
+                    }
                   />
                 ))}
               </div>

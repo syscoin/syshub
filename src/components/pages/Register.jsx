@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { Grid, FormGroup, withStyles } from 'material-ui';
+import { Grid, withStyles } from 'material-ui';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
-
+import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 
 // import withRoot from '../containers/WithRoot';
@@ -34,7 +34,6 @@ class Register extends Component {
       disableRegisterButton: true,
       verify: null
     };
-    console.log('FromItem', FormItem);
   }
 
   componentDidMount() {
@@ -63,11 +62,7 @@ class Register extends Component {
   }
 
   onChange = e => {
-    console.log('checked = ', e.target.checked);
-    // this.setState({
-    //   checked: e.target.checked,
-    //   enableRegisterButton: false
-    // });
+   
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -83,14 +78,11 @@ class Register extends Component {
 
   // specifying your onload callback function
   callback() {
-    console.log('Recaptcha onLoad CallBack: Done!!!!');
   }
 
   // specifying verify callback function
   verifyCallback(response) {
-    console.log('Recaptcha Verify CallBack: ', response);
     this.setState({ verify: response });
-    console.log(this.verify, 'captcha verify');
   }
 
   checkUsername(event) {
@@ -155,7 +147,6 @@ class Register extends Component {
     let username, email, password;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         username = values.username;
         email = values.email;
         password = values.password;
@@ -202,8 +193,7 @@ class Register extends Component {
   }
 
   render() {
-    const captcha = require('../../assets/img/captcha.jpg'),
-      checkIcon = require('../../assets/img/check.png'),
+    const checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes, deviceType } = this.props;
     const {
@@ -224,7 +214,10 @@ class Register extends Component {
 
     return (
       <Grid container className={style} md={12} xs={12}>
-        <h1 className="title">Join SysHub</h1>
+
+        <Typography variant="display1" gutterBottom>
+          JOIN SYSHUB
+      </Typography>
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {
@@ -275,8 +268,8 @@ class Register extends Component {
                       {!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                        <img alt="a" src={closeIcon} />
-                      )}
+                          <img alt="a" src={closeIcon} />
+                        )}
                       {this.state.usernames}
                       {this.state.disabled ? ` Not Available` : ` Available`}
                     </div>
@@ -388,7 +381,6 @@ class Register extends Component {
                     type="password"
                     id="confirm-password"
                     className="input-field"
-                    type="password"
                     placeholder="**************"
                   />
                 )}
@@ -422,7 +414,7 @@ class Register extends Component {
                 <Button
                   disabled={
                     this.hasErrors(getFieldsError()) ||
-                    (!this.state.checked || !this.state.verify)
+                      (!this.state.checked || !this.state.verify)
                       ? true
                       : false
                   }
