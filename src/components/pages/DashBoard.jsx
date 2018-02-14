@@ -25,8 +25,7 @@ class DashBoard extends Component {
   }
   //changing state with this function
   handleDashboard(value) {
-    const container =
-      this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.setState({
       showContainer: container,
       proposalID: value
@@ -77,8 +76,7 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes:
-      state.sysStats.value.general.registered_masternodes_verified * 0.1,
+    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
     app: state.app
   };
 };
