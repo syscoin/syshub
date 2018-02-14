@@ -20,12 +20,12 @@ class HeaderStats extends Component {
     ).toFixed(5)} BTC/1000 USD`;
     const masternodes = `${
       this.props.sysStatsValue.general.registered_masternodes_verified
-    } / ${this.props.sysStatsValue.general.registered_masternodes}`;
+      } / ${this.props.sysStatsValue.general.registered_masternodes}`;
     const totUsers = this.props.sysStatsValue.general.all_user;
     //console.clear();
     return (
       <Grid container className={style}>
-        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : 0}>
+        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
             alt="a"
             src={require('../../assets/img/png_stasts_sys.png')}
@@ -34,12 +34,12 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`SYSCOIN: `}</span>
-          )}
+              <span className="TxtBold">{`SYSCOIN: `}</span>
+            )}
           {changeRate}
         </Grid>
         {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
-        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : 0}>
+        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
             alt="a"
             src={require('../../assets/img/png_stats_masternodes.png')}
@@ -48,12 +48,12 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
-          )}
+              <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+            )}
           {masternodes}
         </Grid>
         {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
-        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : 0}>
+        <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
             alt="a"
             src={require('../../assets/img/png_stats_users.png')}
@@ -62,8 +62,8 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`USERS: `}</span>
-          )}
+              <span className="TxtBold">{`USERS: `}</span>
+            )}
           {totUsers}
         </Grid>
       </Grid>

@@ -2,31 +2,17 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import { Input } from 'antd';
-import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
-import { AccessAlarm, Send } from 'material-ui-icons';
+import { Send } from 'material-ui-icons';
 
-import { fire, messages } from '../../API/firebase';
+import { messages } from '../../API/firebase';
 
 import List, {
-  ListItem,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemSecondaryAction,
   ListItemText
 } from 'material-ui/List';
-import ListSubheader from 'material-ui/List/ListSubheader';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
-
-const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  position: 'relative',
-  minWidth: '95%'
-};
 
 class ChatBox extends Component {
   constructor(props) {

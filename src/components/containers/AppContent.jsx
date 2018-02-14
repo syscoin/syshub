@@ -2,9 +2,6 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
 
 import { withRoot } from '../HOC';
 
@@ -22,8 +19,7 @@ import {
   MasternodeSetting,
   NewProposal,
   News,
-  UserAccount,
-  UserAccountTest
+  UserAccount
 } from '../pages';
 
 //Import Styles

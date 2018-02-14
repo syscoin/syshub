@@ -20,12 +20,12 @@ class WelcomeBox extends Component {
       <div className={style}>
         <Paper className="Paper" elevation={4}>
           <GridList cols={5}>
-            <GridListTile cols={deviceType === 'mobile' ? 5 : 2} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 2} className="tile__wrapper logo">
               <div className="logoDiv">
                 <img alt="a" src={logo} />
               </div>
             </GridListTile>
-            <GridListTile cols={deviceType === 'mobile' ? 5 : 3} style={{ height: '100%' }}>
+            <GridListTile cols={deviceType === 'mobile' ? 5 : 3} className="tile__wrapper">
               <h1 className="heading">Advertisement Text here</h1>
               <Divider />
               <div className="addvertiseText">

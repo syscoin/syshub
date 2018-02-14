@@ -2,16 +2,11 @@ import React, { Component } from 'react';
 import ReactPasswordStrength from 'react-password-strength';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui';
 import { userChangePswStyle } from './styles';
-import { Grid, FormGroup } from 'material-ui';
+import { Grid } from 'material-ui';
 import { Form, Input, Button } from 'antd';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 
 const FormItem = Form.Item;
 
@@ -25,7 +20,7 @@ class UserChangePassword extends Component {
 
     // this.checkPassword = this.confirmDirty.bind(this);
     // this.checkConfirm = this.checkConfirm.bind(this);
-    console.log("FromItem",FormItem)
+    console.log("FromItem", FormItem)
   }
   componentDidMount() {
     // To disabled submit button at the beginning.
@@ -78,10 +73,6 @@ class UserChangePassword extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
-    const avatar = require('../../assets/img/no-user-image.gif');
-    const checkIcon = require('../../assets/img/check.png');
-    const closeIcon = require('../../assets/img/close.png');
     const {
       getFieldDecorator,
       getFieldsError,

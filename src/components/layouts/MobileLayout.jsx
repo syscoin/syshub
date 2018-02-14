@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Drawer, List, NavBar, Icon, Button } from 'antd-mobile';
 import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 import {
   MAppHeader,
   MAppContent,
-  MAppLSider,
-  MAppRSider,
   MAppFooter
 } from '../containers/';
 
@@ -17,10 +13,8 @@ import {
 import 'antd-mobile/dist/antd-mobile.css';
 import { mobileLayoutStyle } from './styles';
 
-const { SubMenu } = Menu;
-const { Content, Footer } = Layout;
 
-class MobileLayout extends Component { 
+class MobileLayout extends Component {
   toggleBoolState = d => {
     this.setState({
       [d]: !this.state[d]
@@ -28,7 +22,7 @@ class MobileLayout extends Component {
   };
 
   render() {
-    const { classes, app } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <MAppHeader />
@@ -40,9 +34,7 @@ class MobileLayout extends Component {
 }
 
 const stateToProps = state => {
-  return {
-    app: state.app
-  };
+  return {};
 };
 
 const dispatchToProps = dispatch => {

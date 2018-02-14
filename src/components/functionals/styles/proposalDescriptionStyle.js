@@ -57,5 +57,15 @@ export default {
       }
     }
   },
-  mRoot: { extend: 'root' }
+  mRoot: {
+    extend: 'root',
+    width: '100%',
+    '& .approvalStatus': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20
+        }
+      }
+    }
+  }
 };

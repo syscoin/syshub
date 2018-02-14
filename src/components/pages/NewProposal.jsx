@@ -18,7 +18,6 @@ import Paper from 'material-ui/Paper';
 import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 //import style
 
@@ -303,7 +302,6 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
       proposalDate,
-      userProposalSaved
     } = this.state;
 
     if (!currentUser) {
@@ -716,8 +714,7 @@ class NewProposal extends Component {
           </Row>
         );
       default:
-        return;
-        <Button>Confirm</Button>;
+        return <Button>Confirm</Button>;
     }
   }
   onEditorStateChange(editorState) {
@@ -767,8 +764,7 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
-    const { checkStatus, prepareReceipt, submitReceipt } = proposal;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 

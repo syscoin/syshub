@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 import { Grid, withStyles } from 'material-ui';
 import { Avatar } from 'antd';
 
 // import style
 import { newsHeaderStyle } from './styles';
 
-// import components
-import { Stats, WelcomeBox } from '../functionals';
 class NewsHeader extends Component {
   render() {
     const { classes, header, deviceType } = this.props;
@@ -22,13 +19,11 @@ class NewsHeader extends Component {
             {/* Cover Image */}
             <div className="cover">
               <img
-                alt="a"
                 className="cover-img"
                 src={header.image}
                 //'https://www.cryptocoinsnews.com/wp-content/uploads/2016/09/Fb-cover2-X2-1440x548.png'
                 //'https://cdn-images-1.medium.com/max/1024/1*YqNm0p75A84qf7szszQGEQ.png'
-
-                alt="Cover Image"
+                alt="Cover"
               />
             </div>
             <div className="info">

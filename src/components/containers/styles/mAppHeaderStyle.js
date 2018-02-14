@@ -81,7 +81,6 @@ export default {
         }
       },
       '& .text-span': {
-        marginBottom: 5,
         display: 'block',
         marginTop: 0,
         textAlign: 'right',

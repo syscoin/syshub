@@ -56,5 +56,38 @@ export default {
       },
     },
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    width: '100%',
+    '& .no-margin': {
+      '&>p': {
+        fontSize: 20,
+      }
+
+    },
+    '& .paymentsView': {
+      marginTop: 0,
+      width: '100%',
+      '& .OnTimePaymentView': {
+        maxWidth: '100%',
+        width: '100%',
+        flexBasis: 'inherit',
+        marginLeft: 0,
+        padding: '5px 0px',
+        '& .heading': {
+          fontSize: 17,
+
+        },
+        '& .form': {
+          '& .FormGroup': {
+            '& .input-field': {
+              height: 35,
+              width: '100%',
+            }
+          }
+        }
+
+      }
+    }
+  },
 };

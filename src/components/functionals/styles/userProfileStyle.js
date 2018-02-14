@@ -118,13 +118,12 @@ export default {
       textAlign: 'center',
       '& .upload-image-container': {
         width: '100%',
-        margin: 'auto'
+        margin: 'auto',
       }
     },
     '& .profile-credential-grid': {
       '& .form-group': {
         '& .label': {
-          display: 'block',
           fontSize: 17,
           marginLeft: 25
         },
