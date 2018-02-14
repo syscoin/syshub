@@ -1,15 +1,10 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-
 import { Layout } from 'antd';
-
-//import components
 import { HeaderStats, HeaderNav } from '../functionals';
-
 import { appHeaderStyle } from './styles';
 
 const { Header } = Layout;

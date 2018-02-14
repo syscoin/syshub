@@ -4,6 +4,7 @@ import { Input, Icon, Collapse } from 'antd';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
+import Typography from 'material-ui/Typography';
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
@@ -179,13 +180,16 @@ class Faq extends Component {
 
     return (
       <div className={style}>
-        <h1 className="title">SysHub FAQ</h1>
+
+        <Typography variant="display1" gutterBottom>
+        SYSHUB FAQ
+      </Typography>
 
         <div className="faqs-div">
           <Collapse bordered={false}>
             {faqQuestions.map((cat, index) => {
               return (
-                <Panel header={cat.section} key={index} className="faq-category">
+                <Panel header={cat.section} key={index} className="faq-category"> 
                   {cat.questions.map((ques, index) => {
                     return (
                       <Collapse bordered={false}>
@@ -210,6 +214,8 @@ class Faq extends Component {
                     )
                   })}
                 </Panel>
+                
+                
               )
             })}
           </Collapse>

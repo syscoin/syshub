@@ -9,6 +9,7 @@ import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 import { DashBoardHeader } from '../functionals/';
 import axios from 'axios';
+import Typography from 'material-ui/Typography';
 
 // import components
 import { dashboardStyle } from './styles';
@@ -43,7 +44,9 @@ class DashBoard extends Component {
 
     return (
       <Grid className={style}>
-        <h1 className="dashBoardheading">PROPOSAL DASHBOARD</h1>
+        <Typography variant="display1" gutterBottom>
+        PROPOSAL DASHBOARD
+      </Typography>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />

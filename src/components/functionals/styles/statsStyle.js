@@ -1,8 +1,6 @@
 import palette from './palette';
 
-const white = palette.white;
 const primary = palette.primary;
-const grey = palette.textLignt;
 
 export default {
   root: {

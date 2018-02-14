@@ -8,7 +8,7 @@ import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
-
+import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 
 // import withRoot from '../containers/WithRoot';
@@ -224,7 +224,10 @@ class Register extends Component {
 
     return (
       <Grid container className={style} md={12} xs={12}>
-        <h1 className="title">Join SysHub</h1>
+        
+        <Typography variant="display1" gutterBottom>
+        JOIN SYSHUB
+      </Typography>
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {
