@@ -25,7 +25,7 @@ class DesktopLayout extends Component {
             <AppLSider />
           </div>
 
-          <div style={desktopLayoutStyle.appContent}>
+          <div style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
             <AppContent />
           </div>
 
@@ -42,6 +42,7 @@ class DesktopLayout extends Component {
 }
 
 const stateToProps = state => {
+  console.log(state.app.showChat,"show chat")
   return {
     app: state.app
   };
