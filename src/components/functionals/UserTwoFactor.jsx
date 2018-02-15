@@ -157,7 +157,6 @@ class UserTwoFactor extends Component {
         }
       })
       .catch(err => {
-        console.log(err);
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }

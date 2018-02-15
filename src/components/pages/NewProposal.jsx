@@ -666,7 +666,6 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        console.log(this.state.proposalStartEpoch, this.state.proposalEndEpoch, this.state.paymentQuantity, this.state.address, this.state.amount);
         if (this.state.proposalStartEpoch && this.state.paymentQuantity && this.state.address && this.state.amount) {
           return false;
         } else {
