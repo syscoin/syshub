@@ -50,7 +50,7 @@ class UserTwoFactor extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
 
@@ -78,7 +78,14 @@ class UserTwoFactor extends Component {
       });
       return;
     }
-
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error'
+      });
+      return;
+    }
     user
       .unlink(fire.auth.PhoneAuthProvider.PROVIDER_ID)
       .then(user => {
@@ -207,7 +214,7 @@ class UserTwoFactor extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const { currentUser } = this.props.app;
+    //const { currentUser } = this.props.app;
 
     return (
       <div className={style}>
@@ -270,10 +277,10 @@ class UserTwoFactor extends Component {
                 <button onClick={this.addPhone}>Add</button>
               </Grid>
             ) : (
-              <div>
-                <button onClick={this.editPhone}>Edit</button>
-              </div>
-            )
+                <div>
+                  <button onClick={this.editPhone}>Edit</button>
+                </div>
+              )
           ) : null}
 
           {/* userTwofactor left grid */}
@@ -287,11 +294,11 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                  <span className="status-disable">
-                    Disabled
+                    <span className="status-disable">
+                      Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                  </span>
-                )}
+                    </span>
+                  )}
               </span>
               <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
             </div>
@@ -306,15 +313,15 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                <Button
-                  raised
-                  color="primary"
-                  className="twoFactor-button"
-                  onClick={this.enableAuth}
-                >
-                  Enable 2F Auth
+                  <Button
+                    raised
+                    color="primary"
+                    className="twoFactor-button"
+                    onClick={this.enableAuth}
+                  >
+                    Enable 2F Auth
                 </Button>
-              )}
+                )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}
