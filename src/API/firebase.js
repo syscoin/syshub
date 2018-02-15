@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Rebase from 're-base';
 import * as firebase from 'firebase';
 import swal from 'sweetalert';
@@ -101,7 +102,7 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
   });
 };
 
-const doRegister = () => {};
+const doRegister = () => { };
 
 const doLogin = (email, password) => {
   fire
