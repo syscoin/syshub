@@ -23,16 +23,23 @@ class ProposalCard extends Component {
   };
 
   componentWillMount() {
-    let startDate = new Date();
-    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch * 1000);
-    const payment_amount = this.props.proposal.DataString[0][1].payment_amount;
-    if (endDate > startDate) {
-      let timeDiff = endDate.getTime() - startDate.getTime();
-      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+    const { start_epoch, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
+    const millsMonth = this.props.millsMonth;
+    const today = new Date();
+
+    const startDate = new Date(start_epoch * 1000);
+    const endDate = new Date(end_epoch * 1000);
+    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    if (endDate > today) {
+      const timeDiff = endDate.getTime() - today.getTime();
+      const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+      const payment_type = nPayment > 1 ? 'per month' : 'one-time payment';
       this.setState({
         days_remaining,
         month_remaining,
+        payment_amount,
+        payment_type,
         endDate:
           endDate.getDate() +
           '/' +
@@ -41,7 +48,7 @@ class ProposalCard extends Component {
           endDate.getFullYear()
       });
     }
-    this.setState({ payment_amount, payment_type: 'one-time payment' });
+    //this.setState({ payment_amount, payment_type: 'one-time payment' });
   }
 
   voteUp(vote) {
@@ -258,7 +265,8 @@ class ProposalCard extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.app.currentUser
+    user: state.app.currentUser,
+    millsMonth: state.proposals.millsMonth
   };
 };
 

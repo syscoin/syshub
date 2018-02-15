@@ -372,7 +372,9 @@ class NewProposal extends Component {
       time: Math.floor(new Date().getTime() / 1000),
       dataHex: hexedProposal
     };
-
+    this.setState({
+      prepareObj: prepareObj
+    });
     userProposal.prepareObj = prepareObj;
     proposalRef.set(userProposal);
 
@@ -639,7 +641,7 @@ class NewProposal extends Component {
           </Row>
         );
       default:
-        return <Button>Confirm</Button>;
+        return null;
     }
   }
 

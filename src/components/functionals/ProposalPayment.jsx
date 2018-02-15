@@ -1,6 +1,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 
@@ -16,13 +17,40 @@ class ProposalPayment extends Component {
     var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
     this.state = {
-      onTimePayment: this.props.data.payment_amount,
-      compeletePayment: 'abc',
-      Paymentdate: 'abc',
+      oneTimePayment: this.props.data.payment_amount,
+      payment_type: '',
+      compeletePayment: '',
+      Paymentdate: '',
       startDate: startDate,
       endDate: endDate
     };
   }
+
+  componentWillMount() {
+    const { start_epoch, end_epoch, payment_amount } = this.props.data;
+    const millsMonth = 30 * 24 * 60 * 60 * 1000;
+    const today = new Date();
+
+    const startDate = new Date(start_epoch * 1000);
+    const endDate = new Date(end_epoch * 1000);
+    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+
+    if (endDate > today) {
+      let timeDiff = endDate.getTime() - today.getTime();
+      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+      const payment_type = nPayment > 1 ? `${nPayment} totalling in ${payment_amount * nPayment} SYS` : 'one-time payment';
+      this.setState({
+        days_remaining,
+        month_remaining,
+        payment_amount,
+        payment_type,
+
+      });
+    }
+    //this.setState({ payment_amount, payment_type: 'one-time payment' });
+  }
+
   render() {
     const { classes, deviceType } = this.props;
     //Platform style switcher
@@ -42,7 +70,7 @@ class ProposalPayment extends Component {
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
-                One Time Payment
+                {this.state.payment_type}
               </Typography>
             </div>
             <form className="form">
@@ -53,8 +81,8 @@ class ProposalPayment extends Component {
                     id="onTimePayment"
                     className="input-field"
                     placeholder="Amount"
-                    onChange={e => {}}
-                    value={this.state.onTimePayment + ' SYS'}
+                    onChange={e => { }}
+                    value={this.state.oneTimePayment + ' SYS'}
                     disabled={true}
                   />
                 </Typography>
@@ -75,8 +103,8 @@ class ProposalPayment extends Component {
                     name="compeletePayment"
                     id="compeletePayment"
                     className="input-field"
-                    placeholder="no payments occurred yet"
-                    onChange={e => {}}
+                    value="no payments occurred yet"
+                    onChange={e => { }}
                     disabled={true}
                   />
                 </Typography>
@@ -94,12 +122,12 @@ class ProposalPayment extends Component {
               <FormGroup className="FormGroup">
                 <Typography color="inherit">
                   <input
-                    ref={ref => {}}
+                    ref={ref => { }}
                     name="Paymentdate"
                     id="Paymentdate"
                     className="input-field"
                     placeholder="Start Date / End Date"
-                    onChange={e => {}}
+                    onChange={e => { }}
                     value={this.state.startDate + ' / ' + this.state.endDate}
                     disabled={true}
                   />
