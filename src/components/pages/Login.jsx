@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -65,7 +65,7 @@ class Login extends Component {
         });
       })
       .catch(err => {
-        alert(err);
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 
@@ -74,20 +74,6 @@ class Login extends Component {
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
     const appVerifier = window.recaptchaVerifier;
-    const mnPrivateKeys = [
-      {
-        mnPrivateKey: 'cNt1d2uy3qA1gRdpj4axQbrbgYeWCaPCq1M5CXGFauZ3oD2DQdLL',
-        vinMasternode: '0d8394401c13236e95e0b6e0ec93ce14133caae74df7e0db6f0424d648b07d02-0'
-      },
-      {
-        mnPrivateKey: 'cQJd7h2tBbSHjutVrYnc1GhvLgw8pF6e49TEYGFHxNRiQh87UKwd',
-        vinMasternode: '212d6fba79a3254a67e2d1fdc78a6efbc7575ff6c71930bc484ae185633a3b75-0'
-      },
-      {
-        mnPrivateKey: 'cPim54aykwQctacE4ipFFPQzL79vw4dVriGBRvN9Xwt3r9NrA16M',
-        vinMasternode: 'd9ae414d71f57d1cd897651f37665142042aa5a1e54750efa7a6c2ac957e64b7-0'
-      }
-    ];
 
     if (!this.verify) {
       swal({
@@ -103,76 +89,81 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        if (this.props.app.auth) {
-          if (user.phoneNumber == null) {
-            swal({
-              title: 'Oops...',
-              text: 'Add phone number to the account first in account settings',
-              icon: 'error'
-            });
-            return;
-          }
-          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
-        } else {
+        if (user.phoneNumber) {
           fire
             .database()
-            .ref('mnPrivateKey/' + user.uid)
-            .set(mnPrivateKeys);
-        }
-      })
-      .then(confirmationResult => {
-        if (confirmationResult) {
-          swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Success',
-            text: 'Please provide use the verification code to continue',
-            icon: 'success',
-            buttons: true,
-            dangerMode: false,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Confirmation code here',
-                type: 'text'
+            .ref('2FA/' + user.uid)
+            .once('value', snap => {
+              if (snap.val() === true) {
+                fire
+                  .auth()
+                  .signInWithPhoneNumber(`${user.phoneNumber}`, appVerifier)
+                  .then(confirmationResult => {
+                    if (confirmationResult) {
+                      swal({
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        title: 'Success',
+                        text: 'Please provide use the verification code to continue',
+                        icon: 'success',
+                        buttons: true,
+                        dangerMode: false,
+                        content: {
+                          element: 'input',
+                          attributes: {
+                            placeholder: 'Confirmation code here',
+                            type: 'text'
+                          }
+                        }
+                      })
+                        .then(value => {
+                          if (!value) {
+                            throw new Error('Must provide a code to login.');
+                          }
+
+                          return confirmationResult.confirm(value);
+                        })
+                        .then(response => {
+                          return fire.auth().signInWithEmailAndPassword(email, password);
+                        })
+                        .then(user => {
+                          swal({
+                            title: 'Sucess',
+                            text: `${user.email} signed in with sms verification`,
+                            icon: 'success'
+                          });
+
+                          this.props.setPage('home');
+                        })
+                        .catch(err => {
+                          fire.auth().signOut();
+                          this.loginForm.reset();
+
+                          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                        });
+                    }
+                  })
+                  .catch(err => {
+                    fire.auth().signOut();
+                    this.loginForm.reset();
+
+                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                  });
               }
-            }
-          })
-            .then(value => {
-              return confirmationResult.confirm(value);
-            })
-            .then(result => {
-              return fire.auth().signInWithEmailAndPassword(email, password);
-            })
-            .then(user => {
-              swal({
-                title: 'Sucess',
-                text: `${user.email} signed in with sms verification`,
-                icon: 'success'
-              });
-
-              fire
-                .database()
-                .ref('mnPrivateKey/' + user.uid)
-                .set(mnPrivateKeys);
-
-              this.props.setPage('home');
-            })
-            .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
 
           return;
         }
         swal({
           title: 'Success',
-          text: `Account logged in.`,
+          text: `${user.email} signed in without sms verification.`,
           icon: 'success'
         });
-
         this.props.setPage('home');
       })
       .catch(err => {
+        fire.auth().signOut();
+
         swal({
           title: 'Oops...',
           text: `${err}`,

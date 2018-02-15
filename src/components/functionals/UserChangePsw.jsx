@@ -17,10 +17,6 @@ class UserChangePassword extends Component {
     this.state = {
       confirmDirty: '',
     };
-
-    // this.checkPassword = this.confirmDirty.bind(this);
-    // this.checkConfirm = this.checkConfirm.bind(this);
-    console.log("FromItem", FormItem)
   }
   componentDidMount() {
     // To disabled submit button at the beginning.
@@ -59,7 +55,6 @@ class UserChangePassword extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         const updatedUser = {
           currentPass: values.current,
           newPass: values.password,

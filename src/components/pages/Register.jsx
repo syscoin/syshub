@@ -34,7 +34,6 @@ class Register extends Component {
       disableRegisterButton: true,
       verify: null
     };
-    console.log('FromItem', FormItem);
   }
 
   componentDidMount() {
@@ -63,11 +62,7 @@ class Register extends Component {
   }
 
   onChange = e => {
-    console.log('checked = ', e.target.checked);
-    // this.setState({
-    //   checked: e.target.checked,
-    //   enableRegisterButton: false
-    // });
+   
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -83,14 +78,11 @@ class Register extends Component {
 
   // specifying your onload callback function
   callback() {
-    console.log('Recaptcha onLoad CallBack: Done!!!!');
   }
 
   // specifying verify callback function
   verifyCallback(response) {
-    console.log('Recaptcha Verify CallBack: ', response);
     this.setState({ verify: response });
-    console.log(this.verify, 'captcha verify');
   }
 
   checkUsername(event) {
@@ -155,7 +147,6 @@ class Register extends Component {
     let username, email, password;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         username = values.username;
         email = values.email;
         password = values.password;

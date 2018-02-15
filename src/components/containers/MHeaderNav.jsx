@@ -20,7 +20,6 @@ class MHeaderNav extends Component {
   }
 
   itemClick(e) {
-    console.log(e.target.id);
     this.props.setPage(e.target.id);
   }
 
@@ -37,37 +36,26 @@ class MHeaderNav extends Component {
           xs={3}
           className="left-section"
           style={
-            this.props.showMenu ? { backgroundColor: '#53a5cc' } : { backgroundColor: 'inherit' }
+            this.props.showMenu
+              ? { backgroundColor: '#53a5cc' }
+              : { backgroundColor: 'inherit' }
           }
         >
           {/* <Dropdown overlay={menu} placement="bottomRight"> */}
-          <IconButton
-            color="inherit"
-            aria-label="Menu"
-            onClick={() => this.props.toggleMenu()}
-          >
+          <IconButton color="inherit" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
             <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>
           {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img
-            alt="a"
-            src={logo}
-            height="35px"
-            width="100px"
-            id="home"
-            onClick={this.itemClick}
-          />
+          <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
         </Grid>
         <Grid
           item
           xs={3}
           className="right-section"
           style={
-            this.props.showChat
-              ? { backgroundColor: '#53a5cc' }
-              : { backgroundColor: '#1991CC' }
+            this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }
           }
         >
           <Button
@@ -101,6 +89,4 @@ const dispatchToProps = dispatch => {
     toggleMenu: () => dispatch(actions.toggleMenu())
   };
 };
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(mHeaderNavStyle)(MHeaderNav)
-);
+export default connect(stateToProps, dispatchToProps)(injectSheet(mHeaderNavStyle)(MHeaderNav));

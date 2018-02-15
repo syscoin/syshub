@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import SiderLogo from './SiderLogo';
 import { connect } from 'react-redux';
-import {withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 import { siderMenuStyle } from './styles';
 
@@ -14,7 +14,6 @@ class SiderMenu extends Component {
 
   render() {
     const { classes, active, deviceType } = this.props;
-    console.log(deviceType ,"device")
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={style}>
@@ -59,14 +58,13 @@ class SiderMenu extends Component {
             </button>
           ) : null;
         })}
-        <div className="lastBorder" /> {/*Last border*/}
-        <div />
+        <div className={classes.lastBorder} />{/*Last border*/}
+
       </div>
     );
   }
 }
 const stateToProps = state => {
-  console.log(state.app.menuItems,"menu item title")
   return {
     menuItems: state.app.menuItems
   };

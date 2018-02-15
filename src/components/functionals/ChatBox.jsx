@@ -8,9 +8,7 @@ import { Send } from 'material-ui-icons';
 
 import { messages } from '../../API/firebase';
 
-import List, {
-  ListItemText
-} from 'material-ui/List';
+import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
 
@@ -63,32 +61,29 @@ class ChatBox extends Component {
     swal({
       title: 'Oops...',
       text: 'Must write something to chat',
-      icon: 'warning',
+      icon: 'warning'
     });
   }
 
   addMessage(message) {
     const { currentUser } = this.props.app;
-    console.log(message, "message")
     if (!currentUser) {
       this.loginAlert();
       return;
     } else if (message === null || message === '') {
-      this.blankMessageAlert()
+      this.blankMessageAlert();
     } else {
       const updated = {
         body: message,
         user: {
           displayName: currentUser.displayName,
           id: currentUser.uid,
-          email: currentUser.email,
-        },
+          email: currentUser.email
+        }
       };
 
       messages.push(updated);
     }
-
-
   }
 
   onChange(e) {
@@ -135,8 +130,16 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={<p className="chatContent-primaryText">{message.user.displayName}</p>}
-                    secondary={<p className="chatContent-secondaryText">{message.body}</p>}
+                    primary={
+                      <p className="chatContent-primaryText">
+                        {message.user.displayName}
+                      </p>
+                    }
+                    secondary={
+                      <p className="chatContent-secondaryText">
+                        {message.body}
+                      </p>
+                    }
                   />
                 ))}
               </div>
