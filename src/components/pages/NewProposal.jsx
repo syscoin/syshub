@@ -10,10 +10,9 @@ import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col } from 'antd';
-import { Form, Input, Button, InputNumber, Menu, Select, Icon, message, Modal } from 'antd';
+import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -305,10 +304,10 @@ class NewProposal extends Component {
     const { app } = this.props;
     const { currentUser } = app;
     const {
+      //paymentQuantity,
       proposalName,
       proposalTitle,
       address,
-      paymentQuantity,
       amount,
       proposal__detail,
       proposallink,
@@ -351,7 +350,6 @@ class NewProposal extends Component {
           name: proposalName,
           title: proposalTitle,
           description: proposal__detail,
-          nPayments: paymentQuantity,
           type: 1,
           //          start_epoch: Math.floor(new Date().getTime() / 1000),
           start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
