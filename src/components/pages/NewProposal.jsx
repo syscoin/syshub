@@ -87,6 +87,7 @@ class NewProposal extends Component {
         updatedUserProposal.txid = this.state.payValue;
         proposalRef.set(updatedUserProposal);
         submitObj.txid = this.state.payValue;
+
         this.props
           .submitProposal(submitObj)
           .then(submitResponse => {
@@ -326,6 +327,10 @@ class NewProposal extends Component {
       time: Math.floor(new Date().getTime() / 1000),
       dataHex: hexedProposal
     };
+
+    this.setState({
+      prepareObj: prepareObj
+    });
 
     userProposal.prepareObj = prepareObj;
     proposalRef.set(userProposal);

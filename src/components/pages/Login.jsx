@@ -153,13 +153,14 @@ class Login extends Component {
             });
 
           return;
+        } else {
+          swal({
+            title: 'Success',
+            text: `${user.email} signed in without sms verification.`,
+            icon: 'success'
+          });
+          this.props.setPage('home');
         }
-        swal({
-          title: 'Success',
-          text: `${user.email} signed in without sms verification.`,
-          icon: 'success'
-        });
-        this.props.setPage('home');
       })
       .catch(err => {
         fire.auth().signOut();
