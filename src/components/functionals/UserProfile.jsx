@@ -138,12 +138,12 @@ class UserProfile extends Component {
       <div className={style}>
         <Grid container className="profile-grid">
           {/* profile text */}
-          <Grid md={12}>
+          <Grid item md={12}>
             <h1 className="profile-heading">Profile</h1>
           </Grid>
 
           {/* profile image grid */}
-          <Grid md={3} className="profile-image-grid">
+          <Grid md={3} item className="profile-image-grid">
             <div className="avatar-container upload-image-container">
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
@@ -167,7 +167,7 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile credential grid */}
-          <Grid md={9} className="profile-credential-grid">
+          <Grid md={9} item className="profile-credential-grid">
             {/* For User Name */}
             <FormGroup className="form-group">
               <span htmlFor="user-name" className="label">
@@ -208,7 +208,6 @@ class UserProfile extends Component {
               raised
               color="primary"
               className="update-button"
-              innerTextColor="red"
               disabled={this.state.disabled}
             >
               Update Profile

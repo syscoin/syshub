@@ -16,13 +16,14 @@ export default {
   },
   button: {
     height: '50px',
-    width: '100%',
+    width: 'calc(100% - 41px)',
     border: 'none',
     textAlign: 'left',
     background: `linear-gradient(${white}, ${greyLight})`,
     borderWidth: '1px 0 0 0',
     borderStyle: 'solid',
     borderColor: grey,
+    marginLeft:41,
     '&:hover': {
       background: `linear-gradient(${greyLight}, ${white})`
     }

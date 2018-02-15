@@ -14,7 +14,6 @@ class SiderMenu extends Component {
 
   render() {
     const { classes, active, deviceType } = this.props;
-    console.log(deviceType ,"device")
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={style}>
@@ -66,7 +65,6 @@ class SiderMenu extends Component {
   }
 }
 const stateToProps = state => {
-  console.log(state.app.menuItems,"menu item title")
   return {
     menuItems: state.app.menuItems
   };

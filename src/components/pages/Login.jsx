@@ -187,7 +187,7 @@ class Login extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={style} md={12} xs={12}>
+      <Grid item className={style} md={12} xs={12}>
         <h1 className="title">Login to SysHub</h1>
         <Grid item md={12} xs={12} className="form__container">
           <form

@@ -808,7 +808,7 @@ class NewProposal extends Component {
                           >
                             {activeStep === 0 ? null : (
                               <Button
-                                raised={true}
+                                variant="raised"
                                 type="primary"
                                 onClick={this.handleBack}
                                 className="button"
@@ -818,7 +818,7 @@ class NewProposal extends Component {
                             )}
                             {activeStep === steps.length - 1 ? (
                               <Button
-                                raised={true}
+                                variant="raised"
                                 type="primary"
                                 className={classes.button}
                                 onClick={this.createPropObj}
@@ -828,7 +828,7 @@ class NewProposal extends Component {
                             </Button>
                             ) : (
                                 <Button
-                                  raised={true}
+                                  variant="raised"
                                   type="primary"
                                   onClick={this.handleNext}
                                   className={classes.button}

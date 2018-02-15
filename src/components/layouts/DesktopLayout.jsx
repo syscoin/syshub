@@ -42,7 +42,6 @@ class DesktopLayout extends Component {
 }
 
 const stateToProps = state => {
-  console.log(state.app.showChat,"show chat")
   return {
     app: state.app
   };

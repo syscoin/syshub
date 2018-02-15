@@ -222,7 +222,7 @@ class Register extends Component {
       isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
-      <Grid container className={style} md={12} xs={12}>
+      <Grid item className={style} md={12} xs={12}>
 
         <Typography variant="display1" gutterBottom>
           JOIN SYSHUB
@@ -242,7 +242,7 @@ class Register extends Component {
               lg={{ size: 8, offset: 2 }}
               md={{ size: 10, offset: 1 }}
               xs={12}
-              justify="center"
+              /* justify="center" */
             >
               {/* For User Name */}
               <FormItem

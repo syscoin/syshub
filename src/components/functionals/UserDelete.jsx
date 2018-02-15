@@ -14,7 +14,7 @@ class UserDelete extends Component {
       <div className={style}>
         <Grid container>
           {/* change password text */}
-          <Grid md={12}>
+          <Grid item md={12}>
             <h1 className="userDelete-heading">Delete Account</h1>
             <p className="UserDelete-text">
               YOUR ACCOUNT WILL BE DELETED COMPLETELY.

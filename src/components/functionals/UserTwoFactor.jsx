@@ -152,11 +152,11 @@ class UserTwoFactor extends Component {
       <div className={style}>
         <Grid container>
           {/* change password text */}
-          <Grid md={12} className="heading-grid">
+          <Grid item md={12} className="heading-grid">
             <h1 className="userTwoFactor-heading">2-Factor-Authentication</h1>
           </Grid>
           {/* userTwofactor left grid */}
-          <Grid md={6} className="userTwoFactor-left-grid">
+          <Grid item md={6} className="userTwoFactor-left-grid">
             <span className="enable2FA-note">
               Note: Enabling 2FA to secure your account is recommended
             </span>
