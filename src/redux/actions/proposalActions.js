@@ -16,9 +16,6 @@ export default {
     const txt = 'Hello HEX World';
     const hex = Hex.strToHex(txt);
     const str = Hex.hexToStr(hex);
-    console.log('ACZ Original String: ', txt);
-    console.log('ACZ To Hex: ', hex);
-    console.log('ACZ To Str: ', str);
     // -------------------------------------------
 
     return dispatch => {

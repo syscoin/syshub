@@ -48,9 +48,12 @@ export default {
               display: 'block',
             },
             '& .chatContent-primaryText': {
+              display:'block',
+              padding:'8px 0px',
               color: primary,
             },
             '& .chatContent-secondaryText': {
+              display:'block',              
               color: greyDark,
               padding: '0px 0px 0px 5px',
               fontWeight: '100',

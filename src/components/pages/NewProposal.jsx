@@ -78,7 +78,7 @@ class NewProposal extends Component {
         swal({
           title: 'Recovery',
           text:
-            'It seems you have some information saved in our db, would you like to recover the data?',
+          'It seems you have some information saved in our db, would you like to recover the data?',
           buttons: true,
           icon: 'info'
         })
@@ -124,8 +124,8 @@ class NewProposal extends Component {
                   closeOnEsc: false,
                   title: 'Success',
                   text: `"${
-                    userProp.submitReceipt
-                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                  userProp.submitReceipt
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -214,8 +214,8 @@ class NewProposal extends Component {
                   closeOnEsc: false,
                   title: 'Success',
                   text: `"${
-                    userProp.prepareReceipt
-                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+                  userProp.prepareReceipt
+                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -449,15 +449,10 @@ class NewProposal extends Component {
       activeStep: this.state.activeStep + 1,
       showEditor: true
     });
-    // console.log(this.state.proposalTitle, 'proposalTitle');
-    // console.log(this.state.address, 'address');
-    // console.log(this.state.amount, 'amount');
-    // console.log(this.state.paymentQuantity, 'parment quantity');
   };
 
   handleBack = () => {
     if (this.state.activeStep === 2) {
-      // console.log('active step');
       this.setState({ showEditor: true });
     }
     this.setState(
@@ -481,7 +476,6 @@ class NewProposal extends Component {
 
   //date change function
   onDateChange(date, dateString) {
-    // console.log(date, dateString);
     this.setState({
       proposalDate: dateString
     });
@@ -534,7 +528,6 @@ class NewProposal extends Component {
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
-        // console.log('----------------------');
       }
     );
   }
@@ -586,6 +579,7 @@ class NewProposal extends Component {
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
                   }`}
+                onChange={() => { }}
               />
             </Col>
           </Row>
@@ -596,13 +590,6 @@ class NewProposal extends Component {
           <Row className="proposal-details-row">
             {/* Proposal Detail Colomn */}
             <Col span={deviceType === 'mobile' ? 24 : 20}>
-              {/* {this.state.showEditor ?
-
-                <Button className='preview-edit-button' onClick={this.previewHTML.bind(this)}>PREVIEW</Button>
-                :
-                <Button className='preview-edit-button' onClick={() => { this.setState({ showEditor: true }) }}>EDITOR</Button>
-
-              } */}
               {this.state.showEditor ? (
                 <div>
                   <h2 className="editor-title">Write proposal details</h2>
@@ -691,7 +678,8 @@ class NewProposal extends Component {
           <Row className="amount-row">
             <Col span={deviceType === 'mobile' ? 18 : 4}>
               <Input
-                type="text"
+                type="number"
+                min={1}
                 placeholder="0"
                 value={this.state.amount}
                 onChange={this.getAmount}
@@ -705,11 +693,9 @@ class NewProposal extends Component {
     }
   }
   onEditorStateChange(editorState) {
-    console.log("editorState", editorState)
     this.setState({
       editorState
     });
-    console.log(this.state.editorState.getCurrentContent().hasText(), 'editor state');
   }
 
   disabledNextBtn(step) {
@@ -754,7 +740,6 @@ class NewProposal extends Component {
 
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    // console.log(this.state.proposal__detail, 'detail');
     return (
       <div className={style}>
         <h1 className="title">Proposal Configuration</h1>

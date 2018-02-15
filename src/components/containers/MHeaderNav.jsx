@@ -20,7 +20,6 @@ class MHeaderNav extends Component {
   }
 
   itemClick(e) {
-    console.log(e.target.id);
     this.props.setPage(e.target.id);
   }
 
@@ -40,7 +39,6 @@ class MHeaderNav extends Component {
             this.props.showMenu ? { backgroundColor: '#53a5cc' } : { backgroundColor: 'inherit' }
           }
         >
-          {/* <Dropdown overlay={menu} placement="bottomRight"> */}
           <IconButton
             color="inherit"
             aria-label="Menu"
@@ -48,7 +46,6 @@ class MHeaderNav extends Component {
           >
             <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>
-          {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
           <img
@@ -78,7 +75,6 @@ class MHeaderNav extends Component {
             onClick={() => this.props.toggleChat()}
           >
             <img src={chatIcon} alt="chat icon" height="30" id="chatbox" />
-            {/* Call function for toggle */}
           </Button>
         </Grid>
       </Grid>

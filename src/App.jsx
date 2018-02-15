@@ -49,18 +49,12 @@ class App extends Component {
     });
   }
 
-  componentWillUnmount() {
-    // this.clearInterval(this.state.timer);
-  }
-
   tick() {
     this.props.getSysStats();
   }
 
   render() {
     const { classes } = this.props;
-    
-    // console.log('Current User ===>', this.props.app.currentUser);
     return (
       /* <HttpsRedirect> */
       <div className={classes.root}>

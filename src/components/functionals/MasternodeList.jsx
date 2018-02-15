@@ -30,7 +30,6 @@ class MasterNodeList extends Component {
 
   showEditModal(record) {
     this.editNode = record;
-    console.log('record', record);
     this.setState({
       editNodeModal: true,
       editNodeRecord: {
@@ -48,7 +47,6 @@ class MasterNodeList extends Component {
     });
   };
   handleCancel = e => {
-    console.log(e);
     this.setState({
       editNodeRecord: {
         name: '',
@@ -74,11 +72,8 @@ class MasterNodeList extends Component {
       zIndex: 99999,
       onOk() {
         confrimDelete();
-        console.log('OK');
       },
-      onCancel() {
-        console.log('Cancel');
-      },
+      onCancel() { },
     });
   }
 

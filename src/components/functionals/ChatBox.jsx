@@ -69,7 +69,6 @@ class ChatBox extends Component {
 
   addMessage(message) {
     const { currentUser } = this.props.app;
-    console.log(message, "message")
     if (!currentUser) {
       this.loginAlert();
       return;
@@ -135,8 +134,8 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={<p className="chatContent-primaryText">{message.user.displayName}</p>}
-                    secondary={<p className="chatContent-secondaryText">{message.body}</p>}
+                    primary={<span className="chatContent-primaryText">{message.user.displayName}</span>}
+                    secondary={<span className="chatContent-secondaryText">{message.body}</span>}
                   />
                 ))}
               </div>

@@ -45,7 +45,6 @@ class AppHeader extends Component {
   render() {
     const { classes, deviceType } = this.props;
     const { currentUser } = this.props.app;
-    console.log('AaaaaaaAAAAAAAAAAAAAAAAAA', this.props);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 

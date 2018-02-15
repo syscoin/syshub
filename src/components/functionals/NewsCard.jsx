@@ -33,7 +33,7 @@ class NewsCard extends Component {
       <div className={style}>
         <div className={'card-item'} key={post.guid}>
           {/* news card */}
-          <Grid item spacing={24} className="news-card-grid">
+          <Grid container spacing={24} className="news-card-grid">
             {/* news image grid */}
             <Grid
             item

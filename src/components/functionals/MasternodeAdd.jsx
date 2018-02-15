@@ -21,12 +21,6 @@ class MasterNodeAdd extends Component {
   addNode(event) {
     event.preventDefault();
     if (this.state.newNode.name && this.state.newNode.address) {
-      console.log(
-        'Master Node name ' +
-          this.state.newNode.name +
-          ' Master Node Address ' +
-          this.state.newNode.address
-      );
       this.props.addNode(this.state.newNode);
       this.setState({ newNode: { name: '', address: '' } });
     }

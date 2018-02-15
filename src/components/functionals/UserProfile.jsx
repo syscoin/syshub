@@ -45,7 +45,6 @@ class UserProfile extends Component {
           function (snapshot) {
             const progress =
               snapshot.bytesTransferred / snapshot.totalBytes * 100;
-            console.log('Upload is ' + progress + '% done');
           },
           function (error) {
             switch (error.code) {
@@ -125,7 +124,6 @@ class UserProfile extends Component {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-    console.log(this.state.image, 'state image');
   }
 
   render() {

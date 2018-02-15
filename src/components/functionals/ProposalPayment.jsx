@@ -22,7 +22,6 @@ class ProposalPayment extends Component {
       startDate: startDate,
       endDate: endDate
     };
-    console.log('payment data', this.props.data);
   }
   render() {
     const { classes, deviceType } = this.props;

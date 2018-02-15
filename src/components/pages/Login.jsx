@@ -199,10 +199,10 @@ class Login extends Component {
           >
             <Grid
               item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
+              lg={8}
+              md={10}
               xs={12}
-              justify="center"
+              //justify="center"
             >
               {/* For User Name */}
               <FormGroup className="form-group">

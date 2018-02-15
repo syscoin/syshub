@@ -184,11 +184,11 @@ class Faq extends Component {
             {faqQuestions.map((cat, index) => {
               return (
                 <Panel header={cat.section} key={index} className="faq-category">
-                  {cat.questions.map((ques, index) => {
+                  {cat.questions.map((ques, index1) => {
                     return (
-                      <Collapse bordered={false} key ={index}>
+                      <Collapse bordered={false} key={index1}>
                         <div className="list-dot"></div>
-                        <Panel header={ques.question} key={index} showArrow={false} className="faq-subCategory">
+                        <Panel header={ques.question} showArrow={false} className="faq-subCategory">
                           <div style={{ padding: '15px', border: '1px solid #a4b0be', marginLeft: 35 }}>
                             <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
                               {ques.answer}

@@ -34,7 +34,6 @@ class Register extends Component {
       disableRegisterButton: true,
       verify: null
     };
-    console.log('FromItem', FormItem);
   }
 
   componentDidMount() {
@@ -63,11 +62,6 @@ class Register extends Component {
   }
 
   onChange = e => {
-    console.log('checked = ', e.target.checked);
-    // this.setState({
-    //   checked: e.target.checked,
-    //   enableRegisterButton: false
-    // });
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -81,16 +75,9 @@ class Register extends Component {
     }
   };
 
-  // specifying your onload callback function
-  callback() {
-    console.log('Recaptcha onLoad CallBack: Done!!!!');
-  }
-
   // specifying verify callback function
   verifyCallback(response) {
-    console.log('Recaptcha Verify CallBack: ', response);
     this.setState({ verify: response });
-    console.log(this.verify, 'captcha verify');
   }
 
   checkUsername(event) {
@@ -155,7 +142,6 @@ class Register extends Component {
     let username, email, password;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         username = values.username;
         email = values.email;
         password = values.password;
@@ -239,10 +225,10 @@ class Register extends Component {
           >
             <Grid
               item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
+              lg={8}
+              md={10}
               xs={12}
-              /* justify="center" */
+            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -269,7 +255,7 @@ class Register extends Component {
                     placeholder="Enter Username"
                     onChange={e => this.checkUsername(e)}
                   />
-                )}
+                  )}
 
                 {this.state.usernames ? (
                   <span className="validation-message">
@@ -310,7 +296,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="Enter email"
                   />
-                )}
+                  )}
               </FormItem>
 
               {/* For Password */}
@@ -358,7 +344,7 @@ class Register extends Component {
                       }}
                     />
                   </div>
-                )}
+                  )}
                 {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
@@ -392,7 +378,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="**************"
                   />
-                )}
+                  )}
               </FormItem>
 
               {/* For Confirm Password */}
