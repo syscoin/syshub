@@ -3,7 +3,8 @@ import swal from 'sweetalert';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
-const phoneValidation = (phoneNumber, isoCode, user) => {
+//const phoneValidation = (phoneNumber, isoCode, user) => {
+const phoneValidation = (phoneNumber, isoCode) => {
   if (phoneNumber == null || isoCode == null) {
     swal({
       title: 'Oops...',

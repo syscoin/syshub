@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Rebase from 're-base';
 import * as firebase from 'firebase';
 import swal from 'sweetalert';
@@ -26,7 +27,8 @@ const votes = fire.database().ref('votes');
 
 //Some useful functions
 const checkVoted = (user, proposal) => {
-  return new Promise((resolve, reject) => {
+  //return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fire
       .database()
       .ref('votes/' + user.uid)
@@ -101,7 +103,7 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
   });
 };
 
-const doRegister = () => {};
+const doRegister = () => { };
 
 const doLogin = (email, password) => {
   fire
