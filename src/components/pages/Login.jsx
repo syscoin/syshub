@@ -90,14 +90,17 @@ class Login extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         if (user.phoneNumber) {
+          const savedUser = user;
+          fire.auth().signOut();
+          this.props.setCurrentUser(null);
           fire
             .database()
-            .ref('2FA/' + user.uid)
+            .ref('2FA/' + savedUser.uid)
             .once('value', snap => {
               if (snap.val() === true) {
                 fire
                   .auth()
-                  .signInWithPhoneNumber(`${user.phoneNumber}`, appVerifier)
+                  .signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
                   .then(confirmationResult => {
                     if (confirmationResult) {
                       swal({
@@ -137,15 +140,24 @@ class Login extends Component {
                         })
                         .catch(err => {
                           fire.auth().signOut();
+                          this.props.setCurrentUser(null);
                           this.loginForm.reset();
-
+                          this.verify = undefined;
+                          window.recaptchaVerifier.render().then(widgetId => {
+                            window.recaptchaVerifier.reset(widgetId);
+                          });
                           swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                         });
                     }
                   })
                   .catch(err => {
                     fire.auth().signOut();
+                    this.props.setCurrentUser(null);
                     this.loginForm.reset();
+                    this.verify = undefined;
+                    window.recaptchaVerifier.render().then(widgetId => {
+                      window.grecaptcha.reset(widgetId);
+                    });
 
                     swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                   });
@@ -164,7 +176,12 @@ class Login extends Component {
       })
       .catch(err => {
         fire.auth().signOut();
-
+        this.props.setCurrentUser(null);
+        this.loginForm.reset();
+        this.verify = undefined;
+        window.recaptchaVerifier.render().then(widgetId => {
+          window.recaptchaVerifier.reset(widgetId);
+        });
         swal({
           title: 'Oops...',
           text: `${err}`,
@@ -236,6 +253,7 @@ class Login extends Component {
                 <Button type="submit" color="primary">
                   Login
                 </Button>
+
                 <a onClick={this.passwordRecovery}>Forget Your Password?</a>
               </FormGroup>
             </Grid>
@@ -254,7 +272,8 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page))
+    setPage: page => dispatch(actions.setPage(page)),
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user))
   };
 };
 
