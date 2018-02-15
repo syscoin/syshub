@@ -41,7 +41,6 @@ class ProposalComments extends Component {
     this.setReply = this.setReply.bind(this);
     this.voteForComment = this.voteForComment.bind(this);
     this.voteCount = this.voteCount.bind(this);
-    this.changePage = this.changePage.bind(this);
     this.setComment = this.setComment.bind(this);
     this.editedComment = this.editedComment.bind(this);
     this.setEditComment = this.setEditComment.bind(this);
@@ -227,6 +226,16 @@ class ProposalComments extends Component {
           if (_voteIndex > -1) {
             _item.votes[_voteIndex].action = action;
           }
+          else {
+            var newVote = {
+              by: {
+                name: this.props.user.displayName,
+                uid: this.props.user.uid,
+              },
+              action: action
+            }
+            _item.votes.push(newVote);
+          }
         }
         comments.child(this.props.data.proposalID).child(commentID).set(_item);
       }
@@ -275,7 +284,9 @@ class ProposalComments extends Component {
   }
 
   deleteComment(id) {
-    comments.child(this.state.proposalID).child(id).remove();
+    comments.child(this.state.proposalID).child(id).remove().then(() => {
+      commentReplies.child(id).remove();
+    });
   }
 
   showAddReplyBtn(_commentID, showAddReply) {
@@ -309,7 +320,7 @@ class ProposalComments extends Component {
           <hr />
         </Grid>
         {this.state.showAddComment ?
-          <Grid container md={8} className="commentSectionslView">
+          <Grid item container md={8} className="commentSectionslView">
             <Grid item md={12} className="commentHeading">
               Add Comment
           </Grid>

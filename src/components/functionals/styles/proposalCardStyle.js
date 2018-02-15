@@ -238,7 +238,6 @@ export default {
       '& .top-vote__wrapper': {
         textAlign: 'center',
         paddingTop: 0,
-        minWidth: 90,
         '& .vote-text': {
           color: primaryDark,
         },

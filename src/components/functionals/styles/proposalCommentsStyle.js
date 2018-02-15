@@ -44,13 +44,11 @@ export default {
         fontSize: 16,
       },
       '& .proposalDetails': {
-        marginLeft: 5,
         color: gray,
         fontSize: 15,
         background: white,
         padding: '10px 20px',
-        maxWidth: '99.2%',
-        height: 135,
+        maxWidth: '100%%',
         '& .userComment': {
           border: 0,
         },
@@ -82,7 +80,9 @@ export default {
       marginTop: 10,
       borderRadius: 10,
       border: '1px solid' + gray,
-      minHeight: 320,
+      minHeight: 200,
+      display: 'block',
+      paddingBottom: 20,
       '& .commentlHrView': {
         margin: 0,
         marginLeft: '4%',
@@ -134,6 +134,9 @@ export default {
         marginLeft: '7%',
         fontSize: 16,
         color: gray,
+        '&>p': {
+          display: 'inline-block',
+        },
         '& .show-edited': {
           width: 5,
           fontSize: 10,
@@ -168,11 +171,10 @@ export default {
           fontSize: 16,
         },
         '& .proposalDetails': {
-          marginLeft: 5,
           color: gray,
           fontSize: 15,
           background: white,
-          maxWidth: '99%',
+          maxWidth: '100%',
           padding: '10px 20px',
           boxShadow: '5px 5px 20px ' + gray,
           '& .userComment': {
@@ -315,5 +317,82 @@ export default {
       cursor: 'pointer'
     }
   },
-  mRoot: { extend: 'root' },
+  mRoot: {
+    extend: 'root',
+    width: '100%',
+    '& .commentHeadingDiv': {
+      '& .heading': {
+        '&>p': {
+          fontSize: 20,
+        }
+      }
+    },
+    '& .commentSectionslView': {
+      width: '98%',
+      '& .proposalDetails': {
+        width: '100%',
+        maxWidth: '100%',
+        marginLeft: 0,
+      }
+    },
+    '& .topCommentWithReplyView': {
+      width: '100%',
+      display: 'block',
+      maxHeight: '100%',
+      paddingBottom: 10,
+      minHeight: '1%',
+      '& .commentHeading': {
+        '& .userView': {
+          width: '70%',
+          display: 'inline-block',
+          '& .userName': {
+            padding: 10,
+          },
+          '& .commentDate': {
+            marginLeft: 0,
+            fontSize: 12,
+          }
+        },
+        '& .votesView': {
+          width: '30%',
+          padding: '0px 10px',
+          '& .downVoteICon': {
+            marginLeft: 10,
+            marginRight: 5,
+          }
+        }
+      },
+      '& .newYearView': {
+        marginRight: '7%',
+        '&>p': {
+          display: 'inline-block'
+        }
+      },
+      '& .topcommentSectionslView': {
+        width: '100%',
+        margin: '3px 0 20px 2%',
+
+      }
+    },
+    '& .allReplies': {
+      width: '100%',
+      display: 'block',
+      margin: 'auto',
+      marginLeft: '2%',
+      '& .replyHeading': {
+        width: '100%',
+        margin: 'auto',
+        '& .replyUserVeiw': {
+          '& .replyUserName': {
+            padding: '10px 25px 10px 10px',
+
+          }
+        }
+      },
+      '& .commentlHrView': {
+        maxWidth: '90% !important',
+        marginLeft: '7% !important',
+      }
+    }
+  },
 };

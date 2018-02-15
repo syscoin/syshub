@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { Grid, withStyles, Typography } from 'material-ui';
+import { Grid, withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
@@ -40,9 +40,9 @@ class DashBoard extends Component {
 
     return (
       <Grid className={style}>
-        <Typography variant="display1" className="proposal-heading">
+        <h1 className="proposal-heading">
           PROPOSAL DASHBOARD
-      </Typography>
+      </h1>
         {this.state.showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />

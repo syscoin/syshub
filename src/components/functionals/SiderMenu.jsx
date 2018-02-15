@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import SiderLogo from './SiderLogo';
 import { connect } from 'react-redux';
-import {withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 import { siderMenuStyle } from './styles';
 
@@ -48,6 +48,7 @@ class SiderMenu extends Component {
               key={i}
               className={btnStyle}
               onClick={() => this.tests(item.key)}
+              style={deviceType === 'mobile' ? { width: '100%', marginLeft: 0, } : null}
             >
               <img
                 alt="a"

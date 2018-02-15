@@ -10,7 +10,7 @@ export default {
   },
   appContent: {
     width: 'calc(80vw - 95px)',
-    height: 'calc(100vh - 155px)',
+    height: '100%',
     overflowY: 'hidden',
     marginLeft: 20,
     marginTop: 10

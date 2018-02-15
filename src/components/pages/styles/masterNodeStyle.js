@@ -1,13 +1,15 @@
 import palette from './palette';
 
 const white = palette.white;
-
+const greyDark = palette.greyDark;
 export default {
   root: {
     '& .title': {
-      display: "inline-block",
-      fontWeight: 'lighter',
-      textTransform: 'uppercase'
+      fontWeight: 300,
+      color: greyDark,
+      textTransform: 'uppercase',
+      padding: 15,
+      backgroundColor: white,
     },
     '& .masternode-div': {
       background: white,
@@ -20,10 +22,6 @@ export default {
     extend: 'root',
     '& .title': {
       width: '100%',
-      margin: 0,
-      padding: '10px 20px',
-      fontSize: 25,
-      backgroundColor: white,
     },
     '& .masternode-div': {
       height: 'auto',

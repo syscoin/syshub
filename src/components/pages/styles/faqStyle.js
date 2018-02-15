@@ -8,7 +8,11 @@ const greyDark = palette.greyDark;
 export default {
   root: {
     '& .title': {
-      fontWeight: 'lighter'
+      fontWeight: 300,
+      color: greyDark,
+      textTransform: 'uppercase',
+      padding: 15,
+      backgroundColor: white,
     },
     '& .faqs-div': {
       background: white,
@@ -82,10 +86,6 @@ export default {
   mRoot: {
     extend: 'root',
     '& .title': {
-      padding: '10px 20px 0px 20px',
-      margin: 0,
-      background: white,
-      fontWeight: 300,
     },
     '& .faqs-div': {
       padding: '15px 15px 0px 15px',

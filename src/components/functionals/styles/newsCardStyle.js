@@ -27,9 +27,10 @@ export default {
         },
       },
       '& .newsCardContent-grid': {
-        marginTop:15,
+        marginTop: 15,
         verticalAlign: 'middle',
         '& .card': {
+          boxShadow: 'none',
           '& .news-heading': {
             marginBottom: '10px',
             fontWeight: 600,
@@ -90,7 +91,7 @@ export default {
         verticalAlign: 'middle',
         '& .card': {
           '& .news-heading': {
-            marginTop:10,
+            marginTop: 10,
             fontSize: 15,
             marginBottom: '10px',
             fontWeight: 600,
@@ -125,7 +126,7 @@ export default {
     },
     '& .divider': {
       marginTop: 10,
-      width:'105%'
+      width: '105%'
     },
   },
 };

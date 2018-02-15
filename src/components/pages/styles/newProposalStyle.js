@@ -9,7 +9,6 @@ const greyLight = palette.greyLight;
 
 export default {
   root: {
-    marginTop: '20px',
     '& StepLabel': {
       color: 'red',
     },
@@ -20,6 +19,11 @@ export default {
       fontWeight: 300,
     },
     '& .steper__container': {
+      '& .classNameProp': {
+        '&>div:nth-child(2)': {
+          width: '100%',
+        },
+      },
       '& > span > span:nth-child(2)': {
         width: '100%',
         '& .preview-edit-button': {
@@ -37,9 +41,11 @@ export default {
       }
     },
     '& .title': {
-      fontWeight: 'lighter',
+      fontWeight: 300,
       color: greyDark,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      padding: 15,
+      backgroundColor: white,
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -82,8 +88,7 @@ export default {
         fontSize: '22px',
         color: primaryLight,
         display: 'inline-block',
-        // paddingLeft: 'calc(50% + 50px )',
-        marginLeft: "calc(50% - 220px)"
+        marginLeft: "calc(50% - 235px)"
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,

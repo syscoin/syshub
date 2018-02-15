@@ -3,7 +3,6 @@ import { Collapse } from 'antd';
 
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui';
-import Typography from 'material-ui/Typography';
 
 // import components
 import { faqStyle } from './styles';
@@ -175,9 +174,9 @@ class Faq extends Component {
     return (
       <div className={style}>
 
-        <Typography variant="display1" gutterBottom>
+        <h1 className="title">
           SYSHUB FAQ
-      </Typography>
+      </h1>
 
         <div className="faqs-div">
           <Collapse bordered={false}>

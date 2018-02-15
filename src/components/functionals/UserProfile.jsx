@@ -42,10 +42,6 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function (snapshot) {
-            const progress =
-              snapshot.bytesTransferred / snapshot.totalBytes * 100;
-          },
           function (error) {
             switch (error.code) {
               case 'storage/unauthorized':

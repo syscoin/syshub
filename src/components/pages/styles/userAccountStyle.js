@@ -1,14 +1,16 @@
 import palette from './palette';
-
-
 const white = palette.white;
-
+const greyDark = palette.greyDark;
 
 
 export default {
   root: {
     '& .title': {
-      fontWeight: 'lighter',
+      fontWeight: 300,
+      color: greyDark,
+      textTransform: 'uppercase',
+      padding: 15,
+      backgroundColor: white,
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -24,7 +26,6 @@ export default {
   mRoot: {
     extend: 'root',
     '& .title': {
-      margin: 0,
       padding: 15,
       background: white,
       paddingLeft: 15,

@@ -78,7 +78,7 @@ class NewProposal extends Component {
         swal({
           title: 'Recovery',
           text:
-          'It seems you have some information saved in our db, would you like to recover the data?',
+            'It seems you have some information saved in our db, would you like to recover the data?',
           buttons: true,
           icon: 'info'
         })
@@ -124,8 +124,8 @@ class NewProposal extends Component {
                   closeOnEsc: false,
                   title: 'Success',
                   text: `"${
-                  userProp.submitReceipt
-                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
+                    userProp.submitReceipt
+                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a proposal hash, once you have done that please paste the proposal hash into the input. This could take a couple of minutes please be patient.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -214,8 +214,8 @@ class NewProposal extends Component {
                   closeOnEsc: false,
                   title: 'Success',
                   text: `"${
-                  userProp.prepareReceipt
-                  }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
+                    userProp.prepareReceipt
+                    }" \n \n Please copy and paste this code into your wallet terminal in order to obtain a payment id, once you have done that please paste the payment id into the input.`,
                   icon: 'success',
                   buttons: true,
                   dangerMode: false,
@@ -782,7 +782,7 @@ class NewProposal extends Component {
                           ) : null}
                       </StepLabel>
                       <StepContent>
-                        <div>{this.getStepContent(index)}</div>
+                        <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
                         <div className={classes.actionsContainer}>
                           <div
                             className={

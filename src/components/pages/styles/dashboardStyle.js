@@ -5,8 +5,12 @@ const white = palette.white;
 const grey = palette.greyDark;
 export default {
   root: {
-    '& .dashBoardheading': {
-      fontWeight: 'lighter',
+    '& .proposal-heading': {
+      color: grey,
+      textTransform: 'uppercase',
+      backgroundColor: white,
+      padding: 15,
+      fontWeight: 300,
     },
     '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
     '& .icon': { color: primary },
@@ -15,11 +19,6 @@ export default {
   mRoot: {
     extend: 'root',
     '& .proposal-heading': {
-      padding: 15,
-      fontSize: 25,
-      backgroundColor: white,
-      color: grey,
-      fontWeight: 300,
     },
     '& .dashBoardheading': {
       fontWeight: 'lighter',

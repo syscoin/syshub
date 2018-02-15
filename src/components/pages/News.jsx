@@ -6,7 +6,6 @@ import { withStyles } from 'material-ui';
 import { Icon } from 'antd';
 import Paper from 'material-ui/Paper';
 import { NewsList, NewsDetail } from '../containers';
-import Typography from 'material-ui/Typography';
 
 // import style
 import { newsStyle } from './styles';
@@ -41,9 +40,7 @@ class News extends Component {
     const { classes, channel } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="display1" gutterBottom>
-          NEWS AND ANNOUNCEMENTS
-      </Typography>
+        <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
         {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
             {/* <Icon type="backward" className="icon" /> */}
