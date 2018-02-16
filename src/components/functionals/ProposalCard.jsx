@@ -10,9 +10,12 @@ import { checkVoted, voted } from '../../API/firebase';
 import { Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
+import Cryptr from 'cryptr';
 
 // import style
 import { proposalCardStyle } from './styles';
+
+const cryptr = new Cryptr('myTotalySecretKey');
 
 class ProposalCard extends Component {
   state = {
@@ -62,7 +65,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -82,10 +85,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteYes = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 1
             };
@@ -121,7 +124,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -141,10 +144,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteNo = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 2
             };

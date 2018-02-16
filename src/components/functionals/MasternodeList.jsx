@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Grid, withStyles, FormGroup } from 'material-ui';
+import actions from '../../redux/actions';
+import { Grid, withStyles, FormGroup, Input } from 'material-ui';
+import Cryptr from 'cryptr';
 
 // import style
 import { masternodeListStyle } from './styles';
 import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
+const cryptr = new Cryptr('myTotalySecretKey');
 
 class MasterNodeList extends Component {
   constructor(props) {
@@ -16,8 +19,8 @@ class MasterNodeList extends Component {
       editNode: false,
       editNodeRecord: {
         name: '',
-        address: '',
-      },
+        address: ''
+      }
     };
     this.editNode = {};
     this.showEditModal = this.showEditModal.bind(this);
@@ -34,27 +37,30 @@ class MasterNodeList extends Component {
       editNodeModal: true,
       editNodeRecord: {
         name: record.name,
-        address: record.address,
+        address: cryptr.decrypt(record.address),
         key: record.key,
-      },
+        vin: cryptr.decrypt(record.vin),
+        keyId: record.keyId
+      }
     });
   }
 
-  handleOk = e => {
+  handleOk(e) {
     this.props.editNode(this.state.editNodeRecord);
     this.setState({
-      editNodeModal: false,
+      editNodeModal: false
     });
-  };
-  handleCancel = e => {
+  }
+
+  handleCancel(e) {
     this.setState({
       editNodeRecord: {
         name: '',
-        address: '',
+        address: ''
       },
-      editNodeModal: false,
+      editNodeModal: false
     });
-  };
+  }
 
   deleteMasterNode(node) {
     this.props.deleteNode(node);
@@ -82,8 +88,8 @@ class MasterNodeList extends Component {
     this.setState({
       editNodeRecord: {
         ...this.state.editNodeRecord,
-        [e.target.name]: e.target.value,
-      },
+        [e.target.name]: e.target.value
+      }
     });
   }
 
@@ -98,33 +104,33 @@ class MasterNodeList extends Component {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: text => <span>{text}</span>,
+        render: text => <span>{text}</span>
       },
       {
-        title: 'Address',
+        title: 'MN Private Key',
         dataIndex: 'address',
         key: 'address',
-        render: text => <span>{deviceType === 'mobile' ? text.substring(0, 7) + "..." : text}</span>,
+        render: text => (
+          <span>
+            {deviceType == 'mobile'
+              ? cryptr.decrypt(text).substring(0, 7) + '...'
+              : cryptr.decrypt(text)}
+          </span>
+        )
       },
       {
         key: 'action',
         render: (text, record) => (
           <span>
-            <Button
-              className="edit-btn"
-              onClick={() => this.showEditModal(record)}
-            >
+            <Button className="edit-btn" onClick={() => this.showEditModal(record)}>
               Edit
             </Button>
-            <Button
-              className="delete-btn"
-              onClick={() => this.showDeleteConfirm(record)}
-            >
+            <Button className="delete-btn" onClick={() => this.showDeleteConfirm(record)}>
               Delete
             </Button>
           </span>
-        ),
-      },
+        )
+      }
     ];
 
     return (
@@ -142,7 +148,7 @@ class MasterNodeList extends Component {
             </Button>,
             <Button key="back" onClick={this.handleCancel}>
               Close
-            </Button>,
+            </Button>
           ]}
           zIndex={99999}
         >
@@ -154,12 +160,7 @@ class MasterNodeList extends Component {
               }}
               className="wrapper"
             >
-              <Grid
-                item
-                lg={{ size: 8, offset: 2 }}
-                md={{ size: 10, offset: 1 }}
-                justify="center"
-              >
+              <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
                 {/* For User Name */}
                 <FormGroup className="form-group">
                   <span htmlFor="user-name" className="label">
@@ -179,7 +180,7 @@ class MasterNodeList extends Component {
                 {/* For Password */}
                 <FormGroup className="form-group">
                   <span htmlFor="password" className="label">
-                    {`Masternode 1000 SYS coin Address: `}
+                    {`MN Private Key: `}
                   </span>
                   <input
                     ref={address => (this.nodeAddress = address)}
@@ -188,6 +189,20 @@ class MasterNodeList extends Component {
                     className="input-field"
                     placeholder="123.45.67.891.12345"
                     value={this.state.editNodeRecord.address}
+                    onChange={this.onChange}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group">
+                  <span htmlFor="password" className="label">
+                    {`MN Vin: `}
+                  </span>
+                  <input
+                    ref={vin => (this.nodeVin = vin)}
+                    id="vin"
+                    name="vin"
+                    className="input-field"
+                    placeholder="123.45.67.891.12345"
+                    value={this.state.editNodeRecord.vin}
                     onChange={this.onChange}
                   />
                 </FormGroup>
@@ -200,15 +215,17 @@ class MasterNodeList extends Component {
             <h2 className="list-title">Masternode List</h2>
           </div>
           <div className="node-list-table">
-            <Table
-              pagination={{
-                pageSize: 4,
-                hideOnSinglePage: true,
-                size: 'small',
-              }}
-              columns={columns}
-              dataSource={this.props.nodes}
-            />
+            {this.props.nodes.length > 0 ? (
+              <Table
+                pagination={{
+                  pageSize: 4,
+                  hideOnSinglePage: true,
+                  size: 'small'
+                }}
+                columns={columns}
+                dataSource={this.props.nodes}
+              />
+            ) : null}
           </div>
         </div>
       </div>

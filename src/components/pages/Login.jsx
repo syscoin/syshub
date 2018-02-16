@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -89,81 +89,88 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        if (user.phoneNumber) {
-          fire
-            .database()
-            .ref('2FA/' + user.uid)
-            .once('value', snap => {
-              if (snap.val() === true) {
-                fire
-                  .auth()
-                  .signInWithPhoneNumber(`${user.phoneNumber}`, appVerifier)
-                  .then(confirmationResult => {
-                    if (confirmationResult) {
-                      swal({
-                        closeOnClickOutside: false,
-                        closeOnEsc: false,
-                        title: 'Success',
-                        text: 'Please provide use the verification code to continue',
-                        icon: 'success',
-                        buttons: true,
-                        dangerMode: false,
-                        content: {
-                          element: 'input',
-                          attributes: {
-                            placeholder: 'Confirmation code here',
-                            type: 'text'
-                          }
-                        }
-                      })
-                        .then(value => {
-                          if (!value) {
-                            throw new Error('Must provide a code to login.');
-                          }
-
-                          return confirmationResult.confirm(value);
-                        })
-                        .then(response => {
-                          return fire.auth().signInWithEmailAndPassword(email, password);
-                        })
-                        .then(user => {
-                          swal({
-                            title: 'Sucess',
-                            text: `${user.email} signed in with sms verification`,
-                            icon: 'success'
-                          });
-
-                          this.props.setPage('home');
-                        })
-                        .catch(err => {
-                          fire.auth().signOut();
-                          this.loginForm.reset();
-
-                          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-                        });
-                    }
-                  })
-                  .catch(err => {
-                    fire.auth().signOut();
-                    this.loginForm.reset();
-
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-                  });
+        if (this.props.app.auth) {
+          if (user.phoneNumber == null) {
+            swal({
+              title: 'Oops...',
+              text: 'Add phone number to the account first in account settings',
+              icon: 'error'
+            });
+            return;
+          }
+          return fire.auth().signInWithPhoneNumber(`+${user.phoneNumber}`, appVerifier);
+        }
+      })
+      .then(confirmationResult => {
+        if (confirmationResult) {
+          swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Success',
+            text: 'Please provide use the verification code to continue',
+            icon: 'success',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Confirmation code here',
+                type: 'text'
               }
+            }
+          })
+            .then(value => {
+              return confirmationResult.confirm(value);
+            })
+            .then(result => {
+              return fire.auth().signInWithEmailAndPassword(email, password);
+            })
+            .then(user => {
+              swal({
+                title: 'Sucess',
+                text: `${user.email} signed in with sms verification`,
+                icon: 'success'
+              });
+
+              //attach MN to user here
+              fire
+                .database()
+                .ref('MasterNodes/' + user.uid)
+                .on('value', snapshot => {
+                  let list = [];
+                  snapshot.forEach(snap => {
+                    list.push(snap.val());
+                  });
+
+                  user.MasterNodes = list;
+                  this.props.setCurrentUser(user);
+                });
+
+              this.props.setPage('home');
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
 
           return;
+        } else {
+          swal({
+            title: 'Success',
+            //text: `${user.email} signed in without sms verification.`,
+            text: `signed in without sms verification.`,
+            icon: 'success'
+          });
+          this.props.setPage('home');
         }
-        swal({
-          title: 'Success',
-          text: `${user.email} signed in without sms verification.`,
-          icon: 'success'
-        });
-        this.props.setPage('home');
       })
       .catch(err => {
         fire.auth().signOut();
-
+        this.props.setCurrentUser(null);
+        this.loginForm.reset();
+        this.verify = undefined;
+        window.recaptchaVerifier.render().then(widgetId => {
+          window.recaptchaVerifier.reset(widgetId);
+        });
         swal({
           title: 'Oops...',
           text: `${err}`,
@@ -235,6 +242,7 @@ class Login extends Component {
                 <Button type="submit" color="primary">
                   Login
                 </Button>
+
                 <a onClick={this.passwordRecovery}>Forget Your Password?</a>
               </FormGroup>
             </Grid>
@@ -253,7 +261,8 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    setPage: page => dispatch(actions.setPage(page))
+    setPage: page => dispatch(actions.setPage(page)),
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user))
   };
 };
 

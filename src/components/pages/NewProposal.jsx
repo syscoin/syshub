@@ -214,6 +214,7 @@ class NewProposal extends Component {
         updatedUserProposal.txid = this.state.payValue;
         proposalRef.set(updatedUserProposal);
         submitObj.txid = this.state.payValue;
+
         this.props
           .submitProposal(submitObj)
           .then(submitResponse => {

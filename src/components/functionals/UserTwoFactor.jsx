@@ -78,7 +78,14 @@ class UserTwoFactor extends Component {
       });
       return;
     }
-
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error'
+      });
+      return;
+    }
     user
       .unlink(fire.auth.PhoneAuthProvider.PROVIDER_ID)
       .then(user => {
