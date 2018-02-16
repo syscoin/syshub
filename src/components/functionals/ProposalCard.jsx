@@ -234,31 +234,60 @@ class ProposalCard extends Component {
             </div>
           </Grid>
 
-          {user ? (
-            <Grid item md={3} xs={3} className="top-vote__wrapper">
-              {user ? <div className="vote-text">Vote on Proposal</div> : null}
-              <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
-                <img src={voteUpIcon} className="upVoteIcon" alt="" />
-              </Button>
-              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
-                <img src={voteDownIcon} className="downVoteIcon" alt="" />
-              </Button>
-              <div className="vote-count">
-                <div className="vote-number">{proposal.YesCount}</div>
-                <div className="vote-number">{proposal.NoCount}</div>
-              </div>
-            </Grid>
-          ) : (
-              <Grid item md={3} xs={2} className="vote__wrapper">
-                <div className="vote-up">
-                  <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                  <span className="voteNumber">{proposal.YesCount}</span>
-                </div>
-                <div className="vote-down">
-                  <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                  <span className="voteNumber">{proposal.NoCount}</span>
-                </div>
-              </Grid>
+          {user ?
+            (
+              deviceType === 'mobile' ?
+                <Grid item md={3} xs={3} className="vote__wrapper">
+                  <div className="vote-text">Vote</div>
+                  <div className="vote-up">
+                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                    <span className="voteNumber">{proposal.YesCount}</span>
+                  </div>
+                  <div className="vote-down">
+                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                    <span className="voteNumber">{proposal.NoCount}</span>
+                  </div>
+                </Grid>
+                :
+                <Grid item md={3} xs={3} className="top-vote__wrapper">
+                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
+                  <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                  </Button>
+                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                  </Button>
+                  <div className="vote-count">
+                    <div className="vote-number">{proposal.YesCount}</div>
+                    <div className="vote-number">{proposal.NoCount}</div>
+                  </div>
+                </Grid>
+            ) : (
+              deviceType === 'mobile' ?
+                <Grid item md={3} xs={3} className="vote__wrapper">
+                  <div className="vote-up">
+                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                    <span className="voteNumber">{proposal.YesCount}</span>
+                  </div>
+                  <div className="vote-down">
+                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                    <span className="voteNumber">{proposal.NoCount}</span>
+                  </div>
+                </Grid>
+                :
+                <Grid item md={3} xs={3} className="top-vote__wrapper">
+                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
+                  <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                  </Button>
+                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                  </Button>
+                  <div className="vote-count">
+                    <div className="vote-number">{proposal.YesCount}</div>
+                    <div className="vote-number">{proposal.NoCount}</div>
+                  </div>
+                </Grid>
             )}
         </Grid>
       </Grid>

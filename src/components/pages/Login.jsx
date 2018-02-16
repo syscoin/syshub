@@ -210,7 +210,7 @@ class Login extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid container className={style} md={12} xs={12}>
+      <Grid item className={style} md={12} xs={12}>
         <h1 className="title">Login to SysHub</h1>
         <Grid item md={12} xs={12} className="form__container">
           <form
@@ -222,10 +222,10 @@ class Login extends Component {
           >
             <Grid
               item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
+              lg={8}
+              md={10}
               xs={12}
-              justify="center"
+              //justify="center"
             >
               {/* For User Name */}
               <FormGroup className="form-group">

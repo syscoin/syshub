@@ -21,6 +21,7 @@ export default {
       borderBottom: '0.1px solid ' + greyLight,
     },
     '& .changePsw-credential-grid': {
+      width: '100%',
       marginTop: '-20px',
       '& .changedPsw-note': {
         color: primaryLight,
@@ -100,7 +101,7 @@ export default {
       },
     },
     '& .confirmChange-button-grid': {
-      padding: '20px',
+      padding: '20px 0px',
     },
     '& button': {
       borderRadius: 5,

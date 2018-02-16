@@ -1,16 +1,21 @@
 import palette from './palette';
+const greyDark = palette.greyDark;
 
-const white = palette.white;
 
 export default {
   root: {
     '& .title': {
-      fontWeight: 'lighter'
+      fontWeight: 300,
+      color: greyDark,
+      textTransform: 'uppercase',
+      padding: 15,
+      margin: 'auto',
     },
     '& .paper-container': {
       padding: '20px 20px',
       overflowY: 'auto',
       height: '80vh',
+      overflowX: 'hidden',
       '& .gridList': {
         width: 500,
         height: 450
@@ -20,14 +25,10 @@ export default {
   mRoot: {
     extend: 'root',
     '& .title': {
-      margin: 0,
-      padding: 15,
-      background: white,
-      paddingLeft: 15
     },
     '& .paper-container': {
       overflowX: 'hidden',
-      height: 'auto'
+      height: 'calc(80vh - 20px)'
     }
   }
 };

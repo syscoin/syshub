@@ -87,11 +87,11 @@ class UserChangePassword extends Component {
       <div className={style}>
         <Grid container className="userPwd-grid">
           {/* change password text */}
-          <Grid md={12}>
+          <Grid item md={12} xs={12} >
             <h1 className="changePsw-heading">Change Password</h1>
           </Grid>
           {/* profile credential grid */}
-          <Grid md={12} className="changePsw-credential-grid">
+          <Grid item md={12} className="changePsw-credential-grid">
             <span className="changedPsw-note">
               Note: You will be redirected to login on successfull completion of
               password change
@@ -209,7 +209,7 @@ class UserChangePassword extends Component {
                 <Grid className="confirmChange-button-grid">
                   <Button
                     htmlType="submit"
-                    raised
+                    variant="raised"
                     className="confirmChange-button"
                     disabled={this.hasErrors(getFieldsError())}
                   >

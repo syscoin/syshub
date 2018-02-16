@@ -45,7 +45,6 @@ class MHeaderNav extends Component {
           <IconButton color="inherit" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
             <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>
-          {/* </Dropdown> */}
         </Grid>
         <Grid item xs={6} className="center-section">
           <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
@@ -66,7 +65,6 @@ class MHeaderNav extends Component {
             onClick={() => this.props.toggleChat()}
           >
             <img src={chatIcon} alt="chat icon" height="30" id="chatbox" />
-            {/* Call function for toggle */}
           </Button>
         </Grid>
       </Grid>

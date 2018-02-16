@@ -28,7 +28,8 @@ const mWraper = {
   borderRight: `1px solid ${grey}`,
   position: 'fixed',
   height: '100%',
-  backgroundColor: transparentBlack
+  backgroundColor: transparentBlack,
+  width: '100%',
 };
 
 export default {
