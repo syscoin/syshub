@@ -10,6 +10,7 @@ class NewsBody extends Component {
     const { classes, body, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
       <div>
         <Grid container className={style}>

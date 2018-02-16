@@ -15,18 +15,18 @@ export default {
       '& .heading': {
         fontSize: 20,
         color: greyDark,
-        fontWeight: 200,
-      },
+        fontWeight: 200
+      }
     },
     '& .section-separate': {
       margin: 0,
       '& hr': {
-        border: '1px solid ' + greyLight,
+        border: '1px solid ' + greyLight
       },
       '& .separate-with-margin': {
         border: '1px solid ' + greyLight,
-        marginTop: 30,
-      },
+        marginTop: 30
+      }
     },
     '& .commentSectionslView': {
       margin: 0,
@@ -41,7 +41,7 @@ export default {
         color: greyDark,
         padding: '10px 28px',
         fontWeight: 500,
-        fontSize: 16,
+        fontSize: 16
       },
       '& .proposalDetails': {
         color: gray,
@@ -50,11 +50,11 @@ export default {
         padding: '10px 20px',
         maxWidth: '100%%',
         '& .userComment': {
-          border: 0,
+          border: 0
         },
         '& .proposalDetailsHr': {
           marginTop: 10,
-          border: '1px solid ' + greyLight,
+          border: '1px solid ' + greyLight
         },
         '& .formSubmiButton': {
           margin: '0 10px',
@@ -63,16 +63,16 @@ export default {
           color: white,
           float: 'right',
           '& .MuiButton-label-17': {
-            color: white,
-          },
-        },
-      },
+            color: white
+          }
+        }
+      }
     },
     '& .proposalHr': {
       marginTop: 80,
       marginLeft: '6%',
       width: '97%',
-      border: '1px solid ' + greyLight,
+      border: '1px solid ' + greyLight
     },
 
     '& .topCommentWithReplyView': {
@@ -89,8 +89,8 @@ export default {
         maxWidth: '94.8%',
         marginTop: '-10px',
         '& hr': {
-          border: '1px solid ' + greyLight,
-        },
+          border: '1px solid ' + greyLight
+        }
       },
 
       '& .commentHeading': {
@@ -101,18 +101,18 @@ export default {
           '& .userName': {
             color: greyDark,
             padding: '10px 28px',
-            fontWeight: 500,
+            fontWeight: 500
           },
           '& .commentDate': {
             display: 'inline-block',
             marginLeft: '-20px',
-            color: gray,
+            color: gray
           },
           '& .badgeIcon': {
             width: 20,
-            marginLeft: 5,
-          },
-        },
+            marginLeft: 5
+          }
+        }
       },
 
       '& .votesView': {
@@ -121,13 +121,13 @@ export default {
         textAlign: 'right',
         '& .upVoteICon': {
           width: 20,
-          marginLeft: 5,
+          marginLeft: 5
         },
         '& .downVoteICon': {
           width: 20,
           marginLeft: 30,
-          marginRight: 5,
-        },
+          marginRight: 5
+        }
       },
       '& .newYearView': {
         padding: 0,
@@ -149,7 +149,7 @@ export default {
         },
         '& .edit-delete-btn': {
           display: 'inline-block',
-          float: 'right',
+          float: 'right'
         }
       },
       '& .replyView': {
@@ -158,7 +158,7 @@ export default {
         marginTop: 20,
         fontSize: 16,
         color: primaryDark,
-        fontWeight: 'bold',
+        fontWeight: 'bold'
       },
       '& .topcommentSectionslView': {
         margin: '3px 0 20px 6%',
@@ -168,7 +168,7 @@ export default {
           color: greyDark,
           padding: '10px 28px',
           fontWeight: 500,
-          fontSize: 16,
+          fontSize: 16
         },
         '& .proposalDetails': {
           color: gray,
@@ -178,11 +178,11 @@ export default {
           padding: '10px',
           boxShadow: '5px 5px 20px ' + gray,
           '& .userComment': {
-            border: 0,
+            border: 0
           },
           '& .proposalDetailsHr': {
             marginTop: 10,
-            border: '1px solid ' + greyLight,
+            border: '1px solid ' + greyLight
           },
           '& .formSubmiButton': {
             margin: '0 10px',
@@ -190,11 +190,11 @@ export default {
             backgroundColor: primaryDark,
             float: 'right',
             '& .MuiButton-label-17': {
-              color: white,
-            },
-          },
-        },
-      },
+              color: white
+            }
+          }
+        }
+      }
     },
     '& .allReplies': {
       marginTop: 10,
@@ -207,13 +207,13 @@ export default {
           '& .replyUserName': {
             color: greyDark,
             padding: '10px 28px',
-            fontWeight: 500,
+            fontWeight: 500
           },
           '& .replyDate': {
             display: 'inline-block',
             marginLeft: '-20px',
-            color: gray,
-          },
+            color: gray
+          }
         }
       }
     },
@@ -230,8 +230,8 @@ export default {
         maxWidth: '94.8%',
         marginTop: '-10px',
         '& .commentlHr': {
-          border: '1px solid ' + greyLight,
-        },
+          border: '1px solid ' + greyLight
+        }
       },
 
       '& .commentHeading': {
@@ -242,18 +242,18 @@ export default {
           '& .userName': {
             color: greyDark,
             padding: '10px 28px',
-            fontWeight: 500,
+            fontWeight: 500
           },
           '& .commentDate': {
             display: 'inline-block',
             marginLeft: '-20px',
-            color: gray,
+            color: gray
           },
           '& .badgeIcon': {
             width: 20,
-            marginLeft: 5,
-          },
-        },
+            marginLeft: 5
+          }
+        }
       },
 
       '& .votesView': {
@@ -262,31 +262,31 @@ export default {
         textAlign: 'right',
         '& .upVoteICon': {
           width: 20,
-          marginLeft: 5,
+          marginLeft: 5
         },
         '& .downVoteICon': {
           width: 20,
           marginLeft: 30,
-          marginRight: 5,
-        },
+          marginRight: 5
+        }
       },
       '& .newYearView': {
         padding: 0,
         marginLeft: '7%',
         fontSize: 16,
-        color: gray,
+        color: gray
       },
       '& .replyView': {
         padding: 0,
         margin: '20px 0 20px 7%',
         fontSize: 16,
         color: primaryDark,
-        fontWeight: 'bold',
-      },
+        fontWeight: 'bold'
+      }
     },
     '& textarea': {
       color: gray,
-      maxWidth: '100%',
+      maxWidth: '100%'
     },
     '& button': {
       borderRadius: '5px',
@@ -298,8 +298,8 @@ export default {
       margin: '0 10px',
       float: 'right',
       '& span': {
-        color: white,
-      },
+        color: white
+      }
     },
     '& .votingNumber': {
       display: 'inline',

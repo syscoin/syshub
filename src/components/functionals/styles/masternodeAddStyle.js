@@ -9,16 +9,16 @@ export default {
   root: {
     '& .add-title': {
       display: 'inline-block',
-      fontWeight: 'lighter',
+      fontWeight: 'lighter'
     },
     '& .heading': {
-      borderBottom: '1px solid ' + greyLight,
+      borderBottom: '1px solid ' + greyLight
     },
     '& .form__container': {
       padding: '20px',
       '& .form-group': {
         flexDirection: 'row',
-        marginTop: '10px',
+        marginTop: '10px'
       },
       '& .label': {
         width: '40%',
@@ -28,7 +28,7 @@ export default {
         color: primary,
         paddingLeft: '50px',
         textAlign: 'left',
-        fontWeight: 'lighter',
+        fontWeight: 'lighter'
       },
       '& .input-field': {
         width: 'calc(45% - 80px)',
@@ -38,8 +38,8 @@ export default {
         padding: '10px 25px',
         marginTop: '10px',
         '&::before': {
-          backgroundColor: 'transparent',
-        },
+          backgroundColor: 'transparent'
+        }
       },
       '& .form-button-group': {
         display: 'inherit',
@@ -52,20 +52,20 @@ export default {
           fontSize: 17,
           textTransform: 'capitalize',
           '&:hover': {
-            backgroundColor: primaryLight,
+            backgroundColor: primaryLight
           },
           '& span': {
             color: white,
-            fontWeight: 'bold',
-          },
-        },
-      },
-    },
+            fontWeight: 'bold'
+          }
+        }
+      }
+    }
   },
   mRoot: {
     extend: 'root',
     '& .add-title': {
-      marginBottom: 0,
+      marginBottom: 0
     },
     '& .form__container': {
       padding: 0,
@@ -77,14 +77,13 @@ export default {
         '& .input-field': {
           width: '100%',
           margin: 0,
-          padding: 10,
-        },
+          padding: 10
+        }
       },
       '& .form-button-group': {
         marginLeft: 0,
-        textAlign: 'center',
+        textAlign: 'center'
       }
-    },
-
-  },
+    }
+  }
 };

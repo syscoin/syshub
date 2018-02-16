@@ -59,26 +59,32 @@ class AppHeader extends Component {
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
                   <Grid item xs={6} className="name-header">
-                    {currentUser ?
-                      <span className='text-span'>
+                    {currentUser ? (
+                      <span className="text-span">
                         <span className="TxtRegular">{`Welcome  `}</span>
                         <span className="TxtBold">
-                          {currentUser ? this.renderName(currentUser.displayName) : 'Guest'}
-                        </span> </span> : null}
-
+                          {currentUser
+                            ? this.renderName(currentUser.displayName)
+                            : 'Guest'}
+                        </span>{' '}
+                      </span>
+                    ) : null}
 
                     {currentUser ? (
-                      <Button className="btn-logout" onClick={() => this.doLogout()}>
+                      <Button
+                        className="btn-logout"
+                        onClick={() => this.doLogout()}
+                      >
                         <span className="text">Logout</span>
                       </Button>
                     ) : (
-                        <Button
-                          className="btn-login"
-                          onClick={() => this.props.setPage('login')}
-                        >
-                          <span className="text">Login</span>
-                        </Button>
-                      )}
+                      <Button
+                        className="btn-login"
+                        onClick={() => this.props.setPage('login')}
+                      >
+                        <span className="text">Login</span>
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
                 <MHeaderNav className="bottom-header__wrapper" />

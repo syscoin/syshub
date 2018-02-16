@@ -1,6 +1,5 @@
 import palette from './palette';
 
-
 const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
@@ -12,15 +11,15 @@ export default {
       '& .heading': {
         fontSize: 20,
         color: greyDark,
-        fontWeight: 200,
-      },
+        fontWeight: 200
+      }
     },
     '& .no-margin': {
       margin: 0,
       '& .heading': {
         fontSize: 20,
-        color: greyDark,
-      },
+        color: greyDark
+      }
     },
 
     '& .proposalView': {
@@ -31,8 +30,8 @@ export default {
         padding: 0,
         color: gray,
         maxWidth: '89.6667%',
-        fontSize: 15,
-      },
+        fontSize: 15
+      }
     },
 
     '& .commentSectionslView': {
@@ -45,7 +44,7 @@ export default {
       '& .commentHeading': {
         color: greyDark,
         padding: '10px 28px',
-        fontWeight: 500,
+        fontWeight: 500
       },
       '& .proposalDetails': {
         marginLeft: 8,
@@ -54,9 +53,9 @@ export default {
         background: white,
         maxWidth: '100%',
         padding: '10px 20px',
-        height: '70%',
-      },
-    },
+        height: '70%'
+      }
+    }
   },
   mRoot: {
     extend: 'root',
@@ -64,9 +63,9 @@ export default {
     '& .approvalStatus': {
       '& .heading': {
         '&>p': {
-          fontSize: 20,
+          fontSize: 20
         }
       }
     }
   }
-}
+};

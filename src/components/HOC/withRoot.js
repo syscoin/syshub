@@ -1,5 +1,5 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
-
+/* eslint-disable */
 import React, { Component } from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
@@ -12,12 +12,12 @@ const styles = theme => ({
     html: {
       background: theme.palette.background.default,
       WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
+      MozOsxFontSmoothing: 'grayscale' // Antialiasing.
     },
     body: {
-      margin: 0,
-    },
-  },
+      margin: 0
+    }
+  }
 });
 
 let AppWrapper = props => props.children;

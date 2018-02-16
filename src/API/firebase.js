@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Rebase from 're-base';
 import * as firebase from 'firebase';
 import swal from 'sweetalert';
@@ -26,7 +27,8 @@ const votes = fire.database().ref('votes');
 
 //Some useful functions
 const checkVoted = (user, proposal) => {
-  return new Promise((resolve, reject) => {
+  //return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fire
       .database()
       .ref('votes/' + user.uid)
@@ -35,7 +37,7 @@ const checkVoted = (user, proposal) => {
       .then(snap => {
         if (snap.val() !== null) {
           //          resolve(true); // Original true if voted false if no
-          resolve(false); // Overrided
+          resolve(true); // Overrided
           return;
         }
         resolve(false);
@@ -54,8 +56,54 @@ const voted = (user, proposal, voteTxt, voteId) => {
     .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
 };
 
+const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
+  return new Promise((resolve, reject) => {
+    provider
+      .verifyPhoneNumber(phoneNumber, appVerifier)
+      .then(verificationId => {
+        swal({
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Verify',
+          text: 'Please enter the verification code sent to your mobile device',
+          icon: 'info',
+          buttons: true,
+          dangerMode: false,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Confirmation code here',
+              type: 'text'
+            }
+          }
+        })
+          .then(verificationCode => {
+            if (!verificationCode) {
+              throw new Error('Please provide your verificatoin code next time.');
+            }
+            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+          })
+          .then(phoneCredential => {
+            return user.updatePhoneNumber(phoneCredential);
+          })
+          .then(() => {
+            fire
+              .database()
+              .ref('2FA/' + user.uid)
+              .set(true);
+            resolve(true);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 
-const doRegister = () => {};
+const doRegister = () => { };
 
 const doLogin = (email, password) => {
   fire
@@ -256,6 +304,7 @@ export {
   usernames,
   comments,
   commentReplies,
+  phoneAuth,
   fire,
   base,
   doRegister,

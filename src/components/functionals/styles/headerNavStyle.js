@@ -13,34 +13,34 @@ export default {
       padding: '0 15px',
       fontSize: 14,
       '& .icon': {
-        height: 25,
+        height: 25
       },
       '& .TxtRegular': {
         color: white,
         padding: '0',
-        fontSize: '1.2em',
+        fontSize: '1.2em'
       },
       '& .TxtBold': {
         color: white,
         padding: '0 0 0 10px',
         fontSize: '1.3em',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
       },
       '& .button': {
         border: 'none',
         padding: '0 15px',
         '& img': {
-          height: 25,
-        },
+          height: 25
+        }
       },
       '& .login-btn , .logout-btn': {
         padding: 0,
         '& div': {
           fontSize: 15,
-          color: white,
-        },
-      },
-    },
+          color: white
+        }
+      }
+    }
   },
-  mRoot: { extend: 'root' },
+  mRoot: { extend: 'root' }
 };

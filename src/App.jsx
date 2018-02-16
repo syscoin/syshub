@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 import { DesktopLayout, MobileLayout } from './components/layouts';
-import {withStyles } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 import actions from './redux/actions';
 import { fire } from './API/firebase';
@@ -23,10 +23,31 @@ class App extends Component {
       if (user) {
         fire
           .database()
-          .ref('mnPrivateKey/' + user.uid)
-          .on('value', snapshot => {
-            user.mnPrivateKey = snapshot.val();
+          .ref('2FA/' + user.uid)
+          .on('value', snap => {
+            if (snap.val() === true) {
+              fire
+                .database()
+                .ref('MasterNodes/' + user.uid)
+                .on('value', snapshot => {
+                  let list = [];
+                  snapshot.forEach(snap => {
+                    list.push(snap.val());
+                  });
+                  user.MasterNodes = list;
+                  this.props.setCurrentUser(user);
+                });
+
+              return;
+            }
             this.props.setCurrentUser(user);
+          });
+
+        fire
+          .database()
+          .ref('2FA/' + user.uid)
+          .on('value', snap => {
+            this.props.setAuth(snap.val());
           });
       } else {
         this.props.setCurrentUser(null);
@@ -55,12 +76,13 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       /* <HttpsRedirect> */
       <div className={classes.root}>
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          <h1 style={{ color: 'white', zIndex: '10000', display: 'none'}}>
+          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>
             {this.state.timer}
           </h1>
         </Platform>
@@ -84,8 +106,11 @@ const dispatchToProps = dispatch => {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: () => dispatch(actions.getSysStats()),
 
-    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo))
+    platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
+    setAuth: auth => dispatch(actions.setAuth(auth))
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(appStyles)(App));
+export default connect(stateToProps, dispatchToProps)(
+  withStyles(appStyles)(App)
+);

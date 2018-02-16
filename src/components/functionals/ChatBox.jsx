@@ -8,9 +8,7 @@ import { Send } from 'material-ui-icons';
 
 import { messages } from '../../API/firebase';
 
-import List, {
-  ListItemText
-} from 'material-ui/List';
+import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
 
@@ -63,7 +61,7 @@ class ChatBox extends Component {
     swal({
       title: 'Oops...',
       text: 'Must write something to chat',
-      icon: 'warning',
+      icon: 'warning'
     });
   }
 
@@ -73,21 +71,19 @@ class ChatBox extends Component {
       this.loginAlert();
       return;
     } else if (message === null || message === '') {
-      this.blankMessageAlert()
+      this.blankMessageAlert();
     } else {
       const updated = {
         body: message,
         user: {
           displayName: currentUser.displayName,
           id: currentUser.uid,
-          email: currentUser.email,
-        },
+          email: currentUser.email
+        }
       };
 
       messages.push(updated);
     }
-
-
   }
 
   onChange(e) {

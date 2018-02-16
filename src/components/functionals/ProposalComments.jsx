@@ -312,7 +312,7 @@ class ProposalComments extends Component {
 
             <Typography variant="headline" gutterBottom>
               COMMENTS SECTION
-      </Typography>
+            </Typography>
 
           </div>
         </Grid>
@@ -323,7 +323,7 @@ class ProposalComments extends Component {
           <Grid item container md={8} className="commentSectionslView">
             <Grid item md={12} className="commentHeading">
               Add Comment
-          </Grid>
+            </Grid>
             <Grid item md={12} className="proposalDetails">
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 

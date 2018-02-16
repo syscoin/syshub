@@ -17,9 +17,8 @@ export default {
       height: '80vh',
       '& .gridList': {
         width: 500,
-        height: 450,
+        height: 450
       }
-
     }
   },
   mRoot: {
@@ -28,13 +27,7 @@ export default {
     },
     '& .paper-container': {
       overflowX: 'hidden',
-      height: 'auto',
+      height: 'auto'
     }
   }
-
-
-
-
-
-
-}
+};

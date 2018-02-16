@@ -62,6 +62,7 @@ class Register extends Component {
   }
 
   onChange = e => {
+   
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -74,6 +75,10 @@ class Register extends Component {
       });
     }
   };
+
+  // specifying your onload callback function
+  callback() {
+  }
 
   // specifying verify callback function
   verifyCallback(response) {

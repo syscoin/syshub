@@ -59,8 +59,8 @@ class SiderMenu extends Component {
             </button>
           ) : null;
         })}
-        <div className="lastBorder" /> {/*Last border*/}
-        <div />
+        <div className={classes.lastBorder} />{/*Last border*/}
+
       </div>
     );
   }

@@ -15,8 +15,8 @@ export default {
       background: white,
       padding: 25,
       overflowY: 'auto',
-      height: '80vh',
-    },
+      height: '80vh'
+    }
   },
   mRoot: {
     extend: 'root',
@@ -25,8 +25,7 @@ export default {
     },
     '& .masternode-div': {
       height: 'auto',
-      padding: 20,
-
+      padding: 20
     }
   }
-}
+};

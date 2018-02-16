@@ -10,23 +10,23 @@ export default {
     '& button span': {
       color: 'white',
       textTransform: 'capitalize',
-      padding: '3px 0px',
+      padding: '3px 0px'
     },
     '& .profile-heading': {
       margin: '10px 20px 20px 20px',
       fontWeight: 100,
       fontSize: '21px',
-      borderBottom: '0.1px solid ' + greyLight,
+      borderBottom: '0.1px solid ' + greyLight
     },
     '& .profile-image-grid': {
       '& .avatar-container': {
         maxWidth: 150,
         marginLeft: 20,
         padding: 10,
-        border: 'thin solid ' + greyLight,
+        border: 'thin solid ' + greyLight
       },
       '& .user-image': {
-        width: '100%',
+        width: '100%'
       },
       '& .change-photo-btn': {
         fontSize: '12px',
@@ -35,7 +35,7 @@ export default {
           color: primary,
           fontWeight: '100',
           cursor: 'pointer'
-        },
+        }
       },
       '& .upload-image-container': {
         overflow: 'hidden',
@@ -53,9 +53,9 @@ export default {
           right: 0,
           textAlign: 'right',
           top: 0,
-          height: '100%',
-        },
-      },
+          height: '100%'
+        }
+      }
     },
     '& .profile-credential-grid': {
       marginTop: -10,
@@ -69,7 +69,7 @@ export default {
           textAlign: 'left',
           fontSize: 15,
           fontWeight: 100,
-          color: primary,
+          color: primary
         },
         '& .input-field': {
           width: 'calc(45% - 20px)',
@@ -78,19 +78,19 @@ export default {
           border: 'thin solid ' + greyLight,
           padding: '10px',
           '&::before': {
-            backgroundColor: 'transparent',
-          },
+            backgroundColor: 'transparent'
+          }
         },
         '& .validation-message': {
           display: 'inline-block',
           fontSize: 15,
           color: greyDark,
-          fontWeight: '100',
-        },
-      },
+          fontWeight: '100'
+        }
+      }
     },
     '& .update-button-grid': {
-      padding: '20px',
+      padding: '20px'
     },
     '& button': {
       borderRadius: '5px',
@@ -100,9 +100,9 @@ export default {
       fontSize: '16px',
       backgroundColor: primary,
       '&:hover': {
-        backgroundColor: primaryLight,
-      },
-    },
+        backgroundColor: primaryLight
+      }
+    }
   },
   mRoot: {
     extend: 'root',
@@ -125,23 +125,22 @@ export default {
       '& .form-group': {
         '& .label': {
           fontSize: 17,
-          display: 'block',
-          marginLeft: 25,
+          marginLeft: 25
         },
         '& .input-field': {
           display: 'block',
           width: '90%',
-          margin: 'auto',
+          margin: 'auto'
         },
         '& .validation-message': {
           marginLeft: 25,
           paddingTop: 5,
-          fontSize: 16,
+          fontSize: 16
         }
       }
     },
     '& .update-button-grid': {
       textAlign: 'center'
     }
-  },
+  }
 };

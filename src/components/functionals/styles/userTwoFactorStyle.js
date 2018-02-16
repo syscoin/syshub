@@ -12,16 +12,16 @@ export default {
     paddingTop: '20px',
     '& button span': {
       color: 'white',
-      textTransform: 'capitalize',
+      textTransform: 'capitalize'
     },
     '& .userTwoFactor-heading': {
       marginLeft: '20px',
       fontWeight: '100',
       fontSize: '21px',
-      borderBottom: '0.1px solid ' + greyLight,
+      borderBottom: '0.1px solid ' + greyLight
     },
     '& .heading-2FA': {
-      color: primaryLight,
+      color: primaryLight
     },
     '& .userTwoFactor-left-grid': {
       marginTop: '-20px',
@@ -29,7 +29,7 @@ export default {
         color: primaryLight,
         margin: '20px 0px 10px 40px',
         display: 'block',
-        fontWeight: '100',
+        fontWeight: '100'
       },
       '& .div-margin': {
         margin: '12px 0 12px 40px',
@@ -39,7 +39,7 @@ export default {
           fontSize: '15px',
           margin: '15px 0 0px 0',
           color: primary,
-          paddingRight: '10px',
+          paddingRight: '10px'
         },
         '& .status-enable': {
           margin: '0 1%',
@@ -48,8 +48,8 @@ export default {
           fontSize: '1.3em',
           '& .lowSecurity-span': {
             color: greyDark,
-            margin: '0 1%',
-          },
+            margin: '0 1%'
+          }
         },
         '& .status-disable': {
           margin: '0 1%',
@@ -60,12 +60,12 @@ export default {
             color: greyDark,
             fontWeight: 'normal',
             fontSize: '0.8em',
-            margin: '0 1%',
-          },
+            margin: '0 1%'
+          }
         },
         '& .reCapthaWraper': {
-          margin: '15px 0',
-        },
+          margin: '15px 0'
+        }
       },
       '& .form-group': {
         flexDirection: 'row',
@@ -80,8 +80,8 @@ export default {
           paddingRight: '10px',
           '& .fromApp-span': {
             display: 'block',
-            textAlign: 'center',
-          },
+            textAlign: 'center'
+          }
         },
         '& .secret-Input-field': {
           color: primaryLight,
@@ -91,8 +91,8 @@ export default {
           border: 'thin solid ' + greyLight,
           padding: '5px',
           '&::before': {
-            backgroundColor: 'transparent',
-          },
+            backgroundColor: 'transparent'
+          }
         },
         '& .code-Input-field': {
           color: primaryLight,
@@ -104,43 +104,43 @@ export default {
           verticalAlign: 'top',
           marginTop: 20,
           '&::before': {
-            backgroundColor: 'transparent',
-          },
-        },
+            backgroundColor: 'transparent'
+          }
+        }
       },
       '& .generate-button': {
         padding: '0px 10px',
         minHeight: '25px',
-        borderRadius: '5px',
+        borderRadius: '5px'
       },
       '& .qr-div': {
         marginLeft: '150px',
-        marginTop: '-10px',
-      },
+        marginTop: '-10px'
+      }
     },
     '& .userTwoFactor-right-grid': {
       marginTop: '50px',
       '& ol': {
-        fontWeight: '100',
+        fontWeight: '100'
       },
       '& .enableInstruction-heading': {
         fontSize: '20px',
         color: primary,
         fontWeight: 'bold',
-        padding: '0px 30px',
+        padding: '0px 30px'
       },
       '& .googleAuthApp-text': {
         color: primary,
-        fontWeight: 'bold',
+        fontWeight: 'bold'
       },
       '& li': {
         padding: '10px 0px 10px 10px',
-        color: greyDark,
+        color: greyDark
       },
       '& img': {
         width: '120px',
-        padding: '10px',
-      },
+        padding: '10px'
+      }
     },
     '& .twoFactor-button-grid': {
       padding: '20px',
@@ -149,32 +149,32 @@ export default {
         padding: '8px',
         minHeight: '25px',
         width: '150px',
-        fontSize: '16px',
-      },
+        fontSize: '16px'
+      }
     },
     '& button': {
       backgroundColor: primary,
       '&:hover': {
-        backgroundColor: primaryLight,
-      },
-    },
+        backgroundColor: primaryLight
+      }
+    }
   },
   mRoot: {
     extend: 'root',
     '& .heading-grid': {
       width: '100%',
       '& .userTwoFactor-heading': {
-        marginLeft: 5,
+        marginLeft: 5
       }
     },
     '& .userTwoFactor-left-grid': {
       textAlign: 'center',
       '& .enable2FA-note': {
-        margin: '15px 0px 20px 10px',
+        margin: '15px 0px 20px 10px'
       },
       '& .reCapthaWraper': {
-        margin: '15px 30px',
+        margin: '15px 30px'
       }
     }
-  },
+  }
 };

@@ -42,11 +42,10 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function (snapshot) {
-            // this variable can be used to show upload progress
-            //const progress =
-            //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
-          },
+          /* function (snapshot) {
+              const progress =
+                snapshot.bytesTransferred / snapshot.totalBytes * 100;
+            }, */
           function (error) {
             switch (error.code) {
               case 'storage/unauthorized':
@@ -64,7 +63,7 @@ class UserProfile extends Component {
                 alert('Unknown error occurred');
                 break;
               default:
-
+                break;
             }
           },
           () => {
@@ -131,17 +130,20 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar = this.props.currentUser && this.props.currentUser.photoURL ? this.props.currentUser.photoURL : require('../../assets/img/no-user-image.gif');
+    const avatar =
+      this.props.currentUser && this.props.currentUser.photoURL
+        ? this.props.currentUser.photoURL
+        : require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
         <Grid container className="profile-grid">
           {/* profile text */}
-          <Grid item md={12}>
+          <Grid md={12}>
             <h1 className="profile-heading">Profile</h1>
           </Grid>
 
           {/* profile image grid */}
-          <Grid md={3} item className="profile-image-grid">
+          <Grid md={3} className="profile-image-grid">
             <div className="avatar-container upload-image-container">
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
@@ -165,7 +167,7 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile credential grid */}
-          <Grid md={9} item className="profile-credential-grid">
+          <Grid md={9} className="profile-credential-grid">
             {/* For User Name */}
             <FormGroup className="form-group">
               <span htmlFor="user-name" className="label">
@@ -206,6 +208,7 @@ class UserProfile extends Component {
               raised
               color="primary"
               className="update-button"
+              innerTextColor="red"
               disabled={this.state.disabled}
             >
               Update Profile
