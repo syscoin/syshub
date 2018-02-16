@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -156,7 +156,8 @@ class Login extends Component {
         } else {
           swal({
             title: 'Success',
-            text: `${user.email} signed in without sms verification.`,
+            //text: `${user.email} signed in without sms verification.`,
+            text: `signed in without sms verification.`,
             icon: 'success'
           });
           this.props.setPage('home');
