@@ -1,7 +1,6 @@
 import palette from './palette';
 const greyDark = palette.greyDark;
 const primary = palette.primary;
-const white = palette.white;
 export default {
   root: {
     '& .title': {
