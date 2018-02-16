@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 import Cryptr from 'cryptr';
 
 // import style
@@ -51,7 +50,7 @@ class MasterNode extends Component {
     }
 
     masternode.key = this.state.nodes.length + 1;
-    masternode.address = cryptr.encrypt(masternode.address);
+    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
     masternode.vin = cryptr.encrypt(masternode.vin);
     this.setState({
       nodes: [masternode, ...this.state.nodes]
@@ -92,7 +91,7 @@ class MasterNode extends Component {
       return;
     }
 
-    node.address = cryptr.encrypt(node.address);
+    node.mnPrivateKey = cryptr.encrypt(node.mnPrivateKey);
     node.vin = cryptr.encrypt(node.vin);
 
     fire

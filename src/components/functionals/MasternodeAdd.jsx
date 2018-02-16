@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Button, Grid, FormGroup, Input, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup, withStyles } from 'material-ui';
 // import style
 import { masternodeAddStyle } from './styles';
 
@@ -20,9 +19,9 @@ class MasterNodeAdd extends Component {
 
   addNode(event) {
     event.preventDefault();
-    if (this.state.newNode.name && this.state.newNode.address) {
+    if (this.state.newNode.name && this.state.newNode.mnPrivateKey) {
       this.props.addNode(this.state.newNode);
-      this.setState({ newNode: { name: '', address: '', vin: '' } });
+      this.setState({ newNode: { name: '', mnPrivateKey: '', vin: '' } });
     }
   }
 
@@ -76,12 +75,12 @@ class MasterNodeAdd extends Component {
                   {`MN Private Key: `}
                 </span>
                 <input
-                  ref={address => (this.nodeAddress = address)}
-                  id="address"
-                  name="address"
+                  ref={mnPrivateKey => (this.nodemnPrivateKey = mnPrivateKey)}
+                  id="mnPrivateKey"
+                  name="mnPrivateKey"
                   className="input-field"
                   placeholder="enter a valid key"
-                  value={this.state.newNode.address}
+                  value={this.state.newNode.mnPrivateKey}
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -91,7 +90,7 @@ class MasterNodeAdd extends Component {
                   {`MN Vin: `}
                 </span>
                 <input
-                  ref={address => (this.nodeAddress = address)}
+                  ref={vin => (this.nodeVin = vin)}
                   id="address"
                   name="vin"
                   className="input-field"

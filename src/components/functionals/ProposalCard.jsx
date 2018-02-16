@@ -10,6 +10,7 @@ import { checkVoted, voted } from '../../API/firebase';
 import { Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
+import { fire } from '../../API/firebase';
 import Cryptr from 'cryptr';
 
 // import style
@@ -74,7 +75,7 @@ class ProposalCard extends Component {
       return;
     }
 
-    checkVoted(user, proposal)
+    checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
           swal({
@@ -85,26 +86,38 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.MasterNodes.map(mnObj => {
-            const proposalVoteYes = {
-              mnPrivateKey: cryptr.decrypt(mnObj.key),
-              vinMasternode: cryptr.decrypt(mnObj.vin),
-              gObjectHash: proposal.Hash,
-              voteOutcome: 1
-            };
+          let mnKeyIds = [];
+          user.MasterNodes.forEach(mnObj => {
+            mnKeyIds.push(mnObj.keyId);
+            fire
+              .database()
+              .ref('votes/' + user.uid)
+              .child(proposal.Hash)
+              .once('value', snap => {
+                if (snap.val() !== null) {
+                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                    return;
+                  }
+                }
 
-            this.props
-              .voteOnProposal(proposalVoteYes)
-              .then(data => {
-                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                const proposalVoteYes = {
+                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                  vinMasternode: cryptr.decrypt(mnObj.vin),
+                  gObjectHash: proposal.Hash,
+                  voteOutcome: 1
+                };
 
-                voted(user, proposal, 'Yes', 1);
-                this.props.getProposals();
-              })
-              .catch(err => {
-                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                this.props
+                  .voteOnProposal(proposalVoteYes)
+                  .then(data => {
+                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                    voted(user, proposal, 'Yes', 1, mnKeyIds);
+                    this.props.getProposals();
+                  })
+                  .catch(err => {
+                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                  });
               });
-            return value;
           });
         }
       })
@@ -133,7 +146,7 @@ class ProposalCard extends Component {
       return;
     }
 
-    checkVoted(user, proposal)
+    checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
           swal({
@@ -144,26 +157,38 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.MasterNodes.map(mnObj => {
-            const proposalVoteNo = {
-              mnPrivateKey: cryptr.decrypt(mnObj.key),
-              vinMasternode: cryptr.decrypt(mnObj.vin),
-              gObjectHash: proposal.Hash,
-              voteOutcome: 2
-            };
+          let mnKeyIds = [];
+          user.MasterNodes.forEach(mnObj => {
+            mnKeyIds.push(mnObj.keyId);
+            fire
+              .database()
+              .ref('votes/' + user.uid)
+              .child(proposal.Hash)
+              .once('value', snap => {
+                if (snap.val() !== null) {
+                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                    return;
+                  }
+                }
 
-            this.props
-              .voteOnProposal(proposalVoteNo)
-              .then(data => {
-                swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                const proposalVoteNo = {
+                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                  vinMasternode: cryptr.decrypt(mnObj.vin),
+                  gObjectHash: proposal.Hash,
+                  voteOutcome: 2
+                };
 
-                voted(user, proposal, 'No', 2);
-                this.props.getProposals();
-              })
-              .catch(err => {
-                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                this.props
+                  .voteOnProposal(proposalVoteNo)
+                  .then(data => {
+                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                    voted(user, proposal, 'No', 2, mnKeyIds);
+                    this.props.getProposals();
+                  })
+                  .catch(err => {
+                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                  });
               });
-            return value;
           });
         }
       })
@@ -218,8 +243,8 @@ class ProposalCard extends Component {
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                  <span style={{ color: 'grey' }}>No title available for this proposal.</span>
-                )}
+                <span style={{ color: 'grey' }}>No title available for this proposal.</span>
+              )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
@@ -227,17 +252,20 @@ class ProposalCard extends Component {
               {days_remaining < 30 ? (
                 <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
               ) : (
-                  <span>{`(${month_remaining} Month${
-                    month_remaining > 1 ? 's' : ''
-                    } Remaining)`}</span>
-                )}
+                <span>{`(${month_remaining} Month${
+                  month_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
+              )}
             </div>
           </Grid>
 
           {user ? (
             <Grid item md={3} xs={3} className="top-vote__wrapper">
               {user ? <div className="vote-text">Vote on Proposal</div> : null}
-              <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+              <Button
+                className={deviceType === 'mobile' ? 'login-vote-up' : 'vote-up'}
+                onClick={() => this.voteUp(proposal)}
+              >
                 <img src={voteUpIcon} className="upVoteIcon" alt="" />
               </Button>
               <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
@@ -249,17 +277,17 @@ class ProposalCard extends Component {
               </div>
             </Grid>
           ) : (
-              <Grid item md={3} xs={2} className="vote__wrapper">
-                <div className="vote-up">
-                  <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                  <span className="voteNumber">{proposal.YesCount}</span>
-                </div>
-                <div className="vote-down">
-                  <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                  <span className="voteNumber">{proposal.NoCount}</span>
-                </div>
-              </Grid>
-            )}
+            <Grid item md={3} xs={2} className="vote__wrapper">
+              <div className="vote-up">
+                <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                <span className="voteNumber">{proposal.YesCount}</span>
+              </div>
+              <div className="vote-down">
+                <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                <span className="voteNumber">{proposal.NoCount}</span>
+              </div>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

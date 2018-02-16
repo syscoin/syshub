@@ -25,7 +25,7 @@ class App extends Component {
           .database()
           .ref('2FA/' + user.uid)
           .on('value', snap => {
-            if (snap.val() === true) {
+            if (snap.val() === false) {
               fire
                 .database()
                 .ref('MasterNodes/' + user.uid)
@@ -35,6 +35,8 @@ class App extends Component {
                     list.push(snap.val());
                   });
                   user.MasterNodes = list;
+                  console.log(user);
+
                   this.props.setCurrentUser(user);
                 });
 
@@ -86,9 +88,7 @@ class App extends Component {
       <div className={classes.root}>
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>
-            {this.state.timer}
-          </h1>
+          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>{this.state.timer}</h1>
         </Platform>
         <Platform rules={{ DeviceType: 'mobile' }}>
           <MobileLayout />
@@ -115,6 +115,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(appStyles)(App)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(appStyles)(App));
