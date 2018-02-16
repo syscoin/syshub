@@ -196,7 +196,11 @@ class Login extends Component {
         window.recaptchaVerifier.render().then(widgetId => {
           window.recaptchaVerifier.reset(widgetId);
         });
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+        swal({
+          title: 'Oops...',
+          text: `${err}`,
+          icon: 'error'
+        });
       });
   }
 
