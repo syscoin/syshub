@@ -6,7 +6,7 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const red = palette.red;
 const green = palette.green;
-
+const white = palette.white;
 export default {
   root: {
     paddingTop: '20px',
@@ -25,14 +25,15 @@ export default {
     },
     '& .userTwoFactor-left-grid': {
       marginTop: '-20px',
+      marginLeft: 20,
       '& .enable2FA-note': {
         color: primaryLight,
-        margin: '20px 0px 10px 40px',
+        margin: '20px 0px 10px 0px',
         display: 'block',
         fontWeight: '100'
       },
       '& .div-margin': {
-        margin: '12px 0 12px 40px',
+        margin: '12px 0 12px 0px',
         '& .statusText-span': {
           display: 'inline-block',
           textAlign: 'right',
@@ -143,14 +144,58 @@ export default {
       }
     },
     '& .twoFactor-button-grid': {
-      padding: '20px',
+      padding: '20px 0px',
       '& .twoFactor-button': {
         borderRadius: '5px',
         padding: '8px',
-        minHeight: '25px',
+        minHeight: '40px',
         width: '150px',
         fontSize: '16px'
       }
+    },
+    '& .form__container': {
+      marginLeft: 20,
+      '& .form-group': {
+        display: 'block',
+        flexDirection: 'row',
+        '& .label': {
+          width: '25%',
+          display: 'inline-block',
+          textAlign: 'right',
+          fontSize: '15px',
+          marginTop: '15px',
+          color: primary,
+          paddingRight: '10px',
+          fontWeight: 100,
+        },
+        '& .input-field': {
+          color: primaryLight,
+          width: 'calc(40% - 100px)',
+          margin: '0px 10px',
+          display: 'inline-block',
+          border: 'thin solid ' + greyLight,
+          padding: '10px',
+          '&::before': {
+            backgroundColor: 'transparent',
+          },
+        },
+      },
+      '& .form-grid-btn': {
+        padding: '20px 0px',
+      },
+      '& button': {
+        borderRadius: 5,
+        padding: 8,
+        minHeight: 25,
+        width: 150,
+        fontSize: 16,
+        height: 40,
+        color: white,
+        backgroundColor: primary,
+        '&:hover': {
+          backgroundColor: primaryLight,
+        },
+      },
     },
     '& button': {
       backgroundColor: primary,
@@ -169,12 +214,38 @@ export default {
     },
     '& .userTwoFactor-left-grid': {
       textAlign: 'center',
+      marginLeft: 0,
+      '& .twoFactor-button-grid': {
+        textAlign: 'center',
+      },
       '& .enable2FA-note': {
         margin: '15px 0px 20px 10px'
       },
       '& .reCapthaWraper': {
         margin: '15px 30px'
       }
-    }
+    },
+    '& .form__container': {
+      marginLeft: 0,
+      width: '100%',
+      '& .ant-form': {
+        '& .ant-form-item': {
+          '& .label': {
+            width: '100%',
+            display: 'block',
+            fontSize: 17,
+            textAlign: 'left',
+            paddingLeft: 15,
+
+          },
+          '& .input-field': {
+            width: '100%',
+          },
+        }
+      }
+    },
+    '& .form-grid-btn': {
+      textAlign: 'center',
+    },
   }
-};
+}

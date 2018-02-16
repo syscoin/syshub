@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 import { userTwoFactorStyle } from './styles';
-import { Button, Grid, FormGroup } from 'material-ui';
+import { Grid } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
+import { Form, Input, Button } from 'antd';
 import swal from 'sweetalert';
 
 // import components
@@ -15,6 +16,7 @@ import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
+const FormItem = Form.Item;
 
 class UserTwoFactor extends Component {
   constructor(props) {
@@ -225,55 +227,58 @@ class UserTwoFactor extends Component {
           {app.currentUser ? (
             app.currentUser.phoneNumber == null || this.state.editNumber ? (
               <Grid item md={12} className="form__container">
-                <form
+                <Form
                   ref={form => {
                     this.addPhoneForm = form;
                   }}
                   className="wrapper"
                 >
-                  <Grid
-                    item
-                    lg={{ size: 8, offset: 2 }}
-                    md={{ size: 10, offset: 1 }}
-                    justify="center"
-                  >
-                    <FormGroup className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Phone Number (With Area Code): `}
-                      </span>
-                      <input
-                        ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        className="input-field"
-                        placeholder="Phone Number"
-                        value={this.state.phoneNumber}
-                        onChange={this.onChange}
-                        type="number"
-                      />
-                    </FormGroup>
-                    <FormGroup className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Country Code (Example - US, ES): `}
-                      </span>
-                      <input
-                        ref={isoCode => (this.isoCode = isoCode)}
-                        id="isoCode"
-                        name="isoCode"
-                        className="input-field"
-                        placeholder="US"
-                        value={this.state.isoCode}
-                        onChange={this.onChange}
-                      />
-                    </FormGroup>
-                  </Grid>
-                </form>
-                {app.currentUser ? (
-                  app.currentUser.phoneNumber !== null ? (
-                    <button onClick={this.removePhone}>Delete</button>
-                  ) : null
-                ) : null}
-                <button onClick={this.addPhone}>Add</button>
+                  <FormItem className="form-group">
+                    <span htmlFor="user-name" className="label">
+                      {`Phone Number (With Area Code): `}
+                    </span>
+                    <Input
+                      ref={phoneNumber => (this.phoneNumber = phoneNumber)}
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      className="input-field"
+                      placeholder="Phone Number"
+                      value={this.state.phoneNumber}
+                      onChange={this.onChange}
+                      type="number"
+                    />
+                  </FormItem>
+                  <FormItem className="form-group">
+                    <span htmlFor="user-name" className="label">
+                      {`Country Code (Example - US, ES): `}
+                    </span>
+                    <Input
+                      ref={isoCode => (this.isoCode = isoCode)}
+                      id="isoCode"
+                      name="isoCode"
+                      className="input-field"
+                      placeholder="US"
+                      value={this.state.isoCode}
+                      onChange={this.onChange}
+                    />
+                  </FormItem>
+                </Form>
+                <Grid className="form-grid-btn">
+                  {app.currentUser ? (
+                    app.currentUser.phoneNumber !== null ? (
+                      <Button
+                        onClick={this.removePhone}
+                        htmlType="submit"
+                        variant="raised"
+                      >Delete</Button>
+                    ) : null
+                  ) : null}
+                  <Button
+                    onClick={this.addPhone}
+                    htmlType="submit"
+                    variant="raised"
+                  >Add</Button>
+                </Grid>
               </Grid>
             ) : (
                 <div>

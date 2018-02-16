@@ -127,7 +127,8 @@ export default {
       padding: 10,
     },
     '& .edit-btn, .delete-btn': {
-      margin: '0 2px'
-    }
+      margin: '0 2px',
+      padding: '5px 9px'
+    },
   }
 };

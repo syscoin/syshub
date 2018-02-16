@@ -101,7 +101,7 @@ export default {
       },
     },
     '& .confirmChange-button-grid': {
-      padding: '20px',
+      padding: '20px 0px',
     },
     '& button': {
       borderRadius: 5,

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
-import { Grid, withStyles, FormGroup, Input } from 'material-ui';
+import { Grid, withStyles, FormGroup } from 'material-ui';
 import Cryptr from 'cryptr';
 
 // import style
@@ -112,7 +111,7 @@ class MasterNodeList extends Component {
         key: 'address',
         render: text => (
           <span>
-            {deviceType == 'mobile'
+            {deviceType === 'mobile'
               ? cryptr.decrypt(text).substring(0, 7) + '...'
               : cryptr.decrypt(text)}
           </span>
