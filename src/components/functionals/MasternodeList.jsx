@@ -110,7 +110,7 @@ class MasterNodeList extends Component {
         render: text => <span>{text}</span>
       },
       {
-        title: 'Address',
+        title: 'MN Private Key',
         dataIndex: 'address',
         key: 'address',
         render: text => (
