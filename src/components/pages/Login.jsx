@@ -136,6 +136,20 @@ class Login extends Component {
                             icon: 'success'
                           });
 
+                          //attach MN to user here
+                          fire
+                            .database()
+                            .ref('MasterNodes/' + user.uid)
+                            .on('value', snapshot => {
+                              let list = [];
+                              snapshot.forEach(snap => {
+                                list.push(snap.val());
+                              });
+
+                              user.MasterNodes = list;
+                              this.props.setCurrentUser(user);
+                            });
+
                           this.props.setPage('home');
                         })
                         .catch(err => {
@@ -182,11 +196,7 @@ class Login extends Component {
         window.recaptchaVerifier.render().then(widgetId => {
           window.recaptchaVerifier.reset(widgetId);
         });
-        swal({
-          title: 'Oops...',
-          text: `${err}`,
-          icon: 'error'
-        });
+        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
 

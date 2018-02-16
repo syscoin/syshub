@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
-import newProposalStyle from './styles/newProposalStyle';
 //import for text editor
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -11,17 +10,20 @@ import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col } from 'antd';
-import { Form, Input, Button, InputNumber, Modal } from 'antd';
+import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-import { DatePicker } from 'antd';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 //import style
+import newProposalStyle from './styles/newProposalStyle';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
+
+
 
 class NewProposal extends Component {
   constructor(props) {
@@ -32,9 +34,12 @@ class NewProposal extends Component {
       proposalTitle: '',
       proposalName: '',
       paymentQuantity: 1,
-      proposalDate: '',
+      paymentDateOptions: [],
+      proposalStartEpoch: 0,
+      proposalEndEpoch: 0,
       address: '',
-      amount: '',
+      amount: 0,
+      totalAmount: 0,
       recover: false,
       stepperSubHeading: '',
       proposallink: 'http://syshub.com/p/',
@@ -70,6 +75,128 @@ class NewProposal extends Component {
     this.onChange = this.onChange.bind(this);
     this.submitPaymentId = this.submitPaymentId.bind(this);
     this.submitHash = this.submitHash.bind(this);
+  }
+
+  componentWillMount() {
+    const maxDateOptions = 26;
+    const { firstPaymentDate, millsMonth } = this.props.proposal;
+    const today = new Date().getTime();
+    const monthGap = Math.ceil((today - firstPaymentDate) / millsMonth);
+    const firstOption = firstPaymentDate + (monthGap * millsMonth);
+    let paymentDateOptions = [];
+    for (let i = 0; i < maxDateOptions; i++) {
+      let mills = firstOption + i * millsMonth;
+      paymentDateOptions.push({ mills, ymd: this.yearDayMonth(mills, 'usa') });
+    }
+    this.setState({ paymentDateOptions });
+  }
+
+  componentDidMount() {
+    const currentUser = fire.auth().currentUser;
+    if (!currentUser) {
+      return;
+    }
+    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+
+    proposalRef.once('value', snapshot => {
+      const userProp = snapshot.val();
+
+      if (userProp) {
+        if (userProp.hash) {
+          proposalRef.remove();
+          return;
+        }
+
+        this.setState({
+          savedProposal: userProp
+        });
+
+        swal({
+          title: 'Recovery',
+          text:
+            'It seems you have some information saved in our db, would you like to recover the data?',
+          buttons: true,
+          icon: 'info'
+        })
+          .then(value => {
+            if (value) {
+              this.setState({
+                recover: value,
+                prepareObj: userProp.prepareObj
+              });
+
+              let userProposal = {
+                name: userProp.name,
+                description: userProp.description,
+                username: userProp.username,
+                type: 1,
+                start_epoch: userProp.start_epoch,
+                end_epoch: userProp.end_epoch,
+                payment_address: userProp.payment_address,
+                payment_amount: userProp.payment_amount,
+                url: userProp.url
+              };
+
+              if (userProp.prepareReceipt) {
+                userProposal.prepareReceipt = userProp.prepareReceipt;
+                this.setState({
+                  pValue: userProp.prepareReceipt
+                });
+              }
+
+              if (userProp.txid) {
+                userProposal.txid = userProp.txid;
+
+                this.setState({
+                  savedPayValue: userProp.txid
+                });
+              }
+
+              if (userProp.submitReceipt) {
+                userProposal.submitReceipt = userProp.submitReceipt;
+
+                this.setState({
+                  sValue: userProp.submitReceipt
+                });
+              }
+
+              this.setState({
+                visible: true,
+                userProposal
+              });
+            }
+          })
+          .catch(err => {
+            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+          });
+      }
+    });
+  }
+
+  yearDayMonth(dateInMills, format) {
+    const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
+    const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) + 1}`.slice(-2);
+    const firstYear = new Date(dateInMills).getFullYear();
+
+    switch (format) {
+      case 'usa':
+        return `${firstMonth}/${firstDay}/${firstYear}`;
+      case 'eu':
+        return `${firstDay}/${firstMonth}/${firstYear}`;
+      default:
+        return `${firstYear}-${firstMonth}-${firstDay}`;
+    }
+  }
+
+  //payment quantity
+  paymentQuantity(value) {
+    const millsMonth = this.props.proposal.millsMonth;
+    const proposalEndEpoch = this.state.proposalStartEpoch + (millsMonth / 1000 * (value - 1));
+    this.setState({
+      proposalEndEpoch,
+      totalAmount: this.state.amount * value,
+      paymentQuantity: value
+    });
   }
 
   submitPaymentId() {
@@ -174,99 +301,17 @@ class NewProposal extends Component {
     });
   }
 
-  componentDidMount() {
-    const currentUser = fire.auth().currentUser;
-    if (!currentUser) {
-      return;
-    }
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
-
-    proposalRef.once('value', snapshot => {
-      const userProp = snapshot.val();
-
-      if (userProp) {
-        if (userProp.hash) {
-          proposalRef.remove();
-          return;
-        }
-
-        this.setState({
-          savedProposal: userProp
-        });
-
-        swal({
-          title: 'Recovery',
-          text:
-            'It seems you have some information saved in our db, would you like to recover the data?',
-          buttons: true,
-          icon: 'info'
-        })
-          .then(value => {
-            if (value) {
-              this.setState({
-                recover: value,
-                prepareObj: userProp.prepareObj
-              });
-
-              let userProposal = {
-                name: userProp.name,
-                description: userProp.description,
-                username: userProp.username,
-                type: 1,
-                start_epoch: userProp.start_epoch,
-                end_epoch: userProp.end_epoch,
-                payment_address: userProp.payment_address,
-                payment_amount: userProp.payment_amount,
-                url: userProp.url
-              };
-
-              if (userProp.prepareReceipt) {
-                userProposal.prepareReceipt = userProp.prepareReceipt;
-                this.setState({
-                  pValue: userProp.prepareReceipt
-                });
-              }
-
-              if (userProp.txid) {
-                userProposal.txid = userProp.txid;
-
-                this.setState({
-                  savedPayValue: userProp.txid
-                });
-              }
-
-              if (userProp.submitReceipt) {
-                userProposal.submitReceipt = userProp.submitReceipt;
-
-                this.setState({
-                  sValue: userProp.submitReceipt
-                });
-              }
-
-              this.setState({
-                visible: true,
-                userProposal
-              });
-            }
-          })
-          .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-          });
-      }
-    });
-  }
-
   createPropObj = () => {
     const { app } = this.props;
     const { currentUser } = app;
     const {
+      //paymentQuantity,
       proposalName,
       proposalTitle,
       address,
       amount,
       proposal__detail,
       proposallink,
-      proposalDate
     } = this.state;
 
     if (!currentUser) {
@@ -286,8 +331,8 @@ class NewProposal extends Component {
       description: proposal__detail,
       username: currentUser.displayName,
       type: 1,
-      start_epoch: Math.floor(new Date().getTime() / 1000),
-      end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
+      start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
+      end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
       payment_address: address,
       payment_amount: Number(amount),
       url: proposallink
@@ -307,8 +352,9 @@ class NewProposal extends Component {
           title: proposalTitle,
           description: proposal__detail,
           type: 1,
-          start_epoch: Math.floor(new Date().getTime() / 1000),
-          end_epoch: Math.floor(new Date(proposalDate).getTime() / 1000),
+          //          start_epoch: Math.floor(new Date().getTime() / 1000),
+          start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
+          end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
           payment_address: address,
           payment_amount: Number(amount),
           url: proposallink
@@ -327,11 +373,9 @@ class NewProposal extends Component {
       time: Math.floor(new Date().getTime() / 1000),
       dataHex: hexedProposal
     };
-
     this.setState({
       prepareObj: prepareObj
     });
-
     userProposal.prepareObj = prepareObj;
     proposalRef.set(userProposal);
 
@@ -389,9 +433,12 @@ class NewProposal extends Component {
   };
 
   //date change function
-  onDateChange(date, dateString) {
+  onDateChange(value) {
     this.setState({
-      proposalDate: dateString
+      proposalStartEpoch: value,
+      proposalEndEpoch: value,
+      paymentQuantity: 1,
+      totalAmount: this.state.amount
     });
   }
 
@@ -405,13 +452,6 @@ class NewProposal extends Component {
     });
   }
 
-  //payment quantity
-  paymentQuantity(value) {
-    this.setState({
-      paymentQuantity: value
-    });
-  }
-
   //get address function
   getAddress(e) {
     this.setState({
@@ -420,9 +460,10 @@ class NewProposal extends Component {
   }
 
   //get amount function
-  getAmount(e) {
+  getAmount(value) {
     this.setState({
-      amount: e.target.value
+      totalAmount: this.state.paymentQuantity * value,
+      amount: value
     });
   }
 
@@ -448,7 +489,7 @@ class NewProposal extends Component {
 
   // steps name in array in which we map
   getSteps() {
-    return ['Proposal Title', 'Proposal Details', 'Payment Details', 'Amount', 'Create Proposal'];
+    return ['Proposal Title', 'Proposal Details', 'Payment Details', 'Create Proposal'];
   }
   //all the step contents are coming from return of switch case
   getStepContent(step) {
@@ -482,7 +523,7 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                }`}
+                  }`}
               />
             </Col>
           </Row>
@@ -493,13 +534,6 @@ class NewProposal extends Component {
           <Row className="proposal-details-row">
             {/* Proposal Detail Colomn */}
             <Col span={deviceType === 'mobile' ? 24 : 20}>
-              {/* {this.state.showEditor ?
-
-                <Button className='preview-edit-button' onClick={this.previewHTML.bind(this)}>PREVIEW</Button>
-                :
-                <Button className='preview-edit-button' onClick={() => { this.setState({ showEditor: true }) }}>EDITOR</Button>
-
-              } */}
               {this.state.showEditor ? (
                 <div>
                   <h2 className="editor-title">Write proposal details</h2>
@@ -533,78 +567,85 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                // proposal detail preview
-                <Row>
-                  <Col
-                    span={deviceType === 'mobile' ? 24 : 22}
-                    offset={deviceType === 'mobile' ? 0 : 1}
-                  >
-                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                  </Col>
-                  <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div className="proposalContent-div" id="preview-html-container" />
-                  </Col>
-                </Row>
-              )}
+                  // proposal detail preview
+                  <Row>
+                    <Col
+                      span={deviceType === 'mobile' ? 24 : 22}
+                      offset={deviceType === 'mobile' ? 0 : 1}
+                    >
+                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                    </Col>
+                    <Col span={deviceType === 'mobile' ? 24 : 22}>
+                      <div className="proposalContent-div" id="preview-html-container" />
+                    </Col>
+                  </Row>
+                )}
             </Col>
           </Row>
         );
       case 2:
         return (
-          <Row className="paymentDetail-row">
-            <Col span={deviceType === 'mobile' ? 10 : 9}>
-              <label className="label">Date</label>
-              <DatePicker onChange={this.onDateChange} />
-            </Col>
-            <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
-              <label># of Payments</label>
-              <InputNumber
-                min={1}
-                max={50}
-                defaultValue={3}
-                className="payment-input"
-                value={this.state.paymentQuantity}
-                onChange={this.paymentQuantity}
-                type="number"
-              />
-            </Col>
-            <Col span={deviceType === 'mobile' ? 24 : 8}>
-              <label>Address</label>
-              <Input
-                type="text"
-                placeholder="input addresss"
-                value={this.state.address}
-                onChange={this.getAddress}
-              />
-            </Col>
-          </Row>
-        );
-      case 3:
-        return (
-          <Row className="amount-row">
-            <Col span={deviceType === 'mobile' ? 18 : 4}>
-              <Input
-                type="text"
-                placeholder="0"
-                value={this.state.amount}
-                onChange={this.getAmount}
-              />
-            </Col>
-            <div
-              style={{
-                display: 'inline-block',
-                padding: '5px',
-                fontWeight: 'bold'
-              }}
-            >
-              SYS
-            </div>
+          <Row>
+            <Row className="paymentDetail-row">
+              <Col span={deviceType === 'mobile' ? 10 : 9}>
+                <label className="label">Date</label>
+                <Select placeholder="Select a Date" style={{ width: 120 }} onChange={(value) => this.onDateChange(value)}>
+                  {this.state.paymentDateOptions.map(item => <Option value={item.mills / 1000}>{item.ymd}</Option>)}
+
+                </Select>
+
+              </Col>
+              <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
+                <label># of Payments</label>
+                <InputNumber
+                  min={1}
+                  max={13}
+                  defaultValue={3}
+                  className="payment-input"
+                  value={this.state.paymentQuantity}
+                  onChange={this.paymentQuantity}
+                  type="number"
+                />
+              </Col>
+              <Col span={deviceType === 'mobile' ? 24 : 8}>
+                <label>Address</label>
+                <Input
+                  type="text"
+                  placeholder="input addresss"
+                  value={this.state.address}
+                  onChange={this.getAddress}
+                />
+              </Col>
+            </Row>
+            <Row className="amount-row">
+              <Col span={deviceType === 'mobile' ? 24 : 24}>
+                <label>Amount</label>
+                <Row>
+                  <InputNumber
+                    min={0}
+                    className="amount-input"
+                    value={this.state.amount}
+                    onChange={this.getAmount} />
+                  {` SYS`}
+                </Row>
+                <Row>
+                  <p />
+                  <p><strong>Total amount:&nbsp;</strong>
+                    {`${this.state.totalAmount || this.state.amount} SYS ${this.state.proposalStartEpoch ?
+                      `with a final payment on ${this.yearDayMonth(this.state.proposalEndEpoch * 1000, 'usa')}` :
+                      ''}`
+                    }</p>
+
+                </Row>
+              </Col>
+            </Row>
           </Row>
         );
       default:
-        return <Button>Confirm</Button>;
+        return null;
     }
   }
+
   onEditorStateChange(editorState) {
     this.setState({
       editorState
@@ -626,13 +667,7 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        if (this.state.proposalDate && this.state.paymentQuantity && this.state.address) {
-          return false;
-        } else {
-          return true;
-        }
-      case 3:
-        if (this.state.amount) {
+        if (this.state.proposalStartEpoch && this.state.paymentQuantity && this.state.address && this.state.amount) {
           return false;
         } else {
           return true;
@@ -656,84 +691,84 @@ class NewProposal extends Component {
           {this.state.recover === true ? (
             <div>Recovery in process</div>
           ) : (
-            <Stepper activeStep={activeStep} orientation="vertical">
-              {steps.map((label, index) => {
-                return (
-                  <Step className="steper__container" key={label}>
-                    <StepLabel className="steper__label">
-                      <h2 className="step-label"> {label} </h2>
-                      {this.state.activeStep === 0 &&
-                      label === 'Proposal Title' &&
-                      deviceType !== 'mobile' ? (
-                        <h3 className="proposal-title">Proposal Description Url</h3>
-                      ) : null}
-                      {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                        this.state.showEditor ? (
-                          <Button
-                            className="preview-edit-button"
-                            onClick={this.previewHTML.bind(this)}
-                          >
-                            PREVIEW
-                          </Button>
-                        ) : (
-                          <Button
-                            className="preview-edit-button"
-                            onClick={() => {
-                              this.setState({ showEditor: true });
-                            }}
-                          >
-                            EDITOR
-                          </Button>
-                        )
-                      ) : null}
-                    </StepLabel>
-                    <StepContent>
-                      <div>{this.getStepContent(index)}</div>
-                      <div className={classes.actionsContainer}>
-                        <div
-                          className={
-                            activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                          }
-                        >
-                          {activeStep === 0 ? null : (
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((label, index) => {
+                  return (
+                    <Step className="steper__container" key={label}>
+                      <StepLabel className="steper__label">
+                        <h2 className="step-label"> {label} </h2>
+                        {this.state.activeStep === 0 &&
+                          label === 'Proposal Title' &&
+                          deviceType !== 'mobile' ? (
+                            <h3 className="proposal-title">Proposal Description Url</h3>
+                          ) : null}
+                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                          this.state.showEditor ? (
                             <Button
-                              raised={true}
-                              type="primary"
-                              onClick={this.handleBack}
-                              className="button"
+                              className="preview-edit-button"
+                              onClick={this.previewHTML.bind(this)}
                             >
-                              Back
-                            </Button>
-                          )}
-                          {activeStep === steps.length - 1 ? (
-                            <Button
-                              raised={true}
-                              type="primary"
-                              className={classes.button}
-                              onClick={this.createPropObj}
-                              disabled={this.disabledNextBtn(index)}
-                            >
-                              Confirm
-                            </Button>
+                              PREVIEW
+                          </Button>
                           ) : (
-                            <Button
-                              raised={true}
-                              type="primary"
-                              onClick={this.handleNext}
-                              className={classes.button}
-                              disabled={this.disabledNextBtn(index)}
-                            >
-                              Next Step
+                              <Button
+                                className="preview-edit-button"
+                                onClick={() => {
+                                  this.setState({ showEditor: true });
+                                }}
+                              >
+                                EDITOR
+                          </Button>
+                            )
+                        ) : null}
+                      </StepLabel>
+                      <StepContent>
+                        <div>{this.getStepContent(index)}</div>
+                        <div className={classes.actionsContainer}>
+                          <div
+                            className={
+                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                            }
+                          >
+                            {activeStep === 0 ? null : (
+                              <Button
+                                raised={true}
+                                type="primary"
+                                onClick={this.handleBack}
+                                className="button"
+                              >
+                                Back
                             </Button>
-                          )}
+                            )}
+                            {activeStep === steps.length - 1 ? (
+                              <Button
+                                raised={true}
+                                type="primary"
+                                className={classes.button}
+                                onClick={this.createPropObj}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Confirm
+                            </Button>
+                            ) : (
+                                <Button
+                                  raised={true}
+                                  type="primary"
+                                  onClick={this.handleNext}
+                                  className={classes.button}
+                                  disabled={this.disabledNextBtn(index)}
+                                >
+                                  Next Step
+                            </Button>
+                              )}
+                          </div>
                         </div>
-                      </div>
-                    </StepContent>
-                  </Step>
-                );
-              })}
-            </Stepper>
-          )}
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            )}
         </Paper>
         <Modal
           title="Proposal"

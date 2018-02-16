@@ -184,7 +184,7 @@ export default {
       },
       //paymentDetail-row
       '& .paymentDetail-row': {
-        height: 100,
+        height: 50,
         marginTop: 15,
         '& label': {
           display: 'block'
@@ -193,8 +193,14 @@ export default {
       //amount-row
       '& .amount-row': {
         height: 50,
-        marginTop: 15
-      }
+        marginTop: 15,
+        '& label': {
+          display: 'block'
+        }
+      },
+      '& .amount-input': {
+        width: 100
+      },
     },
     '& .ant-btn-primary': {
       backgroundColor: primary,
@@ -214,6 +220,10 @@ export default {
     },
     '& .payment-input': {
       width: '100%'
+    },
+    '& .amount-input': {
+      width: '100%',
+      '& input': { width: '100%' },
     },
     '& .toolbarClassName': {
       marginTop: '30px !important',

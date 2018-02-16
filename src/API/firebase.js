@@ -27,7 +27,8 @@ const votes = fire.database().ref('votes');
 
 //Some useful functions
 const checkVoted = (user, proposal) => {
-  return new Promise((resolve, reject) => {
+  //return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fire
       .database()
       .ref('votes/' + user.uid)
