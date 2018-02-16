@@ -10,9 +10,12 @@ import { checkVoted, voted } from '../../API/firebase';
 import { Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
+import Cryptr from 'cryptr';
 
 // import style
 import { proposalCardStyle } from './styles';
+
+const cryptr = new Cryptr('myTotalySecretKey');
 
 class ProposalCard extends Component {
   state = {
@@ -23,16 +26,23 @@ class ProposalCard extends Component {
   };
 
   componentWillMount() {
-    let startDate = new Date();
-    let endDate = new Date(this.props.proposal.DataString[0][1].end_epoch * 1000);
-    const payment_amount = this.props.proposal.DataString[0][1].payment_amount;
-    if (endDate > startDate) {
-      let timeDiff = endDate.getTime() - startDate.getTime();
-      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+    const { start_epoch, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
+    const millsMonth = this.props.millsMonth;
+    const today = new Date();
+
+    const startDate = new Date(start_epoch * 1000);
+    const endDate = new Date(end_epoch * 1000);
+    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    if (endDate > today) {
+      const timeDiff = endDate.getTime() - today.getTime();
+      const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+      const payment_type = nPayment > 1 ? 'per month' : 'one-time payment';
       this.setState({
         days_remaining,
         month_remaining,
+        payment_amount,
+        payment_type,
         endDate:
           endDate.getDate() +
           '/' +
@@ -41,7 +51,7 @@ class ProposalCard extends Component {
           endDate.getFullYear()
       });
     }
-    this.setState({ payment_amount, payment_type: 'one-time payment' });
+    //this.setState({ payment_amount, payment_type: 'one-time payment' });
   }
 
   voteUp(vote) {
@@ -55,7 +65,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -75,10 +85,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteYes = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 1
             };
@@ -114,7 +124,7 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.mnPrivateKey) {
+    if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
         text: 'Must own a MasterNode in order to vote',
@@ -134,10 +144,10 @@ class ProposalCard extends Component {
 
           return;
         } else if (!value) {
-          user.mnPrivateKey.map(mnObj => {
+          user.MasterNodes.map(mnObj => {
             const proposalVoteNo = {
-              mnPrivateKey: mnObj.mnPrivateKey,
-              vinMasternode: mnObj.vinMasternode,
+              mnPrivateKey: cryptr.decrypt(mnObj.key),
+              vinMasternode: cryptr.decrypt(mnObj.vin),
               gObjectHash: proposal.Hash,
               voteOutcome: 2
             };
@@ -224,31 +234,60 @@ class ProposalCard extends Component {
             </div>
           </Grid>
 
-          {user ? (
-            <Grid item md={3} xs={3} className="top-vote__wrapper">
-              {user ? <div className="vote-text">Vote on Proposal</div> : null}
-              <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
-                <img src={voteUpIcon} className="upVoteIcon" alt="" />
-              </Button>
-              <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
-                <img src={voteDownIcon} className="downVoteIcon" alt="" />
-              </Button>
-              <div className="vote-count">
-                <div className="vote-number">{proposal.YesCount}</div>
-                <div className="vote-number">{proposal.NoCount}</div>
-              </div>
-            </Grid>
-          ) : (
-              <Grid item md={3} xs={2} className="vote__wrapper">
-                <div className="vote-up">
-                  <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                  <span className="voteNumber">{proposal.YesCount}</span>
-                </div>
-                <div className="vote-down">
-                  <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                  <span className="voteNumber">{proposal.NoCount}</span>
-                </div>
-              </Grid>
+          {user ?
+            (
+              deviceType === 'mobile' ?
+                <Grid item md={3} xs={3} className="vote__wrapper">
+                  <div className="vote-text">Vote</div>
+                  <div className="vote-up">
+                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                    <span className="voteNumber">{proposal.YesCount}</span>
+                  </div>
+                  <div className="vote-down">
+                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                    <span className="voteNumber">{proposal.NoCount}</span>
+                  </div>
+                </Grid>
+                :
+                <Grid item md={3} xs={3} className="top-vote__wrapper">
+                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
+                  <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                  </Button>
+                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                  </Button>
+                  <div className="vote-count">
+                    <div className="vote-number">{proposal.YesCount}</div>
+                    <div className="vote-number">{proposal.NoCount}</div>
+                  </div>
+                </Grid>
+            ) : (
+              deviceType === 'mobile' ?
+                <Grid item md={3} xs={3} className="vote__wrapper">
+                  <div className="vote-up">
+                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                    <span className="voteNumber">{proposal.YesCount}</span>
+                  </div>
+                  <div className="vote-down">
+                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                    <span className="voteNumber">{proposal.NoCount}</span>
+                  </div>
+                </Grid>
+                :
+                <Grid item md={3} xs={3} className="top-vote__wrapper">
+                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
+                  <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                  </Button>
+                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
+                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                  </Button>
+                  <div className="vote-count">
+                    <div className="vote-number">{proposal.YesCount}</div>
+                    <div className="vote-number">{proposal.NoCount}</div>
+                  </div>
+                </Grid>
             )}
         </Grid>
       </Grid>
@@ -258,7 +297,8 @@ class ProposalCard extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.app.currentUser
+    user: state.app.currentUser,
+    millsMonth: state.proposals.millsMonth
   };
 };
 

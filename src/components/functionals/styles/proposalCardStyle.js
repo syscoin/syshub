@@ -238,7 +238,6 @@ export default {
       '& .top-vote__wrapper': {
         textAlign: 'center',
         paddingTop: 0,
-        minWidth: 90,
         '& .vote-text': {
           color: primaryDark
         },
@@ -276,17 +275,37 @@ export default {
       },
       '& .vote__wrapper': {
         textAlign: 'center',
-        marginTop: 10,
+        marginTop: 0,
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
         '& .vote-up, .vote-down': {
-          width: 60,
-          display: 'inline-block'
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingBottom: 5,
         },
         '& img': {
-          height: 30,
-          marginRight: 5,
-          verticalAlign: 'middle'
+          height: 40,
+          width: 35,
+          marginRight: 10,
+          verticalAlign: 'middle',
+          marginLeft: 10,
+          border: 'thin solid' + greyLight,
+          padding: 5,
+          borderRadius: 2,
+        },
+        '& .voteNumber': {
+          marginRight: '25%',
+          marginTop: 5,
+          padding: 2,
+        },
+        '& .vote-text': {
+          paddingBottom: 5,
+          color: primaryDark,
         }
-      }
-    }
-  }
+      },
+    },
+  },
 };

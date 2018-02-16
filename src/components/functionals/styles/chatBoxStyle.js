@@ -39,7 +39,7 @@ export default {
         '& .list': {
           maxHeight: '80%',
           '& .chat-list': {
-            height: 'calc(100vh - 230px)',
+            height: 'calc(100vh - 245px)',
             overflowY: 'auto',
             '& .chatContent-listItemText': {
               padding: '10px',
@@ -48,9 +48,12 @@ export default {
               display: 'block',
             },
             '& .chatContent-primaryText': {
+              display:'block',
+              padding:'8px 0px',
               color: primary,
             },
             '& .chatContent-secondaryText': {
+              display:'block',              
               color: greyDark,
               padding: '0px 0px 0px 5px',
               fontWeight: '100',

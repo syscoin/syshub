@@ -5,7 +5,10 @@ import actions from '../../redux/actions';
 
 // import components
 import { Stats, WelcomeBox } from '../functionals';
+
 class Home extends Component {
+  state = {};
+
   render() {
     return (
       <div>

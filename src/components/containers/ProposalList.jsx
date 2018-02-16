@@ -82,7 +82,7 @@ export class ProposalList extends Component {
 const stateToProps = state => {
   return {
     user: state.app.currentUser,
-    logged: state.app.currentUser ? true : false
+    logged: state.app.currentUser ? true : false,
   };
 };
 const dispatchToProps = dispatch => {

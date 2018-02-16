@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/grecaptcha": "^2.0.34",
     "antd": "^3.1.0",
     "antd-mobile": "^2.1.5",
     "axios": "^0.17.1",
+    "bcryptjs": "^2.4.3",
+    "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.2",
     "fast-xml-parser": "^2.9.3",
     "firebase": "^4.8.1",
     "font-awesome": "^4.7.0",
+    "google-libphonenumber": "^3.0.12",
     "html-to-draftjs": "^1.1.2",
     "jss": "^9.5.0",
     "jss-preset-default": "^4.0.1",
@@ -21,6 +25,7 @@
     "qrcode.react": "^0.7.2",
     "re-base": "^3.2.1",
     "react": "^16.2.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.2.0",
     "react-draft-wysiwyg": "^1.12.5",
     "react-fontawesome": "^1.6.1",
@@ -37,7 +42,8 @@
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "sweetalert": "^2.1.0"
+    "sweetalert": "^2.1.0",
+    "sweetalert2": "^7.11.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

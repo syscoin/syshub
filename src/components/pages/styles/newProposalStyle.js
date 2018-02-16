@@ -9,7 +9,6 @@ const greyLight = palette.greyLight;
 
 export default {
   root: {
-    marginTop: '20px',
     '& StepLabel': {
       color: 'red'
     },
@@ -20,6 +19,11 @@ export default {
       fontWeight: 300
     },
     '& .steper__container': {
+      '& .classNameProp': {
+        '&>div:nth-child(2)': {
+          width: '100%',
+        },
+      },
       '& > span > span:nth-child(2)': {
         width: '100%',
         '& .preview-edit-button': {
@@ -37,9 +41,11 @@ export default {
       }
     },
     '& .title': {
-      fontWeight: 'lighter',
+      fontWeight: 300,
       color: greyDark,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      padding: 15,
+      margin: 'auto',
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -82,8 +88,7 @@ export default {
         fontSize: '22px',
         color: primaryLight,
         display: 'inline-block',
-        // paddingLeft: 'calc(50% + 50px )',
-        marginLeft: 'calc(50% - 220px)'
+        marginLeft: 'calc(50% - 235px)'
       },
       '& .proposalHeading-dot': {
         backgroundColor: primary,
@@ -184,7 +189,7 @@ export default {
       },
       //paymentDetail-row
       '& .paymentDetail-row': {
-        height: 100,
+        height: 50,
         marginTop: 15,
         '& label': {
           display: 'block'
@@ -193,8 +198,14 @@ export default {
       //amount-row
       '& .amount-row': {
         height: 50,
-        marginTop: 15
-      }
+        marginTop: 15,
+        '& label': {
+          display: 'block'
+        }
+      },
+      '& .amount-input': {
+        width: 100
+      },
     },
     '& .ant-btn-primary': {
       backgroundColor: primary,
@@ -214,6 +225,10 @@ export default {
     },
     '& .payment-input': {
       width: '100%'
+    },
+    '& .amount-input': {
+      width: '100%',
+      '& input': { width: '100%' },
     },
     '& .toolbarClassName': {
       marginTop: '30px !important',

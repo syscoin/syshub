@@ -31,7 +31,7 @@ class ProposalDescription extends Component {
         </Grid>
         <Grid item container md={12} className="proposalView">
           <Grid item md={11} className="proposalDetails">
-            <Typography gutterBottom><div dangerouslySetInnerHTML={{ __html: description }} /></Typography>
+            <Grid><div dangerouslySetInnerHTML={{ __html: description }} /></Grid>
           </Grid>
         </Grid>
       </Grid>

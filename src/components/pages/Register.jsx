@@ -213,7 +213,7 @@ class Register extends Component {
       isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
-      <Grid container className={style} md={12} xs={12}>
+      <Grid item className={style} md={12} xs={12}>
 
         <Typography variant="display1" gutterBottom>
           JOIN SYSHUB
@@ -230,10 +230,10 @@ class Register extends Component {
           >
             <Grid
               item
-              lg={{ size: 8, offset: 2 }}
-              md={{ size: 10, offset: 1 }}
+              lg={8}
+              md={10}
               xs={12}
-              justify="center"
+            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -260,7 +260,7 @@ class Register extends Component {
                     placeholder="Enter Username"
                     onChange={e => this.checkUsername(e)}
                   />
-                )}
+                  )}
 
                 {this.state.usernames ? (
                   <span className="validation-message">
@@ -301,7 +301,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="Enter email"
                   />
-                )}
+                  )}
               </FormItem>
 
               {/* For Password */}
@@ -349,7 +349,7 @@ class Register extends Component {
                       }}
                     />
                   </div>
-                )}
+                  )}
                 {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
@@ -383,7 +383,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="**************"
                   />
-                )}
+                  )}
               </FormItem>
 
               {/* For Confirm Password */}

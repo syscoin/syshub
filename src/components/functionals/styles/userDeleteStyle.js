@@ -22,7 +22,8 @@ export default {
       fontWeight: '100',
     },
     '& .delete-button-grid': {
-      padding: '20px',
+      padding: '20px 0px',
+      marginLeft: '2.5%',
       '& .delete-button': {
         borderRadius: '5px',
         padding: '8px',
@@ -57,7 +58,10 @@ export default {
       marginLeft: 5
     },
     '& .delete-button-grid': {
-      margin: 'auto'
+      margin: 'auto',
+      marginLeft: 0,
+      textAlign: 'center',
+      width: '100%',
     }
   },
 };

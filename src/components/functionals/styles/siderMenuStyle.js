@@ -12,7 +12,7 @@ export default {
     justifyAlign: 'flex-start',
     width: '100%',
     marginTop: 97,
-    height: '100vh'
+    height: '80vh'
   },
   button: {
     height: '50px',
@@ -23,6 +23,9 @@ export default {
     borderWidth: '1px 0 0 0',
     borderStyle: 'solid',
     borderColor: grey,
+    '&>img': {
+      marginLeft: 41,
+    },
     '&:hover': {
       background: `linear-gradient(${greyLight}, ${white})`
     }

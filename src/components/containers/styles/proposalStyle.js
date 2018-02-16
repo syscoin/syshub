@@ -7,6 +7,6 @@ export default {
     background: white,
     padding:'10px 10px 45px 10px',
     overflowY: 'auto',
-    maxHeight: '80vh'
+    maxHeight: 'calc(80vh - 20px)'
   },
 };
