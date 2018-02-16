@@ -10,6 +10,7 @@ const white = palette.white;
 export default {
   root: {
     paddingTop: '20px',
+
     '& button span': {
       color: 'white',
       textTransform: 'capitalize'
@@ -248,4 +249,4 @@ export default {
       textAlign: 'center',
     },
   }
-}
+};

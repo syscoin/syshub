@@ -224,71 +224,8 @@ class UserTwoFactor extends Component {
           <Grid item md={12} className="heading-grid">
             <h1 className="userTwoFactor-heading">2-Factor-Authentication</h1>
           </Grid>
-          {app.currentUser ? (
-            app.currentUser.phoneNumber == null || this.state.editNumber ? (
-              <Grid item md={12} className="form__container">
-                <Form
-                  ref={form => {
-                    this.addPhoneForm = form;
-                  }}
-                  className="wrapper"
-                >
-                  <FormItem className="form-group">
-                    <span htmlFor="user-name" className="label">
-                      {`Phone Number (With Area Code): `}
-                    </span>
-                    <Input
-                      ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      className="input-field"
-                      placeholder="Phone Number"
-                      value={this.state.phoneNumber}
-                      onChange={this.onChange}
-                      type="number"
-                    />
-                  </FormItem>
-                  <FormItem className="form-group">
-                    <span htmlFor="user-name" className="label">
-                      {`Country Code (Example - US, ES): `}
-                    </span>
-                    <Input
-                      ref={isoCode => (this.isoCode = isoCode)}
-                      id="isoCode"
-                      name="isoCode"
-                      className="input-field"
-                      placeholder="US"
-                      value={this.state.isoCode}
-                      onChange={this.onChange}
-                    />
-                  </FormItem>
-                </Form>
-                <Grid className="form-grid-btn">
-                  {app.currentUser ? (
-                    app.currentUser.phoneNumber !== null ? (
-                      <Button
-                        onClick={this.removePhone}
-                        htmlType="submit"
-                        variant="raised"
-                      >Delete</Button>
-                    ) : null
-                  ) : null}
-                  <Button
-                    onClick={this.addPhone}
-                    htmlType="submit"
-                    variant="raised"
-                  >Add</Button>
-                </Grid>
-              </Grid>
-            ) : (
-                <div>
-                  <button onClick={this.editPhone}>Edit</button>
-                </div>
-              )
-          ) : null}
-
           {/* userTwofactor left grid */}
-          <Grid item md={6} xs={12} className="userTwoFactor-left-grid">
+          <Grid item md={12} xs={12} className="userTwoFactor-left-grid">
             <span className="enable2FA-note">
               Note: Enabling 2FA to secure your account is recommended
             </span>
@@ -304,8 +241,74 @@ class UserTwoFactor extends Component {
                     </span>
                   )}
               </span>
-              <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
+
             </div>
+            {app.currentUser ? (
+              app.currentUser.phoneNumber == null || this.state.editNumber ? (
+                <Grid item md={12} className="form__container">
+                  <Form
+                    ref={form => {
+                      this.addPhoneForm = form;
+                    }}
+                    className="phoneWrapper"
+                  >
+                    <FormItem className="form-group">
+                      <span htmlFor="user-name" className="label">
+                        {`Phone Number (With Area Code): `}
+                      </span>
+                      <Input
+                        ref={phoneNumber => (this.phoneNumber = phoneNumber)}
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        className="input-field"
+                        placeholder="Phone Number"
+                        value={this.state.phoneNumber}
+                        onChange={this.onChange}
+                        type="number"
+                      />
+                    </FormItem>
+                    <FormItem className="form-group">
+                      <span htmlFor="user-name" className="label">
+                        {`Country Code (Example - US, ES): `}
+                      </span>
+                      <Input
+                        ref={isoCode => (this.isoCode = isoCode)}
+                        id="isoCode"
+                        name="isoCode"
+                        className="input-field"
+                        placeholder="US"
+                        value={this.state.isoCode}
+                        onChange={this.onChange}
+                      />
+                    </FormItem>
+                  </Form>
+                  <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
+                  <Grid className="form-grid-btn">
+                    {app.currentUser ? (
+                      app.currentUser.phoneNumber !== null ? (
+                        <Button
+                          onClick={this.removePhone}
+                          htmlType="submit"
+                          variant="raised"
+                        >{'Delete Phone'}</Button>
+                      ) : null
+                    ) : null}
+                    <Button
+                      onClick={this.addPhone}
+                      htmlType="submit"
+                      variant="raised"
+                    >
+                      {'Add & Enable'}
+                    </Button>
+                  </Grid>
+                </Grid>
+              ) : (
+                  <div>
+                    <button onClick={this.editPhone}>Edit</button>
+                  </div>
+                )
+            ) : null}
+
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
                 <Button
