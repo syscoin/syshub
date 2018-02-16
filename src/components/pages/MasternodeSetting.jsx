@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
 import Cryptr from 'cryptr';
 
 // import style

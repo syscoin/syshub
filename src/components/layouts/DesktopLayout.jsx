@@ -25,7 +25,7 @@ class DesktopLayout extends Component {
             <AppLSider />
           </div>
 
-          <div style={desktopLayoutStyle.appContent}>
+          <div style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
             <AppContent />
           </div>
 

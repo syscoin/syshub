@@ -70,10 +70,6 @@ class App extends Component {
     });
   }
 
-  componentWillUnmount() {
-    // this.clearInterval(this.state.timer);
-  }
-
   tick() {
     this.props.getSysStats();
   }

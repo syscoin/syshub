@@ -3,7 +3,6 @@ import { Collapse } from 'antd';
 
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui';
-import Typography from 'material-ui/Typography';
 
 // import components
 import { faqStyle } from './styles';
@@ -175,20 +174,20 @@ class Faq extends Component {
     return (
       <div className={style}>
 
-        <Typography variant="display1" gutterBottom>
+        <h1 className="title">
           SYSHUB FAQ
-      </Typography>
+      </h1>
 
         <div className="faqs-div">
           <Collapse bordered={false}>
             {faqQuestions.map((cat, index) => {
               return (
                 <Panel header={cat.section} key={index} className="faq-category">
-                  {cat.questions.map((ques, index) => {
+                  {cat.questions.map((ques, index1) => {
                     return (
-                      <Collapse bordered={false}>
+                      <Collapse bordered={false} key={index1}>
                         <div className="list-dot"></div>
-                        <Panel header={ques.question} key={index} showArrow={false} className="faq-subCategory">
+                        <Panel header={ques.question} showArrow={false} className="faq-subCategory">
                           <div style={{ padding: '15px', border: '1px solid #a4b0be', marginLeft: 35 }}>
                             <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
                               {ques.answer}
