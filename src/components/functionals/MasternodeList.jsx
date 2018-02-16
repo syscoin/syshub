@@ -18,7 +18,7 @@ class MasterNodeList extends Component {
       editNode: false,
       editNodeRecord: {
         name: '',
-        address: ''
+        mnPrivateKey: ''
       }
     };
     this.editNode = {};
@@ -36,7 +36,7 @@ class MasterNodeList extends Component {
       editNodeModal: true,
       editNodeRecord: {
         name: record.name,
-        address: cryptr.decrypt(record.address),
+        mnPrivateKey: cryptr.decrypt(record.mnPrivateKey),
         key: record.key,
         vin: cryptr.decrypt(record.vin),
         keyId: record.keyId
@@ -55,7 +55,7 @@ class MasterNodeList extends Component {
     this.setState({
       editNodeRecord: {
         name: '',
-        address: ''
+        mnPrivateKey: ''
       },
       editNodeModal: false
     });
@@ -107,9 +107,10 @@ class MasterNodeList extends Component {
       },
       {
         title: 'MN Private Key',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'mnPrivateKey',
+        key: 'mnPrivateKey',
         render: text => (
+
           <span>
             {deviceType === 'mobile'
               ? cryptr.decrypt(text).substring(0, 7) + '...'
@@ -182,12 +183,12 @@ class MasterNodeList extends Component {
                     {`MN Private Key: `}
                   </span>
                   <input
-                    ref={address => (this.nodeAddress = address)}
-                    id="address"
-                    name="address"
+                    ref={mnPrivateKey => (this.nodemnPrivateKey = mnPrivateKey)}
+                    id="mnPrivateKey"
+                    name="mnPrivateKey"
                     className="input-field"
                     placeholder="123.45.67.891.12345"
-                    value={this.state.editNodeRecord.address}
+                    value={this.state.editNodeRecord.mnPrivateKey}
                     onChange={this.onChange}
                   />
                 </FormGroup>
