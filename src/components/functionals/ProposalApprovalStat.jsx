@@ -23,10 +23,13 @@ class ProposalApprovalStat extends Component {
       this.props.proposal.DataString[0][1].end_epoch * 1000
     );
     if (endDate > startDate) {
-      let timeDiff = endDate.getTime() - startDate.getTime();
-      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      const timeDiff = endDate.getTime() - startDate.getTime();
+      const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+
       this.setState({
         days_remaining,
+        month_remaining,
         endDate:
           endDate.getDate() +
           '/' +
@@ -40,7 +43,7 @@ class ProposalApprovalStat extends Component {
     const { classes, deviceType, totalNodes } = this.props;
     //Platform style switcher
     let { YesCount, NoCount, AbstainCount } = this.props.proposal;
-    let { days_remaining, endDate } = this.state;
+    let { days_remaining, month_remaining, endDate } = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <Grid item md={12} className={style}>
@@ -88,9 +91,15 @@ class ProposalApprovalStat extends Component {
             <Typography gutterBottom>
               {days_remaining !== 0 ? (
                 <span>
-                  <span className="approvalRedColorFont">{days_remaining}</span>{' '}
-                  Days Remaining ({endDate})
-              </span>
+                  <span className="approvalRedColorFont">
+                    {days_remaining < 30 ? days_remaining : month_remaining}
+                  </span>
+                  {days_remaining < 30 ?
+                    (<span>{` Day${days_remaining > 1 ? 's' : ''} Remaining `}</span>) :
+                    (<span>{` Month${month_remaining > 1 ? 's' : ''} Remaining `}</span>)
+                  }
+                  <span>({endDate})</span>
+                </span>
               ) : (
                   <span>---</span>
                 )}
