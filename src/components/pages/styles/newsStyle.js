@@ -9,7 +9,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      backgroundColor: white,
+      margin: 'auto',
     },
     '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
     '& .icon': { color: primary },
@@ -20,4 +20,10 @@ export default {
       height: '80vh',
     }
   },
+  mRoot: {
+    extend: 'root',
+    '& .title': {
+      fontSize: '1.9em',
+    }
+  }
 };

@@ -21,6 +21,7 @@ export default {
       borderBottom: '0.1px solid ' + greyLight,
     },
     '& .changePsw-credential-grid': {
+      width: '100%',
       marginTop: '-20px',
       '& .changedPsw-note': {
         color: primaryLight,

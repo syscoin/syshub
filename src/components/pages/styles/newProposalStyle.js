@@ -45,7 +45,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      backgroundColor: white,
+      margin: 'auto',
     },
     '& .paper-container': {
       padding: '20px 20px',

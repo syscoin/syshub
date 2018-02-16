@@ -175,7 +175,7 @@ export default {
           fontSize: 15,
           background: white,
           maxWidth: '100%',
-          padding: '10px 20px',
+          padding: '10px',
           boxShadow: '5px 5px 20px ' + gray,
           '& .userComment': {
             border: 0,
@@ -333,6 +333,7 @@ export default {
         width: '100%',
         maxWidth: '100%',
         marginLeft: 0,
+        padding: 5,
       }
     },
     '& .topCommentWithReplyView': {
@@ -371,7 +372,9 @@ export default {
       '& .topcommentSectionslView': {
         width: '100%',
         margin: '3px 0 20px 2%',
-
+        '& .proposalDetails': {
+          padding: 5,
+        }
       }
     },
     '& .allReplies': {

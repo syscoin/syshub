@@ -10,7 +10,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      backgroundColor: white,
+      margin: 'auto',
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -26,9 +26,6 @@ export default {
   mRoot: {
     extend: 'root',
     '& .title': {
-      padding: 15,
-      background: white,
-      paddingLeft: 15,
     },
     '& .paper-container': {
       overflowX: 'hidden',

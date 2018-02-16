@@ -8,9 +8,9 @@ export default {
     '& .proposal-heading': {
       color: grey,
       textTransform: 'uppercase',
-      backgroundColor: white,
       padding: 15,
       fontWeight: 300,
+      margin: 'auto',
     },
     '& .iconWraper': { fontSize: 14, cursor: 'pointer' },
     '& .icon': { color: primary },

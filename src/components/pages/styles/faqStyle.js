@@ -12,7 +12,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      backgroundColor: white,
+      margin: 'auto',
     },
     '& .faqs-div': {
       background: white,

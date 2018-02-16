@@ -11,19 +11,21 @@ export default {
     flexDirection: 'column',
     justifyAlign: 'flex-start',
     width: '100%',
-    marginTop :97,
-    height:'100vh'
+    marginTop: 97,
+    height: '80vh'
   },
   button: {
     height: '50px',
-    width: 'calc(100% - 41px)',
+    width: '100%',
     border: 'none',
     textAlign: 'left',
     background: `linear-gradient(${white}, ${greyLight})`,
     borderWidth: '1px 0 0 0',
     borderStyle: 'solid',
     borderColor: grey,
-    marginLeft:41,
+    '&>img': {
+      marginLeft: 41,
+    },
     '&:hover': {
       background: `linear-gradient(${greyLight}, ${white})`
     }

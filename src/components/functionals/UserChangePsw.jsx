@@ -87,7 +87,7 @@ class UserChangePassword extends Component {
       <div className={style}>
         <Grid container className="userPwd-grid">
           {/* change password text */}
-          <Grid item md={12}>
+          <Grid item md={12} xs={12} >
             <h1 className="changePsw-heading">Change Password</h1>
           </Grid>
           {/* profile credential grid */}
@@ -124,7 +124,7 @@ class UserChangePassword extends Component {
                       className="input-field"
                       placeholder="******"
                     />
-                    )}
+                  )}
                 </FormItem>
 
                 {/* For New Password */}
@@ -172,7 +172,7 @@ class UserChangePassword extends Component {
                         }}
                       />
                     </div>
-                    )}
+                  )}
                 </FormItem>
 
                 {/* For Confirm Password */}
@@ -204,7 +204,7 @@ class UserChangePassword extends Component {
                       className="input-field"
                       placeholder="******"
                     />
-                    )}
+                  )}
                 </FormItem>
                 <Grid className="confirmChange-button-grid">
                   <Button

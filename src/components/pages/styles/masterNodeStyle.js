@@ -9,7 +9,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      backgroundColor: white,
+      margin: 'auto',
     },
     '& .masternode-div': {
       background: white,

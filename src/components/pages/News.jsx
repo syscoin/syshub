@@ -37,9 +37,10 @@ class News extends Component {
   }
 
   render() {
-    const { classes, channel } = this.props;
+    const { classes, channel, deviceType } = this.props;
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
         {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
