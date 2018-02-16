@@ -53,6 +53,7 @@ class SiderMenu extends Component {
                 alt="a"
                 src={require(`../../assets/img/${icon}.png`)}
                 width="25"
+                style={deviceType === 'mobile' ? { marginLeft: 15, } : null}
               />
               <span className={txt}>{`${item.title.toUpperCase()}`}</span>
             </button>

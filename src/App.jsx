@@ -25,7 +25,7 @@ class App extends Component {
           .database()
           .ref('2FA/' + user.uid)
           .on('value', snap => {
-            if (snap.val() === false) {
+            if (snap.val() === true) {
               fire
                 .database()
                 .ref('MasterNodes/' + user.uid)
@@ -35,7 +35,6 @@ class App extends Component {
                     list.push(snap.val());
                   });
                   user.MasterNodes = list;
-                  console.log(user);
 
                   this.props.setCurrentUser(user);
                 });
@@ -70,10 +69,6 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
-  }
-
-  componentWillUnmount() {
-    // this.clearInterval(this.state.timer);
   }
 
   tick() {

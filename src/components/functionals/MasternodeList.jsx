@@ -109,6 +109,7 @@ class MasterNodeList extends Component {
         dataIndex: 'mnPrivateKey',
         key: 'mnPrivateKey',
         render: text => (
+
           <span>
             {deviceType === 'mobile'
               ? cryptr.decrypt(text).substring(0, 7) + '...'

@@ -3,7 +3,7 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    padding: '0px 25px 25px 25px',
+    padding: '0px 45px 25px 45px',
     '& .txtArea': {
       //border: '1px solid red',
       padding: '40px 0px 0px 10%',

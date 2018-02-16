@@ -29,7 +29,7 @@ export default {
         }
       },
       '& .label': {
-        width: '20%',
+        width: '25%',
         display: 'inline-block',
         textAlign: 'right',
         fontSize: '15px',

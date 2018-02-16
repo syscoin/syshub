@@ -3,6 +3,7 @@ const primary = palette.primary;
 
 export default {
   root: {
+    boxShadow: '-1px 18px 38px -18px rgba(0, 0, 0, 0.25)',
     '& .welcome-box__wrapper': {
       height: '100px'
     },
@@ -12,7 +13,7 @@ export default {
       width: '100%',
       // margin: '20px 20px',
       display: 'inline-block',
-      boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 30px',
+      boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
       padding: '20px',
 
       '& .heading': {

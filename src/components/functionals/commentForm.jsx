@@ -13,7 +13,7 @@ class CommentForm extends Component {
         let { comment } = this.props;
         let { message } = this.state;
         return (
-            <Grid container md={8} className="topcommentSectionslView">
+            <Grid item container md={8} className="topcommentSectionslView">
                 <Grid item md={12} className="commentHeading">
                     Enter Reply
                   </Grid>
