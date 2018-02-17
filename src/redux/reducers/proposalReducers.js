@@ -1,5 +1,5 @@
 import constants from '../constants';
-import { fire } from '../../API/firebase';
+//import { fire } from '../../API/firebase';
 
 const initialState = {
   listRaw: {},
