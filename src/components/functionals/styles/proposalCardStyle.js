@@ -113,7 +113,15 @@ export default {
             height: '100%'
           }
         },
-
+        '& .vote-item__wrapper':{
+          maxWidth: 40,
+          textAlign: 'center',
+          display: 'inline-block',
+          margin: '25px 10px',
+          '& img': {
+            height: 40
+          }
+        },
         '& .vote-number': {
           color: gray,
           fontSize: 20,

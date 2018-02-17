@@ -250,7 +250,7 @@ class ProposalCard extends Component {
                 </Grid>
                 :
                 <Grid item md={3} xs={3} className="top-vote__wrapper">
-                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
+                  <div className="vote-text">{user ? "Vote on Proposal": "Vote"}</div>
                   <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
                   </Button>
@@ -276,17 +276,19 @@ class ProposalCard extends Component {
                 </Grid>
                 :
                 <Grid item md={3} xs={3} className="top-vote__wrapper">
-                  {user ? <div className="vote-text">Vote on Proposal</div> : null}
-                  <Button className={deviceType === 'mobile' ? "login-vote-up" : 'vote-up'} onClick={() => this.voteUp(proposal)}>
+                  <div className="vote-text">{user ? "Vote on Proposal" : ""}</div>
+                  <div className="vote-item__wrapper">
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                  </Button>
-                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                  </Button>
-                  <div className="vote-count">
+                    <br/>
                     <div className="vote-number">{proposal.YesCount}</div>
+                  </div>
+                  <div className="vote-item__wrapper">
+                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                    <br/>
                     <div className="vote-number">{proposal.NoCount}</div>
                   </div>
+                  
+                  
                 </Grid>
             )}
         </Grid>
