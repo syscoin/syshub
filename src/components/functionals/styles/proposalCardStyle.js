@@ -4,7 +4,6 @@ const primaryDark = palette.primaryDark;
 const primaryLight = palette.primaryLight;
 const white = palette.white;
 const gray = palette.grey;
-const greyLight = palette.greyLight;
 
 export default {
   root: {
@@ -22,7 +21,7 @@ export default {
         border: `1px solid ${primaryLight}`,
       },
       '& .proposalView': {
-        textAlign: '-webkit-center',
+        textAlign: 'center',
         '& .progress-dial': {
           // width:"100px",
           '& .ant-progress-inner': {
@@ -95,7 +94,7 @@ export default {
           fontSize: '15px'
         }
       },
-      '& .top-vote__wrapper': {
+      '& .desktop-vote__wrapper': {
         textAlign: 'center',
         paddingTop: 0,
         '& .vote-text': {
@@ -106,14 +105,22 @@ export default {
           width: '100%',
           display: 'inline-block',
           margin: 0,
-          border: 'thin solid' + greyLight,
+          //border: 'thin solid' + greyLight,
           padding: 5,
           height: 60,
           '& img': {
             height: '100%'
           }
         },
-
+        '& .vote-item__wrapper': {
+          maxWidth: 40,
+          textAlign: 'center',
+          display: 'inline-block',
+          margin: '25px 10px',
+          '& img': {
+            height: 40
+          }
+        },
         '& .vote-number': {
           color: gray,
           fontSize: 20,
@@ -185,12 +192,12 @@ export default {
       borderRadius: '10px',
       border: '2px solid ghostwhite',
       '& .proposalView': {
-        textAlign: '-webkit-center',
+        textAlign: 'center',
         '& .progress-dial': {
-          // width:"100px",
+          width: '100%',
           '& .ant-progress-inner': {
-            width: '80px !important',
-            height: '80px !important',
+            width: '100% !important',
+            height: '100% !important',
             fontSize: '20px !important',
             '& .progressIcon': {
               width: '40px',
@@ -238,45 +245,46 @@ export default {
           fontSize: '13px'
         }
       },
-      '& .top-vote__wrapper': {
+      '& .mobile-vote__wrapper': {
         textAlign: 'center',
-        paddingTop: 0,
+        marginTop: 0,
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         '& .vote-text': {
           color: primaryDark
         },
-        '& .vote-up, .vote-down': {
-          display: 'inline-block',
-          margin: 0,
-          border: 'thin solid' + greyLight,
-          padding: 5,
-          height: 40,
-          width: '50%',
-          '& img': {
-            height: '100%'
+        '& .vote-item': {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          width: '100%',
+          //paddingBottom: 5,
+          '& .btn-vote-up, .btn-vote-down': {
+            display: 'inline-block',
+            margin: 0,
+            padding: 5,
+            height: 40,
+            width: 35,
+            '& img': {
+              height: '100%'
+            }
+          },
+          '& .vote-number': {
+            color: gray,
+            fontSize: 20,
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            marginTop: 5,
+            maxWidth: 60,
+            width: '50%'
           }
         },
-        '& .login-vote-up, .login-vote-down': {
-          display: 'inline-block',
-          margin: 0,
-          border: 'thin solid' + greyLight,
-          padding: 5,
-          height: 40,
-          width: '50%',
-          '& img': {
-            height: '100%'
-          }
-        },
-        '& .vote-number': {
-          color: gray,
-          fontSize: 20,
-          display: 'inline-block',
-          verticalAlign: 'middle',
-          marginTop: 5,
-          maxWidth: 60,
-          width: '50%'
-        }
       },
-      '& .vote__wrapper': {
+      '& .logout-vote__wrapper': {
         textAlign: 'center',
         marginTop: 0,
         padding: 0,
@@ -295,7 +303,7 @@ export default {
           marginRight: 10,
           verticalAlign: 'middle',
           marginLeft: 10,
-          border: 'thin solid' + greyLight,
+          //border: 'thin solid' + greyLight,
           padding: 5,
           borderRadius: 2,
         },
