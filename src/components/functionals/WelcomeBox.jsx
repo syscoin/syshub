@@ -14,7 +14,7 @@ class WelcomeBox extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-    const logo = require('../../assets/img/png_logo.png');
+    const logo = require('../../assets/img/png_logo2.png');
 
     return (
       <div className={style}>

@@ -1,7 +1,6 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import Typography from 'material-ui/Typography';
 import injectSheet from 'react-jss';
 
 //Import Styles
@@ -15,18 +14,18 @@ class SiderLogo extends Component {
         <div>
           <img
             alt="a"
-            src={require('../../assets/img/png_logo.png')}
+            src={require('../../assets/img/png_menu_logo.png')}
             width="100%"
           />
         </div>
-        <div className="txtArea">
-        <Typography variant="body1" gutterBottom align='right'>
-          brought to you by
+        {/* <div className="txtArea">
+          <Typography variant="body1" gutterBottom align='right'>
+            brought to you by
         </Typography>
-        <Typography variant="body2" gutterBottom align='right'>
-          Blockchain Foundry
+          <Typography variant="body2" gutterBottom align='right'>
+            Blockchain Foundry
         </Typography>
-        </div>
+        </div> */}
       </div>
     );
   }
