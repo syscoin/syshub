@@ -61,7 +61,6 @@ export class ProposalList extends Component {
           deviceType={deviceType}
           data={{ showHeader: 'proposalList' }}
         />
-
         {this.props.proposalList.map((proposal, index) => {
           return (
             <ProposalCard

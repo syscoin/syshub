@@ -332,11 +332,11 @@ class NewProposal extends Component {
     descriptionRef.set(proposal__detail);
 
     let userProposal = {
+      type: 1,
       name: proposalName,
       title: proposalTitle,
-      description: descriptionID,
+      descriptionID,
       username: currentUser.displayName,
-      type: 1,
       // start_epoch: this.state.proposalStartEpoch,
       nPayment: paymentQuantity,
       first_epoch: this.state.proposalStartEpoch,
