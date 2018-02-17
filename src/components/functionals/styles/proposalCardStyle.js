@@ -17,7 +17,10 @@ export default {
       backgroundColor: 'white',
       padding: '15px 0px',
       borderRadius: '10px',
-      border: '2px solid ghostwhite',
+      border: `1px solid ${gray}`,
+      '&:hover': {
+        border: `1px solid ${primaryLight}`,
+      },
       '& .proposalView': {
         textAlign: '-webkit-center',
         '& .progress-dial': {

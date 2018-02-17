@@ -11,7 +11,6 @@ export default {
     '& .Paper': {
       minHeight: '100px',
       width: '100%',
-      // margin: '20px 20px',
       display: 'inline-block',
       boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
       padding: '20px',
@@ -19,10 +18,12 @@ export default {
       '& .heading': {
         color: '#3498db'
       },
+      '& logo': {
+      },
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: '100%'
+          width: '60%'
         }
       },
       '& .addvertiseText': {
