@@ -29,6 +29,7 @@ export default {
       '& .button': {
         border: 'none',
         padding: '0 15px',
+        verticalAlign: 'middle',
         '& img': {
           height: 25
         }

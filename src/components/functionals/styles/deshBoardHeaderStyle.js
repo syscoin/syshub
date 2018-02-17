@@ -12,7 +12,6 @@ export default {
       marginLeft: '10px',
       // marginBottom: "20px",
       fontSize: '20px',
-      maxWidth: 'calc(100% - 20px)',
       '& .headingRow': {
         color: white,
         paddingLeft: '7px'

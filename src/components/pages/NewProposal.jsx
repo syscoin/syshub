@@ -682,114 +682,32 @@ class NewProposal extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    const modalStyle = deviceType === 'mobile' ? classes.mobileModal : classes.modal;
     const steps = this.getSteps();
     const { activeStep } = this.state;
     return (
-      <div className={style}>
-        <h1 className="title">Proposal Configuration</h1>
-        <Paper className="paper-container" elevation={4}>
-          {this.state.recover === true ? (
-            <div>Recovery in process</div>
-          ) : (
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => {
-                  return (
-                    <Step className="steper__container" key={label}>
-                      <StepLabel className="steper__label">
-                        <h2 className="step-label"> {label} </h2>
-                        {this.state.activeStep === 0 &&
-                          label === 'Proposal Title' &&
-                          deviceType !== 'mobile' ? (
-                            <h3 className="proposal-title">Proposal Description Url</h3>
-                          ) : null}
-                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                          this.state.showEditor ? (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={this.previewHTML.bind(this)}
-                            >
-                              PREVIEW
-                          </Button>
-                          ) : (
-                              <Button
-                                className="preview-edit-button"
-                                onClick={() => {
-                                  this.setState({ showEditor: true });
-                                }}
-                              >
-                                EDITOR
-                          </Button>
-                            )
-                        ) : null}
-                      </StepLabel>
-                      <StepContent>
-                        <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
-                        <div className={classes.actionsContainer}>
-                          <div
-                            className={
-                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                            }
-                          >
-                            {activeStep === 0 ? null : (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                onClick={this.handleBack}
-                                className="button"
-                              >
-                                Back
-                            </Button>
-                            )}
-                            {activeStep === steps.length - 1 ? (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                className={classes.button}
-                                onClick={this.createPropObj}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Confirm
-                            </Button>
-                            ) : (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  onClick={this.handleNext}
-                                  className={classes.button}
-                                  disabled={this.disabledNextBtn(index)}
-                                >
-                                  Next Step
-                            </Button>
-                              )}
-                          </div>
-                        </div>
-                      </StepContent>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-            )}
-        </Paper>
+      <div>
+        {/* Receipt Modal */}
         <Modal
           title="Proposal"
           visible={this.state.visible}
           onCancel={this.handleCancel.bind(this)}
           footer={null}
+          className={modalStyle}
+          zIndex={99999}
         >
-          <div>
+          <div className="receipt-text">
             {this.state.pValue
               ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
               : 'No Prepare Receipt has been received.'}
+            <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
+              <Button type="primary">Copy</Button>
+            </CopyToClipboard>
+            {this.state.pCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
-          <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-            <button>Copy</button>
-          </CopyToClipboard>
-          {this.state.pCopied ? <span style={{ color: 'red' }}>Copied.</span> : null}
-          <br />
           <br />
           {this.state.savedPayValue ? (
-            <div>
+            <div className="id-copied">
               Looks like you already have a payment id, go ahead and copy it and paste it below.
               <CopyToClipboard
                 text={this.state.savedPayValue}
@@ -797,38 +715,129 @@ class NewProposal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              {this.state.payCopied ? <span style={{ color: 'red' }}>Copied.</span> : null}
+              {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
             </div>
           ) : null}
-          Input Payment Id Here:
-          <input value={this.state.payValue} onChange={this.onChange} name="payValue" />
-          <br />
-          <br />
-          <Button type="primary" onClick={this.submitPaymentId}>
-            Submit Payment Id
+          <div className="id-input">
+            <span> Input Payment Id Here: </span>
+            <Input value={this.state.payValue} onChange={this.onChange} name="payValue" />
+            <br />
+          </div>
+          <div className="submit-btn">
+            <Button type="primary" onClick={this.submitPaymentId}>
+              Submit Payment Id
           </Button>
+          </div>
           <br />
           <hr />
           <br />
-          <div>
+          <div className="receipt-text">
             {this.state.sValue
               ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
               : 'No Prepare Receipt has been received.'}
+            <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
+              <Button type="primary">Copy</Button>
+            </CopyToClipboard>
+            {this.state.sCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
-          <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
-            <button>Copy</button>
-          </CopyToClipboard>
-          {this.state.sCopied ? <span style={{ color: 'red' }}>Copied.</span> : null}
           <br />
-          <br />
-          Input Hash here:
-          <input value={this.state.hValue} onChange={this.onChange} name="hValue" />
-          <br />
-          <br />
-          <Button type="primary" onClick={this.submitHash}>
-            Submit Hash
+          <div className="id-input">
+            <span>Input Hash here: </span>
+            <Input value={this.state.hValue} onChange={this.onChange} name="hValue" />
+            <br />
+          </div>
+          <div className="submit-btn">
+            <Button type="primary" onClick={this.submitHash}>
+              Submit Hash
           </Button>
+          </div>
         </Modal>
+        <div className={style}>
+          <h1 className="title">Proposal Configuration</h1>
+          <Paper className="paper-container" elevation={4}>
+            {this.state.recover === true ? (
+              <div>Recovery in process</div>
+            ) : (
+                <Stepper activeStep={activeStep} orientation="vertical">
+                  {steps.map((label, index) => {
+                    return (
+                      <Step className="steper__container" key={label}>
+                        <StepLabel className="steper__label">
+                          <h2 className="step-label"> {label} </h2>
+                          {this.state.activeStep === 0 &&
+                            label === 'Proposal Title' &&
+                            deviceType !== 'mobile' ? (
+                              <h3 className="proposal-title">Proposal Description Url</h3>
+                            ) : null}
+                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                            this.state.showEditor ? (
+                              <Button
+                                className="preview-edit-button"
+                                onClick={this.previewHTML.bind(this)}
+                              >
+                                PREVIEW
+                          </Button>
+                            ) : (
+                                <Button
+                                  className="preview-edit-button"
+                                  onClick={() => {
+                                    this.setState({ showEditor: true });
+                                  }}
+                                >
+                                  EDITOR
+                          </Button>
+                              )
+                          ) : null}
+                        </StepLabel>
+                        <StepContent>
+                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                          <div className={classes.actionsContainer}>
+                            <div
+                              className={
+                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                              }
+                            >
+                              {activeStep === 0 ? null : (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  onClick={this.handleBack}
+                                  className="button"
+                                >
+                                  Back
+                            </Button>
+                              )}
+                              {activeStep === steps.length - 1 ? (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  className={classes.button}
+                                  onClick={this.createPropObj}
+                                  disabled={this.disabledNextBtn(index)}
+                                >
+                                  Confirm
+                            </Button>
+                              ) : (
+                                  <Button
+                                    variant="raised"
+                                    type="primary"
+                                    onClick={this.handleNext}
+                                    className={classes.button}
+                                    disabled={this.disabledNextBtn(index)}
+                                  >
+                                    Next Step
+                            </Button>
+                                )}
+                            </div>
+                          </div>
+                        </StepContent>
+                      </Step>
+                    );
+                  })}
+                </Stepper>
+              )}
+          </Paper>
+        </div>
       </div>
     );
   }

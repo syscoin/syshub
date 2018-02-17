@@ -9,7 +9,7 @@ export default {
     height: 'calc(100vh - 125px)',
   },
   appContent: {
-    width: 'calc(80vw - 95px)',
+    width: 'calc(80vw - 80px)',
     height: '100%',
     overflowY: 'hidden',
     marginLeft: 20,

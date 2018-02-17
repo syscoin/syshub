@@ -242,5 +242,53 @@ export default {
     '& .paper-container': {
       padding: '0 !important'
     }
+  },
+  modal: {
+    marginTop: '4%',
+    '& .ant-modal-content': {
+      '& .ant-modal-close-x': {
+        color: white,
+      },
+      '& .ant-modal-header': {
+        backgroundColor: primary,
+        '& .ant-modal-title': {
+          color: white,
+        }
+      },
+      '& .ant-modal-body': {
+        '& .receipt-text': {
+          padding: '10px 5px',
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        },
+        '& .id-copied': {
+          padding: '10px 5px',
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        },
+        '& .id-input': {
+          '&>span': {
+            width: '50%',
+            display: 'inline-block'
+          },
+          '& input': {
+            width: '50%',
+          }
+        },
+        '& .submit-btn': {
+          padding: '10px 0px',
+        }
+      },
+      '& button>span': {
+        color: white,
+      }
+    },
+
+  },
+  mobileModal: {
+    extend: 'modal',
+    marginTop: 0,
   }
 };
