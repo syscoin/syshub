@@ -309,10 +309,12 @@ class NewProposal extends Component {
       proposalName,
       proposalTitle,
       address,
+      paymentQuantity,
       amount,
       proposal__detail,
       proposallink,
     } = this.state;
+    const descriptionID = Date.now().toString(36);
 
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -325,13 +327,20 @@ class NewProposal extends Component {
     });
 
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+    const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+
+    descriptionRef.set(proposal__detail);
 
     let userProposal = {
-      name: proposalTitle.split(' ').join('_'),
-      description: proposal__detail,
-      username: currentUser.displayName,
       type: 1,
-      start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
+      name: proposalName,
+      title: proposalTitle,
+      descriptionID,
+      username: currentUser.displayName,
+      // start_epoch: this.state.proposalStartEpoch,
+      nPayment: paymentQuantity,
+      first_epoch: this.state.proposalStartEpoch,
+      start_epoch: Math.floor(new Date().getTime() / 1000),
       end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
       payment_address: address,
       payment_amount: Number(amount),
@@ -344,23 +353,7 @@ class NewProposal extends Component {
 
     proposalRef.set(userProposal);
 
-    let newProposal = [
-      [
-        'proposal',
-        {
-          name: proposalName,
-          title: proposalTitle,
-          description: proposal__detail,
-          type: 1,
-          //          start_epoch: Math.floor(new Date().getTime() / 1000),
-          start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
-          end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
-          payment_address: address,
-          payment_amount: Number(amount),
-          url: proposallink
-        }
-      ]
-    ];
+    let newProposal = [['proposal', userProposal]];
 
     const hexedProposal = Hex.strToHex(newProposal);
     const dataHex = {
@@ -444,7 +437,7 @@ class NewProposal extends Component {
 
   //proposal title function
   proposalTitle(e) {
-    const proposalName = e.target.value.trim().replace(/[^A-Za-z0-9]/g, '');
+    const proposalName = e.target.value.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
     this.setState({
       proposalName,
       proposalTitle: e.target.value,
@@ -503,12 +496,16 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 10}>
               {/* proposal title input field */}
               <Form>
-                <FormItem className="form-item">
+                <FormItem className="form-item"
+                  validateStatus={this.state.proposalTitle.length <= 40 ? '' : 'error'}
+                >
                   <Input
                     className="proposal-title-input"
-                    placeholder="Insert Reference Title"
+                    placeholder="Insert Reference Title (40 characters max.)"
+                    addonBefore={`${40 - this.state.proposalTitle.length}`}
                     value={this.state.proposalTitle}
                     onChange={this.proposalTitle}
+                    maxLength={40}
                   />
                 </FormItem>
               </Form>

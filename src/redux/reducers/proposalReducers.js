@@ -1,5 +1,6 @@
 import constants from '../constants';
 
+
 const initialState = {
   listRaw: {},
   list: [],
