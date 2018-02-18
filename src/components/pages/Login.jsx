@@ -90,14 +90,14 @@ class Login extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         if (user.phoneNumber) {
-          const savedUser = user;
-          fire.auth().signOut();
-          this.props.setCurrentUser(null);
           fire
             .database()
-            .ref('2FA/' + savedUser.uid)
+            .ref('2FA/' + user.uid)
             .once('value', snap => {
               if (snap.val() === true) {
+                const savedUser = user;
+                fire.auth().signOut();
+                this.props.setCurrentUser(null);
                 fire
                   .auth()
                   .signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
@@ -147,6 +147,7 @@ class Login extends Component {
                               });
 
                               user.MasterNodes = list;
+                              console.log(user);
                               this.props.setCurrentUser(user);
                             });
 
@@ -175,6 +176,13 @@ class Login extends Component {
 
                     swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                   });
+              } else {
+                swal({
+                  title: 'Success',
+                  text: `${user.email} signed in without sms verification.`,
+                  icon: 'success'
+                });
+                this.props.setPage('home');
               }
             });
 

@@ -26,9 +26,9 @@ const votes = fire.database().ref('votes');
 // const currentUser
 
 //Some useful functions
-const checkVoted = (user, proposal) => {
+const checkVoted = (user, proposal, masternodes) => {
   //return new Promise((resolve, reject) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     fire
       .database()
       .ref('votes/' + user.uid)
@@ -36,9 +36,17 @@ const checkVoted = (user, proposal) => {
       .once('value')
       .then(snap => {
         if (snap.val() !== null) {
-          //          resolve(true); // Original true if voted false if no
-          resolve(true); // Overrided
-          return;
+          let hasVoted = null;
+          masternodes.map(mn => {
+            if (snap.val().mnKeyIds.includes(mn.keyId) === false) {
+              hasVoted = false;
+            }
+          });
+          if (hasVoted === false) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
         }
         resolve(false);
       })
@@ -48,12 +56,17 @@ const checkVoted = (user, proposal) => {
   });
 };
 
-const voted = (user, proposal, voteTxt, voteId) => {
+const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
   fire
     .database()
     .ref('votes/' + user.uid)
     .child(proposal.Hash)
-    .set({ proposalId: proposal.Hash, voteTxt: voteTxt, voteId: voteId });
+    .set({
+      proposalId: proposal.Hash,
+      voteTxt: voteTxt,
+      voteId: voteId,
+      mnKeyIds: mnKeyIds
+    });
 };
 
 const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
@@ -103,7 +116,7 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
   });
 };
 
-const doRegister = () => { };
+const doRegister = () => {};
 
 const doLogin = (email, password) => {
   fire

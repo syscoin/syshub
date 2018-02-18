@@ -78,8 +78,7 @@ class MasterNodeList extends Component {
       onOk() {
         confrimDelete();
       },
-      onCancel() {
-      },
+      onCancel() {}
     });
   }
 
