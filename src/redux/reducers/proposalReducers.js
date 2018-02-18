@@ -1,5 +1,5 @@
 import constants from '../constants';
-//import { fire } from '../../API/firebase';
+
 
 const initialState = {
   listRaw: {},
@@ -33,15 +33,6 @@ const proposals = (state = initialState, action) => {
         list.push(proposal);
         proposal = {};
       });
-
-      //if (Array.isArray(proposal[key2])) {
-      //  const dataString = proposal[key2][0][1]
-      //  const descriptionID = dataString.descriptionID;
-      //  dataString.description = fire.database().ref('ProposalsDescriptions/' + descriptionID).once('value', snapshot => snapshot.val());
-      //  proposal[key2].DataString = dataString;
-      //  //console.log('ACZ: ', key2, descriptionID, description)
-      //
-      //}
 
       return {
         ...state,

@@ -354,25 +354,7 @@ class NewProposal extends Component {
     proposalRef.set(userProposal);
 
     let newProposal = [['proposal', userProposal]];
-    //let newProposal = [
-    //  [
-    //    'proposal',
-    //    {
-    //      name: proposalName,
-    //      title: proposalTitle,
-    //      description: descriptionID,
-    //      type: 1,
-    //      //          start_epoch: Math.floor(new Date().getTime() / 1000),
-    //      start_epoch: this.state.proposalStartEpoch, //Math.floor(new Date().getTime() / 1000),
-    //      end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
-    //      payment_address: address,
-    //      payment_amount: Number(amount),
-    //      url: proposallink
-    //    }
-    //  ]
-    //];
 
-    console.log('ACZ:', newProposal)
     const hexedProposal = Hex.strToHex(newProposal);
     const dataHex = {
       dataHex: hexedProposal

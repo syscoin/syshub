@@ -1,8 +1,13 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
+//Import react/redux
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// import API
+import { fire } from '../../API/firebase';
+
+//Import UI Components
 import { Grid } from 'material-ui';
 import { DashBoardHeader } from '../functionals/';
 import { ProposalPayment } from '../functionals/';
@@ -13,13 +18,25 @@ import { ProposalComments } from '../functionals/';
 // import components
 import { proposalDetailsStyle } from './styles';
 
+//Definition React Component
 export class ProposalDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: this.props.proposal
-    };
+  state = {
+    data: this.props.proposal,
+  };
+
+  componentWillMount() {
+    const proposal = this.state.data;
+    const descriptionID = proposal.DataString[0][1].descriptionID;
+    return fire.database()
+      .ref('ProposalsDescriptions/' + descriptionID)
+      .once('value')
+      .then(snapshot => {
+        proposal.DataString[0][1].description = snapshot.val() || proposal.DataString[0][1].description;
+        this.setState({ data: proposal });
+      }
+      )
   }
+
   render() {
     const { deviceType, totalNodes } = this.props;
     const proposalTitle =
