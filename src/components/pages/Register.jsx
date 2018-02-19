@@ -215,9 +215,11 @@ class Register extends Component {
     return (
       <Grid item className={style} md={12} xs={12}>
 
-        <Typography variant="display1" gutterBottom>
+       <h1 className="title">
           JOIN SYSHUB
-      </Typography>
+
+          </h1>
+      
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {

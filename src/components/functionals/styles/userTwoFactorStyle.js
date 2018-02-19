@@ -17,7 +17,7 @@ export default {
     },
     '& .userTwoFactor-heading': {
       marginLeft: '20px',
-      fontWeight: '100',
+      fontWeight: 'normal',
       fontSize: '21px',
       borderBottom: '0.1px solid ' + greyLight
     },
@@ -31,7 +31,7 @@ export default {
         color: primaryLight,
         margin: '20px 0px 10px 0px',
         display: 'block',
-        fontWeight: '100'
+        fontWeight: 'normal'
       },
       '& .div-margin': {
         margin: '12px 0 12px 0px',
@@ -167,7 +167,7 @@ export default {
           marginTop: '15px',
           color: primary,
           paddingRight: '10px',
-          fontWeight: 100,
+          fontWeight: 'normal',
         },
         '& .input-field': {
           color: primaryLight,
