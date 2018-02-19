@@ -115,7 +115,16 @@ class ProposalCard extends Component {
                     this.props.getProposals();
                   })
                   .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                    const content = document.createElement('div');
+                    content.innerHTML = `Unable to cast vote with <strong>${
+                      mnObj.name
+                    }</strong>.  Please check your key or txid credentials.`;
+                    swal({
+                      html: true,
+                      title: 'Oops...',
+                      content: content,
+                      icon: 'error'
+                    });
                   });
               });
           });
@@ -260,7 +269,7 @@ class ProposalCard extends Component {
           </Grid>
 
           {user ? (
-            deviceType === 'mobile' ?
+            deviceType === 'mobile' ? (
               <Grid item md={3} xs={3} className="mobile-vote__wrapper">
                 <div className="vote-text">Vote</div>
                 <div className="vote-item">
@@ -268,16 +277,15 @@ class ProposalCard extends Component {
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.YesCount}</span>
-                </div  >
+                </div>
                 <div className="vote-item">
                   <Button className="btn-vote-down" onClick={() => this.voteDown(proposal)}>
                     <img src={voteDownIcon} className="downVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.NoCount}</span>
                 </div>
-
               </Grid>
-              :
+            ) : (
               <Grid item md={3} xs={3} className="desktop-vote__wrapper">
                 <div className="vote-text">Vote on Proposal</div>
                 <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
@@ -291,36 +299,34 @@ class ProposalCard extends Component {
                   <div className="vote-number">{proposal.NoCount}</div>
                 </div>
               </Grid>
+            )
+          ) : deviceType === 'mobile' ? (
+            <Grid item md={3} xs={3} className="logout-vote__wrapper">
+              <div className="vote-text">Status</div>
+              <div className="vote-up">
+                <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                <span className="voteNumber">{proposal.YesCount}</span>
+              </div>
+              <div className="vote-down">
+                <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                <span className="voteNumber">{proposal.NoCount}</span>
+              </div>
+            </Grid>
           ) : (
-              deviceType === 'mobile' ?
-                <Grid item md={3} xs={3} className="logout-vote__wrapper">
-                  <div className="vote-text">Status</div>
-                  <div className="vote-up">
-                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                    <span className="voteNumber">{proposal.YesCount}</span>
-                  </div>
-                  <div className="vote-down">
-                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                    <span className="voteNumber">{proposal.NoCount}</span>
-                  </div>
-                </Grid>
-                :
-                <Grid item md={3} xs={3} className="desktop-vote__wrapper">
-                  <div className="vote-text">Voting Status</div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.YesCount}</div>
-                  </div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.NoCount}</div>
-                  </div>
-
-
-                </Grid>
-            )}
+            <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+              <div className="vote-text">Voting Status</div>
+              <div className="vote-item__wrapper">
+                <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.YesCount}</div>
+              </div>
+              <div className="vote-item__wrapper">
+                <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.NoCount}</div>
+              </div>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );
