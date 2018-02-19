@@ -8,7 +8,6 @@ import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
-import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 
 // import withRoot from '../containers/WithRoot';
