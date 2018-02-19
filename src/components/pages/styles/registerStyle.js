@@ -125,7 +125,22 @@ export default {
         textAlign: 'left'
       },
       '& .recaptcha': {
-        marginLeft: 0
+        marginLeft: 0,
+        textAlign: 'center',
+       
+        '&>div':{
+          display: 'inline-block',
+          transform: 'scale(0.90) !important',
+          '-webkitTransform': 'scale(0.90) !important',
+          transformOrigin:'0 0 !important',
+          '-webkitTransformOrigin':'0 0 !important',
+        },
+        '@media (max-width: 400px)':{
+          '& iframe':{
+            marginLeft: '-15px !important',
+            
+          }
+        }
       },
       '& .form-group': {
         margin: 0,
