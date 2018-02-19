@@ -178,7 +178,8 @@ export default {
           padding: '10px',
           boxShadow: '5px 5px 20px ' + gray,
           '& .userComment': {
-            border: 0
+            border: 0,
+            padding: 10,
           },
           '& .proposalDetailsHr': {
             marginTop: 10,
@@ -404,4 +405,7 @@ export default {
       }
     }
   },
+  loginModal: {
+
+  }
 };
