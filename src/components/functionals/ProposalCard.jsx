@@ -69,7 +69,8 @@ class ProposalCard extends Component {
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text:
+          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
         icon: 'error'
       });
       return;
@@ -149,7 +150,8 @@ class ProposalCard extends Component {
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text:
+          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
         icon: 'error'
       });
       return;
