@@ -79,57 +79,51 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
-
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
-                }
-
-                const proposalVoteYes = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 1
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteYes)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'Yes', 1, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    const content = document.createElement('div');
-                    content.innerHTML = `Unable to cast vote with <strong>${
-                      mnObj.name
-                    }</strong>.  Please check your key or txid credentials.`;
-                    swal({
-                      html: true,
-                      title: 'Oops...',
-                      content: content,
-                      icon: 'error'
-                    });
-                  });
-              });
-          });
+          // console.log('This has been voted on')
         }
+
+        let mnKeyIds = [];
+        user.MasterNodes.forEach(mnObj => {
+          mnKeyIds.push(mnObj.keyId);
+          fire
+            .database()
+            .ref('votes/' + user.uid)
+            .child(proposal.Hash)
+            .once('value', snap => {
+              if (snap.val() !== null) {
+                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                  return;
+                }
+              }
+
+              const proposalVoteYes = {
+                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                vinMasternode: cryptr.decrypt(mnObj.vin),
+                gObjectHash: proposal.Hash,
+                voteOutcome: 1
+              };
+
+              this.props
+                .voteOnProposal(proposalVoteYes)
+                .then(data => {
+                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                  voted(user, proposal, 'Yes', 1, mnKeyIds);
+                  this.props.getProposals();
+                })
+                .catch(err => {
+                  const content = document.createElement('div');
+                  content.innerHTML = `Unable to cast vote with <strong>${
+                    mnObj.name
+                  }</strong>.  Please check your key or txid credentials.`;
+                  swal({
+                    html: true,
+                    title: 'Oops...',
+                    content: content,
+                    icon: 'error'
+                  });
+                });
+            });
+        });
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -160,48 +154,42 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
-
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
-                }
-
-                const proposalVoteNo = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 2
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteNo)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-                  });
-              });
-          });
+          // console.log('This has been voted on')
         }
+
+        let mnKeyIds = [];
+        user.MasterNodes.forEach(mnObj => {
+          mnKeyIds.push(mnObj.keyId);
+          fire
+            .database()
+            .ref('votes/' + user.uid)
+            .child(proposal.Hash)
+            .once('value', snap => {
+              if (snap.val() !== null) {
+                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                  return;
+                }
+              }
+
+              const proposalVoteNo = {
+                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                vinMasternode: cryptr.decrypt(mnObj.vin),
+                gObjectHash: proposal.Hash,
+                voteOutcome: 2
+              };
+
+              this.props
+                .voteOnProposal(proposalVoteNo)
+                .then(data => {
+                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                  voted(user, proposal, 'No', 2, mnKeyIds);
+                  this.props.getProposals();
+                })
+                .catch(err => {
+                  swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                });
+            });
+        });
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
