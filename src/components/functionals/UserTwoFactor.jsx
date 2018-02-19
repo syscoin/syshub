@@ -38,13 +38,6 @@ class UserTwoFactor extends Component {
 
   componentDidMount() {
     fire.auth().useDeviceLanguage();
-    const user = fire.auth().currentUser;
-    if (user.phoneNumber == null) {
-      fire
-        .database()
-        .ref('2FA/' + user.uid)
-        .set(false);
-    }
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
       callback: response => {
@@ -52,9 +45,17 @@ class UserTwoFactor extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
+
+    const user = fire.auth().currentUser;
+    if (user.phoneNumber == null) {
+      fire
+        .database()
+        .ref('2FA/' + user.uid)
+        .set(false);
+    }
 
     fire
       .database()
@@ -235,13 +236,12 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                    <span className="status-disable">
-                      Disabled
+                  <span className="status-disable">
+                    Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                    </span>
-                  )}
+                  </span>
+                )}
               </span>
-
             </div>
             {app.currentUser ? (
               app.currentUser.phoneNumber == null || this.state.editNumber ? (
@@ -282,32 +282,26 @@ class UserTwoFactor extends Component {
                       />
                     </FormItem>
                   </Form>
-                  <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
                   <Grid className="form-grid-btn">
                     {app.currentUser ? (
                       app.currentUser.phoneNumber !== null ? (
-                        <Button
-                          onClick={this.removePhone}
-                          htmlType="submit"
-                          variant="raised"
-                        >{'Delete Phone'}</Button>
+                        <Button onClick={this.removePhone} htmlType="submit" variant="raised">
+                          {'Delete Phone'}
+                        </Button>
                       ) : null
                     ) : null}
-                    <Button
-                      onClick={this.addPhone}
-                      htmlType="submit"
-                      variant="raised"
-                    >
+                    <Button onClick={this.addPhone} htmlType="submit" variant="raised">
                       {'Add & Enable'}
                     </Button>
                   </Grid>
                 </Grid>
               ) : (
-                  <div>
-                    <button onClick={this.editPhone}>Edit</button>
-                  </div>
-                )
+                <div>
+                  <button onClick={this.editPhone}>Edit</button>
+                </div>
+              )
             ) : null}
+            <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
 
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
@@ -320,15 +314,15 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                  <Button
-                    raised
-                    color="primary"
-                    className="twoFactor-button"
-                    onClick={this.enableAuth}
-                  >
-                    Enable 2F Auth
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.enableAuth}
+                >
+                  Enable 2F Auth
                 </Button>
-                )}
+              )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}

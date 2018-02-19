@@ -92,7 +92,7 @@ class ProposalCard extends Component {
             .once('value', snap => {
               if (snap.val() !== null) {
                 if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                  return;
+                  // console.log('this MN has voted already', mnObj);
                 }
               }
 
@@ -154,7 +154,7 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          // console.log('This has been voted on')
+          // console.log('This has been voted on');
         }
 
         let mnKeyIds = [];
@@ -167,7 +167,7 @@ class ProposalCard extends Component {
             .once('value', snap => {
               if (snap.val() !== null) {
                 if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                  return;
+                  // console.log('this MN has voted already', mnObj);
                 }
               }
 
