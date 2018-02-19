@@ -704,30 +704,30 @@ class NewProposal extends Component {
               ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
               : 'No Prepare Receipt has been received.'}
             <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-              <Button type="primary">Copy</Button>
+              <Button type="primary" disabled={this.state.sValue}>Copy</Button>
             </CopyToClipboard>
             {this.state.pCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
           <br />
-          {this.state.savedPayValue ? (
+          {this.state.sValue ? (
             <div className="id-copied">
               Looks like you already have a payment id, go ahead and copy it and paste it below.
               <CopyToClipboard
-                text={this.state.savedPayValue}
+                text={this.state.sValue}
                 onCopy={() => this.setState({ payCopied: true })}
               >
-                <Button type="primary">Copy</Button>
+                <Button type="primary" disabled={this.state.sValue} >Copy</Button>
               </CopyToClipboard>
               {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
             </div>
           ) : null}
           <div className="id-input">
             <span> Input Payment Id Here: </span>
-            <Input value={this.state.payValue} onChange={this.onChange} name="payValue" />
+            <Input value={this.state.payValue} disabled={this.state.sValue} onChange={this.onChange} name="payValue" />
             <br />
           </div>
           <div className="submit-btn">
-            <Button type="primary" onClick={this.submitPaymentId}>
+            <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
               Submit Payment Id
           </Button>
           </div>
@@ -739,18 +739,18 @@ class NewProposal extends Component {
               ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
               : 'No Prepare Receipt has been received.'}
             <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
-              <Button type="primary">Copy</Button>
+              <Button type="primary" disabled={!this.state.sValue}>Copy</Button>
             </CopyToClipboard>
             {this.state.sCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
           <br />
           <div className="id-input">
             <span>Input Hash here: </span>
-            <Input value={this.state.hValue} onChange={this.onChange} name="hValue" />
+            <Input value={this.state.hValue} disabled={!this.state.sValue} onChange={this.onChange} name="hValue" />
             <br />
           </div>
           <div className="submit-btn">
-            <Button type="primary" onClick={this.submitHash}>
+            <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
               Submit Hash
           </Button>
           </div>
