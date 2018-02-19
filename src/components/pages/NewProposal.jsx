@@ -716,7 +716,7 @@ class NewProposal extends Component {
                 text={this.state.savedPayValue}
                 onCopy={() => this.setState({ payCopied: true })}
               >
-                <button>Copy</button>
+                <Button type="primary">Copy</Button>
               </CopyToClipboard>
               {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
             </div>
