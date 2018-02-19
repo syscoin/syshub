@@ -69,6 +69,7 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
+    //this.props.getSysStats();
   }
 
   tick() {

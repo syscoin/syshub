@@ -125,17 +125,22 @@ class NewProposal extends Component {
                 prepareObj: userProp.prepareObj
               });
 
-              let userProposal = {
-                name: userProp.name,
-                description: userProp.description,
-                username: userProp.username,
+              let userProposal = { //there are another def in line 339 both have to be in sync
                 type: 1,
+                name: userProp.name,
+                title: userProp.title,
+                descriptionID: userProp.descriptionID || '',
+                description: userProp.description || '',
+                username: userProp.username,
+                nPayment: userProp.nPayment,
+                first_epoch: userProp.first_epoch,
                 start_epoch: userProp.start_epoch,
                 end_epoch: userProp.end_epoch,
                 payment_address: userProp.payment_address,
                 payment_amount: userProp.payment_amount,
                 url: userProp.url
               };
+
 
               if (userProp.prepareReceipt) {
                 userProposal.prepareReceipt = userProp.prepareReceipt;
@@ -314,6 +319,7 @@ class NewProposal extends Component {
       proposal__detail,
       proposallink,
     } = this.state;
+
     const descriptionID = Date.now().toString(36);
 
     if (!currentUser) {
@@ -336,8 +342,8 @@ class NewProposal extends Component {
       name: proposalName,
       title: proposalTitle,
       descriptionID,
+      description: '',
       username: currentUser.displayName,
-      // start_epoch: this.state.proposalStartEpoch,
       nPayment: paymentQuantity,
       first_epoch: this.state.proposalStartEpoch,
       start_epoch: Math.floor(new Date().getTime() / 1000),
