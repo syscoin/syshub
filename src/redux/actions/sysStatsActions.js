@@ -13,7 +13,7 @@ const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 /**---------------------------------------------------------------------------- */
 
 export default {
-  getSysStats: () => {
+  getSysStats: (first) => {
     return dispatch => {
       return dispatch(
         HTTPAsync.get(
@@ -23,7 +23,8 @@ export default {
           //'https://n2mra8hxj2.execute-api.us-east-1.amazonaws.com/devFunc?url=https://www.dashcentral.org/api/v1/getappdata?api_key=4f60267a65f46cd3e5f3e7c862bd98a4fa6c372560f647d282d94457919ac425',
           //'http://localhost:8080',
           null,
-          constants.SYS_STATS_GET
+          first === 'first' ? constants.SYS_STATS_FIRST :
+            constants.SYS_STATS_GET
         )
       );
     };
