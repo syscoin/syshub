@@ -36,7 +36,7 @@ const initialState = {
     {
       img: 'png_stasts_sys.png',
       key: 'changeRate',
-      text: 'BTC/1000 USD'
+      text: 'BTC/SYS'
     },
     {
       img: 'png_menu_masternodes_selected.png',

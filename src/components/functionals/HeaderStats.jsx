@@ -15,9 +15,8 @@ class HeaderStats extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysStatsValue ? `${(
-      1000 / this.props.sysStatsValue.exchange_rates.btc_usd
-    ).toFixed(5)} BTC/1000 USD` : '';
+    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
+    ).toFixed(5)} BTC/SYS` : '';
     const masternodes = sysStatsValue ? `${
       this.props.sysStatsValue.general.registered_masternodes_verified
       } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';

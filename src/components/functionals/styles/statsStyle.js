@@ -24,7 +24,9 @@ export default {
       padding: '0px !important',
       margin: '20px',
       textAlign: 'center',
-      borderRadius: '10px'
+      borderRadius: '10px',
+      height: 50
+
     },
     '& .statsCardHeader': {
       background: primary,
@@ -50,7 +52,7 @@ export default {
       color: 'rgb(189, 195, 199)',
       padding: '10px 0',
       fontSize: '1.4em',
-      height: '100px'
+      height: '50px',
     },
     '& .statsPercentage': {
       //border: '1px solid red',

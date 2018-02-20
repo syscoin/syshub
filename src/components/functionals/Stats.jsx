@@ -6,7 +6,9 @@ import GridList from 'material-ui/GridList';
 import Card, {
   CardHeader,
   CardContent,
+
 } from 'material-ui/Card';
+import { withStyles } from 'material-ui';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
@@ -17,7 +19,7 @@ import { statsStyle } from './styles';
 class Stats extends Component {
   getValue(field) {
     const value = {
-      changeRate: this.props.value ? ((1000 / this.props.value.exchange_rates.btc_usd).toFixed(5)) : 0,
+      changeRate: this.props.value ? ((this.props.value.exchange_rates.btc_dash).toFixed(5)) : 0,
 
       masternodes: this.props.value ? (`${
         this.props.value.general.registered_masternodes_verified
@@ -74,7 +76,7 @@ class Stats extends Component {
           <GridList cols={deviceType === 'mobile' ? 3 : 4} cellHeight={300} className="statsGridDiv">
             {this.props.sysStats.map((item, key) => {
               return (
-                <Card key={key} className="statsCard">
+                <Card key={key} className="statsCard" >
                   <CardHeader
                     className="statsCardHeader"
                     title={
@@ -85,20 +87,12 @@ class Stats extends Component {
                       />
                     }
                   />
-                  <CardContent style={{ position: 'relative' }}>
+                  <CardContent height={'50%'} style={{ position: 'relative', }}>
                     <div className={'statsTextHeading'}>
                       <h1> {this.getValue(item.key)} </h1>
                     </div>
                     <div className="statsText">{item.text}</div>
-                    <div className="statsPercentage">
-                      <img
-                        alt="a"
-                        src={require('./../../assets/img/' +
-                          this.percentages(item.key).arrow)}
-                        height="20"
-                      />
-                      {`${this.percentages(item.key).value}%`}
-                    </div>
+
                   </CardContent>
                 </Card>
               );
@@ -127,5 +121,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  injectSheet(statsStyle)(Stats)
+  withStyles(statsStyle)(Stats)
 );
