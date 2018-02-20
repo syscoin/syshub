@@ -13,13 +13,13 @@ export default {
     },
     '& .userDelete-heading': {
       marginLeft: '20px',
-      fontWeight: '100',
+      fontWeight: 'normal',
       fontSize: '21px',
       borderBottom: '0.1px solid ' + greyLight,
     },
     '& .UserDelete-text': {
       marginLeft: '35px',
-      fontWeight: '100',
+      fontWeight: 'normal',
     },
     '& .delete-button-grid': {
       padding: '20px 0px',
