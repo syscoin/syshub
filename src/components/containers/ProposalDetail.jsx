@@ -31,7 +31,7 @@ export class ProposalDetail extends Component {
       .ref('ProposalsDescriptions/' + descriptionID)
       .once('value')
       .then(snapshot => {
-        proposal.DataString[0][1].description = snapshot.val() || proposal.DataString[0][1].description;
+        proposal.DataString[0][1].description = snapshot.val() ? snapshot.val().detail : proposal.DataString[0][1].description;
         this.setState({ data: proposal });
       }
       )

@@ -22,6 +22,7 @@ import newProposalStyle from './styles/newProposalStyle';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const { TextArea } = Input;
 
 
 
@@ -35,6 +36,7 @@ class NewProposal extends Component {
       proposalName: '',
       paymentQuantity: 1,
       paymentDateOptions: [],
+      proposalDetail: '',
       proposalStartEpoch: 0,
       proposalEndEpoch: 0,
       address: '',
@@ -98,83 +100,93 @@ class NewProposal extends Component {
     }
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    proposalRef.once('value', snapshot => {
+    proposalRef.once('value').then(snapshot => {
       const userProp = snapshot.val();
+      const descriptionID = userProp.descriptionID;
+      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
-      if (userProp) {
-        if (userProp.hash) {
-          proposalRef.remove();
-          return;
-        }
+      descriptionRef.once('value').then(detailObj => {
+        const proposalDetail = detailObj.val();
 
-        this.setState({
-          savedProposal: userProp
-        });
+        if (userProp) {
+          if (userProp.hash) {
+            proposalRef.remove();
+            return
+          }
 
-        swal({
-          title: 'Recovery',
-          text:
-            'It seems you have some information saved in our db, would you like to recover the data?',
-          buttons: true,
-          icon: 'info'
-        })
-          .then(value => {
-            if (value) {
-              this.setState({
-                recover: value,
-                prepareObj: userProp.prepareObj
-              });
-
-              let userProposal = { //there are another def in line 339 both have to be in sync
-                type: 1,
-                name: userProp.name,
-                title: userProp.title,
-                descriptionID: userProp.descriptionID || '',
-                description: userProp.description || '',
-                username: userProp.username,
-                nPayment: userProp.nPayment,
-                first_epoch: userProp.first_epoch,
-                start_epoch: userProp.start_epoch,
-                end_epoch: userProp.end_epoch,
-                payment_address: userProp.payment_address,
-                payment_amount: userProp.payment_amount,
-                url: userProp.url
-              };
-
-
-              if (userProp.prepareReceipt) {
-                userProposal.prepareReceipt = userProp.prepareReceipt;
-                this.setState({
-                  pValue: userProp.prepareReceipt
-                });
-              }
-
-              if (userProp.txid) {
-                userProposal.txid = userProp.txid;
-
-                this.setState({
-                  savedPayValue: userProp.txid
-                });
-              }
-
-              if (userProp.submitReceipt) {
-                userProposal.submitReceipt = userProp.submitReceipt;
-
-                this.setState({
-                  sValue: userProp.submitReceipt
-                });
-              }
-
-              this.setState({
-                visible: true,
-                userProposal
-              });
-            }
-          })
-          .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+          this.setState({
+            savedProposal: userProp
           });
-      }
+
+          swal({
+            title: 'Recovery',
+            text:
+              'It seems you have some information saved in our db, would you like to recover the data?',
+            buttons: true,
+            icon: 'info'
+          })
+            .then(value => {
+              console.log(value);
+              if (value) {
+                this.setState({
+                  recover: value,
+                  prepareObj: userProp.prepareObj,
+                  proposalDetail
+                });
+                console.log('ACZ: newproposal state ', this.state);
+
+                let userProposal = { //there are another def in line 339 both have to be in sync
+                  type: 1,
+                  name: userProp.name,
+                  title: userProp.title,
+                  descriptionID: userProp.descriptionID || '',
+                  description: userProp.description || '',
+                  username: userProp.username,
+                  nPayment: userProp.nPayment,
+                  first_epoch: userProp.first_epoch,
+                  start_epoch: userProp.start_epoch,
+                  end_epoch: userProp.end_epoch,
+                  payment_address: userProp.payment_address,
+                  payment_amount: userProp.payment_amount,
+                  url: userProp.url
+                };
+
+
+                if (userProp.prepareReceipt) {
+                  userProposal.prepareReceipt = userProp.prepareReceipt;
+                  this.setState({
+                    pValue: userProp.prepareReceipt
+                  });
+                }
+
+                if (userProp.txid) {
+                  userProposal.txid = userProp.txid;
+
+                  this.setState({
+                    savedPayValue: userProp.txid
+                  });
+                }
+
+                if (userProp.submitReceipt) {
+                  userProposal.submitReceipt = userProp.submitReceipt;
+
+                  this.setState({
+                    sValue: userProp.submitReceipt
+                  });
+                }
+
+                this.setState({
+                  visible: true,
+                  userProposal
+                });
+              }
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        }
+      })
+
     });
   }
 
@@ -254,26 +266,39 @@ class NewProposal extends Component {
     }
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    if (this.state.hValue) {
-      let updatedUserProposal = { ...this.state.userProposal };
-      updatedUserProposal.hash = this.state.hValue;
-      proposalRef.set(updatedUserProposal);
-      this.setState({
-        visible: false
-      });
-      swal({
-        title: 'Success',
-        text: 'Proposal has been created.',
-        icon: 'success'
-      });
-      this.props.setPage('home');
-    } else {
-      swal({
-        title: 'Oops',
-        text: 'No hash submited',
-        icon: 'error'
-      });
-    }
+    proposalRef.once('value').then(snapshot => {
+
+      const descriptionID = snapshot.val().descriptionID;
+      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+
+      if (this.state.hValue) {
+
+        let updateProposalDetail = { ...this.state.proposalDetail };
+        let updatedUserProposal = { ...this.state.userProposal };
+
+        updateProposalDetail.hash = this.state.hValue;
+        updatedUserProposal.hash = this.state.hValue;
+
+        descriptionRef.set(updateProposalDetail)
+        proposalRef.set(updatedUserProposal);
+
+        this.setState({
+          visible: false
+        });
+        swal({
+          title: 'Success',
+          text: 'Proposal has been created.',
+          icon: 'success'
+        });
+        this.props.setPage('home');
+      } else {
+        swal({
+          title: 'Oops',
+          text: 'No hash submited',
+          icon: 'error'
+        });
+      }
+    })
   }
 
   handleOk(e) {
@@ -335,7 +360,7 @@ class NewProposal extends Component {
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
-    descriptionRef.set(proposal__detail);
+    descriptionRef.set({ detail: proposal__detail, hash: '' });
 
     let userProposal = {
       type: 1,
@@ -354,7 +379,11 @@ class NewProposal extends Component {
     };
 
     this.setState({
-      userProposal: userProposal
+      userProposal: userProposal,
+      proposalDetail: {
+        detail: proposal__detail,
+        hash: ''
+      }
     });
 
     proposalRef.set(userProposal);
@@ -693,23 +722,35 @@ class NewProposal extends Component {
         {/* Receipt Modal */}
         <Modal
           title="Proposal"
+          style={{ top: 20 }}
           visible={this.state.visible}
           onCancel={this.handleCancel.bind(this)}
           footer={null}
           className={modalStyle}
           zIndex={99999}
         >
-          <div className="receipt-text">
-            {this.state.pValue
-              ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
-              : 'No Prepare Receipt has been received.'}
-            <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-              <Button type="primary" disabled={this.state.sValue}>Copy</Button>
-            </CopyToClipboard>
-            {this.state.pCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
-          </div>
-          <br />
-          {this.state.sValue ? (
+          <div>
+            <TextArea rows={this.state.pCopied ? 4 : 5} readonly value={this.state.pValue} />
+            {this.state.pCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
+            <div className="receipt-text">
+              {this.state.pValue
+                ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
+                : 'No Prepare Receipt has been received.'}
+              <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
+                <Button type="primary" disabled={this.state.sValue}>Copy</Button>
+              </CopyToClipboard>
+            </div>
+            <div className="id-input">
+              <span> Input Payment Id Here: </span>
+              <Input value={this.state.payValue} disabled={this.state.sValue} onChange={this.onChange} name="payValue" />
+              <br />
+            </div>
+            <div className="submit-btn">
+              <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
+                Submit Payment Id
+          </Button>
+            </div>
+            {/* {this.state.sValue ? (
             <div className="id-copied">
               Looks like you already have a payment id, go ahead and copy it and paste it below.
               <CopyToClipboard
@@ -720,20 +761,13 @@ class NewProposal extends Component {
               </CopyToClipboard>
               {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
             </div>
-          ) : null}
-          <div className="id-input">
-            <span> Input Payment Id Here: </span>
-            <Input value={this.state.payValue} disabled={this.state.sValue} onChange={this.onChange} name="payValue" />
-            <br />
-          </div>
-          <div className="submit-btn">
-            <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
-              Submit Payment Id
-          </Button>
+          ) : null}*/}
           </div>
           <br />
           <hr />
           <br />
+          <TextArea rows={this.state.sCopied ? 4 : 5} readonly value={this.state.sValue} />
+          {this.state.sCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
           <div className="receipt-text">
             {this.state.sValue
               ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
@@ -741,7 +775,6 @@ class NewProposal extends Component {
             <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
               <Button type="primary" disabled={!this.state.sValue}>Copy</Button>
             </CopyToClipboard>
-            {this.state.sCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
           <br />
           <div className="id-input">

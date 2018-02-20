@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Equalizer } from 'material-ui-icons';
-import injectSheet from 'react-jss';
 
 import GridList from 'material-ui/GridList';
 import Card, {
