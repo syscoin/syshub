@@ -10,17 +10,15 @@ export default {
   },
   appContent: {
     width: 'calc(80vw - 80px)',
-    height: '100%',
-    overflowY: 'hidden',
+    height: 'calc(100vh - 80px)',
     marginLeft: 20,
-    marginTop: 10
+    marginTop: 20
   },
   appContentWithChatBox: {
-    width: 'calc(60vw - 44px)',
-    height: 'calc(100vh - 155px)',
-    overflowY: 'hidden',
+    width: 'calc(60vw - 55px)',
+    height: 'calc(100vh - 80px)',
     marginLeft: 20,
-    marginTop: 10
+    marginTop: 20
   },
   leftSlider:{
     width: '20vw'
