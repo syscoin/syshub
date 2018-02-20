@@ -38,7 +38,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -48,7 +48,7 @@ export default {
         }
       },
       '& .input-password-feild': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -132,18 +132,8 @@ export default {
       '& .recaptcha': {
         marginLeft: 0,
         textAlign: 'center',
-
-        '&>div':{
-          display: 'inline-block',
-          transform: 'scale(0.90) !important',
-          '-webkitTransform': 'scale(0.90) !important',
-          transformOrigin:'0 0 !important',
-          '-webkitTransformOrigin':'0 0 !important',
-        },
-        '@media (max-width: 400px)':{
-          '& iframe':{
-            marginLeft: '-15px !important',
-          }
+        '& div': {
+          display: 'inline-block'
         }
       },
       '& .form-group': {
@@ -166,6 +156,9 @@ export default {
           left: 0,
           textAlign: 'left'
         }
+      },
+      '& .terms-of-condition':{
+        margin: 0
       }
     }
   }

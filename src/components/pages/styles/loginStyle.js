@@ -69,6 +69,7 @@ export default {
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
+        marginTop: 30,
         '&>button': {
           backgroundColor: primary,
           margin: '0 10px 10px 10px',
