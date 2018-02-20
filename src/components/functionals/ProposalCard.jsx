@@ -16,8 +16,6 @@ import Cryptr from 'cryptr';
 // import style
 import { proposalCardStyle } from './styles';
 
-const cryptr = new Cryptr('myTotalySecretKey');
-
 class ProposalCard extends Component {
   state = {
     days_remaining: 0,
@@ -57,6 +55,7 @@ class ProposalCard extends Component {
 
   voteUp(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({
@@ -132,6 +131,7 @@ class ProposalCard extends Component {
 
   voteDown(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({

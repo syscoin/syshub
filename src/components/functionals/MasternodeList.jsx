@@ -8,7 +8,6 @@ import Cryptr from 'cryptr';
 import { masternodeListStyle } from './styles';
 import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
-const cryptr = new Cryptr('myTotalySecretKey');
 
 class MasterNodeList extends Component {
   constructor(props) {
@@ -31,6 +30,8 @@ class MasterNodeList extends Component {
   }
 
   showEditModal(record) {
+    const cryptr = new Cryptr(this.props.app.currentUser.uid);
+
     this.editNode = record;
     this.setState({
       editNodeModal: true,
@@ -92,7 +93,10 @@ class MasterNodeList extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, app } = this.props;
+
+    const cryptr = new Cryptr(app.currentUser.uid);
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle = deviceType === 'mobile' ? classes.mModal : classes.modal;
@@ -109,7 +113,6 @@ class MasterNodeList extends Component {
         dataIndex: 'mnPrivateKey',
         key: 'mnPrivateKey',
         render: text => (
-
           <span>
             {deviceType === 'mobile'
               ? cryptr.decrypt(text).substring(0, 7) + '...'
@@ -233,7 +236,9 @@ class MasterNodeList extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    app: state.app
+  };
 };
 
 const dispatchToProps = dispatch => {
