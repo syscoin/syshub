@@ -8,7 +8,7 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 30px 30px 30px',
+    padding: '10px 30px 30px 0px',
     height: '50vh',
     '& .title': {
       display: 'inline-block',
@@ -68,7 +68,7 @@ export default {
       },
       '& .recaptcha': {
         marginLeft: 10,
-        width: '78%',
+        width: '73%',
         display: 'inline-block',
         float: 'right'
       },
@@ -110,6 +110,7 @@ export default {
   mRoot: {
     extend: 'root',
     marginTop: 0,
+    paddingLeft: 30,
     '& .input-field': {
       width: '100% !important',
       margin: '0px !important'
@@ -127,7 +128,7 @@ export default {
       '& .recaptcha': {
         marginLeft: 0,
         textAlign: 'center',
-       
+
         '&>div':{
           display: 'inline-block',
           transform: 'scale(0.90) !important',
@@ -138,7 +139,7 @@ export default {
         '@media (max-width: 400px)':{
           '& iframe':{
             marginLeft: '-15px !important',
-            
+
           }
         }
       },

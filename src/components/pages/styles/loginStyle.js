@@ -8,7 +8,7 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 0px 0px 20px',
+    padding: '10px 0px 0px 0px',
     height: '50vh',
     '& .form__container': {
       backgroundColor: white,
@@ -40,6 +40,9 @@ export default {
       },
       '& .recaptcha': {
         marginLeft: 10
+      },
+      '& .recaptcha-div': {
+        marginLeft: '1.5%',
       },
       '& .validation-message': {
         width: '35%',
@@ -86,6 +89,14 @@ export default {
     // marginTop: '36px',
     '& .input-field': {
       width: '62% !important'
+    },
+    '& .recaptcha-div': {
+      width: '50%',
+      '&>div': {
+        display: 'inline-block',
+        transform: 'scale(0.82)',
+        marginLeft: '-20px',
+      }
     }
   }
 };

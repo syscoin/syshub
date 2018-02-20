@@ -22,7 +22,7 @@ export default {
     '& .news-card-grid': {
       '& .newsCardImage-grid': {
         padding: '20px 0px 0px 10px',
-        maxWidth: 165,
+        maxWidth: 140,
         '& img': {
           width: '100%',
         },
