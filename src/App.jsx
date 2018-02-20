@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
+import Favicon from 'react-favicon';
 import { DesktopLayout, MobileLayout } from './components/layouts';
 import { withStyles } from 'material-ui';
 
@@ -82,6 +83,7 @@ class App extends Component {
     return (
       /* <HttpsRedirect> */
       <div className={classes.root}>
+        <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
           <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>{this.state.timer}</h1>

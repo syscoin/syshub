@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -233,7 +233,7 @@ class Login extends Component {
               lg={8}
               md={10}
               xs={12}
-              //justify="center"
+            //justify="center"
             >
               {/* For User Name */}
               <FormGroup className="form-group">
@@ -275,10 +275,10 @@ class Login extends Component {
                 <Button type="submit" color="primary">
                   Login
                 </Button>
-                <br/>
+                <br />
                 <a onClick={this.passwordRecovery}>Forget Your Password?</a>
-                <br/>
-                Don’t have an account?  <a style={{fontSize: '120%', color:"#1991CC"}}>Sign Up</a>
+                <br />
+                Don’t have an account?  <a onClick={() => this.props.setPage('register')} className="signUpTxt" >Sign Up</a>
               </FormGroup>
             </Grid>
           </form>
