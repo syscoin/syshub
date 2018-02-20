@@ -223,18 +223,9 @@ class Login extends Component {
         <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
-            ref={form => {
-              this.loginForm = form;
-            }}
-            className="wrapper"
-          >
-            <Grid
-              item
-              lg={8}
-              md={10}
-              xs={12}
-              //justify="center"
-            >
+            ref={ form => { this.loginForm = form }}
+            className="form__wrapper">
+            <Grid item lg={8} md={10} xs={12}>
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -267,7 +258,7 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} className="recaptcha-div" />
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
               </FormGroup>
 
               {/* Form Action Button */}

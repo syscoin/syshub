@@ -41,7 +41,7 @@ export default {
       '& .joinBtn': {
         textAlign: 'right',
         '& .btnText': {
-          color: '#ffff'
+          color: '#fff'
         },
         '& .btn': {
           borderRadius: '8px',

@@ -14,7 +14,10 @@ export default {
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
-      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
+      boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
+      '& .form__wrapper>div': {
+        maxWidth: 475
+      },
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px'
@@ -40,10 +43,8 @@ export default {
         }
       },
       '& .recaptcha': {
-        marginLeft: 10
-      },
-      '& .recaptcha-div': {
         marginLeft: '1.5%',
+        width: 300
       },
       '& .validation-message': {
         width: '35%',
@@ -70,7 +71,7 @@ export default {
         display: 'inherit',
         '&>button': {
           backgroundColor: primary,
-          margin: '0 10px',
+          margin: '0 10px 10px 10px',
           borderRadius: 10,
           '& span': {
             color: white,
@@ -90,16 +91,31 @@ export default {
   mRoot: {
     extend: 'root',
     height: 'calc(100vh - 220px)',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
     // marginTop: '36px',
-    '& .input-field': {
-      width: '62% !important'
+    '& .form-group .label':{
+      textAlign: 'left !important'
     },
-    '& .recaptcha-div': {
-      width: '50%',
-      '&>div': {
+    '& .input-field': {
+      width: '100% !important',
+      marginLeft: '0px !important'
+    },
+    '& .recaptcha': {
+      marginLeft: 0,
+      textAlign: 'center',
+      '&>div':{
         display: 'inline-block',
-        transform: 'scale(0.82)',
-        marginLeft: '-20px',
+        transform: 'scale(0.90) !important',
+        '-webkitTransform': 'scale(0.90) !important',
+        transformOrigin:'0 0 !important',
+        '-webkitTransformOrigin':'0 0 !important',
+      },
+      '@media (max-width: 400px)':{
+        '& iframe':{
+          marginLeft: '-15px !important',
+        },
+        width: '100%'
       }
     }
   }

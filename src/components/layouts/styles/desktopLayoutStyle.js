@@ -16,7 +16,7 @@ export default {
     marginTop: 10
   },
   appContentWithChatBox: {
-    width: 'calc(60vw - 55px)',
+    width: 'calc(60vw - 44px)',
     height: 'calc(100vh - 155px)',
     overflowY: 'hidden',
     marginLeft: 20,
