@@ -38,13 +38,13 @@ export default {
         },
       },
       '& .ant-collapse-header': {
-        fontSize: 20,
+        fontSize: '140%',
         color: primary,
         padding: '12px 0 12px 20px',
-        textTransform: 'uppercase',
-        fontWeight: 'lighter',
+        textTransform: 'camelcase',
+        fontWeight: 'normal',
         '& .arrow': {
-          fontSize: 25,
+          fontSize: 20,
           right: 0,
           padding: '0px 10px',
           width: '5%',
@@ -57,6 +57,7 @@ export default {
       },
       '& .faq-category': {
         '& .ant-collapse-content-box': {
+          fontSize: '100%',
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {

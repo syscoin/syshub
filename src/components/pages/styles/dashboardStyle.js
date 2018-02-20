@@ -21,7 +21,7 @@ export default {
     '& .proposal-heading': {
     },
     '& .dashBoardheading': {
-      fontWeight: 'lighter',
+      fontWeight: 'normal',
       margin: 'auto',
       padding: 15,
       backgroundColor: white,

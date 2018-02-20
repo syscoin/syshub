@@ -6,6 +6,7 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const secondary = palette.secondary;
 
+
 export default {
   root: {
     padding: '10px 0px 0px 20px',
@@ -76,8 +77,11 @@ export default {
       }
     },
     '& .title': {
-      display: 'inline-block',
-      fontWeight: 'lighter'
+      color: greyDark,
+      textTransform: 'uppercase',
+      padding: 15,
+      fontWeight: 300,
+      margin: 'auto',
     }
   },
   mRoot: {

@@ -11,10 +11,11 @@ export default {
     padding: '10px 30px 30px 30px',
     height: '50vh',
     '& .title': {
-      display: 'inline-block',
-      fontWeight: 'lighter',
       color: greyDark,
-      fontSize: 20
+      textTransform: 'uppercase',
+      padding: 15,
+      fontWeight: 300,
+      margin: 'auto'
     },
     '& .form__container': {
       backgroundColor: white,
