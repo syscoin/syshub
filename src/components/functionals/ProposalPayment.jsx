@@ -12,7 +12,7 @@ import { proposalPaymentStyle } from './styles';
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
-    var sdate = new Date(this.props.data.start_epoch * 1000);
+    var sdate = new Date((this.props.data.first_epoch || this.props.data.start_epoch) * 1000);
     var startDate = sdate.toDateString();
     var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
@@ -27,13 +27,13 @@ class ProposalPayment extends Component {
   }
 
   componentWillMount() {
-    const { start_epoch, end_epoch, payment_amount } = this.props.data;
-    const millsMonth = 30 * 24 * 60 * 60 * 1000;
+    const { nPayment, end_epoch, payment_amount } = this.props.data;
+    //const millsMonth = 30 * 24 * 60 * 60 * 1000;
     const today = new Date();
 
-    const startDate = new Date(start_epoch * 1000);
+    //const startDate = new Date(first_epoch * 1000);
     const endDate = new Date(end_epoch * 1000);
-    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    //const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
 
     if (endDate > today) {
       let timeDiff = endDate.getTime() - today.getTime();

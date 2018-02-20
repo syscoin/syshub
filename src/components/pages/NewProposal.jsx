@@ -22,8 +22,7 @@ import newProposalStyle from './styles/newProposalStyle';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-
-
+const { TextArea } = Input;
 
 class NewProposal extends Component {
   constructor(props) {
@@ -35,6 +34,7 @@ class NewProposal extends Component {
       proposalName: '',
       paymentQuantity: 1,
       paymentDateOptions: [],
+      proposalDetail: '',
       proposalStartEpoch: 0,
       proposalEndEpoch: 0,
       address: '',
@@ -82,7 +82,7 @@ class NewProposal extends Component {
     const { firstPaymentDate, millsMonth } = this.props.proposal;
     const today = new Date().getTime();
     const monthGap = Math.ceil((today - firstPaymentDate) / millsMonth);
-    const firstOption = firstPaymentDate + (monthGap * millsMonth);
+    const firstOption = firstPaymentDate + monthGap * millsMonth;
     let paymentDateOptions = [];
     for (let i = 0; i < maxDateOptions; i++) {
       let mills = firstOption + i * millsMonth;
@@ -98,78 +98,95 @@ class NewProposal extends Component {
     }
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    proposalRef.once('value', snapshot => {
+    proposalRef.once('value').then(snapshot => {
       const userProp = snapshot.val();
-
-      if (userProp) {
-        if (userProp.hash) {
-          proposalRef.remove();
-          return;
-        }
-
-        this.setState({
-          savedProposal: userProp
-        });
-
-        swal({
-          title: 'Recovery',
-          text:
-            'It seems you have some information saved in our db, would you like to recover the data?',
-          buttons: true,
-          icon: 'info'
-        })
-          .then(value => {
-            if (value) {
-              this.setState({
-                recover: value,
-                prepareObj: userProp.prepareObj
-              });
-
-              let userProposal = {
-                name: userProp.name,
-                description: userProp.description,
-                username: userProp.username,
-                type: 1,
-                start_epoch: userProp.start_epoch,
-                end_epoch: userProp.end_epoch,
-                payment_address: userProp.payment_address,
-                payment_amount: userProp.payment_amount,
-                url: userProp.url
-              };
-
-              if (userProp.prepareReceipt) {
-                userProposal.prepareReceipt = userProp.prepareReceipt;
-                this.setState({
-                  pValue: userProp.prepareReceipt
-                });
-              }
-
-              if (userProp.txid) {
-                userProposal.txid = userProp.txid;
-
-                this.setState({
-                  savedPayValue: userProp.txid
-                });
-              }
-
-              if (userProp.submitReceipt) {
-                userProposal.submitReceipt = userProp.submitReceipt;
-
-                this.setState({
-                  sValue: userProp.submitReceipt
-                });
-              }
-
-              this.setState({
-                visible: true,
-                userProposal
-              });
-            }
-          })
-          .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-          });
+      if (!userProp) {
+        return;
       }
+      const descriptionID = userProp.descriptionID;
+      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+
+      descriptionRef.once('value').then(detailObj => {
+        const proposalDetail = detailObj.val();
+
+        if (userProp) {
+          if (userProp.hash) {
+            proposalRef.remove();
+            return;
+          }
+
+          this.setState({
+            savedProposal: userProp
+          });
+
+          swal({
+            title: 'Recovery',
+            text:
+              'It seems you have some information saved in our db, would you like to recover the data?',
+            buttons: true,
+            icon: 'info'
+          })
+            .then(value => {
+              console.log(value);
+              if (value) {
+                this.setState({
+                  recover: value,
+                  prepareObj: userProp.prepareObj,
+                  proposalDetail
+                });
+                console.log('ACZ: newproposal state ', this.state);
+
+                let userProposal = {
+                  //there are another def in line 339 both have to be in sync
+                  type: 1,
+                  name: userProp.name,
+                  title: userProp.title,
+                  descriptionID: userProp.descriptionID || '',
+                  description: userProp.description || '',
+                  username: userProp.username,
+                  nPayment: userProp.nPayment,
+                  first_epoch: userProp.first_epoch,
+                  start_epoch: userProp.start_epoch,
+                  end_epoch: userProp.end_epoch,
+                  payment_address: userProp.payment_address,
+                  payment_amount: userProp.payment_amount,
+                  url: userProp.url
+                };
+
+                if (userProp.prepareReceipt) {
+                  userProposal.prepareReceipt = userProp.prepareReceipt;
+                  this.setState({
+                    pValue: userProp.prepareReceipt
+                  });
+                }
+
+                if (userProp.txid) {
+                  userProposal.txid = userProp.txid;
+
+                  this.setState({
+                    savedPayValue: userProp.txid
+                  });
+                }
+
+                if (userProp.submitReceipt) {
+                  userProposal.submitReceipt = userProp.submitReceipt;
+
+                  this.setState({
+                    sValue: userProp.submitReceipt
+                  });
+                }
+
+                this.setState({
+                  visible: true,
+                  userProposal
+                });
+              }
+            })
+            .catch(err => {
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        }
+      });
     });
   }
 
@@ -191,7 +208,7 @@ class NewProposal extends Component {
   //payment quantity
   paymentQuantity(value) {
     const millsMonth = this.props.proposal.millsMonth;
-    const proposalEndEpoch = this.state.proposalStartEpoch + (millsMonth / 1000 * (value - 1));
+    const proposalEndEpoch = this.state.proposalStartEpoch + millsMonth / 1000 * (value - 1);
     this.setState({
       proposalEndEpoch,
       totalAmount: this.state.amount * value,
@@ -249,26 +266,37 @@ class NewProposal extends Component {
     }
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    if (this.state.hValue) {
-      let updatedUserProposal = { ...this.state.userProposal };
-      updatedUserProposal.hash = this.state.hValue;
-      proposalRef.set(updatedUserProposal);
-      this.setState({
-        visible: false
-      });
-      swal({
-        title: 'Success',
-        text: 'Proposal has been created.',
-        icon: 'success'
-      });
-      this.props.setPage('home');
-    } else {
-      swal({
-        title: 'Oops',
-        text: 'No hash submited',
-        icon: 'error'
-      });
-    }
+    proposalRef.once('value').then(snapshot => {
+      const descriptionID = snapshot.val().descriptionID;
+      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+
+      if (this.state.hValue) {
+        let updateProposalDetail = { ...this.state.proposalDetail };
+        let updatedUserProposal = { ...this.state.userProposal };
+
+        updateProposalDetail.hash = this.state.hValue;
+        updatedUserProposal.hash = this.state.hValue;
+
+        descriptionRef.set(updateProposalDetail);
+        proposalRef.set(updatedUserProposal);
+
+        this.setState({
+          visible: false
+        });
+        swal({
+          title: 'Success',
+          text: 'Proposal has been created.',
+          icon: 'success'
+        });
+        this.props.setPage('home');
+      } else {
+        swal({
+          title: 'Oops',
+          text: 'No hash submited',
+          icon: 'error'
+        });
+      }
+    });
   }
 
   handleOk(e) {
@@ -312,8 +340,9 @@ class NewProposal extends Component {
       paymentQuantity,
       amount,
       proposal__detail,
-      proposallink,
+      proposallink
     } = this.state;
+
     const descriptionID = Date.now().toString(36);
 
     if (!currentUser) {
@@ -329,15 +358,15 @@ class NewProposal extends Component {
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
-    descriptionRef.set(proposal__detail);
+    descriptionRef.set({ detail: proposal__detail, hash: '' });
 
     let userProposal = {
       type: 1,
       name: proposalName,
       title: proposalTitle,
       descriptionID,
+      description: '',
       username: currentUser.displayName,
-      // start_epoch: this.state.proposalStartEpoch,
       nPayment: paymentQuantity,
       first_epoch: this.state.proposalStartEpoch,
       start_epoch: Math.floor(new Date().getTime() / 1000),
@@ -348,7 +377,11 @@ class NewProposal extends Component {
     };
 
     this.setState({
-      userProposal: userProposal
+      userProposal: userProposal,
+      proposalDetail: {
+        detail: proposal__detail,
+        hash: ''
+      }
     });
 
     proposalRef.set(userProposal);
@@ -437,7 +470,10 @@ class NewProposal extends Component {
 
   //proposal title function
   proposalTitle(e) {
-    const proposalName = e.target.value.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
+    const proposalName = e.target.value
+      .trim()
+      .toLowerCase()
+      .replace(/[^A-Za-z0-9]/g, '');
     this.setState({
       proposalName,
       proposalTitle: e.target.value,
@@ -496,7 +532,8 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 10}>
               {/* proposal title input field */}
               <Form>
-                <FormItem className="form-item"
+                <FormItem
+                  className="form-item"
                   validateStatus={this.state.proposalTitle.length <= 40 ? '' : 'error'}
                 >
                   <Input
@@ -520,8 +557,8 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                  }`}
-                onChange={() => { }}
+                }`}
+                onChange={() => {}}
               />
             </Col>
           </Row>
@@ -565,19 +602,19 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col
-                      span={deviceType === 'mobile' ? 24 : 22}
-                      offset={deviceType === 'mobile' ? 0 : 1}
-                    >
-                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div className="proposalContent-div" id="preview-html-container" />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div className="proposalContent-div" id="preview-html-container" />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
         );
@@ -587,11 +624,15 @@ class NewProposal extends Component {
             <Row className="paymentDetail-row">
               <Col span={deviceType === 'mobile' ? 10 : 9}>
                 <label className="label">Date</label>
-                <Select placeholder="Select a Date" style={{ width: 120 }} onChange={(value) => this.onDateChange(value)}>
-                  {this.state.paymentDateOptions.map(item => <Option value={item.mills / 1000}>{item.ymd}</Option>)}
-
+                <Select
+                  placeholder="Select a Date"
+                  style={{ width: 120 }}
+                  onChange={value => this.onDateChange(value)}
+                >
+                  {this.state.paymentDateOptions.map(item => (
+                    <Option value={item.mills / 1000}>{item.ymd}</Option>
+                  ))}
                 </Select>
-
               </Col>
               <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
                 <label># of Payments</label>
@@ -623,17 +664,23 @@ class NewProposal extends Component {
                     min={0}
                     className="amount-input"
                     value={this.state.amount}
-                    onChange={this.getAmount} />
+                    onChange={this.getAmount}
+                  />
                   {` SYS`}
                 </Row>
                 <Row>
                   <p />
-                  <p><strong>Total amount:&nbsp;</strong>
-                    {`${this.state.totalAmount || this.state.amount} SYS ${this.state.proposalStartEpoch ?
-                      `with a final payment on ${this.yearDayMonth(this.state.proposalEndEpoch * 1000, 'usa')}` :
-                      ''}`
-                    }</p>
-
+                  <p>
+                    <strong>Total amount:&nbsp;</strong>
+                    {`${this.state.totalAmount || this.state.amount} SYS ${
+                      this.state.proposalStartEpoch
+                        ? `with a final payment on ${this.yearDayMonth(
+                            this.state.proposalEndEpoch * 1000,
+                            'usa'
+                          )}`
+                        : ''
+                    }`}
+                  </p>
                 </Row>
               </Col>
             </Row>
@@ -665,7 +712,12 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        if (this.state.proposalStartEpoch && this.state.paymentQuantity && this.state.address && this.state.amount) {
+        if (
+          this.state.proposalStartEpoch &&
+          this.state.paymentQuantity &&
+          this.state.address &&
+          this.state.amount
+        ) {
           return false;
         } else {
           return true;
@@ -687,66 +739,98 @@ class NewProposal extends Component {
         {/* Receipt Modal */}
         <Modal
           title="Proposal"
+          style={{ top: 20 }}
           visible={this.state.visible}
           onCancel={this.handleCancel.bind(this)}
           footer={null}
           className={modalStyle}
           zIndex={99999}
         >
-          <div className="receipt-text">
-            {this.state.pValue
-              ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
-              : 'No Prepare Receipt has been received.'}
-            <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-              <Button type="primary">Copy</Button>
-            </CopyToClipboard>
-            {this.state.pCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
-          </div>
-          <br />
-          {this.state.savedPayValue ? (
+          <div>
+            <TextArea rows={this.state.pCopied ? 4 : 5} readonly value={this.state.pValue} />
+            {this.state.pCopied ? (
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+              </div>
+            ) : null}
+            <div className="receipt-text">
+              {this.state.pValue
+                ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
+                : 'No Prepare Receipt has been received.'}
+              <CopyToClipboard
+                text={this.state.pValue}
+                onCopy={() => this.setState({ pCopied: true })}
+              >
+                <Button type="primary" disabled={this.state.sValue}>
+                  Copy
+                </Button>
+              </CopyToClipboard>
+            </div>
+            <div className="id-input">
+              <span> Input Payment Id Here: </span>
+              <Input
+                value={this.state.payValue}
+                disabled={this.state.sValue}
+                onChange={this.onChange}
+                name="payValue"
+              />
+              <br />
+            </div>
+            <div className="submit-btn">
+              <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
+                Submit Payment Id
+              </Button>
+            </div>
+            {/* {this.state.sValue ? (
             <div className="id-copied">
               Looks like you already have a payment id, go ahead and copy it and paste it below.
               <CopyToClipboard
-                text={this.state.savedPayValue}
+                text={this.state.sValue}
                 onCopy={() => this.setState({ payCopied: true })}
               >
-                <button>Copy</button>
+                <Button type="primary" disabled={this.state.sValue} >Copy</Button>
               </CopyToClipboard>
               {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
             </div>
-          ) : null}
-          <div className="id-input">
-            <span> Input Payment Id Here: </span>
-            <Input value={this.state.payValue} onChange={this.onChange} name="payValue" />
-            <br />
-          </div>
-          <div className="submit-btn">
-            <Button type="primary" onClick={this.submitPaymentId}>
-              Submit Payment Id
-          </Button>
+          ) : null}*/}
           </div>
           <br />
           <hr />
           <br />
+          <TextArea rows={this.state.sCopied ? 4 : 5} readonly value={this.state.sValue} />
+          {this.state.sCopied ? (
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+            </div>
+          ) : null}
           <div className="receipt-text">
             {this.state.sValue
               ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
               : 'No Prepare Receipt has been received.'}
-            <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
-              <Button type="primary">Copy</Button>
+            <CopyToClipboard
+              text={this.state.sValue}
+              onCopy={() => this.setState({ sCopied: true })}
+            >
+              <Button type="primary" disabled={!this.state.sValue}>
+                Copy
+              </Button>
             </CopyToClipboard>
-            {this.state.sCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
           </div>
           <br />
           <div className="id-input">
             <span>Input Hash here: </span>
-            <Input value={this.state.hValue} onChange={this.onChange} name="hValue" />
+            <Input
+              value={this.state.hValue}
+              disabled={!this.state.sValue}
+              onChange={this.onChange}
+              name="hValue"
+            />
             <br />
           </div>
           <div className="submit-btn">
-            <Button type="primary" onClick={this.submitHash}>
+            <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
               Submit Hash
-          </Button>
+            </Button>
           </div>
         </Modal>
         <div className={style}>
@@ -755,84 +839,84 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-                <Stepper activeStep={activeStep} orientation="vertical">
-                  {steps.map((label, index) => {
-                    return (
-                      <Step className="steper__container" key={label}>
-                        <StepLabel className="steper__label">
-                          <h2 className="step-label"> {label} </h2>
-                          {this.state.activeStep === 0 &&
-                            label === 'Proposal Title' &&
-                            deviceType !== 'mobile' ? (
-                              <h3 className="proposal-title">Proposal Description Url</h3>
-                            ) : null}
-                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                            this.state.showEditor ? (
-                              <Button
-                                className="preview-edit-button"
-                                onClick={this.previewHTML.bind(this)}
-                              >
-                                PREVIEW
-                          </Button>
-                            ) : (
-                                <Button
-                                  className="preview-edit-button"
-                                  onClick={() => {
-                                    this.setState({ showEditor: true });
-                                  }}
-                                >
-                                  EDITOR
-                          </Button>
-                              )
-                          ) : null}
-                        </StepLabel>
-                        <StepContent>
-                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
-                          <div className={classes.actionsContainer}>
-                            <div
-                              className={
-                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                              }
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((label, index) => {
+                  return (
+                    <Step className="steper__container" key={label}>
+                      <StepLabel className="steper__label">
+                        <h2 className="step-label"> {label} </h2>
+                        {this.state.activeStep === 0 &&
+                        label === 'Proposal Title' &&
+                        deviceType !== 'mobile' ? (
+                          <h3 className="proposal-title">Proposal Description Url</h3>
+                        ) : null}
+                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                          this.state.showEditor ? (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={this.previewHTML.bind(this)}
                             >
-                              {activeStep === 0 ? null : (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  onClick={this.handleBack}
-                                  className="button"
-                                >
-                                  Back
+                              PREVIEW
                             </Button>
-                              )}
-                              {activeStep === steps.length - 1 ? (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  className={classes.button}
-                                  onClick={this.createPropObj}
-                                  disabled={this.disabledNextBtn(index)}
-                                >
-                                  Confirm
+                          ) : (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={() => {
+                                this.setState({ showEditor: true });
+                              }}
+                            >
+                              EDITOR
                             </Button>
-                              ) : (
-                                  <Button
-                                    variant="raised"
-                                    type="primary"
-                                    onClick={this.handleNext}
-                                    className={classes.button}
-                                    disabled={this.disabledNextBtn(index)}
-                                  >
-                                    Next Step
-                            </Button>
-                                )}
-                            </div>
+                          )
+                        ) : null}
+                      </StepLabel>
+                      <StepContent>
+                        <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                        <div className={classes.actionsContainer}>
+                          <div
+                            className={
+                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                            }
+                          >
+                            {activeStep === 0 ? null : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleBack}
+                                className="button"
+                              >
+                                Back
+                              </Button>
+                            )}
+                            {activeStep === steps.length - 1 ? (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                className={classes.button}
+                                onClick={this.createPropObj}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Confirm
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleNext}
+                                className={classes.button}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Next Step
+                              </Button>
+                            )}
                           </div>
-                        </StepContent>
-                      </Step>
-                    );
-                  })}
-                </Stepper>
-              )}
+                        </div>
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            )}
           </Paper>
         </div>
       </div>

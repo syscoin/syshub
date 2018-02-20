@@ -25,13 +25,13 @@ class ProposalCard extends Component {
   };
 
   componentWillMount() {
-    const { start_epoch, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
-    const millsMonth = this.props.millsMonth;
+    const { nPayment, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
+    //const millsMonth = this.props.millsMonth;
     const today = new Date();
-
-    const startDate = new Date(start_epoch * 1000);
+    //alert(nPayment);
+    //const startDate = new Date(first_epoch * 1000);
     const endDate = new Date(end_epoch * 1000);
-    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    //const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
     if (endDate > today) {
       const timeDiff = endDate.getTime() - today.getTime();
       const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
@@ -242,8 +242,8 @@ class ProposalCard extends Component {
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                <span style={{ color: 'grey' }}>No title available for this proposal.</span>
-              )}
+                  <span style={{ color: 'grey' }}>No title available for this proposal.</span>
+                )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
@@ -251,10 +251,10 @@ class ProposalCard extends Component {
               {days_remaining < 30 ? (
                 <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
               ) : (
-                <span>{`(${month_remaining} Month${
-                  month_remaining > 1 ? 's' : ''
-                } Remaining)`}</span>
-              )}
+                  <span>{`(${month_remaining} Month${
+                    month_remaining > 1 ? 's' : ''
+                    } Remaining)`}</span>
+                )}
             </div>
           </Grid>
 

@@ -19,6 +19,10 @@ export default {
         flexDirection: 'row',
         marginTop: '10px'
       },
+      '& .signUpTxt': {
+        fontSize: '120%',
+        color: primary
+      },
       '& .label': {
         width: '20%',
         display: 'inline-block',
@@ -87,9 +91,14 @@ export default {
   mRoot: {
     extend: 'root',
     height: 'calc(100vh - 220px)',
-    // marginTop: '36px',
     '& .input-field': {
       width: '62% !important'
-    }
+    },
+
+    '& .signUpTxt': {
+      fontSize: '120%',
+      color: primary
+    },
+
   }
 };
