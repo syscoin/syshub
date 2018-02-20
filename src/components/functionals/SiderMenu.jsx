@@ -20,10 +20,8 @@ class SiderMenu extends Component {
         {this.props.deviceType !== 'mobile' && <SiderLogo />}
         {this.props.menuItems.map((item, i) => {
           const icon = item.key === active ? item.iconSelected : item.icon;
-          const txt =
-            item.key === active ? classes.menuTxtActive : classes.menuTxt;
-          const btnStyle =
-            item.key === active ? classes.buttonActive : classes.button;
+          const txt = item.key === active ? classes.menuTxtActive : classes.menuTxt;
+          const btnStyle = item.key === active ? classes.buttonActive : classes.button;
           let showMe = item.private;
           switch (item.showWhen) {
             case 'always':
@@ -44,23 +42,19 @@ class SiderMenu extends Component {
             document.title = 'Syshub';
           }
           return showMe ? (
-            <button
-              key={i}
-              className={btnStyle}
-              onClick={() => this.tests(item.key)}
-            >
+            <button key={i} className={btnStyle} onClick={() => this.tests(item.key)}>
               <img
                 alt="a"
                 src={require(`../../assets/img/${icon}.png`)}
                 width="25"
-                style={deviceType === 'mobile' ? { marginLeft: 15, } : null}
+                style={deviceType === 'mobile' ? { marginLeft: 15 } : null}
               />
               <span className={txt}>{`${item.title.toUpperCase()}`}</span>
             </button>
           ) : null;
         })}
-        <div className={classes.lastBorder} />{/*Last border*/}
-
+        <div className={classes.lastBorder} />
+        {/*Last border*/}
       </div>
     );
   }
@@ -72,8 +66,7 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {
-  };
+  return {};
 };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(siderMenuStyle)(SiderMenu));

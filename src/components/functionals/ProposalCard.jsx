@@ -16,8 +16,6 @@ import Cryptr from 'cryptr';
 // import style
 import { proposalCardStyle } from './styles';
 
-const cryptr = new Cryptr('myTotalySecretKey');
-
 class ProposalCard extends Component {
   state = {
     days_remaining: 0,
@@ -57,6 +55,7 @@ class ProposalCard extends Component {
 
   voteUp(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({
@@ -69,7 +68,8 @@ class ProposalCard extends Component {
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text:
+          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
         icon: 'error'
       });
       return;
@@ -78,48 +78,51 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
-
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
-                }
-
-                const proposalVoteYes = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 1
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteYes)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'Yes', 1, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-                  });
-              });
-          });
+          // console.log('This has been voted on')
         }
+
+        let mnKeyIds = [];
+        user.MasterNodes.forEach(mnObj => {
+          mnKeyIds.push(mnObj.keyId);
+          fire
+            .database()
+            .ref('votes/' + user.uid)
+            .child(proposal.Hash)
+            .once('value', snap => {
+              if (snap.val() !== null) {
+                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                  // console.log('this MN has voted already', mnObj);
+                }
+              }
+
+              const proposalVoteYes = {
+                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                vinMasternode: cryptr.decrypt(mnObj.vin),
+                gObjectHash: proposal.Hash,
+                voteOutcome: 1
+              };
+
+              this.props
+                .voteOnProposal(proposalVoteYes)
+                .then(data => {
+                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                  voted(user, proposal, 'Yes', 1, mnKeyIds);
+                  this.props.getProposals();
+                })
+                .catch(err => {
+                  const content = document.createElement('div');
+                  content.innerHTML = `Unable to cast vote with <strong>${
+                    mnObj.name
+                  }</strong>.  Please check your key or txid credentials.`;
+                  swal({
+                    html: true,
+                    title: 'Oops...',
+                    content: content,
+                    icon: 'error'
+                  });
+                });
+            });
+        });
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -128,6 +131,7 @@ class ProposalCard extends Component {
 
   voteDown(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({
@@ -140,7 +144,8 @@ class ProposalCard extends Component {
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text:
+          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
         icon: 'error'
       });
       return;
@@ -149,48 +154,42 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
-
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
-                }
-
-                const proposalVoteNo = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 2
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteNo)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-                  });
-              });
-          });
+          // console.log('This has been voted on');
         }
+
+        let mnKeyIds = [];
+        user.MasterNodes.forEach(mnObj => {
+          mnKeyIds.push(mnObj.keyId);
+          fire
+            .database()
+            .ref('votes/' + user.uid)
+            .child(proposal.Hash)
+            .once('value', snap => {
+              if (snap.val() !== null) {
+                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
+                  // console.log('this MN has voted already', mnObj);
+                }
+              }
+
+              const proposalVoteNo = {
+                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
+                vinMasternode: cryptr.decrypt(mnObj.vin),
+                gObjectHash: proposal.Hash,
+                voteOutcome: 2
+              };
+
+              this.props
+                .voteOnProposal(proposalVoteNo)
+                .then(data => {
+                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
+                  voted(user, proposal, 'No', 2, mnKeyIds);
+                  this.props.getProposals();
+                })
+                .catch(err => {
+                  swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                });
+            });
+        });
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -260,7 +259,7 @@ class ProposalCard extends Component {
           </Grid>
 
           {user ? (
-            deviceType === 'mobile' ?
+            deviceType === 'mobile' ? (
               <Grid item md={3} xs={3} className="mobile-vote__wrapper">
                 <div className="vote-text">Vote</div>
                 <div className="vote-item">
@@ -268,16 +267,15 @@ class ProposalCard extends Component {
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.YesCount}</span>
-                </div  >
+                </div>
                 <div className="vote-item">
                   <Button className="btn-vote-down" onClick={() => this.voteDown(proposal)}>
                     <img src={voteDownIcon} className="downVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.NoCount}</span>
                 </div>
-
               </Grid>
-              :
+            ) : (
               <Grid item md={3} xs={3} className="desktop-vote__wrapper">
                 <div className="vote-text">Vote on Proposal</div>
                 <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
@@ -291,34 +289,34 @@ class ProposalCard extends Component {
                   <div className="vote-number">{proposal.NoCount}</div>
                 </div>
               </Grid>
+            )
+          ) : deviceType === 'mobile' ? (
+            <Grid item md={3} xs={3} className="logout-vote__wrapper">
+              <div className="vote-text">Status</div>
+              <div className="vote-up">
+                <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                <span className="voteNumber">{proposal.YesCount}</span>
+              </div>
+              <div className="vote-down">
+                <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                <span className="voteNumber">{proposal.NoCount}</span>
+              </div>
+            </Grid>
           ) : (
-              deviceType === 'mobile' ?
-                <Grid item md={3} xs={3} className="logout-vote__wrapper">
-                  <div className="vote-text">Status</div>
-                  <div className="vote-up">
-                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                    <span className="voteNumber">{proposal.YesCount}</span>
-                  </div>
-                  <div className="vote-down">
-                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                    <span className="voteNumber">{proposal.NoCount}</span>
-                  </div>
-                </Grid>
-                :
-                <Grid item md={3} xs={3} className="desktop-vote__wrapper">
-                  <div className="vote-text">Voting Status</div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.YesCount}</div>
-                  </div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.NoCount}</div>
-                  </div>
-                </Grid>
-            )}
+            <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+              <div className="vote-text">Voting Status</div>
+              <div className="vote-item__wrapper">
+                <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.YesCount}</div>
+              </div>
+              <div className="vote-item__wrapper">
+                <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.NoCount}</div>
+              </div>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

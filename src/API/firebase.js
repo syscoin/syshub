@@ -192,28 +192,28 @@ const doUpdateProfile = (user, callback) => {
             type: 'password'
           }
         }
-      }).then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+      })
+        .then(password => {
+          const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
-        currentUser
-          .reauthenticateWithCredential(credentials)
-          .then(() => {
-            return currentUser.updateEmail(user.email);
-          })
-          .then(() => {
-            if (user.username) {
-              return;
-            }
-            swal({
-              title: 'Success',
-              text: 'Account Updated',
-              icon: 'success'
-            });
-          })
-          .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+          return currentUser.reauthenticateWithCredential(credentials);
+        })
+        .then(() => {
+          return currentUser.updateEmail(user.email);
+        })
+        .then(() => {
+          if (user.username) {
+            return;
+          }
+          swal({
+            title: 'Success',
+            text: 'Account Updated',
+            icon: 'success'
           });
-      });
+        })
+        .catch(err => {
+          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+        });
     }
 
     if (user.username) {

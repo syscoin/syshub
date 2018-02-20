@@ -61,7 +61,6 @@ class Register extends Component {
   }
 
   onChange = e => {
-   
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -76,8 +75,7 @@ class Register extends Component {
   };
 
   // specifying your onload callback function
-  callback() {
-  }
+  callback() {}
 
   // specifying verify callback function
   verifyCallback(response) {
@@ -121,6 +119,7 @@ class Register extends Component {
 
   register(event) {
     event.preventDefault();
+
     if (this.state.disabled) {
       swal({
         title: 'Oops...',
@@ -172,7 +171,6 @@ class Register extends Component {
           const usernameRef = fire.database().ref('usernames');
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
-          this.registerForm.resetFields();
           this.props.setPage('home');
           swal({
             title: 'Success',
@@ -195,12 +193,7 @@ class Register extends Component {
     const checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes, deviceType } = this.props;
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched
-    } = this.props.form;
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -208,17 +201,13 @@ class Register extends Component {
     const username = isFieldTouched('username') && getFieldError('username');
     const email = isFieldTouched('email') && getFieldError('email');
     const password = isFieldTouched('password') && getFieldError('password');
-    const confirmPassword =
-      isFieldTouched('confirm') && getFieldError('confirm');
+    const confirmPassword = isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
       <Grid item className={style} md={12} xs={12}>
-
        <h1 className="title">
           JOIN SYSHUB
-
           </h1>
-      
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {
@@ -234,7 +223,7 @@ class Register extends Component {
               lg={8}
               md={10}
               xs={12}
-            /* justify="center" */
+              /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -261,7 +250,7 @@ class Register extends Component {
                     placeholder="Enter Username"
                     onChange={e => this.checkUsername(e)}
                   />
-                  )}
+                )}
 
                 {this.state.usernames ? (
                   <span className="validation-message">
@@ -269,8 +258,8 @@ class Register extends Component {
                       {!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                          <img alt="a" src={closeIcon} />
-                        )}
+                        <img alt="a" src={closeIcon} />
+                      )}
                       {this.state.usernames}
                       {this.state.disabled ? ` Not Available` : ` Available`}
                     </div>
@@ -302,7 +291,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="Enter email"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Password */}
@@ -336,13 +325,7 @@ class Register extends Component {
                       placeholder="******"
                       minLength={5}
                       minScore={2}
-                      scoreWords={[
-                        'weak',
-                        'okay',
-                        'good',
-                        'strong',
-                        'stronger'
-                      ]}
+                      scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}
                       inputProps={{
                         name: 'password_input',
                         autoComplete: 'off',
@@ -350,7 +333,7 @@ class Register extends Component {
                       }}
                     />
                   </div>
-                  )}
+                )}
                 {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
@@ -384,7 +367,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="**************"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -414,8 +397,7 @@ class Register extends Component {
               <FormItem className="form-group form-button-group">
                 <Button
                   disabled={
-                    this.hasErrors(getFieldsError()) ||
-                      (!this.state.checked || !this.state.verify)
+                    this.hasErrors(getFieldsError()) || (!this.state.checked || !this.state.verify)
                       ? true
                       : false
                   }
