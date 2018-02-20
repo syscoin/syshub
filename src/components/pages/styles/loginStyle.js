@@ -32,7 +32,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(45% - 20px)',
+        width: 'calc(100% - 175px)',
         margin: '0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -102,20 +102,11 @@ export default {
       marginLeft: '0px !important'
     },
     '& .recaptcha': {
-      marginLeft: 0,
+      width: '100% !important',
       textAlign: 'center',
-      '&>div':{
-        display: 'inline-block',
-        transform: 'scale(0.90) !important',
-        '-webkitTransform': 'scale(0.90) !important',
-        transformOrigin:'0 0 !important',
-        '-webkitTransformOrigin':'0 0 !important',
-      },
-      '@media (max-width: 400px)':{
-        '& iframe':{
-          marginLeft: '-15px !important',
-        },
-        width: '100%'
+      '& div':{
+        marginTop: 5,
+        display: 'inline-block'
       }
     }
   }
