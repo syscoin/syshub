@@ -3,6 +3,13 @@ import palette from './palette';
 const primary = palette.primary;
 const white = palette.white;
 const greyDark = palette.greyDark;
+const grey = palette.gey;
+
+// font sizes
+const baseFontSize = 1.8;
+const categoryFontSize = `${baseFontSize}em`; //1.8
+const subCategoryFontSize = `${baseFontSize * 0.9}em`;//1.6
+const answerFontSize = `${baseFontSize * 0.22}em`;//0.4
 
 
 export default {
@@ -38,7 +45,6 @@ export default {
         },
       },
       '& .ant-collapse-header': {
-        fontSize: '140%',
         color: primary,
         padding: '12px 0 12px 20px',
         textTransform: 'camelcase',
@@ -56,8 +62,9 @@ export default {
         paddingLeft: 25,
       },
       '& .faq-category': {
+        fontSize: categoryFontSize,
         '& .ant-collapse-content-box': {
-          fontSize: '100%',
+          fontSize: '300%',
           paddingLeft: 0,
           position: 'relative',
           '& .ant-collapse-header': {
@@ -76,7 +83,19 @@ export default {
             top: 28,
             borderRadius: '50%',
             left: 20,
-          }
+          },
+          '& .faq-subCategory': {
+            textTransform: 'capitalize',
+            '& .ant-collapse-header': {
+              fontSize: subCategoryFontSize,
+            },
+            '& .answer': {
+              fontSize: answerFontSize,
+              textTransform: 'none',
+              color: grey,
+              paddingBottom: 15
+            },
+          },
         },
         '& .ant-collapse-borderless': {
           marginTop: 0

@@ -30,7 +30,7 @@ class HeaderNav extends Component {
 
     const { currentUser } = this.props.app;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
-    const homeIcon = require('../../assets/img/png_menu_home.png');
+    // const homeIcon = require('../../assets/img/png_menu_home.png');
     return (
       <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
@@ -49,15 +49,6 @@ class HeaderNav extends Component {
               onClick={() => this.props.toggleChat()}
             >
               <img src={chatIcon} alt="chat icon" height="30" />
-            </Button>
-            <Button
-              size={'large'}
-              type="primary"
-              ghost
-              className="button"
-              onClick={() => this.props.setPage('home')}
-            >
-              <img src={homeIcon} height="30" alt="home icon" />
             </Button>
 
             {currentUser ? (

@@ -11,7 +11,7 @@ import { Form, Input, Button } from 'antd';
 import swal from 'sweetalert';
 
 // import components
-
+import { isoArray } from '../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 const PNF = PhoneNumberFormat;
@@ -38,6 +38,17 @@ class UserTwoFactor extends Component {
 
   componentDidMount() {
     fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.verify = response;
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
+
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
       fire
@@ -46,21 +57,26 @@ class UserTwoFactor extends Component {
         .set(false);
     }
 
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.verify = response;
-      }
-    });
-
-    window.recaptchaVerifier.render().then(function (widgetId) {
-      window.recaptchaWidgetId = widgetId;
-    });
-
     fire
       .database()
       .ref('2FA/' + user.uid)
       .on('value', snap => {
         this.props.setAuth(snap.val());
+        if (snap.val() === true) {
+          fire
+            .database()
+            .ref('MasterNodes/' + user.uid)
+            .on('value', snapshot => {
+              let list = [];
+              snapshot.forEach(mn => {
+                list.push(mn.val());
+              });
+
+              user.MasterNodes = list;
+
+              this.props.setCurrentUser(user);
+            });
+        }
       });
   }
 
@@ -163,6 +179,11 @@ class UserTwoFactor extends Component {
             text: `Two Factor Authentication Enabled`,
             icon: 'success'
           });
+
+          fire
+            .database()
+            .ref('2FA/' + user.uid)
+            .set(true);
         }
       })
       .catch(err => {
@@ -184,6 +205,7 @@ class UserTwoFactor extends Component {
 
     if (user.phoneNumber == null) {
       this.addPhone();
+      return;
     }
 
     fire
@@ -212,6 +234,7 @@ class UserTwoFactor extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
+    console.log(isoArray);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -235,13 +258,12 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                    <span className="status-disable">
-                      Disabled
+                  <span className="status-disable">
+                    Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                    </span>
-                  )}
+                  </span>
+                )}
               </span>
-
             </div>
             {app.currentUser ? (
               app.currentUser.phoneNumber == null || this.state.editNumber ? (
@@ -282,32 +304,26 @@ class UserTwoFactor extends Component {
                       />
                     </FormItem>
                   </Form>
-                  <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
                   <Grid className="form-grid-btn">
                     {app.currentUser ? (
                       app.currentUser.phoneNumber !== null ? (
-                        <Button
-                          onClick={this.removePhone}
-                          htmlType="submit"
-                          variant="raised"
-                        >{'Delete Phone'}</Button>
+                        <Button onClick={this.removePhone} htmlType="submit" variant="raised">
+                          {'Delete Phone'}
+                        </Button>
                       ) : null
                     ) : null}
-                    <Button
-                      onClick={this.addPhone}
-                      htmlType="submit"
-                      variant="raised"
-                    >
+                    <Button onClick={this.addPhone} htmlType="submit" variant="raised">
                       {'Add & Enable'}
                     </Button>
                   </Grid>
                 </Grid>
               ) : (
-                  <div>
-                    <button onClick={this.editPhone}>Edit</button>
-                  </div>
-                )
+                <div>
+                  <button onClick={this.editPhone}>Edit</button>
+                </div>
+              )
             ) : null}
+            <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
 
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
@@ -320,15 +336,15 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                  <Button
-                    raised
-                    color="primary"
-                    className="twoFactor-button"
-                    onClick={this.enableAuth}
-                  >
-                    Enable 2F Auth
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.enableAuth}
+                >
+                  Enable 2F Auth
                 </Button>
-                )}
+              )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}

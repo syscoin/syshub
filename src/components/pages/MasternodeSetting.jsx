@@ -10,7 +10,6 @@ import { masterNodeStyle } from './styles';
 // import components
 import { MasternodeList, MasternodeAdd } from '../functionals';
 import { fire } from '../../API/firebase';
-const cryptr = new Cryptr('myTotalySecretKey');
 
 class MasterNode extends Component {
   constructor(props) {
@@ -48,6 +47,7 @@ class MasterNode extends Component {
       alert('Must be logged in to add a Master Node');
       return;
     }
+    const cryptr = new Cryptr(user.uid);
 
     masternode.key = this.state.nodes.length + 1;
     masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
@@ -90,6 +90,8 @@ class MasterNode extends Component {
       alert('Must be logged in to edit a Master Node');
       return;
     }
+
+    const cryptr = new Cryptr(user.uid);
 
     node.mnPrivateKey = cryptr.encrypt(node.mnPrivateKey);
     node.vin = cryptr.encrypt(node.vin);

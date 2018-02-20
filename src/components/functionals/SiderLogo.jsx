@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
+import actions from '../../redux/actions';
+import { connect } from 'react-redux';
 
 //Import Styles
 import { siderLogoStyle } from './styles';
@@ -12,11 +14,9 @@ class SiderLogo extends Component {
     return (
       <div className={classes.root}>
         <div>
-          <img
-            alt="a"
-            src={require('../../assets/img/png_menu_logo.png')}
-            width="100%"
-          />
+          <a onClick={() => this.props.setPage('home')}>
+            <img alt="a" src={require('../../assets/img/png_menu_logo.png')} width="100%" />
+          </a>
         </div>
         {/* <div className="txtArea">
           <Typography variant="body1" gutterBottom align='right'>
@@ -31,4 +31,14 @@ class SiderLogo extends Component {
   }
 }
 
-export default injectSheet(siderLogoStyle)(SiderLogo);
+const stateToProps = state => {
+  return {};
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    setPage: page => dispatch(actions.setPage(page))
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(injectSheet(siderLogoStyle)(SiderLogo));

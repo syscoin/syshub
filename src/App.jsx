@@ -86,8 +86,11 @@ class App extends Component {
         <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>{this.state.timer}</h1>
+          {/* <h1 style={{ color: 'white', zIndex: '10000', bottom: '200px' }}>{this.state.timer}</h1> */}
         </Platform>
+        {/* <Platform rules={{ DeviceType: 'tablet' }}>
+          <DesktopLayout />
+        </Platform> */}
         <Platform rules={{ DeviceType: 'mobile' }}>
           <MobileLayout />
         </Platform>
