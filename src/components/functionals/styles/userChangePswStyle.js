@@ -16,7 +16,7 @@ export default {
     },
     '& .changePsw-heading': {
       marginLeft: '20px',
-      fontWeight: '100',
+      fontWeight: 'normal',
       fontSize: '21px',
       borderBottom: '0.1px solid ' + greyLight,
     },
@@ -27,7 +27,7 @@ export default {
         color: primaryLight,
         margin: '20px 40px',
         display: 'block',
-        fontWeight: 100,
+        fontWeight: 'normal',
       },
 
       '& .formGroup-div': {
@@ -44,7 +44,7 @@ export default {
             marginTop: '15px',
             color: primary,
             paddingRight: '10px',
-            fontWeight: 100,
+            fontWeight: 'normal',
           },
           '& .input-field': {
             color: primaryLight,

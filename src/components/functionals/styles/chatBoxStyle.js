@@ -98,7 +98,7 @@ export default {
           padding: 10,
           '& .chatBox-headerText': {
             fontSize: '22px !important',
-            fontWeight: 'lighter',
+            fontWeight: 'normal',
             marginRight: '0px !important',
             marginLeft: '0px !important',
           },

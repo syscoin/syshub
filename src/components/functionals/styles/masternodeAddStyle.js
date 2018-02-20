@@ -9,7 +9,7 @@ export default {
   root: {
     '& .add-title': {
       display: 'inline-block',
-      fontWeight: 'lighter'
+      fontWeight: 'normal'
     },
     '& .heading': {
       borderBottom: '1px solid ' + greyLight
@@ -28,7 +28,7 @@ export default {
         color: primary,
         paddingLeft: '50px',
         textAlign: 'left',
-        fontWeight: 'lighter'
+        fontWeight: 'normal'
       },
       '& .input-field': {
         width: 'calc(45% - 80px)',

@@ -26,21 +26,21 @@ class WelcomeBox extends Component {
               </div>
             </GridListTile>
             <GridListTile cols={deviceType === 'mobile' ? 5 : 3} className="tile__wrapper">
-              <h1 className="heading">Advertisement Text here</h1>
+              <h1 className="heading">In Case You Missed It</h1>
               <Divider />
               <div className="addvertiseText">
                 <ul className="wellcomBoxTextList">
                   <li className="listItem">
-                    The proposal generator has been updated to support 12.2 proposal submissions.{' '}
+                    4 new proposals has been submitted.{' '}
                   </li>
                   <li className="listItem">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                    142 masternodes has been added.
                   </li>
                   <li className="listItem">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                    SBIN remain budget: 129217 SYS.
                   </li>
                   <li className="listItem">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                    1 new post by Blockchain Foundry. 
                   </li>
                 </ul>
               </div>

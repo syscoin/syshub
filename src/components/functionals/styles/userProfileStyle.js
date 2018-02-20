@@ -14,7 +14,7 @@ export default {
     },
     '& .profile-heading': {
       margin: '10px 20px 20px 20px',
-      fontWeight: 100,
+      fontWeight: 'normal',
       fontSize: '21px',
       borderBottom: '0.1px solid ' + greyLight
     },
@@ -33,7 +33,7 @@ export default {
         marginLeft: '38px',
         '& .link-color': {
           color: primary,
-          fontWeight: '100',
+          fontWeight: 'normal',
           cursor: 'pointer'
         }
       },
@@ -68,7 +68,7 @@ export default {
           display: 'inline-block',
           textAlign: 'left',
           fontSize: 15,
-          fontWeight: 100,
+          fontWeight: 'normal',
           color: primary
         },
         '& .input-field': {
