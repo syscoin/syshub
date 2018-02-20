@@ -65,6 +65,16 @@ class ProposalCard extends Component {
       });
     }
 
+    if (this.props.app.auth !== true) {
+      swal({
+        title: 'Oops...',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
+    }
+
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
@@ -141,6 +151,16 @@ class ProposalCard extends Component {
       });
     }
 
+    if (this.props.app.auth !== true) {
+      swal({
+        title: 'Oops...',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
+    }
+
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
@@ -198,6 +218,7 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
+
     const proposalTitle = proposal.DataString[0][1].title || proposal.DataString[0][1].name;
     let { days_remaining, month_remaining, payment_amount, payment_type } = this.state;
     //Platform style switcher
@@ -242,8 +263,8 @@ class ProposalCard extends Component {
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                  <span style={{ color: 'grey' }}>No title available for this proposal.</span>
-                )}
+                <span style={{ color: 'grey' }}>No title available for this proposal.</span>
+              )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
@@ -251,10 +272,10 @@ class ProposalCard extends Component {
               {days_remaining < 30 ? (
                 <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
               ) : (
-                  <span>{`(${month_remaining} Month${
-                    month_remaining > 1 ? 's' : ''
-                    } Remaining)`}</span>
-                )}
+                <span>{`(${month_remaining} Month${
+                  month_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
+              )}
             </div>
           </Grid>
 
@@ -326,6 +347,7 @@ class ProposalCard extends Component {
 const stateToProps = state => {
   return {
     user: state.app.currentUser,
+    app: state.app,
     millsMonth: state.proposals.millsMonth
   };
 };
