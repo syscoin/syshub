@@ -61,7 +61,7 @@ class Register extends Component {
   }
 
   onChange = e => {
-   
+
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,
@@ -261,7 +261,7 @@ class Register extends Component {
                     placeholder="Enter Username"
                     onChange={e => this.checkUsername(e)}
                   />
-                  )}
+                )}
 
                 {this.state.usernames ? (
                   <span className="validation-message">
@@ -302,7 +302,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="Enter email"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Password */}
@@ -350,7 +350,7 @@ class Register extends Component {
                       }}
                     />
                   </div>
-                  )}
+                )}
                 {/* <span className="validation-message">
                   <img alt="a" src={checkIcon} />
                   Password Strength
@@ -384,7 +384,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="**************"
                   />
-                  )}
+                )}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -394,7 +394,8 @@ class Register extends Component {
                 </span>
                 <div className="recaptcha">
                   <Recaptcha
-                    style={{ marginLeft: '10px', width: '20px' }}
+                    size='normal'
+                    // style={{ marginLeft: '10px', width: '20px' }}
                     id="captcha"
                     sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"

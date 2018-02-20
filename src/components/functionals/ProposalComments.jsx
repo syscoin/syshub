@@ -11,7 +11,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
 import CommentForm from './commentForm';
 import Typography from 'material-ui/Typography';
-
+import { Modal } from 'antd';
 // import firebase
 import { comments, commentReplies } from '../../API/firebase';
 
@@ -46,6 +46,7 @@ class ProposalComments extends Component {
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
+    this.loginInfo = this.loginInfo.bind(this);
   }
 
 
@@ -170,6 +171,15 @@ class ProposalComments extends Component {
     })
   }
 
+  loginInfo() {
+    Modal.error({
+      title: 'Please Login first to add Comment',
+      onOk() { },
+      zIndex: 99999,
+      className:proposalCommentsStyle.loginModal
+    });
+  }
+
 
   addComment() {
     if (this.state.userComment && this.props.user) {
@@ -195,7 +205,9 @@ class ProposalComments extends Component {
         userComment: ''
       })
     }
-
+    else {
+      this.loginInfo();
+    }
   }
 
   voteForComment(action, commentID) {
