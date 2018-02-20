@@ -25,13 +25,13 @@ class ProposalCard extends Component {
   };
 
   componentWillMount() {
-    const { start_epoch, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
-    const millsMonth = this.props.millsMonth;
+    const { nPayment, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
+    //const millsMonth = this.props.millsMonth;
     const today = new Date();
-
-    const startDate = new Date(start_epoch * 1000);
+    //alert(nPayment);
+    //const startDate = new Date(first_epoch * 1000);
     const endDate = new Date(end_epoch * 1000);
-    const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    //const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
     if (endDate > today) {
       const timeDiff = endDate.getTime() - today.getTime();
       const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
@@ -63,6 +63,16 @@ class ProposalCard extends Component {
         text: 'Must be logged in to vote!',
         icon: 'error'
       });
+    }
+
+    if (this.props.app.auth !== true) {
+      swal({
+        title: 'Oops...',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
     }
 
     if (!user.MasterNodes) {
@@ -141,6 +151,16 @@ class ProposalCard extends Component {
       });
     }
 
+    if (this.props.app.auth !== true) {
+      swal({
+        title: 'Oops...',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
+    }
+
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
@@ -198,6 +218,7 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
+
     const proposalTitle = proposal.DataString[0][1].title || proposal.DataString[0][1].name;
     let { days_remaining, month_remaining, payment_amount, payment_type } = this.state;
     //Platform style switcher
@@ -326,6 +347,7 @@ class ProposalCard extends Component {
 const stateToProps = state => {
   return {
     user: state.app.currentUser,
+    app: state.app,
     millsMonth: state.proposals.millsMonth
   };
 };

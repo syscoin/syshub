@@ -10,6 +10,7 @@ export default {
 
   // Sys Stats states
   SYS_STATS_GET: 'SYS_STATS_GET',
+  SYS_STATS_FIRST: 'SYS_STATS_FIRST',
 
   //SYS Proposals
   SYS_PROPOSALS_GET: 'SYS_PROPOSALS_GET',

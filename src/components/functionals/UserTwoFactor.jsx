@@ -62,6 +62,21 @@ class UserTwoFactor extends Component {
       .ref('2FA/' + user.uid)
       .on('value', snap => {
         this.props.setAuth(snap.val());
+        if (snap.val() === true) {
+          fire
+            .database()
+            .ref('MasterNodes/' + user.uid)
+            .on('value', snapshot => {
+              let list = [];
+              snapshot.forEach(mn => {
+                list.push(mn.val());
+              });
+
+              user.MasterNodes = list;
+
+              this.props.setCurrentUser(user);
+            });
+        }
       });
   }
 
@@ -164,6 +179,11 @@ class UserTwoFactor extends Component {
             text: `Two Factor Authentication Enabled`,
             icon: 'success'
           });
+
+          fire
+            .database()
+            .ref('2FA/' + user.uid)
+            .set(true);
         }
       })
       .catch(err => {
@@ -185,6 +205,7 @@ class UserTwoFactor extends Component {
 
     if (user.phoneNumber == null) {
       this.addPhone();
+      return;
     }
 
     fire

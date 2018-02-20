@@ -11,17 +11,16 @@ import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, sysStatsValue } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = `${(1000 / this.props.sysStatsValue.exchange_rates.btc_usd).toFixed(
-      5
-    )} BTC/1000 USD`;
-    const masternodes = `${this.props.sysStatsValue.general.registered_masternodes_verified} / ${
-      this.props.sysStatsValue.general.registered_masternodes
-    }`;
-    const totUsers = this.props.sysStatsValue.general.all_user;
+    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
+    ).toFixed(5)} BTC/SYS` : '';
+    const masternodes = sysStatsValue ? `${
+      this.props.sysStatsValue.general.registered_masternodes_verified
+      } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';
+    const totUsers = sysStatsValue ? this.props.sysStatsValue.general.all_user : '';
     //console.clear();
     return (
       <Grid container className={style}>

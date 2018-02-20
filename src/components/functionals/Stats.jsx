@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Equalizer } from 'material-ui-icons';
-import injectSheet from 'react-jss';
 
 import GridList from 'material-ui/GridList';
 import Card, {
   CardHeader,
   CardContent,
+
 } from 'material-ui/Card';
+import { withStyles } from 'material-ui';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
@@ -17,41 +18,47 @@ import { statsStyle } from './styles';
 class Stats extends Component {
   getValue(field) {
     const value = {
-      changeRate: (1000 / this.props.value.exchange_rates.btc_usd).toFixed(5),
+      changeRate: this.props.value ? ((this.props.value.exchange_rates.btc_dash).toFixed(5)) : 0,
 
-      masternodes: `${
+      masternodes: this.props.value ? (`${
         this.props.value.general.registered_masternodes_verified
-        } / ${this.props.value.general.registered_masternodes}`,
-      totUsers: this.props.value.general.all_user,
+        } / ${this.props.value.general.registered_masternodes}`) : '0/0',
+      totUsers: this.props.value ? (this.props.value.general.all_user) : 0,
     }[field];
     return value;
   }
 
   percentages(field) {
-    const changeRateNew = parseFloat(this.props.value.exchange_rates.btc_usd);
-    const changeRateOld = parseFloat(
-      this.props.valueOld.exchange_rates.btc_usd
-    );
+    if (this.props.value || false) {
+      const changeRateNew = parseFloat(this.props.value.exchange_rates.btc_usd);
+      const changeRateOld = parseFloat(
+        this.props.valueOld.exchange_rates.btc_usd
+      );
 
-    const masternodeNew =
-      parseFloat(this.props.value.general.registered_masternodes_verified) /
-      parseFloat(this.props.value.general.registered_masternodes);
-    const masternodeOld =
-      parseFloat(this.props.valueOld.general.registered_masternodes_verified) /
-      parseFloat(this.props.valueOld.general.registered_masternodes);
-    const usersNew = parseFloat(this.props.value.general.all_user);
-    const usersOld = parseFloat(this.props.valueOld.general.all_user);
+      const masternodeNew =
+        parseFloat(this.props.value.general.registered_masternodes_verified) /
+        parseFloat(this.props.value.general.registered_masternodes);
+      const masternodeOld =
+        parseFloat(this.props.valueOld.general.registered_masternodes_verified) /
+        parseFloat(this.props.valueOld.general.registered_masternodes);
+      const usersNew = parseFloat(this.props.value.general.all_user);
+      const usersOld = parseFloat(this.props.valueOld.general.all_user);
 
-    const value = {
-      changeRate: (changeRateNew - changeRateOld) / changeRateOld * 100,
-      masternodes: (masternodeNew - masternodeOld) / masternodeOld * 100,
-      totUsers: (usersNew - usersOld) / usersOld * 100,
-    }[field];
+      const value = {
+        changeRate: (changeRateNew - changeRateOld) / changeRateOld * 100,
+        masternodes: (masternodeNew - masternodeOld) / masternodeOld * 100,
+        totUsers: (usersNew - usersOld) / usersOld * 100,
+      }[field];
 
-    let arrow = value > 0 ? 'png_button_up.png' : 'png_button_down.png';
-    arrow = value === 0 ? 'png_button_updown.png' : arrow;
-
+      let arrow = value > 0 ? 'png_button_up.png' : 'png_button_down.png';
+      arrow = value === 0 ? 'png_button_updown.png' : arrow;
+      return { arrow, value: Math.abs(value).toFixed(2) };
+    }
+    const value = { changeRate: 0, masternodes: 0, totUsers: 0, }[field];
+    let arrow = 'png_button_updown.png';
     return { arrow, value: Math.abs(value).toFixed(2) };
+
+
   }
   render() {
     const { classes, deviceType } = this.props;
@@ -68,7 +75,7 @@ class Stats extends Component {
           <GridList cols={deviceType === 'mobile' ? 3 : 4} cellHeight={300} className="statsGridDiv">
             {this.props.sysStats.map((item, key) => {
               return (
-                <Card key={key} className="statsCard">
+                <Card key={key} className="statsCard" >
                   <CardHeader
                     className="statsCardHeader"
                     title={
@@ -79,20 +86,12 @@ class Stats extends Component {
                       />
                     }
                   />
-                  <CardContent style={{ position: 'relative' }}>
+                  <CardContent height={'50%'} style={{ position: 'relative', }}>
                     <div className={'statsTextHeading'}>
                       <h1> {this.getValue(item.key)} </h1>
                     </div>
                     <div className="statsText">{item.text}</div>
-                    <div className="statsPercentage">
-                      <img
-                        alt="a"
-                        src={require('./../../assets/img/' +
-                          this.percentages(item.key).arrow)}
-                        height="20"
-                      />
-                      {`${this.percentages(item.key).value}%`}
-                    </div>
+
                   </CardContent>
                 </Card>
               );
@@ -121,5 +120,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  injectSheet(statsStyle)(Stats)
+  withStyles(statsStyle)(Stats)
 );
