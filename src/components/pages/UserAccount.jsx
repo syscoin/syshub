@@ -6,11 +6,7 @@ import { withStyles } from 'material-ui';
 import swal from 'sweetalert';
 
 import actions from '../../redux/actions';
-import {
-  doUpdateProfile,
-  doUpdatePassword,
-  doDeleteAccount
-} from '../../API/firebase';
+import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../API/firebase';
 import { userAccountStyle } from './styles';
 
 import UserProfile from '../functionals/UserProfile';
@@ -28,18 +24,19 @@ class UserAccount extends Component {
   }
 
   updateProfile(user) {
-    doUpdateProfile(user, (err, data) => {
-      if (!err) {
+    doUpdateProfile(user)
+      .then(data => {
         swal({
           title: 'Success',
-          text: 'Account Updated',
+          text: 'Account updated.',
           icon: 'success'
         });
+
         this.props.setCurrentUser(data);
-      } else {
+      })
+      .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      }
-    });
+      });
   }
 
   updatePassword(user) {
@@ -65,19 +62,13 @@ class UserAccount extends Component {
       <div className={style}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
-          <UserProfile
-            deviceType={this.props.deviceType}
-            onUpdateProfile={this.updateProfile}
-          />
+          <UserProfile deviceType={this.props.deviceType} onUpdateProfile={this.updateProfile} />
           <UserChangePsw
             deviceType={this.props.deviceType}
             onUpdatePassword={this.updatePassword}
           />
           <UserTwoFactor deviceType={this.props.deviceType} />
-          <UserDelete
-            deviceType={this.props.deviceType}
-            onDeleteProfile={this.deleteProfile}
-          />
+          <UserDelete deviceType={this.props.deviceType} onDeleteProfile={this.deleteProfile} />
         </Paper>
       </div>
     );
