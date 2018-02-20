@@ -275,8 +275,10 @@ class Login extends Component {
                 <Button type="submit" color="primary">
                   Login
                 </Button>
-
+                <br/>
                 <a onClick={this.passwordRecovery}>Forget Your Password?</a>
+                <br/>
+                Don’t have an account?  <a style={{fontSize: '120%', color:"#1991CC"}}>Sign Up</a>
               </FormGroup>
             </Grid>
           </form>

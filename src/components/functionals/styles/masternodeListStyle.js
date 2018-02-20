@@ -10,7 +10,7 @@ export default {
     marginTop: 30,
     '& .list-title': {
       display: 'inline-block',
-      fontWeight: 'lighter',
+      fontWeight: 'normal',
       color: greyDark
     },
     '& .heading': {
@@ -21,7 +21,7 @@ export default {
         '&>tr': {
           '&>th': {
             background: white,
-            fontWeight: 'lighter'
+            fontWeight: 'normal'
           }
         }
       },
@@ -66,7 +66,7 @@ export default {
           fontSize: '15px',
           color: primary,
           textAlign: 'left',
-          fontWeight: 'lighter',
+          fontWeight: 'normal',
           marginTop: 15
         },
         '& .input-field': {

@@ -11,7 +11,7 @@ class AppFooter extends Component {
   render() {
     return (
       <div style={appFooterStyle.footer}>
-        <Footer style={appFooterStyle.wraper}>{`SysHub @ 2018`}</Footer>
+        <Footer style={appFooterStyle.wraper}>{`SysHub © 2018 Blockchain Foundry Inc.`}</Footer>
       </div>
     );
   }
