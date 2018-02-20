@@ -24,8 +24,6 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
 
-
-
 class NewProposal extends Component {
   constructor(props) {
     super(props);
@@ -84,7 +82,7 @@ class NewProposal extends Component {
     const { firstPaymentDate, millsMonth } = this.props.proposal;
     const today = new Date().getTime();
     const monthGap = Math.ceil((today - firstPaymentDate) / millsMonth);
-    const firstOption = firstPaymentDate + (monthGap * millsMonth);
+    const firstOption = firstPaymentDate + monthGap * millsMonth;
     let paymentDateOptions = [];
     for (let i = 0; i < maxDateOptions; i++) {
       let mills = firstOption + i * millsMonth;
@@ -102,6 +100,9 @@ class NewProposal extends Component {
 
     proposalRef.once('value').then(snapshot => {
       const userProp = snapshot.val();
+      if (!userProp) {
+        return;
+      }
       const descriptionID = userProp.descriptionID;
       const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
@@ -111,7 +112,7 @@ class NewProposal extends Component {
         if (userProp) {
           if (userProp.hash) {
             proposalRef.remove();
-            return
+            return;
           }
 
           this.setState({
@@ -135,7 +136,8 @@ class NewProposal extends Component {
                 });
                 console.log('ACZ: newproposal state ', this.state);
 
-                let userProposal = { //there are another def in line 339 both have to be in sync
+                let userProposal = {
+                  //there are another def in line 339 both have to be in sync
                   type: 1,
                   name: userProp.name,
                   title: userProp.title,
@@ -150,7 +152,6 @@ class NewProposal extends Component {
                   payment_amount: userProp.payment_amount,
                   url: userProp.url
                 };
-
 
                 if (userProp.prepareReceipt) {
                   userProposal.prepareReceipt = userProp.prepareReceipt;
@@ -185,8 +186,7 @@ class NewProposal extends Component {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
             });
         }
-      })
-
+      });
     });
   }
 
@@ -208,7 +208,7 @@ class NewProposal extends Component {
   //payment quantity
   paymentQuantity(value) {
     const millsMonth = this.props.proposal.millsMonth;
-    const proposalEndEpoch = this.state.proposalStartEpoch + (millsMonth / 1000 * (value - 1));
+    const proposalEndEpoch = this.state.proposalStartEpoch + millsMonth / 1000 * (value - 1);
     this.setState({
       proposalEndEpoch,
       totalAmount: this.state.amount * value,
@@ -267,19 +267,17 @@ class NewProposal extends Component {
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     proposalRef.once('value').then(snapshot => {
-
       const descriptionID = snapshot.val().descriptionID;
       const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
       if (this.state.hValue) {
-
         let updateProposalDetail = { ...this.state.proposalDetail };
         let updatedUserProposal = { ...this.state.userProposal };
 
         updateProposalDetail.hash = this.state.hValue;
         updatedUserProposal.hash = this.state.hValue;
 
-        descriptionRef.set(updateProposalDetail)
+        descriptionRef.set(updateProposalDetail);
         proposalRef.set(updatedUserProposal);
 
         this.setState({
@@ -298,7 +296,7 @@ class NewProposal extends Component {
           icon: 'error'
         });
       }
-    })
+    });
   }
 
   handleOk(e) {
@@ -342,7 +340,7 @@ class NewProposal extends Component {
       paymentQuantity,
       amount,
       proposal__detail,
-      proposallink,
+      proposallink
     } = this.state;
 
     const descriptionID = Date.now().toString(36);
@@ -472,7 +470,10 @@ class NewProposal extends Component {
 
   //proposal title function
   proposalTitle(e) {
-    const proposalName = e.target.value.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
+    const proposalName = e.target.value
+      .trim()
+      .toLowerCase()
+      .replace(/[^A-Za-z0-9]/g, '');
     this.setState({
       proposalName,
       proposalTitle: e.target.value,
@@ -531,7 +532,8 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 10}>
               {/* proposal title input field */}
               <Form>
-                <FormItem className="form-item"
+                <FormItem
+                  className="form-item"
                   validateStatus={this.state.proposalTitle.length <= 40 ? '' : 'error'}
                 >
                   <Input
@@ -555,8 +557,8 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                  }`}
-                onChange={() => { }}
+                }`}
+                onChange={() => {}}
               />
             </Col>
           </Row>
@@ -600,19 +602,19 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col
-                      span={deviceType === 'mobile' ? 24 : 22}
-                      offset={deviceType === 'mobile' ? 0 : 1}
-                    >
-                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div className="proposalContent-div" id="preview-html-container" />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div className="proposalContent-div" id="preview-html-container" />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
         );
@@ -622,11 +624,15 @@ class NewProposal extends Component {
             <Row className="paymentDetail-row">
               <Col span={deviceType === 'mobile' ? 10 : 9}>
                 <label className="label">Date</label>
-                <Select placeholder="Select a Date" style={{ width: 120 }} onChange={(value) => this.onDateChange(value)}>
-                  {this.state.paymentDateOptions.map(item => <Option value={item.mills / 1000}>{item.ymd}</Option>)}
-
+                <Select
+                  placeholder="Select a Date"
+                  style={{ width: 120 }}
+                  onChange={value => this.onDateChange(value)}
+                >
+                  {this.state.paymentDateOptions.map(item => (
+                    <Option value={item.mills / 1000}>{item.ymd}</Option>
+                  ))}
                 </Select>
-
               </Col>
               <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
                 <label># of Payments</label>
@@ -658,17 +664,23 @@ class NewProposal extends Component {
                     min={0}
                     className="amount-input"
                     value={this.state.amount}
-                    onChange={this.getAmount} />
+                    onChange={this.getAmount}
+                  />
                   {` SYS`}
                 </Row>
                 <Row>
                   <p />
-                  <p><strong>Total amount:&nbsp;</strong>
-                    {`${this.state.totalAmount || this.state.amount} SYS ${this.state.proposalStartEpoch ?
-                      `with a final payment on ${this.yearDayMonth(this.state.proposalEndEpoch * 1000, 'usa')}` :
-                      ''}`
-                    }</p>
-
+                  <p>
+                    <strong>Total amount:&nbsp;</strong>
+                    {`${this.state.totalAmount || this.state.amount} SYS ${
+                      this.state.proposalStartEpoch
+                        ? `with a final payment on ${this.yearDayMonth(
+                            this.state.proposalEndEpoch * 1000,
+                            'usa'
+                          )}`
+                        : ''
+                    }`}
+                  </p>
                 </Row>
               </Col>
             </Row>
@@ -700,7 +712,12 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        if (this.state.proposalStartEpoch && this.state.paymentQuantity && this.state.address && this.state.amount) {
+        if (
+          this.state.proposalStartEpoch &&
+          this.state.paymentQuantity &&
+          this.state.address &&
+          this.state.amount
+        ) {
           return false;
         } else {
           return true;
@@ -731,24 +748,38 @@ class NewProposal extends Component {
         >
           <div>
             <TextArea rows={this.state.pCopied ? 4 : 5} readonly value={this.state.pValue} />
-            {this.state.pCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
+            {this.state.pCopied ? (
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+              </div>
+            ) : null}
             <div className="receipt-text">
               {this.state.pValue
                 ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
                 : 'No Prepare Receipt has been received.'}
-              <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-                <Button type="primary" disabled={this.state.sValue}>Copy</Button>
+              <CopyToClipboard
+                text={this.state.pValue}
+                onCopy={() => this.setState({ pCopied: true })}
+              >
+                <Button type="primary" disabled={this.state.sValue}>
+                  Copy
+                </Button>
               </CopyToClipboard>
             </div>
             <div className="id-input">
               <span> Input Payment Id Here: </span>
-              <Input value={this.state.payValue} disabled={this.state.sValue} onChange={this.onChange} name="payValue" />
+              <Input
+                value={this.state.payValue}
+                disabled={this.state.sValue}
+                onChange={this.onChange}
+                name="payValue"
+              />
               <br />
             </div>
             <div className="submit-btn">
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
                 Submit Payment Id
-          </Button>
+              </Button>
             </div>
             {/* {this.state.sValue ? (
             <div className="id-copied">
@@ -767,25 +798,39 @@ class NewProposal extends Component {
           <hr />
           <br />
           <TextArea rows={this.state.sCopied ? 4 : 5} readonly value={this.state.sValue} />
-          {this.state.sCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
+          {this.state.sCopied ? (
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+            </div>
+          ) : null}
           <div className="receipt-text">
             {this.state.sValue
               ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
               : 'No Prepare Receipt has been received.'}
-            <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
-              <Button type="primary" disabled={!this.state.sValue}>Copy</Button>
+            <CopyToClipboard
+              text={this.state.sValue}
+              onCopy={() => this.setState({ sCopied: true })}
+            >
+              <Button type="primary" disabled={!this.state.sValue}>
+                Copy
+              </Button>
             </CopyToClipboard>
           </div>
           <br />
           <div className="id-input">
             <span>Input Hash here: </span>
-            <Input value={this.state.hValue} disabled={!this.state.sValue} onChange={this.onChange} name="hValue" />
+            <Input
+              value={this.state.hValue}
+              disabled={!this.state.sValue}
+              onChange={this.onChange}
+              name="hValue"
+            />
             <br />
           </div>
           <div className="submit-btn">
             <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
               Submit Hash
-          </Button>
+            </Button>
           </div>
         </Modal>
         <div className={style}>
@@ -794,84 +839,84 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-                <Stepper activeStep={activeStep} orientation="vertical">
-                  {steps.map((label, index) => {
-                    return (
-                      <Step className="steper__container" key={label}>
-                        <StepLabel className="steper__label">
-                          <h2 className="step-label"> {label} </h2>
-                          {this.state.activeStep === 0 &&
-                            label === 'Proposal Title' &&
-                            deviceType !== 'mobile' ? (
-                              <h3 className="proposal-title">Proposal Description Url</h3>
-                            ) : null}
-                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                            this.state.showEditor ? (
-                              <Button
-                                className="preview-edit-button"
-                                onClick={this.previewHTML.bind(this)}
-                              >
-                                PREVIEW
-                          </Button>
-                            ) : (
-                                <Button
-                                  className="preview-edit-button"
-                                  onClick={() => {
-                                    this.setState({ showEditor: true });
-                                  }}
-                                >
-                                  EDITOR
-                          </Button>
-                              )
-                          ) : null}
-                        </StepLabel>
-                        <StepContent>
-                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
-                          <div className={classes.actionsContainer}>
-                            <div
-                              className={
-                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                              }
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((label, index) => {
+                  return (
+                    <Step className="steper__container" key={label}>
+                      <StepLabel className="steper__label">
+                        <h2 className="step-label"> {label} </h2>
+                        {this.state.activeStep === 0 &&
+                        label === 'Proposal Title' &&
+                        deviceType !== 'mobile' ? (
+                          <h3 className="proposal-title">Proposal Description Url</h3>
+                        ) : null}
+                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                          this.state.showEditor ? (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={this.previewHTML.bind(this)}
                             >
-                              {activeStep === 0 ? null : (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  onClick={this.handleBack}
-                                  className="button"
-                                >
-                                  Back
+                              PREVIEW
                             </Button>
-                              )}
-                              {activeStep === steps.length - 1 ? (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  className={classes.button}
-                                  onClick={this.createPropObj}
-                                  disabled={this.disabledNextBtn(index)}
-                                >
-                                  Confirm
+                          ) : (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={() => {
+                                this.setState({ showEditor: true });
+                              }}
+                            >
+                              EDITOR
                             </Button>
-                              ) : (
-                                  <Button
-                                    variant="raised"
-                                    type="primary"
-                                    onClick={this.handleNext}
-                                    className={classes.button}
-                                    disabled={this.disabledNextBtn(index)}
-                                  >
-                                    Next Step
-                            </Button>
-                                )}
-                            </div>
+                          )
+                        ) : null}
+                      </StepLabel>
+                      <StepContent>
+                        <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                        <div className={classes.actionsContainer}>
+                          <div
+                            className={
+                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                            }
+                          >
+                            {activeStep === 0 ? null : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleBack}
+                                className="button"
+                              >
+                                Back
+                              </Button>
+                            )}
+                            {activeStep === steps.length - 1 ? (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                className={classes.button}
+                                onClick={this.createPropObj}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Confirm
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleNext}
+                                className={classes.button}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Next Step
+                              </Button>
+                            )}
                           </div>
-                        </StepContent>
-                      </Step>
-                    );
-                  })}
-                </Stepper>
-              )}
+                        </div>
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            )}
           </Paper>
         </div>
       </div>
