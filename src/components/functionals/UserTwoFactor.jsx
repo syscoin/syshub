@@ -11,7 +11,7 @@ import { Form, Input, Button } from 'antd';
 import swal from 'sweetalert';
 
 // import components
-
+import { isoArray } from '../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 const PNF = PhoneNumberFormat;
@@ -213,6 +213,7 @@ class UserTwoFactor extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
+    console.log(isoArray);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
