@@ -120,7 +120,7 @@ class ProposalCard extends Component {
                     }
                     if (RegExp(/Error voting/).test(data)) {
                       throw new Error(
-                        'Invalid proposal hash. Please check: display_the_hash_that_caused_the_error'
+                        'Invalid proposal hash. Please check: ' + cryptr.decrypt(mnObj.mnPrivateKey)
                       );
                     }
                     return;
@@ -128,9 +128,7 @@ class ProposalCard extends Component {
 
                   if (RegExp(/\s-8\s/).test(data)) {
                     if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
-                      throw new Error(
-                        'Invalid vin. Please check: display_the_vin_that_caused_the_error'
-                      );
+                      throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(mnObj.vin));
                     }
                     return;
                   }
@@ -226,7 +224,7 @@ class ProposalCard extends Component {
                     }
                     if (RegExp(/Error voting/).test(data)) {
                       throw new Error(
-                        'Invalid proposal hash. Please check: display_the_hash_that_caused_the_error'
+                        'Invalid proposal hash. Please check: ' + cryptr.decrypt(mnObj.mnPrivateKey)
                       );
                     }
                     return;
@@ -234,9 +232,7 @@ class ProposalCard extends Component {
 
                   if (RegExp(/\s-8\s/).test(data)) {
                     if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
-                      throw new Error(
-                        'Invalid vin. Please check: display_the_vin_that_caused_the_error'
-                      );
+                      throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(mnObj.vin));
                     }
                     return;
                   }
