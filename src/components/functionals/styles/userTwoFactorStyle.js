@@ -69,21 +69,17 @@ export default {
           margin: '15px 0'
         }
       },
-      '& .form-group': {
-        flexDirection: 'row',
-        marginTop: '10px',
-        display: 'block',
-        '& .label': {
-          display: 'inline-block',
-          textAlign: 'right',
-          fontSize: '15px',
-          marginTop: '15px',
-          color: primary,
-          paddingRight: '10px',
-          '& .fromApp-span': {
-            display: 'block',
-            textAlign: 'center'
-          }
+      '& label': {
+        fontSize: '15px',
+        marginTop: '15px',
+        color: primary,
+        paddingRight: '0px',
+      },
+      '& .phoneWrapper': {
+        '& .form-group': {
+          flexDirection: 'row',
+          marginTop: '10px',
+          display: 'block',
         },
         '& .secret-Input-field': {
           color: primaryLight,

@@ -48,7 +48,7 @@ class UserTwoFactor extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
 
@@ -270,11 +270,11 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                  <span className="status-disable">
-                    Disabled
+                    <span className="status-disable">
+                      Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                  </span>
-                )}
+                    </span>
+                  )}
               </span>
             </div>
             {app.currentUser ? (
@@ -287,9 +287,8 @@ class UserTwoFactor extends Component {
                     className="phoneWrapper"
                   >
                     <FormItem className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Country & Phonenumber (include area code): `}
-                      </span>
+
+                      <label >{`Country & Phonenumber (include area code): `}</label>
                       <InputGroup compact>
                         <Select defaultValue="United States" onChange={this.handleIsoCode}>
                           {isoArray.map((item, i) => (
@@ -315,40 +314,40 @@ class UserTwoFactor extends Component {
                     {app.currentUser
                       ? app.currentUser.phoneNumber !== null
                         ? [
-                            <Button
-                              key={1}
-                              onClick={this.removePhone}
-                              htmlType="submit"
-                              variant="raised"
-                            >
-                              {'Delete Phone'}
-                            </Button>,
-                            <Button
-                              key={2}
-                              onClick={this.addPhone}
-                              htmlType="submit"
-                              variant="raised"
-                            >
-                              {'Edit Phone'}
-                            </Button>
-                          ]
+                          <Button
+                            key={1}
+                            onClick={this.removePhone}
+                            htmlType="submit"
+                            variant="raised"
+                          >
+                            {'Delete'}
+                          </Button>,
+                          <Button
+                            key={2}
+                            onClick={this.addPhone}
+                            htmlType="submit"
+                            variant="raised"
+                          >
+                            {'Update'}
+                          </Button>
+                        ]
                         : null
                       : null}
                   </Grid>
                 </Grid>
               ) : (
-                <div>
-                  <Button
-                    raised
-                    color="primary"
-                    className="twoFactor-button"
-                    onClick={this.editPhone}
-                    style={{ marginBottom: '15px' }}
-                  >
-                    Edit Phone
+                  <div>
+                    <Button
+                      raised
+                      color="primary"
+                      className="twoFactor-button"
+                      onClick={this.editPhone}
+                      style={{ marginBottom: '15px' }}
+                    >
+                      Edit Phone
                   </Button>
-                </div>
-              )
+                  </div>
+                )
             ) : null}
             <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
 
@@ -363,15 +362,15 @@ class UserTwoFactor extends Component {
                   Disable 2F Auth
                 </Button>
               ) : (
-                <Button
-                  raised
-                  color="primary"
-                  className="twoFactor-button"
-                  onClick={this.enableAuth}
-                >
-                  Enable 2F Auth
+                  <Button
+                    raised
+                    color="primary"
+                    className="twoFactor-button"
+                    onClick={this.enableAuth}
+                  >
+                    Enable 2F Auth
                 </Button>
-              )}
+                )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}
