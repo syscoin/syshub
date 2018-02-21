@@ -24,17 +24,17 @@ class DesktopLayout extends Component {
           <Layout>
             <AppHeader />
             <div style={desktopLayoutStyle.wraper}>
-              <Col xl={6}>
+              <Col xl={5}>
                 <AppLSider />
               </Col>
 
               {/* <Col style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}> */}
-              <Col xl={17} style={desktopLayoutStyle.appContent}>
+              <Col xl={this.props.app.showChat?13:18} style={desktopLayoutStyle.appContent}>
                 <AppContent />
               </Col>
 
               {this.props.app.showChat && (
-                <Col xl={6} style={desktopLayoutStyle.rightSlider}>
+                <Col style={desktopLayoutStyle.rightSlider}>
                   <AppRSider />
                 </Col>
               )}

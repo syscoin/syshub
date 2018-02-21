@@ -20,7 +20,8 @@ export default {
     marginTop: 20
   },
   rightSlider: {
-    position: 'fixed',
-    right: 0
+    right: 0,
+    width: '22%',
+    marginLeft: 20
   }
 };

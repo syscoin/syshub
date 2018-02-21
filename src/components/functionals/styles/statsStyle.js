@@ -25,7 +25,7 @@ export default {
       margin: '20px',
       textAlign: 'center',
       borderRadius: '10px',
-      height: '230px !important'
+      height: '255px !important'
 
     },
     '& .statsCardHeader': {
