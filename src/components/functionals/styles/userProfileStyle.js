@@ -118,6 +118,8 @@ export default {
     '& .profile-image-grid': {
       paddingTop: 10,
       paddingBottom: 30,
+      marginLeft: 0,
+      maxWidth: '100%',
       textAlign: 'center',
       '& .upload-image-container': {
         width: '100%',

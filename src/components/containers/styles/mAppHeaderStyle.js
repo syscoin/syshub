@@ -8,7 +8,7 @@ const white = palette.white;
 export default {
   mRoot: {
     height: 130,
-    width: '100vw',
+    width: '100vw', 
     '& .app-bar': {
       boxShadow: 'none'
     },
@@ -65,7 +65,7 @@ export default {
         padding: 0,
         position: 'absolute',
         right: 10,
-        top: 45,
+        top: 25,
         '& .text': {
           color: white
         }
@@ -84,6 +84,10 @@ export default {
         display: 'block',
         marginTop: 0,
         textAlign: 'right',
+        position: 'absolute',
+        top: -35,
+        width: 150,
+        left: -18,
         '& .TxtRegular': {
           color: white,
           padding: '0',

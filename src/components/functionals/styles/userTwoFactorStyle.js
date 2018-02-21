@@ -227,7 +227,11 @@ export default {
         margin: '15px 0px 20px 10px'
       },
       '& .reCapthaWraper': {
-        margin: '15px 30px'
+        margin: 0,
+        textAlign: 'center',
+        '& div':{
+          display: 'inline-block'
+        }
       }
     },
     '& .form__container': {
