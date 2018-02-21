@@ -75,11 +75,10 @@ class ProposalCard extends Component {
       return;
     }
 
-    if (!user.MasterNodes) {
+    if (!user.MasterNodes || user.MasterNodes.length === 0) {
       swal({
         title: 'Oops...',
-        text:
-          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
+        text: 'You need to add a MasterNode to your account.',
         icon: 'error'
       });
       return;

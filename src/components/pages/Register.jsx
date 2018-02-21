@@ -179,11 +179,6 @@ class Register extends Component {
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
           this.props.setPage('home');
-          swal({
-            title: 'Success',
-            text: `Account ${currentUser.email} created`,
-            icon: 'success'
-          });
         }
         this.props.setPage('home');
       })

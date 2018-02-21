@@ -26,7 +26,7 @@ class UserTwoFactor extends Component {
 
     this.state = {
       phoneNumber: null,
-      isoCode: null,
+      isoCode: 'US',
       editNumber: false
     };
 
@@ -70,6 +70,9 @@ class UserTwoFactor extends Component {
             .database()
             .ref('MasterNodes/' + user.uid)
             .on('value', snapshot => {
+              if (snapshot.val() === null) {
+                return;
+              }
               let list = [];
               snapshot.forEach(mn => {
                 list.push(mn.val());
@@ -174,7 +177,7 @@ class UserTwoFactor extends Component {
       return;
     }
 
-    this.setState({ isoCode: '', phoneNumber: '' });
+    this.setState({ isoCode: 'US', phoneNumber: '' });
 
     const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
 
@@ -186,7 +189,7 @@ class UserTwoFactor extends Component {
         if (success) {
           swal({
             title: 'Sucess',
-            text: `Two Factor Authentication Enabled`,
+            text: `New Phone Number added & Two Factor Authentication Enabled`,
             icon: 'success'
           });
 
@@ -288,7 +291,7 @@ class UserTwoFactor extends Component {
                         {`Country & Phonenumber (include area code): `}
                       </span>
                       <InputGroup compact>
-                        <Select defaultValue="Choose your country" onChange={this.handleIsoCode}>
+                        <Select defaultValue="United States" onChange={this.handleIsoCode}>
                           {isoArray.map((item, i) => (
                             <Option value={item.code} key={i}>
                               {item.name}
@@ -309,21 +312,41 @@ class UserTwoFactor extends Component {
                     </FormItem>
                   </Form>
                   <Grid className="form-grid-btn">
-                    {app.currentUser ? (
-                      app.currentUser.phoneNumber !== null ? (
-                        <Button onClick={this.removePhone} htmlType="submit" variant="raised">
-                          {'Delete Phone'}
-                        </Button>
-                      ) : null
-                    ) : null}
-                    <Button onClick={this.addPhone} htmlType="submit" variant="raised">
-                      {'Add & Enable'}
-                    </Button>
+                    {app.currentUser
+                      ? app.currentUser.phoneNumber !== null
+                        ? [
+                            <Button
+                              key={1}
+                              onClick={this.removePhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Delete Phone'}
+                            </Button>,
+                            <Button
+                              key={2}
+                              onClick={this.addPhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Edit Phone'}
+                            </Button>
+                          ]
+                        : null
+                      : null}
                   </Grid>
                 </Grid>
               ) : (
                 <div>
-                  <button onClick={this.editPhone}>Edit</button>
+                  <Button
+                    raised
+                    color="primary"
+                    className="twoFactor-button"
+                    onClick={this.editPhone}
+                    style={{ marginBottom: '15px' }}
+                  >
+                    Edit Phone
+                  </Button>
                 </div>
               )
             ) : null}
