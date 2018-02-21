@@ -71,6 +71,8 @@ export default {
         textAlign: 'center',
         display: 'inherit',
         marginTop: 30,
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>button': {
           backgroundColor: primary,
           margin: '0 10px 10px 10px',

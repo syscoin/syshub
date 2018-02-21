@@ -93,11 +93,14 @@ export default {
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid',
-        marginRight:88
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
       },
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
           marginRight:40,

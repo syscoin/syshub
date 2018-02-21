@@ -28,8 +28,7 @@ class DesktopLayout extends Component {
                 <AppLSider />
               </Col>
 
-              {/* <Col style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}> */}
-              <Col xl={this.props.app.showChat?13:18} style={desktopLayoutStyle.appContent}>
+              <Col style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
                 <AppContent />
               </Col>
 
