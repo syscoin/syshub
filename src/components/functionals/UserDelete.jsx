@@ -17,15 +17,10 @@ class UserDelete extends Component {
           <Grid item md={12} xs={12}>
             <h1 className="userDelete-heading">Delete Account</h1>
             <p className="UserDelete-text">
-              YOUR ACCOUNT WILL BE DELETED COMPLETELY.
+              YOUR ACCOUNT INFORMATION WILL BE DELETED.
             </p>
             <p className="UserDelete-text">
-              Your username will become available for registration and all your
-              information will be remove from our database.
-            </p>
-            <p className="UserDelete-text"> THIS ACCTION CANNOT BE UNDONE</p>
-            <p className="UserDelete-text">
-              Kindly Send us feedback if you are unsatisfied
+              THIS ACTION CANNOT BE UNDONE.
             </p>
           </Grid>
           <Grid className="delete-button-grid">

@@ -571,7 +571,7 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 20}>
               {this.state.showEditor ? (
                 <div>
-                  <h2 className="editor-title">Write proposal details</h2>
+                  <h2 className="editor-title">Proposal Details</h2>
                   {/* proposal detail editor */}
                   <Editor
                     editorState={this.state.editorState}
@@ -623,7 +623,7 @@ class NewProposal extends Component {
           <Row>
             <Row className="paymentDetail-row">
               <Col span={deviceType === 'mobile' ? 10 : 9}>
-                <label className="label">Date</label>
+                <label className="label">Payment Date</label>
                 <Select
                   placeholder="Select a Date"
                   style={{ width: 120 }}
@@ -647,10 +647,10 @@ class NewProposal extends Component {
                 />
               </Col>
               <Col span={deviceType === 'mobile' ? 24 : 8}>
-                <label>Address</label>
+                <label>Payment Address</label>
                 <Input
                   type="text"
-                  placeholder="input addresss"
+                  placeholder="TAhk13PnY9f6Kw3K8f797G8rD4QBtb5f1B"
                   value={this.state.address}
                   onChange={this.getAddress}
                 />
@@ -755,8 +755,8 @@ class NewProposal extends Component {
             ) : null}
             <div className="receipt-text">
               {this.state.pValue
-                ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
-                : 'No Prepare Receipt has been received.'}
+                ? 'Prepare command is ready to be copied. Please copy and paste it into Syscoin Q.T console for payment txid.'
+                : 'No Prepare command has been generated.'}
               <CopyToClipboard
                 text={this.state.pValue}
                 onCopy={() => this.setState({ pCopied: true })}
@@ -767,7 +767,7 @@ class NewProposal extends Component {
               </CopyToClipboard>
             </div>
             <div className="id-input">
-              <span> Input Payment Id Here: </span>
+              <span> Enter Prepare TXID Here: </span>
               <Input
                 value={this.state.payValue}
                 disabled={this.state.sValue}
@@ -778,7 +778,7 @@ class NewProposal extends Component {
             </div>
             <div className="submit-btn">
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
-                Submit Payment Id
+                Submit TXID
               </Button>
             </div>
             {/* {this.state.sValue ? (
@@ -805,8 +805,8 @@ class NewProposal extends Component {
           ) : null}
           <div className="receipt-text">
             {this.state.sValue
-              ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
-              : 'No Prepare Receipt has been received.'}
+              ? 'Submit command is ready to be copied. Please copy and paste it into Syscoin Q.T console to submit your proposal. This could take a couple minutes, please be patient.'
+              : 'No Submit command has been generated.'}
             <CopyToClipboard
               text={this.state.sValue}
               onCopy={() => this.setState({ sCopied: true })}
@@ -818,7 +818,7 @@ class NewProposal extends Component {
           </div>
           <br />
           <div className="id-input">
-            <span>Input Hash here: </span>
+            <span>Enter Proposal Hash Here: </span>
             <Input
               value={this.state.hValue}
               disabled={!this.state.sValue}
@@ -829,7 +829,7 @@ class NewProposal extends Component {
           </div>
           <div className="submit-btn">
             <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
-              Submit Hash
+              Submit
             </Button>
           </div>
         </Modal>

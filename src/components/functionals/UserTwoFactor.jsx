@@ -282,7 +282,7 @@ class UserTwoFactor extends Component {
           {/* userTwofactor left grid */}
           <Grid item md={12} xs={12} className="userTwoFactor-left-grid">
             <span className="enable2FA-note">
-              Note: Enabling 2FA to secure your account is recommended
+              Note: Enabling 2FA is recommended.
             </span>
             <div className="div-margin">
               <span className="statusText-span">Status:</span>
@@ -308,10 +308,10 @@ class UserTwoFactor extends Component {
                   >
                     <FormItem className="form-group">
                       {app.currentUser.phoneNumber
-                        ? `Current Phone Number: ${app.currentUser.phoneNumber}`
+                        ? `Phone Number: ${app.currentUser.phoneNumber}`
                         : ''}
                       <br />
-                      <label>{`Country & Phonenumber (include area code): `}</label>
+                      <label>{`Phone number (with area code): `}</label>
                       <InputGroup compact>
                         <Select defaultValue="United States" onChange={this.handleIsoCode}>
                           {isoArray.map((item, i) => (
@@ -382,7 +382,7 @@ class UserTwoFactor extends Component {
                   className="twoFactor-button"
                   onClick={this.disableAuth}
                 >
-                  Disable 2F Auth
+                  Disable 2FA
                 </Button>
               ) : (
                 <Button
@@ -391,7 +391,7 @@ class UserTwoFactor extends Component {
                   className="twoFactor-button"
                   onClick={this.enableAuth}
                 >
-                  Enable 2F Auth
+                  Enable 2FA
                 </Button>
               )}
             </Grid>

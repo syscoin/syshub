@@ -39,7 +39,7 @@ class ProposalPayment extends Component {
       let timeDiff = endDate.getTime() - today.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
-      const payment_type = nPayment > 1 ? `${nPayment} totalling in ${payment_amount * nPayment} SYS` : 'one-time payment';
+      const payment_type = nPayment > 1 ? `${nPayment} Payments.  Total of ${payment_amount * nPayment} SYS` : 'One-time payment';
       this.setState({
         days_remaining,
         month_remaining,
@@ -92,7 +92,7 @@ class ProposalPayment extends Component {
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
-                Complete Payment
+                Payment
               </Typography>
             </div>
 

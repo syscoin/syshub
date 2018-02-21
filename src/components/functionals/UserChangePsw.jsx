@@ -93,8 +93,7 @@ class UserChangePassword extends Component {
           {/* profile credential grid */}
           <Grid item md={12} className="changePsw-credential-grid">
             <span className="changedPsw-note">
-              Note: You will be redirected to login on successfull completion of
-              password change
+              Note: You will be logged out on successful password change.
             </span>
             <div className="formGroup-div">
               <Form onSubmit={this.handleSubmit}>

@@ -206,7 +206,7 @@ class UserProfile extends Component {
                 className="input-field"
                 placeholder="Enter email"
               />
-              <span className="validation-message">*required for password change</span>
+              <span className="validation-message">*password required.</span>
             </FormGroup>
           </Grid>
           <Grid className="update-button-grid">
