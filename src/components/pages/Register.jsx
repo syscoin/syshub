@@ -220,8 +220,8 @@ class Register extends Component {
           >
             <Grid
               item
-              lg={8}
-              md={10}
+              lg={12}
+              md={12}
               xs={12}
               /* justify="center" */
             >

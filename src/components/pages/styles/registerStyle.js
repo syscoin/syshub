@@ -25,7 +25,7 @@ export default {
         flexDirection: 'row',
         marginTop: '10px',
         '& .ant-form-explain': {
-          marginLeft: 185,
+          marginLeft: 'calc(25% + 10px)',
           marginTop: 5
         }
       },

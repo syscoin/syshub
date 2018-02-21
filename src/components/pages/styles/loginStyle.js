@@ -15,9 +15,6 @@ export default {
       backgroundColor: white,
       padding: '20px',
       boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
-      '& .form__wrapper>div': {
-        maxWidth: 475
-      },
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px'
@@ -27,7 +24,7 @@ export default {
         color: primary
       },
       '& .label': {
-        width: '20%',
+        width: '25%',
         display: 'inline-block',
         textAlign: 'right',
         fontSize: '15px',
@@ -36,7 +33,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(100% - 175px)',
+        width: 300,
         margin: '0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,

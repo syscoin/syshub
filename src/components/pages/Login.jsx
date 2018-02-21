@@ -225,7 +225,7 @@ class Login extends Component {
             onSubmit={event => this.login(event)}
             ref={ form => { this.loginForm = form }}
             className="form__wrapper">
-            <Grid item lg={8} md={10} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
