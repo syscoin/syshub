@@ -11,7 +11,8 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
 import CommentForm from './commentForm';
 import Typography from 'material-ui/Typography';
-
+import swal from 'sweetalert';
+import actions from '../../redux/actions';
 // import firebase
 import { comments, commentReplies } from '../../API/firebase';
 
@@ -46,6 +47,7 @@ class ProposalComments extends Component {
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
+    this.loginInfo = this.loginInfo.bind(this);
   }
 
 
@@ -170,6 +172,23 @@ class ProposalComments extends Component {
     })
   }
 
+  loginInfo() {
+    swal({
+      title: "Are You Login?",
+      text: "Please Login first to add Comment",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.setPage('login')
+        } else {
+          // swal("Your imaginary file is safe!");
+        }
+      });
+  }
+
 
   addComment() {
     if (this.state.userComment && this.props.user) {
@@ -195,7 +214,9 @@ class ProposalComments extends Component {
         userComment: ''
       })
     }
-
+    else {
+      this.loginInfo();
+    }
   }
 
   voteForComment(action, commentID) {
@@ -446,7 +467,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
 };
 
 

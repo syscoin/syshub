@@ -23,7 +23,7 @@ export default {
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: '60%'
+          width: 200
         }
       },
       '& .addvertiseText': {
@@ -41,7 +41,7 @@ export default {
       '& .joinBtn': {
         textAlign: 'right',
         '& .btnText': {
-          color: '#ffff'
+          color: '#fff'
         },
         '& .btn': {
           borderRadius: '8px',

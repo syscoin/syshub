@@ -8,7 +8,7 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 30px 30px 30px',
+    padding: '10px 0px 30px 0px',
     height: '50vh',
     '& .title': {
       color: greyDark,
@@ -20,7 +20,7 @@ export default {
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
-      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
+      boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px',
@@ -38,7 +38,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -48,7 +48,7 @@ export default {
         }
       },
       '& .input-password-feild': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -68,8 +68,9 @@ export default {
         }
       },
       '& .recaptcha': {
-        marginLeft: 10,
-        width: '78%',
+        // marginLeft: 10,
+        marginRight:6,
+        width: '73%',
         display: 'inline-block',
         float: 'right'
       },
@@ -91,15 +92,17 @@ export default {
       },
       '& .terms-of-condition  ': {
         textAlign: 'center',
-        display: 'grid'
+        display: 'grid',
+        marginRight:88
       },
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
         '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
-          margin: '0 10px',
+          marginRight:40,
           borderRadius: 10,
+          minHeight:40,
           '& span': {
             color: white,
             fontWeight: 'bold'
@@ -111,6 +114,8 @@ export default {
   mRoot: {
     extend: 'root',
     marginTop: 0,
+    paddingLeft: 0,
+    height: '100%',
     '& .input-field': {
       width: '100% !important',
       margin: '0px !important'
@@ -121,12 +126,16 @@ export default {
     '& .form__container': {
       marginBottom: '100px',
       '& .label': {
-        width: '100%',
+        width: '50%',
         marginBottom: 10,
         textAlign: 'left'
       },
       '& .recaptcha': {
-        marginLeft: 0
+        marginLeft: 0,
+        textAlign: 'center',
+        '& div': {
+          display: 'inline-block'
+        }
       },
       '& .form-group': {
         margin: 0,
@@ -148,6 +157,9 @@ export default {
           left: 0,
           textAlign: 'left'
         }
+      },
+      '& .terms-of-condition':{
+        margin: 0
       }
     }
   }

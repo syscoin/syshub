@@ -10,7 +10,7 @@ export default {
     alignItems: 'stretch',
     '& .common': {
       color: white,
-      padding: '0 15px',
+      padding: '0px 5px 0px 15px',
       fontSize: 14,
       '& .icon': {
         height: 25

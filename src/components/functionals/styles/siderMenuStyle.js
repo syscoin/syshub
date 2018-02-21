@@ -11,7 +11,7 @@ export default {
     flexDirection: 'column',
     justifyAlign: 'flex-start',
     width: '100%',
-    marginTop: 97,
+    marginTop: 50,
     height: '80vh'
   },
   button: {

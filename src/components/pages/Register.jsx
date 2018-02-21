@@ -378,7 +378,8 @@ class Register extends Component {
                 </span>
                 <div className="recaptcha">
                   <Recaptcha
-                    style={{ marginLeft: '10px', width: '20px' }}
+                    size='normal'
+                    // style={{ marginLeft: '10px', width: '20px' }}
                     id="captcha"
                     sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
