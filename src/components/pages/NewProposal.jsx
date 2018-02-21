@@ -46,7 +46,7 @@ class NewProposal extends Component {
       proposallink: 'http://syshub.com/p/',
       editorState: EditorState.createEmpty(),
       proposal__detail: '',
-      savedProposal: null,
+      savedProposal: {},
       visible: false,
       pValue: '',
       payValue: '',
@@ -181,7 +181,10 @@ class NewProposal extends Component {
                   visible: true,
                   userProposal
                 });
+              } else {
+                this.setState({ savedProposal: {} });
               }
+
             })
             .catch(err => {
               swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -341,10 +344,11 @@ class NewProposal extends Component {
       paymentQuantity,
       amount,
       proposal__detail,
-      proposallink
+      proposallink,
+      savedProposal,
     } = this.state;
 
-    const descriptionID = Date.now().toString(36);
+    const descriptionID = savedProposal.descriptionID || `${currentUser.displayName}${Date.now().toString(36)}`;
 
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -376,6 +380,7 @@ class NewProposal extends Component {
       payment_amount: Number(amount),
       url: proposallink
     };
+
 
     this.setState({
       userProposal: userProposal,
@@ -411,7 +416,7 @@ class NewProposal extends Component {
       .then(data => {
         if (data['Object status'] === 'OK') {
           return this.props.prepareProposal(prepareObj);
-        }
+        } else { alert(data) }
       })
       .then(prepareResponse => {
         if (prepareResponse) {
@@ -466,9 +471,17 @@ class NewProposal extends Component {
     console.log('ACZ: ', this.state.savedProposal);
     console.log('ACZ: ', this.state.editorState);
     this.setState({
+      proposalName: savedProposal.name,
       proposalTitle: savedProposal.title,
       proposallink: savedProposal.url,
       editorState,
+      proposalStartEpoch: savedProposal.first_epoch,
+      paymentQuantity: savedProposal.nPayment,
+      address: savedProposal.payment_address,
+      amount: savedProposal.payment_amount,
+      proposalEndEpoch: savedProposal.end_epoch,
+      totalAmount: savedProposal.payment_amount * savedProposal.nPayment,
+
     });
   };
 
@@ -561,8 +574,13 @@ class NewProposal extends Component {
                 </FormItem>
               </Form>
             </Col>
+
+            {/*************************************************/}
+            {/* Commented intentionally don't remove this part*/}
+            {/*************************************************/}
+
             {/* Proposal Description Url Colomn */}
-            <Col span={deviceType === 'mobile' ? 24 : 14}>
+            {/* <Col span={deviceType === 'mobile' ? 24 : 14}>
               {deviceType === 'mobile' ? (
                 <h3 className="proposal-title">Proposal Description Url</h3>
               ) : null}
@@ -574,7 +592,10 @@ class NewProposal extends Component {
                   }`}
                 onChange={() => { }}
               />
-            </Col>
+            </Col> */}
+
+            {/*************************************************/}
+
           </Row>
         );
       case 1:
@@ -642,6 +663,7 @@ class NewProposal extends Component {
                   placeholder="Select a Date"
                   style={{ width: 120 }}
                   onChange={value => this.onDateChange(value)}
+                  defaultValue={this.state.proposalStartEpoch}
                 >
                   {this.state.paymentDateOptions.map(item => (
                     <Option value={item.mills / 1000}>{item.ymd}</Option>
@@ -862,11 +884,20 @@ class NewProposal extends Component {
                       <Step className="steper__container" key={label}>
                         <StepLabel className="steper__label">
                           <h2 className="step-label"> {label} </h2>
-                          {this.state.activeStep === 0 &&
+
+                          {/*************************************************/}
+                          {/* Commented intentionally don't remove this part*/}
+                          {/*************************************************/}
+
+                          {/*this.state.activeStep === 0 &&
                             label === 'Proposal Title' &&
                             deviceType !== 'mobile' ? (
                               <h3 className="proposal-title">Proposal Description Url</h3>
-                            ) : null}
+                            ) : null*/}
+
+                          {/*************************************************/}
+
+
                           {this.state.activeStep === 1 && label === 'Proposal Details' ? (
                             this.state.showEditor ? (
                               <Button
