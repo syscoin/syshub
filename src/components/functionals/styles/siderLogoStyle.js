@@ -4,6 +4,7 @@ export default {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: '0px 45px 25px 45px',
+    marginBottom: 50,
     '& .txtArea': {
       //border: '1px solid red',
       padding: '40px 0px 0px 10%',
