@@ -96,23 +96,30 @@ class Register extends Component {
       [event.target.name]: event.target.value
     });
 
-    const username = this.registerName.value;
-
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
       usernameRef.on('value', snapshot => {
-        snapshot.forEach(snap => {
-          if (snap.val() === username) {
-            this.setState({
-              disabled: true
-            });
-            return;
-          } else {
-            this.setState({
-              disabled: false
-            });
-          }
-        });
+        if (Object.values(snapshot.val()).includes(this.registerName.value) === true) {
+          this.setState({
+            disabled: true
+          });
+        } else {
+          this.setState({
+            disabled: false
+          });
+        }
+        // snapshot.forEach(snap => {
+        //   if (snap.val() === username) {
+        //     this.setState({
+        //       disabled: true
+        //     });
+        //     return;
+        //   } else {
+        //     this.setState({
+        //       disabled: false
+        //     });
+        //   }
+        // });
       });
     }
   }
@@ -172,11 +179,6 @@ class Register extends Component {
           usernameRef.child(user.uid).set(username);
           currentUser.updateProfile({ displayName: username });
           this.props.setPage('home');
-          swal({
-            title: 'Success',
-            text: `Account ${currentUser.email} created`,
-            icon: 'success'
-          });
         }
         this.props.setPage('home');
       })
@@ -193,6 +195,7 @@ class Register extends Component {
     const checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes, deviceType } = this.props;
+    // console.log(this.state.disabled);
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -205,9 +208,7 @@ class Register extends Component {
 
     return (
       <Grid item className={style} md={12} xs={12}>
-       <h1 className="title">
-          JOIN SYSHUB
-          </h1>
+        <h1 className="title">JOIN SYSHUB</h1>
         <Grid item md={12} xs={12} className="form__container">
           <Form
             ref={form => {
@@ -242,13 +243,13 @@ class Register extends Component {
                     }
                   ]
                 })(
-                  <Input
+                  <input
                     ref={input => (this.registerName = input)}
                     name="usernames"
                     id="user-name"
                     className="input-field"
                     placeholder="Enter Username"
-                    onChange={e => this.checkUsername(e)}
+                    onChange={this.checkUsername}
                   />
                 )}
 

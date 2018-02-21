@@ -7,7 +7,7 @@ import { userTwoFactorStyle } from './styles';
 import { Grid } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
 // import components
@@ -17,6 +17,8 @@ import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
 const FormItem = Form.Item;
+const Option = Select.Option;
+const InputGroup = Input.Group;
 
 class UserTwoFactor extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class UserTwoFactor extends Component {
 
     this.state = {
       phoneNumber: null,
-      isoCode: null,
+      isoCode: 'US',
       editNumber: false
     };
 
@@ -34,6 +36,7 @@ class UserTwoFactor extends Component {
     this.onChange = this.onChange.bind(this);
     this.editPhone = this.editPhone.bind(this);
     this.removePhone = this.removePhone.bind(this);
+    this.handleIsoCode = this.handleIsoCode.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +70,9 @@ class UserTwoFactor extends Component {
             .database()
             .ref('MasterNodes/' + user.uid)
             .on('value', snapshot => {
+              if (snapshot.val() === null) {
+                return;
+              }
               let list = [];
               snapshot.forEach(mn => {
                 list.push(mn.val());
@@ -83,6 +89,13 @@ class UserTwoFactor extends Component {
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+
+  handleIsoCode(value) {
+    console.log(value);
+    this.setState({
+      isoCode: value
     });
   }
 
@@ -164,7 +177,7 @@ class UserTwoFactor extends Component {
       return;
     }
 
-    this.setState({ isoCode: '', phoneNumber: '' });
+    this.setState({ isoCode: 'US', phoneNumber: '' });
 
     const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
 
@@ -176,7 +189,7 @@ class UserTwoFactor extends Component {
         if (success) {
           swal({
             title: 'Sucess',
-            text: `Two Factor Authentication Enabled`,
+            text: `New Phone Number added & Two Factor Authentication Enabled`,
             icon: 'success'
           });
 
@@ -234,7 +247,6 @@ class UserTwoFactor extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
-    console.log(isoArray);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -276,50 +288,65 @@ class UserTwoFactor extends Component {
                   >
                     <FormItem className="form-group">
                       <span htmlFor="user-name" className="label">
-                        {`Phone Number (With Area Code): `}
+                        {`Country & Phonenumber (include area code): `}
                       </span>
-                      <Input
-                        ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        className="input-field"
-                        placeholder="Phone Number"
-                        value={this.state.phoneNumber}
-                        onChange={this.onChange}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Country Code (Example - US, ES): `}
-                      </span>
-                      <Input
-                        ref={isoCode => (this.isoCode = isoCode)}
-                        id="isoCode"
-                        name="isoCode"
-                        className="input-field"
-                        placeholder="US"
-                        value={this.state.isoCode}
-                        onChange={this.onChange}
-                      />
+                      <InputGroup compact>
+                        <Select defaultValue="United States" onChange={this.handleIsoCode}>
+                          {isoArray.map((item, i) => (
+                            <Option value={item.code} key={i}>
+                              {item.name}
+                            </Option>
+                          ))}
+                        </Select>
+                        <Input
+                          ref={phoneNumber => (this.phoneNumber = phoneNumber)}
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          style={{ width: '20%' }}
+                          placeholder="Phone Number"
+                          value={this.state.phoneNumber}
+                          onChange={this.onChange}
+                          type="number"
+                        />
+                      </InputGroup>
                     </FormItem>
                   </Form>
                   <Grid className="form-grid-btn">
-                    {app.currentUser ? (
-                      app.currentUser.phoneNumber !== null ? (
-                        <Button onClick={this.removePhone} htmlType="submit" variant="raised">
-                          {'Delete Phone'}
-                        </Button>
-                      ) : null
-                    ) : null}
-                    <Button onClick={this.addPhone} htmlType="submit" variant="raised">
-                      {'Add & Enable'}
-                    </Button>
+                    {app.currentUser
+                      ? app.currentUser.phoneNumber !== null
+                        ? [
+                            <Button
+                              key={1}
+                              onClick={this.removePhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Delete Phone'}
+                            </Button>,
+                            <Button
+                              key={2}
+                              onClick={this.addPhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Edit Phone'}
+                            </Button>
+                          ]
+                        : null
+                      : null}
                   </Grid>
                 </Grid>
               ) : (
                 <div>
-                  <button onClick={this.editPhone}>Edit</button>
+                  <Button
+                    raised
+                    color="primary"
+                    className="twoFactor-button"
+                    onClick={this.editPhone}
+                    style={{ marginBottom: '15px' }}
+                  >
+                    Edit Phone
+                  </Button>
                 </div>
               )
             ) : null}

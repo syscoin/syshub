@@ -155,7 +155,7 @@ export default {
       }
     },
     '& .form__container': {
-      marginLeft: 20,
+      marginLeft: 0,
       '& .form-group': {
         display: 'block',
         flexDirection: 'row',
@@ -167,7 +167,7 @@ export default {
           marginTop: '15px',
           color: primary,
           paddingRight: '10px',
-          fontWeight: 'normal',
+          fontWeight: 'normal'
         },
         '& .input-field': {
           color: primaryLight,
@@ -177,12 +177,12 @@ export default {
           border: 'thin solid ' + greyLight,
           padding: '10px',
           '&::before': {
-            backgroundColor: 'transparent',
-          },
-        },
+            backgroundColor: 'transparent'
+          }
+        }
       },
       '& .form-grid-btn': {
-        padding: '20px 0px',
+        padding: '20px 0px'
       },
       '& button': {
         borderRadius: 5,
@@ -194,9 +194,9 @@ export default {
         color: white,
         backgroundColor: primary,
         '&:hover': {
-          backgroundColor: primaryLight,
-        },
-      },
+          backgroundColor: primaryLight
+        }
+      }
     },
     '& button': {
       backgroundColor: primary,
@@ -217,7 +217,7 @@ export default {
       textAlign: 'center',
       marginLeft: 0,
       '& .twoFactor-button-grid': {
-        textAlign: 'center',
+        textAlign: 'center'
       },
       '& .enable2FA-note': {
         margin: '15px 0px 20px 10px'
@@ -236,17 +236,16 @@ export default {
             display: 'block',
             fontSize: 17,
             textAlign: 'left',
-            paddingLeft: 15,
-
+            paddingLeft: 15
           },
           '& .input-field': {
-            width: '100%',
-          },
+            width: '100%'
+          }
         }
       }
     },
     '& .form-grid-btn': {
-      textAlign: 'center',
-    },
+      textAlign: 'center'
+    }
   }
 };
