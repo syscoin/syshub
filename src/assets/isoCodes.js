@@ -1,10 +1,5 @@
 const isoArray = [
   {
-    name: 'Israel',
-    dial_code: '+972',
-    code: 'IL'
-  },
-  {
     name: 'Afghanistan',
     dial_code: '+93',
     code: 'AF'

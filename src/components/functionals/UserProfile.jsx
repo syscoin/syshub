@@ -42,12 +42,12 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function (snapshot) {
+          function(snapshot) {
             // this variable can be used to show upload progress
             //const progress =
             //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
           },
-          function (error) {
+          function(error) {
             switch (error.code) {
               case 'storage/unauthorized':
                 // User doesn't have permission to access the object
@@ -64,7 +64,6 @@ class UserProfile extends Component {
                 alert('Unknown error occurred');
                 break;
               default:
-
             }
           },
           () => {
@@ -99,18 +98,30 @@ class UserProfile extends Component {
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
       usernameRef.on('value', snapshot => {
-        snapshot.forEach(snap => {
-          if (snap.val() === username) {
-            this.setState({
-              disabled: true
-            });
-            return;
-          } else {
-            this.setState({
-              disabled: false
-            });
-          }
-        });
+        if (Object.values(snapshot.val()).includes(username) === true) {
+          this.setState({
+            disabled: true
+          });
+        } else {
+          this.setState({
+            disabled: false
+          });
+        }
+        // snapshot.forEach(snap => {
+        //   if (snap.val() === username) {
+        //     this.setState({
+        //       disabled: true
+        //     });
+        //
+        //     return;
+        //   }
+        //
+        //   if (snap.val() !== username) {
+        //     this.setState({
+        //       disabled: false
+        //     });
+        //   }
+        // });
       });
     }
   }
@@ -131,7 +142,10 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar = this.props.currentUser && this.props.currentUser.photoURL ? this.props.currentUser.photoURL : require('../../assets/img/no-user-image.gif');
+    const avatar =
+      this.props.currentUser && this.props.currentUser.photoURL
+        ? this.props.currentUser.photoURL
+        : require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
         <Grid container className="profile-grid">
@@ -146,12 +160,8 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
               ) : (
-                  <img
-                    src={this.state.image}
-                    alt="no user"
-                    className="user-image"
-                  />
-                )}
+                <img src={this.state.image} alt="no user" className="user-image" />
+              )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <Input
@@ -177,6 +187,7 @@ class UserProfile extends Component {
                 id="user-name"
                 className="input-field"
                 placeholder="Enter Username"
+                onChange={this.checkUsername}
               />
               <span className="validation-message">
                 {this.state.disabled === true ? 'Not Available' : 'Available'}
@@ -195,9 +206,7 @@ class UserProfile extends Component {
                 className="input-field"
                 placeholder="Enter email"
               />
-              <span className="validation-message">
-                *required for password change
-              </span>
+              <span className="validation-message">*required for password change</span>
             </FormGroup>
           </Grid>
           <Grid className="update-button-grid">
@@ -227,6 +236,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(userProfileStyle)(UserProfile)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));

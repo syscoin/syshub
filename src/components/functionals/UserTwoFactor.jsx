@@ -7,7 +7,7 @@ import { userTwoFactorStyle } from './styles';
 import { Grid } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
 // import components
@@ -17,6 +17,8 @@ import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
 const FormItem = Form.Item;
+const Option = Select.Option;
+const InputGroup = Input.Group;
 
 class UserTwoFactor extends Component {
   constructor(props) {
@@ -34,6 +36,7 @@ class UserTwoFactor extends Component {
     this.onChange = this.onChange.bind(this);
     this.editPhone = this.editPhone.bind(this);
     this.removePhone = this.removePhone.bind(this);
+    this.handleIsoCode = this.handleIsoCode.bind(this);
   }
 
   componentDidMount() {
@@ -83,6 +86,13 @@ class UserTwoFactor extends Component {
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+
+  handleIsoCode(value) {
+    console.log(value);
+    this.setState({
+      isoCode: value
     });
   }
 
@@ -234,7 +244,6 @@ class UserTwoFactor extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
-    console.log(isoArray);
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -291,17 +300,21 @@ class UserTwoFactor extends Component {
                     </FormItem>
                     <FormItem className="form-group">
                       <span htmlFor="user-name" className="label">
-                        {`Country Code (Example - US, ES): `}
+                        {`IsoCode (Country): `}
                       </span>
-                      <Input
-                        ref={isoCode => (this.isoCode = isoCode)}
-                        id="isoCode"
-                        name="isoCode"
-                        className="input-field"
-                        placeholder="US"
-                        value={this.state.isoCode}
-                        onChange={this.onChange}
-                      />
+                      <InputGroup compact>
+                        <Select value="Choose your country" onChange={this.handleIsoCode}>
+                          {isoArray.map((item, i) => (
+                            <Option value={item.code} key={i}>
+                              {item.name}
+                            </Option>
+                          ))}
+                        </Select>
+                        <Input
+                          style={{ width: '20%' }}
+                          value={this.state.isoCode ? this.state.isoCode : ''}
+                        />
+                      </InputGroup>
                     </FormItem>
                   </Form>
                   <Grid className="form-grid-btn">

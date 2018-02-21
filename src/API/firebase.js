@@ -123,19 +123,19 @@ const doLogin = (email, password) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
-      swal({
-        title: 'Success',
-        text: `Account: ${user.email} logged in.`,
-        icon: 'success'
-      });
+      // swal({
+      //   title: 'Success',
+      //   text: `Account: ${user.email} logged in.`,
+      //   icon: 'success'
+      // });
       //this.loginForm.reset();
     })
     .catch(err => {
-      swal({
-        title: 'Oops...',
-        text: `${err}`,
-        icon: 'error'
-      });
+      // swal({
+      //   title: 'Oops...',
+      //   text: `${err}`,
+      //   icon: 'error'
+      // });
     });
 };
 
@@ -145,11 +145,11 @@ const doLogout = update => {
     .signOut()
     .then(() => {
       if (!update) {
-        swal({
-          title: 'Success',
-          text: `Hope to see you soon`,
-          icon: 'success'
-        });
+        // swal({
+        //   title: 'Success',
+        //   text: `Hope to see you soon`,
+        //   icon: 'success'
+        // });
       }
     });
 };
