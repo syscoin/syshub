@@ -285,25 +285,10 @@ class UserTwoFactor extends Component {
                   >
                     <FormItem className="form-group">
                       <span htmlFor="user-name" className="label">
-                        {`Phone Number (With Area Code): `}
-                      </span>
-                      <Input
-                        ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        className="input-field"
-                        placeholder="Phone Number"
-                        value={this.state.phoneNumber}
-                        onChange={this.onChange}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`IsoCode (Country): `}
+                        {`Country & Phonenumber (include area code): `}
                       </span>
                       <InputGroup compact>
-                        <Select value="Choose your country" onChange={this.handleIsoCode}>
+                        <Select defaultValue="Choose your country" onChange={this.handleIsoCode}>
                           {isoArray.map((item, i) => (
                             <Option value={item.code} key={i}>
                               {item.name}
@@ -311,8 +296,14 @@ class UserTwoFactor extends Component {
                           ))}
                         </Select>
                         <Input
+                          ref={phoneNumber => (this.phoneNumber = phoneNumber)}
+                          id="phoneNumber"
+                          name="phoneNumber"
                           style={{ width: '20%' }}
-                          value={this.state.isoCode ? this.state.isoCode : ''}
+                          placeholder="Phone Number"
+                          value={this.state.phoneNumber}
+                          onChange={this.onChange}
+                          type="number"
                         />
                       </InputGroup>
                     </FormItem>
