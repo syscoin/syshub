@@ -93,7 +93,7 @@ export default {
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid',
-        marginRight:30
+        marginRight:55
       },
       '& .form-button-group': {
         textAlign: 'center',

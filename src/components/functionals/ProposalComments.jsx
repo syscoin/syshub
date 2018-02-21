@@ -11,7 +11,8 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
 import CommentForm from './commentForm';
 import Typography from 'material-ui/Typography';
-import { Modal } from 'antd';
+import swal from 'sweetalert';
+import actions from '../../redux/actions';
 // import firebase
 import { comments, commentReplies } from '../../API/firebase';
 
@@ -172,12 +173,20 @@ class ProposalComments extends Component {
   }
 
   loginInfo() {
-    Modal.error({
-      title: 'Please Login first to add Comment',
-      onOk() { },
-      zIndex: 99999,
-      className:proposalCommentsStyle.loginModal
-    });
+    swal({
+      title: "Are You Login?",
+      text: "Please Login first to add Comment",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.setPage('login')
+        } else {
+          // swal("Your imaginary file is safe!");
+        }
+      });
   }
 
 
@@ -458,7 +467,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
 };
 
 
