@@ -147,15 +147,16 @@ export default {
     '& .twoFactor-button-grid': {
       padding: '20px 0px',
       '& .twoFactor-button': {
-        borderRadius: '5px',
-        padding: '8px',
-        minHeight: '40px',
-        width: '150px',
-        fontSize: '16px'
+        borderRadius: 5,
+        padding: 8,
+        minHeight: 40,
+        width: 150,
+        fontSize: 16,
+        marginLeft: 10
       }
     },
     '& .form__container': {
-      marginLeft: 20,
+      marginLeft: 10,
       '& .form-group': {
         display: 'block',
         flexDirection: 'row',
@@ -197,6 +198,9 @@ export default {
           backgroundColor: primaryLight,
         },
       },
+    },
+    '& .reCapthaWraper':{
+      marginLeft: 10
     },
     '& button': {
       backgroundColor: primary,

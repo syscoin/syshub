@@ -20,9 +20,10 @@ export default {
     },
     '& .profile-image-grid': {
       maxWidth:205,
+      marginLeft: 20,
+      textAlign: 'center',
       '& .avatar-container': {
         maxWidth: 150,
-        marginLeft: 20,
         padding: 10,
         border: 'thin solid ' + greyLight
       },
@@ -31,7 +32,6 @@ export default {
       },
       '& .change-photo-btn': {
         fontSize: '12px',
-        marginLeft: '38px',
         width:'100%',
         '& .link-color': {
           color: primary,
@@ -92,7 +92,8 @@ export default {
       }
     },
     '& .update-button-grid': {
-      padding: '20px'
+      padding: 20,
+      marginLeft: 20
     },
     '& button': {
       borderRadius: '5px',

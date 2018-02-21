@@ -23,7 +23,7 @@ export default {
     },
     '& .delete-button-grid': {
       padding: '20px 0px',
-      marginLeft: '2.5%',
+      marginLeft: 40,
       '& .delete-button': {
         borderRadius: '5px',
         padding: '8px',
