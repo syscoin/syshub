@@ -90,66 +90,66 @@ class ProposalCard extends Component {
           // console.log('This has been voted on')
         }
 
-        let mnKeyIds = [];
-        user.MasterNodes.forEach(mnObj => {
-          mnKeyIds.push(mnObj.keyId);
-          fire
-            .database()
-            .ref('votes/' + user.uid)
-            .child(proposal.Hash)
-            .once('value', snap => {
-              if (snap.val() !== null) {
-                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                  // console.log('this MN has voted already', mnObj);
+        const MN = user.MasterNodes;
+        let mnData = [];
+        for (let i = 0; i < user.MasterNodes.length; i++) {
+          const proposalVoteYes = {
+            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
+            vinMasternode: cryptr.decrypt(MN[i].vin),
+            gObjectHash: proposal.Hash,
+            voteOutcome: 1
+          };
+
+          this.props
+            .voteOnProposal(proposalVoteYes)
+            .then(data => {
+              if (RegExp(/\s-32603\s/).test(data)) {
+                if (RegExp(/Failure to find masternode in list/).test(data)) {
+                  throw new Error('Failure to find masternode in list');
                 }
+                if (RegExp(/Error voting/).test(data)) {
+                  throw new Error(
+                    'Invalid proposal hash. Please check: ' + cryptr.decrypt(MN[i].mnPrivateKey)
+                  );
+                }
+                return;
               }
 
-              const proposalVoteYes = {
-                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                vinMasternode: cryptr.decrypt(mnObj.vin),
-                gObjectHash: proposal.Hash,
-                voteOutcome: 1
-              };
+              if (RegExp(/\s-8\s/).test(data)) {
+                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                  throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(MN[i].vin));
+                }
+                return;
+              }
 
-              this.props
-                .voteOnProposal(proposalVoteYes)
-                .then(data => {
-                  if (RegExp(/\s-32603\s/).test(data)) {
-                    if (RegExp(/Failure to find masternode in list/).test(data)) {
-                      throw new Error('Failure to find masternode in list');
-                    }
-                    if (RegExp(/Error voting/).test(data)) {
-                      throw new Error(
-                        'Invalid proposal hash. Please check: ' + cryptr.decrypt(mnObj.mnPrivateKey)
-                      );
-                    }
-                    return;
-                  }
+              mnData.push(`${MN[i].name}: ${data}`);
 
-                  if (RegExp(/\s-8\s/).test(data)) {
-                    if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
-                      throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(mnObj.vin));
-                    }
-                    return;
-                  }
-                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                  voted(user, proposal, 'Yes', 1, mnKeyIds);
-                  this.props.getProposals();
-                })
-                .catch(err => {
-                  const content = document.createElement('div');
-                  content.innerHTML = `Unable to cast vote with <strong>${
-                    mnObj.name
-                  }</strong>.  Please check your key or txid credentials.`;
-                  swal({
-                    html: true,
-                    title: 'Oops...',
-                    content: content,
-                    icon: 'error'
-                  });
+              if (i + 1 === user.MasterNodes.length) {
+                const content = document.createElement('div');
+                content.innerHTML = mnData.map(data => `<div>${data}<br /></div>`).join(' ');
+
+                swal({
+                  title: 'Success',
+                  content: content,
+                  icon: 'success'
                 });
+
+                this.props.getProposals();
+                let mnKeyIds = [];
+                user.MasterNodes.forEach(mnObj => {
+                  mnKeyIds.push(mnObj.keyId);
+                  voted(user, proposal, 'Yes', 1, mnKeyIds);
+                });
+              }
+            })
+            .catch(err => {
+              swal({
+                title: 'Oops...',
+                text: `${err}`,
+                icon: 'error'
+              });
             });
-        });
+        }
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -194,58 +194,66 @@ class ProposalCard extends Component {
           // console.log('This has been voted on');
         }
 
-        let mnKeyIds = [];
-        user.MasterNodes.forEach(mnObj => {
-          mnKeyIds.push(mnObj.keyId);
-          fire
-            .database()
-            .ref('votes/' + user.uid)
-            .child(proposal.Hash)
-            .once('value', snap => {
-              if (snap.val() !== null) {
-                if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                  // console.log('this MN has voted already', mnObj);
+        const MN = user.MasterNodes;
+        let mnData = [];
+        for (let i = 0; i < user.MasterNodes.length; i++) {
+          const proposalVoteNo = {
+            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
+            vinMasternode: cryptr.decrypt(MN[i].vin),
+            gObjectHash: proposal.Hash,
+            voteOutcome: 2
+          };
+
+          this.props
+            .voteOnProposal(proposalVoteNo)
+            .then(data => {
+              if (RegExp(/\s-32603\s/).test(data)) {
+                if (RegExp(/Failure to find masternode in list/).test(data)) {
+                  throw new Error('Failure to find masternode in list');
                 }
+                if (RegExp(/Error voting/).test(data)) {
+                  throw new Error(
+                    'Invalid proposal hash. Please check: ' + cryptr.decrypt(MN[i].mnPrivateKey)
+                  );
+                }
+                return;
               }
 
-              const proposalVoteNo = {
-                mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                vinMasternode: cryptr.decrypt(mnObj.vin),
-                gObjectHash: proposal.Hash,
-                voteOutcome: 2
-              };
+              if (RegExp(/\s-8\s/).test(data)) {
+                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                  throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(MN[i].vin));
+                }
+                return;
+              }
 
-              this.props
-                .voteOnProposal(proposalVoteNo)
-                .then(data => {
-                  if (RegExp(/\s-32603\s/).test(data)) {
-                    if (RegExp(/Failure to find masternode in list/).test(data)) {
-                      throw new Error('Failure to find masternode in list');
-                    }
-                    if (RegExp(/Error voting/).test(data)) {
-                      throw new Error(
-                        'Invalid proposal hash. Please check: ' + cryptr.decrypt(mnObj.mnPrivateKey)
-                      );
-                    }
-                    return;
-                  }
+              mnData.push(`${MN[i].name}: ${data}`);
 
-                  if (RegExp(/\s-8\s/).test(data)) {
-                    if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
-                      throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(mnObj.vin));
-                    }
-                    return;
-                  }
+              if (i + 1 === user.MasterNodes.length) {
+                const content = document.createElement('div');
+                content.innerHTML = mnData.map(data => `<div>${data}<br /></div>`).join(' ');
 
-                  swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                  voted(user, proposal, 'No', 2, mnKeyIds);
-                  this.props.getProposals();
-                })
-                .catch(err => {
-                  swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                swal({
+                  title: 'Success',
+                  content: content,
+                  icon: 'success'
                 });
+
+                this.props.getProposals();
+                let mnKeyIds = [];
+                user.MasterNodes.forEach(mnObj => {
+                  mnKeyIds.push(mnObj.keyId);
+                  voted(user, proposal, 'No', 2, mnKeyIds);
+                });
+              }
+            })
+            .catch(err => {
+              swal({
+                title: 'Oops...',
+                text: `${err}`,
+                icon: 'error'
+              });
             });
-        });
+        }
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
