@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 //import for text editor
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
@@ -453,8 +454,21 @@ class NewProposal extends Component {
   };
 
   handleReset = () => {
+    const savedProposal = this.state.savedProposal;
     this.setState({
-      activeStep: 0
+      visible: false,
+      activeStep: 0,
+      recover: false,
+    });
+    const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
+    const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
+    const editorState = EditorState.createWithContent(editorContentState);
+    console.log('ACZ: ', this.state.savedProposal);
+    console.log('ACZ: ', this.state.editorState);
+    this.setState({
+      proposalTitle: savedProposal.title,
+      proposallink: savedProposal.url,
+      editorState,
     });
   };
 
@@ -557,8 +571,8 @@ class NewProposal extends Component {
                 placeholder="Enter Proposal Description Url"
                 value={`${this.state.proposallink}${
                   this.state.proposalTitle ? '' : 'proposal-title'
-                }`}
-                onChange={() => {}}
+                  }`}
+                onChange={() => { }}
               />
             </Col>
           </Row>
@@ -602,19 +616,19 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                // proposal detail preview
-                <Row>
-                  <Col
-                    span={deviceType === 'mobile' ? 24 : 22}
-                    offset={deviceType === 'mobile' ? 0 : 1}
-                  >
-                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                  </Col>
-                  <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div className="proposalContent-div" id="preview-html-container" />
-                  </Col>
-                </Row>
-              )}
+                  // proposal detail preview
+                  <Row>
+                    <Col
+                      span={deviceType === 'mobile' ? 24 : 22}
+                      offset={deviceType === 'mobile' ? 0 : 1}
+                    >
+                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                    </Col>
+                    <Col span={deviceType === 'mobile' ? 24 : 22}>
+                      <div className="proposalContent-div" id="preview-html-container" />
+                    </Col>
+                  </Row>
+                )}
             </Col>
           </Row>
         );
@@ -675,11 +689,11 @@ class NewProposal extends Component {
                     {`${this.state.totalAmount || this.state.amount} SYS ${
                       this.state.proposalStartEpoch
                         ? `with a final payment on ${this.yearDayMonth(
-                            this.state.proposalEndEpoch * 1000,
-                            'usa'
-                          )}`
+                          this.state.proposalEndEpoch * 1000,
+                          'usa'
+                        )}`
                         : ''
-                    }`}
+                      }`}
                   </p>
                 </Row>
               </Col>
@@ -777,6 +791,9 @@ class NewProposal extends Component {
               <br />
             </div>
             <div className="submit-btn">
+              <Button type="primary" disabled={this.state.sValue} onClick={this.handleReset}>
+                {`<< Back to Edit`}
+              </Button>
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
                 Submit Payment Id
               </Button>
@@ -839,84 +856,84 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => {
-                  return (
-                    <Step className="steper__container" key={label}>
-                      <StepLabel className="steper__label">
-                        <h2 className="step-label"> {label} </h2>
-                        {this.state.activeStep === 0 &&
-                        label === 'Proposal Title' &&
-                        deviceType !== 'mobile' ? (
-                          <h3 className="proposal-title">Proposal Description Url</h3>
-                        ) : null}
-                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                          this.state.showEditor ? (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={this.previewHTML.bind(this)}
-                            >
-                              PREVIEW
-                            </Button>
-                          ) : (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={() => {
-                                this.setState({ showEditor: true });
-                              }}
-                            >
-                              EDITOR
-                            </Button>
-                          )
-                        ) : null}
-                      </StepLabel>
-                      <StepContent>
-                        <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
-                        <div className={classes.actionsContainer}>
-                          <div
-                            className={
-                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                            }
-                          >
-                            {activeStep === 0 ? null : (
+                <Stepper activeStep={activeStep} orientation="vertical">
+                  {steps.map((label, index) => {
+                    return (
+                      <Step className="steper__container" key={label}>
+                        <StepLabel className="steper__label">
+                          <h2 className="step-label"> {label} </h2>
+                          {this.state.activeStep === 0 &&
+                            label === 'Proposal Title' &&
+                            deviceType !== 'mobile' ? (
+                              <h3 className="proposal-title">Proposal Description Url</h3>
+                            ) : null}
+                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                            this.state.showEditor ? (
                               <Button
-                                variant="raised"
-                                type="primary"
-                                onClick={this.handleBack}
-                                className="button"
+                                className="preview-edit-button"
+                                onClick={this.previewHTML.bind(this)}
                               >
-                                Back
-                              </Button>
-                            )}
-                            {activeStep === steps.length - 1 ? (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                className={classes.button}
-                                onClick={this.createPropObj}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Confirm
-                              </Button>
+                                PREVIEW
+                            </Button>
                             ) : (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                onClick={this.handleNext}
-                                className={classes.button}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Next Step
+                                <Button
+                                  className="preview-edit-button"
+                                  onClick={() => {
+                                    this.setState({ showEditor: true });
+                                  }}
+                                >
+                                  EDITOR
+                            </Button>
+                              )
+                          ) : null}
+                        </StepLabel>
+                        <StepContent>
+                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                          <div className={classes.actionsContainer}>
+                            <div
+                              className={
+                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                              }
+                            >
+                              {activeStep === 0 ? null : (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  onClick={this.handleBack}
+                                  className="button"
+                                >
+                                  Back
                               </Button>
-                            )}
+                              )}
+                              {activeStep === steps.length - 1 ? (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  className={classes.button}
+                                  onClick={this.createPropObj}
+                                  disabled={this.disabledNextBtn(index)}
+                                >
+                                  Confirm
+                              </Button>
+                              ) : (
+                                  <Button
+                                    variant="raised"
+                                    type="primary"
+                                    onClick={this.handleNext}
+                                    className={classes.button}
+                                    disabled={this.disabledNextBtn(index)}
+                                  >
+                                    Next Step
+                              </Button>
+                                )}
+                            </div>
                           </div>
-                        </div>
-                      </StepContent>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-            )}
+                        </StepContent>
+                      </Step>
+                    );
+                  })}
+                </Stepper>
+              )}
           </Paper>
         </div>
       </div>
