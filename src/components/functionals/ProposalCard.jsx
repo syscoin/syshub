@@ -114,6 +114,26 @@ class ProposalCard extends Component {
               this.props
                 .voteOnProposal(proposalVoteYes)
                 .then(data => {
+                  if (RegExp(/\s-32603\s/).test(data)) {
+                    if (RegExp(/Failure to find masternode in list/).test(data)) {
+                      throw new Error('Failure to find masternode in list');
+                    }
+                    if (RegExp(/Error voting/).test(data)) {
+                      throw new Error(
+                        'Invalid proposal hash. Please check: display_the_hash_that_caused_the_error'
+                      );
+                    }
+                    return;
+                  }
+
+                  if (RegExp(/\s-8\s/).test(data)) {
+                    if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
+                      throw new Error(
+                        'Invalid vin. Please check: display_the_vin_that_caused_the_error'
+                      );
+                    }
+                    return;
+                  }
                   swal({ title: 'Success', text: `${data}`, icon: 'success' });
                   voted(user, proposal, 'Yes', 1, mnKeyIds);
                   this.props.getProposals();
@@ -200,6 +220,27 @@ class ProposalCard extends Component {
               this.props
                 .voteOnProposal(proposalVoteNo)
                 .then(data => {
+                  if (RegExp(/\s-32603\s/).test(data)) {
+                    if (RegExp(/Failure to find masternode in list/).test(data)) {
+                      throw new Error('Failure to find masternode in list');
+                    }
+                    if (RegExp(/Error voting/).test(data)) {
+                      throw new Error(
+                        'Invalid proposal hash. Please check: display_the_hash_that_caused_the_error'
+                      );
+                    }
+                    return;
+                  }
+
+                  if (RegExp(/\s-8\s/).test(data)) {
+                    if (RegExp(/mn tx hash must be hexidecimal string/).test(data)) {
+                      throw new Error(
+                        'Invalid vin. Please check: display_the_vin_that_caused_the_error'
+                      );
+                    }
+                    return;
+                  }
+
                   swal({ title: 'Success', text: `${data}`, icon: 'success' });
                   voted(user, proposal, 'No', 2, mnKeyIds);
                   this.props.getProposals();
