@@ -538,7 +538,7 @@ class NewProposal extends Component {
                 >
                   <Input
                     className="proposal-title-input"
-                    placeholder="Insert Reference Title (40 characters max.)"
+                    placeholder="proposal-name (40 characters max.)"
                     addonBefore={`${40 - this.state.proposalTitle.length}`}
                     value={this.state.proposalTitle}
                     onChange={this.proposalTitle}

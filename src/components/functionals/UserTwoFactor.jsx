@@ -325,7 +325,7 @@ class UserTwoFactor extends Component {
                           id="phoneNumber"
                           name="phoneNumber"
                           style={{ width: '20%' }}
-                          placeholder="Phone Number"
+                          placeholder="(123) 456-7894"
                           value={this.state.phoneNumber}
                           onChange={this.onChange}
                           type="number"

@@ -130,7 +130,7 @@ class Register extends Component {
     if (this.state.disabled) {
       swal({
         title: 'Oops...',
-        text: 'Username already taken',
+        text: 'username is taken',
         icon: 'error'
       });
       return;
@@ -248,7 +248,7 @@ class Register extends Component {
                     name="usernames"
                     id="user-name"
                     className="input-field"
-                    placeholder="Enter Username"
+                    placeholder="new-username"
                     onChange={this.checkUsername}
                   />
                 )}
@@ -290,7 +290,7 @@ class Register extends Component {
                     name="email"
                     id="user-name"
                     className="input-field"
-                    placeholder="Enter email"
+                    placeholder="your-name@company.com"
                   />
                 )}
               </FormItem>
@@ -366,7 +366,7 @@ class Register extends Component {
                     type="password"
                     id="confirm-password"
                     className="input-field"
-                    placeholder="**************"
+                    placeholder="your-password"
                   />
                 )}
               </FormItem>

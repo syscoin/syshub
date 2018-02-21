@@ -121,7 +121,7 @@ class UserChangePassword extends Component {
                       id="user-name"
                       type="password"
                       className="input-field"
-                      placeholder="******"
+                      placeholder="old-password"
                     />
                   )}
                 </FormItem>
@@ -154,7 +154,7 @@ class UserChangePassword extends Component {
                         type="password"
                         className="input-password-feild"
                         style={{ height: '34px', borderRadius: '3px' }}
-                        placeholder="******"
+                        placeholder="new-password"
                         minLength={5}
                         minScore={2}
                         scoreWords={[
@@ -201,7 +201,7 @@ class UserChangePassword extends Component {
                       type="password"
                       id="user-name"
                       className="input-field"
-                      placeholder="******"
+                      placeholder="new-password"
                     />
                   )}
                 </FormItem>
