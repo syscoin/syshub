@@ -123,19 +123,19 @@ const doLogin = (email, password) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
-      swal({
-        title: 'Success',
-        text: `Account: ${user.email} logged in.`,
-        icon: 'success'
-      });
+      // swal({
+      //   title: 'Success',
+      //   text: `Account: ${user.email} logged in.`,
+      //   icon: 'success'
+      // });
       //this.loginForm.reset();
     })
     .catch(err => {
-      swal({
-        title: 'Oops...',
-        text: `${err}`,
-        icon: 'error'
-      });
+      // swal({
+      //   title: 'Oops...',
+      //   text: `${err}`,
+      //   icon: 'error'
+      // });
     });
 };
 
@@ -145,11 +145,11 @@ const doLogout = update => {
     .signOut()
     .then(() => {
       if (!update) {
-        swal({
-          title: 'Success',
-          text: `Hope to see you soon`,
-          icon: 'success'
-        });
+        // swal({
+        //   title: 'Success',
+        //   text: `Hope to see you soon`,
+        //   icon: 'success'
+        // });
       }
     });
 };
@@ -172,69 +172,112 @@ const doUpdatePassword = (user, callback) => {
   }
 };
 
-const doUpdateProfile = (user, callback) => {
+const doUpdateProfile = user => {
   const currentUser = fire.auth().currentUser;
+  const oldUsername = currentUser.displayName;
+  const oldEmail = currentUser.email;
 
-  if (currentUser) {
-    if (user.email) {
-      swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Warning',
-        text: 'You are about to change your email, you must input your password first',
-        icon: 'warning',
-        buttons: true,
-        dangerMode: true,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Type your password',
-            type: 'password'
-          }
-        }
-      }).then(password => {
-        const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
-
+  return new Promise((resolve, reject) => {
+    if (currentUser) {
+      if (user.username) {
+        usernames.update({ [currentUser.uid]: user.username });
         currentUser
-          .reauthenticateWithCredential(credentials)
+          .updateProfile({ displayName: user.username })
+          .then(() => {
+            messages.on('value', snap => {
+              snap.forEach(message => {
+                if (message.val().user.displayName === oldUsername) {
+                  const updated = {
+                    body: message.val().body,
+                    key: message.val().key,
+                    user: {
+                      displayName: currentUser.displayName,
+                      email: message.val().user.email,
+                      id: message.val().user.id
+                    }
+                  };
+
+                  fire
+                    .database()
+                    .ref('messages/' + message.val().key)
+                    .update(updated);
+                }
+              });
+            });
+            if (user.photoURL || user.email) {
+              return;
+            }
+            resolve(currentUser);
+          })
+          .catch(err => resolve(err));
+      }
+
+      if (user.photoURL) {
+        currentUser
+          .updateProfile({ photoURL: user.photoURL })
+          .then(() => {
+            if (user.email) {
+              return;
+            }
+            resolve(currentUser);
+          })
+          .catch(err => reject(err));
+      }
+
+      if (user.email) {
+        swal({
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Warning',
+          text: 'You are about to change your email, you must input your password first',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Type your password',
+              type: 'password'
+            }
+          }
+        })
+          .then(password => {
+            const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+
+            return currentUser.reauthenticateWithCredential(credentials);
+          })
           .then(() => {
             return currentUser.updateEmail(user.email);
           })
           .then(() => {
-            if (user.username) {
-              return;
-            }
-            swal({
-              title: 'Success',
-              text: 'Account Updated',
-              icon: 'success'
+            messages.on('value', snap => {
+              snap.forEach(message => {
+                if (message.val().user.email === oldEmail) {
+                  const updated = {
+                    body: message.val().body,
+                    key: message.val().key,
+                    user: {
+                      displayName: message.val().user.displayName,
+                      email: currentUser.email,
+                      id: message.val().user.id
+                    }
+                  };
+
+                  fire
+                    .database()
+                    .ref('messages/' + message.val().key)
+                    .update(updated);
+                }
+              });
             });
+            resolve(currentUser);
           })
           .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            reject(err);
           });
-      });
+      }
     }
-
-    if (user.username) {
-      usernames.update({ [currentUser.uid]: user.username });
-      currentUser
-        .updateProfile({ displayName: user.username })
-        .then(() => {
-          callback(null, currentUser);
-        })
-        .catch(err => callback(err));
-    }
-
-    if (user.photoURL) {
-      currentUser
-        .updateProfile({ photoURL: user.photoURL })
-        .then(() => {
-          callback(null, currentUser);
-        })
-        .catch(err => callback(err));
-    }
-  }
+  });
 };
 
 const doDeleteAccount = () => {

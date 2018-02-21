@@ -6,7 +6,7 @@ import { Input } from 'antd';
 import swal from 'sweetalert';
 import { Send } from 'material-ui-icons';
 
-import { messages } from '../../API/firebase';
+import { messages, fire } from '../../API/firebase';
 
 import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
@@ -67,6 +67,11 @@ class ChatBox extends Component {
 
   addMessage(message) {
     const { currentUser } = this.props.app;
+    const newKey = fire
+      .database()
+      .ref()
+      .push().key;
+
     if (!currentUser) {
       this.loginAlert();
       return;
@@ -75,6 +80,7 @@ class ChatBox extends Component {
     } else {
       const updated = {
         body: message,
+        key: newKey,
         user: {
           displayName: currentUser.displayName,
           id: currentUser.uid,
@@ -82,7 +88,7 @@ class ChatBox extends Component {
         }
       };
 
-      messages.push(updated);
+      messages.child(newKey).set(updated);
     }
   }
 
@@ -130,7 +136,9 @@ class ChatBox extends Component {
                   <ListItemText
                     key={index}
                     className="chatContent-listItemText"
-                    primary={<span className="chatContent-primaryText">{message.user.displayName}</span>}
+                    primary={
+                      <span className="chatContent-primaryText">{message.user.displayName}</span>
+                    }
                     secondary={<span className="chatContent-secondaryText">{message.body}</span>}
                   />
                 ))}
@@ -147,9 +155,7 @@ class ChatBox extends Component {
                   return !currentUser ? this.loginAlert() : null;
                 }}
                 onPressEnter={this.onSubmit}
-                placeholder={
-                  currentUser ? 'Tell something' : 'login to write message'
-                }
+                placeholder={currentUser ? 'Tell something' : 'login to write message'}
               />
               <Send className="send-button" onClick={this.onSubmit} />
             </form>
