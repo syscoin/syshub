@@ -23,7 +23,7 @@ export default {
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: 200
+          width: 300
         }
       },
       '& .addvertiseText': {
@@ -52,7 +52,7 @@ export default {
     '& .tile__wrapper': {
       height: '100% !important',
       '&.logo': {
-        marginTop: 55
+        marginTop: 25
       }
     }
   },
