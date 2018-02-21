@@ -12,20 +12,21 @@ const { Header } = Layout;
 class AppHeader extends Component {
   render() {
     return (
-      <Row>
-        <Col>
-          <Header style={appHeaderStyle.wraper}>
-            <AppBar position="fixed">
+      <Header style={appHeaderStyle.container}>
+        <AppBar position="fixed">
+          <Row type="flex" justify="space-around" align="middle" style={appHeaderStyle.appbar}>
+            <Col xl={24} xxl={20}>
               <Toolbar style={appHeaderStyle.header}>
-                <div style={appHeaderStyle.container}>
+                <div style={appHeaderStyle.wrapper}>
                   <HeaderStats />
                   <HeaderNav />
                 </div>
               </Toolbar>
-            </AppBar>
-          </Header>
-        </Col>
-      </Row>
+            </Col>
+          </Row>
+        </AppBar>
+      </Header>
+
     );
   }
 }

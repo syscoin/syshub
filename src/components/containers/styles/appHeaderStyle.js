@@ -3,11 +3,14 @@ import palette from './palette';
 const primary = palette.primary;
 
 export default {
-  wraper: {},
+  container: {},
+  appbar:{
+    backgroundColor: primary
+  },
   header: {
     backgroundColor: primary,
   },
-  container: {
+  wrapper: {
     // border: '1px solid red',
     display: 'flex',
     flexDirection: 'row',
