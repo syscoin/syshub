@@ -64,6 +64,9 @@ class SiderMenu extends Component {
             case 'always':
               showMe = true;
               break;
+            case 'never':
+              showMe = false;
+              break;
             case 'login':
               showMe = this.props.logged;
               break;
