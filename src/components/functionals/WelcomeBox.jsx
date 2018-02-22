@@ -48,7 +48,7 @@ class WelcomeBox extends Component {
           </GridList>
           {!this.props.logged && (
             <div className="joinBtn">
-              <Button raised className="btn" onClick={this.props.onJoin}>
+              <Button variant= 'raised' className="btn" onClick={this.props.onJoin}>
                 <span className="btnText"> Join SysHub </span>
               </Button>
             </div>

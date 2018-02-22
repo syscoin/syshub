@@ -61,7 +61,7 @@ class MasterNodeAdd extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid item>
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">

@@ -202,7 +202,7 @@ class UserProfile extends Component {
               <input
                 ref={input => (this.registerEmail = input)}
                 name="email"
-                id="user-name"
+                id="user-email"
                 className="input-field"
                 placeholder="new-email@company.com"
               />
@@ -212,7 +212,7 @@ class UserProfile extends Component {
           <Grid className="update-button-grid">
             <Button
               onClick={this.submitProfile}
-              raised
+              variant= "raised"
               color="primary"
               className="update-button"
               disabled={this.state.disabled}

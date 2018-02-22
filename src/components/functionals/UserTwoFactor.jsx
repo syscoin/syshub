@@ -361,7 +361,7 @@ class UserTwoFactor extends Component {
               ) : (
                 <div>
                   <Button
-                    raised
+                    variant= "raised"
                     color="primary"
                     className="twoFactor-button"
                     onClick={this.editPhone}
@@ -377,7 +377,7 @@ class UserTwoFactor extends Component {
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
                 <Button
-                  raised
+                  variant= "raised"
                   color="primary"
                   className="twoFactor-button"
                   onClick={this.disableAuth}
