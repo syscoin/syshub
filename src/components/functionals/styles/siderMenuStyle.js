@@ -54,6 +54,7 @@ export default {
     extend: 'root',
     marginTop: 0,
     width: 'calc(100% + 1px)',
+    height: '100%',
     '& .stats__container':{
       background: primary,
       '& .stats__wrapper': {
