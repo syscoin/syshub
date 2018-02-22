@@ -1,34 +1,63 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import SiderLogo from './SiderLogo';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui';
+import { Row, Col } from 'antd';
+
+// API
 import { doLogout } from '../../API/firebase';
 
 //ReduxActions
 import actions from '../../redux/actions';
 
+// Components
+import SiderLogo from './SiderLogo';
 
 import { siderMenuStyle } from './styles';
 
 class SiderMenu extends Component {
   activeComponemt(pageActive) {
-    if(pageActive === 'logout'){
+    if (pageActive === 'logout') {
       doLogout();
       this.props.doLogout();
       this.props.onItemClick('home');
-    }else{
+    } else {
       this.props.onItemClick(pageActive);
     }
   }
 
   render() {
-    const { classes, active, deviceType } = this.props;
+    const { classes, active, deviceType, sysStatsValue } = this.props;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
+    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
+    ).toFixed(5)} BTC/SYS` : '';
+    const masternodes = sysStatsValue ? `${
+      this.props.sysStatsValue.general.registered_masternodes_verified
+      } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';
+    const totUsers = sysStatsValue ? this.props.sysStatsValue.general.all_user : '';
+
     return (
       <div className={style}>
         {this.props.deviceType !== 'mobile' && <SiderLogo />}
+        {this.props.deviceType === 'mobile' && <Row className='stats__container'>
+          <Col span={15} className='stats__wrapper'>
+            <img alt="a" src={require('../../assets/img/png_stasts_sys.png')} className="icon" />
+            <b>{`SYSCOIN: `}</b>
+            {changeRate}
+          </Col>
+          <Col span={9} className='stats__wrapper'>
+            <img alt="a" src={require('../../assets/img/png_stats_users.png')} className="icon" />
+            <b>{`USERS: `}</b>
+            {totUsers}
+          </Col>
+          <Col span={24} className='stats__wrapper'>
+            <img alt="a" src={require('../../assets/img/png_stats_masternodes.png')} className="icon" />
+            <b>{`REGISTERED MASTERNODES: `}</b>
+            {masternodes}
+          </Col>
+        </Row>}
         {this.props.menuItems.map((item, i) => {
           const icon = item.key === active ? item.iconSelected : item.icon;
           const txt = item.key === active ? classes.menuTxtActive : classes.menuTxt;
@@ -73,7 +102,8 @@ class SiderMenu extends Component {
 }
 const stateToProps = state => {
   return {
-    menuItems: state.app.menuItems
+    menuItems: state.app.menuItems,
+    sysStatsValue: state.sysStats.value
   };
 };
 

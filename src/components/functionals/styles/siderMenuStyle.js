@@ -53,6 +53,22 @@ export default {
   mRoot: {
     extend: 'root',
     marginTop: 0,
-
+    '& .stats__container':{
+      background: primary,
+      '& .stats__wrapper': {
+        color: white,
+        fontSize: 14,
+        padding: 10,
+        height: 45,
+        '& b': {
+          color: white
+        },
+        '& img':{
+          width: '25%',
+          maxWidth: 25,
+          marginRight: 10
+        }
+      }
+    }
   }
 };
