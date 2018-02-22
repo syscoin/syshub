@@ -59,7 +59,8 @@ class NewProposal extends Component {
       payCopied: false,
       prepareObj: {},
       userProposal: {},
-      hashError: ''
+      hashError: '',
+      txIdError: '',
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -230,6 +231,18 @@ class NewProposal extends Component {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
       return;
     }
+
+    if (this.state.payValue.length !== 64) {
+      this.setState({
+        txIdError: 'Invalid proposal TXID'
+      });
+      return;
+    } else {
+      this.setState({
+        txIdError: ''
+      });
+    }
+
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     if (this.state.payValue) {
@@ -683,19 +696,19 @@ class NewProposal extends Component {
                   </Button>
                 </div>
               ) : (
-                // proposal detail preview
-                <Row>
-                  <Col
-                    span={deviceType === 'mobile' ? 24 : 22}
-                    offset={deviceType === 'mobile' ? 0 : 1}
-                  >
-                    <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                  </Col>
-                  <Col span={deviceType === 'mobile' ? 24 : 22}>
-                    <div className="proposalContent-div" id="preview-html-container" />
-                  </Col>
-                </Row>
-              )}
+                  // proposal detail preview
+                  <Row>
+                    <Col
+                      span={deviceType === 'mobile' ? 24 : 22}
+                      offset={deviceType === 'mobile' ? 0 : 1}
+                    >
+                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
+                    </Col>
+                    <Col span={deviceType === 'mobile' ? 24 : 22}>
+                      <div className="proposalContent-div" id="preview-html-container" />
+                    </Col>
+                  </Row>
+                )}
             </Col>
           </Row>
         );
@@ -757,11 +770,11 @@ class NewProposal extends Component {
                     {`${this.state.totalAmount || this.state.amount} SYS ${
                       this.state.proposalStartEpoch
                         ? `with a final payment on ${this.yearDayMonth(
-                            this.state.proposalEndEpoch * 1000,
-                            'usa'
-                          )}`
+                          this.state.proposalEndEpoch * 1000,
+                          'usa'
+                        )}`
                         : ''
-                    }`}
+                      }`}
                   </p>
                 </Row>
               </Col>
@@ -856,6 +869,9 @@ class NewProposal extends Component {
                 onChange={this.onChange}
                 name="payValue"
               />
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.txIdError}</span>
+              </div>
               <br />
             </div>
             <div className="submit-btn">
@@ -932,92 +948,92 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => {
-                  return (
-                    <Step className="steper__container" key={label}>
-                      <StepLabel className="steper__label">
-                        <h2 className="step-label"> {label} </h2>
+                <Stepper activeStep={activeStep} orientation="vertical">
+                  {steps.map((label, index) => {
+                    return (
+                      <Step className="steper__container" key={label}>
+                        <StepLabel className="steper__label">
+                          <h2 className="step-label"> {label} </h2>
 
-                        {/*************************************************/}
-                        {/* Commented intentionally don't remove this part*/}
-                        {/*************************************************/}
+                          {/*************************************************/}
+                          {/* Commented intentionally don't remove this part*/}
+                          {/*************************************************/}
 
-                        {/*this.state.activeStep === 0 &&
+                          {/*this.state.activeStep === 0 &&
                             label === 'Proposal Title' &&
                             deviceType !== 'mobile' ? (
                               <h3 className="proposal-title">Proposal Description Url</h3>
                             ) : null*/}
 
-                        {/*************************************************/}
+                          {/*************************************************/}
 
-                        {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                          this.state.showEditor ? (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={this.previewHTML.bind(this)}
-                            >
-                              PREVIEW
-                            </Button>
-                          ) : (
-                            <Button
-                              className="preview-edit-button"
-                              onClick={() => {
-                                this.setState({ showEditor: true });
-                              }}
-                            >
-                              EDITOR
-                            </Button>
-                          )
-                        ) : null}
-                      </StepLabel>
-                      <StepContent>
-                        <div style={{ width: '100%' }}>{this.getStepContent(activeStep)}</div>
-                        <div className={classes.actionsContainer}>
-                          <div
-                            className={
-                              activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                            }
-                          >
-                            {activeStep === 0 ? null : (
+                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
+                            this.state.showEditor ? (
                               <Button
-                                variant="raised"
-                                type="primary"
-                                onClick={this.handleBack}
-                                className="button"
+                                className="preview-edit-button"
+                                onClick={this.previewHTML.bind(this)}
                               >
-                                Back
-                              </Button>
-                            )}
-                            {activeStep === steps.length - 1 ? (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                className={classes.button}
-                                onClick={this.createPropObj}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Confirm
-                              </Button>
+                                PREVIEW
+                            </Button>
                             ) : (
-                              <Button
-                                variant="raised"
-                                type="primary"
-                                onClick={this.handleNext}
-                                className={classes.button}
-                                disabled={this.disabledNextBtn(index)}
-                              >
-                                Next Step
+                                <Button
+                                  className="preview-edit-button"
+                                  onClick={() => {
+                                    this.setState({ showEditor: true });
+                                  }}
+                                >
+                                  EDITOR
+                            </Button>
+                              )
+                          ) : null}
+                        </StepLabel>
+                        <StepContent>
+                          <div style={{ width: '100%' }}>{this.getStepContent(activeStep)}</div>
+                          <div className={classes.actionsContainer}>
+                            <div
+                              className={
+                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
+                              }
+                            >
+                              {activeStep === 0 ? null : (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  onClick={this.handleBack}
+                                  className="button"
+                                >
+                                  Back
                               </Button>
-                            )}
+                              )}
+                              {activeStep === steps.length - 1 ? (
+                                <Button
+                                  variant="raised"
+                                  type="primary"
+                                  className={classes.button}
+                                  onClick={this.createPropObj}
+                                  disabled={this.disabledNextBtn(index)}
+                                >
+                                  Confirm
+                              </Button>
+                              ) : (
+                                  <Button
+                                    variant="raised"
+                                    type="primary"
+                                    onClick={this.handleNext}
+                                    className={classes.button}
+                                    disabled={this.disabledNextBtn(index)}
+                                  >
+                                    Next Step
+                              </Button>
+                                )}
+                            </div>
                           </div>
-                        </div>
-                      </StepContent>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-            )}
+                        </StepContent>
+                      </Step>
+                    );
+                  })}
+                </Stepper>
+              )}
           </Paper>
         </div>
       </div>

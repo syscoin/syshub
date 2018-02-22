@@ -48,7 +48,8 @@ const initialState = {
       iconSelected: 'png_menu_faq_selected',
       title: 'Faq',
       pageTitle: 'FAQ',
-      showWhen: 'always'
+      showWhen: 'never',
+      showPlatform: 'all'
     },
     {
       key: 'masterNode',
@@ -56,7 +57,25 @@ const initialState = {
       iconSelected: 'png_menu_masternodes_selected',
       title: 'Masternode Setting',
       pageTitle: 'Masternode',
-      showWhen: 'login'
+      showWhen: 'login',
+      showPlatform: 'all'
+    },
+    {
+      key: 'login',
+      icon: 'login_icon',
+      iconSelected: 'login_icon',
+      title: 'Login',
+      pageTitle: 'Login',
+      showWhen: 'logout',
+      showPlatform: 'mobile'
+    }, {
+      key: 'logout',
+      icon: 'logout_icon',
+      iconSelected: 'logout_icon',
+      title: 'Logout',
+      pageTitle: 'Logout',
+      showWhen: 'login',
+      showPlatform: 'mobile'
     }
   ],
   currentUser: null,
