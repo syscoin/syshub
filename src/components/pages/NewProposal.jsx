@@ -347,6 +347,47 @@ class NewProposal extends Component {
     }
   }
 
+  handleReset = (step) => {
+    const {
+      savedProposal,
+      proposalName,
+      proposalTitle,
+      proposallink,
+      proposalStartEpoch,
+      paymentQuantity,
+      address,
+      amount,
+      proposalEndEpoch,
+      totalAmount,
+    } = this.state;
+
+    this.setState({
+      visible: false,
+      activeStep: step || 0,
+      recover: false,
+      pCopied: false,
+      sCopied: false,
+    });
+    const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
+    const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
+    const editorState = EditorState.createWithContent(editorContentState);
+    console.log('ACZ: savedProposal', savedProposal)
+    console.log('ACZ: address', this.state.address);
+    this.setState({
+      proposalName: proposalName || savedProposal.name,
+      proposalTitle: proposalTitle || savedProposal.title,
+      proposallink: proposallink || savedProposal.url,
+      editorState,
+      proposalStartEpoch: proposalStartEpoch || savedProposal.first_epoch,
+      paymentQuantity: paymentQuantity || savedProposal.nPayment,
+      address: address || savedProposal.payment_address,
+      amount: amount || savedProposal.payment_amount,
+      proposalEndEpoch: proposalEndEpoch || savedProposal.end_epoch,
+      totalAmount: totalAmount || savedProposal.payment_amount * savedProposal.nPayment,
+
+    });
+  };
+
   createPropObj = () => {
     const { app } = this.props;
     const { currentUser } = app;
@@ -369,10 +410,10 @@ class NewProposal extends Component {
       return;
     }
 
-    this.setState({
+    /* this.setState({
       activeStep: this.state.activeStep + 1,
       showEditor: true
-    });
+    }); */
 
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
@@ -478,32 +519,7 @@ class NewProposal extends Component {
     );
   };
 
-  handleReset = (step) => {
-    const savedProposal = this.state.savedProposal;
-    this.setState({
-      visible: false,
-      activeStep: step || 0,
-      recover: false,
-    });
-    const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
-    const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
-    const editorState = EditorState.createWithContent(editorContentState);
-    console.log('ACZ: ', this.state.savedProposal);
-    console.log('ACZ: ', this.state.editorState);
-    this.setState({
-      proposalName: savedProposal.name,
-      proposalTitle: savedProposal.title,
-      proposallink: savedProposal.url,
-      editorState,
-      proposalStartEpoch: savedProposal.first_epoch,
-      paymentQuantity: savedProposal.nPayment,
-      address: savedProposal.payment_address,
-      amount: savedProposal.payment_amount,
-      proposalEndEpoch: savedProposal.end_epoch,
-      totalAmount: savedProposal.payment_amount * savedProposal.nPayment,
 
-    });
-  };
 
   //date change function
   onDateChange(value) {
@@ -570,6 +586,7 @@ class NewProposal extends Component {
   //all the step contents are coming from return of switch case
   getStepContent(step) {
     const { deviceType } = this.props;
+
     switch (step) {
       case 0:
         return (
@@ -823,7 +840,7 @@ class NewProposal extends Component {
               </CopyToClipboard>
             </div>
             <div className="id-input">
-              <span> Input Payment Id Here: </span>
+              <span> Enter Prepare TXID Here:  </span>
               <Input
                 value={this.state.payValue}
                 disabled={this.state.sValue}
@@ -834,10 +851,10 @@ class NewProposal extends Component {
             </div>
             <div className="submit-btn">
               <Button type="primary" disabled={this.state.sValue} onClick={() => this.handleReset()}>
-                <Icon type="left" />{`Back to Edit`}
+                <Icon type="left" />{`Back & Edit`}
               </Button>
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
-                Submit Payment Id
+                Submit TXID
               </Button>
             </div>
             {/* {this.state.sValue ? (
@@ -939,7 +956,7 @@ class NewProposal extends Component {
                           ) : null}
                         </StepLabel>
                         <StepContent>
-                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                          <div style={{ width: '100%' }}>{this.getStepContent(activeStep)}</div>
                           <div className={classes.actionsContainer}>
                             <div
                               className={
