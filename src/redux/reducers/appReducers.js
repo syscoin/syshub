@@ -53,7 +53,7 @@ const initialState = {
       iconSelected: 'png_menu_faq_selected',
       title: 'Faq',
       pageTitle: 'FAQ',
-      showWhen: 'always',
+      showWhen: 'never',
       showPlatform: 'all'
     },
     {
@@ -73,7 +73,7 @@ const initialState = {
       pageTitle: 'Login',
       showWhen: 'logout',
       showPlatform: 'mobile'
-    },{
+    }, {
       key: 'logout',
       icon: 'logout_icon',
       iconSelected: 'logout_icon',
