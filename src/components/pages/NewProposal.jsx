@@ -10,7 +10,7 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
@@ -187,7 +187,11 @@ class NewProposal extends Component {
 
             })
             .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              swal({
+                title: 'Oops...',
+                text: `${err}`,
+                icon: 'error',
+              });
             });
         }
       });
@@ -327,10 +331,21 @@ class NewProposal extends Component {
       updated.txid = e.target.value;
       proposalRef.set(updated);
     }
-
+    alert(this.state.savedProposal.txid);
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  checkErrorManager(dataErr) {
+    const dataErrArray = dataErr.replace(/\n/g, '').split(';');
+    const errorMessage = dataErrArray[dataErrArray.length - 2];
+    switch (errorMessage) {
+      case "Invalid name":
+        return { message: errorMessage, step: 0 }
+      default:
+        return { message: errorMessage, step: 2 }
+    }
   }
 
   createPropObj = () => {
@@ -416,7 +431,9 @@ class NewProposal extends Component {
       .then(data => {
         if (data['Object status'] === 'OK') {
           return this.props.prepareProposal(prepareObj);
-        } else { alert(data) }
+        } else {
+          throw this.checkErrorManager(data);
+        }
       })
       .then(prepareResponse => {
         if (prepareResponse) {
@@ -430,7 +447,11 @@ class NewProposal extends Component {
         }
       })
       .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+        swal({
+          title: 'Oops...',
+          text: `${err.message}`,
+          icon: 'error',
+        }).then(value => this.handleReset(err.step));
       });
   };
 
@@ -458,11 +479,11 @@ class NewProposal extends Component {
     );
   };
 
-  handleReset = () => {
+  handleReset = (step) => {
     const savedProposal = this.state.savedProposal;
     this.setState({
       visible: false,
-      activeStep: 0,
+      activeStep: step || 0,
       recover: false,
     });
     const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
@@ -813,8 +834,8 @@ class NewProposal extends Component {
               <br />
             </div>
             <div className="submit-btn">
-              <Button type="primary" disabled={this.state.sValue} onClick={this.handleReset}>
-                {`<< Back to Edit`}
+              <Button type="primary" disabled={this.state.sValue} onClick={() => this.handleReset()}>
+                <Icon type="left" />{`Back to Edit`}
               </Button>
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
                 Submit Payment Id
