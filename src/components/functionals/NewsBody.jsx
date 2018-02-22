@@ -14,7 +14,7 @@ class NewsBody extends Component {
     return (
       <div>
         <Grid container className={style}>
-          <Grid md={12} xs={12} className="new-body__wrapper">
+          <Grid  className="new-body__wrapper">
             <div dangerouslySetInnerHTML={{ __html: body }} />
           </Grid>
         </Grid>
