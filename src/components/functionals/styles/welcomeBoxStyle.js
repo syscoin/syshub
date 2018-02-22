@@ -23,7 +23,7 @@ export default {
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: 300
+          width: '80vw'
         }
       },
       '& .addvertiseText': {
