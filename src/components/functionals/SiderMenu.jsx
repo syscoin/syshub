@@ -14,7 +14,7 @@ import { siderMenuStyle } from './styles';
 
 class SiderMenu extends Component {
   activeComponemt(pageActive) {
-    if(pageActive == 'logout'){
+    if(pageActive === 'logout'){
       doLogout();
       this.props.doLogout();
       this.props.onItemClick('home');
@@ -52,7 +52,7 @@ class SiderMenu extends Component {
           } else if (active === 'home') {
             document.title = 'Syshub';
           }
-          return showMe && (item.showPlatform == 'all' || item.showPlatform == this.props.deviceType) ? (
+          return showMe && (item.showPlatform === 'all' || item.showPlatform === this.props.deviceType) ? (
             <button key={i} className={btnStyle} onClick={() => this.activeComponemt(item.key)}>
               <img
                 alt="a"

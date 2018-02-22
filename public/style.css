@@ -31,3 +31,6 @@ textarea:focus {
 		font-size: 16px;
 	}
 }
+* {
+  -webkit-overflow-scrolling: touch;
+}

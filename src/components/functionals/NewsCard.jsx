@@ -30,8 +30,11 @@ class NewsCard extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const noImage = require('../../assets/img/no-user-image.gif');
 
+    
+    
+    
     return (
-      <div className={style} onClick={()=>{this.props.deviceType === 'mobile'?selectNews(post.guid) : null}}>
+      <div className={style} onClick={()=>{if(this.props.deviceType === 'mobile') selectNews(post.guid) }}>
         <div className='card-item' key={post.guid}>
           {/* news card */}
           <Grid container spacing={24} className="news-card-grid">
