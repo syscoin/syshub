@@ -58,7 +58,8 @@ class NewProposal extends Component {
       hCopied: false,
       payCopied: false,
       prepareObj: {},
-      userProposal: {}
+      userProposal: {},
+      hashError: ''
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -273,14 +274,17 @@ class NewProposal extends Component {
     }
 
     if (this.state.hValue.length !== 64) {
-      swal({
-        title: 'Oops...',
-        text: 'Invalid proposal hash-object.',
-        icon: 'error'
+      this.setState({
+        hashError: 'Invalid proposal hash-object'
       });
 
       return;
+    } else {
+      this.setState({
+        hashError: ''
+      });
     }
+
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     proposalRef.once('value').then(snapshot => {
@@ -911,6 +915,9 @@ class NewProposal extends Component {
               onChange={this.onChange}
               name="hValue"
             />
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.hashError}</span>
+            </div>
             <br />
           </div>
           <div className="submit-btn">
