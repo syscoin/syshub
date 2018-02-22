@@ -10,7 +10,6 @@ import { checkVoted, voted } from '../../API/firebase';
 import { Button } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
-import { fire } from '../../API/firebase';
 import Cryptr from 'cryptr';
 
 // import style

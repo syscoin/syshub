@@ -186,7 +186,7 @@ class UserProfile extends Component {
                 name="usernames"
                 id="user-name"
                 className="input-field"
-                placeholder="Enter Username"
+                placeholder="new-username"
                 onChange={this.checkUsername}
               />
               <span className="validation-message">
@@ -204,7 +204,7 @@ class UserProfile extends Component {
                 name="email"
                 id="user-name"
                 className="input-field"
-                placeholder="Enter email"
+                placeholder="new-email@company.com"
               />
               <span className="validation-message">*password required.</span>
             </FormGroup>

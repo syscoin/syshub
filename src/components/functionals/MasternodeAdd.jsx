@@ -72,7 +72,7 @@ class MasterNodeAdd extends Component {
                   id="name"
                   name="name"
                   className="input-field"
-                  placeholder="masternode_name"
+                  placeholder="masternode-name"
                   value={this.state.newNode.name}
                   onChange={this.onChange}
                 />

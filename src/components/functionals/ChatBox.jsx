@@ -155,7 +155,7 @@ class ChatBox extends Component {
                   return !currentUser ? this.loginAlert() : null;
                 }}
                 onPressEnter={this.onSubmit}
-                placeholder={currentUser ? 'Tell something' : 'login to write message'}
+                placeholder={currentUser ? 'Tell something' : 'login to send message'}
               />
               <Send className="send-button" onClick={this.onSubmit} />
             </form>
