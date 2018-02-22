@@ -155,7 +155,7 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile image grid */}
-          <Grid md={3} item className="profile-image-grid">
+          <Grid md={3} lg={2} item className="profile-image-grid">
             <div className="avatar-container upload-image-container">
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
@@ -175,7 +175,7 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile credential grid */}
-          <Grid md={9} item className="profile-credential-grid">
+          <Grid md={9} lg={10} item className="profile-credential-grid">
             {/* For User Name */}
             <FormGroup className="form-group">
               <span htmlFor="user-name" className="label">
@@ -209,7 +209,7 @@ class UserProfile extends Component {
               <span className="validation-message">*password required.</span>
             </FormGroup>
           </Grid>
-          <Grid className="update-button-grid">
+          <Grid md={9} lg={12}   className="update-button-grid">
             <Button
               onClick={this.submitProfile}
               variant= "raised"

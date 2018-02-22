@@ -19,6 +19,7 @@ export default {
       borderBottom: '0.1px solid ' + greyLight
     },
     '& .profile-image-grid': {
+      maxWidth:205,
       '& .avatar-container': {
         maxWidth: 150,
         marginLeft: 20,
@@ -31,6 +32,7 @@ export default {
       '& .change-photo-btn': {
         fontSize: '12px',
         marginLeft: '38px',
+        width:'100%',
         '& .link-color': {
           color: primary,
           fontWeight: 'normal',

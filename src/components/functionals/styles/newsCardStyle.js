@@ -20,15 +20,15 @@ export default {
       textTransform: 'capitalize',
     },
     '& .news-card-grid': {
+      position: 'relative',
       '& .newsCardImage-grid': {
-        padding: '20px 0px 0px 10px',
-        maxWidth: 140,
+        padding: '10px 0px 0px 10px',
+        maxWidth: 100,
         '& img': {
           width: '100%',
         },
       },
       '& .newsCardContent-grid': {
-        marginTop: 15,
         verticalAlign: 'middle',
         '& .card': {
           boxShadow: 'none',
@@ -53,6 +53,10 @@ export default {
       '& .showMoreButton-grid': {
         textAlign: 'right',
         marginRight: '20px',
+        padding: '0px 15px 10px 0px',
+        position: 'absolute',
+        bottom: 3,
+        right: 0,
         '& button': {
           borderRadius: '5px',
           padding: '0px',

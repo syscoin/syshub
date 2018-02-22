@@ -61,7 +61,6 @@ class Register extends Component {
   }
 
   onChange = e => {
-
     if (this.state.disableRegisterButton === false) {
       this.setState({
         checked: e.target.checked,

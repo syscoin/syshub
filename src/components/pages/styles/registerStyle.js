@@ -93,7 +93,7 @@ export default {
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid',
-        marginRight:30
+        marginRight:88
       },
       '& .form-button-group': {
         textAlign: 'center',
@@ -115,6 +115,7 @@ export default {
     extend: 'root',
     marginTop: 0,
     paddingLeft: 0,
+    height: '100%',
     '& .input-field': {
       width: '100% !important',
       margin: '0px !important'

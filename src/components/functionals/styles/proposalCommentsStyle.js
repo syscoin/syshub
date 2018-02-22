@@ -29,6 +29,7 @@ export default {
       }
     },
     '& .commentSectionslView': {
+      width:'55%',
       margin: 0,
       marginLeft: '4%',
       marginTop: 10,
@@ -39,7 +40,7 @@ export default {
       height: 175,
       '& .commentHeading': {
         color: greyDark,
-        padding: '10px 28px',
+        padding: '10px 10px 0px 28px ',
         fontWeight: 500,
         fontSize: 16
       },
@@ -47,9 +48,10 @@ export default {
         color: gray,
         fontSize: 15,
         background: white,
-        padding: '10px 20px',
+        padding: '10px 10px 20px 10px',
         maxWidth: '100%%',
         '& .userComment': {
+          color:greyDark,
           border: 0
         },
         '& .proposalDetailsHr': {
