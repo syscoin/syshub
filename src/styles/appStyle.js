@@ -1,11 +1,11 @@
 import palette from './palette';
 
-const greyLight = palette.greyLight;
+const white = palette.white;
 
 
 export default {
   root: {
     height: '100vh',
-    backgroundColor: greyLight
+    backgroundColor: white
   },
 };
