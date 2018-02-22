@@ -25,7 +25,7 @@ export default {
         flexDirection: 'row',
         marginTop: '10px',
         '& .ant-form-explain': {
-          marginLeft: 185,
+          marginLeft: 'calc(25% + 10px)',
           marginTop: 5
         }
       },
@@ -93,11 +93,14 @@ export default {
       '& .terms-of-condition  ': {
         textAlign: 'center',
         display: 'grid',
-        marginRight:88
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
       },
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
           marginRight:40,
@@ -124,7 +127,7 @@ export default {
       marginTop: '10px !important'
     },
     '& .form__container': {
-      marginBottom: '100px',
+      marginBottom: 0,
       '& .label': {
         width: '50%',
         marginBottom: 10,
@@ -132,10 +135,6 @@ export default {
       },
       '& .recaptcha': {
         marginLeft: 0,
-        textAlign: 'center',
-        '& div': {
-          display: 'inline-block'
-        }
       },
       '& .form-group': {
         margin: 0,
@@ -159,7 +158,15 @@ export default {
         }
       },
       '& .terms-of-condition':{
+        width: '100% !important', 
         margin: 0
+      },
+      '& .form-button-group':{
+        width: '100% !important',
+        marginLeft: '0px !important',
+        '& button':{
+          margin: '0px !important'
+        }
       }
     }
   }

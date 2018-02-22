@@ -288,7 +288,7 @@ export default {
       }
     },
     '& textarea': {
-      color: gray,
+      color: greyDark,
       maxWidth: '100%'
     },
     '& button': {

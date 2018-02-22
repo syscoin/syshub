@@ -44,18 +44,15 @@ class SiderMenu extends Component {
         {this.props.deviceType === 'mobile' && <Row className='stats__container'>
           <Col span={15} className='stats__wrapper'>
             <img alt="a" src={require('../../assets/img/png_stasts_sys.png')} className="icon" />
-            <b>{`SYSCOIN: `}</b>
-            {changeRate}
+            <span> <b>{`SYSCOIN: `}</b> {changeRate}</span>
           </Col>
           <Col span={9} className='stats__wrapper'>
             <img alt="a" src={require('../../assets/img/png_stats_users.png')} className="icon" />
-            <b>{`USERS: `}</b>
-            {totUsers}
+            <span><b>{`USERS: `}</b> {totUsers}</span>
           </Col>
           <Col span={24} className='stats__wrapper'>
             <img alt="a" src={require('../../assets/img/png_stats_masternodes.png')} className="icon" />
-            <b>{`REGISTERED MASTERNODES: `}</b>
-            {masternodes}
+            <span><b>{`REGISTERED MASTERNODES: `}</b> {masternodes}</span>
           </Col>
         </Row>}
         {this.props.menuItems.map((item, i) => {

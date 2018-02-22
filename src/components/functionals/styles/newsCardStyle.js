@@ -13,7 +13,7 @@ export default {
     marginBottom: 20,
     '& card-item': {},
     '& .readed': {
-      color: `${grey} !Important`,
+      color: `${grey} !important`,
     },
     '& button span': {
       color: 'white',
@@ -78,12 +78,13 @@ export default {
     },
     '& .divider': {
       marginTop: 10,
-    },
+    }
   },
   mRoot: {
     extend: 'root',
+    minHeight: 125,
     width: 'calc(100% - 20px)',
-    '& card-item': {},
+    borderBottom: 'thin solid ' + grey,
     '& .news-card-grid': {
       width: '100%',
       '& .newsCardImage-grid': {
@@ -92,12 +93,15 @@ export default {
           width: '100%',
           maxWidth: 70,
           marginTop: 30
-        },
+        }
       },
       '& .newsCardContent-grid': {
-        height: 110,
+        height: '100%',
         verticalAlign: 'middle',
         marginTop: 0,
+        '& div': {
+          padding: 0
+        },
         '& .card': {
           '& .news-heading': {
             marginTop: 10,
@@ -116,25 +120,21 @@ export default {
             overflow: 'hidden',
             fontWeight: 100,
             color: greyDark,
-          },
-        },
-      },
-      '& .showMoreButton-grid': {
-        textAlign: 'right',
-        marginRight: 20,
-        '& button': {
-          marginTop: 10,
-          borderRadius: 5,
-          padding: 0,
-          minHeight: 25,
-        },
-        '& button:hover': {
-          backgroundColor: primaryLight
+          }
         }
       },
+      '& .showMoreButton-grid': {
+        display: 'none'
+      },
+      '& button:hover': {
+        backgroundColor: primaryLight
+      }
     },
     '& .divider': {
-      marginTop: 10
-    },
+      display: 'none'
+    }
   },
+  '& .divider': {
+    marginTop: 10
+  }
 };

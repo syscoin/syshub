@@ -143,15 +143,16 @@ export default {
     '& .twoFactor-button-grid': {
       padding: '20px 0px',
       '& .twoFactor-button': {
-        borderRadius: '5px',
-        padding: '8px',
-        minHeight: '40px',
-        width: '150px',
-        fontSize: '16px'
+        borderRadius: 5,
+        padding: 8,
+        minHeight: 40,
+        width: 150,
+        fontSize: 16,
+        marginLeft: 10
       }
     },
     '& .form__container': {
-      marginLeft: 0,
+      marginLeft: 10,
       '& .form-group': {
         display: 'block',
         flexDirection: 'row',
@@ -194,6 +195,9 @@ export default {
         }
       }
     },
+    '& .reCapthaWraper':{
+      marginLeft: 10
+    },
     '& button': {
       backgroundColor: primary,
       '&:hover': {
@@ -219,7 +223,11 @@ export default {
         margin: '15px 0px 20px 10px'
       },
       '& .reCapthaWraper': {
-        margin: '15px 30px'
+        margin: 0,
+        textAlign: 'center',
+        '& div':{
+          display: 'inline-block'
+        }
       }
     },
     '& .form__container': {

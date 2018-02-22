@@ -6,6 +6,6 @@ export default {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    minWidth: '100vw',
+    maxWidth: '100vw',
   },
 };

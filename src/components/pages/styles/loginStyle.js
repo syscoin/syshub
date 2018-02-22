@@ -15,9 +15,6 @@ export default {
       backgroundColor: white,
       padding: '20px',
       boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
-      '& .form__wrapper>div': {
-        maxWidth: 475
-      },
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px'
@@ -27,7 +24,7 @@ export default {
         color: primary
       },
       '& .label': {
-        width: '20%',
+        width: '25%',
         display: 'inline-block',
         textAlign: 'right',
         fontSize: '15px',
@@ -36,7 +33,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(100% - 175px)',
+        width: 300,
         margin: '0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -74,6 +71,8 @@ export default {
         textAlign: 'center',
         display: 'inherit',
         marginTop: 30,
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>button': {
           backgroundColor: primary,
           margin: '0 10px 10px 10px',
@@ -95,7 +94,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    height: 'calc(100vh - 220px)',
+    height: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
     // marginTop: '36px',
@@ -108,11 +107,15 @@ export default {
     },
     '& .recaptcha': {
       width: '100% !important',
-      textAlign: 'center',
+      
       '& div':{
         marginTop: 5,
         display: 'inline-block'
       }
+    },
+    '& .form-button-group':{
+      width: '100% !important',
+      marginLeft: '0px !important'
     }
   }
 };

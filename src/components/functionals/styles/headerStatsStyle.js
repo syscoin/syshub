@@ -14,6 +14,13 @@ export default {
       padding: '0 15px',
       color: white,
       fontSize: 14,
+      '@media (min-width: 1024px) and (max-width: 1334px)':{
+        fontSize: 11,
+        padding: '0 15px',
+        '& .icon':{
+          height: 20
+        }
+      },
       '& .icon': {
         height: 25,
         margin: '0px 10px',

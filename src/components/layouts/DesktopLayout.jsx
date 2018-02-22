@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { connect } from 'react-redux';
+
 
 import {
   AppHeader,
@@ -18,25 +19,29 @@ import { desktopLayoutStyle } from './styles';
 class DesktopLayout extends Component {
   render() {
     return (
-      <Layout>
-        <AppHeader />
-        <div style={desktopLayoutStyle.wraper}>
-          <div style={desktopLayoutStyle.leftSlider}>
-            <AppLSider />
-          </div>
+      <Row type="flex" justify="space-around" align="middle">
+        <Col xl={24} xxl={20}>
+          <Layout>
+            <AppHeader />
+            <div style={desktopLayoutStyle.wraper}>
+              <Col xl={5}>
+                <AppLSider />
+              </Col>
 
-          <div style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
-            <AppContent />
-          </div>
+              <Col style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
+                <AppContent />
+              </Col>
 
-          {this.props.app.showChat && (
-            <div style={desktopLayoutStyle.rightSlider}>
-              <AppRSider />
+              {this.props.app.showChat && (
+                <Col style={desktopLayoutStyle.rightSlider}>
+                  <AppRSider />
+                </Col>
+              )}
             </div>
-          )}
-        </div>
-        <AppFooter />
-      </Layout>
+            <AppFooter />
+          </Layout>
+        </Col>
+      </Row>
     );
   }
 }

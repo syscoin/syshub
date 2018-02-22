@@ -5,12 +5,14 @@ import Paper from 'material-ui/Paper';
 import { Input } from 'antd';
 import swal from 'sweetalert';
 import { Send } from 'material-ui-icons';
+import { Form } from 'antd';
 
 import { messages, fire } from '../../API/firebase';
 
 import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
+
 
 class ChatBox extends Component {
   constructor(props) {
@@ -110,6 +112,7 @@ class ChatBox extends Component {
     const { TextArea } = Input;
     const { classes, deviceType } = this.props;
     const chat_icon = require('../../assets/img/png_menu_chat.png');
+    const FormItem = Form.Item;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
@@ -146,19 +149,21 @@ class ChatBox extends Component {
             </List>
 
             {/* input field for chat */}
-            <form className="form" onSubmit={this.onSubmit}>
-              <TextArea
-                value={this.state.message}
-                name="message"
-                onChange={this.onChange}
-                onClick={() => {
-                  return !currentUser ? this.loginAlert() : null;
-                }}
-                onPressEnter={this.onSubmit}
-                placeholder={currentUser ? 'Tell something' : 'login to send message'}
-              />
+            <Form className="form" onSubmit={this.onSubmit}>
+              <FormItem>
+                <TextArea
+                  value={this.state.message}
+                  name="message"
+                  onChange={this.onChange}
+                  onClick={() => {
+                    return !currentUser ? this.loginAlert() : null;
+                  }}
+                  onPressEnter={this.onSubmit}
+                  placeholder={currentUser ? 'Tell something' : 'login to send message'}
+                />
+              </FormItem>
               <Send className="send-button" onClick={this.onSubmit} />
-            </form>
+            </Form>
           </Paper>
         </div>
       </div>

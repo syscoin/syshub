@@ -5,7 +5,6 @@ import injectSheet from 'react-jss';
 import {
   MAppHeader,
   MAppContent,
-  MAppFooter
 } from '../containers/';
 
 //Import Styles
@@ -27,7 +26,6 @@ class MobileLayout extends Component {
       <div className={classes.root}>
         <MAppHeader />
         <MAppContent />
-        <MAppFooter />
       </div>
     );
   }
