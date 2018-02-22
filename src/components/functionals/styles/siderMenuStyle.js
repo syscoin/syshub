@@ -53,13 +53,18 @@ export default {
   mRoot: {
     extend: 'root',
     marginTop: 0,
+    width: 'calc(100% + 1px)',
     '& .stats__container':{
       background: primary,
       '& .stats__wrapper': {
         color: white,
-        fontSize: 14,
+        fontSize: '3.5vw',
         padding: 10,
         height: 45,
+        '& span':{
+          verticalAlign: 'sub',
+          color: white
+        },
         '& b': {
           color: white
         },
