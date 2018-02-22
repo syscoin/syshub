@@ -63,9 +63,6 @@ export default {
         '& .form': {
           border: 'thin solid ' + grey,
           backgroundColor: white,
-          '& TextArea': {
-            height: '0px !important'
-          },
           '&>div': {
             width: 'calc(100% - 60px)',
             // marginLeft: '20px',
@@ -96,9 +93,16 @@ export default {
           position: 'fixed',
           bottom: 0,
           width: '100%',
+          height: 50,
           '& div':{
             width: 'calc(100% - 0px) !important',
-            marginBottom: '0px !important'
+            marginBottom: '0px !important',
+            height: '100%',
+            '& textarea':{
+              height: '50px !important',
+              border: 'none',
+              borderTop: '2px solid '+primary
+            }
           },
           '& .send-button':{
             top: 8
@@ -119,8 +123,10 @@ export default {
           },
         },
         '& .list': {
+          maxHeight: 'calc(100% - 155px) !important',
+          overflowY: 'scroll',
           '& .chat-list': {
-            height: 'calc(100vh - 230px) !important',
+            height: 'calc(100% - 110px) !important',
           }
         }
       }

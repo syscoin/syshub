@@ -4,12 +4,23 @@ import React, { Component } from 'react';
 import SiderLogo from './SiderLogo';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui';
+import { doLogout } from '../../API/firebase';
+
+//ReduxActions
+import actions from '../../redux/actions';
+
 
 import { siderMenuStyle } from './styles';
 
 class SiderMenu extends Component {
-  tests(pageActive) {
-    this.props.onItemClick(pageActive);
+  activeComponemt(pageActive) {
+    if(pageActive == 'logout'){
+      doLogout();
+      this.props.doLogout();
+      this.props.onItemClick('home');
+    }else{
+      this.props.onItemClick(pageActive);
+    }
   }
 
   render() {
@@ -41,8 +52,8 @@ class SiderMenu extends Component {
           } else if (active === 'home') {
             document.title = 'Syshub';
           }
-          return showMe ? (
-            <button key={i} className={btnStyle} onClick={() => this.tests(item.key)}>
+          return showMe && (item.showPlatform == 'all' || item.showPlatform == this.props.deviceType) ? (
+            <button key={i} className={btnStyle} onClick={() => this.activeComponemt(item.key)}>
               <img
                 alt="a"
                 src={require(`../../assets/img/${icon}.png`)}
@@ -53,6 +64,7 @@ class SiderMenu extends Component {
             </button>
           ) : null;
         })}
+
         <div className={classes.lastBorder} />
         {/*Last border*/}
       </div>
@@ -66,8 +78,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    doLogout: () => dispatch(actions.doLogout())
+  };
 };
 
 export default connect(stateToProps, dispatchToProps)(withStyles(siderMenuStyle)(SiderMenu));
-// export default injectSheet(siderMenuStyle)(SiderMenu);

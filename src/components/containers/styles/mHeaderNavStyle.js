@@ -35,7 +35,7 @@ export default {
     '& .right-section': {
       padding: 0,
       textAlign: 'center',
-      height: 55,
+      height: 54,
       borderLeft: 'thin solid ' + grey,
       '& button': {
         '& img': {

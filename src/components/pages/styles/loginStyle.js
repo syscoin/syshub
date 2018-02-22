@@ -94,7 +94,7 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    height: 'calc(100vh - 220px)',
+    height: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
     // marginTop: '36px',
