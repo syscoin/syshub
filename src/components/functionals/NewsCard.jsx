@@ -35,7 +35,7 @@ class NewsCard extends Component {
     
     return (
       <div className={style} onClick={()=>{if(this.props.deviceType === 'mobile') selectNews(post.guid) }}>
-        <div className='card-item' key={post.guid}>
+        <div className='card-item' key={post.guid}> 
           {/* news card */}
           <Grid container spacing={24} className="news-card-grid">
             {/* news image grid */}
