@@ -252,6 +252,12 @@ class ProposalCard extends Component {
                   </a>
                 )
               });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
             });
         }
       })
@@ -428,6 +434,12 @@ class ProposalCard extends Component {
                   </a>
                 )
               });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
             });
         }
       })
