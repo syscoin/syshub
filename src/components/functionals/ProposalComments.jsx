@@ -292,35 +292,44 @@ class ProposalComments extends Component {
   }
 
   showAddReplyBtn(_commentID, showAddReply) {
-    let allComments = this.state.allComments.map((comment) => {
-      if (comment._id === _commentID) {
-        comment.showAddReply = showAddReply;
-        return comment;
-      }
-      return comment
-    })
-    this.setState({ allComments })
+    if (this.props.user) {
+      let allComments = this.state.allComments.map((comment) => {
+        if (comment._id === _commentID) {
+          comment.showAddReply = showAddReply;
+          return comment;
+        }
+        return comment
+      })
+      this.setState({ allComments })
+    }else{
+      this.loginAlert();
+    }
   }
 
   openCommentBox(){
     if (this.props.user) {
       this.setState({ showAddComment: true });
     }else{
-      swal({
-        title: "Are You Login?",
-        text: "Please Login first to add Comment",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            this.props.setPage('login')
-          } else {
-            // swal("Your imaginary file is safe!");
-          }
-        });
+      this.loginAlert();
     }
+  }
+
+  loginAlert(){
+    swal({
+      title: "Are You Login?",
+      text: "Please Login first to add Comment",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.setPage('login')
+        } else {
+          // swal("Your imaginary file is safe!");
+        }
+      });
+
   }
 
   render() {

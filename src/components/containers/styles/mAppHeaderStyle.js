@@ -7,7 +7,7 @@ const white = palette.white;
 
 export default {
   mRoot: {
-    height: 130,
+    height: 55,
     width: '100vw', 
     '& .app-bar': {
       boxShadow: 'none'
@@ -24,7 +24,7 @@ export default {
       alignItem: 'center',
       minWidth: '100%',
       padding: '0 0 0 0',
-      height: 135,
+      height: 55,
       '& .top-header__wrapper': {
         height: 126,
         marginTop: -30,

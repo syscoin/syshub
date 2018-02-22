@@ -5,12 +5,13 @@ import Paper from 'material-ui/Paper';
 import { Input } from 'antd';
 import swal from 'sweetalert';
 import { Send } from 'material-ui-icons';
-
+import { Form } from 'antd';
 import { messages } from '../../API/firebase';
 
 import List, { ListItemText } from 'material-ui/List';
 import { chatBoxStyle } from './styles';
 import { withStyles } from 'material-ui';
+
 
 class ChatBox extends Component {
   constructor(props) {
@@ -104,6 +105,7 @@ class ChatBox extends Component {
     const { TextArea } = Input;
     const { classes, deviceType } = this.props;
     const chat_icon = require('../../assets/img/png_menu_chat.png');
+    const FormItem = Form.Item;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
@@ -138,7 +140,8 @@ class ChatBox extends Component {
             </List>
 
             {/* input field for chat */}
-            <form className="form" onSubmit={this.onSubmit}>
+            <Form className="form" onSubmit={this.onSubmit}>
+              <FormItem>
               <TextArea
                 value={this.state.message}
                 name="message"
@@ -151,8 +154,9 @@ class ChatBox extends Component {
                   currentUser ? 'Tell something' : 'login to write message'
                 }
               />
+              </FormItem>
               <Send className="send-button" onClick={this.onSubmit} />
-            </form>
+            </Form>
           </Paper>
         </div>
       </div>

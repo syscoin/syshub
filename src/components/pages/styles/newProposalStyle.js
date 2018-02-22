@@ -241,6 +241,12 @@ export default {
     },
     '& .paper-container': {
       padding: '0 !important'
+    },
+    '& .paymentDetail-row':{
+      height: '100px !important'
+    },
+    '& .amount-row':{
+      marginTop: '10px !important'
     }
   },
   modal: {

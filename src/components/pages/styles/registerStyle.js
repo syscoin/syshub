@@ -127,7 +127,7 @@ export default {
       marginTop: '10px !important'
     },
     '& .form__container': {
-      marginBottom: '100px',
+      marginBottom: 0,
       '& .label': {
         width: '50%',
         marginBottom: 10,
@@ -135,10 +135,6 @@ export default {
       },
       '& .recaptcha': {
         marginLeft: 0,
-        textAlign: 'center',
-        '& div': {
-          display: 'inline-block'
-        }
       },
       '& .form-group': {
         margin: 0,
@@ -162,7 +158,15 @@ export default {
         }
       },
       '& .terms-of-condition':{
+        width: '100% !important', 
         margin: 0
+      },
+      '& .form-button-group':{
+        width: '100% !important',
+        marginLeft: '0px !important',
+        '& button':{
+          margin: '0px !important'
+        }
       }
     }
   }

@@ -12,7 +12,7 @@ export default {
     '& .left-section': {
       textAlign: 'center',
       padding: 0,
-      height: 45,
+      height: 55,
       borderRight: 'thin solid ' + grey,
       '& button': {
         height: 30,
@@ -25,7 +25,7 @@ export default {
     },
     '& .center-section': {
       textAlign: 'center',
-      height: 50,
+      height: 55,
       '& img': {
         height: 40,
         width: 70,
@@ -35,7 +35,7 @@ export default {
     '& .right-section': {
       padding: 0,
       textAlign: 'center',
-      height: 47,
+      height: 55,
       borderLeft: 'thin solid ' + grey,
       '& button': {
         '& img': {

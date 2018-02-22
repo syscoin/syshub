@@ -92,6 +92,18 @@ export default {
       height: '100%',
       '& .paper-style': {
         height: '100%',
+        '& form':{
+          position: 'fixed',
+          bottom: 0,
+          width: '100%',
+          '& div':{
+            width: 'calc(100% - 0px) !important',
+            marginBottom: '0px !important'
+          },
+          '& .send-button':{
+            top: 8
+          }
+        },
         '& .chatbox-Header': {
           textAlign: 'center !important',
           height: '50px  !important',

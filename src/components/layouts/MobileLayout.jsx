@@ -27,7 +27,7 @@ class MobileLayout extends Component {
       <div className={classes.root}>
         <MAppHeader />
         <MAppContent />
-        <MAppFooter />
+        {/* <MAppFooter /> */}
       </div>
     );
   }

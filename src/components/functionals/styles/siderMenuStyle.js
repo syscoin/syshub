@@ -24,7 +24,7 @@ export default {
     borderStyle: 'solid',
     borderColor: grey,
     '&>img': {
-      marginLeft: 41,
+      marginLeft: 20,
     },
     '&:hover': {
       background: `linear-gradient(${greyLight}, ${white})`

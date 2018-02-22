@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import Button from 'material-ui/Button';
+// import Button from 'material-ui/Button';
 
 import { Layout } from 'antd';
 import injectSheet from 'react-jss';
@@ -17,8 +17,8 @@ import { doLogout } from '../../API/firebase';
 import actions from '../../redux/actions';
 
 //import components
-import { HeaderStats } from '../functionals';
-import { Grid } from 'material-ui';
+// import { HeaderStats } from '../functionals';
+// import { Grid } from 'material-ui';
 import MHeaderNav from './MHeaderNav';
 
 //Import Styles
@@ -28,11 +28,11 @@ const { Header } = Layout;
 
 class AppHeader extends Component {
   doLogout() {
-    const { currentUser } = this.props.app;
-    if (currentUser) {
-      doLogout();
-      this.props.doLogout();
-    }
+    // const { currentUser } = this.props.app;
+    // if (currentUser) {
+    //   doLogout();
+    //   this.props.doLogout();
+    // }
   }
 
   renderName(name) {
@@ -44,7 +44,7 @@ class AppHeader extends Component {
 
   render() {
     const { classes, deviceType } = this.props;
-    const { currentUser } = this.props.app;
+    // const { currentUser } = this.props.app;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -54,7 +54,7 @@ class AppHeader extends Component {
           <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
-                <Grid className="top-header__wrapper">
+                {/* <Grid className="top-header__wrapper">
                   <Grid item xs={6} className="header-bitcoin-status">
                     <HeaderStats deviceType={deviceType} />
                   </Grid>
@@ -86,7 +86,7 @@ class AppHeader extends Component {
                       </Button>
                     )}
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <MHeaderNav className="bottom-header__wrapper" />
               </div>
             </Toolbar>

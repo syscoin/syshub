@@ -107,11 +107,15 @@ export default {
     },
     '& .recaptcha': {
       width: '100% !important',
-      textAlign: 'center',
+      
       '& div':{
         marginTop: 5,
         display: 'inline-block'
       }
+    },
+    '& .form-button-group':{
+      width: '100% !important',
+      marginLeft: '0px !important'
     }
   }
 };
