@@ -331,7 +331,6 @@ class NewProposal extends Component {
       updated.txid = e.target.value;
       proposalRef.set(updated);
     }
-    alert(this.state.savedProposal.txid);
     this.setState({
       [e.target.name]: e.target.value
     });
