@@ -12,7 +12,7 @@ export default {
     justifyAlign: 'flex-start',
     width: '100%',
     marginTop: 50,
-    height: '80vh'
+    height: 'calc(100vh - 122px)'
   },
   button: {
     height: '50px',

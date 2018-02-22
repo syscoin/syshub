@@ -6,10 +6,10 @@ export default {
     flexDirection: 'row',
     alignItems: 'start',
     minWidth: 'calc(100% - 20px)',
-    height: 'calc(100vh - 125px)',
+    height: 'calc(100vh - 122px)',
   },
   appContent: {
-    height: 'calc(100vh - 80px)',
+    height: 'calc(100vh - 140px)',
     marginLeft: 20,
     marginTop: 20,
     width: 'calc(80% - 75px)'
