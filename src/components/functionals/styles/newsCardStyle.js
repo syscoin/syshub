@@ -22,6 +22,7 @@ export default {
     '& .news-card-grid': {
       '& .newsCardImage-grid': {
         padding: '20px 0px 0px 10px',
+        maxWidth: 140,
         '& img': {
           width: '100%',
         },
@@ -77,18 +78,22 @@ export default {
   },
   mRoot: {
     extend: 'root',
+    width: 'calc(100% - 20px)',
     '& card-item': {},
     '& .news-card-grid': {
-      width: '110%',
+      width: '100%',
       '& .newsCardImage-grid': {
         padding: '0px 0px 0px 0px',
         '& img': {
-          width: '110%',
+          width: '100%',
+          maxWidth: 70,
+          marginTop: 30
         },
       },
       '& .newsCardContent-grid': {
         height: 110,
         verticalAlign: 'middle',
+        marginTop: 0,
         '& .card': {
           '& .news-heading': {
             marginTop: 10,
@@ -112,12 +117,12 @@ export default {
       },
       '& .showMoreButton-grid': {
         textAlign: 'right',
-        marginRight: '20px',
+        marginRight: 20,
         '& button': {
           marginTop: 10,
-          borderRadius: '5px',
-          padding: '0px',
-          minHeight: '25px',
+          borderRadius: 5,
+          padding: 0,
+          minHeight: 25,
         },
         '& button:hover': {
           backgroundColor: primaryLight
@@ -125,8 +130,7 @@ export default {
       },
     },
     '& .divider': {
-      marginTop: 10,
-      width: '105%'
+      marginTop: 10
     },
   },
 };

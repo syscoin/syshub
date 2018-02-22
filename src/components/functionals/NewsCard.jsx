@@ -25,6 +25,7 @@ class NewsCard extends Component {
       image,
       deviceType,
     } = this.props;
+    console.log(post.pubDate.slice(0, -12),"data-------------")
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const noImage = require('../../assets/img/no-user-image.gif');
@@ -69,7 +70,7 @@ class NewsCard extends Component {
                     component="p"
                     className="cardSubHeading"
                   >
-                    {post.pubDate}
+                    {post.pubDate.slice(0, -12)}
                   </Typography>
                   {/* content text */}
                   <Typography component="p" className="newsContent">
