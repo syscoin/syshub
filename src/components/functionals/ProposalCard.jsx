@@ -112,17 +112,21 @@ class ProposalCard extends Component {
                     'Invalid proposal hash. Please check: ' + cryptr.decrypt(MN[i].mnPrivateKey)
                   );
                 }
-                return;
               }
 
               if (RegExp(/\s-8\s/).test(data)) {
                 if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
                   throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(MN[i].vin));
                 }
-                return;
               }
-
               mnData.push(`${MN[i].name}: ${data}`);
+
+              this.props.getProposals();
+              let mnKeyIds = [];
+              user.MasterNodes.forEach(mnObj => {
+                mnKeyIds.push(mnObj.keyId);
+                voted(user, proposal, 'No', 2, mnKeyIds);
+              });
 
               if (i + 1 === user.MasterNodes.length) {
                 const content = document.createElement('div');
@@ -132,13 +136,6 @@ class ProposalCard extends Component {
                   title: 'Success',
                   content: content,
                   icon: 'success'
-                });
-
-                this.props.getProposals();
-                let mnKeyIds = [];
-                user.MasterNodes.forEach(mnObj => {
-                  mnKeyIds.push(mnObj.keyId);
-                  voted(user, proposal, 'Yes', 1, mnKeyIds);
                 });
               }
             })
@@ -216,17 +213,21 @@ class ProposalCard extends Component {
                     'Invalid proposal hash. Please check: ' + cryptr.decrypt(MN[i].mnPrivateKey)
                   );
                 }
-                return;
               }
 
               if (RegExp(/\s-8\s/).test(data)) {
                 if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
                   throw new Error('Invalid vin. Please check: ' + cryptr.decrypt(MN[i].vin));
                 }
-                return;
               }
-
               mnData.push(`${MN[i].name}: ${data}`);
+
+              this.props.getProposals();
+              let mnKeyIds = [];
+              user.MasterNodes.forEach(mnObj => {
+                mnKeyIds.push(mnObj.keyId);
+                voted(user, proposal, 'No', 2, mnKeyIds);
+              });
 
               if (i + 1 === user.MasterNodes.length) {
                 const content = document.createElement('div');
@@ -236,13 +237,6 @@ class ProposalCard extends Component {
                   title: 'Success',
                   content: content,
                   icon: 'success'
-                });
-
-                this.props.getProposals();
-                let mnKeyIds = [];
-                user.MasterNodes.forEach(mnObj => {
-                  mnKeyIds.push(mnObj.keyId);
-                  voted(user, proposal, 'No', 2, mnKeyIds);
                 });
               }
             })
