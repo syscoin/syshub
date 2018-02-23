@@ -28,5 +28,19 @@ export default {
         )
       );
     };
+  },
+  getSysMnCount: () => {
+    return dispatch => {
+      return dispatch(
+        HTTPAsync.post(
+          `${baseApiURL}/cmd`,
+          {
+            "script": "masternode count"
+
+          },
+          constants.SYS_STATS_MN_GET
+        )
+      );
+    };
   }
 };
