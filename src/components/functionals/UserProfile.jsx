@@ -72,6 +72,9 @@ class UserProfile extends Component {
             this.props.onUpdateProfile(updatedUser);
             this.registerName.value = '';
             this.registerEmail.value = '';
+            this.setState({
+              disabled: false
+            });
           }
         );
 
@@ -80,6 +83,9 @@ class UserProfile extends Component {
       this.props.onUpdateProfile(updatedUser);
       this.registerName.value = '';
       this.registerEmail.value = '';
+      this.setState({
+        disabled: false
+      });
     }
   }
 
