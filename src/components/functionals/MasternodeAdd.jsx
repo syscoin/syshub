@@ -38,7 +38,7 @@ class MasterNodeAdd extends Component {
     this.setState({
       newNode: {
         ...this.state.newNode,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value.replace(/\s/g, '').trim()
       }
     });
   }

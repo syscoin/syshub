@@ -163,6 +163,7 @@ class ChatBox extends Component {
                 />
               </FormItem>
               <Send className="send-button" onClick={this.onSubmit} />
+
             </Form>
           </Paper>
         </div>

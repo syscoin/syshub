@@ -87,7 +87,7 @@ class MasterNodeList extends Component {
     this.setState({
       editNodeRecord: {
         ...this.state.editNodeRecord,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value.replace(/\s/g, '').trim()
       }
     });
   }
