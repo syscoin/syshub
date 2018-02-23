@@ -9,7 +9,8 @@ const basicColors = {
   secondary: '#1ABC9C',
   red: '#D61414',
   green: '#97CB54',
-  transparentBlack: 'rgba(0, 0, 0, 0.70)'
+  transparentBlack: 'rgba(0, 0, 0, 0.70)',
+  boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)'
 };
 
 const themeColors = {
