@@ -76,6 +76,9 @@ const sysStats = (state = initialState, action) => {
       const newValue = smartParse(action.data.data, state.value);
       return { ...state, value: newValue, valueOld: newValue };
     }
+    case constants.SYS_STATS_MN_GET: {
+      return { ...state, MnCount: action.data };
+    }
 
     default:
       return state;

@@ -71,10 +71,12 @@ class App extends Component {
       ua: Platform.UA || ''
     });
     this.props.getSysStats('first');
+    this.props.getSysMnCount();
   }
 
   tick() {
     this.props.getSysStats();
+    this.props.getSysMnCount();
   }
 
   render() {
@@ -110,6 +112,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: first => dispatch(actions.getSysStats(first)),
+    getSysMnCount: first => dispatch(actions.getSysMnCount(first)),
 
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
     setAuth: auth => dispatch(actions.setAuth(auth))

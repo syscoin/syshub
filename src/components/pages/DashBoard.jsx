@@ -76,14 +76,15 @@ class DashBoard extends Component {
 const stateToProps = state => {
   return {
     proposals: state.proposals,
-    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
+    //    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
+    totalNodes: Math.floor(state.sysStats.MnCount * 0.1) + 1,
     app: state.app
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    getProposals: () => dispatch(actions.getProposals())
+    getProposals: () => dispatch(actions.getProposals()),
   };
 };
 export default connect(stateToProps, dispatchToProps)(

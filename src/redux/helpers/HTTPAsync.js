@@ -3,7 +3,7 @@ import axios from 'axios';
 const getRequest = (url, params) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(url, { params })
+      .get(url, params)
       .then(response => {
         resolve(response.data);
       })
