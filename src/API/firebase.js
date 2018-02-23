@@ -2,6 +2,7 @@
 import Rebase from 're-base';
 import * as firebase from 'firebase';
 import swal from 'sweetalert';
+import swal2 from 'sweetalert2';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -306,23 +307,36 @@ const doDeleteAccount = () => {
         return currentUser.reauthenticateWithCredential(credentials);
       })
       .then(() => {
-        swal({
-          closeOnClickOutside: false,
-          closeOnEsc: false,
+        swal2({
+          allowOutsideClick: false,
+          allowEscapeKey: false,
           title: 'WARNING',
-          text: 'Type "DELETE" to delete your account permantly, this cannot be undone!',
-          icon: 'warning',
-          buttons: true,
-          dangerMode: true,
-          content: {
-            element: 'input',
-            attributes: {
-              placeholder: 'Type "DELETE"',
-              type: 'text'
-            }
-          }
+          html:
+            'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
+          type: 'warning',
+          input: 'text',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger'
         }).then(value => {
-          if (value === 'DELETE') {
+          if (value.value === 'DELETE') {
+            fire
+              .database()
+              .ref('2FA/' + currentUser.uid)
+              .remove();
+            fire
+              .database()
+              .ref('proposals/' + currentUser.uid)
+              .remove();
+            fire
+              .database()
+              .ref('MasterNodes/' + currentUser.uid)
+              .remove();
+
             currentUser
               .delete()
               .then(() => {
@@ -339,7 +353,7 @@ const doDeleteAccount = () => {
             return;
           }
 
-          if (value !== 'DELETE') {
+          if (value.value !== 'DELETE') {
             swal({
               title: 'Oops...',
               text: 'Make sure to type "DELETE" with all caps',
