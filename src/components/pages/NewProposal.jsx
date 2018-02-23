@@ -130,14 +130,12 @@ class NewProposal extends Component {
             icon: 'info'
           })
             .then(value => {
-              console.log(value);
               if (value) {
                 this.setState({
                   recover: value,
                   prepareObj: userProp.prepareObj,
                   proposalDetail
                 });
-                console.log('ACZ: newproposal state ', this.state);
 
                 let userProposal = {
                   //there are another def in line 339 both have to be in sync
@@ -397,8 +395,6 @@ class NewProposal extends Component {
     const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
     const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
     const editorState = EditorState.createWithContent(editorContentState);
-    console.log('ACZ: savedProposal', savedProposal);
-    console.log('ACZ: address', this.state.address);
     this.setState({
       proposalName: proposalName || savedProposal.name,
       proposalTitle: proposalTitle || savedProposal.title,
