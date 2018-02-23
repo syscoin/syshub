@@ -679,7 +679,7 @@ class NewProposal extends Component {
                       }
                     }}
                   />
-                  <Button
+                  {/* <Button
                     className="confirm-button"
                     onClick={this.confirmProposalDetail.bind(this)}
                     style={
@@ -689,7 +689,7 @@ class NewProposal extends Component {
                     }
                   >
                     Confirm
-                  </Button>
+                  </Button> */}
                 </div>
               ) : (
                   // proposal detail preview
@@ -783,7 +783,12 @@ class NewProposal extends Component {
   }
 
   onEditorStateChange(editorState) {
+    this.setState(
+      {
+        showEditor: true,
+      });
     this.setState({
+      proposal__detail: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
       editorState
     });
   }

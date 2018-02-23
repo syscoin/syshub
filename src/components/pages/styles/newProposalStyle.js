@@ -167,7 +167,7 @@ export default {
         },
         '& .confirm-button': {
           marginLeft: 'calc(100% - 105px)',
-          marginTop: -45,
+          marginTop: 0,
           position: 'absolute',
           borderRadius: 6,
           backgroundColor: primary
@@ -244,10 +244,10 @@ export default {
     '& .paper-container': {
       padding: '0 !important'
     },
-    '& .paymentDetail-row':{
+    '& .paymentDetail-row': {
       height: '100px !important'
     },
-    '& .amount-row':{
+    '& .amount-row': {
       marginTop: '10px !important'
     },
     '& .steper__container': {
@@ -257,18 +257,18 @@ export default {
       maxHeight: 140,
       overflowY: 'scroll'
     },
-    '& .confirm-button':{
+    '& .confirm-button': {
       margin: '0px !important',
       right: 20,
       bottom: 0,
       zIndex: 10
     },
-    '& .next-btn-div, .confirm-btn-div':{
+    '& .next-btn-div, .confirm-btn-div': {
       height: 35,
       margin: '10px 0px !important',
       textAlign: 'right'
     },
-    '& .proposal-title-input':{
+    '& .proposal-title-input': {
       width: 'calc(100% - 10px) !important'
     }
   },
