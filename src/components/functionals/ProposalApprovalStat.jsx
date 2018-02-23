@@ -45,6 +45,9 @@ class ProposalApprovalStat extends Component {
     let { YesCount, NoCount, AbstainCount } = this.props.proposal;
     let { days_remaining, month_remaining, endDate } = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
+    const totalVotes = YesCount - NoCount > 0 ? YesCount - NoCount : 0;
+
     return (
       <Grid item md={12} className={style}>
         <Grid item className="approvalStatus">
@@ -65,11 +68,11 @@ class ProposalApprovalStat extends Component {
           </Grid>
           <Grid item md={6} className="approvalValue">
             {/*YesCount / totalNodes * 100 >= 50 ? (*/}
-            {YesCount >= totalNodes ? (
+            {totalVotes >= totalNodes ? (
               <span>
                 <span className="approvalGreenColorFont">FUNDED</span> -
                 Sufficient Votes (<span className="approvalGreenColorFont">
-                  {YesCount}
+                  {totalVotes}
                 </span>/{Math.round(totalNodes)})
               </span>
             ) : (
@@ -77,7 +80,7 @@ class ProposalApprovalStat extends Component {
                   <Typography gutterBottom >
                     <span className="approvalRedColorFont">UNFUNDED</span> -
                 Insufficient Votes  (<span className="approvalRedColorFont">
-                      {YesCount}
+                      {totalVotes}
                     </span>/{Math.round(totalNodes)}) </Typography>
                 </span>
               )}

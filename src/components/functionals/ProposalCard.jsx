@@ -467,9 +467,13 @@ class ProposalCard extends Component {
     const docIcon = require('../../assets/img/png_stats_propposal_votes.png');
     const voteUpIcon = require('../../assets/img/png_button_up.png');
     const voteDownIcon = require('../../assets/img/png_button_down.png');
+    const yesCount = parseInt(proposal.YesCount, 10);
+    const noCount = parseInt(proposal.NoCount, 10);
+    const totalNodes = parseInt(this.props.totalNodes, 10);
+    const totalVotes = yesCount - noCount > 0 ? yesCount - noCount : 0;
 
     // Some Maths ;P
-    const progress = parseInt(proposal.YesCount, 10) / parseInt(this.props.totalNodes, 10) * 100; //remove added counts later and below
+    const progress = totalVotes / totalNodes * 100; //remove added counts later and below
 
     const columns = [
       {
@@ -507,10 +511,10 @@ class ProposalCard extends Component {
                     : progress < 100 ? 'proposalStatusActiveNo' : 'proposalStatusSuccessNo'
                 }
               >
-                {proposal.YesCount}
+                {totalVotes}
               </span>
               {` / `}
-              {this.props.totalNodes.toFixed(0)}
+              {totalNodes}
             </div>
           </Grid>
           <Grid item md={7} xs={6} className="proposalInfoView">
