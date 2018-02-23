@@ -29,6 +29,7 @@ export default {
       }
     },
     '& .commentSectionslView': {
+      width:'55%',
       margin: 0,
       marginLeft: '4%',
       marginTop: 10,
@@ -39,7 +40,7 @@ export default {
       height: 175,
       '& .commentHeading': {
         color: greyDark,
-        padding: '10px 28px',
+        padding: '10px 10px 0px 28px ',
         fontWeight: 500,
         fontSize: 16
       },
@@ -47,9 +48,10 @@ export default {
         color: gray,
         fontSize: 15,
         background: white,
-        padding: '10px 20px',
+        padding: '10px 10px 20px 10px',
         maxWidth: '100%%',
         '& .userComment': {
+          color:greyDark,
           border: 0
         },
         '& .proposalDetailsHr': {
@@ -178,7 +180,8 @@ export default {
           padding: '10px',
           boxShadow: '5px 5px 20px ' + gray,
           '& .userComment': {
-            border: 0
+            border: 0,
+            padding: 10,
           },
           '& .proposalDetailsHr': {
             marginTop: 10,
@@ -285,7 +288,7 @@ export default {
       }
     },
     '& textarea': {
-      color: gray,
+      color: greyDark,
       maxWidth: '100%'
     },
     '& button': {
@@ -328,12 +331,15 @@ export default {
       }
     },
     '& .commentSectionslView': {
-      width: '98%',
+      width: '100%',
       '& .proposalDetails': {
         width: '100%',
         maxWidth: '100%',
         marginLeft: 0,
         padding: 5,
+        '& button': {
+          width: 125,
+        }
       }
     },
     '& .topCommentWithReplyView': {
@@ -347,16 +353,16 @@ export default {
           width: '70%',
           display: 'inline-block',
           '& .userName': {
-            padding: 10,
+            padding: 5,
           },
           '& .commentDate': {
             marginLeft: 0,
-            fontSize: 12,
+            fontSize: '1.7vh',
           }
         },
         '& .votesView': {
           width: '30%',
-          padding: '0px 10px',
+          padding: '0px 5px',
           '& .downVoteICon': {
             marginLeft: 10,
             marginRight: 5,
@@ -374,6 +380,9 @@ export default {
         margin: '3px 0 20px 2%',
         '& .proposalDetails': {
           padding: 5,
+          '& button': {
+            width: 125,
+          }
         }
       }
     },
@@ -398,4 +407,7 @@ export default {
       }
     }
   },
+  loginModal: {
+
+  }
 };

@@ -23,7 +23,7 @@ export default {
       '& .logoDiv': {
         textAlign: 'center',
         '& img': {
-          width: '60%'
+          width: 300
         }
       },
       '& .addvertiseText': {
@@ -41,7 +41,7 @@ export default {
       '& .joinBtn': {
         textAlign: 'right',
         '& .btnText': {
-          color: '#ffff'
+          color: '#fff'
         },
         '& .btn': {
           borderRadius: '8px',
@@ -52,7 +52,7 @@ export default {
     '& .tile__wrapper': {
       height: '100% !important',
       '&.logo': {
-        marginTop: 55
+        marginTop: 25
       }
     }
   },
@@ -71,6 +71,12 @@ export default {
     '& .tile__wrapper': {
       '&.logo': {
         marginTop: 5
+      }
+    },
+    '& .logoDiv': {
+      textAlign: 'center',
+      '& img': {
+        width: '80vw'
       }
     }
   }

@@ -61,7 +61,7 @@ class MasterNodeAdd extends Component {
             }}
             className="wrapper"
           >
-            <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+            <Grid item>
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -72,7 +72,7 @@ class MasterNodeAdd extends Component {
                   id="name"
                   name="name"
                   className="input-field"
-                  placeholder="e.g Mnode1"
+                  placeholder="masternode-name"
                   value={this.state.newNode.name}
                   onChange={this.onChange}
                 />
@@ -88,7 +88,7 @@ class MasterNodeAdd extends Component {
                   id="mnPrivateKey"
                   name="mnPrivateKey"
                   className="input-field"
-                  placeholder="enter a valid key"
+                  placeholder="cRn.....Tfi9ZgR"
                   value={this.state.newNode.mnPrivateKey}
                   onChange={this.onChange}
                 />
@@ -103,7 +103,7 @@ class MasterNodeAdd extends Component {
                   id="address"
                   name="vin"
                   className="input-field"
-                  placeholder="enter a valid vin number"
+                  placeholder="0d8.....b07d02-0"
                   value={this.state.newNode.vin}
                   onChange={this.onChange}
                 />

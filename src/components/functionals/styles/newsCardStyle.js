@@ -13,21 +13,22 @@ export default {
     marginBottom: 20,
     '& card-item': {},
     '& .readed': {
-      color: `${grey} !Important`,
+      color: `${grey} !important`,
     },
     '& button span': {
       color: 'white',
       textTransform: 'capitalize',
     },
     '& .news-card-grid': {
+      position: 'relative',
       '& .newsCardImage-grid': {
-        padding: '20px 0px 0px 10px',
+        padding: '10px 0px 0px 10px',
+        maxWidth: 100,
         '& img': {
           width: '100%',
         },
       },
       '& .newsCardContent-grid': {
-        marginTop: 15,
         verticalAlign: 'middle',
         '& .card': {
           boxShadow: 'none',
@@ -52,6 +53,10 @@ export default {
       '& .showMoreButton-grid': {
         textAlign: 'right',
         marginRight: '20px',
+        padding: '0px 15px 10px 0px',
+        position: 'absolute',
+        bottom: 3,
+        right: 0,
         '& button': {
           borderRadius: '5px',
           padding: '0px',
@@ -73,22 +78,30 @@ export default {
     },
     '& .divider': {
       marginTop: 10,
-    },
+    }
   },
   mRoot: {
     extend: 'root',
-    '& card-item': {},
+    minHeight: 125,
+    width: 'calc(100% - 20px)',
+    borderBottom: 'thin solid ' + grey,
     '& .news-card-grid': {
-      width: '110%',
+      width: '100%',
       '& .newsCardImage-grid': {
         padding: '0px 0px 0px 0px',
         '& img': {
-          width: '110%',
-        },
+          width: '100%',
+          maxWidth: 70,
+          marginTop: 30
+        }
       },
       '& .newsCardContent-grid': {
-        height: 110,
+        height: '100%',
         verticalAlign: 'middle',
+        marginTop: 0,
+        '& div': {
+          padding: 0
+        },
         '& .card': {
           '& .news-heading': {
             marginTop: 10,
@@ -107,26 +120,21 @@ export default {
             overflow: 'hidden',
             fontWeight: 100,
             color: greyDark,
-          },
-        },
-      },
-      '& .showMoreButton-grid': {
-        textAlign: 'right',
-        marginRight: '20px',
-        '& button': {
-          marginTop: 10,
-          borderRadius: '5px',
-          padding: '0px',
-          minHeight: '25px',
-        },
-        '& button:hover': {
-          backgroundColor: primaryLight
+          }
         }
       },
+      '& .showMoreButton-grid': {
+        display: 'none'
+      },
+      '& button:hover': {
+        backgroundColor: primaryLight
+      }
     },
     '& .divider': {
-      marginTop: 10,
-      width: '105%'
-    },
+      display: 'none'
+    }
   },
+  '& .divider': {
+    marginTop: 10
+  }
 };

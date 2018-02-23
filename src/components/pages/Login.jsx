@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -130,11 +130,11 @@ class Login extends Component {
                           return fire.auth().signInWithEmailAndPassword(email, password);
                         })
                         .then(user => {
-                          swal({
-                            title: 'Sucess',
-                            text: `${user.email} signed in with sms verification`,
-                            icon: 'success'
-                          });
+                          // swal({
+                          //   title: 'Sucess',
+                          //   text: `${user.email} signed in with sms verification`,
+                          //   icon: 'success'
+                          // });
 
                           //attach MN to user here
                           fire
@@ -177,11 +177,11 @@ class Login extends Component {
                     swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                   });
               } else {
-                swal({
-                  title: 'Success',
-                  text: `${user.email} signed in without sms verification.`,
-                  icon: 'success'
-                });
+                // swal({
+                //   title: 'Success',
+                //   text: `${user.email} signed in without sms verification.`,
+                //   icon: 'success'
+                // });
                 this.props.setPage('home');
               }
             });
@@ -223,18 +223,9 @@ class Login extends Component {
         <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
-            ref={form => {
-              this.loginForm = form;
-            }}
-            className="wrapper"
-          >
-            <Grid
-              item
-              lg={8}
-              md={10}
-              xs={12}
-            //justify="center"
-            >
+            ref={ form => { this.loginForm = form }}
+            className="form__wrapper">
+            <Grid item lg={12} md={12} xs={12}>
               {/* For User Name */}
               <FormGroup className="form-group">
                 <span htmlFor="user-name" className="label">
@@ -267,7 +258,7 @@ class Login extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} className="recaptcha-div" />
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
               </FormGroup>
 
               {/* Form Action Button */}
@@ -278,7 +269,10 @@ class Login extends Component {
                 <br />
                 <a onClick={this.passwordRecovery}>Forget Your Password?</a>
                 <br />
-                Don’t have an account?  <a onClick={() => this.props.setPage('register')} className="signUpTxt" >Sign Up</a>
+                Don’t have an account?{' '}
+                <a onClick={() => this.props.setPage('register')} className="signUpTxt">
+                  Sign Up
+                </a>
               </FormGroup>
             </Grid>
           </form>

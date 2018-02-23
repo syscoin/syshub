@@ -1,3 +1,6 @@
+import palette from './palette';
+
+const grey = palette.grey;
 
 export default {
   wraper: {
@@ -5,29 +8,32 @@ export default {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'start',
-    minWidth: 'calc(100vw - 20px)',
-    height: 'calc(100vh - 125px)',
+    minWidth: 'calc(100% - 20px)',
+    height: 'calc(100vh - 122px)',
+    borderleft: `1px solid ${grey}`,
+    borderRight: `1px solid ${grey}`,
+
   },
   appContent: {
-    width: 'calc(80vw - 80px)',
-    height: '100%',
-    overflowY: 'hidden',
+    height: 'calc(100vh - 140px)',
     marginLeft: 20,
-    marginTop: 10
+    marginTop: 20,
+    width: 'calc(80% - 75px)'
+
   },
   appContentWithChatBox: {
-    width: 'calc(60vw - 55px)',
-    height: 'calc(100vh - 155px)',
-    overflowY: 'hidden',
+    width: 'calc(61.5% - 20px)',
+    height: 'calc(100vh - 80px)',
     marginLeft: 20,
-    marginTop: 10
-  },
-  leftSlider:{
-    width: '20vw'
+    marginTop: 20,
+    '@media (min-width: 1600px)': {
+      width: 'calc(56% - 20px)'
+    }
   },
   rightSlider: {
-    width: '20vw',
-    position: 'fixed',
-    right: 0
+    right: 0,
+    width: '22%',
+    marginLeft: 20,
+    position: 'fixed'
   }
 };

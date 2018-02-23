@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import { withStyles } from 'material-ui';
 //import for text editor
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
 import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
@@ -23,8 +24,6 @@ import newProposalStyle from './styles/newProposalStyle';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
-
-
 
 class NewProposal extends Component {
   constructor(props) {
@@ -47,7 +46,7 @@ class NewProposal extends Component {
       proposallink: 'http://syshub.com/p/',
       editorState: EditorState.createEmpty(),
       proposal__detail: '',
-      savedProposal: null,
+      savedProposal: {},
       visible: false,
       pValue: '',
       payValue: '',
@@ -59,7 +58,9 @@ class NewProposal extends Component {
       hCopied: false,
       payCopied: false,
       prepareObj: {},
-      userProposal: {}
+      userProposal: {},
+      hashError: '',
+      txIdError: '',
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -84,7 +85,7 @@ class NewProposal extends Component {
     const { firstPaymentDate, millsMonth } = this.props.proposal;
     const today = new Date().getTime();
     const monthGap = Math.ceil((today - firstPaymentDate) / millsMonth);
-    const firstOption = firstPaymentDate + (monthGap * millsMonth);
+    const firstOption = firstPaymentDate + monthGap * millsMonth;
     let paymentDateOptions = [];
     for (let i = 0; i < maxDateOptions; i++) {
       let mills = firstOption + i * millsMonth;
@@ -102,6 +103,9 @@ class NewProposal extends Component {
 
     proposalRef.once('value').then(snapshot => {
       const userProp = snapshot.val();
+      if (!userProp) {
+        return;
+      }
       const descriptionID = userProp.descriptionID;
       const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
@@ -111,7 +115,7 @@ class NewProposal extends Component {
         if (userProp) {
           if (userProp.hash) {
             proposalRef.remove();
-            return
+            return;
           }
 
           this.setState({
@@ -135,7 +139,8 @@ class NewProposal extends Component {
                 });
                 console.log('ACZ: newproposal state ', this.state);
 
-                let userProposal = { //there are another def in line 339 both have to be in sync
+                let userProposal = {
+                  //there are another def in line 339 both have to be in sync
                   type: 1,
                   name: userProp.name,
                   title: userProp.title,
@@ -150,7 +155,6 @@ class NewProposal extends Component {
                   payment_amount: userProp.payment_amount,
                   url: userProp.url
                 };
-
 
                 if (userProp.prepareReceipt) {
                   userProposal.prepareReceipt = userProp.prepareReceipt;
@@ -179,14 +183,19 @@ class NewProposal extends Component {
                   visible: true,
                   userProposal
                 });
+              } else {
+                this.setState({ savedProposal: {} });
               }
             })
             .catch(err => {
-              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+              swal({
+                title: 'Oops...',
+                text: `${err}`,
+                icon: 'error'
+              });
             });
         }
-      })
-
+      });
     });
   }
 
@@ -208,7 +217,7 @@ class NewProposal extends Component {
   //payment quantity
   paymentQuantity(value) {
     const millsMonth = this.props.proposal.millsMonth;
-    const proposalEndEpoch = this.state.proposalStartEpoch + (millsMonth / 1000 * (value - 1));
+    const proposalEndEpoch = this.state.proposalStartEpoch + millsMonth / 1000 * (value - 1);
     this.setState({
       proposalEndEpoch,
       totalAmount: this.state.amount * value,
@@ -222,6 +231,18 @@ class NewProposal extends Component {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
       return;
     }
+
+    if (this.state.payValue.length !== 64) {
+      this.setState({
+        txIdError: 'Invalid proposal TXID'
+      });
+      return;
+    } else {
+      this.setState({
+        txIdError: ''
+      });
+    }
+
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     if (this.state.payValue) {
@@ -264,22 +285,33 @@ class NewProposal extends Component {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
       return;
     }
+
+    if (this.state.hValue.length !== 64) {
+      this.setState({
+        hashError: 'Invalid proposal hash-object'
+      });
+
+      return;
+    } else {
+      this.setState({
+        hashError: ''
+      });
+    }
+
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     proposalRef.once('value').then(snapshot => {
-
       const descriptionID = snapshot.val().descriptionID;
       const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
 
       if (this.state.hValue) {
-
         let updateProposalDetail = { ...this.state.proposalDetail };
         let updatedUserProposal = { ...this.state.userProposal };
 
         updateProposalDetail.hash = this.state.hValue;
         updatedUserProposal.hash = this.state.hValue;
 
-        descriptionRef.set(updateProposalDetail)
+        descriptionRef.set(updateProposalDetail);
         proposalRef.set(updatedUserProposal);
 
         this.setState({
@@ -298,7 +330,7 @@ class NewProposal extends Component {
           icon: 'error'
         });
       }
-    })
+    });
   }
 
   handleOk(e) {
@@ -325,11 +357,61 @@ class NewProposal extends Component {
       updated.txid = e.target.value;
       proposalRef.set(updated);
     }
-
     this.setState({
       [e.target.name]: e.target.value
     });
   }
+
+  checkErrorManager(dataErr) {
+    const dataErrArray = dataErr.replace(/\n/g, '').split(';');
+    const errorMessage = dataErrArray[dataErrArray.length - 2];
+    switch (errorMessage) {
+      case 'Invalid name':
+        return { message: errorMessage, step: 0 };
+      default:
+        return { message: errorMessage, step: 2 };
+    }
+  }
+
+  handleReset = step => {
+    const {
+      savedProposal,
+      proposalName,
+      proposalTitle,
+      proposallink,
+      proposalStartEpoch,
+      paymentQuantity,
+      address,
+      amount,
+      proposalEndEpoch,
+      totalAmount
+    } = this.state;
+
+    this.setState({
+      visible: false,
+      activeStep: step || 0,
+      recover: false,
+      pCopied: false,
+      sCopied: false
+    });
+    const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
+    const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
+    const editorState = EditorState.createWithContent(editorContentState);
+    console.log('ACZ: savedProposal', savedProposal);
+    console.log('ACZ: address', this.state.address);
+    this.setState({
+      proposalName: proposalName || savedProposal.name,
+      proposalTitle: proposalTitle || savedProposal.title,
+      proposallink: proposallink || savedProposal.url,
+      editorState,
+      proposalStartEpoch: proposalStartEpoch || savedProposal.first_epoch,
+      paymentQuantity: paymentQuantity || savedProposal.nPayment,
+      address: address || savedProposal.payment_address,
+      amount: amount || savedProposal.payment_amount,
+      proposalEndEpoch: proposalEndEpoch || savedProposal.end_epoch,
+      totalAmount: totalAmount || savedProposal.payment_amount * savedProposal.nPayment
+    });
+  };
 
   createPropObj = () => {
     const { app } = this.props;
@@ -343,19 +425,21 @@ class NewProposal extends Component {
       amount,
       proposal__detail,
       proposallink,
+      savedProposal
     } = this.state;
 
-    const descriptionID = Date.now().toString(36);
+    const descriptionID =
+      savedProposal.descriptionID || `${currentUser.displayName}${Date.now().toString(36)}`;
 
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
       return;
     }
 
-    this.setState({
+    /* this.setState({
       activeStep: this.state.activeStep + 1,
       showEditor: true
-    });
+    }); */
 
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
@@ -412,6 +496,8 @@ class NewProposal extends Component {
       .then(data => {
         if (data['Object status'] === 'OK') {
           return this.props.prepareProposal(prepareObj);
+        } else {
+          throw this.checkErrorManager(data);
         }
       })
       .then(prepareResponse => {
@@ -426,7 +512,11 @@ class NewProposal extends Component {
         }
       })
       .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+        swal({
+          title: 'Oops...',
+          text: `${err.message}`,
+          icon: 'error'
+        }).then(value => this.handleReset(err.step));
       });
   };
 
@@ -454,12 +544,6 @@ class NewProposal extends Component {
     );
   };
 
-  handleReset = () => {
-    this.setState({
-      activeStep: 0
-    });
-  };
-
   //date change function
   onDateChange(value) {
     this.setState({
@@ -472,7 +556,10 @@ class NewProposal extends Component {
 
   //proposal title function
   proposalTitle(e) {
-    const proposalName = e.target.value.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
+    const proposalName = e.target.value
+      .trim()
+      .toLowerCase()
+      .replace(/[^A-Za-z0-9]/g, '');
     this.setState({
       proposalName,
       proposalTitle: e.target.value,
@@ -522,6 +609,7 @@ class NewProposal extends Component {
   //all the step contents are coming from return of switch case
   getStepContent(step) {
     const { deviceType } = this.props;
+
     switch (step) {
       case 0:
         return (
@@ -531,12 +619,13 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 10}>
               {/* proposal title input field */}
               <Form>
-                <FormItem className="form-item"
+                <FormItem
+                  className="form-item"
                   validateStatus={this.state.proposalTitle.length <= 40 ? '' : 'error'}
                 >
                   <Input
                     className="proposal-title-input"
-                    placeholder="Insert Reference Title (40 characters max.)"
+                    placeholder="proposal-name (40 characters max.)"
                     addonBefore={`${40 - this.state.proposalTitle.length}`}
                     value={this.state.proposalTitle}
                     onChange={this.proposalTitle}
@@ -545,8 +634,13 @@ class NewProposal extends Component {
                 </FormItem>
               </Form>
             </Col>
+
+            {/*************************************************/}
+            {/* Commented intentionally don't remove this part*/}
+            {/*************************************************/}
+
             {/* Proposal Description Url Colomn */}
-            <Col span={deviceType === 'mobile' ? 24 : 14}>
+            {/* <Col span={deviceType === 'mobile' ? 24 : 14}>
               {deviceType === 'mobile' ? (
                 <h3 className="proposal-title">Proposal Description Url</h3>
               ) : null}
@@ -558,7 +652,9 @@ class NewProposal extends Component {
                   }`}
                 onChange={() => { }}
               />
-            </Col>
+            </Col> */}
+
+            {/*************************************************/}
           </Row>
         );
       case 1:
@@ -569,7 +665,7 @@ class NewProposal extends Component {
             <Col span={deviceType === 'mobile' ? 24 : 20}>
               {this.state.showEditor ? (
                 <div>
-                  <h2 className="editor-title">Write proposal details</h2>
+                  <h2 className="editor-title">Proposal Details</h2>
                   {/* proposal detail editor */}
                   <Editor
                     editorState={this.state.editorState}
@@ -621,12 +717,17 @@ class NewProposal extends Component {
           <Row>
             <Row className="paymentDetail-row">
               <Col span={deviceType === 'mobile' ? 10 : 9}>
-                <label className="label">Date</label>
-                <Select placeholder="Select a Date" style={{ width: 120 }} onChange={(value) => this.onDateChange(value)}>
-                  {this.state.paymentDateOptions.map(item => <Option value={item.mills / 1000}>{item.ymd}</Option>)}
-
+                <label className="label">Payment Date</label>
+                <Select
+                  placeholder="Select a Date"
+                  style={{ width: 120 }}
+                  onChange={value => this.onDateChange(value)}
+                  defaultValue={this.state.proposalStartEpoch}
+                >
+                  {this.state.paymentDateOptions.map(item => (
+                    <Option value={item.mills / 1000}>{item.ymd}</Option>
+                  ))}
                 </Select>
-
               </Col>
               <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
                 <label># of Payments</label>
@@ -641,10 +742,10 @@ class NewProposal extends Component {
                 />
               </Col>
               <Col span={deviceType === 'mobile' ? 24 : 8}>
-                <label>Address</label>
+                <label>Payment Address</label>
                 <Input
                   type="text"
-                  placeholder="input addresss"
+                  placeholder="TAhk13PnY9f6Kw3K8f797G8rD4QBtb5f1B"
                   value={this.state.address}
                   onChange={this.getAddress}
                 />
@@ -658,17 +759,23 @@ class NewProposal extends Component {
                     min={0}
                     className="amount-input"
                     value={this.state.amount}
-                    onChange={this.getAmount} />
+                    onChange={this.getAmount}
+                  />
                   {` SYS`}
                 </Row>
                 <Row>
                   <p />
-                  <p><strong>Total amount:&nbsp;</strong>
-                    {`${this.state.totalAmount || this.state.amount} SYS ${this.state.proposalStartEpoch ?
-                      `with a final payment on ${this.yearDayMonth(this.state.proposalEndEpoch * 1000, 'usa')}` :
-                      ''}`
-                    }</p>
-
+                  <p>
+                    <strong>Total amount:&nbsp;</strong>
+                    {`${this.state.totalAmount || this.state.amount} SYS ${
+                      this.state.proposalStartEpoch
+                        ? `with a final payment on ${this.yearDayMonth(
+                          this.state.proposalEndEpoch * 1000,
+                          'usa'
+                        )}`
+                        : ''
+                      }`}
+                  </p>
                 </Row>
               </Col>
             </Row>
@@ -700,7 +807,12 @@ class NewProposal extends Component {
           return true;
         }
       case 2:
-        if (this.state.proposalStartEpoch && this.state.paymentQuantity && this.state.address && this.state.amount) {
+        if (
+          this.state.proposalStartEpoch &&
+          this.state.paymentQuantity &&
+          this.state.address &&
+          this.state.amount
+        ) {
           return false;
         } else {
           return true;
@@ -731,24 +843,49 @@ class NewProposal extends Component {
         >
           <div>
             <TextArea rows={this.state.pCopied ? 4 : 5} readonly value={this.state.pValue} />
-            {this.state.pCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
+            {this.state.pCopied ? (
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+              </div>
+            ) : null}
             <div className="receipt-text">
               {this.state.pValue
-                ? 'Prepare Receipt ready to be copied. Please copy and paste into wallet terminal for payment id.'
-                : 'No Prepare Receipt has been received.'}
-              <CopyToClipboard text={this.state.pValue} onCopy={() => this.setState({ pCopied: true })}>
-                <Button type="primary" disabled={this.state.sValue}>Copy</Button>
+                ? 'Prepare command is ready to be copied. Please copy and paste it into Syscoin Q.T console for payment txid.'
+                : 'No Prepare command has been generated.'}
+              <CopyToClipboard
+                text={this.state.pValue}
+                onCopy={() => this.setState({ pCopied: true })}
+              >
+                <Button type="primary" disabled={this.state.sValue}>
+                  Copy
+                </Button>
               </CopyToClipboard>
             </div>
             <div className="id-input">
-              <span> Input Payment Id Here: </span>
-              <Input value={this.state.payValue} disabled={this.state.sValue} onChange={this.onChange} name="payValue" />
+              <span> Enter Prepare TXID Here: </span>
+              <Input
+                value={this.state.payValue}
+                disabled={this.state.sValue}
+                onChange={this.onChange}
+                name="payValue"
+              />
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.txIdError}</span>
+              </div>
               <br />
             </div>
             <div className="submit-btn">
+              <Button
+                type="primary"
+                disabled={this.state.sValue}
+                onClick={() => this.handleReset()}
+              >
+                <Icon type="left" />
+                {`Back & Edit`}
+              </Button>
               <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
-                Submit Payment Id
-          </Button>
+                Submit TXID
+              </Button>
             </div>
             {/* {this.state.sValue ? (
             <div className="id-copied">
@@ -767,25 +904,42 @@ class NewProposal extends Component {
           <hr />
           <br />
           <TextArea rows={this.state.sCopied ? 4 : 5} readonly value={this.state.sValue} />
-          {this.state.sCopied ? <div style={{ textAlign: 'right' }}><span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span></div> : null}
+          {this.state.sCopied ? (
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+            </div>
+          ) : null}
           <div className="receipt-text">
             {this.state.sValue
-              ? 'Submit Receipt ready to be copied. Please copy and paste into wallet terminal for hash. This could take a couple minutes, please be patient.'
-              : 'No Prepare Receipt has been received.'}
-            <CopyToClipboard text={this.state.sValue} onCopy={() => this.setState({ sCopied: true })}>
-              <Button type="primary" disabled={!this.state.sValue}>Copy</Button>
+              ? 'Submit command is ready to be copied. Please copy and paste it into Syscoin Q.T console to submit your proposal. This could take a couple minutes, please be patient.'
+              : 'No Submit command has been generated.'}
+            <CopyToClipboard
+              text={this.state.sValue}
+              onCopy={() => this.setState({ sCopied: true })}
+            >
+              <Button type="primary" disabled={!this.state.sValue}>
+                Copy
+              </Button>
             </CopyToClipboard>
           </div>
           <br />
           <div className="id-input">
-            <span>Input Hash here: </span>
-            <Input value={this.state.hValue} disabled={!this.state.sValue} onChange={this.onChange} name="hValue" />
+            <span>Enter Proposal Hash Here: </span>
+            <Input
+              value={this.state.hValue}
+              disabled={!this.state.sValue}
+              onChange={this.onChange}
+              name="hValue"
+            />
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.hashError}</span>
+            </div>
             <br />
           </div>
           <div className="submit-btn">
             <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
-              Submit Hash
-          </Button>
+              Submit
+            </Button>
           </div>
         </Modal>
         <div className={style}>
@@ -800,11 +954,19 @@ class NewProposal extends Component {
                       <Step className="steper__container" key={label}>
                         <StepLabel className="steper__label">
                           <h2 className="step-label"> {label} </h2>
-                          {this.state.activeStep === 0 &&
+
+                          {/*************************************************/}
+                          {/* Commented intentionally don't remove this part*/}
+                          {/*************************************************/}
+
+                          {/*this.state.activeStep === 0 &&
                             label === 'Proposal Title' &&
                             deviceType !== 'mobile' ? (
                               <h3 className="proposal-title">Proposal Description Url</h3>
-                            ) : null}
+                            ) : null*/}
+
+                          {/*************************************************/}
+
                           {this.state.activeStep === 1 && label === 'Proposal Details' ? (
                             this.state.showEditor ? (
                               <Button
@@ -812,7 +974,7 @@ class NewProposal extends Component {
                                 onClick={this.previewHTML.bind(this)}
                               >
                                 PREVIEW
-                          </Button>
+                            </Button>
                             ) : (
                                 <Button
                                   className="preview-edit-button"
@@ -821,12 +983,12 @@ class NewProposal extends Component {
                                   }}
                                 >
                                   EDITOR
-                          </Button>
+                            </Button>
                               )
                           ) : null}
                         </StepLabel>
                         <StepContent>
-                          <div style={{ width: '100%' }}>{this.getStepContent(index)}</div>
+                          <div style={{ width: '100%' }}>{this.getStepContent(activeStep)}</div>
                           <div className={classes.actionsContainer}>
                             <div
                               className={
@@ -841,7 +1003,7 @@ class NewProposal extends Component {
                                   className="button"
                                 >
                                   Back
-                            </Button>
+                              </Button>
                               )}
                               {activeStep === steps.length - 1 ? (
                                 <Button
@@ -852,7 +1014,7 @@ class NewProposal extends Component {
                                   disabled={this.disabledNextBtn(index)}
                                 >
                                   Confirm
-                            </Button>
+                              </Button>
                               ) : (
                                   <Button
                                     variant="raised"
@@ -862,7 +1024,7 @@ class NewProposal extends Component {
                                     disabled={this.disabledNextBtn(index)}
                                   >
                                     Next Step
-                            </Button>
+                              </Button>
                                 )}
                             </div>
                           </div>

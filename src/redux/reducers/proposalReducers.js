@@ -1,10 +1,9 @@
 import constants from '../constants';
 
-
 const initialState = {
   listRaw: {},
   list: [],
-  firstPaymentDate: new Date('2018-01-03').getTime(), // YYY-MM-DD 
+  firstPaymentDate: new Date('2018-01-03').getTime(), // YYY-MM-DD
   millsMonth: 30 * 24 * 60 * 60 * 1000,
   checkStatus: null,
   prepareReceipt: null,
@@ -37,7 +36,7 @@ const proposals = (state = initialState, action) => {
       return {
         ...state,
         listRaw: action.data,
-        list: list
+        list: list.sort((a, b) => b.CreationTime - a.CreationTime)
       };
     }
 

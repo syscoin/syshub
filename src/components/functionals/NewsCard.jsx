@@ -25,13 +25,17 @@ class NewsCard extends Component {
       image,
       deviceType,
     } = this.props;
+    console.log(post.pubDate.slice(0, -12),"data-------------")
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const noImage = require('../../assets/img/no-user-image.gif');
 
+    
+    
+    
     return (
-      <div className={style}>
-        <div className={'card-item'} key={post.guid}>
+      <div className={style} onClick={()=>{if(this.props.deviceType === 'mobile') selectNews(post.guid) }}>
+        <div className='card-item' key={post.guid}> 
           {/* news card */}
           <Grid container spacing={24} className="news-card-grid">
             {/* news image grid */}
@@ -42,12 +46,10 @@ class NewsCard extends Component {
               inline="true"
               className="newsCardImage-grid inline-block"
             >
-              {
-                <img
+              { <img
                   src={image ? image.url : noImage}
                   alt={image ? image.title : 'No Image'}
-                  title={image ? image.title : 'No Image'}
-                />
+                  title={image ? image.title : 'No Image'}/>
               }
             </Grid>
             {/* News Content Grid */}
@@ -69,7 +71,7 @@ class NewsCard extends Component {
                     component="p"
                     className="cardSubHeading"
                   >
-                    {post.pubDate}
+                    {post.pubDate.slice(0, -12)}
                   </Typography>
                   {/* content text */}
                   <Typography component="p" className="newsContent">
@@ -81,8 +83,7 @@ class NewsCard extends Component {
             {/* show more button */}
             <Grid item md={12} xs={12} className="showMoreButton-grid">
               <Button raised onClick={index => selectNews(post.guid)}>
-                {' '}
-                Show More{' '}
+                {' '} Show More {' '}
               </Button>
             </Grid>
           </Grid>

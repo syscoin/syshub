@@ -241,6 +241,12 @@ export default {
     },
     '& .paper-container': {
       padding: '0 !important'
+    },
+    '& .paymentDetail-row':{
+      height: '100px !important'
+    },
+    '& .amount-row':{
+      marginTop: '10px !important'
     }
   },
   modal: {
@@ -278,6 +284,9 @@ export default {
           }
         },
         '& .submit-btn': {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           padding: '10px 0px',
         }
       },

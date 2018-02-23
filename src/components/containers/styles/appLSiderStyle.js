@@ -13,6 +13,7 @@ const wraper = {
   flex: '0 1 15%',
   background: greyLight,
   borderRight: `1px solid ${grey}`,
+  borderLeft: `1px solid ${grey}`,
   // height:'100vh',
 };
 const sider = {

@@ -71,10 +71,12 @@ class App extends Component {
       ua: Platform.UA || ''
     });
     this.props.getSysStats('first');
+    this.props.getSysMnCount();
   }
 
   tick() {
     this.props.getSysStats();
+    this.props.getSysMnCount();
   }
 
   render() {
@@ -86,8 +88,11 @@ class App extends Component {
         <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          <h1 style={{ color: 'white', zIndex: '10000', display: 'none' }}>{this.state.timer}</h1>
+          {/* <h1 style={{ color: 'white', zIndex: '10000', bottom: '200px' }}>{this.state.timer}</h1> */}
         </Platform>
+        {/* <Platform rules={{ DeviceType: 'tablet' }}>
+          <DesktopLayout />
+        </Platform> */}
         <Platform rules={{ DeviceType: 'mobile' }}>
           <MobileLayout />
         </Platform>
@@ -107,6 +112,7 @@ const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     getSysStats: first => dispatch(actions.getSysStats(first)),
+    getSysMnCount: first => dispatch(actions.getSysMnCount(first)),
 
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
     setAuth: auth => dispatch(actions.setAuth(auth))

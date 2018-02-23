@@ -187,18 +187,9 @@ class Faq extends Component {
                     return (
                       <Collapse bordered={false} key={index1}>
                         <div className="list-dot"></div>
-                        <Panel header={ques.question} showArrow={false} className="faq-subCategory">
+                        <Panel header={ques.question.toLowerCase()} showArrow={false} className="faq-subCategory">
                           <div style={{ padding: '15px', border: '1px solid #a4b0be', marginLeft: 35 }}>
-                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-                              {ques.answer}
-                            </div>
-                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-                              {ques.answer}
-                            </div>
-                            <div style={{ color: '#a4b0be', paddingBottom: 15 }}>
-                              {ques.answer}
-                            </div>
-                            <div style={{ color: '#a4b0be' }}>
+                            <div className="answer">
                               {ques.answer}
                             </div>
                           </div>
@@ -207,8 +198,6 @@ class Faq extends Component {
                     )
                   })}
                 </Panel>
-
-
               )
             })}
           </Collapse>

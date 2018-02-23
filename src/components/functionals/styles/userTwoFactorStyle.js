@@ -69,21 +69,17 @@ export default {
           margin: '15px 0'
         }
       },
-      '& .form-group': {
-        flexDirection: 'row',
-        marginTop: '10px',
-        display: 'block',
-        '& .label': {
-          display: 'inline-block',
-          textAlign: 'right',
-          fontSize: '15px',
-          marginTop: '15px',
-          color: primary,
-          paddingRight: '10px',
-          '& .fromApp-span': {
-            display: 'block',
-            textAlign: 'center'
-          }
+      '& label': {
+        fontSize: '15px',
+        marginTop: '15px',
+        color: primary,
+        paddingRight: '0px',
+      },
+      '& .phoneWrapper': {
+        '& .form-group': {
+          flexDirection: 'row',
+          marginTop: '10px',
+          display: 'block',
         },
         '& .secret-Input-field': {
           color: primaryLight,
@@ -147,15 +143,16 @@ export default {
     '& .twoFactor-button-grid': {
       padding: '20px 0px',
       '& .twoFactor-button': {
-        borderRadius: '5px',
-        padding: '8px',
-        minHeight: '40px',
-        width: '150px',
-        fontSize: '16px'
+        borderRadius: 5,
+        padding: 8,
+        minHeight: 40,
+        width: 150,
+        fontSize: 16,
+        marginLeft: 10
       }
     },
     '& .form__container': {
-      marginLeft: 20,
+      marginLeft: 10,
       '& .form-group': {
         display: 'block',
         flexDirection: 'row',
@@ -167,7 +164,7 @@ export default {
           marginTop: '15px',
           color: primary,
           paddingRight: '10px',
-          fontWeight: 'normal',
+          fontWeight: 'normal'
         },
         '& .input-field': {
           color: primaryLight,
@@ -177,12 +174,12 @@ export default {
           border: 'thin solid ' + greyLight,
           padding: '10px',
           '&::before': {
-            backgroundColor: 'transparent',
-          },
-        },
+            backgroundColor: 'transparent'
+          }
+        }
       },
       '& .form-grid-btn': {
-        padding: '20px 0px',
+        padding: '20px 0px'
       },
       '& button': {
         borderRadius: 5,
@@ -194,9 +191,12 @@ export default {
         color: white,
         backgroundColor: primary,
         '&:hover': {
-          backgroundColor: primaryLight,
-        },
-      },
+          backgroundColor: primaryLight
+        }
+      }
+    },
+    '& .reCapthaWraper':{
+      marginLeft: 10
     },
     '& button': {
       backgroundColor: primary,
@@ -217,13 +217,17 @@ export default {
       textAlign: 'center',
       marginLeft: 0,
       '& .twoFactor-button-grid': {
-        textAlign: 'center',
+        textAlign: 'center'
       },
       '& .enable2FA-note': {
         margin: '15px 0px 20px 10px'
       },
       '& .reCapthaWraper': {
-        margin: '15px 30px'
+        margin: 0,
+        textAlign: 'center',
+        '& div':{
+          display: 'inline-block'
+        }
       }
     },
     '& .form__container': {
@@ -236,17 +240,16 @@ export default {
             display: 'block',
             fontSize: 17,
             textAlign: 'left',
-            paddingLeft: 15,
-
+            paddingLeft: 15
           },
           '& .input-field': {
-            width: '100%',
-          },
+            width: '100%'
+          }
         }
       }
     },
     '& .form-grid-btn': {
-      textAlign: 'center',
-    },
+      textAlign: 'center'
+    }
   }
 };

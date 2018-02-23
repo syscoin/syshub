@@ -7,24 +7,35 @@ import swal from 'sweetalert';
 import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
-import { Button } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import { Grid, withStyles } from 'material-ui';
 import { Progress } from 'antd';
-import { fire } from '../../API/firebase';
 import Cryptr from 'cryptr';
 
 // import style
 import { proposalCardStyle } from './styles';
 
-const cryptr = new Cryptr('myTotalySecretKey');
-
 class ProposalCard extends Component {
-  state = {
-    days_remaining: 0,
-    endDate: '',
-    payment_amount: 0,
-    payment_type: ''
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      days_remaining: 0,
+      endDate: '',
+      payment_amount: 0,
+      payment_type: '',
+      mnError: '',
+      visible: false,
+      mnData: [],
+      showError: false
+    };
+
+    this.updateError = this.updateError.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.voteUp = this.voteUp.bind(this);
+    this.voteDown = this.voteDown.bind(this);
+  }
 
   componentWillMount() {
     const { nPayment, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
@@ -55,8 +66,28 @@ class ProposalCard extends Component {
     //this.setState({ payment_amount, payment_type: 'one-time payment' });
   }
 
+  updateError(error) {
+    this.setState({
+      mnError: error,
+      showError: !this.state.showError
+    });
+  }
+
+  handleOk(e) {
+    this.setState({
+      visible: false
+    });
+  }
+
+  handleCancel(e) {
+    this.setState({
+      visible: false
+    });
+  }
+
   voteUp(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({
@@ -66,10 +97,20 @@ class ProposalCard extends Component {
       });
     }
 
-    if (!user.MasterNodes) {
+    if (this.props.app.auth !== true) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
+    }
+
+    if (!user.MasterNodes || user.MasterNodes.length === 0) {
+      swal({
+        title: 'Oops...',
+        text: 'You need to add a MasterNode to your account.',
         icon: 'error'
       });
       return;
@@ -78,47 +119,146 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
+          // console.log('This has been voted on')
+        }
 
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
+        const MN = user.MasterNodes;
+        let mnData = [];
+        for (let i = 0; i < user.MasterNodes.length; i++) {
+          const proposalVoteYes = {
+            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
+            vinMasternode: cryptr.decrypt(MN[i].vin),
+            gObjectHash: proposal.Hash,
+            voteOutcome: 1
+          };
+          const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
+          const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
+
+          this.props
+            .voteOnProposal(proposalVoteYes)
+            .then(data => {
+              if (RegExp(/\s-32603\s/).test(data)) {
+                if (RegExp(/Failure to find masternode in list/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a onClick={() => this.updateError('Failure to find masternode in list')}>
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
+                }
+                if (RegExp(/Error voting/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Invalid proposal hash. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
+                }
+                if (i + 1 === user.MasterNodes.length) {
+                  this.setState({
+                    mnData: mnData
+                  });
+
+                  this.props.getProposals();
+                  let mnKeyIds = [];
+                  user.MasterNodes.forEach(mnObj => {
+                    mnKeyIds.push(mnObj.keyId);
+                    voted(user, proposal, 'Yes', 1, mnKeyIds);
+                  });
+
+                  this.setState({
+                    visible: true
+                  });
+                }
+                return;
+              }
+
+              if (RegExp(/\s-8\s/).test(data)) {
+                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Invalid vin. Please check: ${cryptr.decrypt(MN[i].vin)}`
+                          )
+                        }
+                      >
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
                 }
 
-                const proposalVoteYes = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 1
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteYes)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'Yes', 1, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                if (i + 1 === user.MasterNodes.length) {
+                  this.setState({
+                    mnData: mnData
                   });
+
+                  this.props.getProposals();
+                  let mnKeyIds = [];
+                  user.MasterNodes.forEach(mnObj => {
+                    mnKeyIds.push(mnObj.keyId);
+                    voted(user, proposal, 'Yes', 1, mnKeyIds);
+                  });
+
+                  this.setState({
+                    visible: true
+                  });
+                }
+                return;
+              }
+
+              mnData.push({
+                name: MN[i].name,
+                status: <img src={checkIcon} height="20px" width="20px" alt="checkIcon" />
               });
-          });
+              this.setState({
+                mnData: mnData
+              });
+
+              this.props.getProposals();
+              let mnKeyIds = [];
+              user.MasterNodes.forEach(mnObj => {
+                mnKeyIds.push(mnObj.keyId);
+                voted(user, proposal, 'Yes', 1, mnKeyIds);
+              });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
+            })
+            .catch(err => {
+              mnData.push({
+                name: MN[i].name,
+                status: (
+                  <a onClick={() => this.updateError(`Invalid masternode key or vin`)}>
+                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                  </a>
+                )
+              });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
+            });
         }
       })
       .catch(err => {
@@ -128,6 +268,7 @@ class ProposalCard extends Component {
 
   voteDown(vote) {
     const { proposal, user } = this.props;
+    const cryptr = new Cryptr(user.uid);
 
     if (!user) {
       swal({
@@ -137,10 +278,21 @@ class ProposalCard extends Component {
       });
     }
 
+    if (this.props.app.auth !== true) {
+      swal({
+        title: 'Oops...',
+        text: 'Must have 2FA enabled to vote',
+        icon: 'error'
+      });
+
+      return;
+    }
+
     if (!user.MasterNodes) {
       swal({
         title: 'Oops...',
-        text: 'Must own a MasterNode in order to vote',
+        text:
+          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
         icon: 'error'
       });
       return;
@@ -149,47 +301,146 @@ class ProposalCard extends Component {
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
         if (value) {
-          swal({
-            title: 'Oops...',
-            text: 'You already voted.',
-            icon: 'error'
-          });
+          // console.log('This has been voted on');
+        }
 
-          return;
-        } else if (!value) {
-          let mnKeyIds = [];
-          user.MasterNodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            fire
-              .database()
-              .ref('votes/' + user.uid)
-              .child(proposal.Hash)
-              .once('value', snap => {
-                if (snap.val() !== null) {
-                  if (snap.val().mnKeyIds.includes(mnObj.keyId) === true) {
-                    return;
-                  }
+        const MN = user.MasterNodes;
+        let mnData = [];
+        for (let i = 0; i < user.MasterNodes.length; i++) {
+          const proposalVoteNo = {
+            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
+            vinMasternode: cryptr.decrypt(MN[i].vin),
+            gObjectHash: proposal.Hash,
+            voteOutcome: 2
+          };
+          const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
+          const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
+
+          this.props
+            .voteOnProposal(proposalVoteNo)
+            .then(data => {
+              if (RegExp(/\s-32603\s/).test(data)) {
+                if (RegExp(/Failure to find masternode in list/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a onClick={() => this.updateError('Failure to find masternode in list')}>
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
+                }
+                if (RegExp(/Error voting/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Invalid proposal hash. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
+                }
+                if (i + 1 === user.MasterNodes.length) {
+                  this.setState({
+                    mnData: mnData
+                  });
+
+                  this.props.getProposals();
+                  let mnKeyIds = [];
+                  user.MasterNodes.forEach(mnObj => {
+                    mnKeyIds.push(mnObj.keyId);
+                    voted(user, proposal, 'No', 2, mnKeyIds);
+                  });
+
+                  this.setState({
+                    visible: true
+                  });
+                }
+                return;
+              }
+
+              if (RegExp(/\s-8\s/).test(data)) {
+                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                  mnData.push({
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Invalid vin. Please check: ${cryptr.decrypt(MN[i].vin)}`
+                          )
+                        }
+                      >
+                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      </a>
+                    )
+                  });
                 }
 
-                const proposalVoteNo = {
-                  mnPrivateKey: cryptr.decrypt(mnObj.mnPrivateKey),
-                  vinMasternode: cryptr.decrypt(mnObj.vin),
-                  gObjectHash: proposal.Hash,
-                  voteOutcome: 2
-                };
-
-                this.props
-                  .voteOnProposal(proposalVoteNo)
-                  .then(data => {
-                    swal({ title: 'Success', text: `${data}`, icon: 'success' });
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                    this.props.getProposals();
-                  })
-                  .catch(err => {
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                if (i + 1 === user.MasterNodes.length) {
+                  this.setState({
+                    mnData: mnData
                   });
+
+                  this.props.getProposals();
+                  let mnKeyIds = [];
+                  user.MasterNodes.forEach(mnObj => {
+                    mnKeyIds.push(mnObj.keyId);
+                    voted(user, proposal, 'No', 2, mnKeyIds);
+                  });
+
+                  this.setState({
+                    visible: true
+                  });
+                }
+                return;
+              }
+
+              mnData.push({
+                name: MN[i].name,
+                status: <img src={checkIcon} height="20px" width="20px" alt="checkIcon" />
               });
-          });
+              this.setState({
+                mnData: mnData
+              });
+
+              this.props.getProposals();
+              let mnKeyIds = [];
+              user.MasterNodes.forEach(mnObj => {
+                mnKeyIds.push(mnObj.keyId);
+                voted(user, proposal, 'No', 2, mnKeyIds);
+              });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
+            })
+            .catch(err => {
+              mnData.push({
+                name: MN[i].name,
+                status: (
+                  <a onClick={() => this.updateError(`Invalid masternode key or vin`)}>
+                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                  </a>
+                )
+              });
+
+              if (i + 1 === user.MasterNodes.length) {
+                this.setState({
+                  visible: true
+                });
+              }
+            });
         }
       })
       .catch(err => {
@@ -199,6 +450,7 @@ class ProposalCard extends Component {
 
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
+
     const proposalTitle = proposal.DataString[0][1].title || proposal.DataString[0][1].name;
     let { days_remaining, month_remaining, payment_amount, payment_type } = this.state;
     //Platform style switcher
@@ -210,6 +462,21 @@ class ProposalCard extends Component {
 
     // Some Maths ;P
     const progress = parseInt(proposal.YesCount, 10) / parseInt(this.props.totalNodes, 10) * 100; //remove added counts later and below
+
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: text => <span>{text}</span>
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        render: text => <spam>{text}</spam>
+      }
+    ];
 
     return (
       <Grid container className={style}>
@@ -243,8 +510,8 @@ class ProposalCard extends Component {
                 // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                  <span style={{ color: 'grey' }}>No title available for this proposal.</span>
-                )}
+                <span style={{ color: 'grey' }}>No title available for this proposal.</span>
+              )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
@@ -252,15 +519,15 @@ class ProposalCard extends Component {
               {days_remaining < 30 ? (
                 <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
               ) : (
-                  <span>{`(${month_remaining} Month${
-                    month_remaining > 1 ? 's' : ''
-                    } Remaining)`}</span>
-                )}
+                <span>{`(${month_remaining} Month${
+                  month_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
+              )}
             </div>
           </Grid>
 
           {user ? (
-            deviceType === 'mobile' ?
+            deviceType === 'mobile' ? (
               <Grid item md={3} xs={3} className="mobile-vote__wrapper">
                 <div className="vote-text">Vote</div>
                 <div className="vote-item">
@@ -268,16 +535,15 @@ class ProposalCard extends Component {
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.YesCount}</span>
-                </div  >
+                </div>
                 <div className="vote-item">
                   <Button className="btn-vote-down" onClick={() => this.voteDown(proposal)}>
                     <img src={voteDownIcon} className="downVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.NoCount}</span>
                 </div>
-
               </Grid>
-              :
+            ) : (
               <Grid item md={3} xs={3} className="desktop-vote__wrapper">
                 <div className="vote-text">Vote on Proposal</div>
                 <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
@@ -291,35 +557,54 @@ class ProposalCard extends Component {
                   <div className="vote-number">{proposal.NoCount}</div>
                 </div>
               </Grid>
+            )
+          ) : deviceType === 'mobile' ? (
+            <Grid item md={3} xs={3} className="logout-vote__wrapper">
+              <div className="vote-text">Status</div>
+              <div className="vote-up">
+                <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
+                <span className="voteNumber">{proposal.YesCount}</span>
+              </div>
+              <div className="vote-down">
+                <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
+                <span className="voteNumber">{proposal.NoCount}</span>
+              </div>
+            </Grid>
           ) : (
-              deviceType === 'mobile' ?
-                <Grid item md={3} xs={3} className="logout-vote__wrapper">
-                  <div className="vote-text">Status</div>
-                  <div className="vote-up">
-                    <img alt="a" src={voteUpIcon} className="smallUpVoteIcon" />
-                    <span className="voteNumber">{proposal.YesCount}</span>
-                  </div>
-                  <div className="vote-down">
-                    <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
-                    <span className="voteNumber">{proposal.NoCount}</span>
-                  </div>
-                </Grid>
-                :
-                <Grid item md={3} xs={3} className="desktop-vote__wrapper">
-                  <div className="vote-text">Voting Status</div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.YesCount}</div>
-                  </div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.NoCount}</div>
-                  </div>
-                </Grid>
-            )}
+            <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+              <div className="vote-text">Voting Status</div>
+              <div className="vote-item__wrapper">
+                <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.YesCount}</div>
+              </div>
+              <div className="vote-item__wrapper">
+                <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.NoCount}</div>
+              </div>
+            </Grid>
+          )}
         </Grid>
+        <Modal
+          title="Results"
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          onOk={this.handleOk}
+          style={{ top: '200px', textAlign: 'center' }}
+        >
+          {/* <div>{this.state.mnData.map((data, i) => <div key={i}>{data}</div>)}</div> */}
+          <Table
+            pagination={{
+              pageSize: 5,
+              size: 'small'
+            }}
+            columns={columns}
+            dataSource={this.state.mnData}
+          />
+
+          <div style={{ color: 'red' }}>{this.state.showError ? this.state.mnError : ''}</div>
+        </Modal>
       </Grid>
     );
   }
@@ -328,6 +613,7 @@ class ProposalCard extends Component {
 const stateToProps = state => {
   return {
     user: state.app.currentUser,
+    app: state.app,
     millsMonth: state.proposals.millsMonth
   };
 };

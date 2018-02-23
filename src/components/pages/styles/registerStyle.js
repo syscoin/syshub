@@ -8,7 +8,7 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 30px 30px 30px',
+    padding: '10px 0px 30px 0px',
     height: '50vh',
     '& .title': {
       color: greyDark,
@@ -20,12 +20,12 @@ export default {
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
-      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
+      boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px',
         '& .ant-form-explain': {
-          marginLeft: 185,
+          marginLeft: 'calc(25% + 10px)',
           marginTop: 5
         }
       },
@@ -38,7 +38,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -48,7 +48,7 @@ export default {
         }
       },
       '& .input-password-feild': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -68,8 +68,9 @@ export default {
         }
       },
       '& .recaptcha': {
-        marginLeft: 10,
-        width: '78%',
+        // marginLeft: 10,
+        marginRight:6,
+        width: '73%',
         display: 'inline-block',
         float: 'right'
       },
@@ -91,15 +92,20 @@ export default {
       },
       '& .terms-of-condition  ': {
         textAlign: 'center',
-        display: 'grid'
+        display: 'grid',
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
       },
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
-          margin: '0 10px',
+          marginRight:40,
           borderRadius: 10,
+          minHeight:40,
           '& span': {
             color: white,
             fontWeight: 'bold'
@@ -111,6 +117,8 @@ export default {
   mRoot: {
     extend: 'root',
     marginTop: 0,
+    paddingLeft: 0,
+    height: '100%',
     '& .input-field': {
       width: '100% !important',
       margin: '0px !important'
@@ -119,14 +127,14 @@ export default {
       marginTop: '10px !important'
     },
     '& .form__container': {
-      marginBottom: '100px',
+      marginBottom: 0,
       '& .label': {
-        width: '100%',
+        width: '50%',
         marginBottom: 10,
         textAlign: 'left'
       },
       '& .recaptcha': {
-        marginLeft: 0
+        marginLeft: 0,
       },
       '& .form-group': {
         margin: 0,
@@ -147,6 +155,17 @@ export default {
           marginTop: 30,
           left: 0,
           textAlign: 'left'
+        }
+      },
+      '& .terms-of-condition':{
+        width: '100% !important', 
+        margin: 0
+      },
+      '& .form-button-group':{
+        width: '100% !important',
+        marginLeft: '0px !important',
+        '& button':{
+          margin: '0px !important'
         }
       }
     }

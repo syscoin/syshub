@@ -7,16 +7,18 @@ import { userTwoFactorStyle } from './styles';
 import { Grid } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
 // import components
-
+import { isoArray } from '../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
 const FormItem = Form.Item;
+const Option = Select.Option;
+const InputGroup = Input.Group;
 
 class UserTwoFactor extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class UserTwoFactor extends Component {
 
     this.state = {
       phoneNumber: null,
-      isoCode: null,
+      isoCode: 'US',
       editNumber: false
     };
 
@@ -34,10 +36,22 @@ class UserTwoFactor extends Component {
     this.onChange = this.onChange.bind(this);
     this.editPhone = this.editPhone.bind(this);
     this.removePhone = this.removePhone.bind(this);
+    this.handleIsoCode = this.handleIsoCode.bind(this);
   }
 
   componentDidMount() {
     fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.verify = response;
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
+
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
       fire
@@ -46,27 +60,41 @@ class UserTwoFactor extends Component {
         .set(false);
     }
 
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.verify = response;
-      }
-    });
-
-    window.recaptchaVerifier.render().then(function (widgetId) {
-      window.recaptchaWidgetId = widgetId;
-    });
-
     fire
       .database()
       .ref('2FA/' + user.uid)
       .on('value', snap => {
         this.props.setAuth(snap.val());
+        if (snap.val() === true) {
+          fire
+            .database()
+            .ref('MasterNodes/' + user.uid)
+            .on('value', snapshot => {
+              if (snapshot.val() === null) {
+                return;
+              }
+              let list = [];
+              snapshot.forEach(mn => {
+                list.push(mn.val());
+              });
+
+              user.MasterNodes = list;
+
+              this.props.setCurrentUser(user);
+            });
+        }
       });
   }
 
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+
+  handleIsoCode(value) {
+    this.setState({
+      isoCode: value
     });
   }
 
@@ -96,6 +124,11 @@ class UserTwoFactor extends Component {
           title: 'Success',
           text: `Removed phone number from this account.`,
           icon: 'success'
+        });
+
+        this.verify = undefined;
+        window.recaptchaVerifier.render().then(widgetId => {
+          window.recaptchaVerifier.reset(widgetId);
         });
 
         fire
@@ -148,7 +181,7 @@ class UserTwoFactor extends Component {
       return;
     }
 
-    this.setState({ isoCode: '', phoneNumber: '' });
+    this.setState({ isoCode: 'US', phoneNumber: '' });
 
     const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
 
@@ -160,9 +193,20 @@ class UserTwoFactor extends Component {
         if (success) {
           swal({
             title: 'Sucess',
-            text: `Two Factor Authentication Enabled`,
+            text: `New Phone Number added & Two Factor Authentication Enabled`,
             icon: 'success'
           });
+          this.verify = undefined;
+          window.recaptchaVerifier.render().then(widgetId => {
+            window.recaptchaVerifier.reset(widgetId);
+          });
+          this.setState({
+            editNumber: false
+          });
+          fire
+            .database()
+            .ref('2FA/' + user.uid)
+            .set(true);
         }
       })
       .catch(err => {
@@ -184,7 +228,13 @@ class UserTwoFactor extends Component {
 
     if (user.phoneNumber == null) {
       this.addPhone();
+      return;
     }
+
+    this.verify = undefined;
+    window.recaptchaVerifier.render().then(widgetId => {
+      window.recaptchaVerifier.reset(widgetId);
+    });
 
     fire
       .database()
@@ -203,6 +253,11 @@ class UserTwoFactor extends Component {
       });
       return;
     }
+
+    this.verify = undefined;
+    window.recaptchaVerifier.render().then(widgetId => {
+      window.recaptchaVerifier.reset(widgetId);
+    });
 
     fire
       .database()
@@ -227,7 +282,7 @@ class UserTwoFactor extends Component {
           {/* userTwofactor left grid */}
           <Grid item md={12} xs={12} className="userTwoFactor-left-grid">
             <span className="enable2FA-note">
-              Note: Enabling 2FA to secure your account is recommended
+              Note: Enabling 2FA is recommended.
             </span>
             <div className="div-margin">
               <span className="statusText-span">Status:</span>
@@ -235,13 +290,12 @@ class UserTwoFactor extends Component {
                 {this.props.app.auth ? (
                   <span className="status-enable">Enable</span>
                 ) : (
-                    <span className="status-disable">
-                      Disabled
+                  <span className="status-disable">
+                    Disabled
                     <span className="lowSecurity-span">(Low Security)</span>
-                    </span>
-                  )}
+                  </span>
+                )}
               </span>
-
             </div>
             {app.currentUser ? (
               app.currentUser.phoneNumber == null || this.state.editNumber ? (
@@ -253,82 +307,93 @@ class UserTwoFactor extends Component {
                     className="phoneWrapper"
                   >
                     <FormItem className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Phone Number (With Area Code): `}
-                      </span>
-                      <Input
-                        ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        className="input-field"
-                        placeholder="Phone Number"
-                        value={this.state.phoneNumber}
-                        onChange={this.onChange}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem className="form-group">
-                      <span htmlFor="user-name" className="label">
-                        {`Country Code (Example - US, ES): `}
-                      </span>
-                      <Input
-                        ref={isoCode => (this.isoCode = isoCode)}
-                        id="isoCode"
-                        name="isoCode"
-                        className="input-field"
-                        placeholder="US"
-                        value={this.state.isoCode}
-                        onChange={this.onChange}
-                      />
+                      {app.currentUser.phoneNumber
+                        ? `Phone Number: ${app.currentUser.phoneNumber}`
+                        : ''}
+                      <br />
+                      <label>{`Phone number (with area code): `}</label>
+                      <InputGroup compact>
+                        <Select defaultValue="United States" onChange={this.handleIsoCode}>
+                          {isoArray.map((item, i) => (
+                            <Option value={item.code} key={i}>
+                              {item.name}
+                            </Option>
+                          ))}
+                        </Select>
+                        <Input
+                          ref={phoneNumber => (this.phoneNumber = phoneNumber)}
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          style={{ width: '20%' }}
+                          placeholder="(123) 456-7894"
+                          value={this.state.phoneNumber}
+                          onChange={this.onChange}
+                          type="number"
+                        />
+                      </InputGroup>
                     </FormItem>
                   </Form>
-                  <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
                   <Grid className="form-grid-btn">
-                    {app.currentUser ? (
-                      app.currentUser.phoneNumber !== null ? (
-                        <Button
-                          onClick={this.removePhone}
-                          htmlType="submit"
-                          variant="raised"
-                        >{'Delete Phone'}</Button>
-                      ) : null
-                    ) : null}
-                    <Button
-                      onClick={this.addPhone}
-                      htmlType="submit"
-                      variant="raised"
-                    >
-                      {'Add & Enable'}
-                    </Button>
+                    {app.currentUser
+                      ? app.currentUser.phoneNumber !== null
+                        ? [
+                            <Button
+                              key={1}
+                              onClick={this.removePhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Delete'}
+                            </Button>,
+                            <Button
+                              key={2}
+                              onClick={this.addPhone}
+                              htmlType="submit"
+                              variant="raised"
+                            >
+                              {'Update'}
+                            </Button>
+                          ]
+                        : null
+                      : null}
                   </Grid>
                 </Grid>
               ) : (
-                  <div>
-                    <button onClick={this.editPhone}>Edit</button>
-                  </div>
-                )
+                <div>
+                  <Button
+                    variant= "raised"
+                    color="primary"
+                    className="twoFactor-button"
+                    onClick={this.editPhone}
+                    style={{ marginBottom: '15px' }}
+                  >
+                    Edit Phone
+                  </Button>
+                </div>
+              )
             ) : null}
+            <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
 
             <Grid className="twoFactor-button-grid">
               {this.props.app.auth ? (
                 <Button
-                  raised
+                  variant= "raised"
                   color="primary"
                   className="twoFactor-button"
                   onClick={this.disableAuth}
                 >
-                  Disable 2F Auth
+                  Disable 2FA
                 </Button>
               ) : (
-                  <Button
-                    raised
-                    color="primary"
-                    className="twoFactor-button"
-                    onClick={this.enableAuth}
-                  >
-                    Enable 2F Auth
+                <Button
+                  raised
+                  color="primary"
+                  className="twoFactor-button"
+                  onClick={this.enableAuth}
+                >
+                  Enable 2FA
                 </Button>
-                )}
+              )}
             </Grid>
           </Grid>
           {/* userTwofactor right grid */}

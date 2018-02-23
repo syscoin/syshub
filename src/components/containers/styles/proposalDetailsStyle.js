@@ -20,6 +20,7 @@ export default {
     paddingTop: 70,
     paddingLeft: '0.4%',
     maxWidth: '98%',
+    paddingBottom: 70,
   },
   proposalDetailsMRoot: {
     extend: 'proposalDetailsRoot',

@@ -15,3 +15,18 @@ html *:not(i) {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+/* disable auto-zoom on iphone input field focus */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+	select:focus,
+	textarea:focus,
+	input:focus {
+		font-size: 16px;
+	}
+}
+/* fix IOS smooth scrolling issue */
+* {
+  -webkit-overflow-scrolling: touch;
+}

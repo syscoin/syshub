@@ -11,7 +11,8 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
 import CommentForm from './commentForm';
 import Typography from 'material-ui/Typography';
-
+import swal from 'sweetalert';
+import actions from '../../redux/actions';
 // import firebase
 import { comments, commentReplies } from '../../API/firebase';
 
@@ -46,6 +47,7 @@ class ProposalComments extends Component {
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
+    this.openCommentBox = this.openCommentBox.bind(this);
   }
 
 
@@ -171,6 +173,7 @@ class ProposalComments extends Component {
   }
 
 
+
   addComment() {
     if (this.state.userComment && this.props.user) {
       let date = new Date();
@@ -195,7 +198,6 @@ class ProposalComments extends Component {
         userComment: ''
       })
     }
-
   }
 
   voteForComment(action, commentID) {
@@ -290,14 +292,44 @@ class ProposalComments extends Component {
   }
 
   showAddReplyBtn(_commentID, showAddReply) {
-    let allComments = this.state.allComments.map((comment) => {
-      if (comment._id === _commentID) {
-        comment.showAddReply = showAddReply;
-        return comment;
-      }
-      return comment
+    if (this.props.user) {
+      let allComments = this.state.allComments.map((comment) => {
+        if (comment._id === _commentID) {
+          comment.showAddReply = showAddReply;
+          return comment;
+        }
+        return comment
+      })
+      this.setState({ allComments })
+    }else{
+      this.loginAlert();
+    }
+  }
+
+  openCommentBox(){
+    if (this.props.user) {
+      this.setState({ showAddComment: true });
+    }else{
+      this.loginAlert();
+    }
+  }
+
+  loginAlert(){
+    swal({
+      title: "Are You Login?",
+      text: "Please Login first to add Comment",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
     })
-    this.setState({ allComments })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.setPage('login')
+        } else {
+          // swal("Your imaginary file is safe!");
+        }
+      });
+
   }
 
   render() {
@@ -340,7 +372,7 @@ class ProposalComments extends Component {
             </Grid>
           </Grid>
           :
-          <Button className="add-comment-btn" color="primary" onClick={() => { this.setState({ showAddComment: true }) }}>
+          <Button className="add-comment-btn" color="primary" onClick={()=>this.openCommentBox()}>
             Add Comment
           </Button>
         }
@@ -446,7 +478,9 @@ const stateToProps = state => {
 };
 
 const dispatchToProps = dispatch => {
-  return {};
+  return {
+    setPage: page => dispatch(actions.setPage(page)),
+  };
 };
 
 

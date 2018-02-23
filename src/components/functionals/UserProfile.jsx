@@ -42,12 +42,12 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function (snapshot) {
+          function(snapshot) {
             // this variable can be used to show upload progress
             //const progress =
             //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
           },
-          function (error) {
+          function(error) {
             switch (error.code) {
               case 'storage/unauthorized':
                 // User doesn't have permission to access the object
@@ -64,7 +64,6 @@ class UserProfile extends Component {
                 alert('Unknown error occurred');
                 break;
               default:
-
             }
           },
           () => {
@@ -99,18 +98,30 @@ class UserProfile extends Component {
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
       usernameRef.on('value', snapshot => {
-        snapshot.forEach(snap => {
-          if (snap.val() === username) {
-            this.setState({
-              disabled: true
-            });
-            return;
-          } else {
-            this.setState({
-              disabled: false
-            });
-          }
-        });
+        if (Object.values(snapshot.val()).includes(username) === true) {
+          this.setState({
+            disabled: true
+          });
+        } else {
+          this.setState({
+            disabled: false
+          });
+        }
+        // snapshot.forEach(snap => {
+        //   if (snap.val() === username) {
+        //     this.setState({
+        //       disabled: true
+        //     });
+        //
+        //     return;
+        //   }
+        //
+        //   if (snap.val() !== username) {
+        //     this.setState({
+        //       disabled: false
+        //     });
+        //   }
+        // });
       });
     }
   }
@@ -131,7 +142,10 @@ class UserProfile extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const avatar = this.props.currentUser && this.props.currentUser.photoURL ? this.props.currentUser.photoURL : require('../../assets/img/no-user-image.gif');
+    const avatar =
+      this.props.currentUser && this.props.currentUser.photoURL
+        ? this.props.currentUser.photoURL
+        : require('../../assets/img/no-user-image.gif');
     return (
       <div className={style}>
         <Grid container className="profile-grid">
@@ -141,17 +155,13 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile image grid */}
-          <Grid md={3} item className="profile-image-grid">
+          <Grid md={3} lg={2} item className="profile-image-grid">
             <div className="avatar-container upload-image-container">
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
               ) : (
-                  <img
-                    src={this.state.image}
-                    alt="no user"
-                    className="user-image"
-                  />
-                )}
+                <img src={this.state.image} alt="no user" className="user-image" />
+              )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <Input
@@ -165,7 +175,7 @@ class UserProfile extends Component {
           </Grid>
 
           {/* profile credential grid */}
-          <Grid md={9} item className="profile-credential-grid">
+          <Grid md={8} lg={9} item className="profile-credential-grid">
             {/* For User Name */}
             <FormGroup className="form-group">
               <span htmlFor="user-name" className="label">
@@ -176,7 +186,8 @@ class UserProfile extends Component {
                 name="usernames"
                 id="user-name"
                 className="input-field"
-                placeholder="Enter Username"
+                placeholder="new-username"
+                onChange={this.checkUsername}
               />
               <span className="validation-message">
                 {this.state.disabled === true ? 'Not Available' : 'Available'}
@@ -191,19 +202,17 @@ class UserProfile extends Component {
               <input
                 ref={input => (this.registerEmail = input)}
                 name="email"
-                id="user-name"
+                id="user-email"
                 className="input-field"
-                placeholder="Enter email"
+                placeholder="new-email@company.com"
               />
-              <span className="validation-message">
-                *required for password change
-              </span>
+              <span className="validation-message">*password required.</span>
             </FormGroup>
           </Grid>
-          <Grid className="update-button-grid">
+          <Grid md={9} lg={12} className="update-button-grid">
             <Button
               onClick={this.submitProfile}
-              raised
+              variant= "raised"
               color="primary"
               className="update-button"
               disabled={this.state.disabled}
@@ -227,6 +236,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  withStyles(userProfileStyle)(UserProfile)
-);
+export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));

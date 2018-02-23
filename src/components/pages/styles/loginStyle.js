@@ -9,12 +9,12 @@ const secondary = palette.secondary;
 
 export default {
   root: {
-    padding: '10px 0px 0px 20px',
+    padding: '10px 0px 0px 0px',
     height: '50vh',
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
-      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 5px 30px',
+      boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
       '& .form-group': {
         flexDirection: 'row',
         marginTop: '10px'
@@ -24,7 +24,7 @@ export default {
         color: primary
       },
       '& .label': {
-        width: '20%',
+        width: '25%',
         display: 'inline-block',
         textAlign: 'right',
         fontSize: '15px',
@@ -33,7 +33,7 @@ export default {
         paddingRight: '10px'
       },
       '& .input-field': {
-        width: 'calc(45% - 20px)',
+        width: 300,
         margin: '0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
@@ -44,7 +44,8 @@ export default {
         }
       },
       '& .recaptcha': {
-        marginLeft: 10
+        marginLeft: '1.5%',
+        width: 300
       },
       '& .validation-message': {
         width: '35%',
@@ -69,9 +70,12 @@ export default {
       '& .form-button-group': {
         textAlign: 'center',
         display: 'inherit',
+        marginTop: 30,
+        width: 'calc(25% + 300px)',
+        marginLeft: 'calc(12% + 27px)',
         '&>button': {
           backgroundColor: primary,
-          margin: '0 10px',
+          margin: '0 10px 10px 10px',
           borderRadius: 10,
           '& span': {
             color: white,
@@ -90,15 +94,28 @@ export default {
   },
   mRoot: {
     extend: 'root',
-    height: 'calc(100vh - 220px)',
+    height: '100%',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
+    // marginTop: '36px',
+    '& .form-group .label':{
+      textAlign: 'left !important'
+    },
     '& .input-field': {
-      width: '62% !important'
+      width: '100% !important',
+      marginLeft: '0px !important'
     },
-
-    '& .signUpTxt': {
-      fontSize: '120%',
-      color: primary
+    '& .recaptcha': {
+      width: '100% !important',
+      
+      '& div':{
+        marginTop: 5,
+        display: 'inline-block'
+      }
     },
-
+    '& .form-button-group':{
+      width: '100% !important',
+      marginLeft: '0px !important'
+    }
   }
 };

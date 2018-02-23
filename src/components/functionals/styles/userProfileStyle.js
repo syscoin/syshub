@@ -19,9 +19,11 @@ export default {
       borderBottom: '0.1px solid ' + greyLight
     },
     '& .profile-image-grid': {
+      maxWidth:205,
+      marginLeft: 20,
+      textAlign: 'center',
       '& .avatar-container': {
         maxWidth: 150,
-        marginLeft: 20,
         padding: 10,
         border: 'thin solid ' + greyLight
       },
@@ -30,7 +32,7 @@ export default {
       },
       '& .change-photo-btn': {
         fontSize: '12px',
-        marginLeft: '38px',
+        width:'100%',
         '& .link-color': {
           color: primary,
           fontWeight: 'normal',
@@ -90,7 +92,8 @@ export default {
       }
     },
     '& .update-button-grid': {
-      padding: '20px'
+      padding: 20,
+      marginLeft: 20
     },
     '& button': {
       borderRadius: '5px',
@@ -115,6 +118,8 @@ export default {
     '& .profile-image-grid': {
       paddingTop: 10,
       paddingBottom: 30,
+      marginLeft: 0,
+      maxWidth: '100%',
       textAlign: 'center',
       '& .upload-image-container': {
         width: '100%',

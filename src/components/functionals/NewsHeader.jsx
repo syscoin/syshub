@@ -15,7 +15,7 @@ class NewsHeader extends Component {
     return (
       <div>
         <Grid container className={style}>
-          <Grid md={12} className="new-header-grid">
+          <Grid className="new-header-grid">
             {/* Cover Image */}
             <div className="cover">
               <img
