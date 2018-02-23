@@ -625,7 +625,7 @@ class NewProposal extends Component {
                     addonBefore={`${40 - this.state.proposalTitle.length}`}
                     value={this.state.proposalTitle}
                     onChange={this.proposalTitle}
-                    maxLength={40}
+                    maxLength={`${40}`}
                   />
                 </FormItem>
               </Form>
@@ -720,8 +720,8 @@ class NewProposal extends Component {
                   onChange={value => this.onDateChange(value)}
                   defaultValue={this.state.proposalStartEpoch}
                 >
-                  {this.state.paymentDateOptions.map(item => (
-                    <Option value={item.mills / 1000}>{item.ymd}</Option>
+                  {this.state.paymentDateOptions.map((item, i) => (
+                    <Option key={`ACZ_${i}`} value={item.mills / 1000}>{item.ymd}</Option>
                   ))}
                 </Select>
               </Col>
@@ -838,7 +838,7 @@ class NewProposal extends Component {
           zIndex={99999}
         >
           <div>
-            <TextArea rows={this.state.pCopied ? 4 : 5} readonly value={this.state.pValue} />
+            <TextArea rows={this.state.pCopied ? 4 : 5} readOnly value={this.state.pValue} />
             {this.state.pCopied ? (
               <div style={{ textAlign: 'right' }}>
                 <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
@@ -861,7 +861,7 @@ class NewProposal extends Component {
               <span> Enter Prepare TXID Here: </span>
               <Input
                 value={this.state.payValue}
-                disabled={this.state.sValue}
+                disabled={this.state.sValue ? true : false}
                 onChange={this.onChange}
                 name="payValue"
               />
@@ -899,7 +899,7 @@ class NewProposal extends Component {
           <br />
           <hr />
           <br />
-          <TextArea rows={this.state.sCopied ? 4 : 5} readonly value={this.state.sValue} />
+          <TextArea rows={this.state.sCopied ? 4 : 5} readOnly value={this.state.sValue} />
           {this.state.sCopied ? (
             <div style={{ textAlign: 'right' }}>
               <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
