@@ -35,7 +35,7 @@ export default {
         HTTPAsync.post(
           `${baseApiURL}/cmd`,
           {
-            "script": "masternode count"
+            'script': 'masternode count'
 
           },
           constants.SYS_STATS_MN_GET
