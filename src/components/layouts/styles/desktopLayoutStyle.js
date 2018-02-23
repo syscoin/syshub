@@ -28,7 +28,7 @@ export default {
     marginLeft: 20,
     marginTop: 20,
     boxShadow: boxShadow,
-    '@media (min-width: 1600px)':{
+    '@media (minWidth: 1600px)': {
       width: 'calc(56% - 20px)'
     }
   },

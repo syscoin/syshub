@@ -81,7 +81,7 @@ class NewsCard extends Component {
             </Grid>
             {/* show more button */}
             <Grid item md={12} xs={12} className="showMoreButton-grid">
-              <Button raised onClick={index => selectNews(post.guid)}>
+              <Button raised="true" onClick={index => selectNews(post.guid)}>
                 {' '} Show More {' '}
               </Button>
             </Grid>
