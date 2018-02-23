@@ -25,7 +25,7 @@ class Login extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function(widgetId) {
+    window.recaptchaVerifier.render().then(function (widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
   }
@@ -147,7 +147,6 @@ class Login extends Component {
                               });
 
                               user.MasterNodes = list;
-                              console.log(user);
                               this.props.setCurrentUser(user);
                             });
 
@@ -223,7 +222,7 @@ class Login extends Component {
         <Grid item md={12} xs={12} className="form__container">
           <form
             onSubmit={event => this.login(event)}
-            ref={ form => { this.loginForm = form }}
+            ref={form => { this.loginForm = form }}
             className="form__wrapper">
             <Grid item lg={12} md={12} xs={12}>
               {/* For User Name */}

@@ -75,7 +75,7 @@ class Register extends Component {
   };
 
   // specifying your onload callback function
-  callback() {}
+  callback() { }
 
   // specifying verify callback function
   verifyCallback(response) {
@@ -195,7 +195,6 @@ class Register extends Component {
     const checkIcon = require('../../assets/img/check.png'),
       closeIcon = require('../../assets/img/close.png'),
       { classes, deviceType } = this.props;
-    // console.log(this.state.disabled);
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -224,7 +223,7 @@ class Register extends Component {
               lg={12}
               md={12}
               xs={12}
-              /* justify="center" */
+            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -259,8 +258,8 @@ class Register extends Component {
                       {!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                        <img alt="a" src={closeIcon} />
-                      )}
+                          <img alt="a" src={closeIcon} />
+                        )}
                       {this.state.usernames}
                       {this.state.disabled ? ` Not Available` : ` Available`}
                     </div>
