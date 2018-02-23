@@ -2,6 +2,8 @@ import palette from './palette';
 
 const white = palette.white;
 const greyDark = palette.greyDark;
+const boxShadow = palette.boxShadow;
+
 export default {
   root: {
     '& .title': {
@@ -15,7 +17,8 @@ export default {
       background: white,
       padding: 25,
       overflowY: 'auto',
-      height: '80vh'
+      height: '80vh',
+      boxShadow: boxShadow
     }
   },
   mRoot: {

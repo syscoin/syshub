@@ -385,8 +385,7 @@ class UserTwoFactor extends Component {
                   Disable 2FA
                 </Button>
               ) : (
-                <Button
-                  raised
+                <Button 
                   color="primary"
                   className="twoFactor-button"
                   onClick={this.enableAuth}
