@@ -1,6 +1,7 @@
 import palette from './palette';
 
 const primary = palette.primary;
+const boxShadow = palette.boxShadow;
 
 export default {
   root: {
@@ -20,7 +21,7 @@ export default {
       width: '100%'
     },
     '& .statsCard': {
-      boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
+      boxShadow: boxShadow,
       padding: '0px !important',
       margin: '20px',
       textAlign: 'center',

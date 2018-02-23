@@ -1,6 +1,7 @@
 import palette from './palette';
 
 const grey = palette.grey;
+const boxShadow = palette.boxShadow;
 
 export default {
   wraper: {
@@ -26,7 +27,8 @@ export default {
     height: 'calc(100vh - 80px)',
     marginLeft: 20,
     marginTop: 20,
-    '@media (min-width: 1600px)': {
+    boxShadow: boxShadow,
+    '@media (min-width: 1600px)':{
       width: 'calc(56% - 20px)'
     }
   },

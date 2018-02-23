@@ -209,7 +209,7 @@ class UserProfile extends Component {
               <span className="validation-message">*password required.</span>
             </FormGroup>
           </Grid>
-          <Grid md={9} lg={12} className="update-button-grid">
+          <Grid item md={9} lg={12} className="update-button-grid">
             <Button
               onClick={this.submitProfile}
               variant= "raised"

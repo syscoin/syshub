@@ -944,10 +944,10 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-                <Stepper activeStep={activeStep} orientation="vertical">
+                <Stepper activeStep={activeStep} orientation="vertical" className="steper__container">
                   {steps.map((label, index) => {
                     return (
-                      <Step className="steper__container" key={label}>
+                      <Step className="steper__wrapper" key={label}>
                         <StepLabel className="steper__label">
                           <h2 className="step-label"> {label} </h2>
 
@@ -984,7 +984,7 @@ class NewProposal extends Component {
                           ) : null}
                         </StepLabel>
                         <StepContent>
-                          <div style={{ width: '100%' }}>{this.getStepContent(activeStep)}</div>
+                          {this.getStepContent(activeStep)}
                           <div className={classes.actionsContainer}>
                             <div
                               className={

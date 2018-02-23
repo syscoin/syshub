@@ -19,6 +19,9 @@ export default {
       fontWeight: 300
     },
     '& .steper__container': {
+      padding: 0
+    },
+    '& .steper__wrapper': {
       '& .classNameProp': {
         '&>div:nth-child(2)': {
           width: '100%',
@@ -54,12 +57,11 @@ export default {
 
       //next step button styling
       '& .next-btn-div': {
-        textAlign: 'right',
         margin: '10px 60px 10px 0px',
         '& Button': {
           borderRadius: '7px',
           height: '35px',
-          margin: 10
+          marginRight: 10
         },
         '& button span': {
           textTransform: 'capitalize',
@@ -139,14 +141,14 @@ export default {
           padding: '15px',
           marginTop: '10px',
           backgroundColor: white,
-          height: 100
+          minHeight: 180
         },
         '& .proposalEditor-wrapper': {
-          marginLeft: '40px',
+          marginLeft: 20,
           backgroundColor: greyLight,
           marginTop: 20,
           boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
-          height: 200,
+          minHeight: 200,
           minWidth: 500
         },
         '& .toolbarClassName': {
@@ -182,7 +184,7 @@ export default {
         '& .proposalContent-div': {
           marginLeft: 15,
           padding: 12,
-          height: 100,
+          height: '100%',
           overflow: 'auto',
           color: grey
         }
@@ -247,6 +249,27 @@ export default {
     },
     '& .amount-row':{
       marginTop: '10px !important'
+    },
+    '& .steper__container': {
+      padding: 10
+    },
+    '& .DraftEditor-editorContainer>div>div': {
+      maxHeight: 140,
+      overflowY: 'scroll'
+    },
+    '& .confirm-button':{
+      margin: '0px !important',
+      right: 20,
+      bottom: 0,
+      zIndex: 10
+    },
+    '& .next-btn-div, .confirm-btn-div':{
+      height: 35,
+      margin: '10px 0px !important',
+      textAlign: 'right'
+    },
+    '& .proposal-title-input':{
+      width: 'calc(100% - 10px) !important'
     }
   },
   modal: {

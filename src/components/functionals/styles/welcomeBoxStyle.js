@@ -76,7 +76,7 @@ export default {
     '& .logoDiv': {
       textAlign: 'center',
       '& img': {
-        width: '80vw'
+        width: '80vw !important'
       }
     }
   }
