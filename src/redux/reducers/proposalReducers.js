@@ -29,7 +29,10 @@ const proposals = (state = initialState, action) => {
         Object.keys(action.data[key1]).forEach(key2 => {
           proposal[key2] = smartParse(action.data[key1][key2]);
         });
-        list.push(proposal);
+        if (smartParse(action.data[key1].DataString)[0][0] === 'proposal') {
+          list.push(proposal);
+        }
+
         proposal = {};
       });
 

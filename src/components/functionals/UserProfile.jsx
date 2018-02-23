@@ -212,7 +212,7 @@ class UserProfile extends Component {
           <Grid item md={9} lg={12} className="update-button-grid">
             <Button
               onClick={this.submitProfile}
-              variant= "raised"
+              variant="raised"
               color="primary"
               className="update-button"
               disabled={this.state.disabled}
