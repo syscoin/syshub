@@ -31,11 +31,10 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`SYSCOIN: `}</span>
-          )}
+              <span className="TxtBold">{`SYSCOIN: `}</span>
+            )}
           {changeRate}
         </Grid>
-        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
             alt="a"
@@ -45,18 +44,17 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
-          )}
+              <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+            )}
           {masternodes}
         </Grid>
-        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img alt="a" src={require('../../assets/img/png_stats_users.png')} className="icon" />
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`USERS: `}</span>
-          )}
+              <span className="TxtBold">{`USERS: `}</span>
+            )}
           {totUsers}
         </Grid>
       </Grid>

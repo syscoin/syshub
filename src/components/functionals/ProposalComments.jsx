@@ -301,20 +301,20 @@ class ProposalComments extends Component {
         return comment
       })
       this.setState({ allComments })
-    }else{
+    } else {
       this.loginAlert();
     }
   }
 
-  openCommentBox(){
+  openCommentBox() {
     if (this.props.user) {
       this.setState({ showAddComment: true });
-    }else{
+    } else {
       this.loginAlert();
     }
   }
 
-  loginAlert(){
+  loginAlert() {
     swal({
       title: "Are You Login?",
       text: "Please Login first to add Comment",
@@ -357,7 +357,6 @@ class ProposalComments extends Component {
               Add Comment
             </Grid>
             <Grid item md={12} className="proposalDetails">
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 
               <textarea rows="2" cols="75" className="userComment" value={this.state.userComment} onChange={this.setComment}>
 
@@ -372,7 +371,7 @@ class ProposalComments extends Component {
             </Grid>
           </Grid>
           :
-          <Button className="add-comment-btn" color="primary" onClick={()=>this.openCommentBox()}>
+          <Button className="add-comment-btn" color="primary" onClick={() => this.openCommentBox()}>
             Add Comment
           </Button>
         }
@@ -418,7 +417,6 @@ class ProposalComments extends Component {
                     Edited Comment
                   </Grid>
                   <Grid item md={12} className="proposalDetails">
-                    {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus eleifend velit, et dapibus nulla interdum tempor. */}
 
                     <textarea rows="2" cols="75" className="userComment" value={this.state.userEditComment} onChange={this.setEditComment}>
 

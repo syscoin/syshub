@@ -606,7 +606,6 @@ class ProposalCard extends Component {
           onOk={this.handleOk}
           style={{ top: '200px', textAlign: 'center' }}
         >
-          {/* <div>{this.state.mnData.map((data, i) => <div key={i}>{data}</div>)}</div> */}
           <Table
             pagination={{
               pageSize: 5,

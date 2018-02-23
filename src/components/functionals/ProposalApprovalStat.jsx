@@ -67,7 +67,6 @@ class ProposalApprovalStat extends Component {
             </Typography>
           </Grid>
           <Grid item md={6} className="approvalValue">
-            {/*YesCount / totalNodes * 100 >= 50 ? (*/}
             {totalVotes >= totalNodes ? (
               <span>
                 <span className="approvalGreenColorFont">FUNDED</span> -

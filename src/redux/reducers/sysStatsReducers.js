@@ -1,37 +1,6 @@
 import constants from '../constants';
 
 const initialState = {
-  /*   value: {
-      general: {
-        consensus_blockheight: '805650',
-        consensus_version: '120202',
-        consensus_protocolversion: '70208',
-        all_user: '3648',
-        registered_masternodes: '3036',
-        registered_masternodes_verified: '787'
-      },
-      exchange_rates: {
-        dash_usd: 1,
-        btc_usd: '1',
-        btc_dash: '1'
-      }
-    },
-    valueOld: {
-      general: {
-        consensus_blockheight: '805694',
-        consensus_version: '120202',
-        consensus_protocolversion: '70208',
-        all_user: '3648',
-        registered_masternodes: '3036',
-        registered_masternodes_verified: '1047'
-      },
-      exchange_rates: {
-        dash_usd: 712.4703203664,
-        btc_usd: '1',
-        btc_dash: '0.06783726'
-      }
-    }, */
-
   cards: [
     {
       img: 'png_stasts_sys.png',

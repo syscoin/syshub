@@ -67,7 +67,6 @@ class Stats extends Component {
 
     return (
       <div className={style}>
-        {/* <Icon color="accent">add_circle</Icon> */}
         <h1 className="statsHeading">
           <Equalizer className="headingIcon" /> SYSHub Stats
         </h1>
