@@ -326,6 +326,26 @@ const doDeleteAccount = () => {
           if (value.value === 'DELETE') {
             fire
               .database()
+              .ref('messages')
+              .once('value', snapshot => {
+                snapshot.forEach(snap => {
+                  if (snap.val().user.id === currentUser.uid) {
+                    let newMessage = { ...snap.val() };
+                    newMessage.user.displayName = `${currentUser.displayName}-deleted`;
+                    fire
+                      .database()
+                      .ref('messages/' + snap.key)
+                      .update(newMessage);
+                  }
+                });
+              });
+
+            fire
+              .database()
+              .ref('usernames/' + currentUser.uid)
+              .set(`${currentUser.displayName}-deleted`);
+            fire
+              .database()
               .ref('2FA/' + currentUser.uid)
               .remove();
             fire
