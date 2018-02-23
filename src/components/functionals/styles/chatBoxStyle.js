@@ -48,12 +48,12 @@ export default {
               display: 'block',
             },
             '& .chatContent-primaryText': {
-              display:'block',
-              padding:'8px 0px',
+              display: 'block',
+              padding: '8px 0px',
               color: primary,
             },
             '& .chatContent-secondaryText': {
-              display:'block',              
+              display: 'block',
               color: greyDark,
               padding: '0px 0px 0px 5px',
               fontWeight: '100',
@@ -65,17 +65,16 @@ export default {
           backgroundColor: white,
           '&>div': {
             width: 'calc(100% - 60px)',
-            // marginLeft: '20px',
           },
           '& ::before': {
             backgroundColor: 'transparent',
           },
           '& .send-button': {
             position: 'absolute',
-            marginTop: '4px',
             cursor: 'pointer',
-            color: '#a8aba5',
-            right: 6
+            color: primary,
+            right: 15,
+            bottom: 50
           },
         },
       },
@@ -89,22 +88,22 @@ export default {
       height: '100%',
       '& .paper-style': {
         height: '100%',
-        '& form':{
+        '& form': {
           position: 'fixed',
           bottom: 0,
           width: '100%',
           height: 50,
-          '& div':{
+          '& div': {
             width: 'calc(100% - 0px) !important',
             marginBottom: '0px !important',
             height: '100%',
-            '& textarea':{
+            '& textarea': {
               height: '50px !important',
               border: 'none',
-              borderTop: '2px solid '+primary
+              borderTop: '2px solid ' + primary
             }
           },
-          '& .send-button':{
+          '& .send-button': {
             top: 8
           }
         },
