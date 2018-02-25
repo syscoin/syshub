@@ -136,14 +136,14 @@ export default {
           let nUser = 0;
           for (var key in snapshot.val()) {
             const value = snapshot.val()[key];
-            if (value.indexOf('-deleted') === -1) { nUser += 1 }
-          };
+            if (value.indexOf('-deleted') === -1) { nUser += 1; }
+          }
           dispatch({
             type: actionType,
             data: nUser,
           });
-          return snapshot
-        })
+          return snapshot;
+        });
   },
 
   fireMn: (actionType) => {
@@ -157,12 +157,12 @@ export default {
             const value = snapshot.val()[key];
             const myMn = Object.keys(value).length;
             nMN += myMn;
-          };
+          }
           dispatch({
             type: actionType,
             data: nMN,
           });
-          return snapshot
-        })
+          return snapshot;
+        });
   },
 };
