@@ -18,7 +18,10 @@ const initialState = {
       key: 'totUsers',
       text: 'ALL USERS'
     }
-  ]
+  ],
+  totMn: 0,
+  regMn: 0,
+  users: 0
 };
 
 function smartParse(json, def) {
@@ -51,13 +54,13 @@ const sysStats = (state = initialState, action) => {
       return { ...state, sysPrice };
     }
     case constants.SYS_STATS_TMN_GET: {
-      return { ...state, mnCount: action.data };
+      return { ...state, totMn: action.data };
     }
     case constants.SYS_STATS_RMN_GET: {
-      return { ...state, nMns: action.data };
+      return { ...state, regMn: action.data };
     }
     case constants.SYS_STATS_USER_GET: {
-      return { ...state, nUsers: action.data };
+      return { ...state, users: action.data };
     }
     default:
       return state;

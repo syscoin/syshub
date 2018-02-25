@@ -51,7 +51,7 @@ export default {
       );
     };
   },
-  getSysMnCount: () => {
+  getSysMnTotal: () => {
     return dispatch => {
       return dispatch(
         HTTPAsync.post(
