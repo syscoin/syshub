@@ -34,21 +34,7 @@ function smartParse(json, def) {
 
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
-    case constants.SYS_STATS_GET: {
-      const value = state.value;
-      const valueOld = state.valueOld;
-      const newValue = smartParse(action.data.data, value);
-      const statsChanged =
-        JSON.stringify(value) === JSON.stringify(newValue) ? false : true;
 
-      return statsChanged
-        ? { ...state, value: newValue, valueOld: value }
-        : { ...state, value, valueOld };
-    }
-    case constants.SYS_STATS_FIRST: {
-      const newValue = smartParse(action.data.data, state.value);
-      return { ...state, value: newValue, valueOld: newValue };
-    }
     case constants.SYS_STATS_PRICE_GET: {
       const sysPrice = smartParse(action.data.data, [])[0];
       return { ...state, sysPrice };

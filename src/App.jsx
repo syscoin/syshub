@@ -12,6 +12,9 @@ import appStyles from './styles/appStyle';
 
 class App extends Component {
   state = {};
+  componentWillMount() {
+    this.props.getSysInfo();
+  }
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
 
@@ -70,12 +73,9 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
-    this.props.getSysStats('first');
-    this.props.getSysInfo();
   }
 
   tick() {
-    this.props.getSysStats();
     this.props.getSysInfo();
   }
 
@@ -105,7 +105,6 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysStats: first => dispatch(actions.getSysStats(first)),
     getSysInfo: () => {
       return (
         dispatch(actions.getSysPrice()),
