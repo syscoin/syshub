@@ -1,7 +1,6 @@
 // curl https://d3j22jloo6hpq6.cloudfront.net/API/curl?url="https://www.dashcentral.org/api/v1/public"
 
 import constants from '../constants';
-
 import { HTTPAsync } from '../helpers';
 
 /**---------------------------------------------------------------------------- */
@@ -29,6 +28,29 @@ export default {
       );
     };
   },
+  getSysMnRegistered: () => {
+    return dispatch =>
+      dispatch(
+        HTTPAsync.fireMn(constants.SYS_STATS_RMN_GET)
+      );
+  },
+  getSysUserRegistered: () => {
+    return dispatch =>
+      dispatch(
+        HTTPAsync.fireUser(constants.SYS_STATS_USER_GET)
+      );
+  },
+  getSysPrice: () => {
+    return dispatch => {
+      return dispatch(
+        HTTPAsync.get(
+          `${baseApiURL}/curl?url="https://api.coinmarketcap.com/v1/ticker/syscoin/"`,
+          null,
+          constants.SYS_STATS_PRICE_GET
+        )
+      );
+    };
+  },
   getSysMnCount: () => {
     return dispatch => {
       return dispatch(
@@ -38,7 +60,7 @@ export default {
             'script': 'masternode count'
 
           },
-          constants.SYS_STATS_MN_GET
+          constants.SYS_STATS_TMN_GET
         )
       );
     };

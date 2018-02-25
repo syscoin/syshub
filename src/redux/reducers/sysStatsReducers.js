@@ -1,5 +1,6 @@
 import constants from '../constants';
 
+
 const initialState = {
   cards: [
     {
@@ -45,10 +46,19 @@ const sysStats = (state = initialState, action) => {
       const newValue = smartParse(action.data.data, state.value);
       return { ...state, value: newValue, valueOld: newValue };
     }
-    case constants.SYS_STATS_MN_GET: {
-      return { ...state, MnCount: action.data };
+    case constants.SYS_STATS_PRICE_GET: {
+      const sysPrice = smartParse(action.data.data, [])[0];
+      return { ...state, sysPrice };
     }
-
+    case constants.SYS_STATS_TMN_GET: {
+      return { ...state, mnCount: action.data };
+    }
+    case constants.SYS_STATS_RMN_GET: {
+      return { ...state, nMns: action.data };
+    }
+    case constants.SYS_STATS_USER_GET: {
+      return { ...state, nUsers: action.data };
+    }
     default:
       return state;
   }
