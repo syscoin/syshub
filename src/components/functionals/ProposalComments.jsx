@@ -406,9 +406,14 @@ class ProposalComments extends Component {
   }
 
   // Render Child Object
-  renderChildComments(comment){
+  generateChildCommentsStructure(comment){
+    let tree = [];
     // Step 1: Filter all parents
-    
+    for(var i=0; i<=comment.replies.length; i++){
+      if(replies[i].parent === null){
+        tree.push
+      }
+    }
     
     // Step(1): Filter all unique
     
