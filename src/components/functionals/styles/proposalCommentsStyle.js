@@ -133,7 +133,7 @@ export default {
       },
       '& .newYearView': {
         padding: 0,
-        marginLeft: '7%',
+        marginLeft: '4%',
         fontSize: 16,
         color: gray,
         '&>p': {
@@ -156,7 +156,7 @@ export default {
       },
       '& .replyView': {
         padding: 0,
-        marginLeft: '7%',
+        marginLeft: '4%',
         marginTop: 20,
         fontSize: 16,
         color: primaryDark,
@@ -275,13 +275,13 @@ export default {
       },
       '& .newYearView': {
         padding: 0,
-        marginLeft: '7%',
+        marginLeft: '4%',
         fontSize: 16,
         color: gray
       },
       '& .replyView': {
         padding: 0,
-        margin: '20px 0 20px 7%',
+        margin: '20px 0 20px 4%',
         fontSize: 16,
         color: primaryDark,
         fontWeight: 'bold'
@@ -370,7 +370,7 @@ export default {
         }
       },
       '& .newYearView': {
-        marginRight: '7%',
+        marginRight: '4%',
         '&>p': {
           display: 'inline-block'
         }
