@@ -98,8 +98,8 @@ class Register extends Component {
 
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.on('value', snapshot => {
-        if (Object.values(snapshot.val()).includes(this.registerName.value) === true) {
+      usernameRef.once('value').then(snapshot => {
+        if (Object.values(snapshot.val()).includes(this.state.usernames) === true) {
           this.setState({
             disabled: true
           });
@@ -108,18 +108,6 @@ class Register extends Component {
             disabled: false
           });
         }
-        // snapshot.forEach(snap => {
-        //   if (snap.val() === username) {
-        //     this.setState({
-        //       disabled: true
-        //     });
-        //     return;
-        //   } else {
-        //     this.setState({
-        //       disabled: false
-        //     });
-        //   }
-        // });
       });
     }
   }

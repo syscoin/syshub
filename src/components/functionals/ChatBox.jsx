@@ -38,7 +38,10 @@ class ChatBox extends Component {
       });
     });
   }
+  componentWillUnmount() {
+    messages.off();
 
+  }
   componentDidMount() {
     this.scrollToBottom();
   }
