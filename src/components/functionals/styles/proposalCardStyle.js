@@ -283,6 +283,9 @@ export default {
             width: '50%'
           }
         },
+        '& .voteNumber':{
+          width: 30
+        }
       },
       '& .logout-vote__wrapper': {
         textAlign: 'center',

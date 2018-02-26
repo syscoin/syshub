@@ -1,37 +1,7 @@
 import constants from '../constants';
 
-const initialState = {
-  /*   value: {
-      general: {
-        consensus_blockheight: '805650',
-        consensus_version: '120202',
-        consensus_protocolversion: '70208',
-        all_user: '3648',
-        registered_masternodes: '3036',
-        registered_masternodes_verified: '787'
-      },
-      exchange_rates: {
-        dash_usd: 1,
-        btc_usd: '1',
-        btc_dash: '1'
-      }
-    },
-    valueOld: {
-      general: {
-        consensus_blockheight: '805694',
-        consensus_version: '120202',
-        consensus_protocolversion: '70208',
-        all_user: '3648',
-        registered_masternodes: '3036',
-        registered_masternodes_verified: '1047'
-      },
-      exchange_rates: {
-        dash_usd: 712.4703203664,
-        btc_usd: '1',
-        btc_dash: '0.06783726'
-      }
-    }, */
 
+const initialState = {
   cards: [
     {
       img: 'png_stasts_sys.png',
@@ -48,7 +18,10 @@ const initialState = {
       key: 'totUsers',
       text: 'ALL USERS'
     }
-  ]
+  ],
+  totMn: 0,
+  regMn: 0,
+  users: 0
 };
 
 function smartParse(json, def) {
@@ -61,25 +34,20 @@ function smartParse(json, def) {
 
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
-    case constants.SYS_STATS_GET: {
-      const value = state.value;
-      const valueOld = state.valueOld;
-      const newValue = smartParse(action.data.data, value);
-      const statsChanged =
-        JSON.stringify(value) === JSON.stringify(newValue) ? false : true;
 
-      return statsChanged
-        ? { ...state, value: newValue, valueOld: value }
-        : { ...state, value, valueOld };
+    case constants.SYS_STATS_PRICE_GET: {
+      const sysPrice = smartParse(action.data.data, [])[0];
+      return { ...state, sysPrice };
     }
-    case constants.SYS_STATS_FIRST: {
-      const newValue = smartParse(action.data.data, state.value);
-      return { ...state, value: newValue, valueOld: newValue };
+    case constants.SYS_STATS_TMN_GET: {
+      return { ...state, totMn: action.data };
     }
-    case constants.SYS_STATS_MN_GET: {
-      return { ...state, MnCount: action.data };
+    case constants.SYS_STATS_RMN_GET: {
+      return { ...state, regMn: action.data };
     }
-
+    case constants.SYS_STATS_USER_GET: {
+      return { ...state, users: action.data };
+    }
     default:
       return state;
   }

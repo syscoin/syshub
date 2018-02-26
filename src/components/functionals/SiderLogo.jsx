@@ -18,14 +18,6 @@ class SiderLogo extends Component {
             <img alt="a" src={require('../../assets/img/png_menu_logo.png')} width="100%" />
           </a>
         </div>
-        {/* <div className="txtArea">
-          <Typography variant="body1" gutterBottom align='right'>
-            brought to you by
-        </Typography>
-          <Typography variant="body2" gutterBottom align='right'>
-            Blockchain Foundry
-        </Typography>
-        </div> */}
       </div>
     );
   }

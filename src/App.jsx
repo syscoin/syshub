@@ -12,6 +12,9 @@ import appStyles from './styles/appStyle';
 
 class App extends Component {
   state = {};
+  componentWillMount() {
+    this.props.getSysInfo();
+  }
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
 
@@ -70,34 +73,25 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
-    this.props.getSysStats('first');
-    this.props.getSysMnCount();
   }
 
   tick() {
-    this.props.getSysStats();
-    this.props.getSysMnCount();
+    this.props.getSysInfo();
   }
 
   render() {
     const { classes } = this.props;
 
     return (
-      /* <HttpsRedirect> */
       <div className={classes.root}>
         <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
           <DesktopLayout />
-          {/* <h1 style={{ color: 'white', zIndex: '10000', bottom: '200px' }}>{this.state.timer}</h1> */}
         </Platform>
-        {/* <Platform rules={{ DeviceType: 'tablet' }}>
-          <DesktopLayout />
-        </Platform> */}
         <Platform rules={{ DeviceType: 'mobile' }}>
           <MobileLayout />
         </Platform>
       </div>
-      /* </HttpsRedirect> */
     );
   }
 }
@@ -111,8 +105,14 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysStats: first => dispatch(actions.getSysStats(first)),
-    getSysMnCount: first => dispatch(actions.getSysMnCount(first)),
+    getSysInfo: () => {
+      return (
+        dispatch(actions.getSysPrice()),
+        dispatch(actions.getSysMnTotal()),
+        dispatch(actions.getSysMnRegistered()),
+        dispatch(actions.getSysUserRegistered())
+      )
+    },
 
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
     setAuth: auth => dispatch(actions.setAuth(auth))

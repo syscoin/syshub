@@ -41,7 +41,6 @@ class MHeaderNav extends Component {
               : { backgroundColor: 'inherit' }
           }
         >
-          {/* <Dropdown overlay={menu} placement="bottomRight"> */}
           <IconButton color="inherit" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
             <Icon type="bars" className="menu-icon" id="sidebar" />
           </IconButton>

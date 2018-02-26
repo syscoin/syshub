@@ -12,16 +12,13 @@ import { headerStatsStyle } from './styles';
 class HeaderStats extends Component {
   render() {
     const { classes, deviceType, sysStatsValue } = this.props;
+    const { sysPrice, totMn, regMn, users } = sysStatsValue;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
-    ).toFixed(5)} BTC/SYS` : '';
-    const masternodes = sysStatsValue ? `${
-      this.props.sysStatsValue.general.registered_masternodes_verified
-      } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';
-    const totUsers = sysStatsValue ? this.props.sysStatsValue.general.all_user : '';
-    //console.clear();
+    const changeRate = sysPrice ? `${(sysPrice.price_btc)} BTC/SYS` : '';
+    const masternodes = totMn ? `${regMn} / ${totMn}` : '';
+    const totUsers = users ? users : '';
     return (
       <Grid container className={style}>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
@@ -31,11 +28,10 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`SYSCOIN: `}</span>
-          )}
+              <span className="TxtBold">{`SYSCOIN: `}</span>
+            )}
           {changeRate}
         </Grid>
-        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
             alt="a"
@@ -45,18 +41,17 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
-          )}
+              <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+            )}
           {masternodes}
         </Grid>
-        {/*deviceType === 'mobile' ? null : <Divider className="divider" type="vertical" />*/}
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img alt="a" src={require('../../assets/img/png_stats_users.png')} className="icon" />
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-            <span className="TxtBold">{`USERS: `}</span>
-          )}
+              <span className="TxtBold">{`USERS: `}</span>
+            )}
           {totUsers}
         </Grid>
       </Grid>
@@ -71,7 +66,12 @@ HeaderStats.propTypes = {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStatsValue: state.sysStats.value
+    sysStatsValue: {
+      sysPrice: state.sysStats.sysPrice,
+      totMn: state.sysStats.totMn,
+      regMn: state.sysStats.regMn,
+      users: state.sysStats.users,
+    }
   };
 }
 

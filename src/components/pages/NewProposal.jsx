@@ -857,7 +857,7 @@ class NewProposal extends Component {
                 text={this.state.pValue}
                 onCopy={() => this.setState({ pCopied: true })}
               >
-                <Button type="primary" disabled={this.state.sValue}>
+                <Button type="primary" disabled={this.state.sValue || !this.state.pValue}>
                   Copy
                 </Button>
               </CopyToClipboard>
@@ -884,22 +884,10 @@ class NewProposal extends Component {
                 <Icon type="left" />
                 {`Back & Edit`}
               </Button>
-              <Button type="primary" disabled={this.state.sValue} onClick={this.submitPaymentId}>
+              <Button type="primary" disabled={this.state.sValue || !this.state.pValue} onClick={this.submitPaymentId}>
                 Submit TXID
               </Button>
             </div>
-            {/* {this.state.sValue ? (
-            <div className="id-copied">
-              Looks like you already have a payment id, go ahead and copy it and paste it below.
-              <CopyToClipboard
-                text={this.state.sValue}
-                onCopy={() => this.setState({ payCopied: true })}
-              >
-                <Button type="primary" disabled={this.state.sValue} >Copy</Button>
-              </CopyToClipboard>
-              {this.state.payCopied ? <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span> : null}
-            </div>
-          ) : null}*/}
           </div>
           <br />
           <hr />

@@ -44,7 +44,6 @@ class News extends Component {
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
         {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
-            {/* <Icon type="backward" className="icon" /> */}
             <Icon type="double-left" className="icon" />
             <span className="iconTxt">{`  Back to List`}</span>
           </div>
