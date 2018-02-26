@@ -87,7 +87,7 @@ export default {
       paddingBottom: 20,
       '& .commentlHrView': {
         margin: 0,
-        marginLeft: '4%',
+        marginLeft: 22,
         maxWidth: '94.8%',
         marginTop: '-10px',
         '& hr': {
@@ -229,7 +229,7 @@ export default {
       height: 150,
       '& .commentlHrView': {
         margin: 0,
-        marginLeft: '4%',
+        marginLeft: 22,
         maxWidth: '94.8%',
         marginTop: '-10px',
         '& .commentlHr': {
@@ -349,11 +349,12 @@ export default {
       paddingBottom: 10,
       minHeight: '1%',
       '& .commentHeading': {
+        padding: '10px 15px !important',
         '& .userView': {
           width: '70%',
           display: 'inline-block',
           '& .userName': {
-            padding: 5,
+            padding: 0,
           },
           '& .commentDate': {
             marginLeft: 0,
@@ -384,6 +385,9 @@ export default {
             width: 125,
           }
         }
+      },
+      '& .commentlHrView':{
+        marginLeft: 0
       }
     },
     '& .allReplies': {
@@ -396,14 +400,14 @@ export default {
         margin: 'auto',
         '& .replyUserVeiw': {
           '& .replyUserName': {
-            padding: '10px 25px 10px 10px',
+            padding: '10px 25px 10px 0px',
 
           }
         }
       },
       '& .commentlHrView': {
         maxWidth: '90% !important',
-        marginLeft: '7% !important',
+        marginLeft: '0px !important',
       }
     }
   },
