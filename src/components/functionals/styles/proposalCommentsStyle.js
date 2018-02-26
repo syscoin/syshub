@@ -318,6 +318,17 @@ export default {
     },
     '& .replyView': {
       cursor: 'pointer'
+    },
+    '& .btn-clear':{
+      background: 'transparent',
+      width: 70,
+      margin: 0,
+      padding: 0,
+      '& span':{
+        color: primaryDark,
+        justifyContent: 'left',
+        textTransform: 'initial'
+      }
     }
   },
   mRoot: {
