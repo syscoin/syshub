@@ -141,7 +141,10 @@ export default {
           padding: '15px',
           marginTop: '10px',
           backgroundColor: white,
-          minHeight: 180
+          minHeight: 180,
+          '& .DraftEditor-editorContainer':{
+            zIndex: 0
+          }
         },
         '& .proposalEditor-wrapper': {
           marginLeft: 20,

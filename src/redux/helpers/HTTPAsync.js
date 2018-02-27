@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { fire } from '../../API/firebase';
+
 
 const getRequest = (url, params) => {
   return new Promise((resolve, reject) => {
@@ -123,5 +125,44 @@ export default {
         .catch(err => {
           throw err;
         });
-  }
+  },
+
+  fireUser: (actionType) => {
+    return dispatch =>
+      fire.database()
+        .ref('usernames')
+        .once('value')
+        .then(snapshot => {
+          let nUser = 0;
+          for (var key in snapshot.val()) {
+            const value = snapshot.val()[key];
+            if (value.indexOf('-deleted') === -1) { nUser += 1; }
+          }
+          dispatch({
+            type: actionType,
+            data: nUser,
+          });
+          return snapshot;
+        });
+  },
+
+  fireMn: (actionType) => {
+    return dispatch =>
+      fire.database()
+        .ref('MasterNodes')
+        .once('value')
+        .then(snapshot => {
+          let nMN = 0;
+          for (var key in snapshot.val()) {
+            const value = snapshot.val()[key];
+            const myMn = Object.keys(value).length;
+            nMN += myMn;
+          }
+          dispatch({
+            type: actionType,
+            data: nMN,
+          });
+          return snapshot;
+        });
+  },
 };

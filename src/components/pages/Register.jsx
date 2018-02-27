@@ -242,7 +242,7 @@ class Register extends Component {
                     }
                   ]
                 })(
-                  <input
+                  <Input
                     ref={input => (this.registerName = input)}
                     name="usernames"
                     id="user-name"
