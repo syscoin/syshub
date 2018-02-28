@@ -10,7 +10,7 @@ class CommentForm extends Component {
     }
   }
   render() {
-    let { comment, parentKey } = this.props;
+    let { comment, parent } = this.props;
     let { message } = this.state;
     return (
       <Grid item container md={8} className="topcommentSectionslView">
@@ -20,7 +20,7 @@ class CommentForm extends Component {
           <textarea rows="1" cols="55" className="userComment" value={message} onChange={(e) => { this.setState({ message: e.target.value }) }}>
           </textarea>
           <hr className="proposalDetailsHr" />
-          <Button onClick={() => this.props.add(comment._id, message, parentKey)}> Submit </Button>
+          <Button onClick={() => this.props.add(comment._id, message, parent)}> Submit </Button>
           <Button onClick={() => { this.props.cancel(comment._id, false) }}> Cancel </Button>
         </Grid>
       </Grid>

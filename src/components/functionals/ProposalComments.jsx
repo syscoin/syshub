@@ -14,7 +14,7 @@ import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
 import actions from '../../redux/actions';
 // import firebase
-import { comments, commentReplies } from '../../API/firebase';
+import { comments, commentReplies, commentReplies_V2 } from '../../API/firebase';
 
 import { proposalCommentsStyle } from './styles';
 
@@ -31,6 +31,7 @@ class ProposalComments extends Component {
       userEditComment: '',
       selectedCommentID: null,
       showAddComment: false,
+      allReplies: {},
       replyBox: '' // replybox Id
     };
     this.commentsCounts = 0;
@@ -38,7 +39,7 @@ class ProposalComments extends Component {
     this.setComment = this.setComment.bind(this);
     // this.renderReplies = this.renderReplies.bind(this);
     this.generateDate = this.generateDate.bind(this);
-    // this.loadReplies = this.loadReplies.bind(this);
+    this.loadReplies = this.loadReplies.bind(this);
     // this.addReply = this.addReply.bind(this);
     // this.setReply = this.setReply.bind(this);
     this.voteForComment = this.voteForComment.bind(this);
@@ -47,10 +48,12 @@ class ProposalComments extends Component {
     this.editedComment = this.editedComment.bind(this);
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
-    this.renderNestedComments = this.renderNestedComments.bind(this);
     // this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
     // this.openCommentBox = this.openCommentBox.bind(this);
     this.commentReply = this.commentReply.bind(this);
+    this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
+    this.renderChild = this.renderChild.bind(this);
+    //this.loadChild = this.loadChild.bind(this);
   }
 
 
@@ -85,7 +88,7 @@ class ProposalComments extends Component {
         this.setState({
           allComments: commentsArray
         }, () => {
-          //this.loadReplies(0);
+          this.loadReplies(0);
           //this.commentsLimit = this.commentsLimit;
         });
       });
@@ -95,24 +98,94 @@ class ProposalComments extends Component {
   loadReplies(index) {
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id,
-        _comments = Object.assign(this.state.allComments);
+        _comments = Object.assign(this.state.allComments),
+        _allReplies = null,
+        _childReplies = []
 
-      commentReplies.child(_commentId).on('value', (item) => {
-        let _replies = item.val();
-          _comments[index].replies = [];
+      commentReplies_V2.child(_commentId).on('value', (item) => {
+        let _allReplies = item.val();
+        _comments[index].replies = [];
         if (index >= 0) {
-          for (var key in _replies) {
-            let _obj = _replies[key];
-            _obj.key = key;
-            _comments[index].replies.push(_obj)
+          for (var key in _allReplies) {
+            _allReplies[key]._id = key;
+            if (_allReplies[key].isRoot) {
+              _comments[index].replies.push(_allReplies[key]);
+            } else {
+              _childReplies.push(_allReplies[key]);
+            }
           }
-          this.setState({ allComments: _comments }, () => {
+          this.setState({
+            allComments: _comments,
+            allReplies: { ...this.state.allReplies, [_commentId]: _childReplies }
+          }, () => {
             this.loadReplies(index + 1);
           });
         }
       })
     }
   }
+
+  renderChild(commentId, childs) {
+    debugger;
+    if (childs) {
+      for (var key in childs) {
+        let _commentReplies = this.state.allReplies[commentId],
+          _replyIndex = _commentReplies.map((item) => {
+            return item._id;
+          }).indexOf(childs[key]);
+        if (_replyIndex > -1) {
+          console.log(' || ---------- KEYS: --------------- || ', key)
+          console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
+          return <div className="reply__container">
+            <div className="reply__wrapper">
+              <p>{_commentReplies[_replyIndex].text}</p>
+              {this.state.replyBox == _commentReplies[_replyIndex]._id ?
+                <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={this.showAddReplyBtn} /> :
+                <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
+              }
+            </div>
+            {_commentReplies[_replyIndex] && _commentReplies[_replyIndex].child && this.renderChild(commentId, _commentReplies[_replyIndex].child)}
+          </div>
+        }else{
+          console.log("Render Child Break")
+          return "";  
+        }
+
+      }
+    }
+  }
+
+  // loadChild(commentIndex, replyIndex){
+  //   if(this.state.allComments > commentIndex){
+  //     if(this.state.allComments[commentIndex].replies && this.state.allComments[commentIndex].replies.length > replyIndex){
+
+  //     }else{
+  //       this.loadChild(commentIndex+1, replyIndex+1)  
+  //     }
+  //   }else{
+  //     this.loadChild(commentIndex+1, 0)
+  //   }
+  // }
+
+  // loadReplies(count){
+  //   let _replies = [],
+  //       _index = this.state.allComments.map((item)=>{
+  //         return item._id
+  //       }).indexOf(comment._id);
+
+  //     commentReplies_V2.child(comment._id).once('value', (items)=>{
+  //       let _items = items.val();
+  //       for(var key in _items){
+  //         if(_items[key].isRoot){
+  //           _replies.push(_items[key]);
+  //         }
+  //       }
+
+  //       this.setState(...this.state.allComments[_index], {replies: _replies},()=>{
+  //         console.log(this.state.allComments);
+  //       });
+  //     });
+  // }
 
   // renderReplies(replies) {
 
@@ -135,7 +208,7 @@ class ProposalComments extends Component {
   //             {' '}
   //             <Typography gutterBottom>{reply.message +" "+ reply.showReplyBox} </Typography>
   //             {this.renderNestedReply(reply)}
-              
+
   //           </Grid>
   //         </Grid>
   //       )
@@ -144,20 +217,7 @@ class ProposalComments extends Component {
   //   )
   // }
 
-  // Render Nested Reply
-  renderNestedReply(reply){
-    return <div>
-      {this.state.replyBox == reply.key ?
-        <CommentForm comment={ reply } add={ this.addReply } cancel={ this.showAddReplyBtn } />:
-        <Button className="btn-clear" onClick={()=> this.setState({replyBox: reply.key})}> Reply </Button>
-      }
-    </div>
-  }
 
-  // Put nested child comment
-  addNested(key){
-    
-  }
 
   setComment(e) {
     this.setState({
@@ -351,76 +411,89 @@ class ProposalComments extends Component {
       });
   }
 
-  // Render all the nested comment
-  renderNestedComments(comment){
-    console.log('---Comment ---', comment);
-    if(comment.replies &&comment.replies.length>0){
-      
-      // Write some logic which will find the index of child
+ 
 
-      // Step(1): Filter all unique
-      
-      // Step(2): Arrange all parent
-
-      // Step(3): Set all child into parent
-      return <div> <h1> Has Some Replies </h1> </div>
-    }else{
-      return <div> 
-        { this.state.replyBox === comment._id ? 
-          <CommentForm 
-            comment={comment}
-            add={this.commentReply}
-            parent-key="null"
-          > </CommentForm>:
-          <Button className="btn-clear" onClick={()=>{
-            this.setState({replyBox: comment._id});
-          }}>Reply</Button>
-        }
-      </div>
-    }
-  }
-
-  // Method call on reply Layer1
-  commentReply(id, text, parentKey){
-    comments.child(this.props.data.proposalID).child(id).once('value',(item)=>{
-      let _item = item.val();
-      if(_item.replies == undefined){
-        _item.replies = [{
-          parent: null,
-          text: text,
-          createdAt: new Date().getTime(),
-          createdBy: {
-            name: this.props.user.displayName,
-            uid: this.props.user.uid,
-          },
-          id: comments.push().key
-        }];
+  // -- Method call on reply Layer1
+  commentReply(id, text, parentKey) {
+    let _uniqueID = comments.push().key,
+      _replyObject = {
+        text: text,
+        createdAt: new Date().getTime(),
+        createdBy: {
+          name: this.props.user.displayName,
+          uid: this.props.user.uid,
+        },
+        child: [],
+        isRoot: parentKey ? false : true
       }
 
-      // Update Comment
-      comments.child(this.props.data.proposalID).child(id).set(_item,()=>{
-        console.log("Successfully Write Comment");
-        this.setState({replyBox: null});
-      });
+    commentReplies_V2.child(id + '/' + _uniqueID).set(_replyObject, (e) => {
+      console.log('Comment Reply Saved', e);
+      if (parentKey) {
+        commentReplies_V2.child(id + '/' + parentKey).child('child').push(_uniqueID);
+      }
+      this.setState({ replyBox: null });
     });
+
+    // comments.child(this.props.data.proposalID).child(id).once('value',(item)=>{
+    //   let _item = item.val(),
+    //     _uniqueID = comments.push().key; 
+
+    //     if(_item.replies == undefined){
+    //     _item.replies = []; 
+    //   }
+
+    //   _item.replies.push({
+    //     parent: parentKey,
+    //     text: text,
+    //     createdAt: new Date().getTime(),
+    //     createdBy: {
+    //       name: this.props.user.displayName,
+    //       uid: this.props.user.uid,
+    //     },
+    //     id: _uniqueID
+    //   });
+
+    //   // -- Update Comment
+    //   comments.child(this.props.data.proposalID).child(id).set(_item,()=>{
+    //     console.log("Successfully Write Comment");
+    //     this.setState({replyBox: null});
+    //   });
+    // });
   }
 
   // Render Child Object
-  generateChildCommentsStructure(comment){
-    let tree = [];
-    // Step 1: Filter all parents
-    for(var i=0; i<=comment.replies.length; i++){
-      if(replies[i].parent === null){
-        tree.push
-      }
+  generateChildCommentsStructure(reply, comment) {
+    if (reply && reply.length) {
+      return reply.map((item) => {
+        return <div key={item._id} className="reply__container">
+          <div className="reply__wrapper">
+            <p>{item.text}</p>
+            {this.state.replyBox == item._id ?
+              <CommentForm parent={item._id} comment={comment} add={this.commentReply} cancel={this.showAddReplyBtn} /> :
+              <Button className="btn-clear" onClick={() => this.setState({ replyBox: item._id })}> Reply </Button>
+            }
+          </div>
+          {item.child && this.renderChild(comment._id, item.child)}
+        </div>
+      });
+    } else {
+      return <div>
+        { this.state.replyBox === comment._id ?
+          <CommentForm
+            comment={comment}
+            add={this.commentReply}
+            parent-key="null"> 
+          </CommentForm> :
+          <Button className="btn-clear" onClick={() => {
+           this.setState({ replyBox: comment._id });
+          }}>Reply</Button>
+        }</div>
     }
-    
-    // Step(1): Filter all unique
-    
-    // Step(2): Arrange all parent
-    
-    // Step(3): Set all child into parent
   }
+
+
+
 
   render() {
     const { classes, deviceType } = this.props;
@@ -501,7 +574,7 @@ class ProposalComments extends Component {
               <Grid item md={12} className="commentlHrView">
                 <hr className="hr" />
               </Grid>
-              { this.state.editCommentState && this.state.selectedCommentID === comment._id ?
+              {this.state.editCommentState && this.state.selectedCommentID === comment._id ?
                 <Grid item container md={8} className="commentSectionslView">
                   <Grid item md={12} className="commentHeading">
                     Edited Comment
@@ -533,10 +606,10 @@ class ProposalComments extends Component {
                       <DeleteIcon onClick={() => { this.deleteComment(comment._id) }} />
                     </Grid>
                   }
-                  { comment.isEdited && <Button color="primary" className="show-edited"> Edited </Button> }
+                  {comment.isEdited && <Button color="primary" className="show-edited"> Edited </Button>}
                 </Grid>
               }
-              { this.renderNestedComments(comment) }
+              {this.generateChildCommentsStructure(comment.replies, comment)}
               {/* { comment.replies && this.renderReplies(comment.replies) } */}
               {/* <Grid item md={10} className="replyView" onClick={() => { this.showAddReplyBtn(comment._id, true) }}> {' '} Reply </Grid> */}
               {/* { comment.showAddReply && <CommentForm comment={ comment } add={ this.addReply } cancel={ this.showAddReplyBtn } />} */}

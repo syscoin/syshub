@@ -299,7 +299,6 @@ export default {
       fontSize: '16px',
       backgroundColor: primaryDark,
       margin: '0 10px',
-      float: 'right',
       '& span': {
         color: white
       }
@@ -329,6 +328,15 @@ export default {
         justifyContent: 'left',
         textTransform: 'initial'
       }
+    },
+    '& .reply__container':{
+      width: '90%',
+      marginLeft: '5%',
+      display: 'inline-block',
+      '& .reply__wrapper':{
+        borderBottom: '1px solid '+ gray
+      }
+      
     }
   },
   mRoot: {
