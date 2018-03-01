@@ -2,17 +2,16 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-
-
-//import antd components
-import { Grid, Button, withStyles } from 'material-ui';
+import { Row, Col } from 'antd';
+import { Grid, Button, withStyles, Typography } from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/Edit';
-import CommentForm from './commentForm';
-import Typography from 'material-ui/Typography';
 import swal from 'sweetalert';
+
+
 import actions from '../../redux/actions';
+import CommentForm from './commentForm';
+
 // import firebase
 import { comments, commentReplies, commentReplies_V2 } from '../../API/firebase';
 
@@ -136,19 +135,29 @@ class ProposalComments extends Component {
         if (_replyIndex > -1) {
           console.log(' || ---------- KEYS: --------------- || ', key)
           console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
-          return <div className="reply__container">
-            <div className="reply__wrapper">
-              <p>{_commentReplies[_replyIndex].text}</p>
-              {this.state.replyBox == _commentReplies[_replyIndex]._id ?
-                <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={this.showAddReplyBtn} /> :
-                <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
-              }
-            </div>
+          return <Row className="reply__container">
+            <Col xs={24} className="reply__wrapper">
+              {/* Intro */}
+              <Col xs={24} className="intro__wrapper">
+                <span className="user-name">
+                  <b>{_commentReplies[_replyIndex].createdBy.name}</b>
+                </span>
+                <span className="date"> {this.generateDate(_commentReplies[_replyIndex].createdAt)} </span>
+              </Col>
+              {/* Message */}
+              <Col className="message__wrapper">
+                <p>{_commentReplies[_replyIndex].text}</p>
+                {this.state.replyBox == _commentReplies[_replyIndex]._id ?
+                  <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
+                  <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
+                }
+              </Col>
+            </Col>
             {_commentReplies[_replyIndex] && _commentReplies[_replyIndex].child && this.renderChild(commentId, _commentReplies[_replyIndex].child)}
-          </div>
-        }else{
+          </Row>
+        } else {
           console.log("Render Child Break")
-          return "";  
+          return "";
         }
 
       }
@@ -411,7 +420,7 @@ class ProposalComments extends Component {
       });
   }
 
- 
+
 
   // -- Method call on reply Layer1
   commentReply(id, text, parentKey) {
@@ -466,27 +475,38 @@ class ProposalComments extends Component {
   generateChildCommentsStructure(reply, comment) {
     if (reply && reply.length) {
       return reply.map((item) => {
-        return <div key={item._id} className="reply__container">
-          <div className="reply__wrapper">
-            <p>{item.text}</p>
-            {this.state.replyBox == item._id ?
-              <CommentForm parent={item._id} comment={comment} add={this.commentReply} cancel={this.showAddReplyBtn} /> :
-              <Button className="btn-clear" onClick={() => this.setState({ replyBox: item._id })}> Reply </Button>
-            }
-          </div>
+        return <Row key={item._id} className="reply__container">
+          <Col xs={24} className="reply__wrapper">
+            {/* Intro */}
+            <Col xs={24} className="intro__wrapper">
+              <span className="user-name">
+                <b>{item.createdBy.name}</b>
+              </span>
+              <span className="date"> {this.generateDate(item.createdAt)} </span>
+            </Col>
+            {/* Message */}
+            <Col className="message__wrapper">
+              <p>{item.text}</p>
+              {this.state.replyBox == item._id ?
+                <CommentForm parent={item._id} comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
+                <Button className="btn-clear" onClick={() => this.setState({ replyBox: item._id })}> Reply </Button>
+              }
+            </Col>
+
+          </Col>
           {item.child && this.renderChild(comment._id, item.child)}
-        </div>
+        </Row>
       });
     } else {
       return <div>
-        { this.state.replyBox === comment._id ?
+        {this.state.replyBox === comment._id ?
           <CommentForm
             comment={comment}
             add={this.commentReply}
-            parent-key="null"> 
+            parent-key="null">
           </CommentForm> :
           <Button className="btn-clear" onClick={() => {
-           this.setState({ replyBox: comment._id });
+            this.setState({ replyBox: comment._id });
           }}>Reply</Button>
         }</div>
     }
@@ -545,12 +565,46 @@ class ProposalComments extends Component {
 
         {this.state.allComments.map((comment, key) => {
           return (
-            <Grid item container md={10} className="topCommentWithReplyView" key={comment._id}>
-              <Grid item container md={12} className="commentHeading">
+            <Row item container md={10} className="topCommentWithReplyView" key={comment._id}>
+              <Col xs={24} className="reply__wrapper">
+                {/* Intro */}
+                <Col xs={24} className="intro__wrapper">
+                  <span className="user-name">
+                    <b>{comment.createdBy.name}</b>
+                  </span>
+                  <span className="date"> {this.generateDate(comment.createdAt)} </span>
+                  <Col className="votes-view">
+                    <div className="wrapper">
+                      <img
+                        alt="up"
+                        src={require('../../assets/img/png_button_up.png')}
+                        onClick={() => { this.voteForComment('up', comment._id) }}
+                      />
+                      <p className="count">{this.voteCount('up', comment.votes)}</p>
+                    </div>
+                    <div className="wrapper">
+                      <img
+                        alt="down"
+                        src={require('../../assets/img/png_button_down.png')}
+                        onClick={() => { this.voteForComment('down', comment._id) }}
+                      />
+                      <p className="count">{this.voteCount('down', comment.votes)}</p>
+                    </div>
+                  </Col>
+                </Col>
+                {/* Message */}
+                <Col className="message__wrapper">
+                  <p>{comment.message}</p>
+                  {this.state.replyBox == comment._id ?
+                    <CommentForm comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
+                    <Button className="btn-clear" onClick={() => this.setState({ replyBox: comment._id })}> Reply </Button>
+                  }
+                </Col>
+              </Col>
+              {/* <Grid item container md={12} className="commentHeading">
                 <Grid item md={8} className="userView">
                   <span className="userName">
-                    {' '}
-                    {comment.createdBy.name}{' '}
+                    {' '} {comment.createdBy.name} {' '}
                   </span>
                   <div className="commentDate">{this.generateDate(comment.createdAt)}</div>
                 </Grid>
@@ -573,8 +627,8 @@ class ProposalComments extends Component {
               </Grid>
               <Grid item md={12} className="commentlHrView">
                 <hr className="hr" />
-              </Grid>
-              {this.state.editCommentState && this.state.selectedCommentID === comment._id ?
+              </Grid> */}
+              {/* {this.state.editCommentState && this.state.selectedCommentID === comment._id ?
                 <Grid item container md={8} className="commentSectionslView">
                   <Grid item md={12} className="commentHeading">
                     Edited Comment
@@ -608,12 +662,12 @@ class ProposalComments extends Component {
                   }
                   {comment.isEdited && <Button color="primary" className="show-edited"> Edited </Button>}
                 </Grid>
-              }
+              } */}
               {this.generateChildCommentsStructure(comment.replies, comment)}
               {/* { comment.replies && this.renderReplies(comment.replies) } */}
               {/* <Grid item md={10} className="replyView" onClick={() => { this.showAddReplyBtn(comment._id, true) }}> {' '} Reply </Grid> */}
               {/* { comment.showAddReply && <CommentForm comment={ comment } add={ this.addReply } cancel={ this.showAddReplyBtn } />} */}
-            </Grid>
+            </Row>
           )
         })}
       </Grid>

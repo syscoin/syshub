@@ -72,8 +72,8 @@ export default {
     },
     '& .proposalHr': {
       marginTop: 80,
-      marginLeft: '6%',
-      width: '97%',
+      marginLeft: 20,
+      width: 'calc(100% - 40px)',
       border: '1px solid ' + greyLight
     },
 
@@ -83,121 +83,7 @@ export default {
       borderRadius: 10,
       border: '1px solid' + gray,
       minHeight: 200,
-      display: 'block',
-      paddingBottom: 20,
-      '& .commentlHrView': {
-        margin: 0,
-        marginLeft: '4%',
-        maxWidth: '94.8%',
-        marginTop: '-10px',
-        '& hr': {
-          border: '1px solid ' + greyLight
-        }
-      },
-
-      '& .commentHeading': {
-        padding: '10px 10px',
-        '& .userView': {
-          padding: 0,
-          marginTop: 10,
-          '& .userName': {
-            color: greyDark,
-            padding: '10px 28px',
-            fontWeight: 500
-          },
-          '& .commentDate': {
-            display: 'inline-block',
-            marginLeft: '-20px',
-            color: gray
-          },
-          '& .badgeIcon': {
-            width: 20,
-            marginLeft: 5
-          }
-        }
-      },
-
-      '& .votesView': {
-        marginTop: 10,
-        padding: 0,
-        textAlign: 'right',
-        '& .upVoteICon': {
-          width: 20,
-          marginLeft: 5
-        },
-        '& .downVoteICon': {
-          width: 20,
-          marginLeft: 30,
-          marginRight: 5
-        }
-      },
-      '& .newYearView': {
-        padding: 0,
-        marginLeft: '7%',
-        fontSize: 16,
-        color: gray,
-        '&>p': {
-          display: 'inline-block',
-        },
-        '& .show-edited': {
-          width: 5,
-          fontSize: 10,
-          backgroundColor: '#fff',
-          margin: 0,
-          padding: '5px 0px',
-          '& span': {
-            color: primaryLight
-          }
-        },
-        '& .edit-delete-btn': {
-          display: 'inline-block',
-          float: 'right'
-        }
-      },
-      '& .replyView': {
-        padding: 0,
-        marginLeft: '7%',
-        marginTop: 20,
-        fontSize: 16,
-        color: primaryDark,
-        fontWeight: 'bold'
-      },
-      '& .topcommentSectionslView': {
-        margin: '3px 0 20px 6%',
-        borderRadius: 5,
-        background: 'rgb(240, 242, 245)',
-        '& .commentHeading': {
-          color: greyDark,
-          padding: '10px 28px',
-          fontWeight: 500,
-          fontSize: 16
-        },
-        '& .proposalDetails': {
-          color: gray,
-          fontSize: 15,
-          background: white,
-          maxWidth: '100%',
-          padding: '10px',
-          boxShadow: '5px 5px 20px ' + gray,
-          '& .userComment': {
-            border: 0,
-            padding: 10,
-          },
-          '& .proposalDetailsHr': {
-            marginTop: 10,
-            border: '1px solid ' + greyLight
-          },
-          '& .formSubmiButton': {
-            margin: '0 10px',
-            borderRadius: '10px',
-            backgroundColor: primaryDark,
-            float: 'right',
-            '& .MuiButton-label-17': {
-              color: white
-            }
-          }
-        }
-      }
+      padding: 20
     },
     '& .allReplies': {
       marginTop: 10,
@@ -258,21 +144,6 @@ export default {
           }
         }
       },
-
-      '& .votesView': {
-        marginTop: 10,
-        padding: 0,
-        textAlign: 'right',
-        '& .upVoteICon': {
-          width: 20,
-          marginLeft: 5
-        },
-        '& .downVoteICon': {
-          width: 20,
-          marginLeft: 30,
-          marginRight: 5
-        }
-      },
       '& .newYearView': {
         padding: 0,
         marginLeft: '7%',
@@ -329,12 +200,46 @@ export default {
         textTransform: 'initial'
       }
     },
-    '& .reply__container':{
-      width: '90%',
-      marginLeft: '5%',
+    '& .reply__container, .topCommentWithReplyView':{
+      width: 'calc(100% - 20px)',
+      marginLeft: 20,
       display: 'inline-block',
       '& .reply__wrapper':{
-        borderBottom: '1px solid '+ gray
+        marginTop: 20,
+        '& p':{
+          marginTop:5,
+          marginBottom:5
+        },
+        '& .intro__wrapper':{
+          borderBottom: '1px solid '+ greyLight,
+          paddingBottom: 5,
+          marginBottom: 5,
+          '& .date':{
+            color: gray, 
+            marginLeft: 10
+          },
+          '& .votes-view':{
+            display: 'inline-block',
+            float: 'right',
+            height: 30,
+            width: 80,
+            marginTop: -30,
+            '& .wrapper':{
+              height: '100%',
+              width: 40,
+              display: 'inline-block',
+              textAlign: 'center',
+              '& img':{
+                height: 30,
+                marginRight: 2.5,
+                marginLeft: 2.5
+              }
+            }
+          }
+        },
+        '& .message__wrapper':{
+
+        }
       }
       
     }
