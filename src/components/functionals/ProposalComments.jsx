@@ -129,9 +129,15 @@ class ProposalComments extends Component {
     if (childs) {
       for (var key in childs) {
         let _commentReplies = this.state.allReplies[commentId],
+          _replyIndex = -1;
+        console.log(this.state.allReplies);
+        if(_commentReplies && _commentReplies.length>0){
           _replyIndex = _commentReplies.map((item) => {
             return item._id;
           }).indexOf(childs[key]);
+        }
+
+
         if (_replyIndex > -1) {
           console.log(' || ---------- KEYS: --------------- || ', key)
           console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
