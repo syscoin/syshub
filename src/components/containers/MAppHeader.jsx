@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-// import Button from 'material-ui/Button';
 
 import { Layout } from 'antd';
 import injectSheet from 'react-jss';

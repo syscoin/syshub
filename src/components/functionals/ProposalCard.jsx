@@ -520,7 +520,6 @@ class ProposalCard extends Component {
           <Grid item md={7} xs={6} className="proposalInfoView">
             <h1 className="proposalHeading" onClick={() => selectProposal(proposal)}>
               {proposalTitle ? (
-                // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
                   <span style={{ color: 'grey' }}>No title available for this proposal.</span>

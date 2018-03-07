@@ -23,7 +23,6 @@ export default {
       '& .proposalView': {
         textAlign: 'center',
         '& .progress-dial': {
-          // width:"100px",
           '& .ant-progress-inner': {
             width: '100px !important',
             height: '92px !important',
@@ -184,7 +183,6 @@ export default {
     extend: 'root',
     '& .proposalRow': {
       maxWidth: '100%',
-      // minWidth :'calc(100% + 110px)',
       height: 150,
       margin: '5px 0 0 0px',
       backgroundColor: 'white',
@@ -211,7 +209,6 @@ export default {
         borderLeft: '1px solid ' + gray,
         paddingLeft: '10px',
         height: '99%',
-        // minWidth: 'calc(100% - 195px)',
         '& .voteButton': {
           border: 'none',
           textAlign: 'right',

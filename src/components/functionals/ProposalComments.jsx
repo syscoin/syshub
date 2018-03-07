@@ -311,7 +311,6 @@ class ProposalComments extends Component {
       }
 
     commentReplies_V2.child(id + '/' + _uniqueID).set(_replyObject, (e) => {
-      console.log('Comment Reply Saved', e);
       if (parentKey) {
         commentReplies_V2.child(id + '/' + parentKey).child('child').push(_uniqueID);
       }

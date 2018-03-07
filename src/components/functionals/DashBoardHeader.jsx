@@ -11,7 +11,6 @@ import { deshBoardHeaderStyle } from './styles';
 class DashBoardHeader extends Component {
   constructor(props) {
     super(props);
-    // console.clear();
     this.state = {
       data: this.props.data
     };
