@@ -1,8 +1,8 @@
-// curl https://d3j22jloo6hpq6.cloudfront.net/API/curl?url="https://www.dashcentral.org/api/v1/public"
-
 import constants from '../constants';
 
-import { HTTPAsync } from '../helpers';
+import {
+  HTTPAsync
+} from '../helpers';
 
 /**---------------------------------------------------------------------------- */
 /** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
@@ -33,8 +33,7 @@ export default {
     return dispatch => {
       return dispatch(
         HTTPAsync.post(
-          `${baseApiURL}/cmd`,
-          {
+          `${baseApiURL}/cmd`, {
             'script': 'masternode count'
 
           },

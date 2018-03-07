@@ -42,12 +42,12 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function(snapshot) {
+          function (snapshot) {
             // this variable can be used to show upload progress
             //const progress =
             //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
           },
-          function(error) {
+          function (error) {
             switch (error.code) {
               case 'storage/unauthorized':
                 // User doesn't have permission to access the object
@@ -113,21 +113,6 @@ class UserProfile extends Component {
             disabled: false
           });
         }
-        // snapshot.forEach(snap => {
-        //   if (snap.val() === username) {
-        //     this.setState({
-        //       disabled: true
-        //     });
-        //
-        //     return;
-        //   }
-        //
-        //   if (snap.val() !== username) {
-        //     this.setState({
-        //       disabled: false
-        //     });
-        //   }
-        // });
       });
     }
   }
@@ -166,8 +151,8 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
               ) : (
-                <img src={this.state.image} alt="no user" className="user-image" />
-              )}
+                  <img src={this.state.image} alt="no user" className="user-image" />
+                )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <Input
