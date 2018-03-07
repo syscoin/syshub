@@ -51,8 +51,9 @@ class ProposalComments extends Component {
     // this.openCommentBox = this.openCommentBox.bind(this);
     this.commentReply = this.commentReply.bind(this);
     this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
-    this.renderChild = this.renderChild.bind(this);
     this.renderChild2 = this.renderChild2.bind(this);
+    this.loadComments = this.loadComments.bind(this);
+    this.refreshComments = this.refreshComments.bind(this);
   }
 
 
@@ -70,12 +71,20 @@ class ProposalComments extends Component {
     if (proposal) {
       this.setState({ proposal })
     }
+    this.loadComments();
+  }
+
+  refreshComments() {
+    this.loadComments();
+  }
+  // load Comments
+  loadComments() {
     // Load comments from firebase in realtime
     // then set in state
 
     comments.child(this.props.data.proposalID)
       .orderByChild('createdAt')
-      .on('value', (item) => {
+      .once('value', (item) => {
         let commentsObjs = item.val(),
           commentsArray = [];
         for (var key in commentsObjs) {
@@ -92,7 +101,6 @@ class ProposalComments extends Component {
         });
       });
   }
-
   // load replies
   loadReplies(index) {
     if (this.state.allComments.length > index) {
@@ -101,7 +109,7 @@ class ProposalComments extends Component {
         // _allReplies = null,
         _childReplies = []
 
-      commentReplies_V2.child(_commentId).on('value', (item) => {
+      commentReplies_V2.child(_commentId).once('value', (item) => {
         let _allReplies = item.val();
 
         this.setState({ allRepliesRaw: _allReplies });
@@ -249,7 +257,7 @@ class ProposalComments extends Component {
       })
       this.setState({
         userComment: ''
-      })
+      }, () => this.refreshComments());
     }
   }
 
@@ -405,7 +413,7 @@ class ProposalComments extends Component {
       if (parentKey) {
         commentReplies_V2.child(id + '/' + parentKey).child('child').push(_uniqueID);
       }
-      this.setState({ replyBox: null });
+      this.setState({ replyBox: null }, () => this.refreshComments());
     });
 
     // comments.child(this.props.data.proposalID).child(id).once('value',(item)=>{
@@ -493,7 +501,6 @@ class ProposalComments extends Component {
           </Col>
           {/* Message */}
           <Col className="message__wrapper">
-            {console.log('ACZ --> ', reply.text)}
             <p>{reply.text}</p>
             {this.state.replyBox === reply._id ?
               <CommentForm parent={reply._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
@@ -505,51 +512,6 @@ class ProposalComments extends Component {
       </Row>
     ));
   }
-
-  renderChild(commentId, childs) {
-    //debugger;
-    if (childs) {
-      for (var key in childs) {
-        let _commentReplies = this.state.allReplies[commentId],
-          _replyIndex = -1;
-        // console.log(this.state.allReplies);
-        if (_commentReplies && _commentReplies.length > 0) {
-          _replyIndex = _commentReplies.map((item) => {
-            return item._id;
-          }).indexOf(childs[key]);
-        }
-        if (_replyIndex > -1) {
-          // console.log(' || ---------- KEYS: --------------- || ', key)
-          // console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
-          return <Row className="reply__container">
-            <Col xs={24} className="reply__wrapper">
-              {/* Intro */}
-              <Col xs={24} className="intro__wrapper">
-                <span className="user-name">
-                  <b>{_commentReplies[_replyIndex].createdBy.name}</b>
-                </span>
-                <span className="date"> {this.generateDate(_commentReplies[_replyIndex].createdAt)} </span>
-              </Col>
-              {/* Message */}
-              <Col className="message__wrapper">
-                <p>{_commentReplies[_replyIndex].text}</p>
-                {this.state.replyBox === _commentReplies[_replyIndex]._id ?
-                  <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
-                  <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
-                }
-              </Col>
-            </Col>
-            {_commentReplies[_replyIndex] && _commentReplies[_replyIndex].child && this.renderChild(commentId, _commentReplies[_replyIndex].child)}
-          </Row>
-        } else {
-          console.log("Render Child Break")
-          return "";
-        }
-
-      }
-    }
-  }
-
 
   render() {
     const { classes, deviceType } = this.props;
