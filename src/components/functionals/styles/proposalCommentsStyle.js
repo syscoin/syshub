@@ -1,7 +1,7 @@
 import palette from './palette';
 
 const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
+// const primaryLight = palette.primaryLight;
 const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
@@ -29,7 +29,7 @@ export default {
       }
     },
     '& .commentSectionslView': {
-      width:'55%',
+      width: '55%',
       margin: 0,
       marginLeft: '4%',
       marginTop: 10,
@@ -51,7 +51,7 @@ export default {
         padding: '10px 10px 20px 10px',
         maxWidth: '100%%',
         '& .userComment': {
-          color:greyDark,
+          color: greyDark,
           border: 0
         },
         '& .proposalDetailsHr': {
@@ -189,47 +189,47 @@ export default {
     '& .replyView': {
       cursor: 'pointer'
     },
-    '& .btn-clear':{
+    '& .btn-clear': {
       background: 'transparent',
       width: 70,
       margin: 0,
       padding: 0,
-      '& span':{
+      '& span': {
         color: primaryDark,
         justifyContent: 'left',
         textTransform: 'initial'
       }
     },
-    '& .reply__container, .topCommentWithReplyView':{
+    '& .reply__container, .topCommentWithReplyView': {
       width: 'calc(100% - 20px)',
       marginLeft: 20,
       display: 'inline-block',
-      '& .reply__wrapper':{
+      '& .reply__wrapper': {
         marginTop: 20,
-        '& p':{
-          marginTop:5,
-          marginBottom:5
+        '& p': {
+          marginTop: 5,
+          marginBottom: 5
         },
-        '& .intro__wrapper':{
-          borderBottom: '1px solid '+ greyLight,
+        '& .intro__wrapper': {
+          borderBottom: '1px solid ' + greyLight,
           paddingBottom: 5,
           marginBottom: 5,
-          '& .date':{
-            color: gray, 
+          '& .date': {
+            color: gray,
             marginLeft: 10
           },
-          '& .votes-view':{
+          '& .votes-view': {
             display: 'inline-block',
             float: 'right',
             height: 30,
             width: 80,
             marginTop: -30,
-            '& .wrapper':{
+            '& .wrapper': {
               height: '100%',
               width: 40,
               display: 'inline-block',
               textAlign: 'center',
-              '& img':{
+              '& img': {
                 height: 30,
                 marginRight: 2.5,
                 marginLeft: 2.5
@@ -237,11 +237,11 @@ export default {
             }
           }
         },
-        '& .message__wrapper':{
+        '& .message__wrapper': {
 
         }
       }
-      
+
     }
   },
   mRoot: {

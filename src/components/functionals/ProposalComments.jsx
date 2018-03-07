@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import { Grid, Button, withStyles, Typography } from 'material-ui';
-import DeleteIcon from 'material-ui-icons/Delete';
-import EditIcon from 'material-ui-icons/Edit';
+// import DeleteIcon from 'material-ui-icons/Delete';
+// import EditIcon from 'material-ui-icons/Edit';
 import swal from 'sweetalert';
 
 
@@ -52,7 +52,7 @@ class ProposalComments extends Component {
     this.commentReply = this.commentReply.bind(this);
     this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
     this.renderChild = this.renderChild.bind(this);
-    //this.loadChild = this.loadChild.bind(this);
+    this.renderChild2 = this.renderChild2.bind(this);
   }
 
 
@@ -98,11 +98,14 @@ class ProposalComments extends Component {
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id,
         _comments = Object.assign(this.state.allComments),
-        _allReplies = null,
+        // _allReplies = null,
         _childReplies = []
 
       commentReplies_V2.child(_commentId).on('value', (item) => {
         let _allReplies = item.val();
+
+        this.setState({ allRepliesRaw: _allReplies });
+
         _comments[index].replies = [];
         if (index >= 0) {
           for (var key in _allReplies) {
@@ -124,51 +127,6 @@ class ProposalComments extends Component {
     }
   }
 
-  renderChild(commentId, childs) {
-    debugger;
-    if (childs) {
-      for (var key in childs) {
-        let _commentReplies = this.state.allReplies[commentId],
-          _replyIndex = -1;
-        console.log(this.state.allReplies);
-        if(_commentReplies && _commentReplies.length>0){
-          _replyIndex = _commentReplies.map((item) => {
-            return item._id;
-          }).indexOf(childs[key]);
-        }
-
-
-        if (_replyIndex > -1) {
-          console.log(' || ---------- KEYS: --------------- || ', key)
-          console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
-          return <Row className="reply__container">
-            <Col xs={24} className="reply__wrapper">
-              {/* Intro */}
-              <Col xs={24} className="intro__wrapper">
-                <span className="user-name">
-                  <b>{_commentReplies[_replyIndex].createdBy.name}</b>
-                </span>
-                <span className="date"> {this.generateDate(_commentReplies[_replyIndex].createdAt)} </span>
-              </Col>
-              {/* Message */}
-              <Col className="message__wrapper">
-                <p>{_commentReplies[_replyIndex].text}</p>
-                {this.state.replyBox == _commentReplies[_replyIndex]._id ?
-                  <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
-                  <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
-                }
-              </Col>
-            </Col>
-            {_commentReplies[_replyIndex] && _commentReplies[_replyIndex].child && this.renderChild(commentId, _commentReplies[_replyIndex].child)}
-          </Row>
-        } else {
-          console.log("Render Child Break")
-          return "";
-        }
-
-      }
-    }
-  }
 
   // loadChild(commentIndex, replyIndex){
   //   if(this.state.allComments > commentIndex){
@@ -454,7 +412,7 @@ class ProposalComments extends Component {
     //   let _item = item.val(),
     //     _uniqueID = comments.push().key; 
 
-    //     if(_item.replies == undefined){
+    //     if(_item.replies === undefined){
     //     _item.replies = []; 
     //   }
 
@@ -480,7 +438,7 @@ class ProposalComments extends Component {
   // Render Child Object
   generateChildCommentsStructure(reply, comment) {
     if (reply && reply.length) {
-      return reply.map((item) => {
+      return reply.map((item, i) => {
         return <Row key={item._id} className="reply__container">
           <Col xs={24} className="reply__wrapper">
             {/* Intro */}
@@ -493,14 +451,14 @@ class ProposalComments extends Component {
             {/* Message */}
             <Col className="message__wrapper">
               <p>{item.text}</p>
-              {this.state.replyBox == item._id ?
+              {this.state.replyBox === item._id ?
                 <CommentForm parent={item._id} comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
                 <Button className="btn-clear" onClick={() => this.setState({ replyBox: item._id })}> Reply </Button>
               }
             </Col>
 
           </Col>
-          {item.child && this.renderChild(comment._id, item.child)}
+          {item.child && this.renderChild2(comment._id, item.child)}
         </Row>
       });
     } else {
@@ -518,7 +476,79 @@ class ProposalComments extends Component {
     }
   }
 
+  renderChild2(commentId, childs) {
+    const replies = this.state.allReplies[commentId];
+    const childsId = Object.values(childs);
+    const filteredReplies = replies.filter((item0) => childsId.find((item1) => item1 === item0._id));
 
+    return filteredReplies.map((reply) => (
+      <Row className="reply__container" key={reply._id}>
+        <Col xs={24} className="reply__wrapper">
+          {/* Intro */}
+          <Col xs={24} className="intro__wrapper">
+            <span className="user-name">
+              <b>{reply.createdBy.name}</b>
+            </span>
+            <span className="date"> {this.generateDate(reply.createdAt)} </span>
+          </Col>
+          {/* Message */}
+          <Col className="message__wrapper">
+            {console.log('ACZ --> ', reply.text)}
+            <p>{reply.text}</p>
+            {this.state.replyBox === reply._id ?
+              <CommentForm parent={reply._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
+              <Button className="btn-clear" onClick={() => this.setState({ replyBox: reply._id })}> Reply </Button>
+            }
+          </Col>
+        </Col>
+        {reply.child && this.renderChild2(commentId, reply.child)}
+      </Row>
+    ));
+  }
+
+  renderChild(commentId, childs) {
+    //debugger;
+    if (childs) {
+      for (var key in childs) {
+        let _commentReplies = this.state.allReplies[commentId],
+          _replyIndex = -1;
+        // console.log(this.state.allReplies);
+        if (_commentReplies && _commentReplies.length > 0) {
+          _replyIndex = _commentReplies.map((item) => {
+            return item._id;
+          }).indexOf(childs[key]);
+        }
+        if (_replyIndex > -1) {
+          // console.log(' || ---------- KEYS: --------------- || ', key)
+          // console.log(' || ---------- CHILD: --------------- || ', _commentReplies[_replyIndex].child)
+          return <Row className="reply__container">
+            <Col xs={24} className="reply__wrapper">
+              {/* Intro */}
+              <Col xs={24} className="intro__wrapper">
+                <span className="user-name">
+                  <b>{_commentReplies[_replyIndex].createdBy.name}</b>
+                </span>
+                <span className="date"> {this.generateDate(_commentReplies[_replyIndex].createdAt)} </span>
+              </Col>
+              {/* Message */}
+              <Col className="message__wrapper">
+                <p>{_commentReplies[_replyIndex].text}</p>
+                {this.state.replyBox === _commentReplies[_replyIndex]._id ?
+                  <CommentForm parent={_commentReplies[_replyIndex]._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
+                  <Button className="btn-clear" onClick={() => this.setState({ replyBox: _commentReplies[_replyIndex]._id })}> Reply </Button>
+                }
+              </Col>
+            </Col>
+            {_commentReplies[_replyIndex] && _commentReplies[_replyIndex].child && this.renderChild(commentId, _commentReplies[_replyIndex].child)}
+          </Row>
+        } else {
+          console.log("Render Child Break")
+          return "";
+        }
+
+      }
+    }
+  }
 
 
   render() {
@@ -571,7 +601,7 @@ class ProposalComments extends Component {
 
         {this.state.allComments.map((comment, key) => {
           return (
-            <Row item container md={10} className="topCommentWithReplyView" key={comment._id}>
+            <Row item="true" container="true" md={10} className="topCommentWithReplyView" key={comment._id}>
               <Col xs={24} className="reply__wrapper">
                 {/* Intro */}
                 <Col xs={24} className="intro__wrapper">
@@ -601,7 +631,7 @@ class ProposalComments extends Component {
                 {/* Message */}
                 <Col className="message__wrapper">
                   <p>{comment.message}</p>
-                  {this.state.replyBox == comment._id ?
+                  {this.state.replyBox === comment._id ?
                     <CommentForm comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
                     <Button className="btn-clear" onClick={() => this.setState({ replyBox: comment._id })}> Reply </Button>
                   }
