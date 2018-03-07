@@ -10,8 +10,6 @@ import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
 import PropTypes from 'prop-types';
 
-// import withRoot from '../containers/WithRoot';
-
 // import style
 import { registerStyle } from './styles';
 
@@ -108,18 +106,6 @@ class Register extends Component {
             disabled: false
           });
         }
-        // snapshot.forEach(snap => {
-        //   if (snap.val() === username) {
-        //     this.setState({
-        //       disabled: true
-        //     });
-        //     return;
-        //   } else {
-        //     this.setState({
-        //       disabled: false
-        //     });
-        //   }
-        // });
       });
     }
   }
@@ -223,7 +209,6 @@ class Register extends Component {
               lg={12}
               md={12}
               xs={12}
-            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -334,11 +319,6 @@ class Register extends Component {
                     />
                   </div>
                 )}
-                {/* <span className="validation-message">
-                  <img alt="a" src={checkIcon} />
-                  Password Strength
-                  <span className="strong">Strong</span>
-                </span> */}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -378,7 +358,6 @@ class Register extends Component {
                 <div className="recaptcha">
                   <Recaptcha
                     size='normal'
-                    // style={{ marginLeft: '10px', width: '20px' }}
                     id="captcha"
                     sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"

@@ -1,9 +1,16 @@
 /* eslint-disable */
 import React from 'react';
-import { render } from 'react-dom';
-import { createStore, compose } from 'redux';
+import {
+  render
+} from 'react-dom';
+import {
+  createStore,
+  compose
+} from 'redux';
 
-import { Provider } from 'react-redux';
+import {
+  Provider
+} from 'react-redux';
 
 import App from './App';
 
@@ -17,12 +24,15 @@ import middlewares from './redux/middleware';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducers, {}, composeEnhancers(middlewares));
-//const store = createStore(reducers);
 
-const app = (
-  <Provider store={store}>
-    <App />
-  </Provider>
+const app = ( <
+  Provider store = {
+    store
+  } >
+  <
+  App / >
+  <
+  /Provider>
 );
 
 const rootElement = document.querySelector('#root');

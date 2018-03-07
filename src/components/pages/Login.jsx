@@ -130,11 +130,6 @@ class Login extends Component {
                           return fire.auth().signInWithEmailAndPassword(email, password);
                         })
                         .then(user => {
-                          // swal({
-                          //   title: 'Sucess',
-                          //   text: `${user.email} signed in with sms verification`,
-                          //   icon: 'success'
-                          // });
 
                           //attach MN to user here
                           fire
@@ -176,11 +171,6 @@ class Login extends Component {
                     swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                   });
               } else {
-                // swal({
-                //   title: 'Success',
-                //   text: `${user.email} signed in without sms verification.`,
-                //   icon: 'success'
-                // });
                 this.props.setPage('home');
               }
             });
