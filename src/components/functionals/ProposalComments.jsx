@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import { Grid, Button, withStyles, Typography } from 'material-ui';
-// import DeleteIcon from 'material-ui-icons/Delete';
-// import EditIcon from 'material-ui-icons/Edit';
 import swal from 'sweetalert';
 
 
@@ -36,19 +34,14 @@ class ProposalComments extends Component {
     this.commentsCounts = 0;
     this.addComment = this.addComment.bind(this);
     this.setComment = this.setComment.bind(this);
-    // this.renderReplies = this.renderReplies.bind(this);
     this.generateDate = this.generateDate.bind(this);
     this.loadReplies = this.loadReplies.bind(this);
-    // this.addReply = this.addReply.bind(this);
-    // this.setReply = this.setReply.bind(this);
     this.voteForComment = this.voteForComment.bind(this);
     this.voteCount = this.voteCount.bind(this);
     this.setComment = this.setComment.bind(this);
     this.editedComment = this.editedComment.bind(this);
     this.setEditComment = this.setEditComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
-    // this.showAddReplyBtn = this.showAddReplyBtn.bind(this);
-    // this.openCommentBox = this.openCommentBox.bind(this);
     this.commentReply = this.commentReply.bind(this);
     this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
     this.renderChild2 = this.renderChild2.bind(this);
@@ -77,9 +70,10 @@ class ProposalComments extends Component {
   refreshComments() {
     this.loadComments();
   }
+
   // load Comments
   loadComments() {
-    // Load comments from firebase in realtime
+    // Load comments from firebase
     // then set in state
 
     comments.child(this.props.data.proposalID)
@@ -101,12 +95,15 @@ class ProposalComments extends Component {
         });
       });
   }
+
   // load replies
   loadReplies(index) {
+    // Load replies from firebase
+    // then set in state
+
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id,
         _comments = Object.assign(this.state.allComments),
-        // _allReplies = null,
         _childReplies = []
 
       commentReplies_V2.child(_commentId).once('value', (item) => {
@@ -135,106 +132,11 @@ class ProposalComments extends Component {
     }
   }
 
-
-  // loadChild(commentIndex, replyIndex){
-  //   if(this.state.allComments > commentIndex){
-  //     if(this.state.allComments[commentIndex].replies && this.state.allComments[commentIndex].replies.length > replyIndex){
-
-  //     }else{
-  //       this.loadChild(commentIndex+1, replyIndex+1)  
-  //     }
-  //   }else{
-  //     this.loadChild(commentIndex+1, 0)
-  //   }
-  // }
-
-  // loadReplies(count){
-  //   let _replies = [],
-  //       _index = this.state.allComments.map((item)=>{
-  //         return item._id
-  //       }).indexOf(comment._id);
-
-  //     commentReplies_V2.child(comment._id).once('value', (items)=>{
-  //       let _items = items.val();
-  //       for(var key in _items){
-  //         if(_items[key].isRoot){
-  //           _replies.push(_items[key]);
-  //         }
-  //       }
-
-  //       this.setState(...this.state.allComments[_index], {replies: _replies},()=>{
-  //         console.log(this.state.allComments);
-  //       });
-  //     });
-  // }
-
-  // renderReplies(replies) {
-
-  //   return (
-  //     replies.map((reply, key) => {
-  //       return (
-  //         <Grid item container md={11} className="allReplies" key={key}>
-  //           <Grid item container md={12} className="replyHeading">
-  //             <Grid item md={8} className="replyUserVeiw">
-  //               <span className="replyUserName">
-  //                 {' '} {reply.createdBy.name} {' '}
-  //               </span>
-  //               <div className="replyDate">{this.generateDate(reply.createdAt)}</div>
-  //             </Grid>
-  //           </Grid>
-  //           <Grid item md={12} className="commentlHrView">
-  //             <hr className="hr" />
-  //           </Grid>
-  //           <Grid item md={10} className="newYearView">
-  //             {' '}
-  //             <Typography gutterBottom>{reply.message +" "+ reply.showReplyBox} </Typography>
-  //             {this.renderNestedReply(reply)}
-
-  //           </Grid>
-  //         </Grid>
-  //       )
-  //     })
-
-  //   )
-  // }
-
-
-
   setComment(e) {
     this.setState({
       userComment: e.target.value
     })
   }
-
-  // addReply(commentID, message) {
-  //   if (this.props.user && message.length > 0) {
-  //     let date = new Date();
-  //     let _replyObj = {
-  //       createdBy: {
-  //         name: this.props.user.displayName,
-  //         uid: this.props.user.uid,
-  //       },
-  //       createdAt: date.getTime(),
-  //       updatedAt: date.getTime(),
-  //       message: message,
-  //     }
-  //     commentReplies.child(commentID).push(_replyObj, () => {
-  //       this.showAddReplyBtn(commentID, false);
-  //     })
-  //     this.setState({
-  //       userReply: ''
-  //     })
-  //   }
-
-  // }
-
-  // setReply(e) {
-  //   this.setState({
-  //     userReply: e.target.value
-  //   })
-  // }
-
-
 
   addComment() {
     if (this.state.userComment && this.props.user) {
@@ -415,32 +317,6 @@ class ProposalComments extends Component {
       }
       this.setState({ replyBox: null }, () => this.refreshComments());
     });
-
-    // comments.child(this.props.data.proposalID).child(id).once('value',(item)=>{
-    //   let _item = item.val(),
-    //     _uniqueID = comments.push().key; 
-
-    //     if(_item.replies === undefined){
-    //     _item.replies = []; 
-    //   }
-
-    //   _item.replies.push({
-    //     parent: parentKey,
-    //     text: text,
-    //     createdAt: new Date().getTime(),
-    //     createdBy: {
-    //       name: this.props.user.displayName,
-    //       uid: this.props.user.uid,
-    //     },
-    //     id: _uniqueID
-    //   });
-
-    //   // -- Update Comment
-    //   comments.child(this.props.data.proposalID).child(id).set(_item,()=>{
-    //     console.log("Successfully Write Comment");
-    //     this.setState({replyBox: null});
-    //   });
-    // });
   }
 
   // Render Child Object
@@ -515,6 +391,7 @@ class ProposalComments extends Component {
 
   render() {
     const { classes, deviceType } = this.props;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -599,72 +476,7 @@ class ProposalComments extends Component {
                   }
                 </Col>
               </Col>
-              {/* <Grid item container md={12} className="commentHeading">
-                <Grid item md={8} className="userView">
-                  <span className="userName">
-                    {' '} {comment.createdBy.name} {' '}
-                  </span>
-                  <div className="commentDate">{this.generateDate(comment.createdAt)}</div>
-                </Grid>
-                <Grid item md={4} className="votesView">
-                  <img
-                    alt="a"
-                    src={require('../../assets/img/png_button_up.png')}
-                    className="upVoteICon"
-                    onClick={() => { this.voteForComment('up', comment._id) }}
-                  />
-                  <div className="votingNumber">{this.voteCount('up', comment.votes)}</div>
-                  <img
-                    alt="a"
-                    src={require('../../assets/img/png_button_down.png')}
-                    className="downVoteICon"
-                    onClick={() => { this.voteForComment('down', comment._id) }}
-                  />
-                  <div className="votingNumber">{this.voteCount('down', comment.votes)}</div>
-                </Grid>
-              </Grid>
-              <Grid item md={12} className="commentlHrView">
-                <hr className="hr" />
-              </Grid> */}
-              {/* {this.state.editCommentState && this.state.selectedCommentID === comment._id ?
-                <Grid item container md={8} className="commentSectionslView">
-                  <Grid item md={12} className="commentHeading">
-                    Edited Comment
-                  </Grid>
-                  <Grid item md={12} className="proposalDetails">
-
-                    <textarea rows="2" cols="75" className="userComment" value={this.state.userEditComment} onChange={this.setEditComment}>
-
-                    </textarea>
-                    <hr className="proposalDetailsHr" />
-                    <Button type="submit" color="primary" onClick={() => this.editComment(comment._id)}>
-                      Submit
-                    </Button>
-                    <Button color="primary" onClick={() => { this.setState({ editCommentState: !this.state.editCommentState }) }}>
-                      Cancel
-                    </Button>
-                  </Grid>
-                </Grid>
-                :
-                <Grid item md={8} className="newYearView">
-                  {' '}
-                  <Typography gutterBottom>
-                    {comment.message}
-                  </Typography>
-
-                  {this.props.user && this.props.user.uid === comment.createdBy.uid &&
-                    <Grid className="edit-delete-btn">
-                      <EditIcon onClick={() => { this.editedComment(comment._id, comment.message) }} />
-                      <DeleteIcon onClick={() => { this.deleteComment(comment._id) }} />
-                    </Grid>
-                  }
-                  {comment.isEdited && <Button color="primary" className="show-edited"> Edited </Button>}
-                </Grid>
-              } */}
               {this.generateChildCommentsStructure(comment.replies, comment)}
-              {/* { comment.replies && this.renderReplies(comment.replies) } */}
-              {/* <Grid item md={10} className="replyView" onClick={() => { this.showAddReplyBtn(comment._id, true) }}> {' '} Reply </Grid> */}
-              {/* { comment.showAddReply && <CommentForm comment={ comment } add={ this.addReply } cancel={ this.showAddReplyBtn } />} */}
             </Row>
           )
         })}
