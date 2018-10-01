@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { userTwoFactorStyle } from './styles';
 import { Grid } from 'material-ui';
 import { fire, phoneAuth } from '../../API/firebase';
@@ -416,5 +416,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(userTwoFactorStyle)(UserTwoFactor)
+  injectSheet(userTwoFactorStyle)(UserTwoFactor)
 );

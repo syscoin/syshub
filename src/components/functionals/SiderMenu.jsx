@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { Row, Col } from 'antd';
 
 // API
@@ -113,4 +113,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(siderMenuStyle)(SiderMenu));
+export default connect(stateToProps, dispatchToProps)(injectSheet(siderMenuStyle)(SiderMenu));

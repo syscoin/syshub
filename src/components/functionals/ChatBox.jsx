@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import { Input } from 'antd';
 import swal from 'sweetalert';
-import { Send } from 'material-ui-icons';
+import { Send } from '@material-ui/icons';
 import { Form } from 'antd';
 
 import { messages, fire } from '../../API/firebase';
 
-import List, { ListItemText } from 'material-ui/List';
+import List, { ListItemText } from '@material-ui/core/List';
 import { chatBoxStyle } from './styles';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 
 
 class ChatBox extends Component {
@@ -178,4 +178,4 @@ const stateToProps = state => {
   };
 };
 
-export default connect(stateToProps)(withStyles(chatBoxStyle)(ChatBox));
+export default connect(stateToProps)(injectSheet(chatBoxStyle)(ChatBox));

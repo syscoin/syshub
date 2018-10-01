@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { Icon } from 'antd';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import { NewsList, NewsDetail } from '../containers';
 
 // import style
@@ -90,5 +90,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsStyle)(News)
+  injectSheet(newsStyle)(News)
 );

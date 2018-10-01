@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 import { doLogout } from '../../API/firebase';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 
 //Import UI Framework components
 import { Button } from 'antd';
 
 //Import Styles
+import { injectSheet } from 'jss';
 import { headerNavStyle } from './styles';
 
 const ButtonGroup = Button.Group;
@@ -96,4 +97,4 @@ HeaderNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(headerNavStyle)(HeaderNav));
+export default connect(stateToProps, dispatchToProps)(injectSheet(headerNavStyle)(HeaderNav));

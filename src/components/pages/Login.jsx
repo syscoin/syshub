@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Grid, FormGroup, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup } from 'material-ui';
 import swal from 'sweetalert';
 import { fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 // import style
+import { injectSheet } from 'jss';
 import { loginStyle } from './styles';
 
 class Login extends Component {
@@ -284,4 +285,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));
+export default connect(stateToProps, dispatchToProps)(injectSheet(loginStyle)(Login));

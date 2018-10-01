@@ -284,5 +284,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalCardStyle)(ProposalCard)
+  injectSheet(proposalCardStyle)(ProposalCard)
 );

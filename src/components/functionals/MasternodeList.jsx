@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Grid, withStyles, FormGroup } from 'material-ui';
+import { Grid, FormGroup } from 'material-ui';
 import Cryptr from 'cryptr';
 
 // import style
+import { injectSheet } from 'jss';
 import { masternodeListStyle } from './styles';
 import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
@@ -79,7 +80,7 @@ class MasterNodeList extends Component {
       onOk() {
         confrimDelete();
       },
-      onCancel() {}
+      onCancel() { }
     });
   }
 
@@ -246,5 +247,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(masternodeListStyle)(MasterNodeList)
+  injectSheet(masternodeListStyle)(MasterNodeList)
 );

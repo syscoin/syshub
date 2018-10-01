@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 
 // import style
+import { injectSheet } from 'jss';
 import { newsBodyStyle } from './styles';
 
 class NewsBody extends Component {
@@ -32,5 +33,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsBodyStyle)(NewsBody)
+  injectSheet(newsBodyStyle)(NewsBody)
 );

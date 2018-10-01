@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { userDeleteStyle } from './styles';
 import { Button, Grid } from 'material-ui';
 
@@ -48,5 +48,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(userDeleteStyle)(UserDelete)
+  injectSheet(userDeleteStyle)(UserDelete)
 );

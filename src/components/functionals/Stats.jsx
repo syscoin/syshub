@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Equalizer } from 'material-ui-icons';
+import { Equalizer } from '@material-ui/icons';
 
-import GridList from 'material-ui/GridList';
+import GridList from '@material-ui/core/GridList';
 import Card, {
   CardHeader,
   CardContent,
 
-} from 'material-ui/Card';
-import { withStyles } from 'material-ui';
+} from '@material-ui/core/Card';
+import { injectSheet } from 'jss';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
@@ -119,5 +119,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(statsStyle)(Stats)
+  injectSheet(statsStyle)(Stats)
 );

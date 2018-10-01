@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 import Favicon from 'react-favicon';
 import { DesktopLayout, MobileLayout } from './components/layouts';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 
 import actions from './redux/actions';
 import { fire } from './API/firebase';
@@ -113,4 +113,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(appStyles)(App));
+export default connect(stateToProps, dispatchToProps)(injectSheet(appStyles)(App));

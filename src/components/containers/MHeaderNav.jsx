@@ -8,7 +8,7 @@ import injectSheet from 'react-jss';
 import { Grid } from 'material-ui';
 import { Icon } from 'antd';
 import { Button } from 'antd';
-import IconButton from 'material-ui/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import actions from '../../redux/actions';
 
 class MHeaderNav extends Component {

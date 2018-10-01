@@ -2,11 +2,12 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 //import antd components
-import { Grid, withStyles } from 'material-ui';
+import { Grid} from 'material-ui';
 
+import { injectSheet } from 'jss';
 import { proposalApprovalStyle } from './styles';
 
 class ProposalApprovalStat extends Component {
@@ -133,4 +134,4 @@ ProposalApprovalStat.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(proposalApprovalStyle)(ProposalApprovalStat);
+export default injectSheet(proposalApprovalStyle)(ProposalApprovalStat);

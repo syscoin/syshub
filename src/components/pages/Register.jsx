@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
@@ -11,6 +11,7 @@ import { fire } from '../../API/firebase';
 import PropTypes from 'prop-types';
 
 // import style
+import { injectSheet } from 'jss';
 import { registerStyle } from './styles';
 
 const FormItem = Form.Item;
@@ -417,5 +418,5 @@ function mapDispatchToProps(dispatch) {
 const _RegisterForm = Form.create()(Register); // Need to add component like this due to antd Form
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(registerStyle)(_RegisterForm)
+  injectSheet(registerStyle)(_RegisterForm)
 );

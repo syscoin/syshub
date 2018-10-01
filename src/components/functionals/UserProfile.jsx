@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { userProfileStyle } from './styles';
 import { Button, Grid, FormGroup } from 'material-ui';
 import swal from 'sweetalert';
@@ -227,4 +227,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));
+export default connect(stateToProps, dispatchToProps)(injectSheet(userProfileStyle)(UserProfile));

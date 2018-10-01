@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui';
+import Paper from '@material-ui/core/Paper';
+import { injectSheet } from 'jss';
 import swal from 'sweetalert';
 
 import actions from '../../redux/actions';
@@ -86,4 +86,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userAccountStyle)(UserAccount));
+export default connect(stateToProps, dispatchToProps)(injectSheet(userAccountStyle)(UserAccount));

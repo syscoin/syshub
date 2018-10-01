@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import GridList, { GridListTile } from 'material-ui/GridList';
-import Divider from 'material-ui/Divider';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui';
+import Paper from '@material-ui/core/Paper';
+import GridList, { GridListTile } from '@material-ui/core/GridList';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import { injectSheet } from 'jss';
 import PropTypes from 'prop-types';
 
 // import style
@@ -63,4 +63,4 @@ WelcomeBox.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(welcomeBoxStyle)(WelcomeBox);
+export default injectSheet(welcomeBoxStyle)(WelcomeBox);

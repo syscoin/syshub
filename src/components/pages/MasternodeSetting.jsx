@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 
 import { connect } from 'react-redux';
 import Cryptr from 'cryptr';
@@ -133,4 +133,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(masterNodeStyle)(MasterNode));
+export default connect(stateToProps, dispatchToProps)(injectSheet(masterNodeStyle)(MasterNode));

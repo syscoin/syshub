@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 
 // import components
+import { injectSheet } from 'jss';
 import { dashboardStyle } from './styles';
 
 class DashBoard extends Component {
@@ -88,5 +89,5 @@ const dispatchToProps = dispatch => {
   };
 };
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
+  injectSheet(dashboardStyle)(DashBoard)
 );

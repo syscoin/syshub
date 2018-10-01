@@ -4,6 +4,7 @@ import { Grid, withStyles } from 'material-ui';
 import { Avatar } from 'antd';
 
 // import style
+import { injectSheet } from 'jss';
 import { newsHeaderStyle } from './styles';
 
 class NewsHeader extends Component {
@@ -59,5 +60,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsHeaderStyle)(NewsHeader)
+  injectSheet(newsHeaderStyle)(NewsHeader)
 );

@@ -8,11 +8,12 @@ import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
 import { Button, Modal, Table } from 'antd';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
 // import style
+import { injectSheet } from 'jss';
 import { proposalCardStyle } from './styles';
 
 class ProposalCard extends Component {
@@ -637,4 +638,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(proposalCardStyle)(ProposalCard));
+export default connect(stateToProps, dispatchToProps)(injectSheet(proposalCardStyle)(ProposalCard));

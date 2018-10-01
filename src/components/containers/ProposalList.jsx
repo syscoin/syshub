@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core/Grid';
 
 // import styles
+import { injectSheet } from 'jss';
 import { proposalStyle } from './styles';
 
 // import component
@@ -50,5 +51,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalStyle)(ProposalList)
+  injectSheet(proposalStyle)(ProposalList)
 );

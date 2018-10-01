@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 
 // import style
 import { newsListStyle } from './styles';
@@ -51,5 +51,5 @@ NewsList.propTypes = {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsListStyle)(NewsList)
+  injectSheet(newsListStyle)(NewsList)
 );

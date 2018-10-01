@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
-import { Grid, Button, withStyles, Typography } from 'material-ui';
+import { Grid, Button, Typography } from 'material-ui';
 import swal from 'sweetalert';
 
 
@@ -13,6 +13,7 @@ import CommentForm from './commentForm';
 // import firebase
 import { comments, commentReplies, commentReplies_V2 } from '../../API/firebase';
 
+import { injectSheet } from 'jss';
 import { proposalCommentsStyle } from './styles';
 
 class ProposalComments extends Component {
@@ -498,4 +499,4 @@ const dispatchToProps = dispatch => {
 };
 
 
-export default connect(stateToProps, dispatchToProps)(withStyles(proposalCommentsStyle)(ProposalComments));
+export default connect(stateToProps, dispatchToProps)(injectSheet(proposalCommentsStyle)(ProposalComments));

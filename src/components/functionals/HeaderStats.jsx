@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; //to pass functions
 import actions from '../../redux/actions';
 //import antd components
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from 'material-ui';
 
+import { injectSheet } from 'jss';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
@@ -81,5 +82,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(headerStatsStyle)(HeaderStats)
+  injectSheet(headerStatsStyle)(HeaderStats)
 );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactPasswordStrength from 'react-password-strength';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { injectSheet } from 'jss';
 import { userChangePswStyle } from './styles';
 import { Grid } from 'material-ui';
 import { Form, Input, Button } from 'antd';
@@ -236,5 +236,5 @@ const dispatchToProps = dispatch => {
 const _userChangePass = Form.create()(UserChangePassword); // Need to add component like this due to antd Form
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(userChangePswStyle)(_userChangePass)
+  injectSheet(userChangePswStyle)(_userChangePass)
 );
