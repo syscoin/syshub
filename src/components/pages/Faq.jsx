@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Collapse } from 'antd';
 
 import { connect } from 'react-redux';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 
 // import components
 import { faqStyle } from './styles';

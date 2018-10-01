@@ -6,6 +6,8 @@ import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import createContext from './createContext';
 
+import injectSheet from 'react-jss';
+
 // Apply some reset
 const styles = theme => ({
   '@global': {

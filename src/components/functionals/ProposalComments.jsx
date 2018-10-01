@@ -13,7 +13,7 @@ import CommentForm from './commentForm';
 // import firebase
 import { comments, commentReplies, commentReplies_V2 } from '../../API/firebase';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { proposalCommentsStyle } from './styles';
 
 class ProposalComments extends Component {

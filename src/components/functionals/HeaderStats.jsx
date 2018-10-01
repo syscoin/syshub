@@ -7,7 +7,7 @@ import actions from '../../redux/actions';
 //import antd components
 import { Grid } from '@material-ui/core';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {

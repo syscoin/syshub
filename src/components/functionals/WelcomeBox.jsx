@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
-import GridList, { GridListTile } from '@material-ui/core/GridList';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 
 // import style

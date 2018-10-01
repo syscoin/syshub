@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import { Button, Icon } from 'antd';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { newsFooterStyle } from './styles';
 
 class NewsFooter extends Component {

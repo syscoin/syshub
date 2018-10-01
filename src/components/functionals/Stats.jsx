@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { Equalizer } from '@material-ui/icons';
 
 import GridList from '@material-ui/core/GridList';
-import Card, {
-  CardHeader,
-  CardContent,
-
-} from '@material-ui/core/Card';
-import { injectSheet } from 'jss';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
 
 // import style
+import injectSheet from 'react-jss';
 import { statsStyle } from './styles';
 
 class Stats extends Component {

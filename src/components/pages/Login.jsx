@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { loginStyle } from './styles';
 
 class Login extends Component {

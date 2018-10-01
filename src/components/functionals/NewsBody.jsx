@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core/Grid';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { newsBodyStyle } from './styles';
 
 class NewsBody extends Component {

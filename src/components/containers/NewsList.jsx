@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 
 // import style
 import { newsListStyle } from './styles';

@@ -13,7 +13,7 @@ import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { proposalCardStyle } from './styles';
 
 class ProposalCard extends Component {

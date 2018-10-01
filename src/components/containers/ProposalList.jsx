@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core/Grid';
 
 // import styles
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { proposalStyle } from './styles';
 
 // import component

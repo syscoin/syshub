@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { Grid, FormGroup } from '@material-ui/core';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { proposalPaymentStyle } from './styles';
 
 class ProposalPayment extends Component {

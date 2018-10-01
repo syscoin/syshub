@@ -12,7 +12,7 @@ import { Grid } from '@material-ui/core';
 import { Button } from 'antd';
 
 //Import Styles
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { headerNavStyle } from './styles';
 
 const ButtonGroup = Button.Group;

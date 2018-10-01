@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../redux/actions';

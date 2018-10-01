@@ -8,7 +8,7 @@ import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 
 // import components
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { dashboardStyle } from './styles';
 
 class DashBoard extends Component {

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 //import antd components
 import { Grid } from '@material-ui/core';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { deshBoardHeaderStyle } from './styles';
 
 class DashBoardHeader extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { userTwoFactorStyle } from './styles';
 import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../API/firebase';

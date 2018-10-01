@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 import Favicon from 'react-favicon';
 import { DesktopLayout, MobileLayout } from './components/layouts';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 
 import actions from './redux/actions';
 import { fire } from './API/firebase';

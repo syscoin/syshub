@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import { Avatar } from 'antd';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { newsAboutStyle } from './styles';
 
 class NewsAbout extends Component {

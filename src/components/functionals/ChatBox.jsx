@@ -10,7 +10,7 @@ import { Form } from 'antd';
 
 import { messages, fire } from '../../API/firebase';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { chatBoxStyle } from './styles';
 
 

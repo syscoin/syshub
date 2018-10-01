@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core/Grid';
 import { Avatar } from 'antd';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { newsHeaderStyle } from './styles';
 
 class NewsHeader extends Component {

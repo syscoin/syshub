@@ -5,7 +5,7 @@ import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { masternodeAddStyle } from './styles';
 
 class MasterNodeAdd extends Component {

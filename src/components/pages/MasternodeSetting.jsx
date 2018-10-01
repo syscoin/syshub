@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 
 import { connect } from 'react-redux';
 import Cryptr from 'cryptr';

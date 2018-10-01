@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { userProfileStyle } from './styles';
 import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';

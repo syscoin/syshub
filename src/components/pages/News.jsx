@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { Icon } from 'antd';
 import Paper from '@material-ui/core/Paper';
 import { NewsList, NewsDetail } from '../containers';

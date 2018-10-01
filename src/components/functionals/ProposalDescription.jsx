@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { proposalDescriptionStyle } from './styles';
 
 class ProposalDescription extends Component {

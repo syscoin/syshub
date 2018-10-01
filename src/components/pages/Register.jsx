@@ -11,7 +11,7 @@ import { fire } from '../../API/firebase';
 import PropTypes from 'prop-types';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { registerStyle } from './styles';
 
 const FormItem = Form.Item;

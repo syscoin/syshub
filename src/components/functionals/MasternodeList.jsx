@@ -5,7 +5,7 @@ import { Grid, FormGroup } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
 // import style
-import { injectSheet } from 'jss';
+import injectSheet from 'react-jss';
 import { masternodeListStyle } from './styles';
 import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
