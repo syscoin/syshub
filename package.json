@@ -2,6 +2,23 @@
   "name": "syshub",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:log": "eslint . > eslint.log",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
+  },
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ],
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@material-ui/core": "^3.1.2",
@@ -46,23 +63,6 @@
     "sweetalert": "^2.1.0",
     "sweetalert2": "^7.28.4"
   },
-  "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint:log": "eslint . > eslint.log",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
-  },
-  "pre-commit": [
-    "precommit-msg",
-    "lint"
-  ],
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.11.1",
