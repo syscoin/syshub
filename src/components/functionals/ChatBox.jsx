@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
+import List, { ListItemText } from '@material-ui/core/List';
+import { Send } from '@material-ui/icons';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import Paper from '@material-ui/core/Paper';
 import { Input } from 'antd';
 import swal from 'sweetalert';
-import { Send } from '@material-ui/icons';
 import { Form } from 'antd';
 
 import { messages, fire } from '../../API/firebase';
 
-import List, { ListItemText } from '@material-ui/core/List';
-import { chatBoxStyle } from './styles';
 import { injectSheet } from 'jss';
+import { chatBoxStyle } from './styles';
 
 
 class ChatBox extends Component {

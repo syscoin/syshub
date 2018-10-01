@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';

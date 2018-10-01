@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, FormGroup } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { fire } from '../../API/firebase';
 import { connect } from 'react-redux';

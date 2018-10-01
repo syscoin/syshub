@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Button, Grid, FormGroup } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 
 // import style

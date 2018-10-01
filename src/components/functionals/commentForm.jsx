@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button } from 'material-ui';
+import { Grid, Button } from '@material-ui/core';
 
 class CommentForm extends Component {
   constructor(props) {

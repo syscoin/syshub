@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { injectSheet } from 'jss';
 import { userDeleteStyle } from './styles';
-import { Button, Grid } from 'material-ui';
+import { Button, Grid } from '@material-ui/core';
 
 class UserDelete extends Component {
   render() {

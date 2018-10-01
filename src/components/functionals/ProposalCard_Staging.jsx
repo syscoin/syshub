@@ -8,7 +8,7 @@ import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
 import { Button } from 'antd';
-import { Grid, withStyles } from 'material-ui';
+import { Grid, withStyles } from '@material-ui/core';
 import { Progress } from 'antd';
 
 // import style

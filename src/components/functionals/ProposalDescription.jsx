@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //import antd components
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import { injectSheet } from 'jss';

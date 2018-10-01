@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core/Grid';
 import { Icon } from 'antd';
 import { Button } from 'antd';
 import IconButton from '@material-ui/core/IconButton';

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
-import { Grid, Button, Typography } from 'material-ui';
+import { Grid, Button, Typography } from '@material-ui/core';
 import swal from 'sweetalert';
 
 

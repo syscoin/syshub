@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Grid, FormGroup } from 'material-ui';
+import { Grid, FormGroup } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
 // import style

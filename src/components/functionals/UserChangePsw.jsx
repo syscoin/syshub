@@ -4,7 +4,7 @@ import ReactPasswordStrength from 'react-password-strength';
 import { connect } from 'react-redux';
 import { injectSheet } from 'jss';
 import { userChangePswStyle } from './styles';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import { Form, Input, Button } from 'antd';
 
 

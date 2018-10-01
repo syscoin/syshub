@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
 //import antd components
-import { Grid} from 'material-ui';
+import { Grid} from '@material-ui/core';
 
 import { injectSheet } from 'jss';
 import { proposalApprovalStyle } from './styles';

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { injectSheet } from 'jss';
 import { userProfileStyle } from './styles';
-import { Button, Grid, FormGroup } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 // import components

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 import { doLogout } from '../../API/firebase';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 
 //Import UI Framework components
 import { Button } from 'antd';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core/Grid';
 
 // import style
 import { injectSheet } from 'jss';
