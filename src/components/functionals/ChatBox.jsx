@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
-import List, { ListItemText } from '@material-ui/core/List';
+import List from '@material-ui/core/List';
+import ListItemText from '@material-ui/core/ListItemText';
 import { Send } from '@material-ui/icons';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
