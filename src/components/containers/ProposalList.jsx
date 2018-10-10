@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 
 // import styles
 import injectSheet from 'react-jss';

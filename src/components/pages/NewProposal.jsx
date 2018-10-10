@@ -12,7 +12,11 @@ import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col, Icon } from 'antd';
 import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
-import Stepper, { Step, StepLabel, StepContent } from '@material-ui/core/Stepper';
+
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
