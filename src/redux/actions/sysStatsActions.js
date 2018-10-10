@@ -13,7 +13,7 @@ const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 /**---------------------------------------------------------------------------- */
 
 export default {
-  getSysStats: (first) => {
+  getDashStats: (first) => {
     return dispatch => {
       return dispatch(
         HTTPAsync.get(

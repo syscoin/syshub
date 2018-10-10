@@ -70,12 +70,12 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
-    this.props.getSysStats('first');
+    this.props.getDashStats('first');
     this.props.getSysMnCount();
   }
 
   tick() {
-    this.props.getSysStats();
+    this.props.getDashStats();
     this.props.getSysMnCount();
   }
 
@@ -105,7 +105,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysStats: first => dispatch(actions.getSysStats(first)),
+    getDashStats: first => dispatch(actions.getDashStats(first)),
     getSysMnCount: first => dispatch(actions.getSysMnCount(first)),
 
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),

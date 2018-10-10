@@ -14,6 +14,7 @@ import injectSheet from 'react-jss';
 import { statsStyle } from './styles';
 
 class Stats extends Component {
+  
   getValue(field) {
     const value = {
       changeRate: this.props.value ? ((this.props.value.exchange_rates.btc_dash).toFixed(5)) : 0,
@@ -21,7 +22,9 @@ class Stats extends Component {
       masternodes: this.props.value ? (`${
         this.props.value.general.registered_masternodes_verified
         } / ${this.props.value.general.registered_masternodes}`) : '0/0',
+
       totUsers: this.props.value ? (this.props.value.general.all_user) : 0,
+
     }[field];
     return value;
   }
@@ -58,6 +61,7 @@ class Stats extends Component {
 
 
   }
+
   render() {
     const { classes, deviceType } = this.props;
 
