@@ -31,10 +31,10 @@ const { Content } = Layout;
 class AppContent extends Component {
   render () {
     const { showPage, deviceType } = this.props;
-
+    const wrapperStyle = showPage === 'home'? appContentStyle.wrapperHome : appContentStyle.wrapper
     return (
-      <div style={appContentStyle.__container}>
-        <Content style={appContentStyle.wraper}>
+      <div style={wrapperStyle}>
+        <Content style={appContentStyle.contentWrapper}>
           {
             {
               home: <Home deviceType={deviceType} />,
