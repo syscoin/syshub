@@ -13,6 +13,8 @@ const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 /**---------------------------------------------------------------------------- */
 
 export default {
+
+  // ACZ --> This method have to be deleted
   getDashStats: (first) => {
     return dispatch => {
       return dispatch(
@@ -29,15 +31,39 @@ export default {
       );
     };
   },
+
+  getSysMnRegistered: () => {
+    return dispatch =>
+      dispatch(
+        HTTPAsync.fireMn(constants.SYS_STATS_RMN_GET)
+      );
+  },
+
+  getSysUserRegistered: () => {
+    return dispatch =>
+      dispatch(
+        HTTPAsync.fireUser(constants.SYS_STATS_USER_GET)
+      );
+  },
+
+  getSysPrice: () => {
+    return dispatch => {
+      return dispatch(
+        HTTPAsync.get(
+          `${baseApiURL}/curl?url="https://api.coinmarketcap.com/v1/ticker/syscoin/"`,
+          null,
+          constants.SYS_STATS_PRICE_GET
+        )
+      );
+    };
+  },
+
   getSysMnCount: () => {
     return dispatch => {
       return dispatch(
         HTTPAsync.post(
-          `${baseApiURL}/cmd`, {
-            'script': 'masternode count'
-
-          },
-          constants.SYS_STATS_MN_GET
+          `${baseApiURL}/cmd`, { 'script': 'masternode count' },
+          constants.SYS_STATS_TMN_GET
         )
       );
     };

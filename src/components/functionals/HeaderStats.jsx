@@ -12,16 +12,13 @@ import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
   render() {
-    const { classes, deviceType, sysStatsValue } = this.props;
+    const { classes, deviceType, sysInfo, sysStatsValue } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
-    ).toFixed(5)} BTC/SYS` : '';
-    const masternodes = sysStatsValue ? `${
-      this.props.sysStatsValue.general.registered_masternodes_verified
-      } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';
-    const totUsers = sysStatsValue ? this.props.sysStatsValue.general.all_user : '';
+    const changeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(5)} BTC/SYS` : 0;
+    const masternodes = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.qualify}` : '';
+    const totUsers = this.props.sysInfo ? (this.props.sysInfo.users) : 0;
     //console.clear();
     return (
       <Grid container className={style}>
@@ -70,7 +67,13 @@ HeaderStats.propTypes = {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStatsValue: state.sysStats.value
+    sysStatsValue: state.sysStats.value,
+    sysInfo: {
+      mnCount: state.sysStats.mnCount,
+      mnRegistered: state.sysStats.mnRegistered,
+      sysPrice: state.sysStats.sysPrice,
+      users: state.sysStats.users,
+    },
   };
 }
 

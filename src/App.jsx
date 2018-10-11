@@ -12,6 +12,11 @@ import appStyles from './styles/appStyle';
 
 class App extends Component {
   state = {};
+
+  componentWillMount() {
+    this.tick()
+  }
+
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
 
@@ -70,13 +75,10 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
-    this.props.getDashStats('first');
-    this.props.getSysMnCount();
   }
 
   tick() {
-    this.props.getDashStats();
-    this.props.getSysMnCount();
+    this.props.getSysInfo();
   }
 
   render() {
@@ -105,8 +107,18 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getDashStats: first => dispatch(actions.getDashStats(first)),
-    getSysMnCount: first => dispatch(actions.getSysMnCount(first)),
+    getSysInfo: () => {
+      return (
+        dispatch(actions.getSysPrice()),
+        dispatch(actions.getSysMnCount()),
+        dispatch(actions.getSysMnRegistered()),
+        dispatch(actions.getSysUserRegistered()),
+        
+        dispatch(actions.getDashStats())// ACZ --> to be deleted,
+        // dispatch(actions.getSysMnRegistered()),
+        // dispatch(actions.getSysUserRegistered())
+      )
+    },
 
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
     setAuth: auth => dispatch(actions.setAuth(auth))

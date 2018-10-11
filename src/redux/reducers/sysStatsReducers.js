@@ -41,12 +41,23 @@ const sysStats = (state = initialState, action) => {
         ? { ...state, value: newValue, valueOld: value }
         : { ...state, value, valueOld };
     }
+    /* ACZ --> this function will be deleted */
     case constants.SYS_STATS_FIRST: {
       const newValue = smartParse(action.data.data, state.value);
       return { ...state, value: newValue, valueOld: newValue };
     }
-    case constants.SYS_STATS_MN_GET: {
-      return { ...state, MnCount: action.data };
+    case constants.SYS_STATS_PRICE_GET: {
+      const sysPrice = smartParse(action.data.data, [])[0];
+      return { ...state, sysPrice };
+    }
+    case constants.SYS_STATS_TMN_GET: {
+      return { ...state, mnCount: action.data };
+    }
+    case constants.SYS_STATS_RMN_GET: {
+      return { ...state, mnRegistered: action.data };
+    }
+    case constants.SYS_STATS_USER_GET: {
+      return { ...state, users: action.data };
     }
 
     default:
