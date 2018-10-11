@@ -12,7 +12,7 @@ import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
   render() {
-    const { classes, deviceType, sysInfo, sysStatsValue } = this.props;
+    const { classes, deviceType, sysInfo } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -67,7 +67,6 @@ HeaderStats.propTypes = {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStatsValue: state.sysStats.value,
     sysInfo: {
       mnCount: state.sysStats.mnCount,
       mnRegistered: state.sysStats.mnRegistered,
