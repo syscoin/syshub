@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Collapse } from 'antd';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 
 // import components
 import { faqStyle } from './styles';
@@ -216,5 +216,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(faqStyle)(Faq)
+  injectSheet(faqStyle)(Faq)
 );

@@ -6,7 +6,6 @@ const grey = palette.grey;
 const transparentBlack = palette.transparentBlack;
 
 const wraper = {
-  //border: '1px solid green',
   display: 'flex',
   flexDirection: 'column',
   justifyAlign: 'flex-start',
@@ -14,10 +13,9 @@ const wraper = {
   background: greyLight,
   borderRight: `1px solid ${grey}`,
   borderLeft: `1px solid ${grey}`,
-  // height:'100vh',
 };
 const sider = {
-  backgroundColor: primary //'#ff0045',
+  backgroundColor: primary,
 };
 
 const mWraper = {

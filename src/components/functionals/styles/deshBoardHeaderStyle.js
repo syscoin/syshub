@@ -4,13 +4,11 @@ const white = palette.white;
 
 export default {
   root: {
-    // margin: 0,
     '& .headingView': {
       backgroundColor: '#1991CC',
       height: '50px',
       marginTop: '10px',
       marginLeft: '10px',
-      // marginBottom: "20px",
       fontSize: '20px',
       '& .headingRow': {
         color: white,

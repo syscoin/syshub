@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 //import antd components
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
+
+import injectSheet from 'react-jss';
 import { deshBoardHeaderStyle } from './styles';
 
 class DashBoardHeader extends Component {
   constructor(props) {
     super(props);
-    // console.clear();
     this.state = {
       data: this.props.data
     };
@@ -71,5 +72,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(deshBoardHeaderStyle)(DashBoardHeader)
+  injectSheet(deshBoardHeaderStyle)(DashBoardHeader)
 );

@@ -97,8 +97,7 @@ export default {
     height: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    // marginTop: '36px',
-    '& .form-group .label':{
+    '& .form-group .label': {
       textAlign: 'left !important'
     },
     '& .input-field': {
@@ -107,13 +106,13 @@ export default {
     },
     '& .recaptcha': {
       width: '100% !important',
-      
-      '& div':{
+
+      '& div': {
         marginTop: 5,
         display: 'inline-block'
       }
     },
-    '& .form-button-group':{
+    '& .form-button-group': {
       width: '100% !important',
       marginLeft: '0px !important'
     }

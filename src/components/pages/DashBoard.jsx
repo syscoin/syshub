@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import { Icon } from 'antd';
 import { ProposalList } from '../containers/ProposalList';
 import { ProposalDetail } from '../containers/ProposalDetail';
 
 // import components
+import injectSheet from 'react-jss';
 import { dashboardStyle } from './styles';
 
 class DashBoard extends Component {
@@ -77,7 +78,7 @@ const stateToProps = state => {
   return {
     proposals: state.proposals,
     //    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
-    totalNodes: Math.floor(state.sysStats.totMn * 0.1) + 1,
+    totalNodes: Math.floor(state.sysStats.mnCount * 0.1) + 1,
     app: state.app
   };
 };
@@ -88,5 +89,5 @@ const dispatchToProps = dispatch => {
   };
 };
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(dashboardStyle)(DashBoard)
+  injectSheet(dashboardStyle)(DashBoard)
 );

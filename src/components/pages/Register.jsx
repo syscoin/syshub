@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Recaptcha from 'react-recaptcha';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
@@ -10,9 +10,8 @@ import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
 import PropTypes from 'prop-types';
 
-// import withRoot from '../containers/WithRoot';
-
 // import style
+import injectSheet from 'react-jss';
 import { registerStyle } from './styles';
 
 const FormItem = Form.Item;
@@ -211,7 +210,6 @@ class Register extends Component {
               lg={12}
               md={12}
               xs={12}
-            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -322,11 +320,6 @@ class Register extends Component {
                     />
                   </div>
                 )}
-                {/* <span className="validation-message">
-                  <img alt="a" src={checkIcon} />
-                  Password Strength
-                  <span className="strong">Strong</span>
-                </span> */}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -366,7 +359,6 @@ class Register extends Component {
                 <div className="recaptcha">
                   <Recaptcha
                     size='normal'
-                    // style={{ marginLeft: '10px', width: '20px' }}
                     id="captcha"
                     sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
                     render="explicit"
@@ -426,5 +418,5 @@ function mapDispatchToProps(dispatch) {
 const _RegisterForm = Form.create()(Register); // Need to add component like this due to antd Form
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(registerStyle)(_RegisterForm)
+  injectSheet(registerStyle)(_RegisterForm)
 );

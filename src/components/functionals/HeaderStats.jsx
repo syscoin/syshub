@@ -5,20 +5,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; //to pass functions
 import actions from '../../redux/actions';
 //import antd components
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
 
+import injectSheet from 'react-jss';
 import { headerStatsStyle } from './styles';
 
 class HeaderStats extends Component {
   render() {
-    const { classes, deviceType, sysStatsValue } = this.props;
-    const { sysPrice, totMn, regMn, users } = sysStatsValue;
+    const { classes, deviceType, sysInfo } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysPrice ? `${(sysPrice.price_btc)} BTC/SYS` : '';
-    const masternodes = totMn ? `${regMn} / ${totMn}` : '';
-    const totUsers = users ? users : '';
+    const changeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(5)} BTC/SYS` : 0;
+    const masternodes = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
+    const totUsers = this.props.sysInfo ? (this.props.sysInfo.users) : 0;
+    //console.clear();
     return (
       <Grid container className={style}>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
@@ -66,12 +67,12 @@ HeaderStats.propTypes = {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStatsValue: {
+    sysInfo: {
+      mnCount: state.sysStats.mnCount,
+      mnRegistered: state.sysStats.mnRegistered,
       sysPrice: state.sysStats.sysPrice,
-      totMn: state.sysStats.totMn,
-      regMn: state.sysStats.regMn,
       users: state.sysStats.users,
-    }
+    },
   };
 }
 
@@ -83,5 +84,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(headerStatsStyle)(HeaderStats)
+  injectSheet(headerStatsStyle)(HeaderStats)
 );

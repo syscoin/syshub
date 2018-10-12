@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
+import injectSheet from 'react-jss';
 
-import Card, { CardContent } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 // import style
 import { newsCardStyle } from './styles';
@@ -102,5 +104,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsCardStyle)(NewsCard)
+  injectSheet(newsCardStyle)(NewsCard)
 );

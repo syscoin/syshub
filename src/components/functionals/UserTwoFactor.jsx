@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 import { userTwoFactorStyle } from './styles';
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../API/firebase';
 import { phoneValidation } from '../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
@@ -416,5 +416,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(userTwoFactorStyle)(UserTwoFactor)
+  injectSheet(userTwoFactorStyle)(UserTwoFactor)
 );

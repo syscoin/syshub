@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //import antd components
-import { Grid, withStyles } from 'material-ui';
-import Typography from 'material-ui/Typography';
+import { Grid } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+
+import injectSheet from 'react-jss';
 import { proposalDescriptionStyle } from './styles';
 
 class ProposalDescription extends Component {
@@ -43,4 +45,4 @@ ProposalDescription.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(proposalDescriptionStyle)(ProposalDescription);
+export default injectSheet(proposalDescriptionStyle)(ProposalDescription);

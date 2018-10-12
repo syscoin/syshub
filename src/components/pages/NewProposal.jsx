@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -12,8 +12,12 @@ import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col, Icon } from 'antd';
 import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
-import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
-import Paper from 'material-ui/Paper';
+
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../redux/helpers';
 import { fire } from '../../API/firebase';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -1046,4 +1050,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(newProposalStyle)(NewProposal));
+export default connect(stateToProps, dispatchToProps)(injectSheet(newProposalStyle)(NewProposal));

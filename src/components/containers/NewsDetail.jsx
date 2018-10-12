@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 
 // import style
 import { newsDetailStyle } from './styles';
@@ -63,5 +63,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsDetailStyle)(NewsDetail)
+  injectSheet(newsDetailStyle)(NewsDetail)
 );

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { fire } from '../../API/firebase';
 
 //Import UI Components
-import { Grid } from 'material-ui';
+import Grid from '@material-ui/core/Grid';
 import { DashBoardHeader } from '../functionals/';
 import { ProposalPayment } from '../functionals/';
 import { ProposalApprovalStat } from '../functionals/';

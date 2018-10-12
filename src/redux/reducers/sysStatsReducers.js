@@ -40,10 +40,10 @@ const sysStats = (state = initialState, action) => {
       return { ...state, sysPrice };
     }
     case constants.SYS_STATS_TMN_GET: {
-      return { ...state, totMn: action.data };
+      return { ...state, mnCount: action.data };
     }
     case constants.SYS_STATS_RMN_GET: {
-      return { ...state, regMn: action.data };
+      return { ...state, mnRegistered: action.data };
     }
     case constants.SYS_STATS_USER_GET: {
       return { ...state, users: action.data };
