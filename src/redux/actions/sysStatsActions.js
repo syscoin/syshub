@@ -11,7 +11,7 @@ const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
 
 export default {
 
-   getSysMnRegistered: () => {
+  getSysMnRegistered: () => {
     return dispatch =>
       dispatch(
         HTTPAsync.fireMn(constants.SYS_STATS_RMN_GET)
