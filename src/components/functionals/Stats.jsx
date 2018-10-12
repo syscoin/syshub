@@ -18,7 +18,7 @@ class Stats extends Component {
   getValue(field) {
     return {
       changeRate: this.props.sysInfo.sysPrice ? (parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(5)) : 0,
-      masternodes: this.props.sysInfo.mnCount ? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.qualify}`) : '0/0',
+      masternodes: this.props.sysInfo.mnCount ? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`) : '0/0',
       totUsers: this.props.sysInfo ? (this.props.sysInfo.users) : 0,
     }[field];
   }

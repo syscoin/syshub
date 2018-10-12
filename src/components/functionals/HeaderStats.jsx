@@ -17,7 +17,7 @@ class HeaderStats extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const changeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(5)} BTC/SYS` : 0;
-    const masternodes = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.qualify}` : '';
+    const masternodes = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
     const totUsers = this.props.sysInfo ? (this.props.sysInfo.users) : 0;
     //console.clear();
     return (
