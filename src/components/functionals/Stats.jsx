@@ -68,7 +68,7 @@ class Stats extends Component {
 function mapStateToProps(state) {
   //pass the providers
   return {
-    sysStats: state.sysStats.cards,
+    cards: state.sysStats.cards,
     sysInfo: {
       mnCount: state.sysStats.mnCount,
       mnRegistered: state.sysStats.mnRegistered,

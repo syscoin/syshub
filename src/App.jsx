@@ -110,7 +110,7 @@ const dispatchToProps = dispatch => {
     getSysInfo: () => {
       return (
         dispatch(actions.getSysPrice()),
-        dispatch(actions.getSysMnTotal()),
+        dispatch(actions.getSysMnCount()),
         dispatch(actions.getSysMnRegistered()),
         dispatch(actions.getSysUserRegistered())
       )
