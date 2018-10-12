@@ -97,8 +97,8 @@ class Register extends Component {
 
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.on('value', snapshot => {
-        if (Object.values(snapshot.val()).includes(this.registerName.value) === true) {
+      usernameRef.once('value').then(snapshot => {
+        if (Object.values(snapshot.val()).includes(this.state.usernames) === true) {
           this.setState({
             disabled: true
           });
@@ -228,7 +228,7 @@ class Register extends Component {
                     }
                   ]
                 })(
-                  <input
+                  <Input
                     ref={input => (this.registerName = input)}
                     name="usernames"
                     id="user-name"

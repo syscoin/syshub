@@ -310,6 +310,21 @@ const doDeleteAccount = () => {
           if (value.value === 'DELETE') {
             fire
               .database()
+              .ref('comments')
+              .once('value', snapshot => {
+                snapshot.forEach(snap => {
+                  snap.forEach(comment => {
+                    if (comment.val().createdBy.name === currentUser.displayName) {
+                      let newComment = { ...comment.val() };
+                      newComment.createdBy.name = `${currentUser.displayName}-deleted`;
+                      comment.ref.update(newComment);
+                    }
+                  });
+                });
+              });
+
+            fire
+              .database()
               .ref('messages')
               .once('value', snapshot => {
                 snapshot.forEach(snap => {
@@ -317,10 +332,7 @@ const doDeleteAccount = () => {
                     let newMessage = { ...snap.val()
                     };
                     newMessage.user.displayName = `${currentUser.displayName}-deleted`;
-                    fire
-                      .database()
-                      .ref('messages/' + snap.key)
-                      .update(newMessage);
+                    snap.ref.update(newMessage);
                   }
                 });
               });

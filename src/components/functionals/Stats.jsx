@@ -35,7 +35,7 @@ class Stats extends Component {
         </h1>
         <div className="statsMainDiv">
           <GridList cols={deviceType === 'mobile' ? 3 : 4} cellHeight={300} className="statsGridDiv">
-            {this.props.sysStats.map((item, key) => {
+            {this.props.cards.map((item, key) => {
               return (
                 <Card key={key} className="statsCard" >
                   <CardHeader

@@ -110,13 +110,9 @@ const dispatchToProps = dispatch => {
     getSysInfo: () => {
       return (
         dispatch(actions.getSysPrice()),
-        dispatch(actions.getSysMnCount()),
+        dispatch(actions.getSysMnTotal()),
         dispatch(actions.getSysMnRegistered()),
-        dispatch(actions.getSysUserRegistered()),
-        
-        dispatch(actions.getDashStats())// ACZ --> to be deleted,
-        // dispatch(actions.getSysMnRegistered()),
-        // dispatch(actions.getSysUserRegistered())
+        dispatch(actions.getSysUserRegistered())
       )
     },
 

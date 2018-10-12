@@ -29,14 +29,13 @@ class SiderMenu extends Component {
 
   render() {
     const { classes, active, deviceType, sysStatsValue } = this.props;
+    const { sysPrice, totMn, regMn, users } = sysStatsValue;
+
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysStatsValue ? `${(this.props.sysStatsValue.exchange_rates.btc_dash
-    ).toFixed(5)} BTC/SYS` : '';
-    const masternodes = sysStatsValue ? `${
-      this.props.sysStatsValue.general.registered_masternodes_verified
-      } / ${this.props.sysStatsValue.general.registered_masternodes}` : '';
-    const totUsers = sysStatsValue ? this.props.sysStatsValue.general.all_user : '';
+    const changeRate = sysPrice ? `${(sysPrice.price_btc)} BTC/SYS` : '';
+    const masternodes = totMn ? `${regMn} / ${totMn}` : '';
+    const totUsers = users ? users : '';
 
     return (
       <div className={style}>
@@ -103,7 +102,12 @@ class SiderMenu extends Component {
 const stateToProps = state => {
   return {
     menuItems: state.app.menuItems,
-    sysStatsValue: state.sysStats.value
+    sysStatsValue: {
+      sysPrice: state.sysStats.sysPrice,
+      totMn: state.sysStats.totMn,
+      regMn: state.sysStats.regMn,
+      users: state.sysStats.users,
+    }
   };
 };
 
