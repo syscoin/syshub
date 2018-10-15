@@ -12,20 +12,20 @@ import { proposalDescriptionStyle } from './styles';
 
 class ProposalDescription extends Component {
   render() {
-    const { classes, deviceType, description } = this.props;
+    const { classes, deviceType, description, url } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    const pattern = new RegExp("(\b(https?|ftp|file)://)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
+    const urlLink = url.includes('http') ? url : `http://${url}`;
+    console.log(urlLink, url);
+    
     return (
       <Grid item md={12} className={style}>
         <Grid item className="approvalStatus">
           <div className="heading">
-
             <Typography variant="headline" gutterBottom>
               PROPOSAL DESCRIPTIONS
-      </Typography>
-
-
+            </Typography>
           </div>
         </Grid>
         <Grid item md={11} className="no-margin">
@@ -35,6 +35,12 @@ class ProposalDescription extends Component {
           <Grid item md={11} className="proposalDetails">
             <Grid><div dangerouslySetInnerHTML={{ __html: description }} /></Grid>
           </Grid>
+        </Grid>
+        <Grid item container md={12} className="proposalUrl">
+          <Typography variant="subheading" gutterBottom color='inherit'>
+            More Info: &nbsp;
+          </Typography>
+          <div><a href={urlLink} target="_blank"> {url}</a></div>
         </Grid>
       </Grid>
     );

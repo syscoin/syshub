@@ -1,5 +1,6 @@
 import palette from './palette';
 
+const primaryDark = palette.primaryDark;
 const white = palette.white;
 const gray = palette.grey;
 const greyDark = palette.greyDark;
@@ -32,6 +33,12 @@ export default {
         maxWidth: '89.6667%',
         fontSize: 15
       }
+    },
+    '& .proposalUrl': {
+      marginLeft: '4%',
+      padding: 0,
+      color: primaryDark,
+      fontSize: 16,
     },
 
     '& .commentSectionslView': {
