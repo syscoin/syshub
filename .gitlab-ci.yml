@@ -3,6 +3,7 @@ image: node
 cache:
   paths:
   - node_modules/
+  key: "$CI_BUILD_REPO"
 
 stages:
   - develop
@@ -17,6 +18,7 @@ develop:
    - dpl --provider=heroku --app=$HEROKU_APP_DEV --api-key=$HEROKU_API_KEY
   except:
    - staging
+   - master
 
 staging:
   stage: staging
@@ -26,3 +28,15 @@ staging:
    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
    - staging
+
+deploy:
+  image: rambabusaravanan/firebase
+  stage: deploy
+  only:
+    - master
+  script:
+    - yarn
+    - yarn run build
+    - firebase use syshub-61377 --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
+
