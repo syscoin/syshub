@@ -10,6 +10,13 @@ import { fire } from './API/firebase';
 
 import appStyles from './styles/appStyle';
 
+// Jss Provider
+import JssProvider from 'react-jss/lib/JssProvider';
+import {generateClassName} from './classNameJssProvider';
+
+
+
+
 class App extends Component {
   state = {};
 
@@ -85,6 +92,7 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
+      <JssProvider generateClassName={generateClassName}>
       <div className={classes.root}>
         <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
@@ -94,6 +102,7 @@ class App extends Component {
           <MobileLayout />
         </Platform>
       </div>
+      </JssProvider>
     );
   }
 }
