@@ -12,7 +12,7 @@ import appStyles from './styles/appStyle';
 
 // Jss Provider
 import JssProvider from 'react-jss/lib/JssProvider';
-import {generateClassName} from './classNameJssProvider';
+import {generateClassName} from './Helpers/classNameJssProvider';
 
 
 

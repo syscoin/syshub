@@ -15,7 +15,6 @@ class ProposalDescription extends Component {
     const { classes, deviceType, description, url } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-    const pattern = new RegExp("(\b(https?|ftp|file)://)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
     const urlLink = url.includes('http') ? url : `http://${url}`;
     console.log(urlLink, url);
     
