@@ -34,6 +34,7 @@ deploy:
   image: cortesa/docker-firebase
   stage: deploy
   script:
+    - npm install -g npm-run-all
     - npm run build
     - firebase use syshub-61377 --token $FIREBASE_TOKEN
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
