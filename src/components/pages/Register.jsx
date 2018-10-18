@@ -37,6 +37,21 @@ class Register extends Component {
   componentDidMount() {
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
+
+    fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.setState({
+          verify: response
+        });
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function (widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
+
   }
 
   checkPassword = (rule, value, callback) => {
@@ -356,16 +371,7 @@ class Register extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div className="recaptcha">
-                  <Recaptcha
-                    size='normal'
-                    id="captcha"
-                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
-                    render="explicit"
-                    verifyCallback={this.verifyCallback.bind(this)}
-                    onloadCallback={this.callback.bind(this)}
-                  />
-                </div>
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
