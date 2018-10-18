@@ -38,8 +38,7 @@ deploy:
     - master
     - 62-aft-configure-gitlab-ci-to-deploy-master-branch-in-firebase-hosting
   script:
-    - npm install -g bower
-    - bower install --allow-root
+    - npm run build
     - firebase use --token $FIREBASE_TOKEN syshub-61377
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
 
