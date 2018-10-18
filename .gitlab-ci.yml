@@ -31,7 +31,7 @@ staging:
    - staging
 
 deploy:
-  image: cortesa/syscoin-docker
+  image: cortesa/docker-firebase
   stage: deploy
   environment: Production
   only:
