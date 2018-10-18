@@ -31,9 +31,11 @@ staging:
    - staging
 
 deploy:
-  image: cortesa/docker-firebase
+  image: 
+    name: cortesa/docker-firebase
   stage: deploy
   script:
+    - whoami
     - npm install -g npm-run-all node-sass-chokidar
     - npm run build
     - firebase use syshub-61377 --token $FIREBASE_TOKEN
