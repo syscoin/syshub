@@ -31,7 +31,7 @@ staging:
    - staging
 
 deploy:
-  image: node:latest
+  image: cortesa/syscoin-docker
   stage: deploy
   environment: Production
   only:
