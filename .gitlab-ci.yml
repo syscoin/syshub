@@ -36,6 +36,7 @@ deploy:
   stage: deploy
   script:
     - whoami
+    - npm install
     - ls -All
     - npm run build
     - firebase use syshub-61377 --token $FIREBASE_TOKEN
