@@ -1,32 +1,26 @@
 import React, { Component } from 'react';
-import { Equalizer } from 'material-ui-icons';
+import { Equalizer } from '@material-ui/icons';
 
-import GridList from 'material-ui/GridList';
-import Card, {
-  CardHeader,
-  CardContent,
-
-} from 'material-ui/Card';
-import { withStyles } from 'material-ui';
+import GridList from '@material-ui/core/GridList';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 import { connect } from 'react-redux'; //to pass functions
 import { bindActionCreators } from 'redux';
 
 // import style
+import injectSheet from 'react-jss';
 import { statsStyle } from './styles';
 
 class Stats extends Component {
 
   getValue(field) {
-    const { sysStatsValue } = this.props;
-    const { sysPrice, totMn, regMn, users } = sysStatsValue;
-
-    const value = {
-      changeRate: sysPrice ? sysPrice.price_btc : 0,
-      masternodes: totMn ? `${regMn} / ${totMn}` : '0/0',
-      totUsers: users ? users : 0,
+    return {
+      changeRate: this.props.sysInfo.sysPrice ? (parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(5)) : 0,
+      masternodes: this.props.sysInfo.mnCount ? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`) : '0/0',
+      totUsers: this.props.sysInfo ? (this.props.sysInfo.users) : 0,
     }[field];
-    return value;
   }
 
   render() {
@@ -75,12 +69,12 @@ function mapStateToProps(state) {
   //pass the providers
   return {
     cards: state.sysStats.cards,
-    sysStatsValue: {
+    sysInfo: {
+      mnCount: state.sysStats.mnCount,
+      mnRegistered: state.sysStats.mnRegistered,
       sysPrice: state.sysStats.sysPrice,
-      totMn: state.sysStats.totMn,
-      regMn: state.sysStats.regMn,
       users: state.sysStats.users,
-    }
+    },
   };
 }
 
@@ -92,5 +86,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(statsStyle)(Stats)
+  injectSheet(statsStyle)(Stats)
 );

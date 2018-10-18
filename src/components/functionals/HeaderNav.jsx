@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 import { doLogout } from '../../API/firebase';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
 
 //Import UI Framework components
 import { Button } from 'antd';
 
 //Import Styles
+import injectSheet from 'react-jss';
 import { headerNavStyle } from './styles';
 
 const ButtonGroup = Button.Group;
@@ -30,7 +31,6 @@ class HeaderNav extends Component {
 
     const { currentUser } = this.props.app;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
-    // const homeIcon = require('../../assets/img/png_menu_home.png');
     return (
       <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
@@ -62,16 +62,16 @@ class HeaderNav extends Component {
                 <div className="common">Logout</div>
               </Button>
             ) : (
-              <Button
-                size="large"
-                type="primary"
-                ghost
-                className="button login-btn"
-                onClick={() => this.props.setPage('login')}
-              >
-                <div className="common">Login</div>
-              </Button>
-            )}
+                <Button
+                  size="large"
+                  type="primary"
+                  ghost
+                  className="button login-btn"
+                  onClick={() => this.props.setPage('login')}
+                >
+                  <div className="common">Login</div>
+                </Button>
+              )}
           </ButtonGroup>
         </Grid>
       </Grid>
@@ -97,4 +97,4 @@ HeaderNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(headerNavStyle)(HeaderNav));
+export default connect(stateToProps, dispatchToProps)(injectSheet(headerNavStyle)(HeaderNav));

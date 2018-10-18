@@ -3,18 +3,27 @@ import { connect } from 'react-redux';
 import Platform from 'react-platform-js';
 import Favicon from 'react-favicon';
 import { DesktopLayout, MobileLayout } from './components/layouts';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 
 import actions from './redux/actions';
 import { fire } from './API/firebase';
 
 import appStyles from './styles/appStyle';
 
+// Jss Provider
+import JssProvider from 'react-jss/lib/JssProvider';
+import {generateClassName} from './Helpers/classNameJssProvider';
+
+
+
+
 class App extends Component {
   state = {};
+
   componentWillMount() {
-    this.props.getSysInfo();
+    this.tick()
   }
+
   componentDidMount() {
     const currentUser = fire.auth().currentUser;
 
@@ -83,6 +92,7 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
+      <JssProvider generateClassName={generateClassName}>
       <div className={classes.root}>
         <Favicon url={require('./assets/img/png_favicon.png')} />
         <Platform rules={{ DeviceType: undefined }}>
@@ -92,6 +102,7 @@ class App extends Component {
           <MobileLayout />
         </Platform>
       </div>
+      </JssProvider>
     );
   }
 }
@@ -108,7 +119,7 @@ const dispatchToProps = dispatch => {
     getSysInfo: () => {
       return (
         dispatch(actions.getSysPrice()),
-        dispatch(actions.getSysMnTotal()),
+        dispatch(actions.getSysMnCount()),
         dispatch(actions.getSysMnRegistered()),
         dispatch(actions.getSysUserRegistered())
       )
@@ -119,4 +130,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(appStyles)(App));
+export default connect(stateToProps, dispatchToProps)(injectSheet(appStyles)(App));

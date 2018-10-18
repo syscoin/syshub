@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, withStyles } from 'material-ui';
+import Grid from '@material-ui/core/Grid';
 import { Avatar } from 'antd';
 
 // import style
+import injectSheet from 'react-jss';
 import { newsHeaderStyle } from './styles';
 
 class NewsHeader extends Component {
@@ -59,5 +60,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(newsHeaderStyle)(NewsHeader)
+  injectSheet(newsHeaderStyle)(NewsHeader)
 );

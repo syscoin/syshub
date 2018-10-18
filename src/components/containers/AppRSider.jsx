@@ -16,7 +16,7 @@ class AppRSider extends Component {
       deviceType === 'mobile' ? appRSiderStyle.mWraper : appRSiderStyle.wraper;
     return (
       <div style={style}>
-        <ChatBox deviceType={deviceType} />
+       <ChatBox deviceType={deviceType} />
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import injectSheet from 'react-jss';
 import { userProfileStyle } from './styles';
-import { Button, Grid, FormGroup } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Input } from 'antd';
 // import components
@@ -42,12 +42,12 @@ class UserProfile extends Component {
 
         uploadTask.on(
           'state_changed',
-          function(snapshot) {
+          function (snapshot) {
             // this variable can be used to show upload progress
             //const progress =
             //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
           },
-          function(error) {
+          function (error) {
             switch (error.code) {
               case 'storage/unauthorized':
                 // User doesn't have permission to access the object
@@ -113,21 +113,6 @@ class UserProfile extends Component {
             disabled: false
           });
         }
-        // snapshot.forEach(snap => {
-        //   if (snap.val() === username) {
-        //     this.setState({
-        //       disabled: true
-        //     });
-        //
-        //     return;
-        //   }
-        //
-        //   if (snap.val() !== username) {
-        //     this.setState({
-        //       disabled: false
-        //     });
-        //   }
-        // });
       });
     }
   }
@@ -166,8 +151,8 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
               ) : (
-                <img src={this.state.image} alt="no user" className="user-image" />
-              )}
+                  <img src={this.state.image} alt="no user" className="user-image" />
+                )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <Input
@@ -242,4 +227,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(userProfileStyle)(UserProfile));
+export default connect(stateToProps, dispatchToProps)(injectSheet(userProfileStyle)(UserProfile));

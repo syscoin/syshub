@@ -2,9 +2,11 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
-import { withStyles, MuiThemeProvider } from 'material-ui/styles';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import createContext from './createContext';
+
+import injectSheet from 'react-jss';
 
 // Apply some reset
 const styles = theme => ({
@@ -22,7 +24,7 @@ const styles = theme => ({
 
 let AppWrapper = props => props.children;
 
-AppWrapper = withStyles(styles)(AppWrapper);
+AppWrapper = injectSheet(styles)(AppWrapper);
 
 const context = createContext();
 

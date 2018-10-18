@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Button, Grid, FormGroup, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
+
 // import style
+import injectSheet from 'react-jss';
 import { masternodeAddStyle } from './styles';
 
 class MasterNodeAdd extends Component {
@@ -132,5 +134,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(masternodeAddStyle)(MasterNodeAdd)
+  injectSheet(masternodeAddStyle)(MasterNodeAdd)
 );

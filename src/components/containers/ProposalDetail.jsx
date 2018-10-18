@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { fire } from '../../API/firebase';
 
 //Import UI Components
-import { Grid } from 'material-ui';
+import Grid from '@material-ui/core/Grid';
 import { DashBoardHeader } from '../functionals/';
 import { ProposalPayment } from '../functionals/';
 import { ProposalApprovalStat } from '../functionals/';
@@ -38,10 +38,10 @@ export class ProposalDetail extends Component {
   }
 
   render() {
-    const { deviceType, totalNodes } = this.props;
-    const proposalTitle =
-      this.state.data.DataString[0][1].title ||
-      this.state.data.DataString[0][1].name;
+    
+    const { deviceType, totalNodes, proposal} = this.props;
+    const dataString = proposal.DataString[0][1];
+    const proposalTitle = dataString.title || dataString.name;
     //Platform style switcher
     return (
       <Grid style={proposalDetailsStyle.root}>
@@ -56,25 +56,26 @@ export class ProposalDetail extends Component {
 
         <Grid container style={deviceType === 'mobile' ? proposalDetailsStyle.proposalDetailsMRoot : proposalDetailsStyle.proposalDetailsRoot}>
           {deviceType === 'mobile' ?
-            <h3 style={proposalDetailsStyle.proposalTitle}> Proposal Title: <span style={{ padding: '0px 10px' }}>{this.state.data.DataString[0][1].name}</span>  </h3>
+            <h3 style={proposalDetailsStyle.proposalTitle}> Proposal Title: <span style={{ padding: '0px 10px' }}>{dataString.name}</span>  </h3>
             : null
           }
           <ProposalPayment
             deviceType={deviceType}
-            data={this.state.data.DataString[0][1]}
+            data={dataString}
           />
           <ProposalApprovalStat
             deviceType={deviceType}
-            proposal={this.state.data}
+            proposal={proposal}
             totalNodes={totalNodes}
           />
           <ProposalDescription
             deviceType={deviceType}
-            description={this.state.data.DataString[0][1].description}
+            description={dataString.description}
+            url={dataString.url}
           />
           <ProposalComments
             deviceType={deviceType}
-            data={{ proposalID: this.state.data.Hash }}
+            data={{ proposalID: proposal.Hash }}
           />
         </Grid>
       </Grid>

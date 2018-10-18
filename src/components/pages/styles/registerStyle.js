@@ -68,8 +68,7 @@ export default {
         }
       },
       '& .recaptcha': {
-        // marginLeft: 10,
-        marginRight:6,
+        marginRight: 6,
         width: '73%',
         display: 'inline-block',
         float: 'right'
@@ -103,9 +102,9 @@ export default {
         marginLeft: 'calc(12% + 27px)',
         '&>.ant-form-item-control-wrapper>.ant-form-item-control>button': {
           backgroundColor: primary,
-          marginRight:40,
+          marginRight: 40,
           borderRadius: 10,
-          minHeight:40,
+          minHeight: 40,
           '& span': {
             color: white,
             fontWeight: 'bold'
@@ -157,14 +156,14 @@ export default {
           textAlign: 'left'
         }
       },
-      '& .terms-of-condition':{
-        width: '100% !important', 
+      '& .terms-of-condition': {
+        width: '100% !important',
         margin: 0
       },
-      '& .form-button-group':{
+      '& .form-button-group': {
         width: '100% !important',
         marginLeft: '0px !important',
-        '& button':{
+        '& button': {
           margin: '0px !important'
         }
       }

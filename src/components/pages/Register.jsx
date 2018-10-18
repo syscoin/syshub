@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Recaptcha from 'react-recaptcha';
-import { Grid, withStyles } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
@@ -10,9 +9,8 @@ import actions from '../../redux/actions';
 import { fire } from '../../API/firebase';
 import PropTypes from 'prop-types';
 
-// import withRoot from '../containers/WithRoot';
-
 // import style
+import injectSheet from 'react-jss';
 import { registerStyle } from './styles';
 
 const FormItem = Form.Item;
@@ -38,6 +36,21 @@ class Register extends Component {
   componentDidMount() {
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
+
+    fire.auth().useDeviceLanguage();
+
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+      callback: response => {
+        this.setState({
+          verify: response
+        });
+      }
+    });
+
+    window.recaptchaVerifier.render().then(function (widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
+
   }
 
   checkPassword = (rule, value, callback) => {
@@ -98,8 +111,8 @@ class Register extends Component {
 
     const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.on('value', snapshot => {
-        if (Object.values(snapshot.val()).includes(this.registerName.value) === true) {
+      usernameRef.once('value').then(snapshot => {
+        if (Object.values(snapshot.val()).includes(this.state.usernames) === true) {
           this.setState({
             disabled: true
           });
@@ -108,18 +121,6 @@ class Register extends Component {
             disabled: false
           });
         }
-        // snapshot.forEach(snap => {
-        //   if (snap.val() === username) {
-        //     this.setState({
-        //       disabled: true
-        //     });
-        //     return;
-        //   } else {
-        //     this.setState({
-        //       disabled: false
-        //     });
-        //   }
-        // });
       });
     }
   }
@@ -223,7 +224,6 @@ class Register extends Component {
               lg={12}
               md={12}
               xs={12}
-            /* justify="center" */
             >
               {/* For User Name */}
               <FormItem
@@ -242,7 +242,7 @@ class Register extends Component {
                     }
                   ]
                 })(
-                  <input
+                  <Input
                     ref={input => (this.registerName = input)}
                     name="usernames"
                     id="user-name"
@@ -334,11 +334,6 @@ class Register extends Component {
                     />
                   </div>
                 )}
-                {/* <span className="validation-message">
-                  <img alt="a" src={checkIcon} />
-                  Password Strength
-                  <span className="strong">Strong</span>
-                </span> */}
               </FormItem>
 
               {/* For Confirm Password */}
@@ -375,17 +370,7 @@ class Register extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div className="recaptcha">
-                  <Recaptcha
-                    size='normal'
-                    // style={{ marginLeft: '10px', width: '20px' }}
-                    id="captcha"
-                    sitekey="6LfhnEEUAAAAACHqYj67uNQ89-4Z-ctwiOD1FRZ8"
-                    render="explicit"
-                    verifyCallback={this.verifyCallback.bind(this)}
-                    onloadCallback={this.callback.bind(this)}
-                  />
-                </div>
+                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
@@ -438,5 +423,5 @@ function mapDispatchToProps(dispatch) {
 const _RegisterForm = Form.create()(Register); // Need to add component like this due to antd Form
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(registerStyle)(_RegisterForm)
+  injectSheet(registerStyle)(_RegisterForm)
 );

@@ -18,17 +18,15 @@ firebase.initializeApp(config);
 const fire = firebase;
 
 const base = Rebase.createClass(fire.database());
-// const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 const comments = fire.database().ref('comments');
 const commentReplies = fire.database().ref('commentReplies');
+const commentReplies_V2 = fire.database().ref('commentReplies_V2');
 const votes = fire.database().ref('votes');
-// const currentUser
 
 //Some useful functions
 const checkVoted = (user, proposal, masternodes) => {
-  //return new Promise((resolve, reject) => {
   return new Promise(resolve => {
     fire
       .database()
@@ -76,21 +74,21 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
       .verifyPhoneNumber(phoneNumber, appVerifier)
       .then(verificationId => {
         swal({
-          closeOnClickOutside: false,
-          closeOnEsc: false,
-          title: 'Verify',
-          text: 'Please enter the verification code sent to your mobile device',
-          icon: 'info',
-          buttons: true,
-          dangerMode: false,
-          content: {
-            element: 'input',
-            attributes: {
-              placeholder: 'Confirmation code here',
-              type: 'text'
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Verify',
+            text: 'Please enter the verification code sent to your mobile device',
+            icon: 'info',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Confirmation code here',
+                type: 'text'
+              }
             }
-          }
-        })
+          })
           .then(verificationCode => {
             if (!verificationCode) {
               throw new Error('Please provide your verificatoin code next time.');
@@ -123,21 +121,8 @@ const doLogin = (email, password) => {
   fire
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      // swal({
-      //   title: 'Success',
-      //   text: `Account: ${user.email} logged in.`,
-      //   icon: 'success'
-      // });
-      //this.loginForm.reset();
-    })
-    .catch(err => {
-      // swal({
-      //   title: 'Oops...',
-      //   text: `${err}`,
-      //   icon: 'error'
-      // });
-    });
+    .then(user => {})
+    .catch(err => {});
 };
 
 const doLogout = update => {
@@ -145,13 +130,7 @@ const doLogout = update => {
     .auth()
     .signOut()
     .then(() => {
-      if (!update) {
-        // swal({
-        //   title: 'Success',
-        //   text: `Hope to see you soon`,
-        //   icon: 'success'
-        // });
-      }
+      if (!update) {}
     });
 };
 
@@ -181,9 +160,13 @@ const doUpdateProfile = user => {
   return new Promise((resolve, reject) => {
     if (currentUser) {
       if (user.username) {
-        usernames.update({ [currentUser.uid]: user.username });
+        usernames.update({
+          [currentUser.uid]: user.username
+        });
         currentUser
-          .updateProfile({ displayName: user.username })
+          .updateProfile({
+            displayName: user.username
+          })
           .then(() => {
             messages.on('value', snap => {
               snap.forEach(message => {
@@ -215,7 +198,9 @@ const doUpdateProfile = user => {
 
       if (user.photoURL) {
         currentUser
-          .updateProfile({ photoURL: user.photoURL })
+          .updateProfile({
+            photoURL: user.photoURL
+          })
           .then(() => {
             if (user.email) {
               return;
@@ -227,21 +212,21 @@ const doUpdateProfile = user => {
 
       if (user.email) {
         swal({
-          closeOnClickOutside: false,
-          closeOnEsc: false,
-          title: 'Warning',
-          text: 'You are about to change your email, you must input your password first',
-          icon: 'warning',
-          buttons: true,
-          dangerMode: true,
-          content: {
-            element: 'input',
-            attributes: {
-              placeholder: 'Type your password',
-              type: 'password'
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Warning',
+            text: 'You are about to change your email, you must input your password first',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Type your password',
+                type: 'password'
+              }
             }
-          }
-        })
+          })
           .then(password => {
             const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
@@ -286,21 +271,21 @@ const doDeleteAccount = () => {
 
   if (currentUser) {
     swal({
-      closeOnClickOutside: false,
-      closeOnEsc: false,
-      title: 'Authentication Required',
-      text: 'Please provide your password',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-      content: {
-        element: 'input',
-        attributes: {
-          placeholder: 'Type your password',
-          type: 'password'
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        title: 'Authentication Required',
+        text: 'Please provide your password',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        content: {
+          element: 'input',
+          attributes: {
+            placeholder: 'Type your password',
+            type: 'password'
+          }
         }
-      }
-    })
+      })
       .then(password => {
         const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
 
@@ -311,8 +296,7 @@ const doDeleteAccount = () => {
           allowOutsideClick: false,
           allowEscapeKey: false,
           title: 'WARNING',
-          html:
-            'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
+          html: 'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
           type: 'warning',
           input: 'text',
           showCancelButton: true,
@@ -326,16 +310,29 @@ const doDeleteAccount = () => {
           if (value.value === 'DELETE') {
             fire
               .database()
+              .ref('comments')
+              .once('value', snapshot => {
+                snapshot.forEach(snap => {
+                  snap.forEach(comment => {
+                    if (comment.val().createdBy.name === currentUser.displayName) {
+                      let newComment = { ...comment.val() };
+                      newComment.createdBy.name = `${currentUser.displayName}-deleted`;
+                      comment.ref.update(newComment);
+                    }
+                  });
+                });
+              });
+
+            fire
+              .database()
               .ref('messages')
               .once('value', snapshot => {
                 snapshot.forEach(snap => {
                   if (snap.val().user.id === currentUser.uid) {
-                    let newMessage = { ...snap.val() };
+                    let newMessage = { ...snap.val()
+                    };
                     newMessage.user.displayName = `${currentUser.displayName}-deleted`;
-                    fire
-                      .database()
-                      .ref('messages/' + snap.key)
-                      .update(newMessage);
+                    snap.ref.update(newMessage);
                   }
                 });
               });
@@ -367,7 +364,11 @@ const doDeleteAccount = () => {
                 });
               })
               .catch(err => {
-                swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                swal({
+                  title: 'Oops...',
+                  text: `${err}`,
+                  icon: 'error'
+                });
               });
 
             return;
@@ -383,7 +384,11 @@ const doDeleteAccount = () => {
         });
       })
       .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+        swal({
+          title: 'Oops...',
+          text: `${err}`,
+          icon: 'error'
+        });
       });
   }
 };
@@ -394,6 +399,7 @@ export {
   usernames,
   comments,
   commentReplies,
+  commentReplies_V2,
   phoneAuth,
   fire,
   base,

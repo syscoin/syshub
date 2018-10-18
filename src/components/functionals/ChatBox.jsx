@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Send } from '@material-ui/icons';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
 import { Input } from 'antd';
 import swal from 'sweetalert';
-import { Send } from 'material-ui-icons';
 import { Form } from 'antd';
 
 import { messages, fire } from '../../API/firebase';
 
-import List, { ListItemText } from 'material-ui/List';
+import injectSheet from 'react-jss';
 import { chatBoxStyle } from './styles';
-import { withStyles } from 'material-ui';
 
 
 class ChatBox extends Component {
@@ -38,7 +39,10 @@ class ChatBox extends Component {
       });
     });
   }
+  componentWillUnmount() {
+    messages.off();
 
+  }
   componentDidMount() {
     this.scrollToBottom();
   }
@@ -178,4 +182,4 @@ const stateToProps = state => {
   };
 };
 
-export default connect(stateToProps)(withStyles(chatBoxStyle)(ChatBox));
+export default connect(stateToProps)(injectSheet(chatBoxStyle)(ChatBox));

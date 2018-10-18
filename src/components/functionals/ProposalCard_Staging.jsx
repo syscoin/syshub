@@ -8,7 +8,7 @@ import { checkVoted, voted } from '../../API/firebase';
 
 //import antd components
 import { Button } from 'antd';
-import { Grid, withStyles } from 'material-ui';
+import { Grid, withStyles } from '@material-ui/core';
 import { Progress } from 'antd';
 
 // import style
@@ -215,7 +215,6 @@ class ProposalCard extends Component {
           <Grid item md={7} xs={6} className="proposalInfoView">
             <h1 className="proposalHeading" onClick={() => selectProposal(proposal)}>
               {proposalTitle ? (
-                // proposal.DataString[0][1].name.split('\n', 1)[0]
                 proposalTitle.split('\n', 1)[0]
               ) : (
                   <span style={{ color: 'grey' }}>No title available for this proposal.</span>
@@ -227,7 +226,7 @@ class ProposalCard extends Component {
               {days_remaining < 30 ? (
                 <span>{`(${days_remaining} Day${
                   days_remaining > 1 ? 's' : ''
-                } Remaining)`}</span>
+                  } Remaining)`}</span>
               ) : (
                   <span>{`(${month_remaining} Month${
                     month_remaining > 1 ? 's' : ''
@@ -285,5 +284,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  withStyles(proposalCardStyle)(ProposalCard)
+  injectSheet(proposalCardStyle)(ProposalCard)
 );

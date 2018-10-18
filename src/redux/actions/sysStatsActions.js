@@ -1,5 +1,3 @@
-// curl https://d3j22jloo6hpq6.cloudfront.net/API/curl?url="https://www.dashcentral.org/api/v1/public"
-
 import constants from '../constants';
 import { HTTPAsync } from '../helpers';
 
@@ -19,12 +17,14 @@ export default {
         HTTPAsync.fireMn(constants.SYS_STATS_RMN_GET)
       );
   },
+
   getSysUserRegistered: () => {
     return dispatch =>
       dispatch(
         HTTPAsync.fireUser(constants.SYS_STATS_USER_GET)
       );
   },
+
   getSysPrice: () => {
     return dispatch => {
       return dispatch(
@@ -36,15 +36,12 @@ export default {
       );
     };
   },
-  getSysMnTotal: () => {
+
+  getSysMnCount: () => {
     return dispatch => {
       return dispatch(
         HTTPAsync.post(
-          `${baseApiURL}/cmd`,
-          {
-            'script': 'masternode count'
-
-          },
+          `${baseApiURL}/cmd`, { 'script': 'masternode count' },
           constants.SYS_STATS_TMN_GET
         )
       );

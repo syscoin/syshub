@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Grid, FormGroup, withStyles } from 'material-ui';
+import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { fire } from '../../API/firebase';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
 // import style
+import injectSheet from 'react-jss';
 import { loginStyle } from './styles';
 
 class Login extends Component {
@@ -130,11 +131,6 @@ class Login extends Component {
                           return fire.auth().signInWithEmailAndPassword(email, password);
                         })
                         .then(user => {
-                          // swal({
-                          //   title: 'Sucess',
-                          //   text: `${user.email} signed in with sms verification`,
-                          //   icon: 'success'
-                          // });
 
                           //attach MN to user here
                           fire
@@ -176,11 +172,6 @@ class Login extends Component {
                     swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
                   });
               } else {
-                // swal({
-                //   title: 'Success',
-                //   text: `${user.email} signed in without sms verification.`,
-                //   icon: 'success'
-                // });
                 this.props.setPage('home');
               }
             });
@@ -294,4 +285,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withStyles(loginStyle)(Login));
+export default connect(stateToProps, dispatchToProps)(injectSheet(loginStyle)(Login));
