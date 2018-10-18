@@ -33,7 +33,7 @@ staging:
 deploy:
   image: node:latest
   stage: deploy
-  enviroment: Production
+  environment: Production
   only:
     - master
     - 62-aft-configure-gitlab-ci-to-deploy-master-branch-in-firebase-hosting
