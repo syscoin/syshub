@@ -19,7 +19,6 @@ develop:
   except:
    - staging
    - master
-   - 62-aft-configure-gitlab-ci-to-deploy-master-branch-in-firebase-hosting
 
 staging:
   stage: staging
@@ -36,7 +35,6 @@ deploy:
   environment: Production
   only:
     - master
-    - 62-aft-configure-gitlab-ci-to-deploy-master-branch-in-firebase-hosting
   script:
     - npm install
     - npm run build
