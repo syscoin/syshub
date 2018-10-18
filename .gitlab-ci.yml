@@ -36,8 +36,8 @@ deploy:
   stage: deploy
   script:
     - whoami
+    - npm install
     - ls -All
-    - npm install -g npm-run-all node-sass-chokidar
     - npm run build
     - firebase use syshub-61377 --token $FIREBASE_TOKEN
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
