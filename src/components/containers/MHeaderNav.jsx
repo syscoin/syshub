@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
-import { Grid } from '@material-ui/core/Grid';
+import  Grid  from '@material-ui/core/Grid';
 import { Icon } from 'antd';
 import { Button } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,13 +24,12 @@ class MHeaderNav extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes } = this.props;
     //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const chatIcon = require('../../assets/img/png_menu_chat.png');
     const logo = require('../../assets/img/png_logo_white.png');
     return (
-      <Grid container className={style}>
+      <Grid container className={classes.mRoot}>
         <Grid
           item
           xs={3}
@@ -73,7 +72,6 @@ class MHeaderNav extends Component {
 
 const stateToProps = state => {
   return {
-    deviceType: state.app.platform.deviceType,
     showChat: state.app.showChat,
     showMenu: state.app.showMenu
   };

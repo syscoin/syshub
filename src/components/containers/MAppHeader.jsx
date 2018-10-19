@@ -29,13 +29,12 @@ class AppHeader extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes } = this.props;
     //Platform style switcher
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    
     return (
       <div>
-        <Header className={style}>
+        <Header className={classes.mRoot}>
           <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
