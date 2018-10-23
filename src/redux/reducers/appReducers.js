@@ -73,7 +73,8 @@ const initialState = {
       pageTitle: 'Login',
       showWhen: 'logout',
       showPlatform: 'mobile'
-    }, {
+    },
+    {
       key: 'logout',
       icon: 'logout_icon',
       iconSelected: 'logout_icon',
@@ -89,7 +90,11 @@ const initialState = {
   showMenu: false,
   platform: {},
   loading: false,
-  auth: false
+  auth: false,
+  dashBoard: {
+    showContainer: 'dashBoard',
+    selectedProposal: ''
+  }
 };
 
 const app = (state = initialState, action) => {
@@ -144,6 +149,18 @@ const app = (state = initialState, action) => {
 
     case constants.SET_AUTH:
       return { ...state, auth: action.data };
+
+    case constants.APP_PROPOSAL_CONTAINER:
+      return {
+        ...state,
+        dashBoard: { ...state.dashBoard, showContainer: action.data }
+      };
+
+    case constants.APP_PROPOSAL_SHOW:
+      return {
+        ...state,
+        dashBoard: { ...state.dashBoard, selectedProposal: action.data }
+      };
 
     default:
       return state;

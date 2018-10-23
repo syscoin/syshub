@@ -15,7 +15,6 @@ class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showContainer: 'dashBoard',
       proposalID: ''
     };
     this.handleDashboard = this.handleDashboard.bind(this);
@@ -26,24 +25,24 @@ class DashBoard extends Component {
   }
   //changing state with this function
   handleDashboard(value) {
-    const container = this.state.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    const container =
+      this.props.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
+    this.props.setProposalContainer(container);
+    this.props.setProposalShow(value.Hash);
     this.setState({
-      showContainer: container,
       proposalID: value
     });
   }
 
   render() {
-    const { classes, proposals, deviceType } = this.props;
+    const { classes, proposals, deviceType, showContainer } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <Grid className={style}>
-        <h1 className="proposal-heading">
-          PROPOSAL DASHBOARD
-      </h1>
-        {this.state.showContainer === 'proposalDetail' && (
+        <h1 className="proposal-heading">PROPOSAL DASHBOARD</h1>
+        {showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />
             <span className="iconTxt">{`  Back to List`}</span>
@@ -57,7 +56,7 @@ class DashBoard extends Component {
                 selectProposal={this.handleDashboard}
                 proposalList={proposals.list}
                 totalNodes={this.props.totalNodes}
-                currentUser={this.props.app.currentUser}
+                currentUser={this.props.currentUser}
               />
             ),
             proposalDetail: (
@@ -67,7 +66,7 @@ class DashBoard extends Component {
                 totalNodes={this.props.totalNodes}
               />
             )
-          }[this.state.showContainer]
+          }[showContainer]
         }
       </Grid>
     );
@@ -79,15 +78,21 @@ const stateToProps = state => {
     proposals: state.proposals,
     //    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
     totalNodes: Math.floor(state.sysStats.mnCount * 0.1) + 1,
-    app: state.app
+    currentUser: state.app.currentUser,
+    showContainer: state.app.dashBoard.showContainer,
+    showProposal: state.app.dashBoard.showProposal
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
     getProposals: () => dispatch(actions.getProposals()),
+    setProposalContainer: container =>
+      dispatch(actions.setProposalContainer(container)),
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
   };
 };
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(dashboardStyle)(DashBoard)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(dashboardStyle)(DashBoard));
