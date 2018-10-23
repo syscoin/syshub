@@ -22,16 +22,24 @@ class DashBoard extends Component {
 
   componentDidMount() {
     this.props.getProposals();
+    this.selectProposalByHash(this.props.selectedProposal);
   }
+
+  selectProposalByHash(propHash) {
+    alert(propHash);
+  }
+
   //changing state with this function
   handleDashboard(value) {
     const container =
       this.props.showContainer === 'dashBoard' ? 'proposalDetail' : 'dashBoard';
     this.props.setProposalContainer(container);
-    this.props.setProposalShow(value.Hash);
-    this.setState({
-      proposalID: value
-    });
+    if (value) {
+      this.props.setProposalShow(value.Hash);
+      this.setState({
+        proposalID: value
+      });
+    }
   }
 
   render() {
@@ -42,6 +50,7 @@ class DashBoard extends Component {
     return (
       <Grid className={style}>
         <h1 className="proposal-heading">PROPOSAL DASHBOARD</h1>
+        {this.props.selectedProposal}
         {showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />
@@ -80,7 +89,7 @@ const stateToProps = state => {
     totalNodes: Math.floor(state.sysStats.mnCount * 0.1) + 1,
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
-    showProposal: state.app.dashBoard.showProposal
+    selectedProposal: state.app.dashBoard.selectedProposal
   };
 };
 
