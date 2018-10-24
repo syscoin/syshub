@@ -47,7 +47,7 @@ class NewProposal extends Component {
       totalAmount: 0,
       recover: false,
       stepperSubHeading: '',
-      proposallink: 'http://syshub.com/p/',
+      proposallink: '',
       editorState: EditorState.createEmpty(),
       proposal__detail: '',
       savedProposal: {},
@@ -64,7 +64,7 @@ class NewProposal extends Component {
       prepareObj: {},
       userProposal: {},
       hashError: '',
-      txIdError: '',
+      txIdError: ''
     };
 
     this.getStepContent = this.getStepContent.bind(this);
@@ -82,6 +82,7 @@ class NewProposal extends Component {
     this.onChange = this.onChange.bind(this);
     this.submitPaymentId = this.submitPaymentId.bind(this);
     this.submitHash = this.submitHash.bind(this);
+    this.urlInputChange = this.urlInputChange.bind(this);
   }
 
   componentWillMount() {
@@ -111,7 +112,9 @@ class NewProposal extends Component {
         return;
       }
       const descriptionID = userProp.descriptionID;
-      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+      const descriptionRef = fire
+        .database()
+        .ref('ProposalsDescriptions/' + descriptionID);
 
       descriptionRef.once('value').then(detailObj => {
         const proposalDetail = detailObj.val();
@@ -203,7 +206,8 @@ class NewProposal extends Component {
 
   yearDayMonth(dateInMills, format) {
     const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
-    const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) + 1}`.slice(-2);
+    const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) +
+      1}`.slice(-2);
     const firstYear = new Date(dateInMills).getFullYear();
 
     switch (format) {
@@ -219,7 +223,8 @@ class NewProposal extends Component {
   //payment quantity
   paymentQuantity(value) {
     const millsMonth = this.props.proposal.millsMonth;
-    const proposalEndEpoch = this.state.proposalStartEpoch + millsMonth / 1000 * (value - 1);
+    const proposalEndEpoch =
+      this.state.proposalStartEpoch + (millsMonth / 1000) * (value - 1);
     this.setState({
       proposalEndEpoch,
       totalAmount: this.state.amount * value,
@@ -304,7 +309,9 @@ class NewProposal extends Component {
 
     proposalRef.once('value').then(snapshot => {
       const descriptionID = snapshot.val().descriptionID;
-      const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+      const descriptionRef = fire
+        .database()
+        .ref('ProposalsDescriptions/' + descriptionID);
 
       if (this.state.hValue) {
         let updateProposalDetail = { ...this.state.proposalDetail };
@@ -397,7 +404,9 @@ class NewProposal extends Component {
       sCopied: false
     });
     const editorContentBlock = htmlToDraft(this.state.proposalDetail.detail);
-    const editorContentState = ContentState.createFromBlockArray(editorContentBlock.contentBlocks);
+    const editorContentState = ContentState.createFromBlockArray(
+      editorContentBlock.contentBlocks
+    );
     const editorState = EditorState.createWithContent(editorContentState);
     this.setState({
       proposalName: proposalName || savedProposal.name,
@@ -409,7 +418,8 @@ class NewProposal extends Component {
       address: address || savedProposal.payment_address,
       amount: amount || savedProposal.payment_amount,
       proposalEndEpoch: proposalEndEpoch || savedProposal.end_epoch,
-      totalAmount: totalAmount || savedProposal.payment_amount * savedProposal.nPayment
+      totalAmount:
+        totalAmount || savedProposal.payment_amount * savedProposal.nPayment
     });
   };
 
@@ -429,7 +439,8 @@ class NewProposal extends Component {
     } = this.state;
 
     const descriptionID =
-      savedProposal.descriptionID || `${currentUser.displayName}${Date.now().toString(36)}`;
+      savedProposal.descriptionID ||
+      `${currentUser.displayName}${Date.now().toString(36)}`;
 
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -442,7 +453,9 @@ class NewProposal extends Component {
     }); */
 
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
-    const descriptionRef = fire.database().ref('ProposalsDescriptions/' + descriptionID);
+    const descriptionRef = fire
+      .database()
+      .ref('ProposalsDescriptions/' + descriptionID);
 
     descriptionRef.set({ detail: proposal__detail, hash: '' });
 
@@ -563,7 +576,7 @@ class NewProposal extends Component {
     this.setState({
       proposalName,
       proposalTitle: e.target.value,
-      proposallink: `http://syshub.com/p/${proposalName}`
+      proposallink: ''
     });
   }
 
@@ -587,10 +600,14 @@ class NewProposal extends Component {
     this.setState(
       {
         showEditor: false,
-        proposal__detail: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        proposal__detail: draftToHtml(
+          convertToRaw(this.state.editorState.getCurrentContent())
+        )
       },
       () => {
-        let previewContainer = document.getElementById('preview-html-container');
+        let previewContainer = document.getElementById(
+          'preview-html-container'
+        );
         previewContainer.innerHTML = draftToHtml(
           convertToRaw(this.state.editorState.getCurrentContent())
         );
@@ -602,9 +619,21 @@ class NewProposal extends Component {
     this.previewHTML();
   }
 
+  async urlInputChange(e) {
+    const url = e.target.value;
+    await this.setState({
+      proposallink: url
+    });
+  }
+
   // steps name in array in which we map
   getSteps() {
-    return ['Proposal Title', 'Proposal Details', 'Payment Details', 'Create Proposal'];
+    return [
+      'Proposal Title',
+      'Proposal Details',
+      'Payment Details',
+      'Create Proposal'
+    ];
   }
   //all the step contents are coming from return of switch case
   getStepContent(step) {
@@ -621,7 +650,9 @@ class NewProposal extends Component {
               <Form>
                 <FormItem
                   className="form-item"
-                  validateStatus={this.state.proposalTitle.length <= 40 ? '' : 'error'}
+                  validateStatus={
+                    this.state.proposalTitle.length <= 40 ? '' : 'error'
+                  }
                 >
                   <Input
                     className="proposal-title-input"
@@ -696,19 +727,32 @@ class NewProposal extends Component {
                   </Button> */}
                 </div>
               ) : (
-                  // proposal detail preview
-                  <Row>
-                    <Col
-                      span={deviceType === 'mobile' ? 24 : 22}
-                      offset={deviceType === 'mobile' ? 0 : 1}
-                    >
-                      <h1 className="proposalDetail-title">{this.state.proposalTitle}</h1>
-                    </Col>
-                    <Col span={deviceType === 'mobile' ? 24 : 22}>
-                      <div className="proposalContent-div" id="preview-html-container" />
-                    </Col>
-                  </Row>
-                )}
+                // proposal detail preview
+                <Row>
+                  <Col
+                    span={deviceType === 'mobile' ? 24 : 22}
+                    offset={deviceType === 'mobile' ? 0 : 1}
+                  >
+                    <h1 className="proposalDetail-title">
+                      {this.state.proposalTitle}
+                    </h1>
+                  </Col>
+                  <Col span={deviceType === 'mobile' ? 24 : 22}>
+                    <div
+                      className="proposalContent-div"
+                      id="preview-html-container"
+                    />
+                  </Col>
+                </Row>
+              )}
+              <div className="urlInput">
+                <Input
+                  className="proposal-url-input"
+                  placeholder="More Info URL (keep it blank to proposal refers itself)"
+                  value={this.state.proposallink}
+                  onChange={this.urlInputChange}
+                />
+              </div>
             </Col>
           </Row>
         );
@@ -725,11 +769,16 @@ class NewProposal extends Component {
                   defaultValue={this.state.proposalStartEpoch}
                 >
                   {this.state.paymentDateOptions.map((item, i) => (
-                    <Option key={`ACZ_${i}`} value={item.mills / 1000}>{item.ymd}</Option>
+                    <Option key={`ACZ_${i}`} value={item.mills / 1000}>
+                      {item.ymd}
+                    </Option>
                   ))}
                 </Select>
               </Col>
-              <Col span={deviceType === 'mobile' ? 10 : 7} offset={deviceType === 'mobile' ? 4 : 0}>
+              <Col
+                span={deviceType === 'mobile' ? 10 : 7}
+                offset={deviceType === 'mobile' ? 4 : 0}
+              >
                 <label># of Payments</label>
                 <InputNumber
                   min={1}
@@ -770,11 +819,11 @@ class NewProposal extends Component {
                     {`${this.state.totalAmount || this.state.amount} SYS ${
                       this.state.proposalStartEpoch
                         ? `with a final payment on ${this.yearDayMonth(
-                          this.state.proposalEndEpoch * 1000,
-                          'usa'
-                        )}`
+                            this.state.proposalEndEpoch * 1000,
+                            'usa'
+                          )}`
                         : ''
-                      }`}
+                    }`}
                   </p>
                 </Row>
               </Col>
@@ -787,12 +836,13 @@ class NewProposal extends Component {
   }
 
   onEditorStateChange(editorState) {
-    this.setState(
-      {
-        showEditor: true,
-      });
     this.setState({
-      proposal__detail: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+      showEditor: true
+    });
+    this.setState({
+      proposal__detail: draftToHtml(
+        convertToRaw(this.state.editorState.getCurrentContent())
+      ),
       editorState
     });
   }
@@ -800,7 +850,7 @@ class NewProposal extends Component {
   disabledNextBtn(step) {
     switch (step) {
       case 0:
-        if (this.state.proposalTitle && this.state.proposallink) {
+        if (this.state.proposalTitle) {
           return false;
         } else {
           return true;
@@ -831,7 +881,8 @@ class NewProposal extends Component {
     const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-    const modalStyle = deviceType === 'mobile' ? classes.mobileModal : classes.modal;
+    const modalStyle =
+      deviceType === 'mobile' ? classes.mobileModal : classes.modal;
     const steps = this.getSteps();
     const { activeStep } = this.state;
     return (
@@ -847,10 +898,16 @@ class NewProposal extends Component {
           zIndex={99999}
         >
           <div>
-            <TextArea rows={this.state.pCopied ? 4 : 5} readOnly value={this.state.pValue} />
+            <TextArea
+              rows={this.state.pCopied ? 4 : 5}
+              readOnly
+              value={this.state.pValue}
+            />
             {this.state.pCopied ? (
               <div style={{ textAlign: 'right' }}>
-                <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+                <span style={{ color: 'red', padding: '0px 8px' }}>
+                  Copied.
+                </span>
               </div>
             ) : null}
             <div className="receipt-text">
@@ -861,7 +918,10 @@ class NewProposal extends Component {
                 text={this.state.pValue}
                 onCopy={() => this.setState({ pCopied: true })}
               >
-                <Button type="primary" disabled={this.state.sValue || !this.state.pValue}>
+                <Button
+                  type="primary"
+                  disabled={this.state.sValue || !this.state.pValue}
+                >
                   Copy
                 </Button>
               </CopyToClipboard>
@@ -875,7 +935,9 @@ class NewProposal extends Component {
                 name="payValue"
               />
               <div style={{ textAlign: 'right' }}>
-                <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.txIdError}</span>
+                <span style={{ color: 'red', padding: '0px 8px' }}>
+                  {this.state.txIdError}
+                </span>
               </div>
               <br />
             </div>
@@ -888,7 +950,11 @@ class NewProposal extends Component {
                 <Icon type="left" />
                 {`Back & Edit`}
               </Button>
-              <Button type="primary" disabled={this.state.sValue || !this.state.pValue} onClick={this.submitPaymentId}>
+              <Button
+                type="primary"
+                disabled={this.state.sValue || !this.state.pValue}
+                onClick={this.submitPaymentId}
+              >
                 Submit TXID
               </Button>
             </div>
@@ -896,7 +962,11 @@ class NewProposal extends Component {
           <br />
           <hr />
           <br />
-          <TextArea rows={this.state.sCopied ? 4 : 5} readOnly value={this.state.sValue} />
+          <TextArea
+            rows={this.state.sCopied ? 4 : 5}
+            readOnly
+            value={this.state.sValue}
+          />
           {this.state.sCopied ? (
             <div style={{ textAlign: 'right' }}>
               <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
@@ -925,12 +995,18 @@ class NewProposal extends Component {
               name="hValue"
             />
             <div style={{ textAlign: 'right' }}>
-              <span style={{ color: 'red', padding: '0px 8px' }}>{this.state.hashError}</span>
+              <span style={{ color: 'red', padding: '0px 8px' }}>
+                {this.state.hashError}
+              </span>
             </div>
             <br />
           </div>
           <div className="submit-btn">
-            <Button type="primary" disabled={!this.state.sValue} onClick={this.submitHash}>
+            <Button
+              type="primary"
+              disabled={!this.state.sValue}
+              onClick={this.submitHash}
+            >
               Submit
             </Button>
           </div>
@@ -941,92 +1017,99 @@ class NewProposal extends Component {
             {this.state.recover === true ? (
               <div>Recovery in process</div>
             ) : (
-                <Stepper activeStep={activeStep} orientation="vertical" className="steper__container">
-                  {steps.map((label, index) => {
-                    return (
-                      <Step className="steper__wrapper" key={label}>
-                        <StepLabel className="steper__label">
-                          <h2 className="step-label"> {label} </h2>
+              <Stepper
+                activeStep={activeStep}
+                orientation="vertical"
+                className="steper__container"
+              >
+                {steps.map((label, index) => {
+                  return (
+                    <Step className="steper__wrapper" key={label}>
+                      <StepLabel className="steper__label">
+                        <h2 className="step-label"> {label} </h2>
 
-                          {/*************************************************/}
-                          {/* Commented intentionally don't remove this part*/}
-                          {/*************************************************/}
+                        {/*************************************************/}
+                        {/* Commented intentionally don't remove this part*/}
+                        {/*************************************************/}
 
-                          {/*this.state.activeStep === 0 &&
+                        {/*this.state.activeStep === 0 &&
                             label === 'Proposal Title' &&
                             deviceType !== 'mobile' ? (
                               <h3 className="proposal-title">Proposal Description Url</h3>
                             ) : null*/}
 
-                          {/*************************************************/}
+                        {/*************************************************/}
 
-                          {this.state.activeStep === 1 && label === 'Proposal Details' ? (
-                            this.state.showEditor ? (
-                              <Button
-                                className="preview-edit-button"
-                                onClick={this.previewHTML.bind(this)}
-                              >
-                                PREVIEW
-                            </Button>
-                            ) : (
-                                <Button
-                                  className="preview-edit-button"
-                                  onClick={() => {
-                                    this.setState({ showEditor: true });
-                                  }}
-                                >
-                                  EDITOR
-                            </Button>
-                              )
-                          ) : null}
-                        </StepLabel>
-                        <StepContent>
-                          {this.getStepContent(activeStep)}
-                          <div className={classes.actionsContainer}>
-                            <div
-                              className={
-                                activeStep === steps.length - 1 ? 'confirm-btn-div' : 'next-btn-div'
-                              }
+                        {this.state.activeStep === 1 &&
+                        label === 'Proposal Details' ? (
+                          this.state.showEditor ? (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={this.previewHTML.bind(this)}
                             >
-                              {activeStep === 0 ? null : (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  onClick={this.handleBack}
-                                  className="button"
-                                >
-                                  Back
+                              PREVIEW
+                            </Button>
+                          ) : (
+                            <Button
+                              className="preview-edit-button"
+                              onClick={() => {
+                                this.setState({ showEditor: true });
+                              }}
+                            >
+                              EDITOR
+                            </Button>
+                          )
+                        ) : null}
+                      </StepLabel>
+                      <StepContent>
+                        {this.getStepContent(activeStep)}
+                        <div className={classes.actionsContainer}>
+                          <div
+                            className={
+                              activeStep === steps.length - 1
+                                ? 'confirm-btn-div'
+                                : 'next-btn-div'
+                            }
+                          >
+                            {activeStep === 0 ? null : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleBack}
+                                className="button"
+                              >
+                                Back
                               </Button>
-                              )}
-                              {activeStep === steps.length - 1 ? (
-                                <Button
-                                  variant="raised"
-                                  type="primary"
-                                  className={classes.button}
-                                  onClick={this.createPropObj}
-                                  disabled={this.disabledNextBtn(index)}
-                                >
-                                  Confirm
+                            )}
+                            {activeStep === steps.length - 1 ? (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                className={classes.button}
+                                onClick={this.createPropObj}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Confirm
                               </Button>
-                              ) : (
-                                  <Button
-                                    variant="raised"
-                                    type="primary"
-                                    onClick={this.handleNext}
-                                    className={classes.button}
-                                    disabled={this.disabledNextBtn(index)}
-                                  >
-                                    Next Step
+                            ) : (
+                              <Button
+                                variant="raised"
+                                type="primary"
+                                onClick={this.handleNext}
+                                className={classes.button}
+                                disabled={this.disabledNextBtn(index)}
+                              >
+                                Next Step
                               </Button>
-                                )}
-                            </div>
+                            )}
                           </div>
-                        </StepContent>
-                      </Step>
-                    );
-                  })}
-                </Stepper>
-              )}
+                        </div>
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            )}
           </Paper>
         </div>
       </div>
@@ -1050,4 +1133,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(newProposalStyle)(NewProposal));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(newProposalStyle)(NewProposal));
