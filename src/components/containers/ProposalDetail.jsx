@@ -21,7 +21,8 @@ import { proposalDetailsStyle } from './styles';
 //Definition React Component
 export class ProposalDetail extends Component {
   state = {
-    data: this.props.proposal
+    data: this.props.proposal,
+    url: 'hey here'
   };
 
   componentWillMount() {
@@ -39,6 +40,15 @@ export class ProposalDetail extends Component {
           this.setState({ data: proposal });
         });
     }
+  }
+
+  setMoreInfoUrl(url, propHash) {
+    if (url) {
+      return url;
+    }
+    const origin = window.location.origin;
+    const newUrl = `${origin}/p/${propHash}`;
+    return newUrl;
   }
 
   render() {
@@ -85,7 +95,7 @@ export class ProposalDetail extends Component {
               <ProposalDescription
                 deviceType={deviceType}
                 description={dataString.description}
-                url={dataString.url}
+                url={this.setMoreInfoUrl(dataString.url, proposal.Hash)}
               />
               <ProposalComments
                 deviceType={deviceType}
