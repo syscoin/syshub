@@ -20,17 +20,28 @@ class DashBoard extends Component {
     this.handleDashboard = this.handleDashboard.bind(this);
   }
 
-  componentWillMount() {
+  componentWillMount() {}
+
+  async componentDidMount() {
+    await this.props.getProposals();
     this.selectProposalByHash(this.props.selectedProposal);
   }
 
-  componentDidMount() {
-    this.props.getProposals();
-  }
-
   selectProposalByHash(propHash) {
+    const { proposals } = this.props;
     // this.props.setProposalContainer('dashBoard');
-    // alert(propHash);
+    if (proposals) {
+      const proposalList = proposals.list;
+      const selectedProp = proposalList.filter(
+        item => item.Hash === propHash
+      )[0];
+      console.log('ACZ --> ', selectedProp);
+      this.setState({
+        proposalID: selectedProp
+      });
+
+      // alert(propHash);
+    }
   }
 
   //changing state with this function
@@ -54,7 +65,6 @@ class DashBoard extends Component {
     return (
       <Grid className={style}>
         <h1 className="proposal-heading">PROPOSAL DASHBOARD</h1>
-        {this.props.selectedProposal}
         {showContainer === 'proposalDetail' && (
           <div className="iconWraper" onClick={() => this.handleDashboard()}>
             <Icon type="backward" className="icon" />
