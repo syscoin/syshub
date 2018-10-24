@@ -20,13 +20,17 @@ class DashBoard extends Component {
     this.handleDashboard = this.handleDashboard.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getProposals();
+  componentWillMount() {
     this.selectProposalByHash(this.props.selectedProposal);
   }
 
+  componentDidMount() {
+    this.props.getProposals();
+  }
+
   selectProposalByHash(propHash) {
-    alert(propHash);
+    // this.props.setProposalContainer('dashBoard');
+    // alert(propHash);
   }
 
   //changing state with this function
