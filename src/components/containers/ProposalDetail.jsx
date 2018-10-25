@@ -20,10 +20,14 @@ import { proposalDetailsStyle } from './styles';
 
 //Definition React Component
 export class ProposalDetail extends Component {
-  state = {
-    data: this.props.proposal,
-    url: 'hey here'
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: this.props.proposal,
+      url: ''
+    };
+    this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
+  }
 
   componentWillMount() {
     const proposal = this.state.data;
@@ -43,7 +47,7 @@ export class ProposalDetail extends Component {
   }
 
   setMoreInfoUrl(url, propHash) {
-    if (url) {
+    if (url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
     }
     const origin = window.location.origin;
@@ -108,6 +112,7 @@ export class ProposalDetail extends Component {
     );
   }
 }
+
 const stateToProps = state => {
   return {};
 };

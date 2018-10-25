@@ -472,7 +472,7 @@ class NewProposal extends Component {
       end_epoch: this.state.proposalEndEpoch, //Math.floor(new Date(proposalDate).getTime() / 1000),
       payment_address: address,
       payment_amount: Number(amount),
-      url: proposallink
+      url: proposallink || this.props.appConstants.EMPTY_FIELD
     };
 
     this.setState({
@@ -749,7 +749,12 @@ class NewProposal extends Component {
                 <Input
                   className="proposal-url-input"
                   placeholder="More Info URL (keep it blank to proposal refers itself)"
-                  value={this.state.proposallink}
+                  value={
+                    this.state.proposallink !==
+                    this.props.appConstants.EMPTY_FIELD
+                      ? this.state.proposallink
+                      : ''
+                  }
                   onChange={this.urlInputChange}
                 />
               </div>
@@ -1120,7 +1125,8 @@ class NewProposal extends Component {
 const stateToProps = state => {
   return {
     proposal: state.proposals,
-    app: state.app
+    app: state.app,
+    appConstants: state.app.globalConst
   };
 };
 

@@ -35,7 +35,6 @@ class DashBoard extends Component {
       const selectedProp = proposalList.filter(
         item => item.Hash === propHash
       )[0];
-      console.log('ACZ --> ', selectedProp);
       this.setState({
         proposalID: selectedProp
       });
@@ -58,7 +57,13 @@ class DashBoard extends Component {
   }
 
   render() {
-    const { classes, proposals, deviceType, showContainer } = this.props;
+    const {
+      classes,
+      proposals,
+      deviceType,
+      showContainer,
+      appConstants
+    } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -80,6 +85,7 @@ class DashBoard extends Component {
                 proposalList={proposals.list}
                 totalNodes={this.props.totalNodes}
                 currentUser={this.props.currentUser}
+                globalConst={appConstants}
               />
             ),
             proposalDetail: (
@@ -87,6 +93,7 @@ class DashBoard extends Component {
                 deviceType={this.props.deviceType}
                 proposal={this.state.proposalID}
                 totalNodes={this.props.totalNodes}
+                globalConst={appConstants}
               />
             )
           }[showContainer]
@@ -103,7 +110,8 @@ const stateToProps = state => {
     totalNodes: Math.floor(state.sysStats.mnCount * 0.1) + 1,
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
-    selectedProposal: state.app.dashBoard.selectedProposal
+    selectedProposal: state.app.dashBoard.selectedProposal,
+    appConstants: state.app.globalConst
   };
 };
 
