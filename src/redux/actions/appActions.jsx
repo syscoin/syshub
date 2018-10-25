@@ -19,6 +19,18 @@ export default {
       data: value
     };
   },
+  setProposalContainer: container => {
+    return {
+      type: constants.APP_PROPOSAL_CONTAINER,
+      data: container
+    };
+  },
+  setProposalShow: propHash => {
+    return {
+      type: constants.APP_PROPOSAL_SHOW,
+      data: propHash
+    };
+  },
   toggleChat: () => {
     return {
       type: constants.APP_CHAT_TOGGLE,

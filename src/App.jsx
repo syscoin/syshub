@@ -12,16 +12,15 @@ import appStyles from './styles/appStyle';
 
 // Jss Provider
 import JssProvider from 'react-jss/lib/JssProvider';
-import {generateClassName} from './Helpers/classNameJssProvider';
-
-
-
+import { generateClassName } from './Helpers/classNameJssProvider';
 
 class App extends Component {
   state = {};
 
   componentWillMount() {
-    this.tick()
+    const location = window.location;
+    this.tick();
+    this.detectPorposalUrl(location);
   }
 
   componentDidMount() {
@@ -88,20 +87,31 @@ class App extends Component {
     this.props.getSysInfo();
   }
 
+  detectPorposalUrl(location) {
+    const urlPath = location.pathname;
+    const urlId = '/p/';
+    if (urlPath.includes(urlId)) {
+      const propHash = urlPath.substring(urlId.length);
+      this.props.setPage('dashBoard');
+      this.props.setProposalContainer('proposalDetail');
+      this.props.setProposalShow(propHash);
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
       <JssProvider generateClassName={generateClassName}>
-      <div className={classes.root}>
-        <Favicon url={require('./assets/img/png_favicon.png')} />
-        <Platform rules={{ DeviceType: undefined }}>
-          <DesktopLayout />
-        </Platform>
-        <Platform rules={{ DeviceType: 'mobile' }}>
-          <MobileLayout />
-        </Platform>
-      </div>
+        <div className={classes.root}>
+          <Favicon url={require('./assets/img/png_favicon.png')} />
+          <Platform rules={{ DeviceType: undefined }}>
+            <DesktopLayout />
+          </Platform>
+          <Platform rules={{ DeviceType: 'mobile' }}>
+            <MobileLayout />
+          </Platform>
+        </div>
       </JssProvider>
     );
   }
@@ -122,12 +132,18 @@ const dispatchToProps = dispatch => {
         dispatch(actions.getSysMnCount()),
         dispatch(actions.getSysMnRegistered()),
         dispatch(actions.getSysUserRegistered())
-      )
+      );
     },
-
+    setPage: page => dispatch(actions.setPage(page)),
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
-    setAuth: auth => dispatch(actions.setAuth(auth))
+    setAuth: auth => dispatch(actions.setAuth(auth)),
+    setProposalContainer: container =>
+      dispatch(actions.setProposalContainer(container)),
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(appStyles)(App));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(appStyles)(App));
