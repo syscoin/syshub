@@ -2,8 +2,8 @@ image: node
 
 cache:
   paths:
-  - node_modules/
-  key: "$CI_BUILD_REPO"
+    - node_modules/
+  key: '$CI_BUILD_REPO'
 
 stages:
   - develop
@@ -14,27 +14,27 @@ develop:
   stage: develop
   image: ruby:latest
   script:
-   - gem install dpl
-   - dpl --provider=heroku --app=$HEROKU_APP_DEV --api-key=$HEROKU_API_KEY
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_DEV --api-key=$HEROKU_API_KEY
   except:
-   - staging
-   - master
+    - staging
+    - master
 
 staging:
   stage: staging
   image: ruby:latest
   script:
-   - gem install dpl
-   - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
-   - staging
+    - master
 
 deploy:
   stage: deploy
   image: cortesa/docker-firebase
   environment: Production
   only:
-    - master
+    - staging
   script:
     - npm install
     - npm run build
