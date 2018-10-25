@@ -12,8 +12,6 @@ import { proposalStyle } from './styles';
 import { DashBoardHeader, ProposalCard } from '../functionals/';
 
 export class ProposalList extends Component {
-
-
   render() {
     const { selectProposal, deviceType } = this.props;
 
@@ -43,13 +41,14 @@ export class ProposalList extends Component {
 const stateToProps = state => {
   return {
     user: state.app.currentUser,
-    logged: state.app.currentUser ? true : false,
+    logged: state.app.currentUser ? true : false
   };
 };
 const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(proposalStyle)(ProposalList)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(proposalStyle)(ProposalList));

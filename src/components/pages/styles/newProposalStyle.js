@@ -24,8 +24,8 @@ export default {
     '& .steper__wrapper': {
       '& .classNameProp': {
         '&>div:nth-child(2)': {
-          width: '100%',
-        },
+          width: '100%'
+        }
       },
       '& > span > span:nth-child(2)': {
         width: '100%',
@@ -48,7 +48,7 @@ export default {
       color: greyDark,
       textTransform: 'uppercase',
       padding: 15,
-      margin: 'auto',
+      margin: 'auto'
     },
     '& .paper-container': {
       padding: '20px 20px',
@@ -102,6 +102,7 @@ export default {
       },
       //step 1 proposal-title-row
       '& .proposal-title-row': {
+        marginTop: 20,
         '& .proposal-title-input, .proposal-url-input': {
           width: 'calc(100% - 40px)',
           height: '40px'
@@ -142,7 +143,7 @@ export default {
           marginTop: '10px',
           backgroundColor: white,
           minHeight: 180,
-          '& .DraftEditor-editorContainer':{
+          '& .DraftEditor-editorContainer': {
             zIndex: 0
           }
         },
@@ -190,6 +191,15 @@ export default {
           height: '100%',
           overflow: 'auto',
           color: grey
+        },
+        '& .urlInput': {
+          //border: '1px solid red'
+          marginLeft: 20,
+          backgroundColor: greyLight,
+          marginTop: 20,
+          // boxShadow: 'rgba(0, 0, 0, 0.20) 0px 5px 20px',
+          minWidth: 500,
+          '& .proposal-url-input': {}
         }
       },
       //paymentDetail-row
@@ -210,7 +220,7 @@ export default {
       },
       '& .amount-input': {
         width: 100
-      },
+      }
     },
     '& .ant-btn-primary': {
       backgroundColor: primary,
@@ -233,7 +243,7 @@ export default {
     },
     '& .amount-input': {
       width: '100%',
-      '& input': { width: '100%' },
+      '& input': { width: '100%' }
     },
     '& .toolbarClassName': {
       marginTop: '30px !important',
@@ -279,12 +289,12 @@ export default {
     marginTop: '4%',
     '& .ant-modal-content': {
       '& .ant-modal-close-x': {
-        color: white,
+        color: white
       },
       '& .ant-modal-header': {
         backgroundColor: primary,
         '& .ant-modal-title': {
-          color: white,
+          color: white
         }
       },
       '& .ant-modal-body': {
@@ -292,13 +302,13 @@ export default {
           padding: '10px 5px',
           display: 'flex',
           justifyContent: 'space-evenly',
-          alignItems: 'center',
+          alignItems: 'center'
         },
         '& .id-copied': {
           padding: '10px 5px',
           display: 'flex',
           justifyContent: 'space-evenly',
-          alignItems: 'center',
+          alignItems: 'center'
         },
         '& .id-input': {
           '&>span': {
@@ -306,24 +316,23 @@ export default {
             display: 'inline-block'
           },
           '& input': {
-            width: '50%',
+            width: '50%'
           }
         },
         '& .submit-btn': {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          padding: '10px 0px',
+          padding: '10px 0px'
         }
       },
       '& button>span': {
-        color: white,
+        color: white
       }
-    },
-
+    }
   },
   mobileModal: {
     extend: 'modal',
-    marginTop: 0,
+    marginTop: 0
   }
 };

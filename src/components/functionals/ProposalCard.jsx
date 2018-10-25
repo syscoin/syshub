@@ -39,7 +39,11 @@ class ProposalCard extends Component {
   }
 
   componentWillMount() {
-    const { nPayment, end_epoch, payment_amount } = this.props.proposal.DataString[0][1];
+    const {
+      nPayment,
+      end_epoch,
+      payment_amount
+    } = this.props.proposal.DataString[0][1];
     //const millsMonth = this.props.millsMonth;
     const today = new Date();
     //alert(nPayment);
@@ -143,8 +147,17 @@ class ProposalCard extends Component {
                     key: `${i}`,
                     name: MN[i].name,
                     status: (
-                      <a onClick={() => this.updateError('Failure to find masternode in list')}>
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      <a
+                        onClick={() =>
+                          this.updateError('Failure to find masternode in list')
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -163,7 +176,12 @@ class ProposalCard extends Component {
                           )
                         }
                       >
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -188,7 +206,9 @@ class ProposalCard extends Component {
               }
 
               if (RegExp(/\s-8\s/).test(data)) {
-                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                if (
+                  RegExp(/mn tx hash must be hexadecimal string/).test(data)
+                ) {
                   mnData.push({
                     key: `${i}`,
                     name: MN[i].name,
@@ -196,11 +216,18 @@ class ProposalCard extends Component {
                       <a
                         onClick={() =>
                           this.updateError(
-                            `Invalid vin. Please check: ${cryptr.decrypt(MN[i].vin)}`
+                            `Invalid vin. Please check: ${cryptr.decrypt(
+                              MN[i].vin
+                            )}`
                           )
                         }
                       >
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -228,7 +255,14 @@ class ProposalCard extends Component {
               mnData.push({
                 key: `${i}`,
                 name: MN[i].name,
-                status: <img src={checkIcon} height="20px" width="20px" alt="checkIcon" />
+                status: (
+                  <img
+                    src={checkIcon}
+                    height="20px"
+                    width="20px"
+                    alt="checkIcon"
+                  />
+                )
               });
               this.setState({
                 mnData: mnData
@@ -252,7 +286,11 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a onClick={() => this.updateError(`Invalid masternode key or vin`)}>
+                  <a
+                    onClick={() =>
+                      this.updateError(`Invalid masternode key or vin`)
+                    }
+                  >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
                   </a>
                 )
@@ -329,8 +367,17 @@ class ProposalCard extends Component {
                     key: `${i}`,
                     name: MN[i].name,
                     status: (
-                      <a onClick={() => this.updateError('Failure to find masternode in list')}>
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                      <a
+                        onClick={() =>
+                          this.updateError('Failure to find masternode in list')
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -349,7 +396,12 @@ class ProposalCard extends Component {
                           )
                         }
                       >
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -374,7 +426,9 @@ class ProposalCard extends Component {
               }
 
               if (RegExp(/\s-8\s/).test(data)) {
-                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                if (
+                  RegExp(/mn tx hash must be hexadecimal string/).test(data)
+                ) {
                   mnData.push({
                     key: `${i}`,
                     name: MN[i].name,
@@ -382,11 +436,18 @@ class ProposalCard extends Component {
                       <a
                         onClick={() =>
                           this.updateError(
-                            `Invalid vin. Please check: ${cryptr.decrypt(MN[i].vin)}`
+                            `Invalid vin. Please check: ${cryptr.decrypt(
+                              MN[i].vin
+                            )}`
                           )
                         }
                       >
-                        <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
                       </a>
                     )
                   });
@@ -414,7 +475,14 @@ class ProposalCard extends Component {
               mnData.push({
                 key: `${i}`,
                 name: MN[i].name,
-                status: <img src={checkIcon} height="20px" width="20px" alt="checkIcon" />
+                status: (
+                  <img
+                    src={checkIcon}
+                    height="20px"
+                    width="20px"
+                    alt="checkIcon"
+                  />
+                )
               });
               this.setState({
                 mnData: mnData
@@ -438,7 +506,11 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a onClick={() => this.updateError(`Invalid masternode key or vin`)}>
+                  <a
+                    onClick={() =>
+                      this.updateError(`Invalid masternode key or vin`)
+                    }
+                  >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
                   </a>
                 )
@@ -460,8 +532,14 @@ class ProposalCard extends Component {
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
 
-    const proposalTitle = proposal.DataString[0][1].title || proposal.DataString[0][1].name;
-    let { days_remaining, month_remaining, payment_amount, payment_type } = this.state;
+    const proposalTitle =
+      proposal.DataString[0][1].title || proposal.DataString[0][1].name;
+    let {
+      days_remaining,
+      month_remaining,
+      payment_amount,
+      payment_type
+    } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -474,7 +552,7 @@ class ProposalCard extends Component {
     const totalVotes = yesCount - noCount > 0 ? yesCount - noCount : 0;
 
     // Some Maths ;P
-    const progress = totalVotes / totalNodes * 100; //remove added counts later and below
+    const progress = (totalVotes / totalNodes) * 100; //remove added counts later and below
 
     const columns = [
       {
@@ -491,25 +569,41 @@ class ProposalCard extends Component {
       }
     ];
 
-
     return (
       <Grid container className={style}>
-        <Grid item container md={12} xs={12} className="proposalRow" key={proposal.Hash}>
+        <Grid
+          item
+          container
+          md={12}
+          xs={12}
+          className="proposalRow"
+          key={proposal.Hash}
+        >
           <Grid item md={2} xs={3} className="proposalView">
             <Progress
               type="circle"
               percent={progress}
-              format={percent => <img alt="a" src={docIcon} className="progressIcon" />}
+              format={percent => (
+                <img alt="a" src={docIcon} className="progressIcon" />
+              )}
               className="progress-dial"
               strokeWidth={12}
-              status={progress < 35 ? 'exception' : progress < 100 ? 'active' : 'success'}
+              status={
+                progress < 35
+                  ? 'exception'
+                  : progress < 100
+                    ? 'active'
+                    : 'success'
+              }
             />
             <div className="proposalStatusNo">
               <span
                 className={
                   progress < 35
                     ? 'proposalStatusExecptionNo'
-                    : progress < 100 ? 'proposalStatusActiveNo' : 'proposalStatusSuccessNo'
+                    : progress < 100
+                      ? 'proposalStatusActiveNo'
+                      : 'proposalStatusSuccessNo'
                 }
               >
                 {totalVotes}
@@ -519,23 +613,30 @@ class ProposalCard extends Component {
             </div>
           </Grid>
           <Grid item md={7} xs={6} className="proposalInfoView">
-            <h1 className="proposalHeading" onClick={() => selectProposal(proposal)}>
+            <h1
+              className="proposalHeading"
+              onClick={() => selectProposal(proposal)}
+            >
               {proposalTitle ? (
                 proposalTitle.split('\n', 1)[0]
               ) : (
-                  <span style={{ color: 'grey' }}>No title available for this proposal.</span>
-                )}
+                <span style={{ color: 'grey' }}>
+                  No title available for this proposal.
+                </span>
+              )}
             </h1>
             <div className="proposalDetail">
               <span>{`${payment_amount} SYS ${payment_type} `}</span>
 
               {days_remaining < 30 ? (
-                <span>{`(${days_remaining} Day${days_remaining > 1 ? 's' : ''} Remaining)`}</span>
+                <span>{`(${days_remaining} Day${
+                  days_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
               ) : (
-                  <span>{`(${month_remaining} Month${
-                    month_remaining > 1 ? 's' : ''
-                    } Remaining)`}</span>
-                )}
+                <span>{`(${month_remaining} Month${
+                  month_remaining > 1 ? 's' : ''
+                } Remaining)`}</span>
+              )}
             </div>
           </Grid>
 
@@ -544,33 +645,45 @@ class ProposalCard extends Component {
               <Grid item md={3} xs={3} className="mobile-vote__wrapper">
                 <div className="vote-text">Vote</div>
                 <div className="vote-item">
-                  <Button className="btn-vote-up" onClick={() => this.voteUp(proposal)}>
+                  <Button
+                    className="btn-vote-up"
+                    onClick={() => this.voteUp(proposal)}
+                  >
                     <img src={voteUpIcon} className="upVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.YesCount}</span>
                 </div>
                 <div className="vote-item">
-                  <Button className="btn-vote-down" onClick={() => this.voteDown(proposal)}>
+                  <Button
+                    className="btn-vote-down"
+                    onClick={() => this.voteDown(proposal)}
+                  >
                     <img src={voteDownIcon} className="downVoteIcon" alt="" />
                   </Button>
                   <span className="voteNumber">{proposal.NoCount}</span>
                 </div>
               </Grid>
             ) : (
-                <Grid item md={3} xs={3} className="desktop-vote__wrapper">
-                  <div className="vote-text">Vote on Proposal</div>
-                  <Button className="vote-up" onClick={() => this.voteUp(proposal)}>
-                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                  </Button>
-                  <Button className="vote-down" onClick={() => this.voteDown(proposal)}>
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                  </Button>
-                  <div className="vote-count">
-                    <div className="vote-number">{proposal.YesCount}</div>
-                    <div className="vote-number">{proposal.NoCount}</div>
-                  </div>
-                </Grid>
-              )
+              <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+                <div className="vote-text">Vote on Proposal</div>
+                <Button
+                  className="vote-up"
+                  onClick={() => this.voteUp(proposal)}
+                >
+                  <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                </Button>
+                <Button
+                  className="vote-down"
+                  onClick={() => this.voteDown(proposal)}
+                >
+                  <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                </Button>
+                <div className="vote-count">
+                  <div className="vote-number">{proposal.YesCount}</div>
+                  <div className="vote-number">{proposal.NoCount}</div>
+                </div>
+              </Grid>
+            )
           ) : deviceType === 'mobile' ? (
             <Grid item md={3} xs={3} className="logout-vote__wrapper">
               <div className="vote-text">Status</div>
@@ -584,20 +697,20 @@ class ProposalCard extends Component {
               </div>
             </Grid>
           ) : (
-                <Grid item md={3} xs={3} className="desktop-vote__wrapper">
-                  <div className="vote-text">Voting Status</div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteUpIcon} className="upVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.YesCount}</div>
-                  </div>
-                  <div className="vote-item__wrapper">
-                    <img src={voteDownIcon} className="downVoteIcon" alt="" />
-                    <br />
-                    <div className="vote-number">{proposal.NoCount}</div>
-                  </div>
-                </Grid>
-              )}
+            <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+              <div className="vote-text">Voting Status</div>
+              <div className="vote-item__wrapper">
+                <img src={voteUpIcon} className="upVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.YesCount}</div>
+              </div>
+              <div className="vote-item__wrapper">
+                <img src={voteDownIcon} className="downVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.NoCount}</div>
+              </div>
+            </Grid>
+          )}
         </Grid>
         <Modal
           title="Results"
@@ -616,7 +729,9 @@ class ProposalCard extends Component {
             dataSource={this.state.mnData}
           />
 
-          <div style={{ color: 'red' }}>{this.state.showError ? this.state.mnError : ''}</div>
+          <div style={{ color: 'red' }}>
+            {this.state.showError ? this.state.mnError : ''}
+          </div>
         </Modal>
       </Grid>
     );
@@ -638,4 +753,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(proposalCardStyle)(ProposalCard));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(proposalCardStyle)(ProposalCard));
