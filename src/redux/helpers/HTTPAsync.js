@@ -55,6 +55,7 @@ const deleteRequest = url => {
 };
 
 export default {
+  onlyGet: (url, params) => getRequest(url, params).then(data => data).catch(err => {throw err;}),
   post: (url, body, actionType) => {
     return dispatch =>
       postRequest(url, body)

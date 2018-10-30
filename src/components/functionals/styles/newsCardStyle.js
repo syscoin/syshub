@@ -59,7 +59,7 @@ export default {
         right: 0,
         '& button': {
           borderRadius: '5px',
-          padding: '0px',
+          padding: '0px 10px',
           minHeight: '28px',
         },
         '& button:hover': {
