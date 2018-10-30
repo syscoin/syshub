@@ -11,7 +11,6 @@ import NewsCard from '../functionals/NewsCard';
 class NewsList extends Component {
   render() {
     const { classes, selectNews, posts, readedList, deviceType } = this.props;
-    console.log('ACZ --> ', posts);
     
     return (
       <div className={classes.root}>

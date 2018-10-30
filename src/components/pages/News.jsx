@@ -14,11 +14,26 @@ class News extends Component {
   state = {
     readedList: [],
     showContainer: 'list',
+    postList: '',
     post: ''
   };
+
+
   componentWillMount() {
     this.props.getMediumPosts();
   }
+
+  sortPostsList(postsList) {
+    if (postsList.length > 0) {
+      const sortedList = postsList.sort((a, b) => {
+        const aPubTime = new Date(a.pubDate).getTime();
+        const bPubTime = new Date(b.pubDate).getTime();
+        return bPubTime - aPubTime;
+      });
+      return sortedList;
+    }
+  }
+
   //changing state with this function
   handleSelectNews(value) {
     const { posts } = this.props;
@@ -38,6 +53,8 @@ class News extends Component {
   render() {
     const { classes, posts, deviceType } = this.props;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const sortedPosts = this.sortPostsList(posts);
+
     return (
       <div className={style}>
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
@@ -47,14 +64,14 @@ class News extends Component {
             <span className="iconTxt">{`  Back to List`}</span>
           </div>
         )}
-        {posts && (
+        {sortedPosts && (
           <Paper className="paper-container" elevation={4}>
             {
               {
                 list: (
                   <NewsList
                     deviceType={this.props.deviceType}
-                    posts={posts}
+                    posts={sortedPosts}
                     readedList={this.state.readedList}
                     selectNews={guid => this.handleSelectNews(guid)}
                   />
