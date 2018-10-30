@@ -38,7 +38,7 @@ class NewsList extends Component {
 
 const stateToProps = state => {
   return {
-    channel: state.mediumPosts.posts.channel
+    channel: state.mediumPosts.posts
   };
 };
 
