@@ -24,14 +24,15 @@ class NewsCard extends Component {
       classes,
       post,
       selectNews,
-      image,
       deviceType,
     } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const image = post.image;
     const noImage = require('../../assets/img/no-user-image.gif');
 
-
+    console.log('ACZ --> ', image);
+    
 
 
     return (

@@ -32,7 +32,6 @@ export default {
         mediumChannels.map( user => 
           HTTPAsync.onlyGet(`${baseApiURL}/curl?url=${mediumFeed}${user}`,null,)
           .then( data => {
-            console.log('ACZ --> ', data);
             const parsedData = xmlParser(data.data).rss;
             dispatch({
               type: constants.MEDIUM_POSTS_GET,

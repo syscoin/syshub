@@ -21,9 +21,8 @@ class News extends Component {
   }
   //changing state with this function
   handleSelectNews(value) {
-    const { channel } = this.props;
+    const { posts } = this.props;
     const container = this.state.showContainer === 'list' ? 'details' : 'list';
-    const posts = channel.item;
     const post = posts.find(p => p.guid === value);
     if (value) {
       this.setState({
@@ -37,7 +36,7 @@ class News extends Component {
   }
 
   render() {
-    const { classes, channel, deviceType } = this.props;
+    const { classes, posts, deviceType } = this.props;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={style}>
@@ -48,14 +47,14 @@ class News extends Component {
             <span className="iconTxt">{`  Back to List`}</span>
           </div>
         )}
-        {channel && (
+        {posts && (
           <Paper className="paper-container" elevation={4}>
             {
               {
                 list: (
                   <NewsList
                     deviceType={this.props.deviceType}
-                    channel={channel}
+                    posts={posts}
                     readedList={this.state.readedList}
                     selectNews={guid => this.handleSelectNews(guid)}
                   />
@@ -63,7 +62,6 @@ class News extends Component {
                 details: (
                   <NewsDetail
                     deviceType={this.props.deviceType}
-                    channel={channel}
                     post={this.state.post}
                     goBack={() => this.handleSelectNews()}
                   />
@@ -79,7 +77,7 @@ class News extends Component {
 
 const stateToProps = state => {
   return {
-    channel: state.mediumPosts.posts.channel
+    posts: state.mediumPosts.posts
   };
 };
 

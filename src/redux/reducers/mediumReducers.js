@@ -1,16 +1,10 @@
 import constants from '../constants';
-const fastXmlParser = require('fast-xml-parser');
 
 const initialState = {
   posts: [],
   channels: [],
   loop: 0,
 };
-
-function xmlParser(xmlObj) {
-  const jsonObj = fastXmlParser.parse(xmlObj);
-  return jsonObj;
-}
 
 const mediumPosts = (state = initialState, action) => {
   switch (action.type) {
@@ -22,7 +16,7 @@ const mediumPosts = (state = initialState, action) => {
         loop = 0;
       }
       channels.push(action.data);
-      const image = action.data.channel.image.url;
+      const image = action.data.channel.image;
       const postObj = action.data.channel.item.map( item=> ({ image, ...item }));
       posts = posts.concat(postObj);
       loop += 1;
