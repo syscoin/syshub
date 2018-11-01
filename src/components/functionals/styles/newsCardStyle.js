@@ -1,17 +1,17 @@
 import palette from './palette';
 
+const white = palette.white;
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
 const greyDark = palette.greyDark;
 const grey = palette.grey;
+const greyLight = palette.greyLight;
 
 export default {
   root: {
     width: 'calc(100% - 40px)',
-    marginLeft: 20,
-    marginTop: 20,
-    marginBottom: 20,
-    '& card-item': {},
+    cursor: 'pointer',
+    '& card-item': {    },
     '& .readed': {
       color: `${grey} !important`,
     },
@@ -21,16 +21,23 @@ export default {
     },
     '& .news-card-grid': {
       position: 'relative',
+      margin: '5px 0 0 0',
+      '&:hover': {
+        backgroundImage: `linear-gradient(to right, ${white} , ${greyLight}, ${white})`,
+      },
       '& .newsCardImage-grid': {
-        padding: '10px 0px 0px 10px',
+        margin: '10px 0px 0px 10px',
         maxWidth: 100,
         '& img': {
+          backgroundColor: 'transparent',
+
           width: '100%',
         },
       },
       '& .newsCardContent-grid': {
         verticalAlign: 'middle',
         '& .card': {
+          backgroundColor: 'transparent',
           boxShadow: 'none',
           '& .news-heading': {
             marginBottom: '10px',
@@ -77,7 +84,7 @@ export default {
       display: 'inline-block',
     },
     '& .divider': {
-      marginTop: 10,
+      marginTop: 5,
     }
   },
   mRoot: {
@@ -135,6 +142,6 @@ export default {
     }
   },
   '& .divider': {
-    marginTop: 10
+    marginTop: 0
   }
 };
