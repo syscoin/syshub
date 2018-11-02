@@ -107,7 +107,7 @@ const stateToProps = state => {
   return {
     proposals: state.proposals,
     //    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
-    totalNodes: Math.floor(state.sysStats.mnCount * 0.1) + 1,
+    totalNodes: Math.floor(state.sysStats.mnCount.enabled),
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
     selectedProposal: state.app.dashBoard.selectedProposal,

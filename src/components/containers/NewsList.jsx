@@ -10,11 +10,11 @@ import NewsCard from '../functionals/NewsCard';
 
 class NewsList extends Component {
   render() {
-    const { classes, selectNews, channel, readedList, deviceType } = this.props;
-    const image = channel ? channel.image : null;
+    const { classes, selectNews, posts, readedList, deviceType } = this.props;
+    
     return (
       <div className={classes.root}>
-        {channel.item.map((post, index) => {
+        {posts.map((post, index) => {
           const readed = readedList.find(itm => itm === post.guid)
             ? true
             : false;
@@ -25,7 +25,6 @@ class NewsList extends Component {
               readed={readed}
               key={index}
               index={index}
-              image={image}
               post={post}
               selectNews={selectNews}
             />
@@ -38,7 +37,7 @@ class NewsList extends Component {
 
 const stateToProps = state => {
   return {
-    channel: state.mediumPosts.posts.channel
+    posts: state.mediumPosts.posts
   };
 };
 
