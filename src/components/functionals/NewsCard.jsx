@@ -32,7 +32,7 @@ class NewsCard extends Component {
     const noImage = require('../../assets/img/no-user-image.gif');
 
     return (
-      <div className={style} onClick={() => { if (this.props.deviceType === 'mobile') selectNews(post.guid) }}>
+      <div className={style} onClick={() => selectNews(post.guid)}>
         <div className='card-item' key={post.guid}>
           {/* news card */}
           <Grid container spacing={24} className="news-card-grid">
@@ -56,8 +56,8 @@ class NewsCard extends Component {
                 <CardContent>
                   {/* content heading */}
                   <Typography
-                    type="headline"
-                    component="h3"
+                    component="h2"
+                    variant="headline"
                     className={`news-heading ${
                       this.props.readed ? 'readed' : ''
                       }`}
@@ -65,7 +65,7 @@ class NewsCard extends Component {
                     {post.title}
                   </Typography>
                   <Typography
-                    type="subheading"
+                    variant="body1"
                     component="p"
                     className="cardSubHeading"
                   >
@@ -85,8 +85,8 @@ class NewsCard extends Component {
               </Button>
             </Grid>
           </Grid>
-          <Divider className="divider" />
         </div>
+          <Divider className="divider" />
       </div>
     );
   }

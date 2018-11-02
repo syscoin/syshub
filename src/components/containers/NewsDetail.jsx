@@ -23,7 +23,9 @@ const splitContent = content => {
   return { image, body };
 };
 
+
 class NewsDetail extends Component {
+
   render() {
     const { classes, post, goBack, deviceType } = this.props;
 

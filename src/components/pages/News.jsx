@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import injectSheet from 'react-jss';
 import { Icon } from 'antd';
-import Paper from '@material-ui/core/Paper';
 import { NewsList, NewsDetail } from '../containers';
 
 // import style
 import { newsStyle } from './styles';
 
 class News extends Component {
-  state = {
-    readedList: [],
-    showContainer: 'list',
-    postList: '',
-    post: ''
-  };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      readedList: [],
+      showContainer: 'list',
+      postList: '',
+      post: ''
+    };
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+  }
 
   componentWillMount() {
     this.props.getMediumPosts();
   }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    const detailContainer = ReactDOM.findDOMNode(this.detailContainer);
+    detailContainer.scrollTop = detailContainer.scrollHeight;
+  };
 
   sortPostsList(postsList) {
     if (postsList.length > 0) {
@@ -56,17 +69,20 @@ class News extends Component {
     const sortedPosts = this.sortPostsList(posts);
 
     return (
-      <div className={style}>
+      <div className={style} >
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
-        {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
-            <Icon type="double-left" className="icon" />
-            <span className="iconTxt">{`  Back to List`}</span>
+            {this.state.showContainer === 'details' && 
+            <div>
+              <Icon type="double-left" className="icon" />
+              <span className="iconTxt">{`  Back to List`}</span>
+            </div>
+            }
+            {this.state.showContainer !== 'details' && (<span className="iconTxtHide">{`  Back to List`}</span>)}
           </div>
-        )}
-        {sortedPosts && (
-          <Paper className="paper-container" elevation={4}>
-            {
+       
+          <div className="paper-container" ref={el => this.detailContainer = el}>
+            { sortedPosts &&
               {
                 list: (
                   <NewsList
@@ -85,8 +101,8 @@ class News extends Component {
                 )
               }[this.state.showContainer]
             }
-          </Paper>
-        )}
+          </div>
+        
       </div>
     );
   }
