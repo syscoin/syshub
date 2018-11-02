@@ -26,11 +26,6 @@ const splitContent = content => {
 
 class NewsDetail extends Component {
 
-  componentDidMount() {
-    this.scrollToBottom();
-  }
-
-
   render() {
     const { classes, post, goBack, deviceType } = this.props;
 

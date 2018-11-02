@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 import injectSheet from 'react-jss';
 import { Icon } from 'antd';
-import Paper from '@material-ui/core/Paper';
 import { NewsList, NewsDetail } from '../containers';
 
 // import style
@@ -20,12 +20,8 @@ class News extends Component {
       postList: '',
       post: ''
     };
-    this.detailContainerRef = React.createRef();
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
-
-
-  
-
 
   componentWillMount() {
     this.props.getMediumPosts();
@@ -36,10 +32,8 @@ class News extends Component {
   }
 
   scrollToBottom = () => {
-    const detailContainer = this.detailContainerRef.current;
-    console.log('ACZ -- detailContainer', detailContainer.scrollHeight);
-    
-    //detailContainer.scrollTop = 0;// detailContainer.scrollHeight;
+    const detailContainer = ReactDOM.findDOMNode(this.detailContainer);
+    detailContainer.scrollTop = detailContainer.scrollHeight;
   };
 
   sortPostsList(postsList) {
@@ -75,7 +69,7 @@ class News extends Component {
     const sortedPosts = this.sortPostsList(posts);
 
     return (
-      <div className={style} ref={this.detailContainerRef}>
+      <div className={style} >
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
             {this.state.showContainer === 'details' && 
@@ -86,9 +80,9 @@ class News extends Component {
             }
             {this.state.showContainer !== 'details' && (<span className="iconTxtHide">{`  Back to List`}</span>)}
           </div>
-        {sortedPosts && (
-          <Paper className="paper-container" elevation={4} >
-            {
+       
+          <div className="paper-container" ref={el => this.detailContainer = el}>
+            { sortedPosts &&
               {
                 list: (
                   <NewsList
@@ -107,8 +101,8 @@ class News extends Component {
                 )
               }[this.state.showContainer]
             }
-          </Paper>
-        )}
+          </div>
+        
       </div>
     );
   }

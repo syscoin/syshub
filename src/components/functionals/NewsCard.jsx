@@ -57,7 +57,7 @@ class NewsCard extends Component {
                   {/* content heading */}
                   <Typography
                     component="h2"
-                    variant="h3"
+                    variant="headline"
                     className={`news-heading ${
                       this.props.readed ? 'readed' : ''
                       }`}
