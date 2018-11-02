@@ -345,18 +345,6 @@ class ProposalComments extends Component {
           {item.child && this.renderChild2(comment._id, item.child)}
         </Row>
       });
-    } else {
-      return <div>
-        {this.state.replyBox === comment._id ?
-          <CommentForm
-            comment={comment}
-            add={this.commentReply}
-            parent-key="null">
-          </CommentForm> :
-          <Button className="btn-clear" onClick={() => {
-            this.setState({ replyBox: comment._id });
-          }}>Reply</Button>
-        }</div>
     }
   }
 

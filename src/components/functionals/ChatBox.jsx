@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import actions from '../../redux/actions';
+
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Send } from '@material-ui/icons';
+import { Send, Close } from '@material-ui/icons';
+
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 import { Input } from 'antd';
 import swal from 'sweetalert';
 import { Form } from 'antd';
@@ -125,10 +128,8 @@ class ChatBox extends Component {
         <div className="chat_box_container">
           <Paper className="paper-style">
             <div className="chatbox-Header">
-              <span>
-                <img alt="a" src={chat_icon} className="chatBox-headerIcon" />
-              </span>
-              <span className="chatBox-headerText">CHATBOX</span>
+              <Close className="close-icon" viewBox="5 2 20 20" onClick={() => this.props.toggleChat()}/>
+              <div className="chatBox-headerText">CHATBOX</div>
             </div>
             {/* chat list */}
             <List className="list">
@@ -182,4 +183,10 @@ const stateToProps = state => {
   };
 };
 
-export default connect(stateToProps)(injectSheet(chatBoxStyle)(ChatBox));
+const dispatchToProps = dispatch => {
+  return {
+    toggleChat: () => dispatch(actions.toggleChat())
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(injectSheet(chatBoxStyle)(ChatBox));
