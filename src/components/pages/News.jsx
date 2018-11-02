@@ -11,17 +11,36 @@ import { NewsList, NewsDetail } from '../containers';
 import { newsStyle } from './styles';
 
 class News extends Component {
-  state = {
-    readedList: [],
-    showContainer: 'list',
-    postList: '',
-    post: ''
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      readedList: [],
+      showContainer: 'list',
+      postList: '',
+      post: ''
+    };
+    this.detailContainerRef = React.createRef();
+  }
+
+
+  
 
 
   componentWillMount() {
     this.props.getMediumPosts();
   }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    const detailContainer = this.detailContainerRef.current;
+    console.log('ACZ -- detailContainer', detailContainer.scrollHeight);
+    
+    //detailContainer.scrollTop = 0;// detailContainer.scrollHeight;
+  };
 
   sortPostsList(postsList) {
     if (postsList.length > 0) {
@@ -56,16 +75,19 @@ class News extends Component {
     const sortedPosts = this.sortPostsList(posts);
 
     return (
-      <div className={style}>
+      <div className={style} ref={this.detailContainerRef}>
         <h1 className="title">NEWS AND ANNOUNCEMENTS</h1>
-        {this.state.showContainer === 'details' && (
           <div className="iconWraper" onClick={() => this.handleSelectNews()}>
-            <Icon type="double-left" className="icon" />
-            <span className="iconTxt">{`  Back to List`}</span>
+            {this.state.showContainer === 'details' && 
+            <div>
+              <Icon type="double-left" className="icon" />
+              <span className="iconTxt">{`  Back to List`}</span>
+            </div>
+            }
+            {this.state.showContainer !== 'details' && (<span className="iconTxtHide">{`  Back to List`}</span>)}
           </div>
-        )}
         {sortedPosts && (
-          <Paper className="paper-container" elevation={4}>
+          <Paper className="paper-container" elevation={4} >
             {
               {
                 list: (

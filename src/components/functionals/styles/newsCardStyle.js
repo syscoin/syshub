@@ -22,8 +22,12 @@ export default {
     '& .news-card-grid': {
       position: 'relative',
       margin: '5px 0 0 0',
+      width: '100%',
+      border: `1px solid transparent`,
       '&:hover': {
-        backgroundImage: `linear-gradient(to right, ${white} , ${greyLight}, ${white})`,
+        backgroundImage: `linear-gradient(to right, ${white} , ${greyLight}, ${greyLight}, ${white})`,
+        border: `1px solid ${grey}`,
+        borderRadius: '4px'
       },
       '& .newsCardImage-grid': {
         margin: '10px 0px 0px 10px',
@@ -136,12 +140,6 @@ export default {
       '& button:hover': {
         backgroundColor: primaryLight
       }
-    },
-    '& .divider': {
-      display: 'none'
     }
   },
-  '& .divider': {
-    marginTop: 0
-  }
 };

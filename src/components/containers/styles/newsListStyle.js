@@ -1,6 +1,6 @@
 
 export default {
   root: {
-    marginTop: 20,
+    margin: '20px 0 0 0',
   },
 };

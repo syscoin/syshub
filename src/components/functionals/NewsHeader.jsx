@@ -18,7 +18,7 @@ class NewsHeader extends Component {
         <Grid container className={style}>
           <Grid className="new-header-grid">
             {/* Cover Image */}
-            <div className="cover">
+            {false && <div className="cover">
               <img
                 className="cover-img"
                 src={header.image}
@@ -26,7 +26,7 @@ class NewsHeader extends Component {
                 //'https://cdn-images-1.medium.com/max/1024/1*YqNm0p75A84qf7szszQGEQ.png'
                 alt="Cover"
               />
-            </div>
+            </div>}
             <div className="info">
               <h2 className="title">{header.title}</h2>
             </div>
