@@ -61,6 +61,7 @@ class Register extends Component {
       callback();
     }
   };
+
   checkConfirm = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
@@ -68,6 +69,16 @@ class Register extends Component {
     }
     callback();
   };
+
+  checkEmail = (rule, value, callback) => {
+    const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
+    const isValidEmail = emaiRegex.test(value) ? true : false;
+    if (!isValidEmail) {
+      callback('Email address in invalid format');
+    } else {
+      callback();
+    }
+  }
 
   hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -281,6 +292,9 @@ class Register extends Component {
                     {
                       required: true,
                       message: 'Enter your email!'
+                    },
+                    {
+                      validator: this.checkEmail
                     }
                   ]
                 })(
