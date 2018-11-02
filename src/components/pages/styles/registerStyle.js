@@ -27,6 +27,9 @@ export default {
         '& .ant-form-explain': {
           marginLeft: 'calc(25% + 10px)',
           marginTop: 5
+        },
+        '& .form-control': {
+          width: '100%'
         }
       },
       '& .label': {
@@ -52,7 +55,7 @@ export default {
         margin: '10px 10px 0px 10px',
         display: 'inline-block',
         border: 'thin solid ' + greyLight,
-        padding: '9px 10px',
+        padding: '9px 0px',
         '& .ReactPasswordStrength-input': {
           padding: 0
         },

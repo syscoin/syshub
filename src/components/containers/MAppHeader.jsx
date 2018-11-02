@@ -38,7 +38,7 @@ class AppHeader extends Component {
           <AppBar position="fixed" className="app-bar">
             <Toolbar className="header">
               <div className="container">
-                <MHeaderNav className="bottom-header__wrapper" />
+                <MHeaderNav/>
               </div>
             </Toolbar>
           </AppBar>
