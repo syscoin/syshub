@@ -114,7 +114,8 @@ export class ProposalDetail extends Component {
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+  };
 };
 
 const dispatchToProps = dispatch => {
