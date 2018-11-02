@@ -27,6 +27,9 @@ export default {
         '& .ant-form-explain': {
           marginLeft: 'calc(25% + 10px)',
           marginTop: 5
+        },
+        '& .form-control': {
+          width: '100%',
         }
       },
       '& .label': {
