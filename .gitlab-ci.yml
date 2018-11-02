@@ -8,12 +8,12 @@ cache:
 stages:
   - develop
   - staging
-  - deploy
+  - stable
 
 develop:
   stage: deploy
   image: cortesa/docker-firebase
-  environment: Production
+  environment: Develop
   script:
     - npm install
     - npm run build
@@ -25,19 +25,23 @@ develop:
 
 staging:
   stage: staging
-  image: ruby:latest
+  image: cortesa/docker-firebase
+  environment: Develop
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - npm install
+    - npm run build
+    - firebase use --token $FIREBASE_TOKEN syshub-61377
+    - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
   only:
-    - master
+    - staging
+  
 
-deploy:
-  stage: deploy
+stable:
+  stage: stable
   image: cortesa/docker-firebase
   environment: Production
   only:
-    - staging
+    - masterStable
   script:
     - npm install
     - npm run build
