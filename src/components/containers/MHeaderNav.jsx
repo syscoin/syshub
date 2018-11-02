@@ -41,7 +41,7 @@ class MHeaderNav extends Component {
               : { backgroundColor: 'inherit' }
           }
         >
-        <IconButton color="secondary" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
+        <IconButton aria-label="Menu" onClick={() => this.props.toggleMenu()}>
           <Menu className="menu-icon" viewBox="5 2 20 20"/>
         </IconButton>
         </Grid>
