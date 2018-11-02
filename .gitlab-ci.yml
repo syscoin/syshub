@@ -11,7 +11,7 @@ stages:
   - stable
 
 develop:
-  stage: deploy
+  stage: develop
   image: cortesa/docker-firebase
   environment: Develop
   script:
@@ -41,7 +41,7 @@ stable:
   image: cortesa/docker-firebase
   environment: Production
   only:
-    - masterStable
+    - master
   script:
     - npm install
     - npm run build
