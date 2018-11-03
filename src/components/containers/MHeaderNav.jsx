@@ -3,13 +3,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { mHeaderNavStyle } from './styles';
 import injectSheet from 'react-jss';
 import  Grid  from '@material-ui/core/Grid';
-import { Icon } from 'antd';
+import Menu from '@material-ui/icons/Menu';
 import { Button } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import actions from '../../redux/actions';
+
+import { mHeaderNavStyle } from './styles';
 
 class MHeaderNav extends Component {
   constructor(props) {
@@ -40,12 +41,12 @@ class MHeaderNav extends Component {
               : { backgroundColor: 'inherit' }
           }
         >
-          <IconButton color="inherit" aria-label="Menu" onClick={() => this.props.toggleMenu()}>
-            <Icon type="bars" className="menu-icon" id="sidebar" />
-          </IconButton>
+        <IconButton aria-label="Menu" onClick={() => this.props.toggleMenu()}>
+          <Menu className="menu-icon" viewBox="5 2 20 20"/>
+        </IconButton>
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img alt="a" src={logo} height="35px" width="100px" id="home" onClick={this.itemClick} />
+          <img alt="a" src={logo} id="home" onClick={this.itemClick} />
         </Grid>
         <Grid
           item

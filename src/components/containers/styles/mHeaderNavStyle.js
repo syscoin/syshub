@@ -3,6 +3,7 @@ import palette from './palette';
 
 
 const grey = palette.grey;
+const white = palette.white;
 
 export default {
   mRoot: {
@@ -10,13 +11,14 @@ export default {
     marginBottom: 0,
     marginTop: 0,
     '& .left-section': {
-      textAlign: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
       padding: 0,
       height: 55,
-      borderRight: 'thin solid ' + grey,
-      '& button': {
-        height: 30,
-        marginTop: -15
+      borderRight: `thin solid ${grey}`,
+      '& .menu-icon': {
+        fill: white,
       }
     },
     '& .divider': {
@@ -24,12 +26,13 @@ export default {
       margin: 0
     },
     '& .center-section': {
-      textAlign: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
       height: 55,
       '& img': {
-        height: 40,
-        width: 70,
-        marginTop: -29
+        maxWidth: '100%'
       }
     },
     '& .right-section': {

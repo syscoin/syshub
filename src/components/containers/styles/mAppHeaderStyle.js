@@ -1,8 +1,6 @@
 import palette from './palette';
 
 const primary = palette.primary;
-const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
 const white = palette.white;
 
 export default {
@@ -31,11 +29,6 @@ export default {
         marginLeft: -10,
         width: 'calc(100% + 100px)'
       }
-    },
-    '& .hdivider ': {
-      width: '100%',
-      borderTop: `1px solid ${primaryDark}`,
-      borderBottom: `1px solid ${primaryLight}`
     },
     '& .header-bitcoin-status': {
       marginBottom: 0,

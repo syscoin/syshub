@@ -5,6 +5,7 @@ const primary = palette.primary;
 const primaryLight = palette.primaryLight;
 const grey = palette.textLignt;
 const greyDark = palette.greyDark;
+const red = palette.red;
 
 export default {
   root: {
@@ -20,20 +21,26 @@ export default {
         position: 'relative',
         width: '100%',
         '& .chatbox-Header': {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
           backgroundColor: primaryLight,
           height: '35px',
-          paddingTop: '7px',
           textAlign: 'left',
           paddingLeft: '10px',
-          '& .chatBox-headerIcon': {
-            width: '25px',
-            height: '20px',
+          '& .close-icon': {
+            fill: white,
+            '&:hover': {
+              cursor: 'pointer',
+              fill: red
+            }
           },
           '& .chatBox-headerText': {
             color: white,
             marginRight: '52px',
             marginLeft: '6px',
-            fontSize: '13px',
+            fontSize: '16px',
           },
         },
         '& .list': {

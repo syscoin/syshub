@@ -11,7 +11,7 @@ import actions from '../../redux/actions';
 import CommentForm from './commentForm';
 
 // import firebase
-import { comments, commentReplies, commentReplies_V2 } from '../../API/firebase';
+import { comments, commentReplies_V2 } from '../../API/firebase';
 
 import injectSheet from 'react-jss';
 import { proposalCommentsStyle } from './styles';
@@ -23,12 +23,12 @@ class ProposalComments extends Component {
       userComment: '',
       userReply: '',
       proposalID: this.props.data.proposalID,
-      allComments: [],
       proposal: null,
       editCommentState: false,
       userEditComment: '',
       selectedCommentID: null,
       showAddComment: false,
+      allComments: [],
       allReplies: {},
       replyBox: '' // replybox Id
     };
@@ -42,7 +42,7 @@ class ProposalComments extends Component {
     this.setComment = this.setComment.bind(this);
     this.editedComment = this.editedComment.bind(this);
     this.setEditComment = this.setEditComment.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
+    /* this.deleteComment = this.deleteComment.bind(this); */
     this.commentReply = this.commentReply.bind(this);
     this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
     this.renderChild2 = this.renderChild2.bind(this);
@@ -101,7 +101,7 @@ class ProposalComments extends Component {
   loadReplies(index) {
     // Load replies from firebase
     // then set in state
-
+    
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id,
         _comments = Object.assign(this.state.allComments),
@@ -249,13 +249,14 @@ class ProposalComments extends Component {
     this.setState({ editCommentState: !this.state.editCommentState })
   }
 
-  deleteComment(id) {
+/*   deleteComment(id) {
     comments.child(this.state.proposalID).child(id).remove().then(() => {
       commentReplies.child(id).remove();
     });
-  }
+  } */
 
   showAddReplyBtn(_commentID, showAddReply) {
+    
     if (this.props.user) {
       let allComments = this.state.allComments.map((comment) => {
         if (comment._id === _commentID) {
@@ -273,6 +274,14 @@ class ProposalComments extends Component {
   openCommentBox() {
     if (this.props.user) {
       this.setState({ showAddComment: true });
+    } else {
+      this.loginAlert();
+    }
+  }
+
+  openReplyBox(itemId) {
+    if (this.props.user) {
+      this.setState({ replyBox: itemId });
     } else {
       this.loginAlert();
     }
@@ -337,7 +346,7 @@ class ProposalComments extends Component {
               <p>{item.text}</p>
               {this.state.replyBox === item._id ?
                 <CommentForm parent={item._id} comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
-                <Button className="btn-clear" onClick={() => this.setState({ replyBox: item._id })}> Reply </Button>
+                <Button className="btn-clear" onClick={() => this.openReplyBox(item._id)}> Reply </Button>
               }
             </Col>
 
@@ -345,18 +354,6 @@ class ProposalComments extends Component {
           {item.child && this.renderChild2(comment._id, item.child)}
         </Row>
       });
-    } else {
-      return <div>
-        {this.state.replyBox === comment._id ?
-          <CommentForm
-            comment={comment}
-            add={this.commentReply}
-            parent-key="null">
-          </CommentForm> :
-          <Button className="btn-clear" onClick={() => {
-            this.setState({ replyBox: comment._id });
-          }}>Reply</Button>
-        }</div>
     }
   }
 
@@ -380,7 +377,7 @@ class ProposalComments extends Component {
             <p>{reply.text}</p>
             {this.state.replyBox === reply._id ?
               <CommentForm parent={reply._id} comment={{ _id: commentId }} add={this.commentReply} cancel={() => { this.setState({ replyBox: "" }) }} /> :
-              <Button className="btn-clear" onClick={() => this.setState({ replyBox: reply._id })}> Reply </Button>
+              <Button className="btn-clear" onClick={() => this.openReplyBox(reply._id)}> Reply </Button>
             }
           </Col>
         </Col>
@@ -472,7 +469,7 @@ class ProposalComments extends Component {
                   <p>{comment.message}</p>
                   {this.state.replyBox === comment._id ?
                     <CommentForm comment={comment} add={this.commentReply} cancel={() => this.setState({ replyBox: "" })} /> :
-                    <Button className="btn-clear" onClick={() => this.setState({ replyBox: comment._id })}> Reply </Button>
+                    <Button className="btn-clear" onClick={() => this.openReplyBox(comment._id)}> Reply </Button>
                   }
                 </Col>
               </Col>

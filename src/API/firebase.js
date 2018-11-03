@@ -21,7 +21,6 @@ const base = Rebase.createClass(fire.database());
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 const comments = fire.database().ref('comments');
-const commentReplies = fire.database().ref('commentReplies');
 const commentReplies_V2 = fire.database().ref('commentReplies_V2');
 const votes = fire.database().ref('votes');
 
@@ -398,7 +397,6 @@ export {
   messages,
   usernames,
   comments,
-  commentReplies,
   commentReplies_V2,
   phoneAuth,
   fire,
