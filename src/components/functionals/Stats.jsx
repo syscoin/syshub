@@ -31,7 +31,7 @@ class Stats extends Component {
   }
 
   changeContent(item) {
-    const percent_change = -0.32// this.getValue(item.key).percent_change_1h;
+    const percent_change = this.getValue(item.key).percent_change_1h;
     return (
       <div>
         <div className={'changeTxtHeading'}>
