@@ -17,11 +17,51 @@ class Stats extends Component {
 
   getValue(field) {
     return {
-      changeRate: this.props.sysInfo.sysPrice ? (parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(5)) : 0,
+      changeRate: {
+        usdChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_usd).toFixed(8) : 0,
+        btcChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) : 0,
+        satoshiChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) * 100000000 : 0,
+        percent_change_1h: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_1h) : 0,
+        percent_change_24h: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_24h) : 0,
+        percent_change_7d: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_7d) : 0,
+      },
       masternodes: this.props.sysInfo.mnCount ? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`) : '0/0',
       totUsers: this.props.sysInfo ? (this.props.sysInfo.users) : 0,
     }[field];
   }
+
+  changeContent(item) {
+    const percent_change = -0.32// this.getValue(item.key).percent_change_1h;
+    return (
+      <div>
+        <div className={'changeTxtHeading'}>
+          <div className="changeTxtBody firstLine"> ${this.getValue(item.key).usdChangeRate}
+            <span className="symbol"> USD</span>
+          </div>
+          <div className="changeTxtBody"> {this.getValue(item.key).btcChangeRate} BTC</div>
+          <div className="changeTxtBody"> {this.getValue(item.key).satoshiChangeRate} SATOSHI</div>
+          <div className={`changeTxtBody percentage ${percent_change > 0 ? 'goingUp' : 'goingDown'}`}> {`${percent_change} %`}</div>
+        </div>
+        {/* <div className="statsText">{item.text}</div> */}
+      </div>
+    )
+  }
+
+  defineCardContent(item) {
+    if (item.text.length > 1) {
+      return this.changeContent(item);
+    } else {
+      return (
+        <div>
+          <div className={'statsTextHeading'}>
+            <h1> {this.getValue(item.key)} </h1>
+          </div>
+          <div className="statsText">{item.text}</div>
+        </div>
+      )
+    }
+  }
+
 
   render() {
     const { classes, deviceType } = this.props;
@@ -49,11 +89,7 @@ class Stats extends Component {
                     }
                   />
                   <CardContent height={'50%'} style={{ position: 'relative', }}>
-                    <div className={'statsTextHeading'}>
-                      <h1> {this.getValue(item.key)} </h1>
-                    </div>
-                    <div className="statsText">{item.text}</div>
-
+                    {this.defineCardContent(item)}
                   </CardContent>
                 </Card>
               );
