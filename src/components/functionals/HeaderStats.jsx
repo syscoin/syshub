@@ -16,22 +16,25 @@ class HeaderStats extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(5)} BTC/SYS` : 0;
-    const masternodes = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
-    const totUsers = this.props.sysInfo ? (this.props.sysInfo.users) : 0;
+    const usdChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_usd).toFixed(8)} USD` : 0;
+    const btcChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8)} BTC` : 0;
+    const satChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000} SATOSHI` : 0;
+    const masternodes   = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
+    const totUsers      = sysInfo ? (this.props.sysInfo.users) : 0;
+    const sysCaption    = deviceType === 'mobile' ? ':': 'SYSCOIN:';
     //console.clear();
     return (
       <Grid container className={style}>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
-          <a onClick={() => this.props.setPage('home')}>
-            <img alt="a" src={require('../../assets/img/png_stasts_sys.png')} className="icon" />
-          </a>
-          {deviceType === 'mobile' ? (
-            <span className="TxtBold">{`: `}</span>
-          ) : (
-              <span className="TxtBold">{`SYSCOIN: `}</span>
-            )}
-          {changeRate}
+        <div className="changeRate">
+          <img alt="a" src={require('../../assets/img/png_stasts_sys.png')} className="icon" onClick={() => this.props.setPage('home')}/>
+          <span className="TxtBold">{sysCaption}</span>
+          <div className="changeValue">
+            <i>{usdChangeRate}</i>
+            <i>{btcChangeRate}</i>
+            <i>{satChangeRate}</i>
+          </div>
+        </div>
         </Grid>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img

@@ -21,9 +21,24 @@ export default {
           height: 20
         }
       },
+      '& .changeRate': {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+      },
       '& .icon': {
         height: 25,
         margin: '0px 10px',
+      },
+      '& .changeValue': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        margin: '0 0 0 1em',
+        color: white,
+        lineHeight: '1.1em',
       },
     },
     '& .TxtBold': {
