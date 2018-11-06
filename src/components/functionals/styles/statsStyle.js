@@ -1,6 +1,9 @@
 import palette from './palette';
 
 const primary = palette.primary;
+const grey = palette.grey;
+const green = palette.green;
+const red = palette.red;
 const boxShadow = palette.boxShadow;
 
 export default {
@@ -8,7 +11,7 @@ export default {
     '& .statsHeading': {
       alignItems: 'center',
       display: 'flex',
-      fontSiza: '32px'
+      fontSize: '32px'
     },
     '& .headingIcon': {
       height: '50px',
@@ -68,7 +71,29 @@ export default {
         //border: '1px solid blue',
         margin: '0 3% 0 0'
       }
-    }
+    },
+    '& .changeTxtHeading': {
+      fontWeight: 'bold',
+      marginTop: '20px',
+      height: '60px',
+      '& .changeTxtBody': {
+        color: grey,
+      },
+      '& .firstLine': {
+        lineHeight: '2rem',
+        fontSize: '1.5rem',
+        color: primary
+      },
+      '& .symbol': {
+        fontSize: '1rem',
+        color: primary
+      },
+      '& .percentage': {
+        fontSize: '1.3rem'
+      },
+      '& .goingUp':{ color: green},
+      '& .goingDown':{color: red},
+    },
   },
   mRoot: {
     extend: 'root',

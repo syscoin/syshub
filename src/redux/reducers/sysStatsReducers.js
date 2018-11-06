@@ -6,17 +6,17 @@ const initialState = {
     {
       img: 'png_stasts_sys.png',
       key: 'changeRate',
-      text: 'BTC/SYS'
+      text: ['USD', 'BTC', 'SATOSHI']
     },
     {
       img: 'png_menu_masternodes_selected.png',
       key: 'masternodes',
-      text: 'REGISTERED MASTERNODES'
+      text: ['REGISTERED MASTERNODES']
     },
     {
       img: 'png_stats_users.png',
       key: 'totUsers',
-      text: 'ALL USERS'
+      text: ['ALL USERS']
     }
   ],
   totMn: 0,
