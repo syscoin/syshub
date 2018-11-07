@@ -5,7 +5,7 @@ import { HTTPAsync } from '../helpers';
 /** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
 /**---------------------------------------------------------------------------- */
 
-const baseApiURL = constants.URL_SYS_MN_API; // Quang HTTPS server
+const baseApiURL = constants.URL_SYS_MN_PROD_API; // Quang HTTPS server
 
 /**---------------------------------------------------------------------------- */
 
