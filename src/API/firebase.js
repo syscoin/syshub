@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Rebase from 're-base';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
@@ -16,6 +16,8 @@ const config = {
 firebase.initializeApp(config);
 
 const fire = firebase;
+
+console.log('ACZ config -->', process.env.NODE_ENV, config);
 
 const base = Rebase.createClass(fire.database());
 const messages = fire.database().ref('messages');
