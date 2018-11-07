@@ -6,17 +6,17 @@ cache:
   key: '$CI_BUILD_REPO'
 
 stages:
-  - develop
+  - developing
   - staging
-  - stable
+  - production
 
-develop:
-  stage: develop
+developing:
+  stage: developing
   image: cortesa/docker-firebase
-  environment: Develop
+  environment: development
   script:
     - npm install
-    - npm run build
+    - npm run build:development
     - firebase use --token $FIREBASE_TOKEN syshub-dev
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
   except:
@@ -26,24 +26,24 @@ develop:
 staging:
   stage: staging
   image: cortesa/docker-firebase
-  environment: Develop
-  script:
-    - npm install
-    - npm run build
-    - firebase use --token $FIREBASE_TOKEN syshub-61377
-    - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
-  only:
-    - staging
-  
-
-stable:
-  stage: stable
-  image: cortesa/docker-firebase
-  environment: Production
+  environment: development
   only:
     - master
   script:
     - npm install
-    - npm run build
+    - npm run build:development
+    - firebase use --token $FIREBASE_TOKEN syshub-dev
+    - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
+
+# it shuold deploys in production
+production:
+  stage: production
+  image: cortesa/docker-firebase
+  environment: production
+  only:
+    - staging
+  script:
+    - npm install
+    - npm run build:production
     - firebase use --token $FIREBASE_TOKEN syshub-61377
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
