@@ -17,8 +17,6 @@ firebase.initializeApp(config);
 
 const fire = firebase;
 
-console.log('ACZ config -->', process.env.NODE_ENV, config);
-
 const base = Rebase.createClass(fire.database());
 const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
