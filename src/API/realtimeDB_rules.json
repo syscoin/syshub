@@ -1,0 +1,36 @@
+{
+  "rules": {
+  	"messages": {
+      ".read": true,
+      ".write": "auth !== null",
+    },
+    "usernames": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "2FA": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
+    "comments": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "commentReplies_V2": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "votes": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "proposals": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "MasterNodes": {
+      ".read": true,
+      ".write": "auth !== null"
+    }
+  }
+}

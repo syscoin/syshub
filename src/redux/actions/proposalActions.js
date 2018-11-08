@@ -3,10 +3,10 @@ import constants from '../constants';
 import { HTTPAsync } from '../helpers';
 
 /**---------------------------------------------------------------------------- */
-/** TO CHANGE THE URL FOR THE API GO TO "/src/redux/constants/apiURLsConst.js"  */
+/** TO CHANGE THE URL FOR THE API DO IT IN ".env -> REACT_APP_SYS_MN_API"       */
 /**---------------------------------------------------------------------------- */
 
-const baseApiURL = constants.URL_SYS_MN_PROD_API; // Quang HTTPS server
+const baseApiURL = process.env.REACT_APP_SYS_MN_API;
 
 /**---------------------------------------------------------------------------- */
 
