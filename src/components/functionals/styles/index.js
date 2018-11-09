@@ -22,7 +22,7 @@ import newsDetailStyle from './newsDetailStyle';
 import newsAboutStyle from './newsAboutStyle';
 import newsFooterStyle from './newsFooterStyle';
 import newsHeaderStyle from './newsHeaderStyle';
-import masternodeAddStyle from './masternodeAddStyle';
+// import masternodeAddStyle from './masternodeAddStyle';
 import masternodeListStyle from './masternodeListStyle';
 
 export {
@@ -50,6 +50,5 @@ export {
   newsAboutStyle,
   newsFooterStyle,
   newsHeaderStyle,
-  masternodeAddStyle,
   masternodeListStyle,
 };

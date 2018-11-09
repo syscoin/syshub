@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 
 // import style
 import injectSheet from 'react-jss';
-import { masternodeAddStyle } from './styles';
+import masternodeAddStyle from './masternodeAdd.style';
 
 class MasterNodeAdd extends Component {
   constructor(props) {

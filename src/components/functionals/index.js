@@ -12,7 +12,7 @@ import ProposalPayment from './ProposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat';
 import ProposalDescription from './ProposalDescription';
 import ProposalComments from './ProposalComments';
-import MasternodeAdd from './MasternodeAdd';
+import MasternodeAdd from './masternodeAdd/masternodeAdd';
 import MasternodeList from './MasternodeList';
 import NewsHeader from './NewsHeader';
 import NewsBody from './NewsBody';
