@@ -51,7 +51,7 @@ class MasterNode extends Component {
 
     masternode.key = this.state.nodes.length + 1;
     masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-    masternode.vin = cryptr.encrypt(masternode.vin);
+    masternode.txid = cryptr.encrypt(masternode.txid);
     this.setState({
       nodes: [masternode, ...this.state.nodes]
     });
@@ -94,7 +94,7 @@ class MasterNode extends Component {
     const cryptr = new Cryptr(user.uid);
 
     node.mnPrivateKey = cryptr.encrypt(node.mnPrivateKey);
-    node.vin = cryptr.encrypt(node.vin);
+    node.txid = cryptr.encrypt(node.txid);
 
     fire
       .database()

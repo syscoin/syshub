@@ -40,7 +40,7 @@ class MasterNodeList extends Component {
         name: record.name,
         mnPrivateKey: cryptr.decrypt(record.mnPrivateKey),
         key: record.key,
-        vin: cryptr.decrypt(record.vin),
+        txid: cryptr.decrypt(record.txid),
         keyId: record.keyId
       }
     });
@@ -197,15 +197,15 @@ class MasterNodeList extends Component {
                 </FormGroup>
                 <FormGroup className="form-group">
                   <span htmlFor="password" className="label">
-                    {`MN Vin: `}
+                    {`MN TXID: `}
                   </span>
                   <input
-                    ref={vin => (this.nodeVin = vin)}
-                    id="vin"
-                    name="vin"
+                    ref={txid => (this.nodeVin = txid)}
+                    id="txid"
+                    name="txid"
                     className="input-field"
                     placeholder="123.45.67.891.12345"
-                    value={this.state.editNodeRecord.vin}
+                    value={this.state.editNodeRecord.txid}
                     onChange={this.onChange}
                   />
                 </FormGroup>
