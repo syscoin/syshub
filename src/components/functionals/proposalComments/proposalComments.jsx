@@ -7,14 +7,14 @@ import { Grid, Button, Typography } from '@material-ui/core';
 import swal from 'sweetalert';
 
 
-import actions from '../../redux/actions';
-import CommentForm from './commentForm';
+import actions from '../../../redux/actions';
+import CommentForm from './commentForm/commentForm';
 
 // import firebase
-import { comments, commentReplies_V2 } from '../../API/firebase';
+import { comments, commentReplies_V2 } from '../../../API/firebase';
 
 import injectSheet from 'react-jss';
-import { proposalCommentsStyle } from './styles';
+import proposalCommentsStyle from './proposalComments.style';
 
 class ProposalComments extends Component {
   constructor(props) {
@@ -449,7 +449,7 @@ class ProposalComments extends Component {
                     <div className="wrapper">
                       <img
                         alt="up"
-                        src={require('../../assets/img/png_button_up.png')}
+                        src={require('../../../assets/img/png_button_up.png')}
                         onClick={() => { this.voteForComment('up', comment._id) }}
                       />
                       <p className="count">{this.voteCount('up', comment.votes)}</p>
@@ -457,7 +457,7 @@ class ProposalComments extends Component {
                     <div className="wrapper">
                       <img
                         alt="down"
-                        src={require('../../assets/img/png_button_down.png')}
+                        src={require('../../../assets/img/png_button_down.png')}
                         onClick={() => { this.voteForComment('down', comment._id) }}
                       />
                       <p className="count">{this.voteCount('down', comment.votes)}</p>

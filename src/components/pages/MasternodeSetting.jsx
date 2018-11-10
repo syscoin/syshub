@@ -4,11 +4,18 @@ import injectSheet from 'react-jss';
 import { connect } from 'react-redux';
 import Cryptr from 'cryptr';
 
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+// import Icons
+import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
+import Add from '@material-ui/icons/Add';
+
 // import style
 import { masterNodeStyle } from './styles';
 
 // import components
-import { MasternodeList, MasternodeAdd } from '../functionals';
+import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../functionals';
 import { fire } from '../../API/firebase';
 
 class MasterNode extends Component {
@@ -16,10 +23,12 @@ class MasterNode extends Component {
     super(props);
 
     this.state = {
-      nodes: []
+      nodes: [],
+      activeTab: 0,
     };
 
     this.addNode = this.addNode.bind(this);
+    this.addNodes = this.addNodes.bind(this);
     this.deleteNode = this.deleteNode.bind(this);
     this.editNode = this.editNode.bind(this);
   }
@@ -39,6 +48,10 @@ class MasterNode extends Component {
           nodes: list
         });
       });
+  }
+
+  addNodes(masternodeArray) {
+    masternodeArray.map(mn => this.addNode(mn));    
   }
 
   addNode(masternode) {
@@ -103,14 +116,33 @@ class MasterNode extends Component {
       .update(node);
   }
 
+  handleOnTabClick = (event, activeTab) => {
+    this.setState({ activeTab });
+  };
+
   render() {
     const { classes, deviceType } = this.props;
+    const {activeTab} = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     return (
       <div className={style}>
         <h1 className="title">Masternode Settings</h1>
         <div className="masternode-div">
-          <MasternodeAdd deviceType={this.props.deviceType} addNode={this.addNode} />
+          <div className="heading">
+            <h2 className="add-title">Add New Masternode</h2>
+          </div>
+          <Tabs
+            value={activeTab}
+            onChange={this.handleOnTabClick}
+            indicatorColor="primary"
+            textColor="primary"
+            fullWidth
+          >
+            <Tab icon={<Add />} label="ADD" />
+            <Tab icon={<PlaylistAdd />} label="MULTIPLE ADD" />
+          </Tabs>
+          { activeTab === 0 && <MasternodeAdd deviceType={this.props.deviceType} addNode={this.addNode} /> }
+          { activeTab === 1 && <MasternodeBatchAdd deviceType={this.props.deviceType} addNodes={this.addNodes} /> }
           <MasternodeList
             deviceType={this.props.deviceType}
             nodes={this.state.nodes}

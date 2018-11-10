@@ -6,7 +6,7 @@ import Cryptr from 'cryptr';
 
 // import style
 import injectSheet from 'react-jss';
-import { masternodeListStyle } from './styles';
+import masternodeListStyle from './masternodeList.style';
 import { Table, Modal, Button } from 'antd';
 const confirm = Modal.confirm;
 
