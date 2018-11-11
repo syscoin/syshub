@@ -18,7 +18,7 @@ export default {
       background: white,
       padding: 25,
       overflowY: 'auto',
-      height: '80vh',
+      height: '76.5vh',
       boxShadow: boxShadow,
       '& .heading': {
         borderBottom: `1px solid ${greyLight}`
