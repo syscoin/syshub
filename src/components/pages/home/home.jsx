@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import injectSheet from 'react-jss';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
 // import components
-import { Stats } from '../functionals';
+import { Stats } from '../../functionals';
 // import { WelcomeBox } from '../functionals';
 
 // import style
-import { homeStyle } from './styles';
+import homeStyle from './home.style';
 
 class Home extends Component {
   state = {};

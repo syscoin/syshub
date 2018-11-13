@@ -5,14 +5,17 @@ import Paper from '@material-ui/core/Paper';
 import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
-import actions from '../../redux/actions';
-import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../API/firebase';
-import { userAccountStyle } from './styles';
+import actions from '../../../redux/actions';
+import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
 
-import UserProfile from '../functionals/UserProfile';
-import UserChangePsw from '../functionals/UserChangePsw';
-import UserDelete from '../functionals/UserDelete';
-import UserTwoFactor from '../functionals/UserTwoFactor';
+import UserProfile from '../../functionals/UserProfile';
+import UserChangePsw from '../../functionals/UserChangePsw';
+import UserDelete from '../../functionals/UserDelete';
+import UserTwoFactor from '../../functionals/UserTwoFactor';
+
+// Import styles
+import userAccountStyle from './userAccount.style';
+
 
 class UserAccount extends Component {
   constructor(props) {

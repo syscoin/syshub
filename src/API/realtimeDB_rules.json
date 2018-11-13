@@ -28,6 +28,10 @@
       ".read": true,
       ".write": "auth !== null"
     },
+    "proposalsDescriptions": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
     "MasterNodes": {
       ".read": true,
       ".write": "auth !== null"

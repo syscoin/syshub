@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
@@ -9,7 +9,6 @@ import htmlToDraft from 'html-to-draftjs';
 // import components
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Row, Col, Icon } from 'antd';
 import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
 
@@ -18,12 +17,14 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
-import { Hex } from '../../redux/helpers';
-import { fire } from '../../API/firebase';
+import { Hex } from '../../../redux/helpers';
+import { fire, getCurrentUser } from '../../../API/firebase';
+import { recoverPendingProposal, deletePendingProposal } from '../../../API/proposals.service';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 //import style
-import newProposalStyle from './styles/newProposalStyle';
+import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import newProposalStyle from './newProposal.style';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -99,107 +100,95 @@ class NewProposal extends Component {
     this.setState({ paymentDateOptions });
   }
 
-  componentDidMount() {
-    const currentUser = fire.auth().currentUser;
-    if (!currentUser) {
+  async componentDidMount() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) { return };
+
+    const userProp = await recoverPendingProposal(currentUser.uid);
+    if (!userProp) { 
+      return
+     };
+    const proposalDetail = userProp.descriptionRef;
+    if (userProp.hash) {
+      deletePendingProposal(currentUser.uid);
       return;
     }
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    proposalRef.once('value').then(snapshot => {
-      const userProp = snapshot.val();
-      if (!userProp) {
-        return;
-      }
-      const descriptionID = userProp.descriptionID;
-      const descriptionRef = fire
-        .database()
-        .ref('ProposalsDescriptions/' + descriptionID);
+    this.setState({
+      savedProposal: userProp
+    });
 
-      descriptionRef.once('value').then(detailObj => {
-        const proposalDetail = detailObj.val();
+    swal({
+      title: 'Recovery',
+      text:
+        `It seems you have some information saved in our db, would you like to recover the data?
 
-        if (userProp) {
-          if (userProp.hash) {
-            proposalRef.remove();
-            return;
-          }
+        If you CANCEL all data will be permanently deleted and the funds will be lost if you have paid any`,
+      buttons: true,
+      icon: 'info'
+    })
+    .then(value => {
+      if (value) {
+        this.setState({
+          recover: value,
+          prepareObj: userProp.prepareObj,
+          proposalDetail
+        });
+
+        let userProposal = {
+          //there are another def in line 339 both have to be in sync
+          type: 1,
+          name: userProp.name,
+          title: userProp.title,
+          descriptionID: userProp.descriptionID || '',
+          description: userProp.description || '',
+          username: userProp.username,
+          nPayment: userProp.nPayment,
+          first_epoch: userProp.first_epoch,
+          start_epoch: userProp.start_epoch,
+          end_epoch: userProp.end_epoch,
+          payment_address: userProp.payment_address,
+          payment_amount: userProp.payment_amount,
+          url: userProp.url
+        };
+
+        if (userProp.prepareReceipt) {
+          userProposal.prepareReceipt = userProp.prepareReceipt;
+          this.setState({
+            pValue: userProp.prepareReceipt
+          });
+        }
+
+        if (userProp.txid) {
+          userProposal.txid = userProp.txid;
 
           this.setState({
-            savedProposal: userProp
+            savedPayValue: userProp.txid
           });
-
-          swal({
-            title: 'Recovery',
-            text:
-              'It seems you have some information saved in our db, would you like to recover the data?',
-            buttons: true,
-            icon: 'info'
-          })
-            .then(value => {
-              if (value) {
-                this.setState({
-                  recover: value,
-                  prepareObj: userProp.prepareObj,
-                  proposalDetail
-                });
-
-                let userProposal = {
-                  //there are another def in line 339 both have to be in sync
-                  type: 1,
-                  name: userProp.name,
-                  title: userProp.title,
-                  descriptionID: userProp.descriptionID || '',
-                  description: userProp.description || '',
-                  username: userProp.username,
-                  nPayment: userProp.nPayment,
-                  first_epoch: userProp.first_epoch,
-                  start_epoch: userProp.start_epoch,
-                  end_epoch: userProp.end_epoch,
-                  payment_address: userProp.payment_address,
-                  payment_amount: userProp.payment_amount,
-                  url: userProp.url
-                };
-
-                if (userProp.prepareReceipt) {
-                  userProposal.prepareReceipt = userProp.prepareReceipt;
-                  this.setState({
-                    pValue: userProp.prepareReceipt
-                  });
-                }
-
-                if (userProp.txid) {
-                  userProposal.txid = userProp.txid;
-
-                  this.setState({
-                    savedPayValue: userProp.txid
-                  });
-                }
-
-                if (userProp.submitReceipt) {
-                  userProposal.submitReceipt = userProp.submitReceipt;
-
-                  this.setState({
-                    sValue: userProp.submitReceipt
-                  });
-                }
-
-                this.setState({
-                  visible: true,
-                  userProposal
-                });
-              } else {
-                this.setState({ savedProposal: {} });
-              }
-            })
-            .catch(err => {
-              swal({
-                title: 'Oops...',
-                text: `${err}`,
-                icon: 'error'
-              });
-            });
         }
+
+        if (userProp.submitReceipt) {
+          userProposal.submitReceipt = userProp.submitReceipt;
+
+          this.setState({
+            sValue: userProp.submitReceipt
+          });
+        }
+
+        this.setState({
+          visible: true,
+          userProposal
+        });
+      } else {
+        deletePendingProposal(currentUser.uid);
+        this.setState({ savedProposal: {} });
+      }
+    })
+    .catch(err => {
+      swal({
+        title: 'Oops...',
+        text: `${err}`,
+        icon: 'error'
       });
     });
   }
@@ -311,7 +300,7 @@ class NewProposal extends Component {
       const descriptionID = snapshot.val().descriptionID;
       const descriptionRef = fire
         .database()
-        .ref('ProposalsDescriptions/' + descriptionID);
+        .ref('proposalsDescriptions/' + descriptionID);
 
       if (this.state.hValue) {
         let updateProposalDetail = { ...this.state.proposalDetail };
@@ -455,7 +444,7 @@ class NewProposal extends Component {
     const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     const descriptionRef = fire
       .database()
-      .ref('ProposalsDescriptions/' + descriptionID);
+      .ref('proposalsDescriptions/' + descriptionID);
 
     descriptionRef.set({ detail: proposal__detail, hash: '' });
 
@@ -665,27 +654,6 @@ class NewProposal extends Component {
                 </FormItem>
               </Form>
             </Col>
-
-            {/*************************************************/}
-            {/* Commented intentionally don't remove this part*/}
-            {/*************************************************/}
-
-            {/* Proposal Description Url Colomn */}
-            {/* <Col span={deviceType === 'mobile' ? 24 : 14}>
-              {deviceType === 'mobile' ? (
-                <h3 className="proposal-title">Proposal Description Url</h3>
-              ) : null}
-              <Input
-                className="proposal-url-input"
-                placeholder="Enter Proposal Description Url"
-                value={`${this.state.proposallink}${
-                  this.state.proposalTitle ? '' : 'proposal-title'
-                  }`}
-                onChange={() => { }}
-              />
-            </Col> */}
-
-            {/*************************************************/}
           </Row>
         );
       case 1:
@@ -714,17 +682,6 @@ class NewProposal extends Component {
                       }
                     }}
                   />
-                  {/* <Button
-                    className="confirm-button"
-                    onClick={this.confirmProposalDetail.bind(this)}
-                    style={
-                      this.state.editorState && this.state.editorState.getCurrentContent().hasText()
-                        ? { backgroundColor: '#1991CC' }
-                        : { backgroundColor: '#BDC3C7' }
-                    }
-                  >
-                    Confirm
-                  </Button> */}
                 </div>
               ) : (
                 // proposal detail preview
@@ -1032,19 +989,6 @@ class NewProposal extends Component {
                     <Step className="steper__wrapper" key={label}>
                       <StepLabel className="steper__label">
                         <h2 className="step-label"> {label} </h2>
-
-                        {/*************************************************/}
-                        {/* Commented intentionally don't remove this part*/}
-                        {/*************************************************/}
-
-                        {/*this.state.activeStep === 0 &&
-                            label === 'Proposal Title' &&
-                            deviceType !== 'mobile' ? (
-                              <h3 className="proposal-title">Proposal Description Url</h3>
-                            ) : null*/}
-
-                        {/*************************************************/}
-
                         {this.state.activeStep === 1 &&
                         label === 'Proposal Details' ? (
                           this.state.showEditor ? (
