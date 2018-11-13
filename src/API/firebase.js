@@ -392,6 +392,10 @@ const doDeleteAccount = () => {
   }
 };
 
+const getCurrentUser = () => {
+  return fire.auth().currentUser;
+}
+
 //Check if neccessary
 export {
   messages,
@@ -409,5 +413,6 @@ export {
   doDeleteAccount,
   votes,
   checkVoted,
-  voted
+  voted,
+  getCurrentUser
 };
