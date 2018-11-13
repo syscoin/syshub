@@ -20,7 +20,7 @@ developing:
     - firebase use --token $FIREBASE_TOKEN syshub-dev
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
   except:
-    - staging
+    - production
     - master
 
 staging:
@@ -41,7 +41,7 @@ production:
   image: cortesa/docker-firebase
   environment: production
   only:
-    - staging
+    - production
   script:
     - npm install
     - npm run build:production
