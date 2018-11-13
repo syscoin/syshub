@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 import { Icon } from 'antd';
-import { NewsList, NewsDetail } from '../containers';
+import { NewsList, NewsDetail } from '../../containers';
 
 // import style
-import { newsStyle } from './styles';
+import newsStyle from './news.style';
 
 class News extends Component {
 

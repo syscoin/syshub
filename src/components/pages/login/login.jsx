@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
-import { fire } from '../../API/firebase';
+import { fire } from '../../../API/firebase';
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
 // import style
 import injectSheet from 'react-jss';
-import { loginStyle } from './styles';
+import loginStyle from './login.style';
 
 class Login extends Component {
   constructor(props) {

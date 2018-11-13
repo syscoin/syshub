@@ -12,13 +12,13 @@ import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 import Add from '@material-ui/icons/Add';
 
 // import style
-import { masterNodeStyle } from './styles';
+import masterNodeSettingStyle from './masternodeSetting.style';
 
 // import components
-import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../functionals';
-import { fire } from '../../API/firebase';
+import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../../functionals';
+import { fire } from '../../../API/firebase';
 
-class MasterNode extends Component {
+class MasternodeSetting extends Component {
   constructor(props) {
     super(props);
 
@@ -165,4 +165,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(masterNodeStyle)(MasterNode));
+export default connect(stateToProps, dispatchToProps)(injectSheet(masterNodeSettingStyle)(MasternodeSetting));

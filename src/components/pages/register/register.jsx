@@ -5,13 +5,13 @@ import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
-import actions from '../../redux/actions';
-import { fire } from '../../API/firebase';
+import actions from '../../../redux/actions';
+import { fire } from '../../../API/firebase';
 import PropTypes from 'prop-types';
 
 // import style
 import injectSheet from 'react-jss';
-import { registerStyle } from './styles';
+import registerStyle from './register.style';
 
 const FormItem = Form.Item;
 
@@ -204,8 +204,8 @@ class Register extends Component {
   }
 
   render() {
-    const checkIcon = require('../../assets/img/check.png'),
-      closeIcon = require('../../assets/img/close.png'),
+    const checkIcon = require('../../../assets/img/check.png'),
+      closeIcon = require('../../../assets/img/close.png'),
       { classes, deviceType } = this.props;
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     //Platform style switcher

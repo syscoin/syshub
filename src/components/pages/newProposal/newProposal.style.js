@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
