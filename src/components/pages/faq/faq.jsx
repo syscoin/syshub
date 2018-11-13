@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 // import components
-import { faqStyle } from './styles';
+import faqStyle from './faq.style';
 
 const Panel = Collapse.Panel;
 

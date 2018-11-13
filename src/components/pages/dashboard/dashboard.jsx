@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 import { Grid } from '@material-ui/core';
 import { Icon } from 'antd';
-import { ProposalList } from '../containers/ProposalList';
-import { ProposalDetail } from '../containers/ProposalDetail';
+import { ProposalList } from '../../containers/ProposalList';
+import { ProposalDetail } from '../../containers/ProposalDetail';
 
 // import components
 import injectSheet from 'react-jss';
-import { dashboardStyle } from './styles';
+import dashboardStyle from './dashboard.style';
 
 class DashBoard extends Component {
   constructor(props) {
