@@ -19,7 +19,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
 import { fire, getCurrentUser } from '../../../API/firebase';
-import { checkPendingProposal, recoverPendingProposal, deletePendingProposal } from '../../../API/proposals.service';
+import { recoverPendingProposal, deletePendingProposal } from '../../../API/proposals.service';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 //import style
@@ -118,112 +118,81 @@ class NewProposal extends Component {
       savedProposal: userProp
     });
 
-    console.log('ACZ pendingProposal --> ', userProp);
-    
- // ---------------------------------------------------//
- /*    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+    swal({
+      title: 'Recovery',
+      text:
+        `It seems you have some information saved in our db, would you like to recover the data?
 
-    proposalRef.once('value').then(snapshot => {
-      const userProp = snapshot.val();
-      if (!userProp) {
-        return;
-      }
-      const descriptionID = userProp.descriptionID;
-      const descriptionRef = fire
-        .database()
-        .ref('proposalsDescriptions/' + descriptionID);
+        If you CANCEL all data will be permanently deleted and the funds will be lost if you have paid any`,
+      buttons: true,
+      icon: 'info'
+    })
+    .then(value => {
+      if (value) {
+        this.setState({
+          recover: value,
+          prepareObj: userProp.prepareObj,
+          proposalDetail
+        });
 
-      descriptionRef.once('value').then(detailObj => {
-        const proposalDetail = detailObj.val();
+        let userProposal = {
+          //there are another def in line 339 both have to be in sync
+          type: 1,
+          name: userProp.name,
+          title: userProp.title,
+          descriptionID: userProp.descriptionID || '',
+          description: userProp.description || '',
+          username: userProp.username,
+          nPayment: userProp.nPayment,
+          first_epoch: userProp.first_epoch,
+          start_epoch: userProp.start_epoch,
+          end_epoch: userProp.end_epoch,
+          payment_address: userProp.payment_address,
+          payment_amount: userProp.payment_amount,
+          url: userProp.url
+        };
 
-        if (userProp) {
-          if (userProp.hash) {
-            proposalRef.remove();
-            return;
-          }
+        if (userProp.prepareReceipt) {
+          userProposal.prepareReceipt = userProp.prepareReceipt;
+          this.setState({
+            pValue: userProp.prepareReceipt
+          });
+        }
+
+        if (userProp.txid) {
+          userProposal.txid = userProp.txid;
 
           this.setState({
-            savedProposal: userProp
-          }); */
-
-          swal({
-            title: 'Recovery',
-            text:
-              `It seems you have some information saved in our db, would you like to recover the data?
-
-              If you CANCEL all data will be permanently deleted and the funds will be lost if you have paid any`,
-            buttons: true,
-            icon: 'info'
-          })
-            .then(value => {
-              if (value) {
-                this.setState({
-                  recover: value,
-                  prepareObj: userProp.prepareObj,
-                  proposalDetail
-                });
-
-                let userProposal = {
-                  //there are another def in line 339 both have to be in sync
-                  type: 1,
-                  name: userProp.name,
-                  title: userProp.title,
-                  descriptionID: userProp.descriptionID || '',
-                  description: userProp.description || '',
-                  username: userProp.username,
-                  nPayment: userProp.nPayment,
-                  first_epoch: userProp.first_epoch,
-                  start_epoch: userProp.start_epoch,
-                  end_epoch: userProp.end_epoch,
-                  payment_address: userProp.payment_address,
-                  payment_amount: userProp.payment_amount,
-                  url: userProp.url
-                };
-
-                if (userProp.prepareReceipt) {
-                  userProposal.prepareReceipt = userProp.prepareReceipt;
-                  this.setState({
-                    pValue: userProp.prepareReceipt
-                  });
-                }
-
-                if (userProp.txid) {
-                  userProposal.txid = userProp.txid;
-
-                  this.setState({
-                    savedPayValue: userProp.txid
-                  });
-                }
-
-                if (userProp.submitReceipt) {
-                  userProposal.submitReceipt = userProp.submitReceipt;
-
-                  this.setState({
-                    sValue: userProp.submitReceipt
-                  });
-                }
-
-                this.setState({
-                  visible: true,
-                  userProposal
-                });
-              } else {
-                deletePendingProposal(currentUser.uid);
-                this.setState({ savedProposal: {} });
-              }
-            })
-            .catch(err => {
-              swal({
-                title: 'Oops...',
-                text: `${err}`,
-                icon: 'error'
-              });
-            });
+            savedPayValue: userProp.txid
+          });
         }
- /*      });
+
+        if (userProp.submitReceipt) {
+          userProposal.submitReceipt = userProp.submitReceipt;
+
+          this.setState({
+            sValue: userProp.submitReceipt
+          });
+        }
+
+        this.setState({
+          visible: true,
+          userProposal
+        });
+      } else {
+        deletePendingProposal(currentUser.uid);
+        this.setState({ savedProposal: {} });
+      }
+    })
+    .catch(err => {
+      swal({
+        title: 'Oops...',
+        text: `${err}`,
+        icon: 'error'
+      });
     });
   }
- */
+
   yearDayMonth(dateInMills, format) {
     const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
     const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) +
@@ -685,27 +654,6 @@ class NewProposal extends Component {
                 </FormItem>
               </Form>
             </Col>
-
-            {/*************************************************/}
-            {/* Commented intentionally don't remove this part*/}
-            {/*************************************************/}
-
-            {/* Proposal Description Url Colomn */}
-            {/* <Col span={deviceType === 'mobile' ? 24 : 14}>
-              {deviceType === 'mobile' ? (
-                <h3 className="proposal-title">Proposal Description Url</h3>
-              ) : null}
-              <Input
-                className="proposal-url-input"
-                placeholder="Enter Proposal Description Url"
-                value={`${this.state.proposallink}${
-                  this.state.proposalTitle ? '' : 'proposal-title'
-                  }`}
-                onChange={() => { }}
-              />
-            </Col> */}
-
-            {/*************************************************/}
           </Row>
         );
       case 1:
@@ -734,17 +682,6 @@ class NewProposal extends Component {
                       }
                     }}
                   />
-                  {/* <Button
-                    className="confirm-button"
-                    onClick={this.confirmProposalDetail.bind(this)}
-                    style={
-                      this.state.editorState && this.state.editorState.getCurrentContent().hasText()
-                        ? { backgroundColor: '#1991CC' }
-                        : { backgroundColor: '#BDC3C7' }
-                    }
-                  >
-                    Confirm
-                  </Button> */}
                 </div>
               ) : (
                 // proposal detail preview
@@ -823,7 +760,6 @@ class NewProposal extends Component {
                   value={this.state.address}
                   onChange={this.getAddress}
                 />
-                TAhk13PnY9f6Kw3K8f797G8rD4QBtb5f1B
               </Col>
             </Row>
             <Row className="amount-row">

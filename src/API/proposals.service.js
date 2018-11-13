@@ -10,7 +10,11 @@ export const checkPendingProposal = (uid) => {
   return !!proposalRef;
 };
 
-
+/**
+ * 
+ * @param {uid} User ID
+ * @return the proposal object plus the description atached  
+ */
 export const recoverPendingProposal = async (uid) => {
   const proposalRef = fire.database().ref(`proposals/${uid}`);
   const rawProposal = await proposalRef.once('value');
@@ -24,6 +28,11 @@ export const recoverPendingProposal = async (uid) => {
   return recoveredProposal;
 }
 
+/**
+ * 
+ * @param {uid} User ID
+ * remove all register even the description detail 
+ */
 export const deletePendingProposal = async (uid) => {
   const proposalRef = fire.database().ref(`proposals/${uid}`);
   const rawProposal = await proposalRef.once('value');
