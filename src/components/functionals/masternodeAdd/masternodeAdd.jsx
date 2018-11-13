@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 
 // import style
 import injectSheet from 'react-jss';
-import { masternodeAddStyle } from './styles';
+import masternodeAddStyle from './masternodeAdd.style';
 
 class MasterNodeAdd extends Component {
   constructor(props) {
@@ -22,17 +22,17 @@ class MasterNodeAdd extends Component {
 
   addNode(event) {
     event.preventDefault();
-    if (RegExp(/-0|-1/).test(this.state.newNode.vin) !== true) {
+    if (RegExp(/-0|-1/).test(this.state.newNode.txid) !== true) {
       swal({
         title: 'Oops...',
-        text: 'Please make sure to add "-0" or "-1" to the end of your vin.',
+        text: 'Please make sure to add "-0" or "-1" to the end of your txid.',
         icon: 'error'
       });
       return;
     }
     if (this.state.newNode.name && this.state.newNode.mnPrivateKey) {
       this.props.addNode(this.state.newNode);
-      this.setState({ newNode: { name: '', mnPrivateKey: '', vin: '' } });
+      this.setState({ newNode: { name: '', mnPrivateKey: '', txid: '' } });
     }
   }
 
@@ -52,9 +52,6 @@ class MasterNodeAdd extends Component {
 
     return (
       <div className={style}>
-        <div className="heading">
-          <h2 className="add-title">Add New Masternode</h2>
-        </div>
         <Grid item md={12} className="form__container">
           <form
             onSubmit={event => this.addNode(event)}
@@ -98,15 +95,15 @@ class MasterNodeAdd extends Component {
 
               <FormGroup className="form-group">
                 <span htmlFor="password" className="label">
-                  {`MN Vin: `}
+                  {`MN TXID: `}
                 </span>
                 <input
-                  ref={vin => (this.nodeVin = vin)}
+                  ref={txid => (this.nodeVin = txid)}
                   id="address"
-                  name="vin"
+                  name="txid"
                   className="input-field"
                   placeholder="0d8.....b07d02-0"
-                  value={this.state.newNode.vin}
+                  value={this.state.newNode.txid}
                   onChange={this.onChange}
                 />
               </FormGroup>

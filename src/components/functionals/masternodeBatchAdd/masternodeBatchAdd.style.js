@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const white = palette.white;
 const primary = palette.primary;
@@ -17,7 +17,7 @@ export default {
     '& .form__container': {
       padding: '20px',
       '& .form-group': {
-        flexDirection: 'row',
+        flexDirection: 'column',
         marginTop: '10px'
       },
       '& .label': {

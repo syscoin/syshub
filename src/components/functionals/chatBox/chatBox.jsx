@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -12,10 +12,10 @@ import { Input } from 'antd';
 import swal from 'sweetalert';
 import { Form } from 'antd';
 
-import { messages, fire } from '../../API/firebase';
+import { messages, fire } from '../../../API/firebase';
 
 import injectSheet from 'react-jss';
-import { chatBoxStyle } from './styles';
+import chatBoxStyle from './chatBox.style';
 
 
 class ChatBox extends Component {
