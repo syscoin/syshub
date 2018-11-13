@@ -1,4 +1,4 @@
-import ChatBox from './ChatBox';
+import ChatBox from './chatBox/chatBox';
 import HeaderStats from './HeaderStats';
 import HeaderNav from './HeaderNav';
 import SiderLogo from './SiderLogo';
@@ -11,9 +11,10 @@ import ProposalCard from './ProposalCard';
 import ProposalPayment from './ProposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat';
 import ProposalDescription from './ProposalDescription';
-import ProposalComments from './ProposalComments';
-import MasternodeAdd from './MasternodeAdd';
-import MasternodeList from './MasternodeList';
+import ProposalComments from './proposalComments/proposalComments';
+import MasternodeAdd from './masternodeAdd/masternodeAdd';
+import MasternodeBatchAdd from './masternodeBatchAdd/masternodeBatchAdd';
+import MasternodeList from './masternodeList/masternodeList';
 import NewsHeader from './NewsHeader';
 import NewsBody from './NewsBody';
 import NewsAbout from './NewsAbout';
@@ -35,6 +36,7 @@ export {
   ProposalDescription,
   ProposalComments,
   MasternodeAdd,
+  MasternodeBatchAdd,
   MasternodeList,
   NewsHeader,
   NewsBody,

@@ -131,7 +131,7 @@ class ProposalCard extends Component {
         for (let i = 0; i < user.MasterNodes.length; i++) {
           const proposalVoteYes = {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
-            vinMasternode: cryptr.decrypt(MN[i].vin),
+            vinMasternode: cryptr.decrypt(MN[i].txid),
             gObjectHash: proposal.Hash,
             voteOutcome: 1
           };
@@ -216,8 +216,8 @@ class ProposalCard extends Component {
                       <a
                         onClick={() =>
                           this.updateError(
-                            `Invalid vin. Please check: ${cryptr.decrypt(
-                              MN[i].vin
+                            `Invalid txid. Please check: ${cryptr.decrypt(
+                              MN[i].txid
                             )}`
                           )
                         }
@@ -288,7 +288,7 @@ class ProposalCard extends Component {
                 status: (
                   <a
                     onClick={() =>
-                      this.updateError(`Invalid masternode key or vin`)
+                      this.updateError(`Invalid masternode key or txid`)
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
@@ -351,7 +351,7 @@ class ProposalCard extends Component {
         for (let i = 0; i < user.MasterNodes.length; i++) {
           const proposalVoteNo = {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
-            vinMasternode: cryptr.decrypt(MN[i].vin),
+            vinMasternode: cryptr.decrypt(MN[i].txid),
             gObjectHash: proposal.Hash,
             voteOutcome: 2
           };
@@ -436,8 +436,8 @@ class ProposalCard extends Component {
                       <a
                         onClick={() =>
                           this.updateError(
-                            `Invalid vin. Please check: ${cryptr.decrypt(
-                              MN[i].vin
+                            `Invalid txid. Please check: ${cryptr.decrypt(
+                              MN[i].txid
                             )}`
                           )
                         }
@@ -508,7 +508,7 @@ class ProposalCard extends Component {
                 status: (
                   <a
                     onClick={() =>
-                      this.updateError(`Invalid masternode key or vin`)
+                      this.updateError(`Invalid masternode key or txid`)
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
