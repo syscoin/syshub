@@ -14,13 +14,16 @@ class UserProfile extends Component {
     super(props);
 
     this.state = {
-      disabled: false,
+      disabled: true,
       image: null,
-      imageFile: null
+      imageFile: null,
+      showUserNameMsg: false,
+      showEmailMsg: false
     };
 
     this.submitProfile = this.submitProfile.bind(this);
     this.checkUsername = this.checkUsername.bind(this);
+    this.checkUserEmail = this.checkUserEmail.bind(this);
   }
 
   submitProfile() {
@@ -73,7 +76,7 @@ class UserProfile extends Component {
             this.registerName.value = '';
             this.registerEmail.value = '';
             this.setState({
-              disabled: false
+              disabled: true
             });
           }
         );
@@ -87,6 +90,12 @@ class UserProfile extends Component {
         disabled: false
       });
     }
+  }
+
+  checkUserEmail(event) {
+    const email = event.target.value;
+    const disabled = email ? false : true;
+    this.setState({ disabled });
   }
 
   checkUsername(event) {
@@ -106,16 +115,24 @@ class UserProfile extends Component {
       usernameRef.on('value', snapshot => {
         if (Object.values(snapshot.val()).includes(username) === true) {
           this.setState({
-            disabled: true
+            disabled: true,
+            showUserNameMsg: true
           });
         } else {
           this.setState({
-            disabled: false
+            disabled: false,
+            showUserNameMsg: true
           });
         }
       });
+    } else {
+      this.setState({
+        showUserNameMsg: false,
+        disabled: true,
+      });
     }
   }
+
   // upload profile image function
   onImageChange(event) {
     const file = event.target.files[0];
@@ -125,11 +142,13 @@ class UserProfile extends Component {
         this.setState({ image: e.target.result, imageFile: file });
       };
       reader.readAsDataURL(event.target.files[0]);
+      this.setState({disabled: false});
     }
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, currentUser } = this.props;
+    const { showEmailMsg, showUserNameMsg } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -137,6 +156,7 @@ class UserProfile extends Component {
       this.props.currentUser && this.props.currentUser.photoURL
         ? this.props.currentUser.photoURL
         : require('../../assets/img/no-user-image.gif');
+
     return (
       <div className={style}>
         <Grid container className="profile-grid">
@@ -177,12 +197,12 @@ class UserProfile extends Component {
                 name="usernames"
                 id="user-name"
                 className="input-field"
-                placeholder="new-username"
+                placeholder={currentUser.displayName}
                 onChange={this.checkUsername}
               />
-              <span className="validation-message">
+              {showUserNameMsg && <span className="validation-message">
                 {this.state.disabled === true ? 'Not Available' : 'Available'}
-              </span>
+              </span>}
             </FormGroup>
 
             {/* For User Email */}
@@ -195,9 +215,12 @@ class UserProfile extends Component {
                 name="email"
                 id="user-email"
                 className="input-field"
-                placeholder="new-email@company.com"
+                placeholder={currentUser.email}
+                onChange={this.checkUserEmail}
               />
-              <span className="validation-message">*password required.</span>
+              {showEmailMsg && <span className="validation-message">
+                {this.state.disabled === true ? 'Not Available' : 'Available'}
+              </span>}
             </FormGroup>
           </Grid>
           <Grid item md={9} lg={12} className="update-button-grid">
