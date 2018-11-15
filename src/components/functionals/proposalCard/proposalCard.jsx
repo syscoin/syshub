@@ -670,7 +670,7 @@ class ProposalCard extends Component {
 
               {//!------------
               }
-              <ProposalVotingDesktop/>
+              <ProposalVotingDesktop logged votingStatus onVote/>
               {//!------------
               }
 
