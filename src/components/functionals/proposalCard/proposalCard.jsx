@@ -1,10 +1,10 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { checkVoted, voted } from '../../API/firebase';
+import { checkVoted, voted } from '../../../API/firebase';
 
 //import antd components
 import { Button, Modal, Table } from 'antd';
@@ -12,9 +12,12 @@ import { Grid } from '@material-ui/core';
 import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
+// import custom components
+import ProposalVotingDesktop from '../proposalVoting/desktop/proposalVotingDesktop'
+
 // import style
 import injectSheet from 'react-jss';
-import { proposalCardStyle } from './styles';
+import { proposalCardStyle } from '../styles';
 
 class ProposalCard extends Component {
   constructor(props) {
@@ -543,9 +546,10 @@ class ProposalCard extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const docIcon = require('../../assets/img/png_stats_propposal_votes.png');
-    const voteUpIcon = require('../../assets/img/png_button_up.png');
-    const voteDownIcon = require('../../assets/img/png_button_down.png');
+    const docIcon = require('../../../assets/img/png_stats_propposal_votes.png');
+    const voteUpIcon = require('../../../assets/img/png_button_up.png');
+    const voteDownIcon = require('../../../assets/img/png_button_down.png');
+    const voteAbstain = require('../../../assets/img/png_button_updown.png');
     const yesCount = parseInt(proposal.YesCount, 10);
     const noCount = parseInt(proposal.NoCount, 10);
     const totalNodes = parseInt(this.props.totalNodes, 10);
@@ -639,11 +643,9 @@ class ProposalCard extends Component {
               )}
             </div>
           </Grid>
-
           {user ? (
             deviceType === 'mobile' ? (
-              <Grid item md={3} xs={3} className="mobile-vote__wrapper">
-                <div className="vote-text">Vote</div>
+              <Grid item md={3} xs={3} className="mobile-vote__wrapper">                <div className="vote-text">Vote</div>
                 <div className="vote-item">
                   <Button
                     className="btn-vote-up"
@@ -665,6 +667,14 @@ class ProposalCard extends Component {
               </Grid>
             ) : (
               <Grid item md={3} xs={3} className="desktop-vote__wrapper">
+
+              {//!------------
+              }
+              <ProposalVotingDesktop/>
+              {//!------------
+              }
+
+{/* 
                 <div className="vote-text">Vote on Proposal</div>
                 <Button
                   className="vote-up"
@@ -681,7 +691,7 @@ class ProposalCard extends Component {
                 <div className="vote-count">
                   <div className="vote-number">{proposal.YesCount}</div>
                   <div className="vote-number">{proposal.NoCount}</div>
-                </div>
+</div> */}
               </Grid>
             )
           ) : deviceType === 'mobile' ? (
@@ -694,6 +704,10 @@ class ProposalCard extends Component {
               <div className="vote-down">
                 <img alt="a" src={voteDownIcon} className="smallDownVoteIcon" />
                 <span className="voteNumber">{proposal.NoCount}</span>
+              </div>
+              <div className="vote-abstain">
+                <img src={voteAbstain} className="abstainVoteIcon" alt="" />
+                <div className="vote-number">{proposal.AbstainCount}</div>
               </div>
             </Grid>
           ) : (
@@ -708,6 +722,11 @@ class ProposalCard extends Component {
                 <img src={voteDownIcon} className="downVoteIcon" alt="" />
                 <br />
                 <div className="vote-number">{proposal.NoCount}</div>
+              </div>
+              <div className="vote-item__wrapper">
+                <img src={voteAbstain} className="abstainVoteIcon" alt="" />
+                <br />
+                <div className="vote-number">{proposal.AbstainCount}</div>
               </div>
             </Grid>
           )}

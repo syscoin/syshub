@@ -7,7 +7,7 @@ import WelcomeBox from './WelcomeBox';
 import Stats from './Stats';
 import FooterInfo from './FooterInfo';
 import DashBoardHeader from './DashBoardHeader';
-import ProposalCard from './ProposalCard';
+import ProposalCard from './proposalCard/proposalCard';
 import ProposalPayment from './ProposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat';
 import ProposalDescription from './ProposalDescription';

@@ -6,7 +6,7 @@ import siderMenuStyle from './siderMenuStyle';
 import statsStyle from './statsStyle';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
-import proposalCardStyle from './proposalCardStyle';
+import proposalCardStyle from '../proposalCard/proposalCard.style';
 import proposalPaymentStyle from './proposalPaymentStyle';
 import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
