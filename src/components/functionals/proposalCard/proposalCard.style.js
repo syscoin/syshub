@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../styles/palette';
 
 const primaryDark = palette.primaryDark;
 const primaryLight = palette.primaryLight;
@@ -11,7 +11,7 @@ export default {
     marginTop: 20,
     '& .proposalRow': {
       maxWidth: 'calc(100% - 35px)',
-      height: 150,
+      height: 160,
       margin: '5px 0 0 20px',
       backgroundColor: 'white',
       padding: '15px 0px',
@@ -152,6 +152,11 @@ export default {
             width: '30px',
             height: '40px',
             marginLeft: '18%'
+          },
+          '& .abstainVoteIcon': {
+            width: '30px',
+            height: '40px',
+            marginLeft: '18%'
           }
         },
         '& .votesNoView': {
@@ -166,7 +171,7 @@ export default {
       '& .vote__wrapper': {
         textAlign: 'center',
         marginTop: 35,
-        '& .vote-up, .vote-down': {
+        '& .vote-up, .vote-down, .vote-abstain': {
           paddingBottom: 15,
           width: 60,
           display: 'inline-block'
