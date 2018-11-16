@@ -11,7 +11,7 @@ export default {
     marginTop: 20,
     '& .proposalRow': {
       maxWidth: 'calc(100% - 35px)',
-      height: 150,
+      height: 160,
       margin: '5px 0 0 20px',
       backgroundColor: 'white',
       padding: '15px 0px',

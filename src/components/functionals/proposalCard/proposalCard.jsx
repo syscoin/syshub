@@ -13,7 +13,7 @@ import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
 // import custom components
-import ProposalVotingDesktop from '../proposalVoting/desktop/proposalVotingDesktop'
+import ProposalVotingDesktop from '../proposalVoting/proposalVotingDesktop'
 
 // import style
 import injectSheet from 'react-jss';
@@ -557,6 +557,13 @@ class ProposalCard extends Component {
 
     // Some Maths ;P
     const progress = (totalVotes / totalNodes) * 100; //remove added counts later and below
+    const logged = user? true : false;
+    const votingCount = {
+      yesCount: proposal.YesCount,
+      noCount: proposal.NoCount,
+      abstainCount: proposal.AbstainCount
+    }
+
 
     const columns = [
       {
@@ -670,7 +677,7 @@ class ProposalCard extends Component {
 
               {//!------------
               }
-              <ProposalVotingDesktop logged votingStatus onVote/>
+              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote/>
               {//!------------
               }
 
