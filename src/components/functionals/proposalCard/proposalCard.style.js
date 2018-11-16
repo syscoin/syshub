@@ -93,7 +93,7 @@ export default {
           fontSize: '15px'
         }
       },
-      '& .desktop-vote__wrapper': {
+      '& .proposalVoteView': {
         textAlign: 'center',
         paddingTop: 0,
         '& .vote-text': {
@@ -188,13 +188,14 @@ export default {
     extend: 'root',
     '& .proposalRow': {
       maxWidth: '100%',
-      height: 150,
+      height: 300,
       margin: '5px 0 0 0px',
       backgroundColor: 'white',
       padding: '15px 0px',
       borderRadius: '10px',
-      border: '2px solid ghostwhite',
+      border: '2px solid red',// ghostwhite',
       '& .proposalView': {
+        boder: '1px solid blue',
         textAlign: 'center',
         '& .progress-dial': {
           width: '100%',
@@ -210,6 +211,7 @@ export default {
         }
       },
       '& .proposalInfoView': {
+        border: '1px solid green',
         borderRight: '1px solid ' + gray,
         borderLeft: '1px solid ' + gray,
         paddingLeft: '10px',
@@ -247,7 +249,8 @@ export default {
           fontSize: '13px'
         }
       },
-      '& .mobile-vote__wrapper': {
+      '& .proposalVoteView': {
+        border: '1px solid cyan',
         textAlign: 'center',
         marginTop: 0,
         padding: 0,

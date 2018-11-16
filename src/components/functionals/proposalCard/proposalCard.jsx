@@ -815,46 +815,127 @@ render() {
 
     return (
       <Grid container className={style}>
-        <Grid
-          item
+        { deviceType === 'desktop' && 
+          <Grid
+            item
+            container
+            md={12}
+            xs={12}
+            className="proposalRow"
+            key={proposal.Hash}
+          >
+            <Grid item md={2} xs={3} className="proposalView">
+              <Progress
+                type="circle"
+                percent={progress}
+                format={percent => (
+                  <img alt="a" src={docIcon} className="progressIcon" />
+                )}
+                className="progress-dial"
+                strokeWidth={12}
+                status={
+                  progress < 35
+                    ? 'exception'
+                    : progress < 100
+                      ? 'active'
+                      : 'success'
+                }
+              />
+              <div className="proposalStatusNo">
+                <span
+                  className={
+                    progress < 35
+                      ? 'proposalStatusExecptionNo'
+                      : progress < 100
+                        ? 'proposalStatusActiveNo'
+                        : 'proposalStatusSuccessNo'
+                  }
+                >
+                  {totalVotes}
+                </span>
+                {` / `}
+                {totalNodes}
+              </div>
+            </Grid>
+            <Grid item md={7} xs={6} className="proposalInfoView">
+              <h1
+                className="proposalHeading"
+                onClick={() => selectProposal(proposal)}
+              >
+                {proposalTitle ? (
+                  proposalTitle.split('\n', 1)[0]
+                ) : (
+                  <span style={{ color: 'grey' }}>
+                    No title available for this proposal.
+                  </span>
+                )}
+              </h1>
+              <div className="proposalDetail">
+                <span>{`${payment_amount} SYS ${payment_type} `}</span>
+
+                {days_remaining < 30 ? (
+                  <span>{`(${days_remaining} Day${
+                    days_remaining > 1 ? 's' : ''
+                  } Remaining)`}</span>
+                ) : (
+                  <span>{`(${month_remaining} Month${
+                    month_remaining > 1 ? 's' : ''
+                  } Remaining)`}</span>
+                )}
+              </div>
+            </Grid>
+            <Grid item md={3} xs={3} className="proposalVoteView">
+              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+            </Grid>
+
+          </Grid>
+        }
+        { deviceType === 'mobile' &&
+          <Grid
           container
-          md={12}
-          xs={12}
+          direction="column"
+          justify="center"
+          alignItems="center"
           className="proposalRow"
           key={proposal.Hash}
         >
-          <Grid item md={2} xs={3} className="proposalView">
-            <Progress
-              type="circle"
-              percent={progress}
-              format={percent => (
-                <img alt="a" src={docIcon} className="progressIcon" />
-              )}
-              className="progress-dial"
-              strokeWidth={12}
-              status={
-                progress < 35
-                  ? 'exception'
-                  : progress < 100
-                    ? 'active'
-                    : 'success'
-              }
-            />
-            <div className="proposalStatusNo">
-              <span
-                className={
+          <Grid container direction="row" justify="center" alignItems="center">
+            <Grid item md={2} xs={3} className="proposalView">
+              <Progress
+                type="circle"
+                percent={progress}
+                format={percent => (
+                  <img alt="a" src={docIcon} className="progressIcon" />
+                )}
+                className="progress-dial"
+                strokeWidth={12}
+                status={
                   progress < 35
-                    ? 'proposalStatusExecptionNo'
+                    ? 'exception'
                     : progress < 100
-                      ? 'proposalStatusActiveNo'
-                      : 'proposalStatusSuccessNo'
+                      ? 'active'
+                      : 'success'
                 }
-              >
-                {totalVotes}
-              </span>
-              {` / `}
-              {totalNodes}
-            </div>
+              />
+              <div className="proposalStatusNo">
+                <span
+                  className={
+                    progress < 35
+                      ? 'proposalStatusExecptionNo'
+                      : progress < 100
+                        ? 'proposalStatusActiveNo'
+                        : 'proposalStatusSuccessNo'
+                  }
+                >
+                  {totalVotes}
+                </span>
+                {` / `}
+                {totalNodes}
+              </div>
+            </Grid>
+            <Grid item md={3} xs={3} className="proposalVoteView">
+              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+            </Grid>
           </Grid>
           <Grid item md={7} xs={6} className="proposalInfoView">
             <h1
@@ -883,11 +964,8 @@ render() {
               )}
             </div>
           </Grid>
-            <Grid item md={3} xs={3} className="mobile-vote__wrapper">
-              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
-            </Grid>
 
-        </Grid>
+        </Grid>}
         <Modal
           title="Results"
           visible={this.state.visible}
