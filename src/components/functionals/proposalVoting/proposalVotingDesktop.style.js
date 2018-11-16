@@ -1,16 +1,13 @@
 import palette from '../../../styles/palette';
 
-const primary = palette.primary;
 const primaryDark = palette.primaryDark;
-const primaryHover = palette.primaryHover;
 const red = palette.red;
 const redHover = palette.redHover;
 const green = palette.green;
 const greenHover = palette.greenHover;
-const white = palette.white;
 const gray = palette.grey;
-const text = palette.text;
 const greyDark = palette.greyDark;
+const greyHover = palette.greyHover;
 
 export default {
   root: {
@@ -30,6 +27,11 @@ export default {
       justifyContent: 'center',
       alignItems: 'stretch',
       padding: '0 15px',
+      '&:disabled': {
+        '& .acceptIcon, .abstainIcon, .declineIcon': {
+          fill: gray
+        },
+      }
     },
     '& .btnContent': {
       // border: '1px solid red',
@@ -52,7 +54,7 @@ export default {
         }
     },
     '& .abstain:hover':{
-        background: primaryHover,
+        background: greyHover,
         '& .voteNumbers': {
           color: greyDark
         }
@@ -65,7 +67,7 @@ export default {
       fill: green
     },
     '& .abstainIcon': {
-      fill: primary
+      fill: greyDark
     },
     '& .declineIcon': {
       fill: red

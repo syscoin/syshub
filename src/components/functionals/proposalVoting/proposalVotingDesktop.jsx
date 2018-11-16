@@ -20,28 +20,28 @@ class ProposalVotingDesktop extends Component {
 
   render() {
     const { classes, logged, votingCount } = this.props;
-    const accepts =  1 //votingCount.yesCount;
-    const declines = 100 // votingCount.noCount;
-    const abstains = 100000 // votingCount.abstainCount;
+    const accepts =  votingCount.yesCount;
+    const declines = votingCount.noCount;
+    const abstains = votingCount.abstainCount;
 
     return (
       <div className={classes.root}>
-        <div className="formLabel">Vote on Proposal</div>
-          <Button size="small" className="muiButton accept">
+        <div className="formLabel">Vote</div>
+          <Button size="small" className="muiButton accept" disabled={!logged} onClick={() => this.props.onVote('yes')}>
             <div className="btnContent">
               <KeyboardArrowUp className="btnIcon acceptIcon"/>
               <div className="voteLabel">Yes</div>
               <div className="voteNumbers">{`${accepts}`}</div>
             </div>
           </Button>
-          <Button size="small" className="muiButton abstain">
+          <Button size="small" className="muiButton abstain" disabled={!logged} onClick={() => this.props.onVote('abstain')}>
             <div className="btnContent">
               <CropSquare className="btnIcon abstainIcon"/>
               <div className="voteLabel">Abstain</div>
               <div className="voteNumbers">{`${abstains}`}</div>
             </div>
           </Button>
-          <Button size="small" className="muiButton decline">
+          <Button size="small" className="muiButton decline" disabled={!logged} onClick={() => this.props.onVote('no')}>
             <div className="btnContent">
               <KeyboardArrowDown className="btnIcon declineIcon"/>
               <div className="voteLabel">No</div>
