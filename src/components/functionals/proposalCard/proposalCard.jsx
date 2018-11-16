@@ -13,7 +13,8 @@ import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
 // import custom components
-import ProposalVotingDesktop from '../proposalVoting/proposalVotingDesktop'
+import ProposalVoting from '../proposalVoting/proposalVoting'
+import ProposalProgress from '../proposalProgress/proposalProgress'
 
 // import style
 import injectSheet from 'react-jss';
@@ -885,7 +886,7 @@ render() {
               </div>
             </Grid>
             <Grid item md={3} xs={3} className="proposalVoteView">
-              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+              <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
 
           </Grid>
@@ -899,9 +900,10 @@ render() {
           className="proposalRow"
           key={proposal.Hash}
         >
-          <Grid container direction="row" justify="center" alignItems="center">
-            <Grid item md={2} xs={3} className="proposalView">
-              <Progress
+          <Grid container direction="row" justify="space-between" alignItems="center">
+            <Grid item md={5} xs={5} className="proposalProgressView">
+            <ProposalProgress/>
+              {/* <Progress
                 type="circle"
                 percent={progress}
                 format={percent => (
@@ -931,13 +933,13 @@ render() {
                 </span>
                 {` / `}
                 {totalNodes}
-              </div>
+              </div> */}
             </Grid>
-            <Grid item md={3} xs={3} className="proposalVoteView">
-              <ProposalVotingDesktop logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+            <Grid item md={5} xs={5} className="proposalVoteView">
+              <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
           </Grid>
-          <Grid item md={7} xs={6} className="proposalInfoView">
+          <Grid item md={7} xs={7} className="proposalInfoView">
             <h1
               className="proposalHeading"
               onClick={() => selectProposal(proposal)}

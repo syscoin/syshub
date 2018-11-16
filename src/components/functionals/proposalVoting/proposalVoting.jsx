@@ -1,4 +1,4 @@
-// Inputs:  proposal voting status
+// Inputs:  user logged and proposal voting status
 // Outputs: voting result (yes/no/abstain)
 
 import React, { Component } from 'react';
@@ -14,7 +14,7 @@ import CropSquare from '@material-ui/icons/CropSquare';
 
 // import style
 import injectSheet from 'react-jss';
-import proposalVotingDesktopStyle from './proposalVotingDesktop.style';
+import proposalVotingDesktopStyle from './proposalVoting.style';
 
 class ProposalVotingDesktop extends Component {
 

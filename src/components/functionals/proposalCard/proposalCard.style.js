@@ -194,7 +194,7 @@ export default {
       padding: '15px 0px',
       borderRadius: '10px',
       border: '2px solid red',// ghostwhite',
-      '& .proposalView': {
+      '& .proposalProgressView': {
         boder: '1px solid blue',
         textAlign: 'center',
         '& .progress-dial': {
