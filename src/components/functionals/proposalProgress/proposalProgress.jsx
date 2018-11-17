@@ -6,15 +6,10 @@ import React, { Component } from 'react';
 //import material-ui components
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
 
 // import style
 import injectSheet from 'react-jss';
 import proposalProgressStyle from './proposalProgress.style';
-
-// import project assets
-const docIcon = require('../../../assets/img/png_stats_propposal_votes.png');
 
 class ProposalProgress extends Component {
   state = {
@@ -27,7 +22,7 @@ class ProposalProgress extends Component {
   componentWillMount(){
     this.prepareData();
   }
-  
+
   prepareData() {
     const { progressObj } = this.props;
     const { totalNodes, totalVotes, passingPercentage, funded } = progressObj;

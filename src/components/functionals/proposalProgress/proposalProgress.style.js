@@ -1,15 +1,11 @@
 import palette from '../../../styles/palette';
-import { newsBodyStyle } from '../styles';
 
-const primary = palette.primary;
 const white = palette.white;
 const red = palette.red;
-const redHover = palette.redHover;
 const green = palette.green;
 const greenLight = palette.greenLight;
 const greenHover = palette.greenHover;
 const greyLight = palette.greyLight;
-const greyHover = palette.greyHover;
 
 export default {
   root: {

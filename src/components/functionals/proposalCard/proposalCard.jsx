@@ -9,7 +9,6 @@ import { checkVoted, voted } from '../../../API/firebase';
 //import antd components
 import { Modal, Table } from 'antd';
 import { Grid } from '@material-ui/core';
-import { Progress } from 'antd';
 import Cryptr from 'cryptr';
 
 // import custom components
@@ -783,14 +782,12 @@ render() {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const docIcon = require('../../../assets/img/png_stats_propposal_votes.png');
     const yesCount = parseInt(proposal.YesCount, 10);
     const noCount = parseInt(proposal.NoCount, 10);
     const totalNodes = parseInt(this.props.totalNodes, 10);
     const totalVotes = yesCount - noCount > 0 ? yesCount - noCount : 0;
 
     // Some Maths ;P
-    const progress = (totalVotes / totalNodes) * 100; //remove added counts later and below
     const logged = user? true : false;
     const votingCount = {
       yesCount: proposal.YesCount,
