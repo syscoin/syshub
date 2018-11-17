@@ -902,38 +902,13 @@ render() {
         >
           <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item md={5} xs={5} className="proposalProgressView">
-            <ProposalProgress/>
-              {/* <Progress
-                type="circle"
-                percent={progress}
-                format={percent => (
-                  <img alt="a" src={docIcon} className="progressIcon" />
-                )}
-                className="progress-dial"
-                strokeWidth={12}
-                status={
-                  progress < 35
-                    ? 'exception'
-                    : progress < 100
-                      ? 'active'
-                      : 'success'
-                }
-              />
-              <div className="proposalStatusNo">
-                <span
-                  className={
-                    progress < 35
-                      ? 'proposalStatusExecptionNo'
-                      : progress < 100
-                        ? 'proposalStatusActiveNo'
-                        : 'proposalStatusSuccessNo'
-                  }
-                >
-                  {totalVotes}
-                </span>
-                {` / `}
-                {totalNodes}
-              </div> */}
+            <ProposalProgress 
+              progressObj={{
+                totalNodes: 1265,
+                totalVotes: 200,
+                fundedPercentage: 10,
+              }}
+            />
             </Grid>
             <Grid item md={5} xs={5} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>

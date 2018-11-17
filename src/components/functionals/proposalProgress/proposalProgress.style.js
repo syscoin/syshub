@@ -1,0 +1,71 @@
+import palette from '../../../styles/palette';
+import { newsBodyStyle } from '../styles';
+
+const primary = palette.primary;
+const white = palette.white;
+const red = palette.red;
+const redHover = palette.redHover;
+const green = palette.green;
+const greenLight = palette.greenLight;
+const greenHover = palette.greenHover;
+const greyLight = palette.greyLight;
+const greyHover = palette.greyHover;
+
+export default {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent:'center',
+    alignItems: 'center',
+    '& .proposalProgressWrapper': {
+      position: 'relative',
+      width: '100px',
+      height: '100px',
+    },
+    '& .proposalProgressButton':{
+      backgroundColor: white,
+      border: `11px solid ${greyLight}`,
+      position: 'absolute',
+      top: 1,
+      left: 1,
+      marginTop: 0,
+      marginLeft: 0,
+      width: '100%',
+      height: '100%',
+      boxShadow:'none',
+      '&.funded': {
+        backgroundColor: greenHover,
+      },
+    },
+    '& .proposalProgressInner':{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent:'center',
+      alignItems: 'center',
+    },
+    '& .proposalProgressIcon': {
+      width: '49%',
+      height: '49%',
+      margin: '3px 0 0 0'
+
+    },
+    '& .proposalProgressText':{
+      margin: '3px 0 0 0'
+    },
+    '& .proposalProgress': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      zIndex: 1,
+      '&>svg>circle': {
+        stroke: greenLight
+      }
+    },
+    '& .proposalProgressInfo': {
+      '&.funded': {
+        fontWeight: 'bold',
+        color: green
+      },
+    },
+  }
+}
