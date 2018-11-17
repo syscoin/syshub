@@ -9,6 +9,7 @@ export default {
   root: {
     height: '100%',
     marginTop: 20,
+
     '& .proposalRow': {
       maxWidth: 'calc(100% - 35px)',
       height: 160,
@@ -193,7 +194,7 @@ export default {
       backgroundColor: 'white',
       padding: '15px 0px',
       borderRadius: '10px',
-      border: '2px solid red',// ghostwhite',
+      border: '2px solid ghostwhite',
       '& .proposalProgressView': {
         boder: '1px solid blue',
         textAlign: 'center',

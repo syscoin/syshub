@@ -826,37 +826,14 @@ render() {
             key={proposal.Hash}
           >
             <Grid item md={2} xs={3} className="proposalView">
-              <Progress
-                type="circle"
-                percent={progress}
-                format={percent => (
-                  <img alt="a" src={docIcon} className="progressIcon" />
-                )}
-                className="progress-dial"
-                strokeWidth={12}
-                status={
-                  progress < 35
-                    ? 'exception'
-                    : progress < 100
-                      ? 'active'
-                      : 'success'
-                }
+              <ProposalProgress 
+                progressObj={{
+                  totalNodes: totalNodes,
+                  totalVotes: totalVotes,
+                  passingPercentage: 10,
+                  funded: proposal.fCachedFunding
+                }}
               />
-              <div className="proposalStatusNo">
-                <span
-                  className={
-                    progress < 35
-                      ? 'proposalStatusExecptionNo'
-                      : progress < 100
-                        ? 'proposalStatusActiveNo'
-                        : 'proposalStatusSuccessNo'
-                  }
-                >
-                  {totalVotes}
-                </span>
-                {` / `}
-                {totalNodes}
-              </div>
             </Grid>
             <Grid item md={7} xs={6} className="proposalInfoView">
               <h1
@@ -902,19 +879,20 @@ render() {
         >
           <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item md={5} xs={5} className="proposalProgressView">
-            <ProposalProgress 
-              progressObj={{
-                totalNodes: 1265,
-                totalVotes: 200,
-                fundedPercentage: 10,
-              }}
-            />
+              <ProposalProgress 
+                progressObj={{
+                  totalNodes: totalNodes,
+                  totalVotes: totalVotes,
+                  passingPercentage: 10,
+                  funded: proposal.fCachedFunding
+                }}
+              />
             </Grid>
             <Grid item md={5} xs={5} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
           </Grid>
-          <Grid item md={7} xs={7} className="proposalInfoView">
+          <Grid item md={12} xs={12} className="proposalInfoView">
             <h1
               className="proposalHeading"
               onClick={() => selectProposal(proposal)}

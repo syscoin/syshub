@@ -49,17 +49,34 @@ export default {
       margin: '3px 0 0 0'
 
     },
-    '& .proposalProgressText':{
-      margin: '3px 0 0 0'
+    '& .proposalProgressPercentage': {
+      margin: '20% 0 0 0',
+      fontSize: '1.9em',
+    },
+    '& .proposalProgressStatus':{
+      margin: '3px 0 0 0',
+      fontSize: '0.8em'
     },
     '& .proposalProgress': {
       position: 'absolute',
       top: 0,
       left: 0,
       zIndex: 1,
-      '&>svg>circle': {
-        stroke: greenLight
-      }
+      '&.unfunded':{
+        '&>svg>circle':{
+          stroke: red
+        }
+      },
+      '&.passing':{
+        '&>svg>circle':{
+          stroke: greenLight
+        }
+      },
+      '&.funded':{
+        '& svg>circle':{
+          stroke: greenLight
+        },
+      },
     },
     '& .proposalProgressInfo': {
       '&.funded': {
