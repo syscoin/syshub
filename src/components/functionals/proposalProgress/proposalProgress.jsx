@@ -13,7 +13,7 @@ import proposalProgressStyle from './proposalProgress.style';
 
 class ProposalProgress extends Component {
   state = {
-    progress : 0,
+    progress: 0,
     totalNodes: 0,
     totalVotes: 0,
     status: ''
@@ -26,7 +26,7 @@ class ProposalProgress extends Component {
   prepareData() {
     const { progressObj } = this.props;
     const { totalNodes, totalVotes, passingPercentage, funded } = progressObj;
-    const progress = Math.floor(totalVotes / totalNodes * 100);
+    const progress = Math.min(Math.floor(totalVotes / totalNodes * 100), 100);
     let status = progress >= passingPercentage ? 'passing' : 'unfunded';
     if (funded ) { status = 'funded' } ;
     this.setState({

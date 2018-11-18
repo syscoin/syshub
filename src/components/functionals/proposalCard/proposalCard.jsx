@@ -14,6 +14,7 @@ import Cryptr from 'cryptr';
 // import custom components
 import ProposalVoting from '../proposalVoting/proposalVoting'
 import ProposalProgress from '../proposalProgress/proposalProgress'
+import ProposalInfo from '../proposalInfo/propsalInfo'
 
 // import style
 import injectSheet from 'react-jss';
@@ -815,14 +816,11 @@ render() {
       <Grid container className={style}>
         { deviceType === 'desktop' && 
           <Grid
-            item
             container
-            md={12}
-            xs={12}
             className="proposalRow"
             key={proposal.Hash}
           >
-            <Grid item md={2} xs={3} className="proposalView">
+            <Grid item md={2} xs={3} className="proposalProgressView">
               <ProposalProgress 
                 progressObj={{
                   totalNodes: totalNodes,
@@ -833,49 +831,29 @@ render() {
               />
             </Grid>
             <Grid item md={7} xs={6} className="proposalInfoView">
-              <h1
-                className="proposalHeading"
-                onClick={() => selectProposal(proposal)}
-              >
-                {proposalTitle ? (
-                  proposalTitle.split('\n', 1)[0]
-                ) : (
-                  <span style={{ color: 'grey' }}>
-                    No title available for this proposal.
-                  </span>
-                )}
-              </h1>
-              <div className="proposalDetail">
-                <span>{`${payment_amount} SYS ${payment_type} `}</span>
-
-                {days_remaining < 30 ? (
-                  <span>{`(${days_remaining} Day${
-                    days_remaining > 1 ? 's' : ''
-                  } Remaining)`}</span>
-                ) : (
-                  <span>{`(${month_remaining} Month${
-                    month_remaining > 1 ? 's' : ''
-                  } Remaining)`}</span>
-                )}
-              </div>
+              <ProposalInfo 
+                title={proposalTitle}
+                paymentAmount={payment_amount}
+                paymentType={payment_type}
+                daysRemaining={days_remaining}
+                monthRemaining={month_remaining}
+              />
             </Grid>
             <Grid item md={3} xs={3} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
-
           </Grid>
         }
         { deviceType === 'mobile' &&
           <Grid
           container
-          direction="column"
+          direction="row"
           justify="center"
           alignItems="center"
           className="proposalRow"
           key={proposal.Hash}
         >
-          <Grid container direction="row" justify="space-between" alignItems="center">
-            <Grid item md={5} xs={5} className="proposalProgressView">
+            <Grid item md={6} xs={6} className="proposalProgressView">
               <ProposalProgress 
                 progressObj={{
                   totalNodes: totalNodes,
@@ -885,38 +863,18 @@ render() {
                 }}
               />
             </Grid>
-            <Grid item md={5} xs={5} className="proposalVoteView">
+            <Grid item md={6} xs={6} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
+            <Grid item md={12} xs={12} className="proposalInfoView">
+              <ProposalInfo 
+                title={proposalTitle}
+                paymentAmount={payment_amount}
+                paymentType={payment_type}
+                daysRemaining={days_remaining}
+                monthRemaining={month_remaining}
+              />
           </Grid>
-          <Grid item md={12} xs={12} className="proposalInfoView">
-            <h1
-              className="proposalHeading"
-              onClick={() => selectProposal(proposal)}
-            >
-              {proposalTitle ? (
-                proposalTitle.split('\n', 1)[0]
-              ) : (
-                <span style={{ color: 'grey' }}>
-                  No title available for this proposal.
-                </span>
-              )}
-            </h1>
-            <div className="proposalDetail">
-              <span>{`${payment_amount} SYS ${payment_type} `}</span>
-
-              {days_remaining < 30 ? (
-                <span>{`(${days_remaining} Day${
-                  days_remaining > 1 ? 's' : ''
-                } Remaining)`}</span>
-              ) : (
-                <span>{`(${month_remaining} Month${
-                  month_remaining > 1 ? 's' : ''
-                } Remaining)`}</span>
-              )}
-            </div>
-          </Grid>
-
         </Grid>}
         <Modal
           title="Results"
