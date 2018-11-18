@@ -786,7 +786,7 @@ render() {
     const yesCount = parseInt(proposal.YesCount, 10);
     const noCount = parseInt(proposal.NoCount, 10);
     const totalNodes = parseInt(this.props.totalNodes, 10);
-    const totalVotes = yesCount - noCount > 0 ? yesCount - noCount : 0;
+    const totalVotes = parseInt(proposal.AbsoluteYesCount, 10);;
 
     // Some Maths ;P
     const logged = user? true : false;
