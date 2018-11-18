@@ -830,7 +830,7 @@ render() {
                 }}
               />
             </Grid>
-            <Grid item md={7} xs={6} className="proposalInfoView">
+            <Grid item md={7} xs={6} className="proposalInfoView" onClick={() => selectProposal(proposal)}>
               <ProposalInfo 
                 title={proposalTitle}
                 paymentAmount={payment_amount}
@@ -866,7 +866,7 @@ render() {
             <Grid item md={6} xs={6} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
             </Grid>
-            <Grid item md={12} xs={12} className="proposalInfoView">
+            <Grid item md={12} xs={12} className="proposalInfoView"  onClick={() => selectProposal(proposal)}>
               <ProposalInfo 
                 title={proposalTitle}
                 paymentAmount={payment_amount}

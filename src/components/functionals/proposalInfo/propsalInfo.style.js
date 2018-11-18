@@ -1,8 +1,6 @@
 import palette from '../styles/palette';
 
 const primaryDark = palette.primaryDark;
-const primaryLight = palette.primaryLight;
-const white = palette.white;
 const gray = palette.grey;
 
 export default {
