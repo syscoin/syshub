@@ -1,21 +1,9 @@
-// Inputs: title and bref
-// Output: none
-/* eslint-disable flowtype/require-valid-file-annotation */
+/**
+ * Inputs: title, paymentAmount, paymentType, daysRemaining, monthRemaining
+ * Outputs: none
+ */
 
 import React, { Component } from 'react';
-import actions from '../../../redux/actions';
-import { connect } from 'react-redux';
-import swal from 'sweetalert';
-import { checkVoted, voted } from '../../../API/firebase';
-
-//import antd components
-import { Modal, Table } from 'antd';
-import { Grid } from '@material-ui/core';
-import Cryptr from 'cryptr';
-
-// import custom components
-import ProposalVoting from '../proposalVoting/proposalVoting'
-import ProposalProgress from '../proposalProgress/proposalProgress'
 
 // import style
 import injectSheet from 'react-jss';
