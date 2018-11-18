@@ -788,15 +788,18 @@ render() {
     const totalNodes = parseInt(this.props.totalNodes, 10);
     const totalVotes = parseInt(proposal.AbsoluteYesCount, 10);;
 
-    // Some Maths ;P
     const logged = user? true : false;
     const votingCount = {
-      yesCount: proposal.YesCount,
-      noCount: proposal.NoCount,
+      yesCount,
+      noCount,
       abstainCount: proposal.AbstainCount
     }
-
-
+    const progressObj={
+      totalNodes,
+      totalVotes,
+      passingPercentage: 10,
+      funded: proposal.fCachedFunding
+    }
     const columns = [
       {
         title: 'Name',
@@ -821,14 +824,7 @@ render() {
             key={proposal.Hash}
           >
             <Grid item md={2} xs={3} className="proposalProgressView">
-              <ProposalProgress 
-                progressObj={{
-                  totalNodes: totalNodes,
-                  totalVotes: totalVotes,
-                  passingPercentage: 10,
-                  funded: proposal.fCachedFunding
-                }}
-              />
+              <ProposalProgress progressObj={progressObj}/>
             </Grid>
             <Grid item md={7} xs={6} className="proposalInfoView" onClick={() => selectProposal(proposal)}>
               <ProposalInfo 
@@ -854,14 +850,7 @@ render() {
           key={proposal.Hash}
         >
             <Grid item md={6} xs={6} className="proposalProgressView">
-              <ProposalProgress 
-                progressObj={{
-                  totalNodes: totalNodes,
-                  totalVotes: totalVotes,
-                  passingPercentage: 10,
-                  funded: proposal.fCachedFunding
-                }}
-              />
+              <ProposalProgress progressObj={progressObj}/>
             </Grid>
             <Grid item md={6} xs={6} className="proposalVoteView">
               <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
