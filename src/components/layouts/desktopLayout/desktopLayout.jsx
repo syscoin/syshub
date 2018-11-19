@@ -9,11 +9,11 @@ import {
   AppLSider,
   AppRSider,
   AppFooter
-} from '../containers/';
+} from '../../containers/';
 
 //Import Styles
 import 'antd/dist/antd.css';
-import { desktopLayoutStyle } from './styles';
+import desktopLayoutStyle from './desktopLayout.style';
 
 
 class DesktopLayout extends Component {
