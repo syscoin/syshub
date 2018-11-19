@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { Grid, FormGroup } from '@material-ui/core';
 
 import injectSheet from 'react-jss';
-import { proposalPaymentStyle } from './styles';
+import proposalPaymentStyle from './proposalPayment.style';
 
 class ProposalPayment extends Component {
   constructor(props) {
@@ -91,11 +91,11 @@ class ProposalPayment extends Component {
             </form>
           </Grid>
           <Grid item md={3} className="OnTimePaymentView">
-            <div className="heading">
+            {/* <div className="heading">
               <Typography variant="subheading" gutterBottom>
                 Payment
               </Typography>
-            </div>
+            </div> 
 
             <form className="form">
               <FormGroup className="FormGroup">
@@ -110,7 +110,7 @@ class ProposalPayment extends Component {
                   />
                 </Typography>
               </FormGroup>
-            </form>
+            </form>*/}
           </Grid>
 
           <Grid item md={3} className="OnTimePaymentView">
