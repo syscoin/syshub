@@ -1,7 +1,9 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const primaryDark = palette.primaryDark;
 const greyDark = palette.greyDark;
+const green = palette.green;
+const red = palette.red;
 
 export default {
   root: {
@@ -36,17 +38,25 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: 'red',
+          color: red,
         },
-        '& .approvalGreenColorFont': {
-          color: 'green',
+        '& .approvalColorFont': {
+          '&.funded': {
+            color: green,
+          },
+          '&.passing': {
+            color: primaryDark,
+          },
+          '&.unfunded': {
+            color: red,
+          }
         },
         '& .voteRedColorFont': {
-          color: 'red',
+          color: red,
           marginRight: '6%',
         },
         '& .voteGreenColorFont': {
-          color: 'green',
+          color: green,
           marginRight: '6%',
         },
       },
@@ -66,14 +76,14 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: 'red',
+          color: red,
         },
         '& .voteRedColorFont': {
-          color: 'red',
+          color: red,
           marginRight: '6%',
         },
         '& .voteGreenColorFont': {
-          color: 'green',
+          color: green,
           marginRight: '6%',
         },
       },

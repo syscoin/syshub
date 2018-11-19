@@ -1,4 +1,4 @@
-import DesktopLayout from './DesktopLayout';
-import MobileLayout from './MobileLayout';
+import DesktopLayout from './desktopLayout/desktopLayout';
+import MobileLayout from './mobileLayout/mobileLayout';
 
 export { DesktopLayout, MobileLayout };

@@ -5,12 +5,12 @@ import injectSheet from 'react-jss';
 import {
   MAppHeader,
   MAppContent,
-} from '../containers/';
+} from '../../containers';
 
 //Import Styles
 
 import 'antd-mobile/dist/antd-mobile.css';
-import { mobileLayoutStyle } from './styles';
+import mobileLayoutStyle from './mobileLayout.style';
 
 
 class MobileLayout extends Component {

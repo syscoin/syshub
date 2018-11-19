@@ -8,17 +8,28 @@ import Typography from '@material-ui/core/Typography';
 import { Grid} from '@material-ui/core';
 
 import injectSheet from 'react-jss';
-import { proposalApprovalStyle } from './styles';
+import { proposalApprovalStyle } from '../styles';
 
 class ProposalApprovalStat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       days_remaining: 0,
-      endDate: ''
+      month_remaining: 0,
+      endDate: '',
+      totalNodes: 0,
+      totalVotes: 0,
+      YesCount: 0,
+      NoCount: 0,
+      AbstainCount: 0,
+      progress: 0,
+      passingPercentage: 0,
+      status: ''
     };
   }
   componentWillMount() {
+    this.prepareData();
+    
     let startDate = new Date();
     let endDate = new Date(
       this.props.proposal.DataString[0][1].end_epoch * 1000
@@ -40,14 +51,34 @@ class ProposalApprovalStat extends Component {
       });
     }
   }
+
+  prepareData() {
+    const { totalNodes, proposal, passingPercentage } = this.props;
+    const { AbsoluteYesCount, YesCount, NoCount, AbstainCount, fCachedFunding } = proposal;
+    
+    const funded = fCachedFunding;
+    const progress = Math.min(Math.floor(AbsoluteYesCount / totalNodes * 100), 100);
+    let status = progress >= passingPercentage ? 'passing' : 'unfunded';
+    if (funded ) { status = 'funded' } ;
+    this.setState({
+      totalNodes,
+      totalVotes: AbsoluteYesCount,
+      YesCount,
+      NoCount,
+      AbstainCount,
+      progress,
+      passingPercentage,
+      status
+    });
+  }
+
   render() {
-    const { classes, deviceType, totalNodes } = this.props;
+    const { classes, deviceType } = this.props;
+    const { days_remaining, month_remaining, endDate, totalNodes,totalVotes, YesCount, NoCount, AbstainCount, status } = this.state;
+    
     //Platform style switcher
-    let { YesCount, NoCount, AbstainCount } = this.props.proposal;
-    let { days_remaining, month_remaining, endDate } = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const totalVotes = YesCount - NoCount > 0 ? YesCount - NoCount : 0;
 
     return (
       <Grid item md={12} className={style}>
@@ -68,22 +99,11 @@ class ProposalApprovalStat extends Component {
             </Typography>
           </Grid>
           <Grid item md={6} className="approvalValue">
-            {totalVotes >= totalNodes ? (
-              <span>
-                <span className="approvalGreenColorFont">FUNDED</span> -
-                Sufficient Votes (<span className="approvalGreenColorFont">
-                  {totalVotes}
-                </span>/{Math.round(totalNodes)})
-              </span>
-            ) : (
-                <span>
-                  <Typography gutterBottom >
-                    <span className="approvalRedColorFont">UNFUNDED</span> -
-                Insufficient Votes  (<span className="approvalRedColorFont">
-                      {totalVotes}
-                    </span>/{Math.round(totalNodes)}) </Typography>
-                </span>
-              )}
+            <span> 
+              <span className={`approvalColorFont ${status}`}>{status.toUpperCase()}</span>
+              {status !== 'unfunded' ? ' - Sufficient Votes ': ' - Insufficient Votes '}
+              <span className={`approvalColorFont ${status}`}>{totalVotes}</span>/{Math.round(totalNodes)}
+            </span>
           </Grid>
         </Grid>
 
