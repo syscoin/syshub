@@ -20,7 +20,7 @@ class Stats extends Component {
       changeRate: {
         usdChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_usd).toFixed(8) : 0,
         btcChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) : 0,
-        satoshiChangeRate: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) * 100000000 : 0,
+        satoshiChangeRate: this.props.sysInfo.sysPrice ? Math.floor(parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) * 100000000) : 0,
         percent_change_1h: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_1h) : 0,
         percent_change_24h: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_24h) : 0,
         percent_change_7d: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_7d) : 0,

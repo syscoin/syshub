@@ -18,7 +18,7 @@ class HeaderStats extends Component {
 
     const usdChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_usd).toFixed(8)} USD` : 0;
     const btcChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8)} BTC` : 0;
-    const satChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000} SATOSHI` : 0;
+    const satChangeRate = sysInfo.sysPrice ? `${Math.floor(parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000)} SATOSHI` : 0;
     const masternodes   = sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
     const totUsers      = sysInfo ? (this.props.sysInfo.users) : 0;
     const sysCaption    = deviceType === 'mobile' ? ':': 'SYSCOIN:';
