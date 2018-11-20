@@ -62,19 +62,20 @@ class MasternodeSetting extends Component {
     }
     const cryptr = new Cryptr(user.uid);
 
-    masternode.key = this.state.nodes.length + 1;
     masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
     masternode.txid = cryptr.encrypt(masternode.txid);
+    
+    const newKey = fire
+    .database()
+    .ref()
+    .push().key;
+    
+    masternode.keyId = newKey;
+    masternode.key = newKey;
+    
     this.setState({
       nodes: [masternode, ...this.state.nodes]
     });
-
-    const newKey = fire
-      .database()
-      .ref()
-      .push().key;
-
-    masternode.keyId = newKey;
 
     fire
       .database()
@@ -124,6 +125,7 @@ class MasternodeSetting extends Component {
     const { classes, deviceType } = this.props;
     const {activeTab} = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
       <div className={style}>
         <h1 className="title">Masternode Settings</h1>
