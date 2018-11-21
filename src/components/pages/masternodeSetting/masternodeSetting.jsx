@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
-
 import { connect } from 'react-redux';
-import Cryptr from 'cryptr';
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import API services
+import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode } from '../../../API/masternode.service';
 
-// import Icons
+// import Material-ui Items
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 import Add from '@material-ui/icons/Add';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 // import style
 import masterNodeSettingStyle from './masternodeSetting.style';
 
-// import components
+// import custom components
 import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../../functionals';
-import { fire } from '../../../API/firebase';
 
 class MasternodeSetting extends Component {
   constructor(props) {
@@ -33,88 +32,50 @@ class MasternodeSetting extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
-  componentDidMount() {
-    const user = fire.auth().currentUser;
+componentDidMount() {
+    this.getMasternodeList();
+  }
 
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .on('value', snapshot => {
-        let list = [];
-        snapshot.forEach(snap => {
-          list.push(snap.val());
-        });
-        this.setState({
-          nodes: list
-        });
-      });
+  async getMasternodeList () {
+    const user = this.props.app.currentUser;
+    const mnList = await getMasternodeList(user.uid);
+    this.setState({ nodes: mnList, user });
   }
 
   addNodes(masternodeArray) {
     masternodeArray.map(mn => this.addNode(mn));    
   }
 
-  addNode(masternode) {
+  async addNode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to add a Master Node');
       return;
     }
-    const cryptr = new Cryptr(user.uid);
 
-    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-    masternode.txid = cryptr.encrypt(masternode.txid);
-    
-    const newKey = fire
-    .database()
-    .ref()
-    .push().key;
-    
-    masternode.keyId = newKey;
-    masternode.key = newKey;
-    
-    this.setState({
-      nodes: [masternode, ...this.state.nodes]
-    });
-
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(masternode.keyId)
-      .set(masternode);
+    await addMasternode(masternode, user.uid);
+    this.getMasternodeList();
   }
 
-  deleteNode(node) {
+  async deleteNode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to delete a Master Node');
       return;
     }
+    await deleteMasternode(masternode, user.uid);
+    this.getMasternodeList();
 
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(node.keyId)
-      .remove();
   }
 
-  editNode(node) {
+  async editNode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to edit a Master Node');
       return;
     }
-
-    const cryptr = new Cryptr(user.uid);
-
-    node.mnPrivateKey = cryptr.encrypt(node.mnPrivateKey);
-    node.txid = cryptr.encrypt(node.txid);
-
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(node.keyId)
-      .update(node);
+    await updateMasternode(masternode, user.uid);
+    this.getMasternodeList();
   }
 
   handleOnTabClick = (event, activeTab) => {
