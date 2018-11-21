@@ -44,3 +44,14 @@ export const updateMasternode = async (masternode, uid) => {
   const selectedMasternode = await masternodeRef.child(masternode.keyId);
   selectedMasternode.update(masternode);
 };
+
+export const checkMasternodeExists = async ( mnPrivateKey, uid) => {
+  const cryptr = new Cryptr(uid);
+
+  const encryptedPrivateKey = cryptr.encrypt(mnPrivateKey);
+
+  const mnList = await getMasternodeList(uid);
+  const foundedMn = mnList.find((item) => item.mnPrivateKey === encryptedPrivateKey);
+
+  return !!foundedMn;
+};

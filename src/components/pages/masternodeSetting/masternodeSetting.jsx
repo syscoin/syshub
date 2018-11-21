@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
 import { connect } from 'react-redux';
+import swal from 'sweetalert';
+
 
 // import API services
-import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode } from '../../../API/masternode.service';
+import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode, checkMasternodeExists } from '../../../API/masternode.service';
 
 // import Material-ui Items
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
@@ -35,26 +37,63 @@ class MasternodeSetting extends Component {
 componentDidMount() {
     this.getMasternodeList();
   }
-
+  
   async getMasternodeList () {
     const user = this.props.app.currentUser;
     const mnList = await getMasternodeList(user.uid);
-    this.setState({ nodes: mnList, user });
+    this.setState({ nodes: mnList, user });    
+  }
+
+  prepareMasternodeError(pkArray) {
+    const arrayJoined = pkArray.join();
+    return arrayJoined.replace(/,/g, ',\n');
   }
 
   addNodes(masternodeArray) {
-    masternodeArray.map(mn => this.addNode(mn));    
+    const user = this.props.app.currentUser;
+    const addMnError = []
+    masternodeArray.forEach(async masternode => {
+      const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+      if (!mansternodeExists) {
+        this.addMasternode(masternode);
+      } else {
+        addMnError.push(masternode.mnPrivateKey);
+      }
+      
+      if (addMnError.length > 0) {
+        swal({
+          className: 'sweetalertModal',
+          title: 'Skipping',
+          text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(addMnError)}\n\n already exists`,
+          icon: 'error'
+        });
+      }
+    });
   }
 
   async addNode(masternode) {
+    const user = this.props.app.currentUser;
+    const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+    if (!mansternodeExists) {
+      this.addMasternode(masternode);
+    } else {
+      swal({
+        className: 'sweetalertModal',
+        title: 'Skipping',
+        text: `The Masternode with the Private-key:\n\n ${masternode.mnPrivateKey}\n\n already exists`,
+        icon: 'error'
+      });
+    }
+  }
+
+  async addMasternode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to add a Master Node');
       return;
     }
-
-    await addMasternode(masternode, user.uid);
-    this.getMasternodeList();
+      await addMasternode(masternode, user.uid);
+      this.getMasternodeList();
   }
 
   async deleteNode(masternode) {

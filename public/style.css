@@ -22,3 +22,7 @@ html *:not(i) {
 * {
   -webkit-overflow-scrolling: touch;
 }
+
+.sweetalertModal {
+  width: 550px !Important;
+}
