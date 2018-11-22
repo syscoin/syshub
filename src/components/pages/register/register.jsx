@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
-import { Form, Input, Button, Checkbox } from 'antd';
+// import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
@@ -24,7 +25,7 @@ class Register extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.register = this.register.bind(this);
     this.state = {
-      checked: false,
+      checked: true, // until TOS are defined false,
       disabled: false,
       username: null,
       confirmDirty: '',
@@ -388,9 +389,10 @@ class Register extends Component {
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
-                <Checkbox checked={this.state.checked} onChange={this.onChange}>
+                {/* <Checkbox checked={this.state.checked} onChange={this.onChange}>
                   I have read and accepted the <a>Terms of Service</a>
-                </Checkbox>
+                </Checkbox> */}
+              <div style={{fontSize: '1.5em', color: 'red', border: '2px solid red'}}>SYShub.org is BETA software and as such you agree to use this application at your own risk.</div>
               </FormItem>
 
               {/* Form Action Button */}

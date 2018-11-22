@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const primary = palette.primary;
 const grey = palette.grey;
@@ -70,6 +70,12 @@ export default {
       '& >img': {
         //border: '1px solid blue',
         margin: '0 3% 0 0'
+      }
+    },
+    '& .loading': {
+      marginTop: '30px',
+      '&>div>svg>circle': {
+        stroke: `${primary } !Important`
       }
     },
     '& .changeTxtHeading': {
