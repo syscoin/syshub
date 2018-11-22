@@ -26,7 +26,7 @@ class UserChangePassword extends Component {
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('Passwords do not match!');
     } else {
       callback();
     }
