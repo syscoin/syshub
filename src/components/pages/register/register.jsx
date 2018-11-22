@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
-import { Form, Input, Button, Checkbox } from 'antd';
+// import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
@@ -24,7 +25,7 @@ class Register extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.register = this.register.bind(this);
     this.state = {
-      checked: false,
+      checked: true, // until TOS are defined false,
       disabled: false,
       username: null,
       confirmDirty: '',
@@ -56,7 +57,7 @@ class Register extends Component {
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('Passwords do not match!');
     } else {
       callback();
     }
@@ -73,8 +74,9 @@ class Register extends Component {
   checkEmail = (rule, value, callback) => {
     const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
     const isValidEmail = emaiRegex.test(value) ? true : false;
+    const erroMsg = value ? 'Invalid Email address format': 'Enter a valid Email address'
     if (!isValidEmail) {
-      callback('Email address in invalid format');
+      callback(erroMsg);
     } else {
       callback();
     }
@@ -290,10 +292,6 @@ class Register extends Component {
                 {getFieldDecorator('email', {
                   rules: [
                     {
-                      required: true,
-                      message: 'Enter your email!'
-                    },
-                    {
                       validator: this.checkEmail
                     }
                   ]
@@ -388,9 +386,10 @@ class Register extends Component {
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
-                <Checkbox checked={this.state.checked} onChange={this.onChange}>
+                {/* <Checkbox checked={this.state.checked} onChange={this.onChange}>
                   I have read and accepted the <a>Terms of Service</a>
-                </Checkbox>
+                </Checkbox> */}
+              <div style={{fontSize: '1.5em', color: 'red', border: '2px solid red'}}>SYShub.org is BETA software and as such you agree to use this application at your own risk.</div>
               </FormItem>
 
               {/* Form Action Button */}

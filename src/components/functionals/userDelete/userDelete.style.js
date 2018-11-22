@@ -1,8 +1,9 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
 const greyLight = palette.greyLight;
+const red = palette.red;
 
 export default {
   root: {
@@ -19,7 +20,8 @@ export default {
     },
     '& .UserDelete-text': {
       marginLeft: '35px',
-      fontWeight: 'normal',
+      fontWeight: 'bold',
+      color: red,
     },
     '& .delete-button-grid': {
       padding: '20px 0px',

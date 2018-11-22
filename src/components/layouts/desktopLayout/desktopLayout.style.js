@@ -10,7 +10,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'start',
     minWidth: 'calc(100% - 20px)',
-    height: 'calc(100vh - 122px)',
+    height: '100%',
     borderleft: `1px solid ${grey}`,
     borderRight: `1px solid ${grey}`,
 

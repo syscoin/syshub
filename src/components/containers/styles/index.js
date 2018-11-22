@@ -1,8 +1,6 @@
 import palette from './palette';
 
 //Desktop containers Styles
-import appContentStyle from './appContentStyle';
-import appFooterStyle from './appFooterStyle';
 import appHeaderStyle from './appHeaderStyle';
 import appRSiderStyle from './appRSiderStyle';
 import appLSiderStyle from './appLSiderStyle';
@@ -19,8 +17,6 @@ import mHeaderNavStyle from './mHeaderNavStyle';
 
 export {
   palette,
-  appContentStyle,
-  appFooterStyle,
   appHeaderStyle,
   appRSiderStyle,
   appLSiderStyle,

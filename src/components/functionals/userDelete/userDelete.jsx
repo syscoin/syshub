@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
-import { userDeleteStyle } from './styles';
 import { Button, Grid } from '@material-ui/core';
+
+// Import Style Sheets
+import userDeleteStyle from './userDelete.style';
 
 class UserDelete extends Component {
   render() {
@@ -17,10 +19,10 @@ class UserDelete extends Component {
           <Grid item md={12} xs={12}>
             <h1 className="userDelete-heading">Delete Account</h1>
             <p className="UserDelete-text">
-              YOUR ACCOUNT INFORMATION WILL BE DELETED.
+              Your account information will be deteled.
             </p>
             <p className="UserDelete-text">
-              THIS ACTION CANNOT BE UNDONE.
+              This action can not be undone.
             </p>
           </Grid>
           <Grid className="delete-button-grid">

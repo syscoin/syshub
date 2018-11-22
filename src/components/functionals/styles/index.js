@@ -3,13 +3,11 @@ import headerStatsStyle from './headerStatsStyle';
 import headerNavStyle from './headerNavStyle';
 import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
-import statsStyle from './statsStyle';
+import statsStyle from '../stats/stats.style';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
 import userProfileStyle from './userProfileStyle';
-import userChangePswStyle from './userChangePswStyle';
-import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
 import proposalApprovalStyle from '../ProposalApprovalStat/proposalApprovalStat.style';
 import proposalDescriptionStyle from './proposalDescriptionStyle';
@@ -31,8 +29,6 @@ export {
   deshBoardHeaderStyle,
   proposalCardStyle,
   userProfileStyle,
-  userChangePswStyle,
-  userDeleteStyle,
   userTwoFactorStyle,
   proposalDescriptionStyle,
   proposalApprovalStyle,
