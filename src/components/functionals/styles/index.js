@@ -3,7 +3,7 @@ import headerStatsStyle from './headerStatsStyle';
 import headerNavStyle from './headerNavStyle';
 import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
-import statsStyle from './statsStyle';
+import statsStyle from '../stats/stats.style';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
