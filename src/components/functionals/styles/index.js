@@ -9,7 +9,6 @@ import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
 import userProfileStyle from './userProfileStyle';
 import userChangePswStyle from './userChangePswStyle';
-import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
 import proposalApprovalStyle from '../ProposalApprovalStat/proposalApprovalStat.style';
 import proposalDescriptionStyle from './proposalDescriptionStyle';
@@ -32,7 +31,6 @@ export {
   proposalCardStyle,
   userProfileStyle,
   userChangePswStyle,
-  userDeleteStyle,
   userTwoFactorStyle,
   proposalDescriptionStyle,
   proposalApprovalStyle,
