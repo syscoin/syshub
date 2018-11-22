@@ -57,7 +57,7 @@ class Register extends Component {
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('Passwords do not match!');
     } else {
       callback();
     }
@@ -74,8 +74,9 @@ class Register extends Component {
   checkEmail = (rule, value, callback) => {
     const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
     const isValidEmail = emaiRegex.test(value) ? true : false;
+    const erroMsg = value ? 'Invalid Email address format': 'Enter a valid Email address'
     if (!isValidEmail) {
-      callback('Email address in invalid format');
+      callback(erroMsg);
     } else {
       callback();
     }
@@ -290,10 +291,6 @@ class Register extends Component {
                 </span>
                 {getFieldDecorator('email', {
                   rules: [
-                    {
-                      required: true,
-                      message: 'Enter your email!'
-                    },
                     {
                       validator: this.checkEmail
                     }
