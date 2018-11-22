@@ -3,10 +3,11 @@ import ReactPasswordStrength from 'react-password-strength';
 
 import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
-import { userChangePswStyle } from './styles';
 import { Grid } from '@material-ui/core';
 import { Form, Input, Button } from 'antd';
 
+// Import style pages
+import userChangePswStyle from './userChangePsw.style';
 
 const FormItem = Form.Item;
 
@@ -31,6 +32,7 @@ class UserChangePassword extends Component {
       callback();
     }
   };
+  
   checkConfirm = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
@@ -39,14 +41,6 @@ class UserChangePassword extends Component {
     callback();
   };
 
-  checkPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
   hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   }

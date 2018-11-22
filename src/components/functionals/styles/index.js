@@ -8,7 +8,6 @@ import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
 import userProfileStyle from './userProfileStyle';
-import userChangePswStyle from './userChangePswStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
 import proposalApprovalStyle from '../ProposalApprovalStat/proposalApprovalStat.style';
 import proposalDescriptionStyle from './proposalDescriptionStyle';
@@ -30,7 +29,6 @@ export {
   deshBoardHeaderStyle,
   proposalCardStyle,
   userProfileStyle,
-  userChangePswStyle,
   userTwoFactorStyle,
   proposalDescriptionStyle,
   proposalApprovalStyle,

@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
@@ -96,7 +96,7 @@ export default {
         },
       },
       '& .ant-form-explain': {
-        marginLeft: '220px',
+        marginLeft: '22%',
         padding: '5px',
       },
     },

@@ -9,7 +9,7 @@ import actions from '../../../redux/actions';
 import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
 
 import UserProfile from '../../functionals/UserProfile';
-import UserChangePsw from '../../functionals/UserChangePsw';
+import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
 import UserDelete from '../../functionals/userDelete/userDelete';
 import UserTwoFactor from '../../functionals/UserTwoFactor';
 
