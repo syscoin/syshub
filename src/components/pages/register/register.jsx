@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
-import { Form, Input, Button, Checkbox } from 'antd';
+// import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
