@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Grid, FormGroup } from '@material-ui/core';
+import { FormGroup } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
 // import style
@@ -155,7 +155,7 @@ class MasterNodeList extends Component {
           ]}
           zIndex={99999}
         >
-          <Grid item md={12} className="form__container">
+          <div item md={12} className="form__container">
             <form
               onSubmit={event => this.addNode(event)}
               ref={form => {
@@ -163,7 +163,7 @@ class MasterNodeList extends Component {
               }}
               className="wrapper"
             >
-              <Grid item lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} justify="center">
+              <div>
                 {/* For User Name */}
                 <FormGroup className="form-group">
                   <span htmlFor="user-name" className="label">
@@ -209,9 +209,9 @@ class MasterNodeList extends Component {
                     onChange={this.onChange}
                   />
                 </FormGroup>
-              </Grid>
+              </div>
             </form>
-          </Grid>
+          </div>
         </Modal>
         <div className={style}>
           <div className="heading">

@@ -95,6 +95,7 @@ export class ProposalDetail extends Component {
                 deviceType={deviceType}
                 proposal={proposal}
                 totalNodes={totalNodes}
+                passingPercentage={10}
               />
               <ProposalDescription
                 deviceType={deviceType}

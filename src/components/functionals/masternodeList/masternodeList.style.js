@@ -58,7 +58,8 @@ export default {
     '& .ant-modal-body': {
       '& .form__container': {
         '& .form-group': {
-          flexDirection: 'row'
+          flexDirection: 'row',
+          flexJustify: 'flex-start'
         },
         '& .label': {
           width: '50%',

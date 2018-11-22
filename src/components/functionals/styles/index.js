@@ -3,16 +3,13 @@ import headerStatsStyle from './headerStatsStyle';
 import headerNavStyle from './headerNavStyle';
 import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
-import statsStyle from './statsStyle';
+import statsStyle from '../stats/stats.style';
 import welcomeBoxStyle from './welcomeBoxStyle';
 import deshBoardHeaderStyle from './deshBoardHeaderStyle';
-import proposalCardStyle from './proposalCardStyle';
-import proposalPaymentStyle from './proposalPaymentStyle';
+import proposalCardStyle from '../proposalCard/proposalCard.style';
 import userProfileStyle from './userProfileStyle';
-import userChangePswStyle from './userChangePswStyle';
-import userDeleteStyle from './userDeleteStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
-import proposalApprovalStyle from './proposalApprovalStyle';
+import proposalApprovalStyle from '../ProposalApprovalStat/proposalApprovalStat.style';
 import proposalDescriptionStyle from './proposalDescriptionStyle';
 import newsCardStyle from './newsCardStyle';
 import newsBodyStyle from './newsBodyStyle';
@@ -31,10 +28,7 @@ export {
   welcomeBoxStyle,
   deshBoardHeaderStyle,
   proposalCardStyle,
-  proposalPaymentStyle,
   userProfileStyle,
-  userChangePswStyle,
-  userDeleteStyle,
   userTwoFactorStyle,
   proposalDescriptionStyle,
   proposalApprovalStyle,

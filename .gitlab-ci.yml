@@ -41,7 +41,7 @@ production:
   image: cortesa/docker-firebase
   environment: production
   only:
-    - staging
+    - production
   script:
     - npm install
     - npm run build:production
