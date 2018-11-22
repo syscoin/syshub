@@ -10,7 +10,7 @@ import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API
 
 import UserProfile from '../../functionals/UserProfile';
 import UserChangePsw from '../../functionals/UserChangePsw';
-import UserDelete from '../../functionals/UserDelete';
+import UserDelete from '../../functionals/userDelete/userDelete';
 import UserTwoFactor from '../../functionals/UserTwoFactor';
 
 // Import styles

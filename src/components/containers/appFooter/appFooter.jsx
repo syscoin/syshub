@@ -1,9 +1,9 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import { withRoot } from '../HOC';
+import { withRoot } from '../../HOC';
 import { Layout } from 'antd';
-import { appFooterStyle } from './styles';
+import appFooterStyle from './appFooter.style';
 
 const { Footer } = Layout;
 

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { withRoot } from '../HOC';
+import { withRoot } from '../../HOC';
 
 import { Layout } from 'antd';
 
@@ -20,10 +20,10 @@ import {
   NewProposal,
   News,
   UserAccount
-} from '../pages';
+} from '../../pages';
 
 //Import Styles
-import { appContentStyle } from './styles';
+import appContentStyle from './appContent.style';
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;
