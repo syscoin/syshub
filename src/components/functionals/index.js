@@ -6,7 +6,7 @@ import SiderMenu from './SiderMenu';
 import WelcomeBox from './WelcomeBox';
 import Stats from './stats/stats';
 import FooterInfo from './FooterInfo';
-import DashBoardHeader from './DashBoardHeader';
+import DashBoardHeader from './dashBoardHeader/dashBoardHeader';
 import ProposalCard from './proposalCard/proposalCard';
 import ProposalPayment from './proposalPayment/proposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat/proposalApprovalStat';

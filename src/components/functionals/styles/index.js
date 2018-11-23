@@ -5,7 +5,6 @@ import siderLogoStyle from './siderLogoStyle';
 import siderMenuStyle from './siderMenuStyle';
 import statsStyle from '../stats/stats.style';
 import welcomeBoxStyle from './welcomeBoxStyle';
-import deshBoardHeaderStyle from './deshBoardHeaderStyle';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
 import userProfileStyle from './userProfileStyle';
 import userTwoFactorStyle from './userTwoFactorStyle';
@@ -26,7 +25,6 @@ export {
   siderMenuStyle,
   statsStyle,
   welcomeBoxStyle,
-  deshBoardHeaderStyle,
   proposalCardStyle,
   userProfileStyle,
   userTwoFactorStyle,
