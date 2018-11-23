@@ -94,6 +94,25 @@ class ProposalCard extends Component {
     });
   }
 
+  async show2FAErrorModal() {
+    const modalValue = await swal({
+      title: 'Oops...',
+      text: 'Must have 2FA enabled to vote',
+      icon: 'error',
+      buttons: {
+        cancel: true,
+        go2FA: {
+          text: 'Enable 2FA',
+          value: 'go2FA'
+        }
+      }
+    });
+    if (modalValue) {
+      this.props.setPage('userAccount');
+    }
+    
+  }
+
   onVote(vote) {
     switch(vote) {
       case 'yes':
@@ -123,12 +142,7 @@ class ProposalCard extends Component {
     }
 
     if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
+      this.show2FAErrorModal();
       return;
     }
 
@@ -342,12 +356,7 @@ class ProposalCard extends Component {
     }
 
     if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
+      this.show2FAErrorModal();
       return;
     }
 
@@ -562,12 +571,7 @@ class ProposalCard extends Component {
     }
 
     if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
+      this.show2FAErrorModal();
       return;
     }
 
@@ -902,7 +906,8 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     voteOnProposal: params => dispatch(actions.voteOnProposal(params)),
-    getProposals: () => dispatch(actions.getProposals())
+    getProposals: () => dispatch(actions.getProposals()),
+    setPage: page => dispatch(actions.setPage(page)),    
   };
 };
 
