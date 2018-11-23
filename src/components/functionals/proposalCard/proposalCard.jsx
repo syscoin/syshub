@@ -94,21 +94,56 @@ class ProposalCard extends Component {
     });
   }
 
-  async show2FAErrorModal() {
-    const modalValue = await swal({
-      title: 'Oops...',
-      text: 'Must have 2FA enabled to vote',
-      icon: 'error',
-      buttons: {
-        cancel: true,
-        go2FA: {
-          text: 'Enable 2FA',
-          value: 'go2FA'
+  async cantVoteErrorModal(type) {
+
+    const modalType = {
+      e2fa: {
+        mText: 'Must have 2FA enabled to vote',
+        buttons: {
+          cancel: true,
+          goToPage: {
+            text: 'Enable 2FA',
+            value: 'userAccount'
+          }
+        }
+      },
+      eMn: {
+        mText: 'Must have, at least, one Masternode registered',
+        buttons: {
+          cancel: true,
+          goToPage: {
+            text: 'Add Masternode',
+            value: 'masterNode'
+          }
+        }
+      },
+      e2faeMn: {
+        mText: 'Must have, at least, one Masternode registered and 2FA Enabled',
+        buttons: {
+          cancel: true,
+          goToPageA: {
+            text: 'Enable 2FA',
+            value: 'userAccount'
+          },
+          goToPageB: {
+            text: 'Add Masternode',
+            value: 'masterNode'
+          }
         }
       }
-    });
+    }[type]
+
+    console.log('ACZ --> ', modalType);
+    
+    const modalValue = await swal(
+      {
+        title: 'Oops...',
+        text: modalType.mText,
+        icon: 'error',
+        buttons: modalType.buttons
+      })
     if (modalValue) {
-      this.props.setPage('userAccount');
+      this.props.setPage(modalValue);
     }
     
   }
@@ -140,19 +175,11 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-
-    if (this.props.app.auth !== true) {
-      this.show2FAErrorModal();
-      return;
-    }
-
-    if (!user.MasterNodes || user.MasterNodes.length === 0) {
-      swal({
-        title: 'Oops...',
-        text: 'You need to add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)
@@ -355,19 +382,10 @@ class ProposalCard extends Component {
       });
     }
 
-    if (this.props.app.auth !== true) {
-      this.show2FAErrorModal();
-      return;
-    }
-
-    if (!user.MasterNodes) {
-      swal({
-        title: 'Oops...',
-        text:
-          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)
@@ -570,19 +588,10 @@ class ProposalCard extends Component {
       });
     }
 
-    if (this.props.app.auth !== true) {
-      this.show2FAErrorModal();
-      return;
-    }
-
-    if (!user.MasterNodes) {
-      swal({
-        title: 'Oops...',
-        text:
-          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)

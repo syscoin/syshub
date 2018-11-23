@@ -53,6 +53,7 @@ class App extends Component {
 
               return;
             }
+            user.MasterNodes = [];
             this.props.setCurrentUser(user);
           });
 
@@ -62,8 +63,6 @@ class App extends Component {
           .on('value', snap => {
             this.props.setAuth(snap.val());
           });
-      } else {
-        this.props.setCurrentUser(null);
       }
     });
 
