@@ -133,8 +133,6 @@ class ProposalCard extends Component {
       }
     }[type]
 
-    console.log('ACZ --> ', modalType);
-    
     const modalValue = await swal(
       {
         title: 'Oops...',
@@ -184,9 +182,8 @@ class ProposalCard extends Component {
 
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
-        if (value) {
-        }
-
+        if (value) {}
+        
         const MN = user.MasterNodes;
         let mnData = [];
         for (let i = 0; i < user.MasterNodes.length; i++) {
@@ -198,10 +195,11 @@ class ProposalCard extends Component {
           };
           const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
           const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
-
+          
           this.props
-            .voteOnProposal(proposalVoteYes)
-            .then(data => {
+          .voteOnProposal(proposalVoteYes)
+          .then(data => {
+            const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -232,6 +230,30 @@ class ProposalCard extends Component {
                         onClick={() =>
                           this.updateError(
                             `Invalid proposal hash. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
                               MN[i].mnPrivateKey
                             )}`
                           )
@@ -293,7 +315,7 @@ class ProposalCard extends Component {
                     )
                   });
                 }
-
+                
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
@@ -325,6 +347,7 @@ class ProposalCard extends Component {
                   />
                 )
               });
+
               this.setState({
                 mnData: mnData
               });
@@ -408,6 +431,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteNo)
             .then(data => {
+            const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -453,6 +477,32 @@ class ProposalCard extends Component {
                     )
                   });
                 }
+
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
@@ -606,7 +656,7 @@ class ProposalCard extends Component {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
             vinMasternode: cryptr.decrypt(MN[i].txid),
             gObjectHash: proposal.Hash,
-            voteOutcome: 0
+            voteOutcome: 3
           };
           const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
           const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
@@ -614,6 +664,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteAbstain)
             .then(data => {
+              const mnDataInitLength = mnData.length;              
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -659,6 +710,32 @@ class ProposalCard extends Component {
                     )
                   });
                 }
+
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
