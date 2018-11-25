@@ -94,6 +94,58 @@ class ProposalCard extends Component {
     });
   }
 
+  async cantVoteErrorModal(type) {
+
+    const modalType = {
+      e2fa: {
+        mText: 'Must have 2FA enabled to vote',
+        buttons: {
+          cancel: true,
+          goToPage: {
+            text: 'Enable 2FA',
+            value: 'userAccount'
+          }
+        }
+      },
+      eMn: {
+        mText: 'Must have, at least, one Masternode registered',
+        buttons: {
+          cancel: true,
+          goToPage: {
+            text: 'Add Masternode',
+            value: 'masterNode'
+          }
+        }
+      },
+      e2faeMn: {
+        mText: 'Must have, at least, one Masternode registered and 2FA Enabled',
+        buttons: {
+          cancel: true,
+          goToPageA: {
+            text: 'Enable 2FA',
+            value: 'userAccount'
+          },
+          goToPageB: {
+            text: 'Add Masternode',
+            value: 'masterNode'
+          }
+        }
+      }
+    }[type]
+
+    const modalValue = await swal(
+      {
+        title: 'Oops...',
+        text: modalType.mText,
+        icon: 'error',
+        buttons: modalType.buttons
+      })
+    if (modalValue) {
+      this.props.setPage(modalValue);
+    }
+    
+  }
+
   onVote(vote) {
     switch(vote) {
       case 'yes':
@@ -121,31 +173,17 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-
-    if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
-      return;
-    }
-
-    if (!user.MasterNodes || user.MasterNodes.length === 0) {
-      swal({
-        title: 'Oops...',
-        text: 'You need to add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)
       .then(value => {
-        if (value) {
-        }
-
+        if (value) {}
+        
         const MN = user.MasterNodes;
         let mnData = [];
         for (let i = 0; i < user.MasterNodes.length; i++) {
@@ -157,10 +195,11 @@ class ProposalCard extends Component {
           };
           const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
           const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
-
+          
           this.props
-            .voteOnProposal(proposalVoteYes)
-            .then(data => {
+          .voteOnProposal(proposalVoteYes)
+          .then(data => {
+            const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -191,6 +230,30 @@ class ProposalCard extends Component {
                         onClick={() =>
                           this.updateError(
                             `Invalid proposal hash. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
                               MN[i].mnPrivateKey
                             )}`
                           )
@@ -252,7 +315,7 @@ class ProposalCard extends Component {
                     )
                   });
                 }
-
+                
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
@@ -284,6 +347,7 @@ class ProposalCard extends Component {
                   />
                 )
               });
+
               this.setState({
                 mnData: mnData
               });
@@ -341,24 +405,10 @@ class ProposalCard extends Component {
       });
     }
 
-    if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
-      return;
-    }
-
-    if (!user.MasterNodes) {
-      swal({
-        title: 'Oops...',
-        text:
-          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)
@@ -381,6 +431,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteNo)
             .then(data => {
+            const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -426,6 +477,32 @@ class ProposalCard extends Component {
                     )
                   });
                 }
+
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
@@ -561,24 +638,10 @@ class ProposalCard extends Component {
       });
     }
 
-    if (this.props.app.auth !== true) {
-      swal({
-        title: 'Oops...',
-        text: 'Must have 2FA enabled to vote',
-        icon: 'error'
-      });
-
-      return;
-    }
-
-    if (!user.MasterNodes) {
-      swal({
-        title: 'Oops...',
-        text:
-          'You either need to enable 2FA to use your MasterNodes, or must add a MasterNode to your account.',
-        icon: 'error'
-      });
-      return;
+    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    if (modalType) {
+      this.cantVoteErrorModal(modalType);
     }
 
     checkVoted(user, proposal, user.MasterNodes)
@@ -593,7 +656,7 @@ class ProposalCard extends Component {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
             vinMasternode: cryptr.decrypt(MN[i].txid),
             gObjectHash: proposal.Hash,
-            voteOutcome: 0
+            voteOutcome: 3
           };
           const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
           const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
@@ -601,6 +664,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteAbstain)
             .then(data => {
+              const mnDataInitLength = mnData.length;              
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -646,6 +710,32 @@ class ProposalCard extends Component {
                     )
                   });
                 }
+
+                if (mnDataInitLength === mnData.legth) {
+                  mnData.push({
+                    key: `${i}`,
+                    name: MN[i].name,
+                    status: (
+                      <a
+                        onClick={() =>
+                          this.updateError(
+                            `Vote has Failed. Please check: ${cryptr.decrypt(
+                              MN[i].mnPrivateKey
+                            )}`
+                          )
+                        }
+                      >
+                        <img
+                          src={xIcon}
+                          height="20px"
+                          width="20px"
+                          alt="xIcon"
+                        />
+                      </a>
+                    )
+                  });
+                }
+
                 if (i + 1 === user.MasterNodes.length) {
                   this.setState({
                     mnData: mnData
@@ -902,7 +992,8 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     voteOnProposal: params => dispatch(actions.voteOnProposal(params)),
-    getProposals: () => dispatch(actions.getProposals())
+    getProposals: () => dispatch(actions.getProposals()),
+    setPage: page => dispatch(actions.setPage(page)),    
   };
 };
 
