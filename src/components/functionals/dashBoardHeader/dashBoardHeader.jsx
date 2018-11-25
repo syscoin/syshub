@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 
 import injectSheet from 'react-jss';
-import { deshBoardHeaderStyle } from './styles';
-
+import dashBoardHeaderStyle from './dashBoardHeader.style';
 class DashBoardHeader extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +28,7 @@ class DashBoardHeader extends Component {
           <Grid item container md={12} xs={12} className="no-margin">
             <Grid item md={12} xs={12} className="headingView">
               <Grid item md={12} xs={12} className="headingRow">
-                <img alt="a" src={require('../../assets/img/png_icon_proposal.png')} height="30" />
+                <img alt="a" src={require('../../../assets/img/png_icon_proposal.png')} height="30" />
                 <div className="headingDiv"> {this.state.data.name}</div>
                 <div className="ownerDetails">
                 </div>
@@ -72,5 +71,5 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(stateToProps, dispatchToProps)(
-  injectSheet(deshBoardHeaderStyle)(DashBoardHeader)
+  injectSheet(dashBoardHeaderStyle)(DashBoardHeader)
 );
