@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 //Desktop containers Styles
 import appHeaderStyle from './appHeaderStyle';

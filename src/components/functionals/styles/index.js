@@ -1,26 +1,23 @@
-import palette from './palette';
-import headerStatsStyle from './headerStatsStyle';
-import headerNavStyle from './headerNavStyle';
-import siderLogoStyle from './siderLogoStyle';
-import siderMenuStyle from './siderMenuStyle';
+import palette from '../../../styles/palette';
+import headerStatsStyle from '../headerStats/headerStats.style';
+import siderLogoStyle from '../siderLogo/siderLogo.style';
+import siderMenuStyle from '../siderMenu/siderMenu.style';
 import statsStyle from '../stats/stats.style';
-import welcomeBoxStyle from './welcomeBoxStyle';
+import welcomeBoxStyle from '../welcomeBox/welcomeBox.style';
 import proposalCardStyle from '../proposalCard/proposalCard.style';
-import userProfileStyle from './userProfileStyle';
-import userTwoFactorStyle from './userTwoFactorStyle';
+import userProfileStyle from '../userProfile/userProfile.style';
+import userTwoFactorStyle from '../userTwoFactor/userTwoFactor.style';
 import proposalApprovalStyle from '../ProposalApprovalStat/proposalApprovalStat.style';
-import proposalDescriptionStyle from './proposalDescriptionStyle';
-import newsCardStyle from './newsCardStyle';
-import newsBodyStyle from './newsBodyStyle';
-import newsDetailStyle from './newsDetailStyle';
-import newsAboutStyle from './newsAboutStyle';
-import newsFooterStyle from './newsFooterStyle';
-import newsHeaderStyle from './newsHeaderStyle';
+import proposalDescriptionStyle from '../proposalDescription/proposalDescription.style';
+import newsCardStyle from '../newsCard/newsCard.style';
+import newsBodyStyle from '../newsBody/newsBody.style';
+import newsAboutStyle from '../newsAbout/newsAbout.style';
+import newsFooterStyle from '../newsFooter/newsFooter.style';
+import newsHeaderStyle from '../newsHeader/newsHeader.style';
 
 export {
   palette,
   headerStatsStyle,
-  headerNavStyle,
   siderLogoStyle,
   siderMenuStyle,
   statsStyle,
@@ -32,7 +29,6 @@ export {
   proposalApprovalStyle,
   newsCardStyle,
   newsBodyStyle,
-  newsDetailStyle,
   newsAboutStyle,
   newsFooterStyle,
   newsHeaderStyle,

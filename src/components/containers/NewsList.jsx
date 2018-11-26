@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 // import style
 import { newsListStyle } from './styles';
 
-import NewsCard from '../functionals/NewsCard';
+import NewsCard from '../functionals/newsCard/newsCard';
 
 class NewsList extends Component {
   render() {
