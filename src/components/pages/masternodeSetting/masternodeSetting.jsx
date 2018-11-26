@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
-
 import { connect } from 'react-redux';
-import Cryptr from 'cryptr';
+import swal from 'sweetalert';
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
-// import Icons
+// import API services
+import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode, checkMasternodeExists } from '../../../API/masternode.service';
+
+// import Material-ui Items
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 import Add from '@material-ui/icons/Add';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 // import style
 import masterNodeSettingStyle from './masternodeSetting.style';
 
-// import components
+// import custom components
 import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../../functionals';
-import { fire } from '../../../API/firebase';
 
 class MasternodeSetting extends Component {
   constructor(props) {
@@ -33,87 +34,87 @@ class MasternodeSetting extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
-  componentDidMount() {
-    const user = fire.auth().currentUser;
+componentDidMount() {
+    this.getMasternodeList();
+  }
+  
+  async getMasternodeList () {
+    const user = this.props.app.currentUser;
+    const mnList = await getMasternodeList(user.uid);
+    this.setState({ nodes: mnList, user });    
+  }
 
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .on('value', snapshot => {
-        let list = [];
-        snapshot.forEach(snap => {
-          list.push(snap.val());
-        });
-        this.setState({
-          nodes: list
-        });
-      });
+  prepareMasternodeError(pkArray) {
+    const arrayJoined = pkArray.join();
+    return arrayJoined.replace(/,/g, ',\n');
   }
 
   addNodes(masternodeArray) {
-    masternodeArray.map(mn => this.addNode(mn));    
+    const user = this.props.app.currentUser;
+    const addMnError = []
+    masternodeArray.forEach(async masternode => {
+      const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+      if (!mansternodeExists) {
+        this.addMasternode(masternode);
+      } else {
+        addMnError.push(masternode.mnPrivateKey);
+      }
+      
+      if (addMnError.length > 0) {
+        swal({
+          className: 'sweetalertModal',
+          title: 'Skipping',
+          text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(addMnError)}\n\n already exists`,
+          icon: 'error'
+        });
+      }
+    });
   }
 
-  addNode(masternode) {
+  async addNode(masternode) {
+    const user = this.props.app.currentUser;
+    const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+    if (!mansternodeExists) {
+      this.addMasternode(masternode);
+    } else {
+      swal({
+        className: 'sweetalertModal',
+        title: 'Skipping',
+        text: `The Masternode with the Private-key:\n\n ${masternode.mnPrivateKey}\n\n already exists`,
+        icon: 'error'
+      });
+    }
+  }
+
+  async addMasternode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to add a Master Node');
       return;
     }
-    const cryptr = new Cryptr(user.uid);
-
-    masternode.key = this.state.nodes.length + 1;
-    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-    masternode.txid = cryptr.encrypt(masternode.txid);
-    this.setState({
-      nodes: [masternode, ...this.state.nodes]
-    });
-
-    const newKey = fire
-      .database()
-      .ref()
-      .push().key;
-
-    masternode.keyId = newKey;
-
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(masternode.keyId)
-      .set(masternode);
+      await addMasternode(masternode, user.uid);
+      this.getMasternodeList();
   }
 
-  deleteNode(node) {
+  async deleteNode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to delete a Master Node');
       return;
     }
+    await deleteMasternode(masternode, user.uid);
+    this.getMasternodeList();
 
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(node.keyId)
-      .remove();
   }
 
-  editNode(node) {
+  async editNode(masternode) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to edit a Master Node');
       return;
     }
-
-    const cryptr = new Cryptr(user.uid);
-
-    node.mnPrivateKey = cryptr.encrypt(node.mnPrivateKey);
-    node.txid = cryptr.encrypt(node.txid);
-
-    fire
-      .database()
-      .ref('MasterNodes/' + user.uid)
-      .child(node.keyId)
-      .update(node);
+    await updateMasternode(masternode, user.uid);
+    this.getMasternodeList();
   }
 
   handleOnTabClick = (event, activeTab) => {
@@ -124,6 +125,7 @@ class MasternodeSetting extends Component {
     const { classes, deviceType } = this.props;
     const {activeTab} = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
       <div className={style}>
         <h1 className="title">Masternode Settings</h1>

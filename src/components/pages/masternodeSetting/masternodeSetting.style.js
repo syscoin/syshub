@@ -27,7 +27,7 @@ export default {
         display: 'inline-block',
         fontWeight: 'normal'
       },
-    }
+    },
   },
   mRoot: {
     extend: 'root',

@@ -288,10 +288,10 @@ class UserTwoFactor extends Component {
               <span className="statusText-span">Status:</span>
               <span>
                 {this.props.app.auth ? (
-                  <span className="status-enable">Enable</span>
+                  <span className="status-enable">Enabled</span>
                 ) : (
                   <span className="status-disable">
-                    Disabled
+                    Not Enabled
                     <span className="lowSecurity-span">(Low Security)</span>
                   </span>
                 )}
