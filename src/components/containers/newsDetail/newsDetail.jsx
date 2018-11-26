@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 // import style
-import { newsDetailStyle } from './styles';
+import { newsDetailStyle } from '../styles';
 
 // import components
 import {
@@ -12,7 +12,7 @@ import {
   NewsBody,
   NewsAbout,
   NewsFooter,
-} from '../functionals';
+} from '../../functionals';
 
 const splitContent = content => {
   const image = content

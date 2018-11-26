@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
-import { userProfileStyle } from '../styles';
 import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Input } from 'antd';
+
 // import components
 import { fire } from '../../../API/firebase';
+
+// Import Styles
+import userProfileStyle from './userProfile.style';
 
 class UserProfile extends Component {
   constructor(props) {

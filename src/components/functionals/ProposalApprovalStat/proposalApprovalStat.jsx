@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { Grid} from '@material-ui/core';
 
 import injectSheet from 'react-jss';
-import { proposalApprovalStyle } from '../styles';
+import proposalApprovalStatStyle from './proposalApprovalStat.style';
 
 class ProposalApprovalStat extends Component {
   constructor(props) {
@@ -154,4 +154,4 @@ ProposalApprovalStat.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default injectSheet(proposalApprovalStyle)(ProposalApprovalStat);
+export default injectSheet(proposalApprovalStatStyle)(ProposalApprovalStat);

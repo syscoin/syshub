@@ -10,13 +10,13 @@ import { Layout } from 'antd';
 import injectSheet from 'react-jss';
 
 //ReduxActions
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
 //import components
-import MHeaderNav from './MHeaderNav';
+import MHeaderNav from '../mHeaderNav/mHeaderNav';
 
 //Import Styles
-import { mAppHeaderStyle } from './styles';
+import { mAppHeaderStyle } from '../styles';
 
 const { Header } = Layout;
 

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 // import style
-import { newsListStyle } from './styles';
+import { newsListStyle } from '../styles';
 
-import NewsCard from '../functionals/newsCard/newsCard';
+import NewsCard from '../../functionals/newsCard/newsCard';
 
 class NewsList extends Component {
   render() {

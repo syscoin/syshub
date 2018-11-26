@@ -6,7 +6,7 @@ import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 //Import Styles
-import { siderLogoStyle } from '../styles';
+import siderLogoStyle from './siderLogo.style';
 
 class SiderLogo extends Component {
   render() {

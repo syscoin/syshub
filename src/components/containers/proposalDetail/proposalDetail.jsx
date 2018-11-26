@@ -5,18 +5,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import API
-import { fire } from '../../API/firebase';
+import { fire } from '../../../API/firebase';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
-import { DashBoardHeader } from '../functionals/';
-import { ProposalPayment } from '../functionals/';
-import { ProposalApprovalStat } from '../functionals/';
-import { ProposalDescription } from '../functionals/';
-import { ProposalComments } from '../functionals/';
+import { DashBoardHeader } from '../../functionals';
+import { ProposalPayment } from '../../functionals';
+import { ProposalApprovalStat } from '../../functionals';
+import { ProposalDescription } from '../../functionals';
+import { ProposalComments } from '../../functionals';
 
 // import components
-import { proposalDetailsStyle } from './styles';
+import { proposalDetailsStyle } from '../styles';
 
 //Definition React Component
 export class ProposalDetail extends Component {

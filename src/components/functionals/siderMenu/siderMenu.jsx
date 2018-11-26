@@ -11,10 +11,10 @@ import { doLogout } from '../../../API/firebase';
 //ReduxActions
 import actions from '../../../redux/actions';
 
-// Components
+// Custom Components
 import SiderLogo from '../siderLogo/siderLogo';
 
-import { siderMenuStyle } from '../styles';
+import siderMenuStyle from './siderMenu.style';
 
 class SiderMenu extends Component {
   activeComponemt(pageActive) {

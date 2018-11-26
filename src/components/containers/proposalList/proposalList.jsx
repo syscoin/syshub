@@ -6,10 +6,10 @@ import Grid from '@material-ui/core/Grid';
 
 // import styles
 import injectSheet from 'react-jss';
-import { proposalStyle } from './styles';
+import { proposalStyle } from '../styles';
 
 // import component
-import { DashBoardHeader, ProposalCard } from '../functionals/';
+import { DashBoardHeader, ProposalCard } from '../../functionals';
 
 export class ProposalList extends Component {
   render() {

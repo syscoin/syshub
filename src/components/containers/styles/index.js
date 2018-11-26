@@ -1,19 +1,19 @@
 import palette from '../../../styles/palette';
 
 //Desktop containers Styles
-import appHeaderStyle from './appHeaderStyle';
-import appRSiderStyle from './appRSiderStyle';
-import appLSiderStyle from './appLSiderStyle';
-import proposalStyle from './proposalStyle';
-import proposalDetailsStyle from './proposalDetailsStyle';
-import newsListStyle from './newsListStyle';
-import newsDetailStyle from './newsDetailStyle';
+import appHeaderStyle from './appHeader.style';
+import appRSiderStyle from './appRSider.style';
+import appLSiderStyle from './appLSider.style';
+import proposalStyle from './proposal.style';
+import proposalDetailsStyle from './proposalDetails.style';
+import newsListStyle from './newsList.style';
+import newsDetailStyle from './newsDetail.style';
 
 //Mobile containers Styles
-import mAppContentStyle from './mAppContentStyle';
-import mAppFooterStyle from './mAppFooterStyle';
-import mAppHeaderStyle from './mAppHeaderStyle';
-import mHeaderNavStyle from './mHeaderNavStyle';
+import mAppContentStyle from './mAppContent.style';
+import mAppFooterStyle from './mAppFooter.style';
+import mAppHeaderStyle from './mAppHeader.style';
+import mHeaderNavStyle from './mHeaderNav.style';
 
 export {
   palette,

@@ -8,7 +8,7 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 
 // import style
-import { welcomeBoxStyle } from '../styles';
+import welcomeBoxStyle from './welcomeBox.style';
 
 class WelcomeBox extends Component {
   render() {

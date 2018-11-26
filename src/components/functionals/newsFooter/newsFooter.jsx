@@ -6,7 +6,7 @@ import { Button, Icon } from 'antd';
 
 // import style
 import injectSheet from 'react-jss';
-import { newsFooterStyle } from '../styles';
+import newsFooterStyle from './newsFooter.style';
 
 class NewsFooter extends Component {
   render() {

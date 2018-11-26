@@ -3,14 +3,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import actions from '../../redux/actions';
-import { withRoot } from '../HOC';
+import actions from '../../../redux/actions';
+import { withRoot } from '../../HOC';
 
 //Import functional components
-import { SiderMenu } from '../functionals';
+import { SiderMenu } from '../../functionals';
 
 // Styles
-import { appLSiderStyle } from './styles';
+import { appLSiderStyle } from '../styles';
 
 
 class AppLSider extends Component {

@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 // import style
-import { newsCardStyle } from '../styles';
+import newsCardStyle from './newsCard.style';
 
 class NewsCard extends Component {
   constructor(props) {

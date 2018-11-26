@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
-import { userTwoFactorStyle } from '../styles';
 import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../../API/firebase';
 import { phoneValidation } from '../../../Helpers';
@@ -13,6 +12,9 @@ import swal from 'sweetalert';
 // import components
 import { isoArray } from '../../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+
+// Import Style
+import userTwoFactorStyle from './userTwoFactor.style';
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();

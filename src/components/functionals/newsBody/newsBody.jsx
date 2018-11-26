@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 // import style
 import injectSheet from 'react-jss';
-import { newsBodyStyle } from '../styles';
+import newsBodyStyle from './newsBody.style';
 
 class NewsBody extends Component {
   render() {

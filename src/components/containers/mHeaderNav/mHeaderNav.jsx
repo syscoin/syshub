@@ -8,9 +8,9 @@ import  Grid  from '@material-ui/core/Grid';
 import Menu from '@material-ui/icons/Menu';
 import { Button } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
-import { mHeaderNavStyle } from './styles';
+import { mHeaderNavStyle } from '../styles';
 
 class MHeaderNav extends Component {
   constructor(props) {

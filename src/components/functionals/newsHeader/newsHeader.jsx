@@ -5,7 +5,7 @@ import { Avatar } from 'antd';
 
 // import style
 import injectSheet from 'react-jss';
-import { newsHeaderStyle } from '../styles';
+import newsHeaderStyle from './newsHeader.style';
 
 class NewsHeader extends Component {
   render() {

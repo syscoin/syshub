@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { withRoot } from '../HOC';
+import { withRoot } from '../../HOC';
 
 import { Layout } from 'antd';
 
@@ -18,11 +18,11 @@ import {
   NewProposal,
   News,
   UserAccount,
-} from '../pages';
-import MAppLSider from './AppLSider';
-import MAppRSider from './AppRSider';
+} from '../../pages';
+import MAppLSider from './appLSider';
+import MAppRSider from './appRSider';
 //Import Styles
-import { mAppContentStyle } from './styles';
+import { mAppContentStyle } from '../styles';
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;

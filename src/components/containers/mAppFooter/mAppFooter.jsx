@@ -1,12 +1,12 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React, { Component } from 'react';
-import { withRoot } from '../HOC';
+import { withRoot } from '../../HOC';
 import { Layout } from 'antd';
 
 //JSS and styles
 import injectSheet from 'react-jss';
-import { mAppFooterStyle } from './styles';
+import { mAppFooterStyle } from '../styles';
 
 const { Footer } = Layout;
 

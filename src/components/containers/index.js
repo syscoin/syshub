@@ -1,17 +1,17 @@
-import AppHeader from './AppHeader';
+import AppHeader from './appHeader';
 import AppFooter from './appFooter/appFooter';
-import AppLSider from './AppLSider';
-import AppRSider from './AppRSider';
+import AppLSider from './appLSider';
+import AppRSider from './appRSider';
 import AppContent from './appContent/appContent';
-import ProposalList from './ProposalList';
-import ProposalDetail from './ProposalDetail';
-import NewsList from './NewsList';
-import NewsDetail from './NewsDetail';
+import ProposalList from './proposalList/proposalList';
+import ProposalDetail from './proposalDetail/proposalDetail';
+import NewsList from './newsList/newsList';
+import NewsDetail from './newsDetail/newsDetail';
 
 //Mobile Containers
-import MAppHeader from './MAppHeader';
-import MAppFooter from './MAppFooter';
-import MAppContent from './MAppContent';
+import MAppHeader from './mAppHeader/mAppHeader';
+import MAppFooter from './mAppFooter/mAppFooter';
+import MAppContent from './mAppContent';
 
 export {
   AppHeader,

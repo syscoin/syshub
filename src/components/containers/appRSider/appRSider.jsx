@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 
-import { withRoot } from '../HOC';
+import { withRoot } from '../../HOC';
 
-import { ChatBox } from '../functionals';
+import { ChatBox } from '../../functionals';
 
 //import Styles
-import { appRSiderStyle } from './styles';
+import { appRSiderStyle } from '../styles';
 
 class AppRSider extends Component {
   render() {

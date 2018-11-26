@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Layout, Row, Col } from 'antd';
-import { HeaderStats, HeaderNav } from '../functionals';
-import { appHeaderStyle } from './styles';
+import { HeaderStats, HeaderNav } from '../../functionals';
+import { appHeaderStyle } from '../styles';
 
 const { Header } = Layout;
 
