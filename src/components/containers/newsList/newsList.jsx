@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 // import style
-import { newsListStyle } from '../styles';
+import newsListStyle from './newsList.style';
 
 import NewsCard from '../../functionals/newsCard/newsCard';
 

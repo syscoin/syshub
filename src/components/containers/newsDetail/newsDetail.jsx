@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 
 // import style
-import { newsDetailStyle } from '../styles';
+import newsDetailStyle from './newsDetail.style';
 
 // import components
 import {

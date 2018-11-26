@@ -16,7 +16,7 @@ import actions from '../../../redux/actions';
 import MHeaderNav from '../mHeaderNav/mHeaderNav';
 
 //Import Styles
-import { mAppHeaderStyle } from '../styles';
+import mAppHeaderStyle from './mAppHeader.style';
 
 const { Header } = Layout;
 

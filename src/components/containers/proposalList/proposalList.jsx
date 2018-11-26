@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 
 // import styles
 import injectSheet from 'react-jss';
-import { proposalStyle } from '../styles';
+import proposalListStyle from './proposalList.style';
 
 // import component
 import { DashBoardHeader, ProposalCard } from '../../functionals';
@@ -16,7 +16,7 @@ export class ProposalList extends Component {
     const { selectProposal, deviceType } = this.props;
 
     return (
-      <Grid item md={12} xs={12} style={proposalStyle.root}>
+      <Grid item md={12} xs={12} style={proposalListStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
           data={{ showHeader: 'proposalList' }}
@@ -51,4 +51,4 @@ const dispatchToProps = dispatch => {
 export default connect(
   stateToProps,
   dispatchToProps
-)(injectSheet(proposalStyle)(ProposalList));
+)(injectSheet(proposalListStyle)(ProposalList));

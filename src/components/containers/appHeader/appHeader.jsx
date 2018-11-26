@@ -5,7 +5,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Layout, Row, Col } from 'antd';
 import { HeaderStats, HeaderNav } from '../../functionals';
-import { appHeaderStyle } from '../styles';
+
+// import style
+import appHeaderStyle from './appHeader.style';
 
 const { Header } = Layout;
 

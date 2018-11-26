@@ -16,7 +16,7 @@ import { ProposalDescription } from '../../functionals';
 import { ProposalComments } from '../../functionals';
 
 // import components
-import { proposalDetailsStyle } from '../styles';
+import proposalDetailsStyle from './proposalDetails.style';
 
 //Definition React Component
 export class ProposalDetail extends Component {

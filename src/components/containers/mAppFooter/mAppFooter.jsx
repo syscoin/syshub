@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 
 //JSS and styles
 import injectSheet from 'react-jss';
-import { mAppFooterStyle } from '../styles';
+import mAppFooterStyle from './mAppFooter.style';
 
 const { Footer } = Layout;
 

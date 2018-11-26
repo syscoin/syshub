@@ -10,7 +10,7 @@ import { Button } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import actions from '../../../redux/actions';
 
-import { mHeaderNavStyle } from '../styles';
+import mHeaderNavStyle from './mHeaderNav.style';
 
 class MHeaderNav extends Component {
   constructor(props) {
@@ -27,8 +27,8 @@ class MHeaderNav extends Component {
   render() {
     const { classes } = this.props;
     //Platform style switcher
-    const chatIcon = require('../../assets/img/png_menu_chat.png');
-    const logo = require('../../assets/img/png_logo_white.png');
+    const chatIcon = require('../../../assets/img/png_menu_chat.png');
+    const logo = require('../../../assets/img/png_logo_white.png');
     return (
       <Grid container className={classes.mRoot}>
         <Grid

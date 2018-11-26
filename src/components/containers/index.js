@@ -1,7 +1,7 @@
-import AppHeader from './appHeader';
+import AppHeader from './appHeader/appHeader';
 import AppFooter from './appFooter/appFooter';
-import AppLSider from './appLSider';
-import AppRSider from './appRSider';
+import AppLSider from './appLSider/appLSider';
+import AppRSider from './appRSider/appRSider';
 import AppContent from './appContent/appContent';
 import ProposalList from './proposalList/proposalList';
 import ProposalDetail from './proposalDetail/proposalDetail';
@@ -11,7 +11,7 @@ import NewsDetail from './newsDetail/newsDetail';
 //Mobile Containers
 import MAppHeader from './mAppHeader/mAppHeader';
 import MAppFooter from './mAppFooter/mAppFooter';
-import MAppContent from './mAppContent';
+import MAppContent from './mAppContent/mAppContent';
 
 export {
   AppHeader,

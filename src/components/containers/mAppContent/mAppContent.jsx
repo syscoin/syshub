@@ -19,10 +19,12 @@ import {
   News,
   UserAccount,
 } from '../../pages';
-import MAppLSider from './appLSider';
-import MAppRSider from './appRSider';
+import MAppLSider from '../appLSider/appLSider';
+import MAppRSider from '../appRSider/appRSider';
+
 //Import Styles
-import { mAppContentStyle } from '../styles';
+import mAppContentStyle from './mAppContent.style';
+
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;

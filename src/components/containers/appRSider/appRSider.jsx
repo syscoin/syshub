@@ -7,7 +7,7 @@ import { withRoot } from '../../HOC';
 import { ChatBox } from '../../functionals';
 
 //import Styles
-import { appRSiderStyle } from '../styles';
+import appRSiderStyle from './appRSider.style';
 
 class AppRSider extends Component {
   render() {

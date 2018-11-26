@@ -10,7 +10,7 @@ import { withRoot } from '../../HOC';
 import { SiderMenu } from '../../functionals';
 
 // Styles
-import { appLSiderStyle } from '../styles';
+import appLSiderStyle from './appLSider.style';
 
 
 class AppLSider extends Component {
