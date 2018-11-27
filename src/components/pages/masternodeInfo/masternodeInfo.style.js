@@ -1,9 +1,11 @@
 import palette from '../../../styles/palette';
 
+const primary = palette.primary;
 const white = palette.white;
-const greyDark = palette.greyDark;
 const boxShadow = palette.boxShadow;
+const grey = palette.grey;
 const greyLight = palette.greyLight;
+const greyDark = palette.greyDark;
 
 export default {
   root: {
@@ -26,6 +28,27 @@ export default {
       '& .add-title': {
         display: 'inline-block',
         fontWeight: 'normal'
+      },
+      '& .linkWrapper':{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: '10px 0 0 0',
+        
+      },
+      '& .gridCardWrapper':{
+      },
+      '& .girdCard':{
+        '&>div': {
+          borderRadius: '10px',
+          backgroundColor: grey,
+        }
+      },
+      '& .image':{
+        transition: 'all 1s',
+        '&:hover':{
+          width: '90%',
+        }
       },
     },
   },
