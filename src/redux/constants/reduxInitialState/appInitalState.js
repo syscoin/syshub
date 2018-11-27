@@ -83,6 +83,15 @@ export default {
       pageTitle: 'Logout',
       showWhen: 'login',
       showPlatform: 'mobile'
+    },
+    {
+      key: 'tool',
+      icon: 'png_menu_info',
+      iconSelected: 'png_menu_info_selected',
+      title: 'Masternodes Info',
+      pageTitle: 'Masternodes Info',
+      showWhen: 'always',
+      showPlatform: 'all'
     }
   ],
   currentUser: null,

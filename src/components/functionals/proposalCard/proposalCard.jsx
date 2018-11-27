@@ -18,7 +18,7 @@ import ProposalInfo from '../proposalInfo/propsalInfo'
 
 // import style
 import injectSheet from 'react-jss';
-import { proposalCardStyle } from '../styles';
+import proposalCardStyle from './proposalCard.style';
 
 class ProposalCard extends Component {
   constructor(props) {

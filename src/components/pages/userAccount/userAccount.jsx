@@ -8,10 +8,10 @@ import swal from 'sweetalert';
 import actions from '../../../redux/actions';
 import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
 
-import UserProfile from '../../functionals/UserProfile';
+import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
 import UserDelete from '../../functionals/userDelete/userDelete';
-import UserTwoFactor from '../../functionals/UserTwoFactor';
+import UserTwoFactor from '../../functionals/userTwoFactor/userTwoFactor';
 
 // Import styles
 import userAccountStyle from './userAccount.style';
