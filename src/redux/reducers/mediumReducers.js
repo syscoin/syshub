@@ -15,9 +15,16 @@ const mediumPosts = (state = initialState, action) => {
         channels = [];
         loop = 0;
       }
+
       channels.push(action.data);
       const image = action.data.channel.image;
-      const postObj = action.data.channel.item.map( item=> ({ image, ...item }));
+      let postObj;
+      try {
+        postObj = action.data.channel.item.map( item => ({ image, ...item }));
+      } catch (err) {
+        const item = action.data.channel.item;
+        postObj = { image, ...item };
+      }
       posts = posts.concat(postObj);
       loop += 1;
       return { ...state, posts, channels, loop };
