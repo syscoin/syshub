@@ -23,7 +23,7 @@ function xmlParser(xmlObj) {
 }
 
 const mediumFeed = 'https://medium.com/feed/';
-const mediumChannels= [ '@BlockchainFoundry', '@syscoincommunity' ];
+const mediumChannels= [ '@BlockchainFoundry', '@syscoincommunity', '@syscoin' ];
 
 export default {
   getMediumPosts: () => {
