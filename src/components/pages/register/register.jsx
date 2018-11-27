@@ -72,8 +72,9 @@ class Register extends Component {
   };
 
   checkEmail = (rule, value, callback) => {
-    const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
-    const isValidEmail = emaiRegex.test(value) ? true : false;
+    //const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
+    const emailRegex = /^[a-zA-Z0-9]*@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
+    const isValidEmail = emailRegex.test(value) ? true : false;
     const erroMsg = value ? 'Invalid Email address format': 'Enter a valid Email address'
     if (!isValidEmail) {
       callback(erroMsg);
