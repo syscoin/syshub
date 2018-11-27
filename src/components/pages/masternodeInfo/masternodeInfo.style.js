@@ -1,6 +1,5 @@
 import palette from '../../../styles/palette';
 
-const primary = palette.primary;
 const white = palette.white;
 const boxShadow = palette.boxShadow;
 const grey = palette.grey;

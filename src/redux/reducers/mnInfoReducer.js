@@ -1,4 +1,3 @@
-import constants from '../constants';
 import initialState from '../constants/reduxInitialState/mnInfoInitialState';
 
 const mediumPosts = (state = initialState, action) => {
