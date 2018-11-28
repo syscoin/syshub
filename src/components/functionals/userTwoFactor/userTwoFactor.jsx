@@ -48,7 +48,7 @@ class UserTwoFactor extends Component {
               <UserTwoFactorSMS />
             </Grid>
             <Grid item className="content2FA-right">
-              <UserTwoFactorAuth />
+             {/* <UserTwoFactorAuth /> */}
             </Grid>
           </Grid>
         </Grid>

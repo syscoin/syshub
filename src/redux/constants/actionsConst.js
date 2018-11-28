@@ -24,6 +24,7 @@ export default {
   SYS_PROPOSAL_VOTE: 'SYS_PROPOSAL_VOTE',
 
   //2FA
+  SET_2FA: 'SET_2FA',
   SET_AUTH: 'SET_AUTH',
 
   // MEDIUM Connect

@@ -93,7 +93,7 @@ class Login extends Component {
         if (user.phoneNumber) {
           fire
             .database()
-            .ref('2FA/' + user.uid)
+            .ref(`2FA/${user.uid}`)
             .once('value', snap => {
               if (snap.val() === true) {
                 const savedUser = user;

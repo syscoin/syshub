@@ -61,5 +61,11 @@ export default {
       type: constants.SET_AUTH,
       data: value
     };
+  },
+  set2FA: value => {
+    return {
+      type: constants.SET_2FA,
+      data: value
+    };
   }
 };

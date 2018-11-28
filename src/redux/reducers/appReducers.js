@@ -51,6 +51,9 @@ const app = (state = initialState, action) => {
     case constants.APP_LOADING:
       return { ...state, loading: action.data };
 
+    case constants.SET_2FA:
+      return { ...state, twoFA: action.data };
+    
     case constants.SET_AUTH:
       return { ...state, auth: action.data };
 

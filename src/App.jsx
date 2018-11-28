@@ -35,7 +35,7 @@ class App extends Component {
       if (user) {
         fire
           .database()
-          .ref('2FA/' + user.uid)
+          .ref(`2FA/${user.uid}`)
           .on('value', snap => {
             if (snap.val() === true) {
               fire
@@ -52,17 +52,22 @@ class App extends Component {
                 });
 
               return;
-            }
+            }   
             user.MasterNodes = [];
             this.props.setCurrentUser(user);
           });
 
-        fire
-          .database()
-          .ref('2FA/' + user.uid)
-          .on('value', snap => {
-            this.props.setAuth(snap.val());
-          });
+        fire.database().ref(`2FA/${user.uid}`).once('value', twoFA => 
+          fire.database().ref(`2FASMS/${user.uid}`).once('value', sms => 
+            fire.database().ref(`2FAAuth/${user.uid}`).once('value', auth => {
+              this.props.setAuth(twoFA.val()); // ACZ: think to remove in the future
+              this.props.set2FA({
+                twoFA: twoFA.val(),
+                sms: sms.val(),
+                auth: auth.val()
+              });
+            }
+        )));
       }
     });
 
@@ -136,6 +141,7 @@ const dispatchToProps = dispatch => {
     setPage: page => dispatch(actions.setPage(page)),
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
     setAuth: auth => dispatch(actions.setAuth(auth)),
+    set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
     setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))

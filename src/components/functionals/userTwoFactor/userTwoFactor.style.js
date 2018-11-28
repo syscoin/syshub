@@ -23,11 +23,9 @@ export default {
       fontWeight: 'normal'
     },
     '& .content2FA':{
-      border: '1px solid red',
       margin: '0 20px'
     },
     '& .content2FA-left':{
-      border: '1px solid blue'
     },
     '& .content2FA-right':{
       border: '1px solid green'

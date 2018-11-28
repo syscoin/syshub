@@ -56,15 +56,13 @@ class UserTwoFactorSMS extends Component {
 
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
-      fire
-        .database()
-        .ref('2FA/' + user.uid)
-        .set(false);
+      fire.database().ref(`2FA/${user.uid}`).set(false, () =>
+        fire.database().ref(`2FASMS/${user.uid}`).set(false));
     }
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
+      .ref(`2FA/${user.uid}`)
       .on('value', snap => {
         this.props.setAuth(snap.val());
         if (snap.val() === true) {
@@ -135,7 +133,7 @@ class UserTwoFactorSMS extends Component {
 
         fire
           .database()
-          .ref('2FA/' + user.uid)
+          .ref(`2FA/${user.uid}`)
           .set(false);
       })
       .catch(err => {
@@ -162,6 +160,9 @@ class UserTwoFactorSMS extends Component {
   addPhone() {
     const user = fire.auth().currentUser;
 
+    console.log('ACZ -->', user);
+    
+
     if (!user) {
       swal({
         title: 'Oops...',
@@ -182,6 +183,8 @@ class UserTwoFactorSMS extends Component {
     if (phoneValidation(this.state.phoneNumber, this.state.isoCode, user) === false) {
       return;
     }
+
+    alert('la cagaste');
 
     this.setState({ isoCode: 'US', phoneNumber: '' });
 
@@ -207,7 +210,7 @@ class UserTwoFactorSMS extends Component {
           });
           fire
             .database()
-            .ref('2FA/' + user.uid)
+            .ref(`2FA/${user.uid}`)
             .set(true);
         }
       })
@@ -240,7 +243,7 @@ class UserTwoFactorSMS extends Component {
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
+      .ref(`2FA/${user.uid}`)
       .set(true);
   }
 
@@ -263,7 +266,7 @@ class UserTwoFactorSMS extends Component {
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
+      .ref(`2FA/${user.uid}`)
       .set(false);
   }
 

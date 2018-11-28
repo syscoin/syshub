@@ -9,12 +9,17 @@ import { phoneValidation } from '../../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
+
 // import components
 import { isoArray } from '../../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 // Import Style
 import userTwoFactorAuthStyle from './userTwoFactorAuth.style';
+
+// Import Auth libs
+const speakeasy = require('speakeasy');
+const QRCode = require('qrcode')
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -58,13 +63,13 @@ class UserTwoFactorAuth extends Component {
     if (user.phoneNumber == null) {
       fire
         .database()
-        .ref('2FA/' + user.uid)
+        .ref(`2FA/${user.uid}`)
         .set(false);
     }
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
+      .ref(`2FA/${user.uid}`)
       .on('value', snap => {
         this.props.setAuth(snap.val());
         if (snap.val() === true) {
@@ -135,7 +140,7 @@ class UserTwoFactorAuth extends Component {
 
         fire
           .database()
-          .ref('2FA/' + user.uid)
+          .ref(`2FA/${user.uid}`)
           .set(false);
       })
       .catch(err => {
@@ -207,7 +212,7 @@ class UserTwoFactorAuth extends Component {
           });
           fire
             .database()
-            .ref('2FA/' + user.uid)
+            .ref(`2FA/${user.uid}`)
             .set(true);
         }
       })
@@ -217,6 +222,16 @@ class UserTwoFactorAuth extends Component {
   }
 
   enableAuth() {
+    const secret = speakeasy.generateSecret();
+    let QRCodeURL;
+
+    QRCode.toDataURL(secret.otpauth_url, function(err, data_url) {
+      QRCodeURL = data_url;
+    });
+
+    console.log('ACZ Secret --> ', secret);
+    console.log('ACZ QRCodeURL -->', QRCodeURL);
+
     const user = fire.auth().currentUser;
 
     if (!this.verify) {
@@ -227,7 +242,8 @@ class UserTwoFactorAuth extends Component {
       });
       return;
     }
-
+    
+/* 
     if (user.phoneNumber == null) {
       this.addPhone();
       return;
@@ -240,8 +256,8 @@ class UserTwoFactorAuth extends Component {
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
-      .set(true);
+      .ref(`2FA/${user.uid}`)
+      .set(true); */
   }
 
   disableAuth() {
@@ -263,7 +279,7 @@ class UserTwoFactorAuth extends Component {
 
     fire
       .database()
-      .ref('2FA/' + user.uid)
+      .ref(`2FA/${user.uid}`)
       .set(false);
   }
 
@@ -278,7 +294,7 @@ class UserTwoFactorAuth extends Component {
       <div className={style}>
           <Grid item md={12} xs={12} className="userTwoFactor-left-grid">
             <div className="div-margin">
-              <span className="statusText-span">2FA SMS Status:</span>
+              <span className="statusText-span">Google Authenticator status:</span>
               <span>
                 {this.props.app.auth ? (
                   <span className="status-enable">Enabled</span>
@@ -373,7 +389,7 @@ class UserTwoFactorAuth extends Component {
                   variant= "raised"
                   color="primary"
                   className="twoFactor-button"
-                  onClick={this.disableAuth}
+                  onClick={this.enableAuth}
                 >
                   Disable 2FA
                 </Button>
