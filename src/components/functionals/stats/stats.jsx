@@ -27,7 +27,7 @@ class Stats extends Component {
         percent_change_24h: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_24h) : '',
         percent_change_7d: this.props.sysInfo.sysPrice ? parseFloat(this.props.sysInfo.sysPrice.percent_change_7d) : '',
       },
-      masternodes: this.props.sysInfo.mnRegistered? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`) : '',
+      masternodes: this.props.sysInfo.mnRegistered && this.props.sysInfo.mnCount ? (`${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`) : '',
       totUsers: this.props.sysInfo ? (this.props.sysInfo.users) : '',
     }[field];
   }
