@@ -6,7 +6,10 @@ import { DesktopLayout, MobileLayout } from './components/layouts';
 import injectSheet from 'react-jss';
 
 import actions from './redux/actions';
+
+// Import services
 import { fire } from './API/firebase';
+import { getFire2FAstatus, setFire2FAMethod, getFire2FAMethod } from './API/TwoFA.service';
 
 import appStyles from './styles/appStyle';
 
@@ -23,51 +26,41 @@ class App extends Component {
     this.detectPorposalUrl(location);
   }
 
-  componentDidMount() {
-    const currentUser = fire.auth().currentUser;
-
+  async componentDidMount() {
+    const currentUser = await fire.auth().currentUser;
+    
     if (currentUser) {
       this.props.setCurrentUser(currentUser);
       return;
     }
-
-    fire.auth().onAuthStateChanged(user => {
+    
+    fire.auth().onAuthStateChanged(async user => {
       if (user) {
-        fire
-          .database()
-          .ref(`2FA/${user.uid}`)
-          .on('value', snap => {
-            if (snap.val() === true) {
-              fire
-                .database()
-                .ref('MasterNodes/' + user.uid)
-                .on('value', snapshot => {
-                  let list = [];
-                  snapshot.forEach(snap => {
-                    list.push(snap.val());
-                  });
-                  user.MasterNodes = list;
-
-                  this.props.setCurrentUser(user);
-                });
-
-              return;
-            }   
-            user.MasterNodes = [];
-            this.props.setCurrentUser(user);
+        const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+        console.log('ACZ twoFA --> ', twoFA);
+        
+        if (twoFA) {
+        console.log('ACZ twoFA --> aqui estamos');
+          await fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
+            let list = [];
+            snapshot.forEach(snap => {
+              list.push(snap.val());
+            });
+            user['MasterNodes'] = list;
           });
 
-        fire.database().ref(`2FA/${user.uid}`).once('value', twoFA => 
-          fire.database().ref(`2FASMS/${user.uid}`).once('value', sms => 
-            fire.database().ref(`2FAAuth/${user.uid}`).once('value', auth => {
-              this.props.setAuth(twoFA.val()); // ACZ: think to remove in the future
-              this.props.set2FA({
-                twoFA: twoFA.val(),
-                sms: sms.val(),
-                auth: auth.val()
-              });
-            }
-        )));
+          this.props.setCurrentUser(user);
+          const status2FA = await getFire2FAstatus(user.uid);
+          this.props.set2FA(status2FA);
+          console.log('ACZ status2FA --> ', status2FA);
+
+
+          this.props.setAuth(twoFA);  // <-- ACZ Delete: think to remove in the future
+          
+          return;
+        }
+        user['MasterNodes'] = [];
+        this.props.setCurrentUser(user);
       }
     });
 
@@ -140,7 +133,7 @@ const dispatchToProps = dispatch => {
     },
     setPage: page => dispatch(actions.setPage(page)),
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
-    setAuth: auth => dispatch(actions.setAuth(auth)),
+    setAuth: auth => dispatch(actions.setAuth(auth)), // <-- ACZ Delete
     set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),

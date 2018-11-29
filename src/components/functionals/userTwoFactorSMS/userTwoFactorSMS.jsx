@@ -5,6 +5,7 @@ import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../../API/firebase';
+import { setFire2FAMethod, getFire2FAMethod } from '../../../API/TwoFA.service';
 import { phoneValidation } from '../../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
@@ -41,7 +42,7 @@ class UserTwoFactorSMS extends Component {
     this.handleIsoCode = this.handleIsoCode.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     fire.auth().useDeviceLanguage();
 
     window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
@@ -56,15 +57,17 @@ class UserTwoFactorSMS extends Component {
 
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
-      fire.database().ref(`2FA/${user.uid}`).set(false, () =>
-        fire.database().ref(`2FASMS/${user.uid}`).set(false));
+      fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
+      setFire2FAMethod(user.uid, 'sms', false);
     }
 
-    fire
-      .database()
-      .ref(`2FA/${user.uid}`)
-      .on('value', snap => {
-        this.props.setAuth(snap.val());
+    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    this.props.setAuth(twoFA); // <-- ACZ Delete
+    if (twoFA) {
+
+    }
+    fire.database().ref(`2FA/${user.uid}`).on('value', snap => {
+        this.props.setAuth(snap.val()); // <-- ACZ Delete
         if (snap.val() === true) {
           fire
             .database()
@@ -405,7 +408,9 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setAuth: value => dispatch(actions.setAuth(value))
+    setAuth: value => dispatch(actions.setAuth(value)), // <-- ACZ Delete
+    set2FA: auth => dispatch(actions.set2FA(auth)),
+
   };
 };
 

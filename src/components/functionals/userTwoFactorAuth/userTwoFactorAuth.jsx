@@ -5,6 +5,7 @@ import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../../API/firebase';
+import { setFire2FAMethod } from '../../../API/TwoFA.service';
 import { phoneValidation } from '../../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
@@ -61,12 +62,10 @@ class UserTwoFactorAuth extends Component {
 
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
-      fire
-        .database()
-        .ref(`2FA/${user.uid}`)
-        .set(false);
+      setFire2FAMethod(user.uid, 'sms', false);
     }
 
+    
     fire
       .database()
       .ref(`2FA/${user.uid}`)
@@ -418,7 +417,9 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setAuth: value => dispatch(actions.setAuth(value))
+    setAuth: value => dispatch(actions.setAuth(value)), // <-- ACZ Delete
+    set2FA: auth => dispatch(actions.set2FA(auth)),
+
   };
 };
 

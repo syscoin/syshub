@@ -174,7 +174,7 @@ class ProposalCard extends Component {
       });
     }
     
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    let modalType = this.props.app.twoFA.twoFA ? 'e2fa' : '';
     modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
     if (modalType) {
       this.cantVoteErrorModal(modalType);
@@ -405,7 +405,7 @@ class ProposalCard extends Component {
       });
     }
 
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    let modalType = !this.props.app.twoFA.twoFA ? 'e2fa' : '';
     modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
     if (modalType) {
       this.cantVoteErrorModal(modalType);
@@ -638,7 +638,7 @@ class ProposalCard extends Component {
       });
     }
 
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
+    let modalType = !this.props.app.twoFA.twoFA ? 'e2fa' : '';
     modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
     if (modalType) {
       this.cantVoteErrorModal(modalType);

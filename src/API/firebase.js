@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
+import { removeFire2FA, getFire2FAstatus, setFire2FAMethod } from './TwoFA.service';
+
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -97,11 +99,10 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
           .then(phoneCredential => {
             return user.updatePhoneNumber(phoneCredential);
           })
-          .then(() => {
-            fire.database().ref(`2FA/${user.uid}`).set(true, () =>
-              fire.database().ref(`2FASMS/${user.uid}`).set(true, () =>
-                resolve(true)
-            ));
+          .then(async () => {
+            fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
+            await setFire2FAMethod(user.uid, 'sms', true);
+            resolve(true)
           })
           .catch(err => {
             reject(err);
@@ -336,9 +337,8 @@ const doDeleteAccount = () => {
               });
 
             fire.database().ref(`usernames/${currentUser.uid}`).set(`${currentUser.displayName}-deleted`);
-            fire.database().ref(`2FA/${currentUser.uid}`).remove();
-            fire.database().ref(`2FASMS/${currentUser.uid}`).remove();
-            fire.database().ref(`2FAAuth/${currentUser.uid}`).remove();
+            fire.database().ref(`2FA/${currentUser.uid}`).remove(); // <-- ACZ Delete
+            removeFire2FA(currentUser.uid);
             fire.database().ref(`proposals/${currentUser.uid}`).remove();
             fire.database().ref(`MasterNodes/${currentUser.uid}`).remove();
 
@@ -385,6 +385,7 @@ const getCurrentUser = () => {
   return fire.auth().currentUser;
 }
 
+// refactor this method to run properly
 const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
   return new Promise((resolve, reject) => {
     provider
@@ -416,7 +417,7 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
             return user.updatePhoneNumber(phoneCredential);
           })
           .then(() => {
-            fire.database().ref(`2FA/${user.uid}`).set(true, () =>
+            fire.database().ref(`2FA/${user.uid}`).set(true, () => // <-- ACZ Delete
               fire.database().ref(`2FAAuth/${user.uid}`).set(true, () =>
                 resolve(true)
             ));
