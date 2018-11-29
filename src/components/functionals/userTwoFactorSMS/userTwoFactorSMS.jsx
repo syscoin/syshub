@@ -57,14 +57,11 @@ class UserTwoFactorSMS extends Component {
 
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
-      fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
-      this.props.setAuth(false); // <-- ACZ Delete
       const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
       this.props.set2FA(newStatus);
     }
 
     const twoFAStatus = await getFire2FAstatus(user.uid);
-    this.props.setAuth(twoFAStatus.twoFA); // <-- ACZ Delete
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
       fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
@@ -125,9 +122,6 @@ class UserTwoFactorSMS extends Component {
         window.recaptchaVerifier.render().then(widgetId => {
           window.recaptchaVerifier.reset(widgetId);
         });
-
-        fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
-        this.props.setAuth(false); // <-- ACZ Delete
 
         const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
         this.props.set2FA(newStatus);
@@ -205,9 +199,6 @@ class UserTwoFactorSMS extends Component {
             editNumber: false
           });
 
-          fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
-          this.props.setAuth(true); // <-- ACZ Delete
-
           const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
           this.props.set2FA(newStatus);
 
@@ -240,9 +231,6 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset(widgetId);
     });
 
-    fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
-    this.props.setAuth(true); // <-- ACZ Delete
-
     const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
     this.props.set2FA(newStatus);
 
@@ -264,9 +252,6 @@ class UserTwoFactorSMS extends Component {
     window.recaptchaVerifier.render().then(widgetId => {
       window.recaptchaVerifier.reset(widgetId);
     });
-
-    fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
-    this.props.setAuth(false); // <-- ACZ Delete
 
     const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
@@ -410,7 +395,6 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setAuth: value => dispatch(actions.setAuth(value)), // <-- ACZ Delete
     set2FA: auth => dispatch(actions.set2FA(auth)),
 
   };

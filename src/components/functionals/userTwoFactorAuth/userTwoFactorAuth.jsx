@@ -416,7 +416,6 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setAuth: value => dispatch(actions.setAuth(value)), // <-- ACZ Delete
     set2FA: auth => dispatch(actions.set2FA(auth)),
 
   };

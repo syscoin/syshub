@@ -100,7 +100,6 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
             return user.updatePhoneNumber(phoneCredential);
           })
           .then(async () => {
-            fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
             await setFire2FAMethod(user.uid, 'sms', true);
             resolve(true)
           })
@@ -337,7 +336,6 @@ const doDeleteAccount = () => {
               });
 
             fire.database().ref(`usernames/${currentUser.uid}`).set(`${currentUser.displayName}-deleted`);
-            fire.database().ref(`2FA/${currentUser.uid}`).remove(); // <-- ACZ Delete
             removeFire2FA(currentUser.uid);
             fire.database().ref(`proposals/${currentUser.uid}`).remove();
             fire.database().ref(`MasterNodes/${currentUser.uid}`).remove();
@@ -417,7 +415,7 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
             return user.updatePhoneNumber(phoneCredential);
           })
           .then(() => {
-            fire.database().ref(`2FA/${user.uid}`).set(true, () => // <-- ACZ Delete
+            fire.database().ref(`2FA/${user.uid}`).set(true, () => // <-- ACZ Delete: after create the correct method
               fire.database().ref(`2FAAuth/${user.uid}`).set(true, () =>
                 resolve(true)
             ));

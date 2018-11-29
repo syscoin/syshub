@@ -51,8 +51,6 @@ class App extends Component {
           const status2FA = await getFire2FAstatus(user.uid);
           this.props.set2FA(status2FA);
 
-          this.props.setAuth(twoFA);  // <-- ACZ Delete: think to remove in the future
-          
           return;
         }
         user['MasterNodes'] = [];
@@ -129,7 +127,6 @@ const dispatchToProps = dispatch => {
     },
     setPage: page => dispatch(actions.setPage(page)),
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
-    setAuth: auth => dispatch(actions.setAuth(auth)), // <-- ACZ Delete
     set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
