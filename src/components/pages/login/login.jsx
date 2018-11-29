@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { fire } from '../../../API/firebase';
+import { getFire2FAstatus } from '../../../API/TwoFA.service';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 
@@ -70,11 +71,101 @@ class Login extends Component {
       });
   }
 
+  smsLogin(user, email, password) {
+    const appVerifier = window.recaptchaVerifier;
+
+    fire
+      .database()
+      .ref(`2FA/${user.uid}`)
+      .once('value', snap => {
+        if (snap.val() === true) {
+          const savedUser = user;
+          fire.auth().signOut();
+          this.props.setCurrentUser(null);
+          fire
+            .auth()
+            .signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
+            .then(confirmationResult => {
+              if (confirmationResult) {
+                swal({
+                  closeOnClickOutside: false,
+                  closeOnEsc: false,
+                  title: 'Success',
+                  text: 'Please provide use the verification code to continue',
+                  icon: 'success',
+                  buttons: true,
+                  dangerMode: false,
+                  content: {
+                    element: 'input',
+                    attributes: {
+                      placeholder: 'Confirmation code here',
+                      type: 'text'
+                    }
+                  }
+                })
+                  .then(value => {
+                    if (!value) {
+                      throw new Error('Must provide a code to login.');
+                    }
+
+                    return confirmationResult.confirm(value);
+                  })
+                  .then(response => {
+                    return fire.auth().signInWithEmailAndPassword(email, password);
+                  })
+                  .then(user => {
+
+                    //attach MN to user here
+                    fire
+                      .database()
+                      .ref('MasterNodes/' + user.uid)
+                      .on('value', snapshot => {
+                        let list = [];
+                        snapshot.forEach(snap => {
+                          list.push(snap.val());
+                        });
+
+                        user.MasterNodes = list;
+                        this.props.setCurrentUser(user);
+                      });
+
+                    this.props.setPage('home');
+                  })
+                  .catch(err => {
+                    fire.auth().signOut();
+                    this.props.setCurrentUser(null);
+                    this.loginForm.reset();
+                    this.verify = undefined;
+                    window.recaptchaVerifier.render().then(widgetId => {
+                      window.recaptchaVerifier.reset(widgetId);
+                    });
+                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                  });
+              }
+            })
+            .catch(err => {
+              fire.auth().signOut();
+              this.props.setCurrentUser(null);
+              this.loginForm.reset();
+              this.verify = undefined;
+              window.recaptchaVerifier.render().then(widgetId => {
+                window.grecaptcha.reset(widgetId);
+              });
+
+              swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            });
+        } else {
+          this.props.setPage('home');
+        }
+      });
+
+    return;
+  } 
+
   login(event) {
     event.preventDefault();
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
-    const appVerifier = window.recaptchaVerifier;
 
     if (!this.verify) {
       swal({
@@ -86,120 +177,131 @@ class Login extends Component {
       return;
     }
 
-    fire
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        if (user.phoneNumber) {
-          fire
-            .database()
-            .ref(`2FA/${user.uid}`)
-            .once('value', snap => {
-              if (snap.val() === true) {
-                const savedUser = user;
-                fire.auth().signOut();
-                this.props.setCurrentUser(null);
-                fire
-                  .auth()
-                  .signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
-                  .then(confirmationResult => {
-                    if (confirmationResult) {
-                      swal({
-                        closeOnClickOutside: false,
-                        closeOnEsc: false,
-                        title: 'Success',
-                        text: 'Please provide use the verification code to continue',
-                        icon: 'success',
-                        buttons: true,
-                        dangerMode: false,
-                        content: {
-                          element: 'input',
-                          attributes: {
-                            placeholder: 'Confirmation code here',
-                            type: 'text'
-                          }
+    fire.auth().signInWithEmailAndPassword(email, password).then(async user => {
+      const { twoFA, sms, auth } = await getFire2FAstatus(user.uid);
+      if (twoFA) {
+        if(auth) { this.authLogin(user) }
+        if(sms && user.phoneNumber) { this.smsLogin(user, email, password) }
+      } else {
+        swal({
+          title: 'Success',
+          text: `${user.email} signed in without sms verification.`,
+          icon: 'success'
+        });
+        this.props.setPage('home');
+      }
+      /* 
+      if (user.phoneNumber) {
+        fire
+          .database()
+          .ref(`2FA/${user.uid}`)
+          .once('value', snap => {
+            if (snap.val() === true) {
+              const savedUser = user;
+              fire.auth().signOut();
+              this.props.setCurrentUser(null);
+              fire
+                .auth()
+                .signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
+                .then(confirmationResult => {
+                  if (confirmationResult) {
+                    swal({
+                      closeOnClickOutside: false,
+                      closeOnEsc: false,
+                      title: 'Success',
+                      text: 'Please provide use the verification code to continue',
+                      icon: 'success',
+                      buttons: true,
+                      dangerMode: false,
+                      content: {
+                        element: 'input',
+                        attributes: {
+                          placeholder: 'Confirmation code here',
+                          type: 'text'
                         }
+                      }
+                    })
+                      .then(value => {
+                        if (!value) {
+                          throw new Error('Must provide a code to login.');
+                        }
+
+                        return confirmationResult.confirm(value);
                       })
-                        .then(value => {
-                          if (!value) {
-                            throw new Error('Must provide a code to login.');
-                          }
+                      .then(response => {
+                        return fire.auth().signInWithEmailAndPassword(email, password);
+                      })
+                      .then(user => {
 
-                          return confirmationResult.confirm(value);
-                        })
-                        .then(response => {
-                          return fire.auth().signInWithEmailAndPassword(email, password);
-                        })
-                        .then(user => {
-
-                          //attach MN to user here
-                          fire
-                            .database()
-                            .ref('MasterNodes/' + user.uid)
-                            .on('value', snapshot => {
-                              let list = [];
-                              snapshot.forEach(snap => {
-                                list.push(snap.val());
-                              });
-
-                              user.MasterNodes = list;
-                              this.props.setCurrentUser(user);
+                        //attach MN to user here
+                        fire
+                          .database()
+                          .ref('MasterNodes/' + user.uid)
+                          .on('value', snapshot => {
+                            let list = [];
+                            snapshot.forEach(snap => {
+                              list.push(snap.val());
                             });
 
-                          this.props.setPage('home');
-                        })
-                        .catch(err => {
-                          fire.auth().signOut();
-                          this.props.setCurrentUser(null);
-                          this.loginForm.reset();
-                          this.verify = undefined;
-                          window.recaptchaVerifier.render().then(widgetId => {
-                            window.recaptchaVerifier.reset(widgetId);
+                            user.MasterNodes = list;
+                            this.props.setCurrentUser(user);
                           });
-                          swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+
+                        this.props.setPage('home');
+                      })
+                      .catch(err => {
+                        fire.auth().signOut();
+                        this.props.setCurrentUser(null);
+                        this.loginForm.reset();
+                        this.verify = undefined;
+                        window.recaptchaVerifier.render().then(widgetId => {
+                          window.recaptchaVerifier.reset(widgetId);
                         });
-                    }
-                  })
-                  .catch(err => {
-                    fire.auth().signOut();
-                    this.props.setCurrentUser(null);
-                    this.loginForm.reset();
-                    this.verify = undefined;
-                    window.recaptchaVerifier.render().then(widgetId => {
-                      window.grecaptcha.reset(widgetId);
-                    });
-
-                    swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                      });
+                  }
+                })
+                .catch(err => {
+                  fire.auth().signOut();
+                  this.props.setCurrentUser(null);
+                  this.loginForm.reset();
+                  this.verify = undefined;
+                  window.recaptchaVerifier.render().then(widgetId => {
+                    window.grecaptcha.reset(widgetId);
                   });
-              } else {
-                this.props.setPage('home');
-              }
-            });
 
-          return;
-        } else {
-          swal({
-            title: 'Success',
-            text: `${user.email} signed in without sms verification.`,
-            icon: 'success'
+                  swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+                });
+            } else {
+              this.props.setPage('home');
+            }
           });
-          this.props.setPage('home');
-        }
-      })
-      .catch(err => {
-        fire.auth().signOut();
-        this.props.setCurrentUser(null);
-        this.loginForm.reset();
-        this.verify = undefined;
-        window.recaptchaVerifier.render().then(widgetId => {
-          window.recaptchaVerifier.reset(widgetId);
-        });
+
+        return;
+      } 
+      /* else {
         swal({
-          title: 'Oops...',
-          text: `${err}`,
-          icon: 'error'
+          title: 'Success',
+          text: `${user.email} signed in without sms verification.`,
+          icon: 'success'
         });
+        this.props.setPage('home');
+      } */
+    })
+    .catch(err => {
+      fire.auth().signOut();
+      this.props.setCurrentUser(null);
+      this.loginForm.reset();
+      this.verify = undefined;
+      window.recaptchaVerifier.render().then(widgetId => {
+        window.recaptchaVerifier.reset(widgetId);
       });
+      swal({
+        title: 'Oops...',
+        text: `${err}`,
+        icon: 'error'
+      });
+    });
   }
 
   render() {
