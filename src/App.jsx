@@ -9,7 +9,7 @@ import actions from './redux/actions';
 
 // Import services
 import { fire } from './API/firebase';
-import { getFire2FAstatus, setFire2FAMethod, getFire2FAMethod } from './API/TwoFA.service';
+import { getFire2FAstatus, getFire2FAMethod } from './API/TwoFA.service';
 
 import appStyles from './styles/appStyle';
 
@@ -37,10 +37,8 @@ class App extends Component {
     fire.auth().onAuthStateChanged(async user => {
       if (user) {
         const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-        console.log('ACZ twoFA --> ', twoFA);
         
         if (twoFA) {
-        console.log('ACZ twoFA --> aqui estamos');
           await fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
             let list = [];
             snapshot.forEach(snap => {
@@ -52,8 +50,6 @@ class App extends Component {
           this.props.setCurrentUser(user);
           const status2FA = await getFire2FAstatus(user.uid);
           this.props.set2FA(status2FA);
-          console.log('ACZ status2FA --> ', status2FA);
-
 
           this.props.setAuth(twoFA);  // <-- ACZ Delete: think to remove in the future
           

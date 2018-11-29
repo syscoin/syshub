@@ -9,7 +9,7 @@ import { Grid } from '@material-ui/core';
 
 // Import Custom components
 import UserTwoFactorSMS from '../userTwoFactorSMS/userTwoFactorSMS';
-import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
+// import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
 
 
 // Import Style
@@ -28,7 +28,7 @@ class UserTwoFactor extends Component {
   componentDidMount() {}
 
   render() {
-    const { classes, deviceType, app } = this.props;
+    const { classes, deviceType } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 

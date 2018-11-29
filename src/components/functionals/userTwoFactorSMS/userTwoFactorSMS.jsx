@@ -5,7 +5,7 @@ import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 import { Grid } from '@material-ui/core';
 import { fire, phoneAuth } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAMethod } from '../../../API/TwoFA.service';
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
 import { phoneValidation } from '../../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
@@ -58,35 +58,27 @@ class UserTwoFactorSMS extends Component {
     const user = fire.auth().currentUser;
     if (user.phoneNumber == null) {
       fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
-      setFire2FAMethod(user.uid, 'sms', false);
+      this.props.setAuth(false); // <-- ACZ Delete
+      const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
+      this.props.set2FA(newStatus);
     }
 
-    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-    this.props.setAuth(twoFA); // <-- ACZ Delete
-    if (twoFA) {
-
-    }
-    fire.database().ref(`2FA/${user.uid}`).on('value', snap => {
-        this.props.setAuth(snap.val()); // <-- ACZ Delete
-        if (snap.val() === true) {
-          fire
-            .database()
-            .ref('MasterNodes/' + user.uid)
-            .on('value', snapshot => {
-              if (snapshot.val() === null) {
-                return;
-              }
-              let list = [];
-              snapshot.forEach(mn => {
-                list.push(mn.val());
-              });
-
-              user.MasterNodes = list;
-
-              this.props.setCurrentUser(user);
-            });
+    const twoFAStatus = await getFire2FAstatus(user.uid);
+    this.props.setAuth(twoFAStatus.twoFA); // <-- ACZ Delete
+    this.props.set2FA(twoFAStatus);
+    if (twoFAStatus.twoFA) {
+      fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
+        if (snapshot.val() === null) {
+          return;
         }
+        let list = [];
+        snapshot.forEach(mn => {
+          list.push(mn.val());
+        });
+        user.MasterNodes = list;
+        this.props.setCurrentUser(user);
       });
+    }
   }
 
   onChange(e) {
@@ -121,7 +113,7 @@ class UserTwoFactorSMS extends Component {
     }
     user
       .unlink(fire.auth.PhoneAuthProvider.PROVIDER_ID)
-      .then(user => {
+      .then(async user => {
         this.props.setCurrentUser(user);
         swal({
           title: 'Success',
@@ -134,10 +126,11 @@ class UserTwoFactorSMS extends Component {
           window.recaptchaVerifier.reset(widgetId);
         });
 
-        fire
-          .database()
-          .ref(`2FA/${user.uid}`)
-          .set(false);
+        fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
+        this.props.setAuth(false); // <-- ACZ Delete
+
+        const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
+        this.props.set2FA(newStatus);
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -197,7 +190,7 @@ class UserTwoFactorSMS extends Component {
     const provider = new fire.auth.PhoneAuthProvider();
 
     phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), appVerifier)
-      .then(success => {
+      .then(async success => {
         if (success) {
           swal({
             title: 'Sucess',
@@ -211,10 +204,13 @@ class UserTwoFactorSMS extends Component {
           this.setState({
             editNumber: false
           });
-          fire
-            .database()
-            .ref(`2FA/${user.uid}`)
-            .set(true);
+
+          fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
+          this.props.setAuth(true); // <-- ACZ Delete
+
+          const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+          this.props.set2FA(newStatus);
+
         }
       })
       .catch(err => {
@@ -222,7 +218,7 @@ class UserTwoFactorSMS extends Component {
       });
   }
 
-  enableAuth() {
+  async enableAuth() {
     const user = fire.auth().currentUser;
 
     if (!this.verify) {
@@ -244,15 +240,17 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset(widgetId);
     });
 
-    fire
-      .database()
-      .ref(`2FA/${user.uid}`)
-      .set(true);
+    fire.database().ref(`2FA/${user.uid}`).set(true); // <-- ACZ Delete
+    this.props.setAuth(true); // <-- ACZ Delete
+
+    const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+    this.props.set2FA(newStatus);
+
   }
 
-  disableAuth() {
+  async disableAuth() {
     const user = fire.auth().currentUser;
-
+    
     if (!this.verify) {
       swal({
         title: 'Oops...',
@@ -267,14 +265,18 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset(widgetId);
     });
 
-    fire
-      .database()
-      .ref(`2FA/${user.uid}`)
-      .set(false);
+    fire.database().ref(`2FA/${user.uid}`).set(false); // <-- ACZ Delete
+    this.props.setAuth(false); // <-- ACZ Delete
+
+    const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
+    this.props.set2FA(newStatus);
+
+
   }
 
   render() {
     const { classes, deviceType, app } = this.props;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -286,7 +288,7 @@ class UserTwoFactorSMS extends Component {
             <div className="div-margin">
               <span className="statusText-span">2FA SMS Status:</span>
               <span>
-                {this.props.app.auth ? (
+                {this.props.app.twoFA.sms ? (
                   <span className="status-enable">Enabled</span>
                 ) : (
                   <span className="status-disable">

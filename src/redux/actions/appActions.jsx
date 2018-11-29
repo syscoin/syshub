@@ -1,6 +1,4 @@
 import constants from '../constants';
-import { fire } from '../../API/firebase';
-
 
 export default {
   setCurrentUser: user => {

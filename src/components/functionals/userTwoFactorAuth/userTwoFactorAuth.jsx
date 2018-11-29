@@ -231,7 +231,6 @@ class UserTwoFactorAuth extends Component {
     console.log('ACZ Secret --> ', secret);
     console.log('ACZ QRCodeURL -->', QRCodeURL);
 
-    const user = fire.auth().currentUser;
 
     if (!this.verify) {
       swal({

@@ -101,6 +101,11 @@ export default {
   platform: {},
   loading: false,
   auth: false,
+  twoFA: {
+    twoFA: false,
+    sms: false,
+    auth: false
+  },
   dashBoard: {
     showContainer: 'dashBoard',
     selectedProposal: ''
