@@ -361,7 +361,7 @@ class UserTwoFactorSMS extends Component {
             <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
 
             <Grid className="twoFactor-button-grid">
-              {this.props.app.auth ? (
+              {this.props.app.twoFA.twoFA ? (
                 <Button
                   variant= "raised"
                   color="primary"

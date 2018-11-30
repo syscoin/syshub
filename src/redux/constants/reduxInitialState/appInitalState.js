@@ -100,7 +100,6 @@ export default {
   showMenu: false,
   platform: {},
   loading: false,
-  auth: false,
   twoFA: {
     twoFA: false,
     sms: false,
