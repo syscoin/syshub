@@ -15,6 +15,7 @@ class Login extends Component {
     super(props);
 
     this.login = this.login.bind(this);
+    this.smsLogin = this.smsLogin.bind(this);
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
@@ -71,12 +72,11 @@ class Login extends Component {
       });
   }
 
-  smsLogin(user, email, password) {
+  async smsLogin(user, email, password) {
     const appVerifier = window.recaptchaVerifier;
-    const savedUser = user;
-    fire.auth().signOut();
+    await fire.auth().signOut();
     this.props.setCurrentUser(null);
-    fire.auth().signInWithPhoneNumber(`${savedUser.phoneNumber}`, appVerifier)
+    await fire.auth().signInWithPhoneNumber(`${user.phoneNumber}`, appVerifier)
     .then(confirmationResult => {
       if (confirmationResult) {
         swal({
@@ -114,12 +114,10 @@ class Login extends Component {
             user.MasterNodes = list;
             this.props.setCurrentUser(user);
           });
-          this.props.setPage('home');
         })
         .catch(err => {
           fire.auth().signOut();
           this.props.setCurrentUser(null);
-          this.loginForm.reset();
           this.verify = undefined;
           window.recaptchaVerifier.render().then(widgetId => {
             window.recaptchaVerifier.reset(widgetId);
@@ -131,18 +129,16 @@ class Login extends Component {
     .catch(err => {
         fire.auth().signOut();
         this.props.setCurrentUser(null);
-        this.loginForm.reset();
         this.verify = undefined;
         window.recaptchaVerifier.render().then(widgetId => {
           window.grecaptcha.reset(widgetId);
         });
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
     });
-    this.props.setPage('home');
     return;
   } 
 
-  login(event) {
+  async login(event) {
     event.preventDefault();
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
@@ -159,17 +155,20 @@ class Login extends Component {
 
     fire.auth().signInWithEmailAndPassword(email, password).then(async user => {
       const { twoFA, sms, auth } = await getFire2FAstatus(user.uid);
-      console.log('ACZ twoFA, sms, auth --> ',twoFA, sms, auth );
       
       if (twoFA) {
         if(auth) { this.authLogin(user) }
-        if(sms && user.phoneNumber) { this.smsLogin(user, email, password) }
+        if(sms && user.phoneNumber) { 
+          await this.smsLogin(user, email, password);
+          this.props.setPage('home');
+        }
       } else {
         swal({
           title: 'Success',
           text: `${user.email} signed in without sms verification.`,
           icon: 'success'
         });
+        this.loginForm.reset();
         this.props.setPage('home');
       }
     })
