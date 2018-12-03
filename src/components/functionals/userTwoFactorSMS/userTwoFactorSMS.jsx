@@ -224,7 +224,7 @@ class UserTwoFactorSMS extends Component {
   }
 
   async verifySMSCode () {
-    const user = fire.auth().currentUser;
+    let user = fire.auth().currentUser;
     const verificationId = this.state.verificationId;
     const phoneCode = this.state.phoneVerify;
     if (!phoneCode) {
@@ -241,6 +241,8 @@ class UserTwoFactorSMS extends Component {
       user.updatePhoneNumber(phoneCredential);
       const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
       this.props.set2FA(newStatus);
+      user = await fire.auth().currentUser;
+      this.props.setCurrentUser(user);
       this.handleHideModal();
       swal({
         title: 'Sucess',
