@@ -8,9 +8,27 @@ const red = palette.red;
 const green = palette.green;
 const white = palette.white;
 export default {
+  modalRoot:{
+    position: 'absolute',
+    top: '25%',
+    left: '50%',
+    transform: `translate(-50%, -50%)`,
+    background: white,
+    boxShadow: green,
+    padding: 40,
+    color:greyDark,
+    border: '1px solid red',
+    '& .formPhone': {
+      border: '1px solid red',
+      padding: '20px 0px'
+    },
+  },
+  mModalRoot: {
+    extend: 'modalRoot',
+  },
   root: {
     paddingTop: '20px',
-
+    border: '1px solid green',
     '& button span': {
       color: 'white',
       textTransform: 'capitalize'
@@ -24,7 +42,7 @@ export default {
     '& .heading-2FA': {
       color: primaryLight
     },
-    '& .userTwoFactor-left-grid': {
+    '& .userTwoFactor': {
       marginTop: '-20px',
       marginLeft: 20,
       '& .enable2FA-note': {
@@ -33,32 +51,46 @@ export default {
         display: 'block',
         fontWeight: 'normal'
       },
-      '& .div-margin': {
-        margin: '12px 0 12px 0px',
-        '& .statusText-span': {
-          display: 'inline-block',
-          textAlign: 'right',
+      '& .statusWrapper': {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        margin: '12px 0',
+        minHeight: '54px',
+        '& .statusTextSpan': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: '0 10px 0 0',
+          padding: '0 10px 0 0',
+          borderRight: `2px solid ${greyLight}`,
+          textAlign: 'left',
           fontSize: '15px',
-          margin: '15px 0 0px 0',
           color: primary,
-          paddingRight: '10px'
         },
-        '& .status-enable': {
+        '& .statusEnable': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
           margin: '0 1%',
           color: green,
           fontWeight: 'bold',
           fontSize: '1.3em',
-          '& .lowSecurity-span': {
+          '& .lowSecuritySpan': {
             color: greyDark,
             margin: '0 1%'
           }
         },
-        '& .status-disable': {
+        '& .statusDisable': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
           margin: '0 1%',
           color: red,
           fontWeight: 'bold',
           fontSize: '1.3em',
-          '& .lowSecurity-span': {
+          '& .lowSecuritySpan': {
             color: greyDark,
             fontWeight: 'normal',
             fontSize: '0.8em',

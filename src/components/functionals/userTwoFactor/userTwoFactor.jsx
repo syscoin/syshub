@@ -9,7 +9,7 @@ import { Grid } from '@material-ui/core';
 
 // Import Custom components
 import UserTwoFactorSMS from '../userTwoFactorSMS/userTwoFactorSMS';
-// import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
+import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
 
 
 // Import Style
@@ -43,12 +43,12 @@ class UserTwoFactor extends Component {
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Grid container  className="content2FA" justify="flex-start" spacing={0}>
+          <Grid container  className="content2FA" justify="flex-start" spacing={40}>
             <Grid item className="content2FA-left">
               <UserTwoFactorSMS />
             </Grid>
             <Grid item className="content2FA-right">
-             {/* <UserTwoFactorAuth /> */}
+              {/* <UserTwoFactorAuth /> */}
             </Grid>
           </Grid>
         </Grid>
