@@ -21,7 +21,6 @@ export default {
       margin: '0 20px'
     },
     '& .content2FA-left':{
-      border: '1px solid orange'
     },
     '& .content2FA-right':{
       border: '1px solid orange'

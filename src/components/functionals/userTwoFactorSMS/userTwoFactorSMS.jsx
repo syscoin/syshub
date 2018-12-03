@@ -4,14 +4,19 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
-import { fire, phoneAuth } from '../../../API/firebase';
 import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
 import { phoneValidation } from '../../../Helpers';
 // import { Form, Input, Button } from 'antd';//, Select
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import swal from 'sweetalert';
 
+// Import Sevices
+import { fire, phoneAuth, sendSMSToPhone, verifyPhoneCode } from '../../../API/firebase';
+
+
 // import Material-ui components
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,6 +25,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
+
+// Import Material-ui Icons
+import Send from '@material-ui/icons/Send';
+import DoneAll from '@material-ui/icons/DoneAll';
+import Close from '@material-ui/icons/Close';
 
 // import custom components
 import { isoArray } from '../../../assets/isoCodes';
@@ -40,10 +50,13 @@ class UserTwoFactorSMS extends Component {
 
     this.state = {
       phoneNumber: '',
+      phoneVerify: '',
       isoCode: 'US',
-      editNumber: false,
-      showModal: false,
       areaCode: '',
+      verificationId: '',
+      showModal: false,
+      showVerifyCode: false,
+      editNumber: false,
       labelWidth: 10
     };
 
@@ -54,7 +67,7 @@ class UserTwoFactorSMS extends Component {
     this.editPhone = this.editPhone.bind(this);
     this.removePhone = this.removePhone.bind(this);
     this.handleIsoCode = this.handleIsoCode.bind(this);
-    this.handlePhoneChange= this.handlePhoneChange.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
   }
 
   async componentDidMount() {
@@ -81,6 +94,27 @@ class UserTwoFactorSMS extends Component {
         this.props.setCurrentUser(user);
       });
     }
+      window.recaptchaVerifierEnable2FASMS = new fire.auth.RecaptchaVerifier('enable2FASMS', {
+        size: 'invisible',
+        callback: response => {
+          this.verify = response;
+          this.enableAuth();
+        }
+      });
+      window.recaptchaVerifierEnable2FASMS.render().then(function(widgetId) {
+        window.recaptchaWidgetEnable2FASMSId = widgetId;
+      });
+
+      window.recaptchaVerifierDisable2FASMS = new fire.auth.RecaptchaVerifier('disable2FASMS', {
+        size: 'invisible',
+        callback: response => {
+          this.verify = response;
+          this.disableAuth();
+        }
+      });
+      window.recaptchaVerifierDisable2FASMS.render().then(function(widgetId) {
+        window.recaptchaWidgetDisable2FASMSId = widgetId;
+      });
   }
 
   onChange(e) {
@@ -95,12 +129,11 @@ class UserTwoFactorSMS extends Component {
     });
   }
 
-  handlePhoneChange(event) {
+  handleInputChange = field => event => {
     this.setState({
-      phoneNumber: event.target.value
+      [field]: event.target.value,
     });
-    console.log('ACZ phoneNumber -->', this.state.phoneNumber);
-  }
+  };
 
   removePhone() {
     const user = fire.auth().currentUser;
@@ -131,12 +164,13 @@ class UserTwoFactorSMS extends Component {
         });
 
         this.verify = undefined;
-        window.recaptchaVerifier.render().then(widgetId => {
-          window.recaptchaVerifier.reset(widgetId);
+        window.recaptchaVerifierDelete.render().then(widgetId => {
+          window.recaptchaVerifierDelete.reset(widgetId);
         });
 
         const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
         this.props.set2FA(newStatus);
+        this.handleHideModal();
       })
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -159,7 +193,64 @@ class UserTwoFactorSMS extends Component {
     });
   }
 
-  addPhone() {
+  async sendSMS() {
+    const user = fire.auth().currentUser;
+    if (!user) {
+      swal({
+        title: 'Oops...',
+        text: 'Please register/login',
+        icon: 'error'
+      });
+      return;
+    }
+    if (!this.verify) {
+      swal({
+        title: 'Oops...',
+        text: 'Please complete reCAPTCHA',
+        icon: 'error'
+      });
+      return;
+    }
+    const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
+    if (!userNumber) {return}
+    const provider = new fire.auth.PhoneAuthProvider();
+    const appVerifier = window.recaptchaVerifier;
+    const verificationId = await sendSMSToPhone(provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
+    console.log('ACZ verificationId -->', verificationId);
+    this.setState({
+      showVerifyCode: true,
+      verificationId
+    });
+  }
+
+  async verifySMSCode () {
+    const user = fire.auth().currentUser;
+    const verificationId = this.state.verificationId;
+    const phoneCode = this.state.phoneVerify;
+    if (!phoneCode) {
+      this.handleHideModal();
+      swal({
+        title: 'Oops...',
+        text: 'Please provide your verificatoin code next time. Process canceled',
+        icon: 'error'
+      });
+      return;
+    }
+    const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
+    if (phoneCredential) {
+      user.updatePhoneNumber(phoneCredential);
+      const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+      this.props.set2FA(newStatus);
+      this.handleHideModal();
+      swal({
+        title: 'Sucess',
+        text: `New Phone Number added & Two Factor Authentication Enabled`,
+        icon: 'success'
+      });
+    }
+  }
+
+  async addPhone() {
     const user = fire.auth().currentUser;
     
     if (!user) {
@@ -192,7 +283,10 @@ class UserTwoFactorSMS extends Component {
     // const appVerifier = window.recaptchaVerifier;
     const provider = new fire.auth.PhoneAuthProvider();
 
-    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), '123456',appVerifier)
+    const verificationId = await sendSMSToPhone(provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
+    console.log('ACZ verificationId -->', verificationId);
+    
+    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), '123456', appVerifier)
       .then(async success => {
         this.handleHideModal()
         if (success) {
@@ -232,13 +326,13 @@ class UserTwoFactorSMS extends Component {
     }
 
     if (!user.phoneNumber) {
-      this.addPhone();
+      this.handleShowModal();
       return;
     }
 
     this.verify = undefined;
-    window.recaptchaVerifier.render().then(widgetId => {
-      window.recaptchaVerifier.reset(widgetId);
+    window.recaptchaVerifierEnable2FASMS.render().then(widgetId => {
+      window.recaptchaVerifierEnable2FASMS.reset(widgetId);
     });
 
     const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
@@ -259,8 +353,8 @@ class UserTwoFactorSMS extends Component {
     }
 
     this.verify = undefined;
-    window.recaptchaVerifier.render().then(widgetId => {
-      window.recaptchaVerifier.reset(widgetId);
+    window.recaptchaVerifierDisable2FASMS.render().then(widgetId => {
+      window.recaptchaVerifierDisable2FASMS.reset(widgetId);
     });
 
     const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
@@ -273,22 +367,45 @@ class UserTwoFactorSMS extends Component {
   }
   
   handleHideModal() {
-    this.setState({showModal: false});
+    this.setState({
+      phoneNumber: '',
+      phoneVerify: '',
+      isoCode: 'US',
+      areaCode: '',
+      verificationId: '',
+      showModal: false,
+      showVerifyCode: false
+    });
   }
 
   modalDidMount() {
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+    const user = fire.auth().currentUser;
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier('sendSMS', {
+      size: 'invisible',
       callback: response => {
         this.verify = response;
+        this.sendSMS();
       }
     });
-
     window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
 
+    if (user && user.phoneNumber) {
+      window.recaptchaVerifierDelete = new fire.auth.RecaptchaVerifier('phoneRemover', {
+        size: 'invisible',
+        callback: response => {
+          this.verify = response;
+          this.removePhone();
+        }
+      });
+      window.recaptchaVerifierDelete.render().then(function(widgetId) {
+        window.recaptchaWidgetDeleteId = widgetId;
+      });
+    }
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      verificationId: ''
     });
   }
 
@@ -310,21 +427,28 @@ class UserTwoFactorSMS extends Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
+          disableBackdropClick
           open={this.state.showModal}
           onClose={() => this.handleHideModal()}
           onRendered={() => this.modalDidMount()}
         >
           <div className={modalStyle}>
+            <div className="modalHeader">
+              {app.currentUser.phoneNumber && <h3> { `Current number: ${app.currentUser.phoneNumber}`}</h3>}
+              {!app.currentUser.phoneNumber && <h3> {`Current number: Not found`}</h3>}
+              <IconButton aria-label="Close" className="closeBtn" onClick={() => this.handleHideModal()}>
+                <Close fontSize="large"/>
+              </IconButton>
+              {/* <Button className="closeBtn" variant="flat" onClick={() => this.handleHideModal()} >
+                <Close fontSize="large"/>
+              </Button> */}
+            </div>
             <form
               ref={form => {
                 this.addPhoneForm = form;
               }}
               className="phoneWrapper"
               >
-              {app.currentUser.phoneNumber
-                ? `Phone Number: ${app.currentUser.phoneNumber}`
-                : ''}
-              <div>{`Phone number (with area code): `}</div>
               <FormControl variant="outlined" className="formControl">
                 <InputLabel ref={ref => {this.InputLabelRef = ref;}} htmlFor="areaCode">
                   Area Code
@@ -347,15 +471,52 @@ class UserTwoFactorSMS extends Component {
                   ))}
                 </Select>
               </FormControl>  
+              <div className="phoneRow">
               <TextField
                 id="phoneInput"
                 label="Phone number"
                 className="phoneNumber"
                 value={this.state.phoneNumber}
-                onChange={this.handlePhoneChange}
+                onChange={this.handleInputChange('phoneNumber')}
                 margin="normal"
                 variant="outlined"
               />
+              <Button
+                id="sendSMS"
+                color="primary"
+                className="phoneBtn"
+                key={'sms'}
+                variant="outlined"
+                size="large"
+                >
+                SEND <Send className="rightIcon"/>
+              </Button>
+              </div>
+              {this.state.showVerifyCode &&
+                <div className="phoneRow">
+                  <TextField
+                    id="phoneVerify"
+                    label="Enter verification Code"
+                    className="phoneNumber"
+                    value={this.state.phoneVerify}
+                    onChange={this.handleInputChange('phoneVerify')}
+                    margin="normal"
+                    variant="outlined"
+                  />
+                  <Button
+                    id="verifySMSCode"
+                    color="primary"
+                    className="phoneBtn"
+                    key={'code'}
+                    variant="outlined"
+                    size="large"
+                    onClick={() => this.verifySMSCode()}
+                    >
+                    VERIFY <DoneAll className="rightIcon"/>
+                  </Button>
+                </div>
+              }
+
                 {/* <InputGroup compact>  
                   <Select
                     className="phoneCodeSelect"
@@ -381,39 +542,29 @@ class UserTwoFactorSMS extends Component {
                     />
                 </InputGroup> */}
             </form>
-            <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
-            <Grid container directoin="row" justify="space-between" className="formPhoneBtn">
+            <Grid container directoin="row" justify="center" className="formPhoneBtn">
               {app.currentUser &&
-                <div>
-                  <Button
-                    key={1}
-                    onClick={this.addPhone}
-                    htmlType="submit"
-                    variant="raised"
-                    >
-                    {app.currentUser.phoneNumber? 'Update' : 'Add'}
-                  </Button>
-                  {app.currentUser.phoneNumber && 
+                  app.currentUser.phoneNumber && 
                     <Button
+                      id="phoneRemover"
                       key={2}
-                      onClick={this.removePhone}
-                      htmlType="submit"
-                      variant="raised"
+                      className="deleteBtn"
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
                       >
-                      {'Delete'}
-                    </Button>}
-                </div>}
-                <Button color="primary" onClick={() => this.handleHideModal()} >
-                Cancel
-              </Button>
+                      {'DELETE PHONE NUMBER'}
+                    </Button>
+                }
+                
             </Grid>
           </div>
         </Modal> 
         <Grid item md={12} xs={12} className="userTwoFactor">
           <div className="statusWrapper">
             <div className="statusTextSpan">2FA SMS:</div>
-            {this.props.app.twoFA.twoFA && <div className="statusEnable"> Enabled </div>}
-            {!this.props.app.twoFA.twoFA && <div className="statusDisable"> Not Enabled <br/>
+            {this.props.app.twoFA.sms && <div className="statusEnable"> Enabled </div>}
+            {!this.props.app.twoFA.sms && <div className="statusDisable"> Not Enabled <br/>
               <span className="lowSecuritySpan">(Low Security)</span>
             </div>}
           </div>
@@ -427,18 +578,14 @@ class UserTwoFactorSMS extends Component {
           className="twoFactor-button"
           onClick={this.editPhone}
           style={{ marginBottom: '15px' }}
-          // disabled= {!app.currentUser.phoneNumber}
+          disabled={!app.currentUser.phoneNumber}
           >
             Edit Phone
           </Button>
         </Grid>
           <Grid item>
-            {this.props.app.twoFA.twoFA &&
-              <Button variant= "raised" color="primary" className="twoFactor-button" onClick={this.disableAuth}>Disable 2FA SMS</Button>
-            }
-            {!this.props.app.twoFA.twoFA &&
-              <Button color="primary" className="twoFactor-button" onClick={this.enableAuth}>Enable 2FA SMS</Button>
-            }
+            <Button id="disable2FASMS" color="primary" className={`twoFactor-button ${ this.props.app.twoFA.sms ? 'show':'hide'}`} >Disable 2FA SMS</Button>
+            <Button id="enable2FASMS"  color="primary" className={`twoFactor-button ${!this.props.app.twoFA.sms ? 'show':'hide'}`} >Enable 2FA SMS </Button>
           </Grid>
         </Grid>
       </Grid>

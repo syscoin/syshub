@@ -26,3 +26,9 @@ html *:not(i) {
 .sweetalertModal {
   width: 550px !Important;
 }
+
+.grecaptcha-badge {
+  z-index: 1;
+  bottom: none;
+  top: 80px;
+}

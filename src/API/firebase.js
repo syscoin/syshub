@@ -69,6 +69,16 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
+const sendSMSToPhone = async (provider, phoneNumber, appVerifier) => {
+  const verificationId = await provider.verifyPhoneNumber(phoneNumber, appVerifier);
+  return verificationId;
+}
+
+const verifyPhoneCode = async (verificationId, smsCode) => {
+  const phoneCredential = await fire.auth.PhoneAuthProvider.credential(verificationId, smsCode);
+  return phoneCredential;
+}
+
 const phoneAuth = (user, provider, phoneNumber, smsCode, appVerifier) => {
   return new Promise((resolve, reject) => {
     provider
@@ -91,9 +101,6 @@ const phoneAuth = (user, provider, phoneNumber, smsCode, appVerifier) => {
             }
           })
           .then(verificationCode => { */
-            if (!smsCode) { //verificationCode) {
-              throw new Error('Please provide your verificatoin code next time.');
-            }
             return fire.auth.PhoneAuthProvider.credential(verificationId, smsCode); //verificationCode);
           })
           .then(phoneCredential => {
@@ -437,6 +444,8 @@ export {
   usernames,
   comments,
   commentReplies_V2,
+  sendSMSToPhone,
+  verifyPhoneCode,
   phoneAuth,
   fire,
   base,

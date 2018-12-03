@@ -1,4 +1,6 @@
 import palette from '../../../styles/palette';
+import { Flex } from 'antd-mobile';
+import { nonsense } from 'antd-mobile/lib/picker';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
@@ -17,19 +19,54 @@ export default {
     background: white,
     boxShadow: green,
     padding: 40,
+    overflow: 'hidden',
+    minWidth: 420,
     color:greyDark,
+    '& .modalHeader': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-end',
+      margin: '0 0 10px 0',
+    },
+    '& .closeBtn':{
+    },
     '& .formPhoneBtn': {
-      padding: '0px 0px'
+      padding: '0 0 50px 0'
     },
     '& .reCapthaWraper': {
       margin: '15px 0',
     },
     '& .formControl': {
       margin: '5px 0',
-      width:  '90%',
+      width:  '100%',
+    },
+    '& .phoneRow': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    '& .phoneBtn': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: '8px 0 0 0px',
+      padding: '0',
+    },
+    '& .deleteBtn': {
+      margin: '10px 0 0 0',
+      width: '100%',
+      '& span': {
+        color: red
+      }
+    },
+    '& .rightIcon': {
+      margin: '0 0 0 5px',
     },
     '& .phoneNumber': {
-      minWidth:  '70%',
+      minWidth:  '62%',
     }
   },
   mModalRoot: {
@@ -37,7 +74,12 @@ export default {
   },
   root: {
     paddingTop: '20px',
-    border: '1px solid green',
+    '& .hide': {
+      display: 'none'
+    },
+    '& .show': {
+      display: 1
+    },
     '& button span': {
       color: 'white',
       textTransform: 'capitalize'
@@ -120,11 +162,9 @@ export default {
           display: 'block',
         },
         '& .phoneCodeSelect': {
-          border: '1px solid cyan',
           width: '25%'
         },
         '& .phoneInput': {
-          border: '1px solid blue',
           width: '30%'
         },
         '& .secret-Input-field': {
@@ -198,7 +238,6 @@ export default {
       }
     },
     '& .form__container': {
-      border: '1px solid magenta',
       width: '80%',
       marginLeft: 10,
       '& .form-group': {
