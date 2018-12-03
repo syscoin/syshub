@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
-import { fire, phoneAuth } from '../../../API/firebase';
+import { fire } from '../../../API/firebase';
 import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
-import { phoneValidation } from '../../../Helpers';
 import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
@@ -24,8 +23,6 @@ import userTwoFactorAuthStyle from './userTwoFactorAuth.style';
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode')
 
-const PNF = PhoneNumberFormat;
-const phoneUtil = PhoneNumberUtil.getInstance();
 const FormItem = Form.Item;
 const Option = Select.Option;
 const InputGroup = Input.Group;

@@ -1,6 +1,4 @@
 import palette from '../../../styles/palette';
-import { Flex } from 'antd-mobile';
-import { nonsense } from 'antd-mobile/lib/picker';
 
 const primary = palette.primary;
 const primaryLight = palette.primaryLight;
