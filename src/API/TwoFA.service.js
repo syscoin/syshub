@@ -2,6 +2,10 @@ import { fire } from './firebase';
 
 const TWOFA_FIRE_COLLECTION = '2FAAuth';
 
+/* *
+ * 2FA general Functions
+*/
+
 /**
  * 
  * @param {uid} User ID
@@ -37,4 +41,18 @@ export const setFire2FAMethod = async (uid, method, value) => {
 export const removeFire2FA = async (uid) => {
   await fire.database().ref(`${TWOFA_FIRE_COLLECTION}/${uid}`).remove();
   return {err: null, msg: '2FA register successfuly deleted'}
+}
+
+/* *
+ * 2FA SMS methods
+*/
+
+export const sendSMSToPhone = async (provider, phoneNumber, appVerifier) => {
+  const verificationId = await provider.verifyPhoneNumber(phoneNumber, appVerifier);
+  return verificationId;
+}
+
+export const verifyPhoneCode = async (verificationId, smsCode) => {
+  const phoneCredential = await fire.auth.PhoneAuthProvider.credential(verificationId, smsCode);
+  return phoneCredential;
 }

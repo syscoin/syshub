@@ -6,12 +6,11 @@ import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
 import { phoneValidation } from '../../../Helpers';
-// import { Form, Input, Button } from 'antd';//, Select
-// import { Button } from 'antd';
 import swal from 'sweetalert';
 
 // Import Sevices
-import { fire, phoneAuth, sendSMSToPhone, verifyPhoneCode } from '../../../API/firebase';
+import { fire } from '../../../API/firebase';
+import { sendSMSToPhone, verifyPhoneCode } from '../../../API/TwoFA.service';
 
 
 // import Material-ui components
@@ -60,7 +59,6 @@ class UserTwoFactorSMS extends Component {
       labelWidth: 10
     };
 
-    this.addPhone = this.addPhone.bind(this);
     this.disableAuth = this.disableAuth.bind(this);
     this.enableAuth = this.enableAuth.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -252,69 +250,6 @@ class UserTwoFactorSMS extends Component {
     }
   }
 
-  async addPhone() {
-    const user = fire.auth().currentUser;
-    
-    if (!user) {
-      swal({
-        title: 'Oops...',
-        text: 'Please register/login',
-        icon: 'error'
-      });
-      return;
-    }
-    if (!this.verify) {
-      swal({
-        title: 'Oops...',
-        text: 'Please complete reCAPTCHA',
-        icon: 'error'
-      });
-      return;
-    }
-
-    if (phoneValidation(this.state.phoneNumber, this.state.isoCode, user) === false) {
-      return;
-    }
-
-    this.setState({ isoCode: 'US', phoneNumber: '' });
-
-    const appVerifier = window.recaptchaVerifier;
-
-    const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
-
-    // const appVerifier = window.recaptchaVerifier;
-    const provider = new fire.auth.PhoneAuthProvider();
-
-    const verificationId = await sendSMSToPhone(provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
-    console.log('ACZ verificationId -->', verificationId);
-    
-    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), '123456', appVerifier)
-      .then(async success => {
-        this.handleHideModal()
-        if (success) {
-          swal({
-            title: 'Sucess',
-            text: `New Phone Number added & Two Factor Authentication Enabled`,
-            icon: 'success'
-          });
-          this.verify = undefined;
-          window.recaptchaVerifier.render().then(widgetId => {
-            window.recaptchaVerifier.reset(widgetId);
-          });
-          this.setState({
-            editNumber: false
-          });
-
-          const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
-          this.props.set2FA(newStatus);
-
-        }
-      })
-      .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      });
-  }
-
   async enableAuth() {
     const user = fire.auth().currentUser;
 
@@ -361,8 +296,6 @@ class UserTwoFactorSMS extends Component {
 
     const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
-
-
   }
   handleShowModal() {
     this.setState({showModal: true});
@@ -418,8 +351,6 @@ class UserTwoFactorSMS extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle = deviceType === 'mobile' ? classes.mModalRoot : classes.modalRoot;
 
-    //const { currentUser } = this.props.app;
-    
     return (
       <Grid
         container
@@ -441,9 +372,6 @@ class UserTwoFactorSMS extends Component {
               <IconButton aria-label="Close" className="closeBtn" onClick={() => this.handleHideModal()}>
                 <Close fontSize="large"/>
               </IconButton>
-              {/* <Button className="closeBtn" variant="flat" onClick={() => this.handleHideModal()} >
-                <Close fontSize="large"/>
-              </Button> */}
             </div>
             <form
               ref={form => {
@@ -518,47 +446,21 @@ class UserTwoFactorSMS extends Component {
                   </Button>
                 </div>
               }
-
-                {/* <InputGroup compact>  
-                  <Select
-                    className="phoneCodeSelect"
-                    defaultValue="United States"
-                    onChange={this.handleIsoCode}
-                    >
-                    {isoArray.map((item, i) => (
-                      <Option value={item.code} key={i}>
-                        {item.name}
-                      </Option>
-                    ))}
-                  </Select>
-                  <Input
-                    ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    className="phoneInput"
-                    
-                    placeholder="(123) 456-7894"
-                    value={this.state.phoneNumber}
-                    onChange={this.onChange}
-                    type="number"
-                    />
-                </InputGroup> */}
             </form>
             <Grid container directoin="row" justify="center" className="formPhoneBtn">
               {app.currentUser &&
-                  app.currentUser.phoneNumber && 
-                    <Button
-                      id="phoneRemover"
-                      key={2}
-                      className="deleteBtn"
-                      variant="outlined"
-                      color="secondary"
-                      size="large"
-                      >
-                      {'DELETE PHONE NUMBER'}
-                    </Button>
-                }
-                
+                app.currentUser.phoneNumber && 
+                  <Button
+                    id="phoneRemover"
+                    key={2}
+                    className="deleteBtn"
+                    variant="outlined"
+                    color="secondary"
+                    size="large"
+                    >
+                    {'DELETE PHONE NUMBER'}
+                  </Button>
+              }
             </Grid>
           </div>
         </Modal> 

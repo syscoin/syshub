@@ -69,56 +69,6 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
-const sendSMSToPhone = async (provider, phoneNumber, appVerifier) => {
-  const verificationId = await provider.verifyPhoneNumber(phoneNumber, appVerifier);
-  return verificationId;
-}
-
-const verifyPhoneCode = async (verificationId, smsCode) => {
-  const phoneCredential = await fire.auth.PhoneAuthProvider.credential(verificationId, smsCode);
-  return phoneCredential;
-}
-
-const phoneAuth = (user, provider, phoneNumber, smsCode, appVerifier) => {
-  return new Promise((resolve, reject) => {
-    provider
-      .verifyPhoneNumber(phoneNumber, appVerifier)
-      .then(verificationId => {
-        /* swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Verify',
-            text: 'Please enter the verification code sent to your mobile device',
-            icon: 'info',
-            buttons: true,
-            dangerMode: false,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Confirmation code here',
-                type: 'text'
-              }
-            }
-          })
-          .then(verificationCode => { */
-            return fire.auth.PhoneAuthProvider.credential(verificationId, smsCode); //verificationCode);
-          })
-          .then(phoneCredential => {
-            return user.updatePhoneNumber(phoneCredential);
-          })
-          .then(async () => {
-            await setFire2FAMethod(user.uid, 'sms', true);
-            resolve(true)
-          })
-          .catch(err => {
-            reject(err);
-          });
-      })
-      .catch(err => {
-        reject(err);
-      });
-  //});
-};
 
 const doRegister = () => {};
 
@@ -446,7 +396,6 @@ export {
   commentReplies_V2,
   sendSMSToPhone,
   verifyPhoneCode,
-  phoneAuth,
   fire,
   base,
   doRegister,
