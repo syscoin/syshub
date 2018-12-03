@@ -16,6 +16,7 @@ class Login extends Component {
 
     this.login = this.login.bind(this);
     this.smsLogin = this.smsLogin.bind(this);
+    this.authLogin = this.authLogin.bind(this);
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
@@ -70,6 +71,10 @@ class Login extends Component {
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
+  }
+
+  authLogin(user){
+    console.log('ACZ user -->', user); // don't remove by now
   }
 
   async smsLogin(user, email, password) {
