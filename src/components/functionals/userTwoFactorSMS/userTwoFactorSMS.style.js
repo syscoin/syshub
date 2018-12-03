@@ -23,14 +23,13 @@ export default {
     },
     '& .reCapthaWraper': {
       margin: '15px 0',
-      minWidth:  '100%',
     },
     '& .formControl': {
       margin: '5px 0',
-      minWidth:  '100%',
+      width:  '90%',
     },
     '& .phoneNumber': {
-      minWidth:  '100%',
+      minWidth:  '70%',
     }
   },
   mModalRoot: {

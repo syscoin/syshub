@@ -69,12 +69,12 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
-const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
+const phoneAuth = (user, provider, phoneNumber, smsCode, appVerifier) => {
   return new Promise((resolve, reject) => {
     provider
       .verifyPhoneNumber(phoneNumber, appVerifier)
       .then(verificationId => {
-        swal({
+        /* swal({
             closeOnClickOutside: false,
             closeOnEsc: false,
             title: 'Verify',
@@ -90,11 +90,11 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
               }
             }
           })
-          .then(verificationCode => {
-            if (!verificationCode) {
+          .then(verificationCode => { */
+            if (!smsCode) { //verificationCode) {
               throw new Error('Please provide your verificatoin code next time.');
             }
-            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+            return fire.auth.PhoneAuthProvider.credential(verificationId, smsCode); //verificationCode);
           })
           .then(phoneCredential => {
             return user.updatePhoneNumber(phoneCredential);
@@ -110,7 +110,7 @@ const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
       .catch(err => {
         reject(err);
       });
-  });
+  //});
 };
 
 const doRegister = () => {};

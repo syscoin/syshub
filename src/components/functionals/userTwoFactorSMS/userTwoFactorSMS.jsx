@@ -192,7 +192,7 @@ class UserTwoFactorSMS extends Component {
     // const appVerifier = window.recaptchaVerifier;
     const provider = new fire.auth.PhoneAuthProvider();
 
-    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), appVerifier)
+    phoneAuth(user, provider, phoneUtil.format(userNumber, PNF.E164), '123456',appVerifier)
       .then(async success => {
         this.handleHideModal()
         if (success) {
@@ -231,7 +231,7 @@ class UserTwoFactorSMS extends Component {
       return;
     }
 
-    if (user.phoneNumber == null) {
+    if (!user.phoneNumber) {
       this.addPhone();
       return;
     }
@@ -427,7 +427,7 @@ class UserTwoFactorSMS extends Component {
           className="twoFactor-button"
           onClick={this.editPhone}
           style={{ marginBottom: '15px' }}
-          disabled= {!!app.currentUser.phoneNumber}
+          // disabled= {!app.currentUser.phoneNumber}
           >
             Edit Phone
           </Button>
