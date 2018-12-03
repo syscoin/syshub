@@ -9,7 +9,7 @@ import { Grid } from '@material-ui/core';
 
 // Import Custom components
 import UserTwoFactorSMS from '../userTwoFactorSMS/userTwoFactorSMS';
-import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
+// import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
 
 
 // Import Style
