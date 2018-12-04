@@ -88,8 +88,8 @@ export default {
       key: 'tool',
       icon: 'png_menu_info',
       iconSelected: 'png_menu_info_selected',
-      title: 'Masternodes Info',
-      pageTitle: 'Masternodes Info',
+      title: 'Masternode resources',
+      pageTitle: 'Masternode resources',
       showWhen: 'always',
       showPlatform: 'all'
     }
