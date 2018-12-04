@@ -39,9 +39,6 @@ import userTwoFactorSMSStyle from './userTwoFactorSMS.style';
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
-// const FormItem = Form.Item;
-// const Option = Select.Option;
-// const InputGroup = Input.Group;
 
 class UserTwoFactorSMS extends Component {
   constructor(props) {
@@ -55,7 +52,6 @@ class UserTwoFactorSMS extends Component {
       verificationId: '',
       showModal: false,
       showVerifyCode: false,
-      editNumber: false,
       labelWidth: 10
     };
 
@@ -186,9 +182,6 @@ class UserTwoFactorSMS extends Component {
       return;
     }
     this.handleShowModal();
-    this.setState({
-      editNumber: true
-    });
   }
 
   async sendSMS() {
