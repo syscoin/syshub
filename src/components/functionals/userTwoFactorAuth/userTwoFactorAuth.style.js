@@ -10,17 +10,71 @@ const white = palette.white;
 export default {
   modalRoot:{
     position: 'absolute',
-    top: '25%',
+    top: '50%',
     left: '50%',
     transform: `translate(-50%, -50%)`,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
     background: white,
     boxShadow: green,
-    padding: 40,
+    padding: 0,
     color:greyDark,
-    border: '1px solid red',
-    '& .formPhone': {
-      border: '1px solid red',
-      padding: '20px 0px'
+    '& .modalHeaderWrapper': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      padding: '0 0 0 40px',
+      backgroundColor: primary,
+      '& *': {
+        color: white
+      }
+    },
+    '& .closeBtn': {
+      alignSelf: 'flex-end'
+    },
+    '& .modalBodyWrapper': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '40px'
+    },
+    '& .qrCode':{
+      width: '300px',
+      height: '300px'
+    },
+    '& .instructions': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+    },
+    '& .storeBtnWrapper': {
+      margin: '10px 0 20px 0'
+    },
+    '& .gButton': {
+      margin: '0 10px'
+    },
+    '& .aButton': {
+      margin: '0 10px'
+    },
+    '& .inputWrapper': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      '& .codeInput': {
+        maxWidth:  '50%',
+      },
+      '& .verifyCode': {
+        margin: '8px 0px 0 20px',
+      }
+    },
+    '& .rightIcon': {
+      margin: '0 0 0 5px',
     },
   },
   mModalRoot: {
@@ -28,7 +82,12 @@ export default {
   },
   root: {
     paddingTop: '20px',
-    border: '1px solid green',
+    '& .hide': {
+      display: 'none'
+    },
+    '& .show': {
+      display: 1
+    },
     '& button span': {
       color: 'white',
       textTransform: 'capitalize'
@@ -37,7 +96,7 @@ export default {
       marginLeft: '20px',
       fontWeight: 'normal',
       fontSize: '21px',
-      borderBottom: '0.1px solid ' + greyLight
+      borderBottom: `0.1px solid ${greyLight}`
     },
     '& .heading-2FA': {
       color: primaryLight

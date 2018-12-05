@@ -22,8 +22,14 @@ export default {
     },
     '& .content2FA-left':{
     },
+    '& .vDivider': {
+      borderRight: `1px solid ${greyLight}`,
+      width: '2px',
+      minHeight: '100%',
+      margin: '0 20px'
+
+    },
     '& .content2FA-right':{
-      border: '1px solid orange'
     },
   },
   mRoot: {

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
-import injectSheet from 'react-jss';
-import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
-import { phoneValidation } from '../../../Helpers';
 import swal from 'sweetalert';
 
 // Import Sevices
 import { fire } from '../../../API/firebase';
 import { sendSMSToPhone, verifyPhoneCode } from '../../../API/TwoFA.service';
-
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
+import { phoneValidation } from '../../../Helpers';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
@@ -35,6 +32,7 @@ import { isoArray } from '../../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 // Import Style
+import injectSheet from 'react-jss';
 import userTwoFactorSMSStyle from './userTwoFactorSMS.style';
 
 const PNF = PhoneNumberFormat;
@@ -95,9 +93,7 @@ class UserTwoFactorSMS extends Component {
           this.enableAuth();
         }
       });
-      window.recaptchaVerifierEnable2FASMS.render().then(function(widgetId) {
-        window.recaptchaWidgetEnable2FASMSId = widgetId;
-      });
+      window.recaptchaVerifierEnable2FASMS.render();
 
       window.recaptchaVerifierDisable2FASMS = new fire.auth.RecaptchaVerifier('disable2FASMS', {
         size: 'invisible',
@@ -106,9 +102,7 @@ class UserTwoFactorSMS extends Component {
           this.disableAuth();
         }
       });
-      window.recaptchaVerifierDisable2FASMS.render().then(function(widgetId) {
-        window.recaptchaWidgetDisable2FASMSId = widgetId;
-      });
+      window.recaptchaVerifierDisable2FASMS.render();
   }
 
   onChange(e) {
@@ -290,6 +284,7 @@ class UserTwoFactorSMS extends Component {
     const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
   }
+  
   handleShowModal() {
     this.setState({showModal: true});
   }
@@ -303,6 +298,10 @@ class UserTwoFactorSMS extends Component {
       verificationId: '',
       showModal: false,
       showVerifyCode: false
+    });
+    this.verify = false;
+    window.recaptchaVerifierEnable2FASMS.render().then(widgetId => {
+      window.recaptchaVerifierEnable2FASMS.reset(widgetId);
     });
   }
 

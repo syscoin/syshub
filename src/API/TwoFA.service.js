@@ -56,3 +56,27 @@ export const verifyPhoneCode = async (verificationId, smsCode) => {
   const phoneCredential = await fire.auth.PhoneAuthProvider.credential(verificationId, smsCode);
   return phoneCredential;
 }
+
+/* *
+ * 2FA Google Auth
+*/
+
+const speakeasy = require('speakeasy');
+const QRCode = require('qrcode')
+
+export const getAuthQRCode = () => {
+  const secret = speakeasy.generateSecret();
+  let qrCodeURL;
+  QRCode.toDataURL(secret.otpauth_url, (err, data_url) => qrCodeURL = data_url);
+
+  return { secret, qrCodeURL }  
+}
+
+export const verifyAuthCode = (secret32, token) => {
+  const verified = speakeasy.totp.verify({
+    secret: secret32,
+    encoding: 'base32',
+    token
+  });
+  console.log('ACZ token verified--> ', verified)
+}

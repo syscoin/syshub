@@ -5,11 +5,11 @@ import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 
 // Import material-ui components
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 // Import Custom components
 import UserTwoFactorSMS from '../userTwoFactorSMS/userTwoFactorSMS';
-// import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
+import UserTwoFactorAuth from '../userTwoFactorAuth/userTwoFactorAuth';
 
 
 // Import Style
@@ -47,8 +47,9 @@ class UserTwoFactor extends Component {
             <Grid item className="content2FA-left">
               <UserTwoFactorSMS />
             </Grid>
+            <Grid item><div className="vDivider"></div></Grid>
             <Grid item className="content2FA-right">
-              {/* <UserTwoFactorAuth /> */}
+              <UserTwoFactorAuth />
             </Grid>
           </Grid>
         </Grid>

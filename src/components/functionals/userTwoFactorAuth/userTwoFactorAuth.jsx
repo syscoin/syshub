@@ -3,16 +3,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
-import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
-import { Form, Input, Button, Select } from 'antd';
 import swal from 'sweetalert';
 
+// Import Services
+import { fire } from '../../../API/firebase';
+import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode } from '../../../API/TwoFA.service';
+
 // import Material-ui components
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 
-// import components
+// Import Material-ui Icons
+import DoneAll from '@material-ui/icons/DoneAll';
+import Close from '@material-ui/icons/Close';
+
+// import custom components
 import { isoArray } from '../../../assets/isoCodes';
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
@@ -22,19 +35,19 @@ import userTwoFactorAuthStyle from './userTwoFactorAuth.style';
 // Import Auth libs
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode')
-
-const FormItem = Form.Item;
-const Option = Select.Option;
-const InputGroup = Input.Group;
+const gAuth = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2';
+const aAuth = 'https://itunes.apple.com/es/app/google-authenticator/id388497605';
 
 class UserTwoFactorAuth extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      phoneNumber: null,
-      isoCode: 'US',
-      editNumber: false
+      secret: '',
+      showModal: false,
+      qrCodeURL: '',
+      verify: false,
+      token: ''
     };
 
     this.disableAuth = this.disableAuth.bind(this);
@@ -45,26 +58,16 @@ class UserTwoFactorAuth extends Component {
   async componentDidMount() {
     fire.auth().useDeviceLanguage();
 
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.verify = response;
-      }
-    });
-
-    window.recaptchaVerifier.render().then(function(widgetId) {
-      window.recaptchaWidgetId = widgetId;
-    });
-
     const user = fire.auth().currentUser;
-    if (user.phoneNumber == null) {
+    const twoFAStatus = await getFire2FAstatus(user.uid);
+    this.props.set2FA(twoFAStatus);
+
+    if (!twoFAStatus.authSecret) {
       const newStatus = await setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
     }
 
-    const twoFAStatus = await getFire2FAstatus(user.uid);
-    this.props.set2FA(twoFAStatus);
-
-    if (twoFAStatus.twoFA) {
+    if (twoFAStatus.auth) {
       fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
         if (snapshot.val() === null) {
           return;
@@ -77,6 +80,55 @@ class UserTwoFactorAuth extends Component {
         this.props.setCurrentUser(user);
       });
     }
+    window.recaptchaVerifierEnable2FAAuth = new fire.auth.RecaptchaVerifier('enable2FAAuth', {
+      size: 'invisible',
+      callback: response => {
+        this.verify = response;
+        this.enableAuth();
+      }
+    });
+    
+    window.recaptchaVerifierDisable2FAAuth = new fire.auth.RecaptchaVerifier('disable2FAAuth', {
+      size: 'invisible',
+      callback: response => {
+        this.verify = response;
+        this.disableAuth();
+      }
+    });
+
+    window.recaptchaVerifierEnable2FAAuth.render() 
+    window.recaptchaVerifierDisable2FAAuth.render()
+  }
+
+  modalDidMount() {
+    const user = fire.auth().currentUser;
+    window.recaptchaVerifierAuthCode = new fire.auth.RecaptchaVerifier('verifyCode', {
+      size: 'invisible',
+      callback: response => {
+        this.verify = response;
+        this.verifyAuthCode();
+      }
+    });
+    window.recaptchaVerifierAuthCode.render()
+  }
+
+  handleShowModal() {
+    const authQrCode = getAuthQRCode();
+    
+      this.setState({
+        showModal: true,
+        qrCodeURL: authQrCode.qrCodeURL
+      });
+  }
+  
+  handleHideModal() {
+    this.setState({
+      secret: '',
+      qrCodeURL: '',
+      showModal: false,
+    });
+    this.verify = false;
+    window.recaptchaVerifierEnable2FAAuth.reset();
   }
 
   onChange(e) {
@@ -85,18 +137,46 @@ class UserTwoFactorAuth extends Component {
     });
   }
 
-  enableAuth() {
-    const secret = speakeasy.generateSecret();
-    let QRCodeURL;
-
-    QRCode.toDataURL(secret.otpauth_url, function(err, data_url) {
-      QRCodeURL = data_url;
+  handleInputChange = field => event => {
+    this.setState({
+      [field]: event.target.value,
     });
+  };
 
-    console.log('ACZ Secret --> ', secret);
-    console.log('ACZ QRCodeURL -->', QRCodeURL);
+  async verifyAuthCode () {
+    const {token, qrCodeURL} = this.state;
+    const secret32 = qrCodeURL.secret.base32;
 
+    verifyAuthCode(secret32, token);
+   /*  let user = fire.auth().currentUser;
+    const verificationId = this.state.verificationId;
+    const phoneCode = this.state.phoneVerify;
+    if (!phoneCode) {
+      this.handleHideModal();
+      swal({
+        title: 'Oops...',
+        text: 'Please provide your verificatoin code next time. Process canceled',
+        icon: 'error'
+      });
+      return;
+    }
+    const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
+    if (phoneCredential) {
+      user.updatePhoneNumber(phoneCredential);
+      const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+      this.props.set2FA(newStatus);
+      user = await fire.auth().currentUser;
+      this.props.setCurrentUser(user);
+      this.handleHideModal();
+      swal({
+        title: 'Sucess',
+        text: `New Phone Number added & Two Factor Authentication Enabled`,
+        icon: 'success'
+      });
+    } */
+  }
 
+  async enableAuth() {
     if (!this.verify) {
       swal({
         title: 'Oops...',
@@ -105,10 +185,22 @@ class UserTwoFactorAuth extends Component {
       });
       return;
     }
+    const user = fire.auth().currentUser;
+    const twoFAStatus = await getFire2FAstatus(user.uid)
+    console.log('ACZ -->', twoFAStatus);
     
+    if (!twoFAStatus.authSecret) {
+      this.handleShowModal();
+    }
+
+    const newStatus = await setFire2FAMethod(user.uid, 'auth', true);
+    this.props.set2FA(newStatus);
+
+    this.verify = false;
+    window.recaptchaVerifierEnable2FAAuth.reset();
   }
 
-  disableAuth() {
+  async disableAuth() {
     const user = fire.auth().currentUser;
 
     if (!this.verify) {
@@ -120,15 +212,20 @@ class UserTwoFactorAuth extends Component {
       return;
     }
 
-    this.verify = undefined;
-    window.recaptchaVerifier.render().then(widgetId => {
-      window.recaptchaVerifier.reset(widgetId);
-    });
+    const newStatus = await setFire2FAMethod(user.uid, 'auth', false);
+    this.props.set2FA(newStatus);
 
-    fire
-      .database()
-      .ref(`2FA/${user.uid}`)
-      .set(false);
+    this.verify = false;
+    window.recaptchaVerifierDisable2FAAuth.reset();
+  }
+
+  async removeSecret() {
+    const user = fire.auth().currentUser;
+    const newStatus = await setFire2FAMethod(user.uid, 'authSecret', false);
+    this.props.set2FA(newStatus);
+
+
+
   }
 
   render() {
@@ -150,9 +247,57 @@ class UserTwoFactorAuth extends Component {
           aria-describedby="simple-modal-description"
           open={this.state.showModal}
           onClose={() => this.handleHideModal()}
+          onRendered={() => this.modalDidMount()}
         >
           <div className={modalStyle}>
-            aqui va lo chulo
+            <div className="modalHeaderWrapper">
+              <IconButton aria-label="Close" className="closeBtn" onClick={() => this.handleHideModal()}>
+                <Close fontSize="large"/>
+              </IconButton>
+              <h1>Two-Factor Authentication</h1>
+              <p>You have enabled Two-Factor Authentication for your account, Follow the instruction to complete setup</p>
+            </div>
+            <div className="modalBodyWrapper">
+              <img className="qrCode" src={this.state.qrCodeURL} alt="qrCode"/>
+              <div className="instructions">
+                <ol>
+                  <li>Download and install Google Authenticator</li>
+                  <div className="storeBtnWrapper">
+                    <a href={gAuth} target="_blank" rel="noopener noreferrer" className="gButton">
+                      <img width={113} src={require('../../../assets/img/png_icon_google.png')} alt="gplay"/>
+                    </a>
+                    <a href={aAuth} target="_blank" rel="noopener noreferrer" className="aButton">
+                      <img width={100} src={require('../../../assets/img/png_icon_apple.png')} alt="gplay"/>
+                    </a>
+                  </div>
+                  <li>Scan this Barcode</li>
+                  <div className="storeBtnWrapper"></div>
+                  <li>Enter Verification Code</li>
+                  <div className="inputWrapper">
+                    <TextField
+                      id="token"
+                      label="Code"
+                      className="token"
+                      value={this.state.token}
+                      onChange={this.handleInputChange('token')}
+                      margin="normal"
+                      variant="outlined"
+                      size="small"
+                    />
+                    <Button
+                      id="verifyCode"
+                      color="primary"
+                      className="verifyCode"
+                      key={'gcode'}
+                      variant="outlined"
+                      size="small"
+                      >
+                      VERIFY <DoneAll className="rightIcon"/>
+                    </Button>
+                  </div>
+                </ol>
+              </div>
+            </div>
           </div>
         </Modal> 
         <Grid item md={12} xs={12} className="userTwoFactor">
@@ -164,102 +309,25 @@ class UserTwoFactorAuth extends Component {
             </div>}
           </div>
         </Grid>
-        <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} />
-        {app.currentUser && (
-          app.currentUser.phoneNumber == null || this.state.editNumber ? (
-            <Grid item md={12} className="form__container">
-              <Form
-                ref={form => {
-                  this.addPhoneForm = form;
-                }}
-                className="phoneWrapper"
-              >
-                <FormItem className="form-group">
-                  {app.currentUser.phoneNumber
-                    ? `Phone Number: ${app.currentUser.phoneNumber}`
-                    : ''}
-                  <br />
-                  <label>{`Phone number (with area code): `}</label>
-                  <InputGroup compact>
-                    <Select defaultValue="United States" onChange={this.handleIsoCode}>
-                      {isoArray.map((item, i) => (
-                        <Option value={item.code} key={i}>
-                          {item.name}
-                        </Option>
-                      ))}
-                    </Select>
-                    <Input
-                      ref={phoneNumber => (this.phoneNumber = phoneNumber)}
-                      id="pN"
-                      name="phoneNumber"
-                      style={{ width: '20%' }}
-                      placeholder="(123) 456-7894"
-                      value={this.state.phoneNumber}
-                      onChange={this.onChange}
-                      type="number"
-                    />
-                  </InputGroup>
-                </FormItem>
-              </Form>
-              <Grid className="form-grid-btn">
-                {app.currentUser
-                  ? app.currentUser.phoneNumber !== null
-                    ? [
-                        <Button
-                          key={1}
-                          onClick={this.removePhone}
-                          htmlType="submit"
-                          variant="raised"
-                        >
-                          {'Delete'}
-                        </Button>,
-                        <Button
-                          key={2}
-                          onClick={this.addPhone}
-                          htmlType="submit"
-                          variant="raised"
-                        >
-                          {'Update'}
-                        </Button>
-                      ]
-                    : null
-                  : null}
-              </Grid>
-            </Grid>
-          ) : (
-            <div>
-              <Button
-                variant= "raised"
-                color="primary"
-                className="twoFactor-button"
-                onClick={this.editPhone}
-                style={{ marginBottom: '15px' }}
-              >
-                Edit Phone
-              </Button>
-            </div>
-          )
-        )}
-        <Grid className="twoFactor-button-grid">
-            {this.props.app.auth ? (
-              <Button
-                variant= "raised"
-                color="primary"
-                className="twoFactor-button"
-                onClick={this.enableAuth}
-              >
-                Disable 2FA
-              </Button>
-            ) : (
-              <Button 
-                color="primary"
-                className="twoFactor-button"
-                onClick={this.enableAuth}
-              >
-                Enable 2FA
-              </Button>
-            )}
+        {/* <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} /> */}
+        <Grid container direction='row' justify='space-between' className="twoFactor-button-grid">
+          <Grid item>
+            <Button 
+            variant= "raised"
+            color="primary"
+            className="twoFactor-button"
+            onClick={() => this.removeSecret()}
+            style={{ marginBottom: '15px' }}
+            disabled={!app.twoFA.authSecret}
+            >
+              Remove Secret
+            </Button>
           </Grid>
+          <Grid item>
+            <Button id="disable2FAAuth" color="primary" className={`twoFactor-button ${ this.props.app.twoFA.auth ? 'show':'hide'}`} >Disable 2FA Auth</Button>
+            <Button id="enable2FAAuth"  color="primary" className={`twoFactor-button ${!this.props.app.twoFA.auth ? 'show':'hide'}`} >Enable 2FA Auth</Button>
+          </Grid>
+        </Grid>
       </Grid>
     );
   }
