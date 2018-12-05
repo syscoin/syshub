@@ -65,12 +65,13 @@ export default {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       '& .codeInput': {
-        maxWidth:  '50%',
+        maxWidth:  '30%',
       },
       '& .verifyCode': {
-        margin: '8px 0px 0 20px',
+        margin: '25px 0px 0 20px',
+        width: '30%'
       }
     },
     '& .rightIcon': {

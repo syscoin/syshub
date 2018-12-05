@@ -1,4 +1,5 @@
 import { fire } from './firebase';
+import Cryptr from 'cryptr';
 
 const TWOFA_FIRE_COLLECTION = '2FAAuth';
 
@@ -64,19 +65,44 @@ export const verifyPhoneCode = async (verificationId, smsCode) => {
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode')
 
-export const getAuthQRCode = () => {
+export const getAuthQRCode = (email) => {
   const secret = speakeasy.generateSecret();
   let qrCodeURL;
-  QRCode.toDataURL(secret.otpauth_url, (err, data_url) => qrCodeURL = data_url);
-
+  let url = speakeasy.otpauthURL({
+    algorithm: 'sha1',
+    issuer: 'Syshub',
+    secret: secret.base32,
+    label: email
+  });
+  QRCode.toDataURL(url, (err, data_url) => qrCodeURL = data_url);
   return { secret, qrCodeURL }  
 }
 
-export const verifyAuthCode = (secret32, token) => {
-  const verified = speakeasy.totp.verify({
-    secret: secret32,
-    encoding: 'base32',
-    token
+export const getToken = (secret) => speakeasy.totp({
+    secret: secret.base32,
+    encoding: ['base32']
   });
-  console.log('ACZ token verified--> ', verified)
+
+export const verifyAuthCode = (secret, token) => {
+  const verified = speakeasy.totp.verify({
+    secret: secret.base32,
+    encoding: ['base32'],
+    token,
+  });
+  return verified;
 }
+
+export const saveAuthSecret = async (secret, uid) => {
+  const cryptr = new Cryptr(uid);
+  const cryptedSecret = cryptr.encrypt(secret);
+  await setFire2FAMethod(uid, 'authSecret', cryptedSecret);
+  const newStatus = await setFire2FAMethod(uid, 'auth', true);
+
+  console.log('ACZ newStatus -->', newStatus);
+
+  return newStatus;
+  
+} 
+export const getSecret = (uid) => {
+
+} 

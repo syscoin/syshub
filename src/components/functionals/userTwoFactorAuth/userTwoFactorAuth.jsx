@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 
 // Import Services
 import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode } from '../../../API/TwoFA.service';
+import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/TwoFA.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
@@ -47,7 +47,8 @@ class UserTwoFactorAuth extends Component {
       showModal: false,
       qrCodeURL: '',
       verify: false,
-      token: ''
+      token: '',
+      tokenInputError: false,
     };
 
     this.disableAuth = this.disableAuth.bind(this);
@@ -113,11 +114,12 @@ class UserTwoFactorAuth extends Component {
   }
 
   handleShowModal() {
-    const authQrCode = getAuthQRCode();
-    
+    const user = fire.auth().currentUser;
+    const authQrCode = getAuthQRCode(user.email);
       this.setState({
         showModal: true,
-        qrCodeURL: authQrCode.qrCodeURL
+        qrCodeURL: authQrCode.qrCodeURL,
+        secret: authQrCode.secret
       });
   }
   
@@ -140,64 +142,57 @@ class UserTwoFactorAuth extends Component {
   handleInputChange = field => event => {
     this.setState({
       [field]: event.target.value,
+      tokenInputError: false
     });
   };
 
   async verifyAuthCode () {
-    const {token, qrCodeURL} = this.state;
-    const secret32 = qrCodeURL.secret.base32;
+    const {token, secret} = this.state;
+    window.recaptchaVerifierAuthCode.reset();
 
-    verifyAuthCode(secret32, token);
-   /*  let user = fire.auth().currentUser;
-    const verificationId = this.state.verificationId;
-    const phoneCode = this.state.phoneVerify;
-    if (!phoneCode) {
-      this.handleHideModal();
-      swal({
-        title: 'Oops...',
-        text: 'Please provide your verificatoin code next time. Process canceled',
-        icon: 'error'
+    const codeVerified = verifyAuthCode(secret, token);
+    console.log('ACZ codeVerified -->', codeVerified);
+
+    if(!codeVerified) {
+      this.setState({
+        tokenInputError: true
       });
-      return;
+      this.verify = false;
+    return;
     }
-    const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
-    if (phoneCredential) {
-      user.updatePhoneNumber(phoneCredential);
-      const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
-      this.props.set2FA(newStatus);
-      user = await fire.auth().currentUser;
-      this.props.setCurrentUser(user);
-      this.handleHideModal();
-      swal({
-        title: 'Sucess',
-        text: `New Phone Number added & Two Factor Authentication Enabled`,
-        icon: 'success'
-      });
-    } */
+
+    const user = fire.auth().currentUser;
+    const newStatus = await saveAuthSecret(secret, user.uid);
+    this.props.set2FA(newStatus);
+    this.handleHideModal();
   }
 
   async enableAuth() {
+
+    window.recaptchaVerifierEnable2FAAuth.reset();
+    
     if (!this.verify) {
       swal({
         title: 'Oops...',
         text: 'Please complete reCAPTCHA',
         icon: 'error'
       });
+      this.verify = false;
       return;
     }
+    this.verify = false;
+
     const user = fire.auth().currentUser;
     const twoFAStatus = await getFire2FAstatus(user.uid)
-    console.log('ACZ -->', twoFAStatus);
-    
+
     if (!twoFAStatus.authSecret) {
       this.handleShowModal();
+      return;
     }
 
     const newStatus = await setFire2FAMethod(user.uid, 'auth', true);
     this.props.set2FA(newStatus);
 
-    this.verify = false;
-    window.recaptchaVerifierEnable2FAAuth.reset();
   }
 
   async disableAuth() {
@@ -245,6 +240,7 @@ class UserTwoFactorAuth extends Component {
       <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
+          disableBackdropClick
           open={this.state.showModal}
           onClose={() => this.handleHideModal()}
           onRendered={() => this.modalDidMount()}
@@ -255,7 +251,7 @@ class UserTwoFactorAuth extends Component {
                 <Close fontSize="large"/>
               </IconButton>
               <h1>Two-Factor Authentication</h1>
-              <p>You have enabled Two-Factor Authentication for your account, Follow the instruction to complete setup</p>
+              <p>You have enabled Two-Factor Authentication for your account,<br/> Follow the instruction to complete setup</p>
             </div>
             <div className="modalBodyWrapper">
               <img className="qrCode" src={this.state.qrCodeURL} alt="qrCode"/>
@@ -275,8 +271,10 @@ class UserTwoFactorAuth extends Component {
                   <li>Enter Verification Code</li>
                   <div className="inputWrapper">
                     <TextField
+                      error={this.state.tokenInputError}
                       id="token"
                       label="Code"
+                      helperText={this.state.tokenInputError? 'Code do not match!':' '}
                       className="token"
                       value={this.state.token}
                       onChange={this.handleInputChange('token')}
