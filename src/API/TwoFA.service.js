@@ -31,8 +31,12 @@ export const setFire2FAMethod = async (uid, method, value) => {
   const currentStatus = await getFire2FAstatus(uid);
   let newStatus = {};
   if (currentStatus) { newStatus = currentStatus; }
+  if (method === 'authSecret') {
+    newStatus['authSecret'] = value;
+    newStatus['auth'] = !!value;
+  }
   newStatus[method] = value;
-  newStatus['twoFA'] = !!currentStatus.sms || !!currentStatus.auth;
+  newStatus['twoFA'] = !!newStatus.sms || !!newStatus.auth;
   const twoFARef = fire.database().ref(`${TWOFA_FIRE_COLLECTION}/${uid}`);
   twoFARef.update(newStatus);
 
@@ -95,14 +99,18 @@ export const verifyAuthCode = (secret, token) => {
 export const saveAuthSecret = async (secret, uid) => {
   const cryptr = new Cryptr(uid);
   const cryptedSecret = cryptr.encrypt(secret);
-  await setFire2FAMethod(uid, 'authSecret', cryptedSecret);
-  const newStatus = await setFire2FAMethod(uid, 'auth', true);
-
-  console.log('ACZ newStatus -->', newStatus);
-
+  const newStatus = await setFire2FAMethod(uid, 'authSecret', cryptedSecret);
   return newStatus;
-  
 } 
-export const getSecret = (uid) => {
+
+export const getAuthSecret = async (uid) => {
+  const { auth, authSecret} = await getFire2FAstatus(uid);
+  if (!auth) {
+    return false;
+  }
+
+  const cryptr = new Cryptr(uid);
+  const secret = cryptr.decrypt(authSecret);
+  console.log('ACZ getSecret --> ', secret);
 
 } 

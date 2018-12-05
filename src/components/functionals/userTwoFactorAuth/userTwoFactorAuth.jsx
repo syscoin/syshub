@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 
 // Import Services
 import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/TwoFA.service';
+import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret, getAuthSecret } from '../../../API/TwoFA.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
@@ -46,7 +46,6 @@ class UserTwoFactorAuth extends Component {
       secret: '',
       showModal: false,
       qrCodeURL: '',
-      verify: false,
       token: '',
       tokenInputError: false,
     };
@@ -97,8 +96,17 @@ class UserTwoFactorAuth extends Component {
       }
     });
 
+    window.recaptchaVerifierRemoveSecret = new fire.auth.RecaptchaVerifier('removeSecret', {
+      size: 'invisible',
+      callback: response => {
+        this.verify = response;
+        this.removeSecret();
+      }
+    });
+
     window.recaptchaVerifierEnable2FAAuth.render() 
     window.recaptchaVerifierDisable2FAAuth.render()
+    window.recaptchaVerifierRemoveSecret.render()
   }
 
   modalDidMount() {
@@ -128,6 +136,9 @@ class UserTwoFactorAuth extends Component {
       secret: '',
       qrCodeURL: '',
       showModal: false,
+      qrCodeURL: '',
+      token: '',
+      tokenInputError: false,
     });
     this.verify = false;
     window.recaptchaVerifierEnable2FAAuth.reset();
@@ -207,6 +218,9 @@ class UserTwoFactorAuth extends Component {
       return;
     }
 
+    const secret = await getAuthSecret(user.uid);
+    console.log('ACZ secret -->', secret);
+
     const newStatus = await setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
 
@@ -225,11 +239,10 @@ class UserTwoFactorAuth extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle = deviceType === 'mobile' ? classes.mModalRoot : classes.modalRoot;
-
-    //const { currentUser } = this.props.app;
 
     return (
       <Grid
@@ -311,12 +324,11 @@ class UserTwoFactorAuth extends Component {
         <Grid container direction='row' justify='space-between' className="twoFactor-button-grid">
           <Grid item>
             <Button 
-            variant= "raised"
-            color="primary"
-            className="twoFactor-button"
-            onClick={() => this.removeSecret()}
-            style={{ marginBottom: '15px' }}
-            disabled={!app.twoFA.authSecret}
+              id="removeSecret"
+              color="primary"
+              className="twoFactor-button"
+              style={{ marginBottom: '15px' }}
+              disabled={!app.twoFA.authSecret}
             >
               Remove Secret
             </Button>

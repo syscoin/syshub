@@ -469,7 +469,6 @@ class UserTwoFactorSMS extends Component {
         <Grid container direction='row' justify='space-between' className="twoFactor-button-grid">
         <Grid item>
           <Button 
-          variant= "raised"
           color="primary"
           className="twoFactor-button"
           onClick={this.editPhone}
