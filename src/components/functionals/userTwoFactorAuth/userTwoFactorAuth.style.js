@@ -241,9 +241,6 @@ export default {
         width: 150,
         fontSize: 16,
         marginLeft: 10,
-        '&:disabled': {
-          background: 'red'
-        }
       }
     },
     '& .form__container': {
