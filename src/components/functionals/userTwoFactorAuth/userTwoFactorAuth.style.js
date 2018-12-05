@@ -240,7 +240,10 @@ export default {
         minHeight: 40,
         width: 150,
         fontSize: 16,
-        marginLeft: 10
+        marginLeft: 10,
+        '&:disabled': {
+          background: 'red'
+        }
       }
     },
     '& .form__container': {

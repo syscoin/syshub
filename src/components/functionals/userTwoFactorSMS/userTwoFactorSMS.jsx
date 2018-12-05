@@ -201,7 +201,6 @@ class UserTwoFactorSMS extends Component {
     const provider = new fire.auth.PhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
     const verificationId = await sendSMSToPhone(provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
-    console.log('ACZ verificationId -->', verificationId);
     this.setState({
       showVerifyCode: true,
       verificationId

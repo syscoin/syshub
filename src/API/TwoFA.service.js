@@ -70,12 +70,12 @@ const speakeasy = require('speakeasy');
 const QRCode = require('qrcode')
 
 export const getAuthQRCode = (email) => {
-  const secret = speakeasy.generateSecret();
+  const secret = speakeasy.generateSecret().base32;
   let qrCodeURL;
   let url = speakeasy.otpauthURL({
     algorithm: 'sha1',
     issuer: 'Syshub',
-    secret: secret.base32,
+    secret: secret,
     label: email
   });
   QRCode.toDataURL(url, (err, data_url) => qrCodeURL = data_url);
@@ -83,13 +83,13 @@ export const getAuthQRCode = (email) => {
 }
 
 export const getToken = (secret) => speakeasy.totp({
-    secret: secret.base32,
+    secret: secret,
     encoding: ['base32']
   });
 
 export const verifyAuthCode = (secret, token) => {
   const verified = speakeasy.totp.verify({
-    secret: secret.base32,
+    secret: secret,
     encoding: ['base32'],
     token,
   });
@@ -111,6 +111,5 @@ export const getAuthSecret = async (uid) => {
 
   const cryptr = new Cryptr(uid);
   const secret = cryptr.decrypt(authSecret);
-  console.log('ACZ getSecret --> ', secret);
-
+  return secret;
 } 

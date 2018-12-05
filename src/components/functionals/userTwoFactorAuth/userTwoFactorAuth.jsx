@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
@@ -7,17 +6,12 @@ import swal from 'sweetalert';
 
 // Import Services
 import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret, getAuthSecret } from '../../../API/TwoFA.service';
+import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/TwoFA.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 
@@ -25,16 +19,10 @@ import Modal from '@material-ui/core/Modal';
 import DoneAll from '@material-ui/icons/DoneAll';
 import Close from '@material-ui/icons/Close';
 
-// import custom components
-import { isoArray } from '../../../assets/isoCodes';
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
-
 // Import Style
 import userTwoFactorAuthStyle from './userTwoFactorAuth.style';
 
 // Import Auth libs
-const speakeasy = require('speakeasy');
-const QRCode = require('qrcode')
 const gAuth = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2';
 const aAuth = 'https://itunes.apple.com/es/app/google-authenticator/id388497605';
 
@@ -110,7 +98,6 @@ class UserTwoFactorAuth extends Component {
   }
 
   modalDidMount() {
-    const user = fire.auth().currentUser;
     window.recaptchaVerifierAuthCode = new fire.auth.RecaptchaVerifier('verifyCode', {
       size: 'invisible',
       callback: response => {
@@ -123,19 +110,18 @@ class UserTwoFactorAuth extends Component {
 
   handleShowModal() {
     const user = fire.auth().currentUser;
-    const authQrCode = getAuthQRCode(user.email);
+    const {secret, qrCodeURL} = getAuthQRCode(user.email);
       this.setState({
         showModal: true,
-        qrCodeURL: authQrCode.qrCodeURL,
-        secret: authQrCode.secret
+        qrCodeURL,
+        secret
       });
   }
   
   handleHideModal() {
     this.setState({
-      secret: '',
-      qrCodeURL: '',
       showModal: false,
+      secret: '',
       qrCodeURL: '',
       token: '',
       tokenInputError: false,
@@ -162,7 +148,6 @@ class UserTwoFactorAuth extends Component {
     window.recaptchaVerifierAuthCode.reset();
 
     const codeVerified = verifyAuthCode(secret, token);
-    console.log('ACZ codeVerified -->', codeVerified);
 
     if(!codeVerified) {
       this.setState({
@@ -218,9 +203,6 @@ class UserTwoFactorAuth extends Component {
       return;
     }
 
-    const secret = await getAuthSecret(user.uid);
-    console.log('ACZ secret -->', secret);
-
     const newStatus = await setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
 
@@ -232,9 +214,7 @@ class UserTwoFactorAuth extends Component {
     const user = fire.auth().currentUser;
     const newStatus = await setFire2FAMethod(user.uid, 'authSecret', false);
     this.props.set2FA(newStatus);
-
-
-
+    window.recaptchaVerifierRemoveSecret.reset();
   }
 
   render() {
@@ -325,12 +305,12 @@ class UserTwoFactorAuth extends Component {
           <Grid item>
             <Button 
               id="removeSecret"
+              disabled={!app.twoFA.authSecret}
               color="primary"
               className="twoFactor-button"
               style={{ marginBottom: '15px' }}
-              disabled={!app.twoFA.authSecret}
             >
-              Remove Secret
+              Remove Secret {!app.twoFA.authSecret}
             </Button>
           </Grid>
           <Grid item>
