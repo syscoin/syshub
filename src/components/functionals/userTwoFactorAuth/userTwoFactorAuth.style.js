@@ -33,7 +33,7 @@ export default {
       }
     },
     '& .closeBtn': {
-      alignSelf: 'flex-end'
+      alignSelf: 'flex-end',
     },
     '& .modalBodyWrapper': {
       display: 'flex',
@@ -232,69 +232,27 @@ export default {
         padding: '10px'
       }
     },
-    '& .twoFactor-button-grid': {
+    '& .twoFactorBtnGrid': {
       padding: '20px 0px',
-      '& .twoFactor-button': {
+      '& .twoFactorBtn': {
         borderRadius: 5,
         padding: 8,
         minHeight: 40,
         width: 150,
         fontSize: 16,
         marginLeft: 10,
+        
       }
     },
-    '& .form__container': {
-      marginLeft: 10,
-      '& .form-group': {
-        display: 'block',
-        flexDirection: 'row',
-        '& .label': {
-          width: '25%',
-          display: 'inline-block',
-          textAlign: 'right',
-          fontSize: '15px',
-          marginTop: '15px',
-          color: primary,
-          paddingRight: '10px',
-          fontWeight: 'normal'
-        },
-        '& .input-field': {
-          color: primaryLight,
-          width: 'calc(40% - 100px)',
-          margin: '0px 10px',
-          display: 'inline-block',
-          border: 'thin solid ' + greyLight,
-          padding: '10px',
-          '&::before': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      '& .form-grid-btn': {
-        padding: '20px 0px'
-      },
-      '& button': {
-        borderRadius: 5,
-        padding: 8,
-        minHeight: 25,
-        width: 150,
-        fontSize: 16,
-        height: 40,
-        color: white,
-        backgroundColor: primary,
-        '&:hover': {
-          backgroundColor: primaryLight
-        }
-      }
-    },
-    '& .reCapthaWraper':{
-      marginLeft: 10
-    },
-    '& button': {
-      backgroundColor: primary,
+    '& .active': {
+      background: primary,
       '&:hover': {
-        backgroundColor: primaryLight
-      }
+        background: primaryLight
+      },
+    },
+    '& .disabled': {
+      background: greyLight,
+      cursor: 'not-allowed',
     }
   },
   mRoot: {
@@ -308,7 +266,7 @@ export default {
     '& .userTwoFactor-left-grid': {
       textAlign: 'center',
       marginLeft: 0,
-      '& .twoFactor-button-grid': {
+      '& .twoFactorBtnGrid': {
         textAlign: 'center'
       },
       '& .enable2FA-note': {

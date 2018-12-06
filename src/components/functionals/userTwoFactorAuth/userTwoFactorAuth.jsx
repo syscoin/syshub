@@ -301,21 +301,19 @@ class UserTwoFactorAuth extends Component {
           </div>
         </Grid>
         {/* <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} /> */}
-        <Grid container direction='row' justify='space-between' className="twoFactor-button-grid">
+        <Grid container direction='row' justify='space-between' className="twoFactorBtnGrid">
           <Grid item>
             <Button 
               id="removeSecret"
-              disabled={!app.twoFA.authSecret}
-              color="primary"
-              className="twoFactor-button"
+              className={`twoFactorBtn ${app.twoFA.authSecret ? 'active':'disabled'}`}
               style={{ marginBottom: '15px' }}
-            >
-              Remove Secret {!app.twoFA.authSecret}
+              >
+              Remove Secret
             </Button>
           </Grid>
           <Grid item>
-            <Button id="disable2FAAuth" color="primary" className={`twoFactor-button ${ this.props.app.twoFA.auth ? 'show':'hide'}`} >Disable 2FA Auth</Button>
-            <Button id="enable2FAAuth"  color="primary" className={`twoFactor-button ${!this.props.app.twoFA.auth ? 'show':'hide'}`} >Enable 2FA Auth</Button>
+            <Button id="disable2FAAuth" className={`twoFactorBtn active ${ this.props.app.twoFA.auth ? 'show':'hide'}`} >Disable 2FA Auth</Button>
+            <Button id="enable2FAAuth"  className={`twoFactorBtn active ${!this.props.app.twoFA.auth ? 'show':'hide'}`} >Enable 2FA Auth</Button>
           </Grid>
         </Grid>
       </Grid>

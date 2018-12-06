@@ -44,6 +44,7 @@ class UserTwoFactorSMS extends Component {
 
     this.state = {
       phoneNumber: '',
+      withNumber: false,
       phoneVerify: '',
       isoCode: 'US',
       areaCode: '',
@@ -69,6 +70,9 @@ class UserTwoFactorSMS extends Component {
     if (user.phoneNumber == null) {
       const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
       this.props.set2FA(newStatus);
+      this.setState({withNumber: false});
+    } else {
+      this.setState({withNumber: true});
     }
 
     const twoFAStatus = await getFire2FAstatus(user.uid);
@@ -157,6 +161,7 @@ class UserTwoFactorSMS extends Component {
         });
 
         const newStatus = await setFire2FAMethod(user.uid, 'sms', false);
+        this.setState({withNumber: false});
         this.props.set2FA(newStatus);
         this.handleHideModal();
       })
@@ -227,12 +232,13 @@ class UserTwoFactorSMS extends Component {
       this.props.set2FA(newStatus);
       user = await fire.auth().currentUser;
       this.props.setCurrentUser(user);
+      this.setState({withNumber: true});
       this.handleHideModal();
-      swal({
+      /* swal({
         title: 'Sucess',
         text: `New Phone Number added & Two Factor Authentication Enabled`,
         icon: 'success'
-      });
+      }); */
     }
   }
 
@@ -465,21 +471,19 @@ class UserTwoFactorSMS extends Component {
           </div>
         </Grid>
         {/* // Buttons section */}
-        <Grid container direction='row' justify='space-between' className="twoFactor-button-grid">
+        <Grid container direction='row' justify='space-between' className="twoFactorBtnGrid">
         <Grid item>
           <Button 
-          color="primary"
-          className="twoFactor-button"
-          onClick={this.editPhone}
-          style={{ marginBottom: '15px' }}
-          disabled={!app.currentUser.phoneNumber}
+            onClick={this.editPhone}
+            className={`twoFactorBtn ${this.state.withNumber ? 'active':'disabled'}`}
+            style={{ marginBottom: '15px' }}
           >
-            Edit Phone
+              Edit Phone
           </Button>
         </Grid>
           <Grid item>
-            <Button id="disable2FASMS" color="primary" className={`twoFactor-button ${ this.props.app.twoFA.sms ? 'show':'hide'}`} >Disable 2FA SMS</Button>
-            <Button id="enable2FASMS"  color="primary" className={`twoFactor-button ${!this.props.app.twoFA.sms ? 'show':'hide'}`} >Enable 2FA SMS </Button>
+            <Button id="disable2FASMS"  className={`twoFactorBtn active ${ this.props.app.twoFA.sms ? 'show':'hide'}`} >Disable 2FA SMS</Button>
+            <Button id="enable2FASMS"   className={`twoFactorBtn active ${!this.props.app.twoFA.sms ? 'show':'hide'}`} >Enable 2FA SMS </Button>
           </Grid>
         </Grid>
       </Grid>
