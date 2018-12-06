@@ -12,6 +12,6 @@ export const verifyPhoneCode = async (verificationId, smsCode) => {
 }
 
 export const loginWithPhone = async (phoneNumber, appVerifier) => {
-  const confirmationResult = await fire.auth().signInWithPhoneNumber(`${user.phoneNumber}`, appVerifier)
+  const confirmationResult = await fire.auth().signInWithPhoneNumber(`${phoneNumber}`, appVerifier)
   return confirmationResult
 }

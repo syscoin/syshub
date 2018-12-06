@@ -1,6 +1,5 @@
 
 import { fire } from './firebase';
-import Cryptr from 'cryptr';
 
 const TWOFA_FIRE_COLLECTION = '2FAAuth';
 
