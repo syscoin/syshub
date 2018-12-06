@@ -16,24 +16,30 @@ export default {
     transform: `translate(-50%, -50%)`,
     background: white,
     boxShadow: green,
-    padding: 40,
+    padding: 0,
     overflow: 'hidden',
     minWidth: 420,
     color:greyDark,
-    '& .modalHeader': {
+    '& .modalHeaderWrapper': {
       display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'flex-end',
-      margin: '0 0 10px 0',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      padding: '0 0 0 40px',
+      backgroundColor: primary,
+      '& *': {
+        color: white
+      }
     },
-    '& .closeBtn':{
+    '& .closeBtn': {
+      alignSelf: 'flex-end'
+    },
+    '& .phoneWrapper': {
+      width:  '100%',
+      padding: '40px'
     },
     '& .formPhoneBtn': {
       padding: '0 0 50px 0'
-    },
-    '& .reCapthaWraper': {
-      margin: '15px 0',
     },
     '& .formControl': {
       margin: '5px 0',
