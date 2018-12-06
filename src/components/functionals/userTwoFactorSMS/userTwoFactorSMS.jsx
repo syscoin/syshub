@@ -6,8 +6,8 @@ import swal from 'sweetalert';
 
 // Import Sevices
 import { fire } from '../../../API/firebase';
-import { sendSMSToPhone, verifyPhoneCode } from '../../../API/TwoFA.service';
-import { setFire2FAMethod, getFire2FAstatus } from '../../../API/TwoFA.service';
+import { sendSMSToPhone, verifyPhoneCode } from '../../../API/twoFAPhone.service';
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/twoFAFirebase.service';
 import { phoneValidation } from '../../../Helpers';
 
 // import Material-ui components
@@ -109,6 +109,33 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifierDisable2FASMS.render();
   }
 
+  modalDidMount() {
+    const user = fire.auth().currentUser;
+    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier('sendSMS', {
+      size: 'invisible',
+      callback: response => {
+        this.verify = response;
+        this.sendSMS();
+      }
+    });
+    window.recaptchaVerifier.render()
+
+    if (user && user.phoneNumber) {
+      window.recaptchaVerifierDelete = new fire.auth.RecaptchaVerifier('phoneRemover', {
+        size: 'invisible',
+        callback: response => {
+          this.verify = response;
+          this.removePhone();
+        }
+      });
+      window.recaptchaVerifierDelete.render()
+    }
+    this.setState({
+      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      verificationId: ''
+    });
+  }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -191,6 +218,7 @@ class UserTwoFactorSMS extends Component {
         text: 'Please register/login',
         icon: 'error'
       });
+      window.recaptchaVerifier.reset();
       return;
     }
     if (!this.verify) {
@@ -199,10 +227,14 @@ class UserTwoFactorSMS extends Component {
         text: 'Please complete reCAPTCHA',
         icon: 'error'
       });
+      window.recaptchaVerifier.reset();
       return;
     }
     const userNumber = phoneValidation(this.state.phoneNumber, this.state.isoCode, user);
-    if (!userNumber) {return}
+    if (!userNumber) {
+      window.recaptchaVerifier.reset();
+      return;
+    }
     const provider = new fire.auth.PhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
     const verificationId = await sendSMSToPhone(provider, phoneUtil.format(userNumber, PNF.E164), appVerifier);
@@ -310,36 +342,7 @@ class UserTwoFactorSMS extends Component {
     });
   }
 
-  modalDidMount() {
-    const user = fire.auth().currentUser;
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier('sendSMS', {
-      size: 'invisible',
-      callback: response => {
-        this.verify = response;
-        this.sendSMS();
-      }
-    });
-    window.recaptchaVerifier.render().then(function(widgetId) {
-      window.recaptchaWidgetId = widgetId;
-    });
-
-    if (user && user.phoneNumber) {
-      window.recaptchaVerifierDelete = new fire.auth.RecaptchaVerifier('phoneRemover', {
-        size: 'invisible',
-        callback: response => {
-          this.verify = response;
-          this.removePhone();
-        }
-      });
-      window.recaptchaVerifierDelete.render().then(function(widgetId) {
-        window.recaptchaWidgetDeleteId = widgetId;
-      });
-    }
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-      verificationId: ''
-    });
-  }
+  
 
   render() {
     const { classes, deviceType, app } = this.props;

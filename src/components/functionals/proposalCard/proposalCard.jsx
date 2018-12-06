@@ -17,7 +17,7 @@ import ProposalProgress from '../proposalProgress/proposalProgress'
 import ProposalInfo from '../proposalInfo/propsalInfo'
 
 // Import services
-import { getFire2FAMethod } from '../../../API/TwoFA.service';
+import { getFire2FAMethod } from '../../../API/twoFAFirebase.service';
 import { getMasternodeList } from '../../../API/masternode.service';
 
 // import style

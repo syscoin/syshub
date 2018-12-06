@@ -6,7 +6,8 @@ import swal from 'sweetalert';
 
 // Import Services
 import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus, getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/TwoFA.service';
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/twoFAFirebase.service';
+import { getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/twoFAAuthenticator.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
