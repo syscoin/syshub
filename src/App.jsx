@@ -10,6 +10,7 @@ import actions from './redux/actions';
 // Import services
 import { fire } from './API/firebase';
 import { getFire2FAstatus, getFire2FAMethod } from './API/twoFAFirebase.service';
+import { getMasternodeList } from './API/masternodeFirebase.service';
 
 import appStyles from './styles/appStyle';
 
@@ -35,27 +36,19 @@ class App extends Component {
     }
     
     fire.auth().onAuthStateChanged(async user => {
-      if (user) {
-        const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-        
-        if (twoFA) {
-          await fire.database().ref('MasterNodes/' + user.uid).once('value', snapshot => {
-            let list = [];
-            snapshot.forEach(snap => {
-              list.push(snap.val());
-            });
-            user['MasterNodes'] = list;
-          });
-
+      // try {
+        if (user) {
+          const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+          
+          if (twoFA) {
+            user['MasterNodes'] = await getMasternodeList(user.uid);
+            const status2FA = await getFire2FAstatus(user.uid);
+            this.props.set2FA(status2FA);
+          }
           this.props.setCurrentUser(user);
-          const status2FA = await getFire2FAstatus(user.uid);
-          this.props.set2FA(status2FA);
-
-          return;
         }
-        user['MasterNodes'] = [];
-        this.props.setCurrentUser(user);
-      }
+      // }
+      // catch (err) {}
     });
 
     let timer = setInterval(() => this.tick(), 35000);

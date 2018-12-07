@@ -18,7 +18,7 @@ import ProposalInfo from '../proposalInfo/propsalInfo'
 
 // Import services
 import { getFire2FAMethod } from '../../../API/twoFAFirebase.service';
-import { getMasternodeList } from '../../../API/masternode.service';
+import { getMasternodeList } from '../../../API/masternodeFirebase.service';
 
 // import style
 import injectSheet from 'react-jss';

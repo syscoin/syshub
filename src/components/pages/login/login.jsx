@@ -10,6 +10,11 @@ import { loginWithPhone } from '../../../API/twoFAPhone.service';
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';
+import Fade from '@material-ui/core/Fade';
+
+
+// Import custom components
+import TwoFactorModalChallenge from '../../functionals/twoFactorModalChallenge/twoFactorModalChallenge'
 
 // import style
 import injectSheet from 'react-jss';
@@ -18,7 +23,10 @@ import loginStyle from './login.style';
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      showModal: false
 
+    };
     this.login = this.login.bind(this);
     this.smsLogin = this.smsLogin.bind(this);
     this.authLogin = this.authLogin.bind(this);
@@ -77,8 +85,23 @@ class Login extends Component {
   }
 
   async authLogin(user){
-    console.log('ACZ user -->', user); // don't remove by now
-    alert('Hello, you have the Authenticator enabled');
+    const token = await swal({
+                              closeOnClickOutside: false,
+                              closeOnEsc: false,
+                              title: 'Two-Factor Google Authentication',
+                              text: "LOL, LOL, LOL, LOl, LOL",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: false,
+                              content: {
+                                element: 'input',
+                                attributes: {
+                                  placeholder: 'Token here',
+                                  type: 'text'
+                                }
+                              }
+                            });
+    console.log('ACZ token -->', token); // don't remove by now
     return;
   }
 
@@ -169,66 +192,69 @@ class Login extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
-      <Grid item className={style} md={12} xs={12}>
-        <h1 className="title">Login to SysHub</h1>
-        <Grid item md={12} xs={12} className="form__container">
-          <form
-            onSubmit={event => this.login(event)}
-            ref={form => { this.loginForm = form }}
-            className="form__wrapper">
-            <Grid item lg={12} md={12} xs={12}>
-              {/* For User Name */}
-              <FormGroup className="form-group">
-                <span htmlFor="user-name" className="label">
-                  {`Email: `}
-                </span>
-                <input
-                  ref={email => (this.loginEmail = email)}
-                  id="user-email"
-                  className="input-field"
-                  placeholder="Enter email"
-                />
-              </FormGroup>
+      <div>
+        <TwoFactorModalChallenge deviceType={deviceType} onHide={true} />
+        <Grid item className={style} md={12} xs={12}>
+          <h1 className="title">Login to SysHub</h1>
+          <Grid item md={12} xs={12} className="form__container">
+            <form
+              onSubmit={event => this.login(event)}
+              ref={form => { this.loginForm = form }}
+              className="form__wrapper">
+              <Grid item lg={12} md={12} xs={12}>
+                {/* For User Name */}
+                <FormGroup className="form-group">
+                  <span htmlFor="user-name" className="label">
+                    {`Email: `}
+                  </span>
+                  <input
+                    ref={email => (this.loginEmail = email)}
+                    id="user-email"
+                    className="input-field"
+                    placeholder="Enter email"
+                  />
+                </FormGroup>
 
-              {/* For Password */}
-              <FormGroup className="form-group">
-                <span htmlFor="password" className="label">
-                  {`Password: `}
-                </span>
-                <input
-                  ref={pass => (this.loginPsw = pass)}
-                  type="password"
-                  id="password"
-                  className="input-field"
-                  placeholder="**************"
-                />
-              </FormGroup>
+                {/* For Password */}
+                <FormGroup className="form-group">
+                  <span htmlFor="password" className="label">
+                    {`Password: `}
+                  </span>
+                  <input
+                    ref={pass => (this.loginPsw = pass)}
+                    type="password"
+                    id="password"
+                    className="input-field"
+                    placeholder="**************"
+                  />
+                </FormGroup>
 
-              {/* For Confirm Password */}
-              <FormGroup className="form-group">
-                <span htmlFor="confirm-password" className="label">
-                  {`Captcha: `}
-                </span>
-                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
-              </FormGroup>
+                {/* For Confirm Password */}
+                <FormGroup className="form-group">
+                  <span htmlFor="confirm-password" className="label">
+                    {`Captcha: `}
+                  </span>
+                  <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
+                </FormGroup>
 
-              {/* Form Action Button */}
-              <FormGroup className="form-group form-button-group">
-                <Button type="submit" color="primary">
-                  Login
-                </Button>
-                <br />
-                <a onClick={this.passwordRecovery}>Forget Your Password?</a>
-                <br />
-                Don’t have an account?{' '}
-                <a onClick={() => this.props.setPage('register')} className="signUpTxt">
-                  Sign Up
-                </a>
-              </FormGroup>
-            </Grid>
-          </form>
+                {/* Form Action Button */}
+                <FormGroup className="form-group form-button-group">
+                  <Button type="submit" color="primary">
+                    Login
+                  </Button>
+                  <br />
+                  <a onClick={this.passwordRecovery}>Forget Your Password?</a>
+                  <br />
+                  Don’t have an account?{' '}
+                  <a onClick={() => this.props.setPage('register')} className="signUpTxt">
+                    Sign Up
+                  </a>
+                </FormGroup>
+              </Grid>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }
