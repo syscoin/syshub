@@ -40,12 +40,18 @@ class TwoFactorModalChallenge extends Component {
 
   modalDidMount() {}
 
-  handleHideModal() {
+  handleHideModal = () => {
     this.setState({
       showModal: false
     });
   }
 
+  handleInputChange = field => event => {
+    this.setState({
+      [field]: event.target.value,
+      tokenInputError: false
+    });
+  };
 
   render() {
     const { classes, deviceType } = this.props;
@@ -63,13 +69,63 @@ class TwoFactorModalChallenge extends Component {
         >
           <div className={style}>
             <div className="modalHeaderWrapper">
+              <div>
+                <h2 className="modalTitle">Two-Factor Challenge</h2>
+                <p className ="modalSubTitle" >Enter token to continue Login</p>
+              </div>
               <IconButton aria-label="Close" className="closeBtn" onClick={() => this.handleHideModal()}>
                 <Close fontSize="large"/>
               </IconButton>
-              <h1>Two-Factor Authentication</h1>
-              <p>You have enabled Two-Factor Authentication for your account,<br/> Follow the instruction to complete setup</p>
             </div>
             <div className="modalBodyWrapper">
+              <div id="smsToken" className="inputWrapper">
+                <TextField
+                  id="phoneVerify"
+                  label="SMS Code"
+                  className="token"
+                  helperText={this.state.tokenInputError? 'Code do not match!':' '}
+                  value={this.state.phoneVerify}
+                  onChange={this.handleInputChange('phoneVerify')}
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                />
+                <Button
+                  id="verifySMSCode"
+                  color="primary"
+                  className="verifyCode"
+                  key={'code'}
+                  variant="outlined"
+                  size="large"
+                  onClick={() => this.verifySMSCode()}
+                  >
+                  VERIFY <DoneAll className="rightIcon"/>
+                </Button>
+              </div>
+              <div id="authToken" className="inputWrapper">
+                <TextField
+                  error={this.state.tokenInputError}
+                  id="token"
+                  label="Google Token"
+                  className="token"
+                  helperText={this.state.tokenInputError? 'Code do not match!':' '}
+                  value={this.state.token}
+                  onChange={this.handleInputChange('token')}
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                />
+                <Button
+                  id="verifyCode"
+                  color="primary"
+                  className="verifyCode"
+                  key={'gcode'}
+                  variant="outlined"
+                  size="large"
+                  >
+                  VERIFY <DoneAll className="rightIcon"/>
+                </Button>
+              </div>
             </div>
           </div>
         </Modal> 

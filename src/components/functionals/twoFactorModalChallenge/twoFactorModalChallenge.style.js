@@ -18,32 +18,40 @@ export default {
     justifyContent: 'center',
     alignItems: 'stretch',
     background: white,
-    boxShadow: green,
+    borderRadius: '0',
     padding: 0,
     color:greyDark,
     '& .modalHeaderWrapper': {
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       justifyContent: 'flex-start',
-      alignItems: 'flex-start',
+      alignItems: 'center',
+      padding: '15px 40px 15px 20px',
       backgroundColor: primary,
       '& *': {
         color: white
       }
     },
     '& .closeBtn': {
+      position: 'absolute',
+      top: 0,
+      right: 0,
       alignSelf: 'flex-end',
+    },
+    '& .modalTitle': {
+      margin: 0,
+      padding: '0 50px 0 0'
+    },
+    '& .modalSubTitle': {
+      margin: 0,
+      padding: '10px 0 0 5px'
     },
     '& .modalBodyWrapper': {
       display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       padding: '40px'
-    },
-    '& .qrCode':{
-      width: '300px',
-      height: '300px'
     },
     '& .instructions': {
       display: 'flex',
@@ -65,6 +73,7 @@ export default {
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      margin: '0 0 0 0',
       '& .codeInput': {
         maxWidth:  '30%',
       },
