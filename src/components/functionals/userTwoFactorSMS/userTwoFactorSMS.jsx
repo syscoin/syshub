@@ -260,7 +260,8 @@ class UserTwoFactorSMS extends Component {
     const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
     if (phoneCredential) {
       user.updatePhoneNumber(phoneCredential);
-      const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+      let newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+      newStatus = await setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
       user = await fire.auth().currentUser;
       this.props.setCurrentUser(user);
@@ -297,6 +298,7 @@ class UserTwoFactorSMS extends Component {
     });
 
     let newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+    newStatus = await setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
 
   }
@@ -375,79 +377,78 @@ class UserTwoFactorSMS extends Component {
               {app.currentUser.phoneNumber && <h3> { `Current number: ${app.currentUser.phoneNumber}`}</h3>}
               {!app.currentUser.phoneNumber && <h3> {`Current number: Not found`}</h3>}
             </div>
-
-              <form
-                ref={form => { this.addPhoneForm = form }}
-                className="phoneWrapper"
+            <form
+              ref={form => { this.addPhoneForm = form }}
+              className="phoneWrapper"
+            >
+              <FormControl variant="outlined" className="formControl">
+                <InputLabel ref={ref => {this.InputLabelRef = ref;}} htmlFor="areaCode">
+                  Area Code
+                </InputLabel>
+                <Select
+                  value={this.state.isoCode}
+                  onChange={this.handleIsoCode}
+                  input={
+                    <OutlinedInput
+                      labelWidth={this.state.labelWidth}
+                      name="areaCode"
+                      id="areaCode"
+                    />
+                  }
                 >
-                <FormControl variant="outlined" className="formControl">
-                  <InputLabel ref={ref => {this.InputLabelRef = ref;}} htmlFor="areaCode">
-                    Area Code
-                  </InputLabel>
-                  <Select
-                    value={this.state.isoCode}
-                    onChange={this.handleIsoCode}
-                    input={
-                      <OutlinedInput
-                        labelWidth={this.state.labelWidth}
-                        name="areaCode"
-                        id="areaCode"
-                      />
-                    }
-                  >
                   {isoArray.map((item, i) => (
                     <MenuItem value={item.code} key={i}>
                       {item.name}
                     </MenuItem>
                     ))}
-                  </Select>
+                </Select>
                 </FormControl>  
-                <div className="phoneRow">
-                <TextField
-                  id="phoneInput"
-                  label="Phone number"
-                  className="phoneNumber"
-                  value={this.state.phoneNumber}
-                  onChange={this.handleInputChange('phoneNumber')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <Button
-                  id="sendSMS"
-                  color="primary"
-                  className="phoneBtn"
-                  key={'sms'}
-                  variant="outlined"
-                  size="large"
-                  >
-                  SEND <Send className="rightIcon"/>
-                </Button>
-                </div>
-                {this.state.showVerifyCode &&
                   <div className="phoneRow">
                     <TextField
-                      id="phoneVerify"
-                      label="Enter verification Code"
+                      id="phoneInput"
+                      label="Phone number"
                       className="phoneNumber"
-                      value={this.state.phoneVerify}
-                      onChange={this.handleInputChange('phoneVerify')}
+                      value={this.state.phoneNumber}
+                      onChange={this.handleInputChange('phoneNumber')}
                       margin="normal"
                       variant="outlined"
                     />
                     <Button
-                      id="verifySMSCode"
+                      id="sendSMS"
                       color="primary"
                       className="phoneBtn"
-                      key={'code'}
+                      key={'sms'}
                       variant="outlined"
                       size="large"
-                      onClick={() => this.verifySMSCode()}
                       >
-                      VERIFY <DoneAll className="rightIcon"/>
+                      SEND <Send className="rightIcon"/>
                     </Button>
                   </div>
-                }
-              </form>
+                  {this.state.showVerifyCode &&
+                    <div className="phoneRow">
+                      <TextField
+                        id="phoneVerify"
+                        label="Enter verification Code"
+                        className="phoneNumber"
+                        value={this.state.phoneVerify}
+                        onChange={this.handleInputChange('phoneVerify')}
+                        margin="normal"
+                        variant="outlined"
+                      />
+                      <Button
+                        id="verifySMSCode"
+                        color="primary"
+                        className="phoneBtn"
+                        key={'code'}
+                        variant="outlined"
+                        size="large"
+                        onClick={() => this.verifySMSCode()}
+                        >
+                        VERIFY <DoneAll className="rightIcon"/>
+                      </Button>
+                    </div>
+                  }
+                </form>
               <Grid container directoin="row" justify="center" className="formPhoneBtn">
                 {app.currentUser &&
                   app.currentUser.phoneNumber && 

@@ -11,8 +11,6 @@ import { getAuthSecret, verifyAuthCode } from '../../../API/twoFAAuthenticator.s
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';
-import Fade from '@material-ui/core/Fade';
-
 
 // Import custom components
 import TwoFactorModalChallenge from '../../functionals/twoFactorModalChallenge/twoFactorModalChallenge'
@@ -31,7 +29,6 @@ class Login extends Component {
     };
     this.login = this.login.bind(this);
     this.smsLogin = this.smsLogin.bind(this);
-    this.authLogin = this.authLogin.bind(this);
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
@@ -85,7 +82,7 @@ class Login extends Component {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
   }
-
+/* 
   async authLogin(user){
     const token = await swal({
                               closeOnClickOutside: false,
@@ -104,7 +101,7 @@ class Login extends Component {
                               }
                             });
     return;
-  }
+  } */
 
   async smsLogin(user, email, password) {
     const appVerifier = window.recaptchaVerifier;

@@ -1,26 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import swal from 'sweetalert';
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
-
-// Import Services
-import { fire } from '../../../API/firebase';
-import { getCurrentUser } from '../../../API/userFirebase.service';
-import { sendSMSToPhone, verifyPhoneCode } from '../../../API/twoFAPhone.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 
 // Import Material-ui Icons
 import DoneAll from '@material-ui/icons/DoneAll';
@@ -29,9 +14,6 @@ import Close from '@material-ui/icons/Close';
 // Import style pages
 import injectSheet from 'react-jss';
 import twoFactorModalChallengeStyle from './twoFactorModalChallenge.style';
-
-const PNF = PhoneNumberFormat;
-const phoneUtil = PhoneNumberUtil.getInstance();
 
 class TwoFactorModalChallenge extends Component {
   state = {

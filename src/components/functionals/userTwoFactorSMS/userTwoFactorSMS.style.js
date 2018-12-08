@@ -60,7 +60,7 @@ export default {
       padding: '0',
     },
     '& .deleteBtn': {
-      margin: '10px 0 0 0',
+      margin: '10px 40px',
       width: '100%',
       '& span': {
         color: red

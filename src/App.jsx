@@ -9,7 +9,7 @@ import actions from './redux/actions';
 
 // Import services
 import { fire } from './API/firebase';
-import { getFire2FAstatus, getFire2FAMethod } from './API/twoFAFirebase.service';
+import { getFire2FAMethod } from './API/twoFAFirebase.service';
 import { getMasternodeList } from './API/masternodeFirebase.service';
 
 import appStyles from './styles/appStyle';

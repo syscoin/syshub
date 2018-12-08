@@ -95,7 +95,7 @@ export default {
     }
   ],
   currentUser: null,
-  showPage: 'login', //'home',
+  showPage: 'home',
   showChat: false,
   showMenu: false,
   platform: {},

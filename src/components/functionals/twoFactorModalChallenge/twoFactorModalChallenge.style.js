@@ -1,11 +1,7 @@
 import palette from '../../../styles/palette';
 
 const primary = palette.primary;
-const primaryLight = palette.primaryLight;
 const greyDark = palette.greyDark;
-const greyLight = palette.greyLight;
-const red = palette.red;
-const green = palette.green;
 const white = palette.white;
 export default {
   root:{

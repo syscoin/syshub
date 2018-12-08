@@ -159,7 +159,8 @@ class UserTwoFactorAuth extends Component {
     }
 
     const user = fire.auth().currentUser;
-    const newStatus = await saveAuthSecret(secret, user.uid);
+    let newStatus = await saveAuthSecret(secret, user.uid);
+    newStatus = await setFire2FAMethod(user.uid, 'sms', false);    
     this.props.set2FA(newStatus);
     this.handleHideModal();
   }
@@ -187,7 +188,8 @@ class UserTwoFactorAuth extends Component {
       return;
     }
 
-    const newStatus = await setFire2FAMethod(user.uid, 'auth', true);
+    let newStatus = await setFire2FAMethod(user.uid, 'auth', true);
+    newStatus = await setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
 
   }
