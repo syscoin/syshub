@@ -366,103 +366,104 @@ class UserTwoFactorSMS extends Component {
           onRendered={() => this.modalDidMount()}
         >
           <div className={modalStyle}>
-            <div className="modalHeader">
-              {app.currentUser.phoneNumber && <h3> { `Current number: ${app.currentUser.phoneNumber}`}</h3>}
-              {!app.currentUser.phoneNumber && <h3> {`Current number: Not found`}</h3>}
+            <div className="modalHeaderWrapper">
               <IconButton aria-label="Close" className="closeBtn" onClick={() => this.handleHideModal()}>
                 <Close fontSize="large"/>
               </IconButton>
+              <h1>Two-Factor by Phone (SMS)</h1>
+              <p>This enable Two-Factor Authentication for your account,<br/> Follow the instruction to complete setup</p>
+              {app.currentUser.phoneNumber && <h3> { `Current number: ${app.currentUser.phoneNumber}`}</h3>}
+              {!app.currentUser.phoneNumber && <h3> {`Current number: Not found`}</h3>}
             </div>
-            <form
-              ref={form => {
-                this.addPhoneForm = form;
-              }}
-              className="phoneWrapper"
-              >
-              <FormControl variant="outlined" className="formControl">
-                <InputLabel ref={ref => {this.InputLabelRef = ref;}} htmlFor="areaCode">
-                  Area Code
-                </InputLabel>
-                <Select
-                  value={this.state.isoCode}
-                  onChange={this.handleIsoCode}
-                  input={
-                    <OutlinedInput
-                      labelWidth={this.state.labelWidth}
-                      name="areaCode"
-                      id="areaCode"
-                    />
-                  }
+
+              <form
+                ref={form => { this.addPhoneForm = form }}
+                className="phoneWrapper"
                 >
-                 {isoArray.map((item, i) => (
-                  <MenuItem value={item.code} key={i}>
-                    {item.name}
-                  </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>  
-              <div className="phoneRow">
-              <TextField
-                id="phoneInput"
-                label="Phone number"
-                className="phoneNumber"
-                value={this.state.phoneNumber}
-                onChange={this.handleInputChange('phoneNumber')}
-                margin="normal"
-                variant="outlined"
-              />
-              <Button
-                id="sendSMS"
-                color="primary"
-                className="phoneBtn"
-                key={'sms'}
-                variant="outlined"
-                size="large"
-                >
-                SEND <Send className="rightIcon"/>
-              </Button>
-              </div>
-              {this.state.showVerifyCode &&
+                <FormControl variant="outlined" className="formControl">
+                  <InputLabel ref={ref => {this.InputLabelRef = ref;}} htmlFor="areaCode">
+                    Area Code
+                  </InputLabel>
+                  <Select
+                    value={this.state.isoCode}
+                    onChange={this.handleIsoCode}
+                    input={
+                      <OutlinedInput
+                        labelWidth={this.state.labelWidth}
+                        name="areaCode"
+                        id="areaCode"
+                      />
+                    }
+                  >
+                  {isoArray.map((item, i) => (
+                    <MenuItem value={item.code} key={i}>
+                      {item.name}
+                    </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>  
                 <div className="phoneRow">
-                  <TextField
-                    id="phoneVerify"
-                    label="Enter verification Code"
-                    className="phoneNumber"
-                    value={this.state.phoneVerify}
-                    onChange={this.handleInputChange('phoneVerify')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <Button
-                    id="verifySMSCode"
-                    color="primary"
-                    className="phoneBtn"
-                    key={'code'}
-                    variant="outlined"
-                    size="large"
-                    onClick={() => this.verifySMSCode()}
-                    >
-                    VERIFY <DoneAll className="rightIcon"/>
-                  </Button>
+                <TextField
+                  id="phoneInput"
+                  label="Phone number"
+                  className="phoneNumber"
+                  value={this.state.phoneNumber}
+                  onChange={this.handleInputChange('phoneNumber')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <Button
+                  id="sendSMS"
+                  color="primary"
+                  className="phoneBtn"
+                  key={'sms'}
+                  variant="outlined"
+                  size="large"
+                  >
+                  SEND <Send className="rightIcon"/>
+                </Button>
                 </div>
-              }
-            </form>
-            <Grid container directoin="row" justify="center" className="formPhoneBtn">
-              {app.currentUser &&
-                app.currentUser.phoneNumber && 
-                  <Button
-                    id="phoneRemover"
-                    key={2}
-                    className="deleteBtn"
-                    variant="outlined"
-                    color="secondary"
-                    size="large"
-                    >
-                    {'DELETE PHONE NUMBER'}
-                  </Button>
-              }
-            </Grid>
-          </div>
+                {this.state.showVerifyCode &&
+                  <div className="phoneRow">
+                    <TextField
+                      id="phoneVerify"
+                      label="Enter verification Code"
+                      className="phoneNumber"
+                      value={this.state.phoneVerify}
+                      onChange={this.handleInputChange('phoneVerify')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                    <Button
+                      id="verifySMSCode"
+                      color="primary"
+                      className="phoneBtn"
+                      key={'code'}
+                      variant="outlined"
+                      size="large"
+                      onClick={() => this.verifySMSCode()}
+                      >
+                      VERIFY <DoneAll className="rightIcon"/>
+                    </Button>
+                  </div>
+                }
+              </form>
+              <Grid container directoin="row" justify="center" className="formPhoneBtn">
+                {app.currentUser &&
+                  app.currentUser.phoneNumber && 
+                    <Button
+                      id="phoneRemover"
+                      key={2}
+                      className="deleteBtn"
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
+                      >
+                      {'DELETE PHONE NUMBER'}
+                    </Button>
+                }
+              </Grid>
+            </div>
         </Modal> 
         <Grid item md={12} xs={12} className="userTwoFactor">
           <div className="statusWrapper">
