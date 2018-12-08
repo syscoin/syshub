@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
+import { removeFire2FA, getFire2FAstatus, setFire2FAMethod } from './twoFAFirebase.service';
+
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -67,52 +69,6 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
-const phoneAuth = (user, provider, phoneNumber, appVerifier) => {
-  return new Promise((resolve, reject) => {
-    provider
-      .verifyPhoneNumber(phoneNumber, appVerifier)
-      .then(verificationId => {
-        swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Verify',
-            text: 'Please enter the verification code sent to your mobile device',
-            icon: 'info',
-            buttons: true,
-            dangerMode: false,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Confirmation code here',
-                type: 'text'
-              }
-            }
-          })
-          .then(verificationCode => {
-            if (!verificationCode) {
-              throw new Error('Please provide your verificatoin code next time.');
-            }
-            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
-          })
-          .then(phoneCredential => {
-            return user.updatePhoneNumber(phoneCredential);
-          })
-          .then(() => {
-            fire
-              .database()
-              .ref('2FA/' + user.uid)
-              .set(true);
-            resolve(true);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
-};
 
 const doRegister = () => {};
 
@@ -336,22 +292,10 @@ const doDeleteAccount = () => {
                 });
               });
 
-            fire
-              .database()
-              .ref('usernames/' + currentUser.uid)
-              .set(`${currentUser.displayName}-deleted`);
-            fire
-              .database()
-              .ref('2FA/' + currentUser.uid)
-              .remove();
-            fire
-              .database()
-              .ref('proposals/' + currentUser.uid)
-              .remove();
-            fire
-              .database()
-              .ref('MasterNodes/' + currentUser.uid)
-              .remove();
+            fire.database().ref(`usernames/${currentUser.uid}`).set(`${currentUser.displayName}-deleted`);
+            removeFire2FA(currentUser.uid);
+            fire.database().ref(`proposals/${currentUser.uid}`).remove();
+            fire.database().ref(`MasterNodes/${currentUser.uid}`).remove();
 
             currentUser
               .delete()
@@ -396,13 +340,62 @@ const getCurrentUser = () => {
   return fire.auth().currentUser;
 }
 
+// refactor this method to run properly
+const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
+  return new Promise((resolve, reject) => {
+    provider
+      .verifyPhoneNumber(phoneNumber, appVerifier)
+      .then(verificationId => {
+        swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Verify',
+            text: 'Please enter the verification code sent to your mobile device',
+            icon: 'info',
+            buttons: true,
+            dangerMode: false,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Confirmation code here',
+                type: 'text'
+              }
+            }
+          })
+          .then(verificationCode => {
+            if (!verificationCode) {
+              throw new Error('Please provide your verificatoin code next time.');
+            }
+            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+          })
+          .then(phoneCredential => {
+            return user.updatePhoneNumber(phoneCredential);
+          })
+          .then(() => {
+            fire.database().ref(`2FA/${user.uid}`).set(true, () => // <-- ACZ Delete: after create the correct method
+              fire.database().ref(`2FAAuth/${user.uid}`).set(true, () =>
+                resolve(true)
+            ));
+          })
+          .catch(err => {
+            reject(err);
+          });
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+
 //Check if neccessary
 export {
   messages,
   usernames,
   comments,
   commentReplies_V2,
-  phoneAuth,
+  sendSMSToPhone,
+  verifyPhoneCode,
   fire,
   base,
   doRegister,

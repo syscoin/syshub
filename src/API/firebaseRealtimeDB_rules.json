@@ -12,6 +12,10 @@
       ".read": "auth !== null",
       ".write": "auth !== null"
     },
+    "2FAAuth": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
     "comments": {
       ".read": true,
       ".write": "auth !== null"

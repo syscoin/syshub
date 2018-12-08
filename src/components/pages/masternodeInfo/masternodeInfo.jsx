@@ -23,12 +23,9 @@ componentDidMount() { }
     const { classes, deviceType, tilesData } = this.props;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    console.log('ACZ -->', this.props);
-    
-
     return (
       <div className={style}>
-        <h1 className="title">Masternode Info</h1>
+        <h1 className="title">Masternode Resources</h1>
         <div className="masternode-div">
           <div className="heading">
             <GridList cellHeight={cardDim.h} spacing={50}>
