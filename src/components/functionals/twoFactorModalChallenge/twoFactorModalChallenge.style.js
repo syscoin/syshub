@@ -71,11 +71,14 @@ export default {
     '& .inputWrapper': {
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       alignItems: 'flex-start',
       margin: '0 0 0 0',
       '& .codeInput': {
-        maxWidth:  '30%',
+        maxWidth:  '40%',
+      },
+      '& .fullWidth': {
+        maxWidth: '100%'
       },
       '& .verifyCode': {
         margin: '25px 0px 0 20px',

@@ -42,8 +42,8 @@ class App extends Component {
           
           if (twoFA) {
             user['MasterNodes'] = await getMasternodeList(user.uid);
-            const status2FA = await getFire2FAstatus(user.uid);
-            this.props.set2FA(status2FA);
+            /* const status2FA = await getFire2FAstatus(user.uid);
+            this.props.set2FA(status2FA); */
           }
           this.props.setCurrentUser(user);
         }

@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import { fire } from '../../../API/firebase';
 import { getFire2FAstatus } from '../../../API/twoFAFirebase.service';
 import { loginWithPhone } from '../../../API/twoFAPhone.service';
+import { getAuthSecret, verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';
@@ -24,7 +25,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state={
-      showModal: false
+      showModal: false,
+      twoFAStatus: {},
 
     };
     this.login = this.login.bind(this);
@@ -101,7 +103,6 @@ class Login extends Component {
                                 }
                               }
                             });
-    console.log('ACZ token -->', token); // don't remove by now
     return;
   }
 
@@ -132,7 +133,61 @@ class Login extends Component {
     } 
   }
 
-  async login(event) {
+  async  twoFALogin (verifiationResutlObj) {
+
+    const { smsCode, gToken} = verifiationResutlObj;
+    const twoFAStatus = this.state.twoFAStatus;
+    let vSmsCode = false;
+    let vGToken = false;
+    let twoFaResult = false;
+    
+    if (twoFAStatus.auth) {
+      const secret = this.state.secret;
+      const email = this.loginEmail.value;
+      const password = this.loginPsw.value;
+      vGToken = verifyAuthCode(secret, gToken);
+      if (vGToken) {
+        const user = await fire.auth().signInWithEmailAndPassword(email, password);
+        twoFaResult = !!user;
+      }
+    }
+    if (twoFAStatus.sms) {
+      const confirmationResult = this.state.phoneConfirmationResult;
+      try {
+        const verifiedCode = await confirmationResult.confirm(smsCode);
+        vSmsCode = !!verifiedCode;
+      } catch (err) {
+        vSmsCode = false;
+      }
+      twoFaResult = vSmsCode ? vSmsCode: twoFaResult;
+    }
+
+    if (twoFAStatus.auth && twoFAStatus.sms) {
+      twoFaResult = !!(vSmsCode * vGToken);
+    }
+
+    this.loginForm.reset();
+    this.props.setPage('home');
+    console.log('ACZ codeStatus', twoFaResult, vGToken, vSmsCode);
+    if (!twoFaResult) {      
+      await fire.auth().signOut();
+      this.props.doLogout();
+      swal({
+        title: 'Oops...',
+        text: 'You do not pass the 2FA Challenge',
+        icon: 'error'
+      });
+      return
+    }
+    swal({
+      title: 'Success',
+      text: `You are successfuly signed in`,
+      icon: 'success'
+    });
+  }
+
+
+  login(event) {
     event.preventDefault();
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
@@ -146,30 +201,34 @@ class Login extends Component {
       window.recaptchaVerifier.reset()
       return;
     }
-
-    fire.auth().signInWithEmailAndPassword(email, password).then(async user => {
-      const { twoFA, sms, auth } = await getFire2FAstatus(user.uid);
-      if (twoFA) {
-        if(auth) { 
-          await this.authLogin(user);
+    fire.auth().signInWithEmailAndPassword(email, password).then( async user => {
+      const appVerifier = window.recaptchaVerifier;
+      const twoFAStatus = await getFire2FAstatus(user.uid);
+      const showModal = twoFAStatus.twoFA;
+      let phoneConfirmationResult, secret;
+      if (showModal) {
+        if (user.phoneNumber && twoFAStatus.sms) {
+          phoneConfirmationResult = await loginWithPhone(`${user.phoneNumber}`, appVerifier);
         }
-        if(sms && user.phoneNumber) { 
-          await this.smsLogin(user, email, password);
+        if (twoFAStatus.auth && twoFAStatus.authSecret) {
+          secret = await getAuthSecret(user.uid);
         }
-        this.props.setPage('home');
-        swal({
-          title: 'Success',
-          text: `${user.displayName}, you are successfuly signed in`,
-          icon: 'success'
+        await fire.auth().signOut();
+        this.setState({
+          showModal,
+          twoFAStatus,
+          user,
+          phoneConfirmationResult,
+          secret
         });
       } else {
         swal({
           title: 'Success',
-          text: `${user.displayName} signed in without sms verification.`,
+          text: `${user.displayName} signed in without 2FA verification.`,
           icon: 'success'
         });
         this.loginForm.reset();
-        this.props.setPage('home');
+        this.props.setPage('home'); 
       }
     })
     .catch(err => {
@@ -186,14 +245,27 @@ class Login extends Component {
     });
   }
 
+  setModalState(showModal) {
+    this.setState({showModal})
+  }
+
   render() {
     const { classes, deviceType } = this.props;
+    const { twoFAStatus, showModal, tempUser } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <div>
-        <TwoFactorModalChallenge deviceType={deviceType} onHide={true} />
+        <TwoFactorModalChallenge
+          deviceType={deviceType}
+          twoFAStatus={twoFAStatus}
+          showModal={showModal}
+          user={tempUser}
+          phoneProvider={this.state.provider}
+          onClose={(showModal) => this.setModalState(showModal)}
+          onVerify={(verifiationResutlObj)=>this.twoFALogin(verifiationResutlObj)}
+        />
         <Grid item className={style} md={12} xs={12}>
           <h1 className="title">Login to SysHub</h1>
           <Grid item md={12} xs={12} className="form__container">
@@ -268,7 +340,8 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
-    setCurrentUser: user => dispatch(actions.setCurrentUser(user))
+    setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
+    doLogout: () => dispatch(actions.doLogout()),
   };
 };
 

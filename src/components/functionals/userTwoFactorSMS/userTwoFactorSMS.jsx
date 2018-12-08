@@ -296,7 +296,7 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifierEnable2FASMS.reset(widgetId);
     });
 
-    const newStatus = await setFire2FAMethod(user.uid, 'sms', true);
+    let newStatus = await setFire2FAMethod(user.uid, 'sms', true);
     this.props.set2FA(newStatus);
 
   }
