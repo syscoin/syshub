@@ -8,10 +8,6 @@
       ".read": true,
       ".write": "auth !== null"
     },
-    "2FA": {
-      ".read": "auth !== null",
-      ".write": "auth !== null"
-    },
     "2FAAuth": {
       ".read": "auth !== null",
       ".write": "auth !== null"
