@@ -108,6 +108,7 @@ export default {
           marginRight: 40,
           borderRadius: 10,
           minHeight: 40,
+          color: white,
           '& span': {
             color: white,
             fontWeight: 'bold'
@@ -161,7 +162,6 @@ export default {
       },
       '& .terms-of-condition': {
         width: '100% !important',
-        margin: 0
       },
       '& .form-button-group': {
         width: '100% !important',
