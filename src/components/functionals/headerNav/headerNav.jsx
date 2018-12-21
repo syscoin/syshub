@@ -17,20 +17,12 @@ import IconButton from '@material-ui/core/IconButton';
 import injectSheet from 'react-jss';
 import headerNavStyle from './headerNav.style';
 
+// Imports Assets and more
+import socialLinks from '../../../redux/constants/socialLinks';
+
 // const chatIcon = require('../../../assets/img/png_menu_chat.png');
 
-const socialLinks = [
-  {
-    name: 'Discord',
-    icon: 'fab fa-discord',
-    link: 'https://discord.gg/sQFwtkE'
-  },
-  {
-    name: 'Telegram',
-    icon: 'fab fa-telegram-plane',
-    link: 'https://t.me/Syscoin_Official'
-  }
-];
+
 
 class HeaderNav extends Component {
   doLogout() {
