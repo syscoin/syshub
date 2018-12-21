@@ -8,18 +8,29 @@ import actions from '../../../redux/actions';
 import { doLogout } from '../../../API/firebase';
 import { Grid } from '@material-ui/core';
 
-//Import UI Framework components
-import { Button } from 'antd';
+//Import Material-UI Framework components
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 //Import Styles
 import injectSheet from 'react-jss';
 import headerNavStyle from './headerNav.style';
 
-const chatIcon = require('../../../assets/img/png_menu_chat.png');
+// const chatIcon = require('../../../assets/img/png_menu_chat.png');
 
-
-const ButtonGroup = Button.Group;
-
+const socialLinks = [
+  {
+    name: 'Discord',
+    icon: 'fab fa-discord',
+    link: 'https://discord.gg/sQFwtkE'
+  },
+  {
+    name: 'Telegram',
+    icon: 'fab fa-telegram-plane',
+    link: 'https://t.me/Syscoin_Official'
+  }
+];
 
 class HeaderNav extends Component {
   doLogout() {
@@ -43,8 +54,15 @@ class HeaderNav extends Component {
           </span>
         </Grid>
         <Grid item className="common">
-          <ButtonGroup>
-            <Button
+          <div>
+            {socialLinks.map( item => 
+              <Tooltip key={item.name} title={item.name}>
+                <IconButton  aria-label={item.name} className="socialChannel" href={item.link} target="_blank" rel="noopener noreferrer" >
+                  <i className={item.icon}></i>
+                </IconButton>
+              </Tooltip>
+            )}
+            {/* <Button
               size={'large'}
               type="primary"
               ghost
@@ -52,30 +70,27 @@ class HeaderNav extends Component {
               onClick={() => this.props.toggleChat()}
             >
               <img src={chatIcon} alt="chat icon" height="30" />
-            </Button>
-
+            </Button> */}
             {currentUser ? (
               <Button
                 size="large"
                 type="primary"
-                ghost
                 className="button logout-btn"
                 onClick={() => this.doLogout()}
               >
-                <div className="common">Logout</div>
+                <div>Logout</div>
               </Button>
             ) : (
-                <Button
-                  size="large"
-                  type="primary"
-                  ghost
-                  className="button login-btn"
-                  onClick={() => this.props.setPage('login')}
-                >
-                  <div className="common">Login</div>
-                </Button>
-              )}
-          </ButtonGroup>
+              <Button
+                size="large"
+                type="primary"
+                className="button login-btn"
+                onClick={() => this.props.setPage('login')}
+              >
+                <div>Login</div>
+              </Button>
+            )}
+          </div>
         </Grid>
       </Grid>
     );

@@ -19,6 +19,15 @@ export default {
           height: 20
         }
       },
+      '& .socialChannel': {
+        textDecoration: 'none',
+        '&:hover': {
+          background: 'transparent',
+        },
+        '& i': {
+          color: white,
+        }
+      },
       '& .icon': {
         height: 25
       },
@@ -43,6 +52,7 @@ export default {
       },
       '& .login-btn , .logout-btn': {
         padding: 0,
+        color: white,
         '& div': {
           fontSize: 15,
           color: white
