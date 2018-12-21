@@ -7,7 +7,6 @@ import injectSheet from 'react-jss';
 import actions from '../../../redux/actions';
 
 // Imports Material-UI components
-import { Button } from 'antd'; // <-- try to delete for the next iteration
 import Grid  from '@material-ui/core/Grid';
 import Menu from '@material-ui/icons/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -33,7 +32,7 @@ class MHeaderNav extends Component {
   render() {
     const { classes } = this.props;
     //Platform style switcher
-    const chatIcon = require('../../../assets/img/png_menu_chat.png');
+    // const chatIcon = require('../../../assets/img/png_menu_chat.png'); <-- ACZ: Temporarily commented
     const logo = require('../../../assets/img/png_logo_white.png');
     return (
       <Grid container className={classes.mRoot}>

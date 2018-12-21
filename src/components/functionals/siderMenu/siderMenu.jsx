@@ -28,13 +28,13 @@ class SiderMenu extends Component {
   }
 
   render() {
-    const { classes, active, deviceType, sysStatsValue, sysInfo } = this.props;
+    const { classes, active, deviceType, sysInfo } = this.props;
 
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     const usdChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_usd).toFixed(8)} USD` : '';
-    const btcChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8)} BTC` : '';
-    const satChangeRate = sysInfo.sysPrice ? `${Math.floor(parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000)} SATOSHI` : '';
+    // const btcChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8)} BTC` : ''; <-- Temporarily commented
+    // const satChangeRate = sysInfo.sysPrice ? `${Math.floor(parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000)} SATOSHI` : ''; <-- Temporarily commented
     const masternodes   = sysInfo.mnRegistered && sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
     const totUsers      = sysInfo.users ? (sysInfo.users) : '';
 
