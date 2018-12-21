@@ -4,11 +4,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import injectSheet from 'react-jss';
-import  Grid  from '@material-ui/core/Grid';
-import Menu from '@material-ui/icons/Menu';
-import { Button } from 'antd';
-import IconButton from '@material-ui/core/IconButton';
 import actions from '../../../redux/actions';
+
+// Imports Material-UI components
+import Grid  from '@material-ui/core/Grid';
+import Menu from '@material-ui/icons/Menu';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+
+// Imports Assets and more
+import socialLinks from '../../../redux/constants/socialLinks';
 
 import mHeaderNavStyle from './mHeaderNav.style';
 
@@ -27,7 +32,7 @@ class MHeaderNav extends Component {
   render() {
     const { classes } = this.props;
     //Platform style switcher
-    const chatIcon = require('../../../assets/img/png_menu_chat.png');
+    // const chatIcon = require('../../../assets/img/png_menu_chat.png'); <-- ACZ: Temporarily commented
     const logo = require('../../../assets/img/png_logo_white.png');
     return (
       <Grid container className={classes.mRoot}>
@@ -56,7 +61,14 @@ class MHeaderNav extends Component {
             this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }
           }
         >
-          <Button
+        {socialLinks.map( item => 
+              <Tooltip key={item.name} title={item.name}>
+                <IconButton  aria-label={item.name} className="socialChannel" href={item.link} target="_blank" rel="noopener noreferrer" >
+                  <i className={`${item.icon} fa-sm`}></i>
+                </IconButton>
+              </Tooltip>
+            )}
+          {/* <Button
             size={'large'}
             type="primary"
             ghost
@@ -64,7 +76,7 @@ class MHeaderNav extends Component {
             onClick={() => this.props.toggleChat()}
           >
             <img src={chatIcon} alt="chat icon" height="30" id="chatbox" />
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     );

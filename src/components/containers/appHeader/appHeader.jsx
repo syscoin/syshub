@@ -16,7 +16,7 @@ class AppHeader extends Component {
     return (
       <Header style={appHeaderStyle.container}>
         <AppBar position="fixed">
-          <Row type="flex" justify="space-around" align="middle" style={appHeaderStyle.appbar}>
+          <Row type="flex" justify="center" align="middle" style={appHeaderStyle.appbar}>
             <Col xl={24} xxl={20}>
               <Toolbar style={appHeaderStyle.header}>
                 <div style={appHeaderStyle.wrapper}>

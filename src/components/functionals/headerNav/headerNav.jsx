@@ -17,20 +17,13 @@ import IconButton from '@material-ui/core/IconButton';
 import injectSheet from 'react-jss';
 import headerNavStyle from './headerNav.style';
 
+// Imports Assets and more
+import socialLinks from '../../../redux/constants/socialLinks';
+
 // const chatIcon = require('../../../assets/img/png_menu_chat.png');
 
-const socialLinks = [
-  {
-    name: 'Discord',
-    icon: 'fab fa-discord',
-    link: 'https://discord.gg/sQFwtkE'
-  },
-  {
-    name: 'Telegram',
-    icon: 'fab fa-telegram-plane',
-    link: 'https://t.me/Syscoin_Official'
-  }
-];
+
+
 
 class HeaderNav extends Component {
   doLogout() {
@@ -41,17 +34,38 @@ class HeaderNav extends Component {
     }
   }
 
+  showUserName (currentUser) {
+    const nameMaxLength = 20;
+    let userName = 'Guest';
+    if (currentUser) { 
+      userName = currentUser.displayName || currentUser.email;
+    }
+  
+    if (userName.length > nameMaxLength) {
+      return (
+        <Tooltip title={userName}>
+          <span className="TxtBold">
+            {`${userName.substring(0, nameMaxLength-3)}...`}
+          </span>
+        </Tooltip>
+      );
+    }
+    return (
+      <span className="TxtBold">
+        {userName}
+      </span>
+    );
+  }
+
   render() {
     const { classes } = this.props;
-
     const { currentUser } = this.props.app;
+
     return (
       <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
-          <span className="TxtBold">
-            {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
-          </span>
+          {this.showUserName(currentUser)}
         </Grid>
         <Grid item className="common">
           <div>

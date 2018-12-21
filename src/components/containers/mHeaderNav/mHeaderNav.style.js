@@ -45,7 +45,16 @@ export default {
           marginTop: -10,
         }
 
-      }
+      },
+      '& .socialChannel': {
+        textDecoration: 'none',
+        '&:hover': {
+          background: 'transparent',
+        },
+        '& i': {
+          color: white,
+        }
+      },
     },
     '& button': {
       border: 'none'

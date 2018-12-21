@@ -28,14 +28,15 @@ class SiderMenu extends Component {
   }
 
   render() {
-    const { classes, active, deviceType, sysStatsValue } = this.props;
-    const { sysPrice, totMn, regMn, users } = sysStatsValue;
+    const { classes, active, deviceType, sysInfo } = this.props;
 
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
-    const changeRate = sysPrice ? `${(sysPrice.price_btc)} BTC/SYS` : '';
-    const masternodes = totMn ? `${regMn} / ${totMn}` : '';
-    const totUsers = users ? users : '';
+    const usdChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_usd).toFixed(8)} USD` : '';
+    // const btcChangeRate = sysInfo.sysPrice ? `${parseFloat(sysInfo.sysPrice.price_btc).toFixed(8)} BTC` : ''; <-- Temporarily commented
+    // const satChangeRate = sysInfo.sysPrice ? `${Math.floor(parseFloat(sysInfo.sysPrice.price_btc).toFixed(8) * 100000000)} SATOSHI` : ''; <-- Temporarily commented
+    const masternodes   = sysInfo.mnRegistered && sysInfo.mnCount ? `${sysInfo.mnRegistered} / ${sysInfo.mnCount.enabled}` : '';
+    const totUsers      = sysInfo.users ? (sysInfo.users) : '';
 
     return (
       <div className={style}>
@@ -43,7 +44,7 @@ class SiderMenu extends Component {
         {this.props.deviceType === 'mobile' && <Row className='stats__container'>
           <Col span={15} className='stats__wrapper'>
             <img alt="a" src={require('../../../assets/img/png_stasts_sys.png')} className="icon" />
-            <span> <b>{`SYSCOIN: `}</b> {changeRate}</span>
+            <span> <b>{`SYSCOIN: `}</b> {usdChangeRate}</span>
           </Col>
           <Col span={9} className='stats__wrapper'>
             <img alt="a" src={require('../../../assets/img/png_stats_users.png')} className="icon" />
@@ -102,12 +103,12 @@ class SiderMenu extends Component {
 const stateToProps = state => {
   return {
     menuItems: state.app.menuItems,
-    sysStatsValue: {
+    sysInfo: {
+      mnCount: state.sysStats.mnCount,
+      mnRegistered: state.sysStats.mnRegistered,
       sysPrice: state.sysStats.sysPrice,
-      totMn: state.sysStats.totMn,
-      regMn: state.sysStats.regMn,
       users: state.sysStats.users,
-    }
+    },
   };
 };
 

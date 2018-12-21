@@ -10,6 +10,7 @@ export default {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    maxWidth: '55%',
     '& .common': {
       padding: '0 15px',
       color: white,
