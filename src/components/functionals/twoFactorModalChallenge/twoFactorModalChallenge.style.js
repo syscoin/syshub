@@ -86,6 +86,6 @@ export default {
     },
   },
   mRoot: {
-    extend: 'modalRoot',
+    extend: 'root',
   },
-}
+};
