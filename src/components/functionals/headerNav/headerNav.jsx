@@ -24,6 +24,7 @@ import socialLinks from '../../../redux/constants/socialLinks';
 
 
 
+
 class HeaderNav extends Component {
   doLogout() {
     const { currentUser } = this.props.app;
@@ -33,17 +34,38 @@ class HeaderNav extends Component {
     }
   }
 
+  showUserName (currentUser) {
+    const nameMaxLength = 20;
+    let userName = 'Guest';
+    if (currentUser) { 
+      userName = currentUser.displayName || currentUser.email;
+    }
+  
+    if (userName.length > nameMaxLength) {
+      return (
+        <Tooltip title={userName}>
+          <span className="TxtBold">
+            {`${userName.substring(0, nameMaxLength-3)}...`}
+          </span>
+        </Tooltip>
+      );
+    }
+    return (
+      <span className="TxtBold">
+        {userName}
+      </span>
+    );
+  }
+
   render() {
     const { classes } = this.props;
-
     const { currentUser } = this.props.app;
+
     return (
       <Grid item container md={5} className={classes.root}>
         <Grid item className="common">
           <span className="TxtRegular">{`Welcome  `}</span>
-          <span className="TxtBold">
-            {currentUser ? currentUser.displayName || currentUser.email : 'Guest'}
-          </span>
+          {this.showUserName(currentUser)}
         </Grid>
         <Grid item className="common">
           <div>

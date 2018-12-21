@@ -3,11 +3,13 @@ import palette from '../../../styles/palette';
 const primary = palette.primary;
 
 export default {
-  container: {},
+  container: {
+  },
   appbar: {
     backgroundColor: primary
   },
   header: {
+    padding: '0',
     backgroundColor: primary,
   },
   wrapper: {
@@ -15,6 +17,6 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-between',
     minWidth: '100%',
-    padding: '0 20px 0 0',
+    
   },
 };

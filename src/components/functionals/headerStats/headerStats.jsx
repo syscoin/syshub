@@ -26,15 +26,15 @@ class HeaderStats extends Component {
     return (
       <Grid container className={style}>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
-        <div className="changeRate">
-          <img alt="a" src={require('../../../assets/img/png_stasts_sys.png')} className="icon" onClick={() => this.props.setPage('home')}/>
-          <span className="TxtBold">{sysCaption}</span>
-          <div className="changeValue">
-            <i>{usdChangeRate}</i>
-            <i>{btcChangeRate}</i>
-            <i>{satChangeRate}</i>
+          <div className="changeRate">
+            <img alt="a" src={require('../../../assets/img/png_stasts_sys.png')} className="icon" onClick={() => this.props.setPage('home')}/>
+            <span className="TxtBold">{sysCaption}</span>
+            <div className="changeValue">
+              <i>{usdChangeRate}</i>
+              <i>{btcChangeRate}</i>
+              <i>{satChangeRate}</i>
+            </div>
           </div>
-        </div>
         </Grid>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
           <img
@@ -45,8 +45,8 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-              <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
-            )}
+            <span className="TxtBold">{`REGISTERED MASTERNODES: `}</span>
+          )}
           {masternodes}
         </Grid>
         <Grid item className="common" xs={deviceType === 'mobile' ? 12 : null}>
@@ -54,8 +54,8 @@ class HeaderStats extends Component {
           {deviceType === 'mobile' ? (
             <span className="TxtBold">{`: `}</span>
           ) : (
-              <span className="TxtBold">{`USERS: `}</span>
-            )}
+            <span className="TxtBold">{`USERS: `}</span>
+          )}
           {totUsers}
         </Grid>
       </Grid>
