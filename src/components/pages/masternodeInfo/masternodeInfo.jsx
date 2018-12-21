@@ -29,21 +29,17 @@ componentDidMount() { }
         <div className="masternode-div">
           <div className="heading">
             <GridList cellHeight={cardDim.h} spacing={50}>
-{/*               <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                <ListSubheader component="div">December</ListSubheader>
-              </GridListTile> */}
               {tilesData.map(tile => (
-                <GridListTile key={tile.key} className="girdCard" >
+                <GridListTile key={tile.key} className="girdCard" cols={deviceType === 'mobile' ? 2 : 1}>
                   <a href={tile.url} target="_blank" rel="noopener noreferrer" className="linkWrapper">
                     <img className="image" src={tile.img} height={cardDim.h-20} width={'95%'} alt={tile.title}/>
                     <GridListTileBar
                       title={<span style={{color: 'white'}}>{tile.title}</span>}
-                      // subtitle={<span style={{color: 'white'}}>{tile.brief}</span>}
                     />
                   </a>
                 </GridListTile>
               ))}
-          </GridList>
+            </GridList>
           </div>
         </div>
       </div>
