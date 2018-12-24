@@ -36,16 +36,15 @@ class DashBoardHeader extends Component {
             </Grid>
           </Grid>
         ) : (
-            <Grid item container md={12} xs={12} className="no-margin">
-              <Grid item md={12} xs={12} className="headingView">
-                <Grid item md={12} xs={12} className="headingRow">
-                  <div className="headingDiv">
-                    {' '}
-                    <span className="activeText">
-                      {proposal.list.length > 0 ? proposal.list.length : 0}
-                    </span>
-                    {'  '}
-                    Active Proposals
+          <Grid item container md={12} xs={12} className="no-margin">
+            <Grid item md={12} xs={12} className="headingView">
+              <Grid item md={12} xs={12} className="headingRow">
+                <div className="headingDiv">
+                  {' '}
+                  <span className="activeText">
+                    {proposal.list.length > 0 ? proposal.list.length : 0}
+                  </span>
+                    { `Active Proposal ${this.state.data.nextReward()} `}
                 </div>
                 </Grid>
               </Grid>

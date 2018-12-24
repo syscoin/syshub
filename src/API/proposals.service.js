@@ -1,4 +1,14 @@
 import { fire } from './firebase';
+import { HTTPAsync } from '../redux/helpers';
+
+/**---------------------------------------------------------------------------- */
+/** TO CHANGE THE URL FOR THE API DO IT IN ".env -> REACT_APP_SYS_MN_API"       */
+/**---------------------------------------------------------------------------- */
+
+const baseApiURL = process.env.REACT_APP_SYS_MN_API;
+
+/**---------------------------------------------------------------------------- */
+
 
 /**
  * 
@@ -43,4 +53,22 @@ export const deletePendingProposal = async (uid) => {
   descriptionRef.remove();
 }
   proposalRef.remove();
+}
+
+/**
+ * 
+ * @param none
+ * @returns the next reward date
+ */
+
+export const nextGovernanceRewardDate = async () => {
+  const chainInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getinfo`,null,);
+  const blockHeight =  chainInfo.blocks; // 323687;
+  const sixtyThree = 63;
+  const fortyThreeThousand = 43800;
+  const date = new Date();
+  const nextRewardInSeconds = sixtyThree * (fortyThreeThousand * (parseInt(blockHeight / fortyThreeThousand, 10) + 1) - blockHeight);
+  date.setSeconds(nextRewardInSeconds);
+  var nextRewardDate = date.toDateString();
+  return nextRewardDate;
 }
