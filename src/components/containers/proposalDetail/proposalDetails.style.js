@@ -5,7 +5,7 @@ const grey = palette.grey;
 export default {
   root: {
     background: 'white',
-    paddingTop: '10px',
+    padding:'10px 10px 45px 10px',
     overflowY: 'auto',
     height: '80vh',
     boxShadow: '0px 3px 3px 3px ' + grey,

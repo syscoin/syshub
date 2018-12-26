@@ -5,14 +5,21 @@ const white = palette.white;
 export default {
   root: {
     '& .headingView': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'stretch',
       backgroundColor: '#1991CC',
       height: '50px',
-      marginTop: '10px',
-      marginLeft: '10px',
+      margin: '10px',
       fontSize: '20px',
       '& .headingRow': {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         color: white,
-        paddingLeft: '7px'
+        padding: '0 7px'
       },
       '& .headingDiv': {
         display: 'initial',
@@ -31,8 +38,35 @@ export default {
         }
       },
       '& .activeText': {
+        padding: '0 5px',
         fontSize: '26px',
+        fontWeight: 'bold',
         color: white
+      }
+    },
+    '& .TxtRegular': {
+      padding: '0 5px',
+      fontSize: '16px',
+      color: white,
+    },
+    '& .headingRight': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      color: 'inherit',
+    },
+    '& .headingLeft': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      color: 'inherit',
+    },
+    '& .loading': {
+      margin: '8px 20px 0 20px',
+      '&>div>svg>circle': {
+        stroke: `${white} !Important`
       }
     },
     '& .proposalDetailHeadingView': {
@@ -76,8 +110,7 @@ export default {
     '& .headingView': {
       backgroundColor: '#1991CC',
       height: '50px',
-      marginLeft: 0,
-      marginTop: 0,
+      margin: 0,
       fontSize: '20px',
       width: '100%',
       maxWidth: '100%',

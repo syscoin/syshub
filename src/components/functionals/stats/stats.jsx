@@ -51,7 +51,7 @@ class Stats extends Component {
   }
 
   defineCardContent(item) {
-    const loading = !!this.getValue('masternodes');
+    let loading = !!this.getValue(item.key);
     if (item.text.length > 1) {
       return this.changeContent(item);
     } else {
