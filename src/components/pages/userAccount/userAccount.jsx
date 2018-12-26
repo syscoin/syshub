@@ -6,7 +6,8 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
+import { doUpdateProfile, doUpdatePassword, doDeleteAccount, fire } from '../../../API/firebase';
+import { doLogout } from '../../../API/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
@@ -53,9 +54,12 @@ class UserAccount extends Component {
     });
   }
 
-  deleteProfile() {
-    this.props.setPage('home');
-    doDeleteAccount();
+  async deleteProfile() {
+    const deleted = await doDeleteAccount()
+    if (deleted) {
+      this.props.doLogout()
+      this.props.setPage('home');
+    };
   }
 
   render() {
@@ -84,6 +88,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
+    doLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     setPage: page => dispatch(actions.setPage(page))
   };
