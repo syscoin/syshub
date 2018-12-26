@@ -44,12 +44,12 @@ class DashBoardHeader extends Component {
                   <span className="activeText">
                     {proposal.list.length > 0 ? proposal.list.length : 0}
                   </span>
-                    { `Active Proposal ${this.state.data.nextReward()} `}
+                  { ` Active Proposal ${this.state.data.nextRewardDate} l`}
                 </div>
-                </Grid>
               </Grid>
             </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }

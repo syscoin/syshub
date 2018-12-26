@@ -63,11 +63,17 @@ export const deletePendingProposal = async (uid) => {
 
 export const nextGovernanceRewardDate = async () => {
   const chainInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getinfo`,null,);
+  const governanceInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getgovernanceinfo`,null,);
   const blockHeight =  chainInfo.blocks; // 323687;
-  const sixtyThree = 63;
-  const fortyThreeThousand = 43800;
+  const nextSuperBlock = governanceInfo.nextsuperblock;
+  const blockGenerationCycle = 63; // Defined by the chain White_paper doc.
+  
+  // manual Next Super Block Calculation
+  // const superBlockCycle = governanceInfo.superblockcycle;
+  // const nextSB = superBlockCycle * (parseInt(blockHeight / superBlockCycle, 10) + 1);
+
   const date = new Date();
-  const nextRewardInSeconds = sixtyThree * (fortyThreeThousand * (parseInt(blockHeight / fortyThreeThousand, 10) + 1) - blockHeight);
+  const nextRewardInSeconds = blockGenerationCycle * (nextSuperBlock - blockHeight);
   date.setSeconds(nextRewardInSeconds);
   var nextRewardDate = date.toDateString();
   return nextRewardDate;

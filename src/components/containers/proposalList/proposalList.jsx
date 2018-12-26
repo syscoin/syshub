@@ -15,19 +15,28 @@ import { DashBoardHeader, ProposalCard } from '../../functionals';
 
 export class ProposalList extends Component {
 
-  getNextRewardDate() {
-    const nextDate = nextGovernanceRewardDate();
-    return nextDate;
+  constructor(props) {
+    super(props);
+    this.state = {
+      nextRewardDate:'ddddd',
+    };
   }
+
+async componentWillMount() {
+  const nextRewardDate = await nextGovernanceRewardDate();
+  this.setState({nextRewardDate});
+  console.log('ACZ nextDate -->', nextRewardDate);
+  
+}
 
   render() {
     const { selectProposal, deviceType } = this.props;
-    const nextReward = async () => await this.getNextRewardDate();
+    const nextRewardDate = this.state.nextRewardDate;
     return (
       <Grid item md={12} xs={12} style={proposalListStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
-          data={{ showHeader: 'proposalList', nextReward }}
+          data={{ showHeader: 'proposalList', nextRewardDate }}
         />
         {this.props.proposalList.map((proposal, index) => {
           return (
