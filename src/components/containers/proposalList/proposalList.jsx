@@ -18,15 +18,13 @@ export class ProposalList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nextRewardDate:'ddddd',
+      nextRewardDate: '',
     };
   }
 
 async componentWillMount() {
   const nextRewardDate = await nextGovernanceRewardDate();
   this.setState({nextRewardDate});
-  console.log('ACZ nextDate -->', nextRewardDate);
-  
 }
 
   render() {

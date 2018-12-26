@@ -4,52 +4,52 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-//import antd components
+//import Material-UI components
 import { Grid } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import injectSheet from 'react-jss';
 import dashBoardHeaderStyle from './dashBoardHeader.style';
 class DashBoardHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: this.props.data
-    };
-  }
 
   render() {
-    const { classes, deviceType, proposal } = this.props;
+    const { classes, deviceType, proposal, data } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <Grid item container md={12} xs={12} className={style}>
-        {this.state.data.showHeader === 'ProposalDetail' ? (
-          <Grid item container md={12} xs={12} className="no-margin">
-            <Grid item md={12} xs={12} className="headingView">
-              <Grid item md={12} xs={12} className="headingRow">
-                <img alt="a" src={require('../../../assets/img/png_icon_proposal.png')} height="30" />
-                <div className="headingDiv"> {this.state.data.name}</div>
-                <div className="ownerDetails">
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        ) : (
-          <Grid item container md={12} xs={12} className="no-margin">
-            <Grid item md={12} xs={12} className="headingView">
-              <Grid item md={12} xs={12} className="headingRow">
-                <div className="headingDiv">
-                  {' '}
-                  <span className="activeText">
-                    {proposal.list.length > 0 ? proposal.list.length : 0}
-                  </span>
-                  { ` Active Proposal ${this.state.data.nextRewardDate} l`}
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        )}
+        <Grid item md={12} xs={12} className="no-margin headingView">
+          {data.showHeader === 'ProposalDetail'  ? (
+            <div className="headingRow">
+              <img alt="a" src={require('../../../assets/img/png_icon_proposal.png')} height="30" />
+              <div className="headingDiv"> {data.name}</div>
+              <div className="ownerDetails"></div>
+            </div>
+          ) : (
+            <div className="headingRow">
+              <div className="headingRight">
+                <span className="activeText">
+                  {proposal.list.length > 0 ? proposal.list.length : 0}
+                </span>
+                {` Active Proposal`}
+              </div>
+              <div className="headingLeft">
+                <span className="TxtRegular">{`Next reward estimation:`}</span>
+                { data.nextRewardDate && <span style={{color: 'inherit'}}>{data.nextRewardDate}</span>}
+                { !data.nextRewardDate && 
+                  <div className="loading">
+                    <CircularProgress
+                      disableShrink
+                      size={24}
+                      thickness={5}
+                    />
+                  </div>
+                }
+              </div>
+            </div>
+          )}
+        </Grid>
       </Grid>
     );
   }
