@@ -40,7 +40,6 @@ class DashBoardHeader extends Component {
                 { !data.nextRewardDate && 
                   <div className="loading">
                     <CircularProgress
-                      disableShrink
                       size={24}
                       thickness={5}
                     />

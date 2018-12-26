@@ -165,7 +165,6 @@ class Login extends Component {
 
     this.loginForm.reset();
     this.props.setPage('home');
-    console.log('ACZ codeStatus', twoFaResult, vGToken, vSmsCode);
     if (!twoFaResult) {      
       await fire.auth().signOut();
       this.props.doLogout();

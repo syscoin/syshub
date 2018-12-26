@@ -53,9 +53,12 @@ class UserAccount extends Component {
     });
   }
 
-  deleteProfile() {
-    this.props.setPage('home');
-    doDeleteAccount();
+  async deleteProfile() {
+    const deleted = await doDeleteAccount()
+    if (deleted) {
+      this.props.doLogout()
+      this.props.setPage('home');
+    };
   }
 
   render() {
@@ -84,6 +87,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
+    doLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     setPage: page => dispatch(actions.setPage(page))
   };
