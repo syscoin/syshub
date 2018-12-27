@@ -33,6 +33,7 @@ class UserTwoFactorAuth extends Component {
 
     this.state = {
       secret: '',
+      gAuthSecret: '',
       showModal: false,
       qrCodeURL: '',
       token: '',
@@ -111,11 +112,12 @@ class UserTwoFactorAuth extends Component {
 
   handleShowModal() {
     const user = fire.auth().currentUser;
-    const {secret, qrCodeURL} = getAuthQRCode(user.email);
+    const {secret, gAuthSecret, qrCodeURL} = getAuthQRCode(user.email);
       this.setState({
         showModal: true,
         qrCodeURL,
-        secret
+        secret,
+        gAuthSecret
       });
   }
   
@@ -123,6 +125,7 @@ class UserTwoFactorAuth extends Component {
     this.setState({
       showModal: false,
       secret: '',
+      gAuthSecret:'',
       qrCodeURL: '',
       token: '',
       tokenInputError: false,
@@ -291,6 +294,11 @@ class UserTwoFactorAuth extends Component {
                   </div>
                 </ol>
               </div>
+
+            </div>
+            <div className="modalFooterWrapper">
+              <span className="secretWarning">This is your secret key, copy and keep it safe</span>
+              {this.state.gAuthSecret}
             </div>
           </div>
         </Modal> 

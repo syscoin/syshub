@@ -40,7 +40,19 @@ export default {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '40px'
+      padding: '40px 40px 0 40px'
+    },
+    '& .modalFooterWrapper' : {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '0px 40px 40px 40px'
+    },
+    '& .secretWarning': {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: red,
     },
     '& .qrCode':{
       width: '300px',
