@@ -8,10 +8,10 @@ import swal from 'sweetalert';
 import actions from '../../../redux/actions';
 import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
 
-import UserProfile from '../../functionals/UserProfile';
+import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
 import UserDelete from '../../functionals/userDelete/userDelete';
-import UserTwoFactor from '../../functionals/UserTwoFactor';
+import UserTwoFactor from '../../functionals/userTwoFactor/userTwoFactor';
 
 // Import styles
 import userAccountStyle from './userAccount.style';
@@ -53,9 +53,12 @@ class UserAccount extends Component {
     });
   }
 
-  deleteProfile() {
-    this.props.setPage('home');
-    doDeleteAccount();
+  async deleteProfile() {
+    const deleted = await doDeleteAccount()
+    if (deleted) {
+      this.props.doLogout()
+      this.props.setPage('home');
+    };
   }
 
   render() {
@@ -84,6 +87,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
+    doLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     setPage: page => dispatch(actions.setPage(page))
   };

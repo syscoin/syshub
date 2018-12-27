@@ -16,9 +16,13 @@ import ProposalVoting from '../proposalVoting/proposalVoting'
 import ProposalProgress from '../proposalProgress/proposalProgress'
 import ProposalInfo from '../proposalInfo/propsalInfo'
 
+// Import services
+import { getFire2FAMethod } from '../../../API/twoFAFirebase.service';
+import { getMasternodeList } from '../../../API/masternodeFirebase.service';
+
 // import style
 import injectSheet from 'react-jss';
-import { proposalCardStyle } from '../styles';
+import proposalCardStyle from './proposalCard.style';
 
 class ProposalCard extends Component {
   constructor(props) {
@@ -143,7 +147,7 @@ class ProposalCard extends Component {
     if (modalValue) {
       this.props.setPage(modalValue);
     }
-    
+    return;
   }
 
   onVote(vote) {
@@ -162,9 +166,11 @@ class ProposalCard extends Component {
     }
   }
 
-  voteUp(vote) {
+  async voteUp(vote) {
     const { proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
+    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const masternodes = await getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -174,19 +180,20 @@ class ProposalCard extends Component {
       });
     }
     
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
-    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    let modalType = !twoFA ? 'e2fa' : '';
+    modalType = !masternodes ? `${modalType}eMn` : modalType;
     if (modalType) {
-      this.cantVoteErrorModal(modalType);
+      await this.cantVoteErrorModal(modalType);
+      return;
     }
 
-    checkVoted(user, proposal, user.MasterNodes)
+    checkVoted(user, proposal, masternodes)
       .then(value => {
         if (value) {}
         
-        const MN = user.MasterNodes;
+        const MN = masternodes;
         let mnData = [];
-        for (let i = 0; i < user.MasterNodes.length; i++) {
+        for (let i = 0; i < masternodes.length; i++) {
           const proposalVoteYes = {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
             vinMasternode: cryptr.decrypt(MN[i].txid),
@@ -269,14 +276,14 @@ class ProposalCard extends Component {
                     )
                   });
                 }
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'Yes', 1, mnKeyIds);
                   });
@@ -316,14 +323,14 @@ class ProposalCard extends Component {
                   });
                 }
                 
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'Yes', 1, mnKeyIds);
                   });
@@ -354,12 +361,12 @@ class ProposalCard extends Component {
 
               this.props.getProposals();
               let mnKeyIds = [];
-              user.MasterNodes.forEach(mnObj => {
+              masternodes.forEach(mnObj => {
                 mnKeyIds.push(mnObj.keyId);
                 voted(user, proposal, 'Yes', 1, mnKeyIds);
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });
@@ -380,7 +387,7 @@ class ProposalCard extends Component {
                 )
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });
@@ -393,9 +400,11 @@ class ProposalCard extends Component {
       });
   }
 
-  voteDown(vote) {
+  async voteDown(vote) {
     const { proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
+    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const masternodes = await getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -404,21 +413,22 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
-    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    
+    let modalType = !twoFA ? 'e2fa' : '';
+    modalType = !masternodes ? `${modalType}eMn` : modalType;
     if (modalType) {
-      this.cantVoteErrorModal(modalType);
+      await this.cantVoteErrorModal(modalType);
+      return;
     }
 
-    checkVoted(user, proposal, user.MasterNodes)
+    checkVoted(user, proposal, masternodes)
       .then(value => {
         if (value) {
         }
 
-        const MN = user.MasterNodes;
+        const MN = masternodes;
         let mnData = [];
-        for (let i = 0; i < user.MasterNodes.length; i++) {
+        for (let i = 0; i < masternodes.length; i++) {
           const proposalVoteNo = {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
             vinMasternode: cryptr.decrypt(MN[i].txid),
@@ -503,14 +513,14 @@ class ProposalCard extends Component {
                   });
                 }
 
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'No', 2, mnKeyIds);
                   });
@@ -550,14 +560,14 @@ class ProposalCard extends Component {
                   });
                 }
 
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'No', 2, mnKeyIds);
                   });
@@ -587,12 +597,12 @@ class ProposalCard extends Component {
 
               this.props.getProposals();
               let mnKeyIds = [];
-              user.MasterNodes.forEach(mnObj => {
+              masternodes.forEach(mnObj => {
                 mnKeyIds.push(mnObj.keyId);
                 voted(user, proposal, 'No', 2, mnKeyIds);
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });
@@ -613,7 +623,7 @@ class ProposalCard extends Component {
                 )
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });
@@ -626,9 +636,11 @@ class ProposalCard extends Component {
       });
   }
 
-  voteNull(vote) {
+  async voteNull(vote) {
     const { proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
+    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const masternodes = await getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -637,21 +649,21 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-
-    let modalType = !this.props.app.auth ? 'e2fa' : '';
-    modalType = !user.MasterNodes || user.MasterNodes.length === 0 ? `${modalType}eMn` : modalType;
+    let modalType = !twoFA ? 'e2fa' : '';
+    modalType = !masternodes ? `${modalType}eMn` : modalType;
     if (modalType) {
-      this.cantVoteErrorModal(modalType);
+      await this.cantVoteErrorModal(modalType);
+      return;
     }
 
-    checkVoted(user, proposal, user.MasterNodes)
+    checkVoted(user, proposal, masternodes)
       .then(value => {
         if (value) {
         }
 
-        const MN = user.MasterNodes;
+        const MN = masternodes;
         let mnData = [];
-        for (let i = 0; i < user.MasterNodes.length; i++) {
+        for (let i = 0; i < masternodes.length; i++) {
           const proposalVoteAbstain = {
             mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
             vinMasternode: cryptr.decrypt(MN[i].txid),
@@ -736,14 +748,14 @@ class ProposalCard extends Component {
                   });
                 }
 
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'No', 2, mnKeyIds);
                   });
@@ -783,14 +795,14 @@ class ProposalCard extends Component {
                   });
                 }
 
-                if (i + 1 === user.MasterNodes.length) {
+                if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
                   });
 
                   this.props.getProposals();
                   let mnKeyIds = [];
-                  user.MasterNodes.forEach(mnObj => {
+                  masternodes.forEach(mnObj => {
                     mnKeyIds.push(mnObj.keyId);
                     voted(user, proposal, 'No', 2, mnKeyIds);
                   });
@@ -820,12 +832,12 @@ class ProposalCard extends Component {
 
               this.props.getProposals();
               let mnKeyIds = [];
-              user.MasterNodes.forEach(mnObj => {
+              masternodes.forEach(mnObj => {
                 mnKeyIds.push(mnObj.keyId);
                 voted(user, proposal, 'No', 2, mnKeyIds);
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });
@@ -846,7 +858,7 @@ class ProposalCard extends Component {
                 )
               });
 
-              if (i + 1 === user.MasterNodes.length) {
+              if (i + 1 === masternodes.length) {
                 this.setState({
                   visible: true
                 });

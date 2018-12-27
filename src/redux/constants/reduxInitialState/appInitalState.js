@@ -83,6 +83,15 @@ export default {
       pageTitle: 'Logout',
       showWhen: 'login',
       showPlatform: 'mobile'
+    },
+    {
+      key: 'tool',
+      icon: 'png_menu_info',
+      iconSelected: 'png_menu_info_selected',
+      title: 'Masternode resources',
+      pageTitle: 'Masternode resources',
+      showWhen: 'always',
+      showPlatform: 'all'
     }
   ],
   currentUser: null,
@@ -91,7 +100,11 @@ export default {
   showMenu: false,
   platform: {},
   loading: false,
-  auth: false,
+  twoFA: {
+    twoFA: false,
+    sms: false,
+    auth: false
+  },
   dashBoard: {
     showContainer: 'dashBoard',
     selectedProposal: ''

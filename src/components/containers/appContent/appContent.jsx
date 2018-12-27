@@ -17,6 +17,7 @@ import {
   DashBoard,
   Faq,
   MasternodeSetting,
+  MasternodeInfo,
   NewProposal,
   News,
   UserAccount
@@ -44,6 +45,7 @@ class AppContent extends Component {
               userAccount: <UserAccount deviceType={deviceType} />,
               faq: <Faq deviceType={deviceType} />,
               masterNode: <MasternodeSetting deviceType={deviceType} />,
+              tool: <MasternodeInfo deviceType={deviceType} />,
               login: <Login deviceType={deviceType} />,
               register: <Register deviceType={deviceType} />
             }[showPage]

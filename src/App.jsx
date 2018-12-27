@@ -6,7 +6,11 @@ import { DesktopLayout, MobileLayout } from './components/layouts';
 import injectSheet from 'react-jss';
 
 import actions from './redux/actions';
+
+// Import services
 import { fire } from './API/firebase';
+import { getFire2FAMethod } from './API/twoFAFirebase.service';
+import { getMasternodeList } from './API/masternodeFirebase.service';
 
 import appStyles from './styles/appStyle';
 
@@ -23,47 +27,28 @@ class App extends Component {
     this.detectPorposalUrl(location);
   }
 
-  componentDidMount() {
-    const currentUser = fire.auth().currentUser;
-
+  async componentDidMount() {
+    const currentUser = await fire.auth().currentUser;
+    
     if (currentUser) {
       this.props.setCurrentUser(currentUser);
       return;
     }
-
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        fire
-          .database()
-          .ref('2FA/' + user.uid)
-          .on('value', snap => {
-            if (snap.val() === true) {
-              fire
-                .database()
-                .ref('MasterNodes/' + user.uid)
-                .on('value', snapshot => {
-                  let list = [];
-                  snapshot.forEach(snap => {
-                    list.push(snap.val());
-                  });
-                  user.MasterNodes = list;
-
-                  this.props.setCurrentUser(user);
-                });
-
-              return;
-            }
-            user.MasterNodes = [];
-            this.props.setCurrentUser(user);
-          });
-
-        fire
-          .database()
-          .ref('2FA/' + user.uid)
-          .on('value', snap => {
-            this.props.setAuth(snap.val());
-          });
-      }
+    
+    fire.auth().onAuthStateChanged(async user => {
+      // try {
+        if (user) {
+          const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+          
+          if (twoFA) {
+            user['MasterNodes'] = await getMasternodeList(user.uid);
+            /* const status2FA = await getFire2FAstatus(user.uid);
+            this.props.set2FA(status2FA); */
+          }
+          this.props.setCurrentUser(user);
+        }
+      // }
+      // catch (err) {}
     });
 
     let timer = setInterval(() => this.tick(), 35000);
@@ -135,7 +120,7 @@ const dispatchToProps = dispatch => {
     },
     setPage: page => dispatch(actions.setPage(page)),
     platformGet: platformInfo => dispatch(actions.platformGet(platformInfo)),
-    setAuth: auth => dispatch(actions.setAuth(auth)),
+    set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
     setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
