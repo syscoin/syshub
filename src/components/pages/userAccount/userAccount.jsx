@@ -46,6 +46,7 @@ class UserAccount extends Component {
     doUpdatePassword(user, (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
+        this.props.doLogout();
         this.props.setPage('login');
       } else {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
