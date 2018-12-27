@@ -6,7 +6,8 @@ const speakeasy = require('speakeasy');
 const QRCode = require('qrcode')
 
 export const getAuthQRCode = (email) => {
-  const secret = speakeasy.generateSecret().base32;
+  const secretObj = speakeasy.generateSecret();
+  const secret = secretObj.base32;
   let qrCodeURL;
   let url = speakeasy.otpauthURL({
     algorithm: 'sha1',
@@ -14,8 +15,10 @@ export const getAuthQRCode = (email) => {
     secret: secret,
     label: email
   });
+  const gAuthSecret = url.split('secret=')[1].split('&issuer=')[0]
+  
   QRCode.toDataURL(url, (err, data_url) => qrCodeURL = data_url);
-  return { secret, qrCodeURL }  
+  return { secret, gAuthSecret, qrCodeURL }  
 }
 
 export const generateToken = (secret) => speakeasy.totp({
