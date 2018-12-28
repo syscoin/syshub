@@ -11,7 +11,6 @@ const greyHover = palette.greyHover;
 
 export default {
   root: {
-//    border: '1px solid purple',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -42,22 +41,22 @@ export default {
       minWidth: '100%'
     },
     '& .accept:hover':{
-        background: greenHover,
-        '& .voteNumbers': {
-          color: greyDark
-        }
+      background: greenHover,
+      '& .voteNumbers': {
+        color: greyDark
+      }
     },
     '& .decline:hover':{
-        background: redHover,
-        '& .voteNumbers': {
-          color: greyDark
-        }
+      background: redHover,
+      '& .voteNumbers': {
+        color: greyDark
+      }
     },
     '& .abstain:hover':{
-        background: greyHover,
-        '& .voteNumbers': {
-          color: greyDark
-        }
+      background: greyHover,
+      '& .voteNumbers': {
+        color: greyDark
+      }
     },
     '& .btnIcon':{
       // border: '1px solid red',
@@ -87,5 +86,33 @@ export default {
       color: gray,
       fontSize: 20,
     },
+  },
+  mRoot: {
+    extend: 'root',
+    '& .muiButton':{
+      padding: '0 5px',
+      '&:disabled': {
+        '& .acceptIcon, .abstainIcon, .declineIcon': {
+          fill: gray
+        },
+      }
+    },
+    '& .btnContent': {
+      // border: '1px solid blue',
+      minWidth: '100%'
+    },
+    '& .btnIconLabel': {
+      // border: '1px solid magenta',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    '& .btnIcon':{
+      // border: '1px solid cyan',
+      maxWidth: '20px',
+      minWidth: '20px',
+      flex: '0 1 10%'
+    }
   }
-}
+};

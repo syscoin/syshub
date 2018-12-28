@@ -75,10 +75,10 @@ export default {
       margin: '10px 0 0 20px',
       fontSize: '20px',
       maxWidth: 'calc(100% - 20px)',
-      '& .headingRow': {
+      /* '& .headingRow': {
         color: white,
         paddingLeft: '7px'
-      },
+      }, */
       '& .headingDiv': {
         display: 'initial',
         color: white,
@@ -115,6 +115,9 @@ export default {
       width: '100%',
       maxWidth: '100%',
       '& .headingRow': {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
         color: white,
         paddingLeft: '7px',
         overflow: 'hidden',
