@@ -19,35 +19,37 @@ import proposalVotingDesktopStyle from './proposalVoting.style';
 class ProposalVotingDesktop extends Component {
 
   render() {
-    const { classes, logged, votingCount } = this.props;
+    const { classes, logged, votingCount, deviceType } = this.props;
     const accepts =  votingCount.yesCount;
     const declines = votingCount.noCount;
     const abstains = votingCount.abstainCount;
 
+    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+
     return (
-      <div className={classes.root}>
+      <div className={style}>
         <div className="formLabel">Vote</div>
-          <Button size="small" className="muiButton accept" disabled={!logged} onClick={() => this.props.onVote('yes')}>
-            <div className="btnContent">
-              <KeyboardArrowUp className="btnIcon acceptIcon"/>
-              <div className="voteLabel">Yes</div>
-              <div className="voteNumbers">{`${accepts}`}</div>
-            </div>
-          </Button>
-          <Button size="small" className="muiButton abstain" disabled={!logged} onClick={() => this.props.onVote('abstain')}>
-            <div className="btnContent">
-              <CropSquare className="btnIcon abstainIcon"/>
-              <div className="voteLabel">Abstain</div>
-              <div className="voteNumbers">{`${abstains}`}</div>
-            </div>
-          </Button>
-          <Button size="small" className="muiButton decline" disabled={!logged} onClick={() => this.props.onVote('no')}>
-            <div className="btnContent">
-              <KeyboardArrowDown className="btnIcon declineIcon"/>
-              <div className="voteLabel">No</div>
-              <div className="voteNumbers">{`${declines}`}</div>
-            </div>
-          </Button>
+        <Button size="small" className="muiButton accept" disabled={!logged} onClick={() => this.props.onVote('yes')}>
+          <div className="btnContent">
+            <KeyboardArrowUp className="btnIcon acceptIcon"/>
+            <div className="voteLabel">Yes</div>
+            <div className="voteNumbers">{`${accepts}`}</div>
+          </div>
+        </Button>
+        <Button size="small" className="muiButton abstain" disabled={!logged} onClick={() => this.props.onVote('abstain')}>
+          <div className="btnContent">
+            <CropSquare className="btnIcon abstainIcon"/>
+            <div className="voteLabel">Abstain</div>
+            <div className="voteNumbers">{`${abstains}`}</div>
+          </div>
+        </Button>
+        <Button size="small" className="muiButton decline" disabled={!logged} onClick={() => this.props.onVote('no')}>
+          <div className="btnContent">
+            <KeyboardArrowDown className="btnIcon declineIcon"/>
+            <div className="voteLabel">No</div>
+            <div className="voteNumbers">{`${declines}`}</div>
+          </div>
+        </Button>
       </div>
     );
   }
