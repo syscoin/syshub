@@ -46,12 +46,12 @@ class MHeaderNav extends Component {
               : { backgroundColor: 'inherit' }
           }
         >
-        <IconButton aria-label="Menu" onClick={() => this.props.toggleMenu()}>
-          <Menu className="menu-icon" viewBox="5 2 20 20"/>
-        </IconButton>
+          <IconButton aria-label="Menu" onClick={() => this.props.toggleMenu()}>
+            <Menu className="menu-icon" viewBox="5 2 20 20"/>
+          </IconButton>
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img alt="a" src={logo} id="home" onClick={this.itemClick} />
+          <img className="logo" alt="a" src={logo} id="home" onClick={this.itemClick} />
         </Grid>
         <Grid
           item
@@ -61,13 +61,13 @@ class MHeaderNav extends Component {
             this.props.showChat ? { backgroundColor: '#53a5cc' } : { backgroundColor: '#1991CC' }
           }
         >
-        {socialLinks.map( item => 
-              <Tooltip key={item.name} title={item.name}>
-                <IconButton  aria-label={item.name} className="socialChannel" href={item.link} target="_blank" rel="noopener noreferrer" >
-                  <i className={`${item.icon} fa-sm`}></i>
-                </IconButton>
-              </Tooltip>
-            )}
+          {socialLinks.map( item => 
+            <Tooltip key={item.name} title={item.name}>
+              <IconButton  aria-label={item.name} className="socialChannel" href={item.link} target="_blank" rel="noopener noreferrer" >
+                <i className={`${item.icon} fa-sm`}></i>
+              </IconButton>
+            </Tooltip>
+          )}
           {/* <Button
             size={'large'}
             type="primary"
