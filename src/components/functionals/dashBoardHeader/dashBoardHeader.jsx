@@ -35,7 +35,7 @@ class DashBoardHeader extends Component {
                 {` Active Proposal`}
               </div>
               <div className="headingLeft">
-                <span className="TxtRegular">{`Next reward estimation:`}</span>
+                <span className="TxtRegular">{deviceType!=='mobile' ? `Next reward estimation:` : `Reward estimation:`}</span>
                 { data.nextRewardDate && <span style={{color: 'inherit'}}>{data.nextRewardDate}</span>}
                 { !data.nextRewardDate && 
                   <div className="loading">

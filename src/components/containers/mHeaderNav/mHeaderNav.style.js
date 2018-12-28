@@ -32,7 +32,8 @@ export default {
       alignItems: 'center',
       height: 55,
       '& img': {
-        maxWidth: '100%'
+        maxWidth: '100%',
+        maxHeight: '100%'
       }
     },
     '& .right-section': {
