@@ -51,7 +51,7 @@ class MHeaderNav extends Component {
           </IconButton>
         </Grid>
         <Grid item xs={6} className="center-section">
-          <img className="logo" alt="a" src={logo} id="home" onClick={this.itemClick} />
+          <img alt="a" src={logo} id="home" onClick={this.itemClick} />
         </Grid>
         <Grid
           item
