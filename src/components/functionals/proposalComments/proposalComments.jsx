@@ -352,7 +352,7 @@ class ProposalComments extends Component {
 
           </Col>
           {item.child && this.renderChild2(comment._id, item.child)}
-        </Row>
+        </Row>;
       });
     }
   }

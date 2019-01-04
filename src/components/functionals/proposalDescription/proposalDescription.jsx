@@ -16,7 +16,6 @@ class ProposalDescription extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const urlLink = url.includes('http') ? url : `http://${url}`;
-    console.log(urlLink, url);
     
     return (
       <Grid item md={12} className={style}>
