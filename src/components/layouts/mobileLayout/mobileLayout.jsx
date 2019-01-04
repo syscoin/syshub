@@ -25,14 +25,16 @@ class MobileLayout extends Component {
     return (
       <div className={classes.root}>
         <MAppHeader />
-        <MAppContent />
+        {!this.props.app.loading && <MAppContent />}
       </div>
     );
   }
 }
 
 const stateToProps = state => {
-  return {};
+  return {
+    app: state.app
+  };
 };
 
 const dispatchToProps = dispatch => {

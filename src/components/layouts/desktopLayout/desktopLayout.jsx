@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Layout, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 
+// Import Material-UI components
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {
   AppHeader,
@@ -23,13 +25,14 @@ class DesktopLayout extends Component {
         <Col xl={24} xxl={20}>
           <Layout>
             <AppHeader />
-            <div style={desktopLayoutStyle.wraper}>
+            <div style={desktopLayoutStyle.wrapper}>
               <Col xl={5}>
                 <AppLSider />
               </Col>
 
               <Col style={this.props.app.showChat ? desktopLayoutStyle.appContentWithChatBox : desktopLayoutStyle.appContent}>
-                <AppContent />
+                {this.props.app.loading && <div style={desktopLayoutStyle.progressWrapper}><LinearProgress /></div>}
+                {!this.props.app.loading && <AppContent />}
               </Col>
 
               {this.props.app.showChat && (
