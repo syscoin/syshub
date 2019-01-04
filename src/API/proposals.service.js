@@ -50,7 +50,11 @@ export const deletePendingProposal = async (uid) => {
   if (proposalRef) {
   const descID = recoveredProposal.descriptionID;
   const descriptionRef = fire.database().ref(`proposalsDescriptions/${descID}`);
-  descriptionRef.remove();
+  const rawDescription = await descriptionRef.once('value');
+  const recoveredDescription = rawDescription.val();
+  if (!recoveredDescription.hash) {
+    descriptionRef.remove();
+  }
 }
   proposalRef.remove();
 }
