@@ -35,7 +35,7 @@ export class ProposalDetail extends Component {
       const descriptionID = proposal.DataString[0][1].descriptionID;
       return fire
         .database()
-        .ref('ProposalsDescriptions/' + descriptionID)
+        .ref('proposalsDescriptions/' + descriptionID)
         .once('value')
         .then(snapshot => {
           proposal.DataString[0][1].description = snapshot.val()

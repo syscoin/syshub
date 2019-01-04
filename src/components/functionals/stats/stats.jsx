@@ -37,7 +37,7 @@ class Stats extends Component {
     const loading = this.getValue(item.key).usdChangeRate ;
     return (
       <div>
-        {!loading && <div className="loading"><CircularProgress color="primary" /></div>}
+        {!loading && <div className="loading"><CircularProgress /></div>}
         {loading && <div className={'changeTxtHeading'}>
           <div className="changeTxtBody firstLine"> ${this.getValue(item.key).usdChangeRate}
             <span className="symbol"> USD</span>
@@ -57,7 +57,7 @@ class Stats extends Component {
     } else {
       return (
         <div>
-          {!loading && <div className="loading"><CircularProgress color="primary" /></div>}
+          {!loading && <div className="loading"><CircularProgress /></div>}
           {loading && <div>
             <div className={'statsTextHeading'}>
               <h1> {this.getValue(item.key)}</h1>

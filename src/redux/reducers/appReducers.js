@@ -61,7 +61,8 @@ const app = (state = initialState, action) => {
     case constants.APP_PROPOSAL_SHOW:
       return {
         ...state,
-        dashBoard: { ...state.dashBoard, selectedProposal: action.data }
+        dashBoard: { ...state.dashBoard, selectedProposal: action.data },
+        loading: false
       };
 
     default:
