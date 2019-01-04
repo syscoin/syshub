@@ -94,7 +94,7 @@ class DashBoard extends Component {
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={this.state.proposalID}
-                totalNodes={this.props.totalNodes}
+                totalNodes={this.props.totalNodes || 0}
                 globalConst={appConstants}
               />
             )

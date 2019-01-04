@@ -4,7 +4,7 @@ const grey = palette.grey;
 const boxShadow = palette.boxShadow;
 
 export default {
-  wraper: {
+  wrapper: {
     //border: '1px solid red',
     display: 'flex',
     flexDirection: 'row',
@@ -21,6 +21,9 @@ export default {
     marginTop: 20,
     width: 'calc(80% - 75px)'
 
+  },
+  progressWrapper: {
+    margin: '20px 0 0 0',
   },
   appContentWithChatBox: {
     width: 'calc(61.5% - 20px)',

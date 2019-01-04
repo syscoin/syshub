@@ -12,21 +12,32 @@ import { fire } from './API/firebase';
 import { getFire2FAMethod } from './API/twoFAFirebase.service';
 import { getMasternodeList } from './API/masternodeFirebase.service';
 
+// Custom Material-UI Theme
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import appStyles from './styles/appStyle';
+import palette from './styles/palette';
 
 // Jss Provider
 import JssProvider from 'react-jss/lib/JssProvider';
 import { generateClassName } from './Helpers/classNameJssProvider';
 
+const sysHubTheme = createMuiTheme({
+  palette: {
+    primary: { main: palette.primary },
+    secondary: { main: palette.secondary },
+  },
+  typography: { useNextVariants: true },
+});
+
+
 class App extends Component {
   state = {};
 
-  componentWillMount() {
-    const location = window.location;
-    this.tick();
-    this.detectPorposalUrl(location);
+  async componentWillMount() {
+    await this.tick();
+    await this.detectProposalUrl();
   }
-
+  
   async componentDidMount() {
     const currentUser = await fire.auth().currentUser;
     
@@ -67,18 +78,21 @@ class App extends Component {
     });
   }
 
-  tick() {
-    this.props.getSysInfo();
+  async tick() {
+    return await this.props.getSysInfo();
   }
 
-  detectPorposalUrl(location) {
+  async detectProposalUrl() {
+    const location = window.location;
     const urlPath = location.pathname;
     const urlId = '/p/';
     if (urlPath.includes(urlId)) {
       const propHash = urlPath.substring(urlId.length);
-      this.props.setPage('dashBoard');
-      this.props.setProposalContainer('proposalDetail');
-      this.props.setProposalShow(propHash);
+      await this.props.setProposalContainer('proposalDetail');
+      await this.props.setPage('dashBoard');
+      await this.props.setProposalShow(propHash);
+    } else {
+      this.props.setLoading(false);
     }
   }
 
@@ -86,17 +100,19 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
-      <JssProvider generateClassName={generateClassName}>
-        <div className={classes.root}>
-          <Favicon url={require('./assets/img/png_favicon.png')} />
-          <Platform rules={{ DeviceType: undefined }}>
-            <DesktopLayout />
-          </Platform>
-          <Platform rules={{ DeviceType: 'mobile' }}>
-            <MobileLayout />
-          </Platform>
-        </div>
-      </JssProvider>
+      <MuiThemeProvider theme={sysHubTheme}>
+        <JssProvider generateClassName={generateClassName}>
+          <div className={classes.root}>
+            <Favicon url={require('./assets/img/png_favicon.png')} />
+            <Platform rules={{ DeviceType: undefined }}>
+              <DesktopLayout />
+            </Platform>
+            <Platform rules={{ DeviceType: 'mobile' }}>
+              <MobileLayout />
+            </Platform>
+          </div>
+        </JssProvider>
+      </MuiThemeProvider>
     );
   }
 }
@@ -123,7 +139,8 @@ const dispatchToProps = dispatch => {
     set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
-    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash)),
+    setLoading: value => dispatch(actions.loading(value))
   };
 };
 

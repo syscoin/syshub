@@ -99,7 +99,7 @@ export default {
   showChat: false,
   showMenu: false,
   platform: {},
-  loading: false,
+  loading: true,
   twoFA: {
     twoFA: false,
     sms: false,
