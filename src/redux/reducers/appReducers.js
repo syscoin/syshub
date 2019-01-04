@@ -7,7 +7,6 @@ const app = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.data,
-        loading: false
       };
 
     case constants.APP_USER_LOGOUT:
@@ -15,7 +14,6 @@ const app = (state = initialState, action) => {
         ...state,
         currentUser: action.data,
         showPage: 'home',
-        loading: false
       };
 
     case constants.APP_PAGE_SHOW: {
@@ -48,7 +46,7 @@ const app = (state = initialState, action) => {
       };
     }
 
-    case constants.APP_LOADING:
+    case constants.APP_LOADING_GLOBAL:
       return { ...state, loading: action.data };
 
     case constants.SET_2FA:

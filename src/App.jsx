@@ -21,12 +21,11 @@ import { generateClassName } from './Helpers/classNameJssProvider';
 class App extends Component {
   state = {};
 
-  componentWillMount() {
-    const location = window.location;
-    this.tick();
-    this.detectPorposalUrl(location);
+  async componentWillMount() {
+    await this.tick();
+    await this.detectProposalUrl();
   }
-
+  
   async componentDidMount() {
     const currentUser = await fire.auth().currentUser;
     
@@ -65,36 +64,39 @@ class App extends Component {
       deviceVendor: Platform.DeviceVendor || '',
       ua: Platform.UA || ''
     });
+    this.props.setLoading(false);
   }
 
-  tick() {
-    this.props.getSysInfo();
+  async tick() {
+    return await this.props.getSysInfo();
   }
 
-  detectPorposalUrl(location) {
+  async detectProposalUrl() {
+    const location = window.location;
     const urlPath = location.pathname;
     const urlId = '/p/';
     if (urlPath.includes(urlId)) {
       const propHash = urlPath.substring(urlId.length);
-      this.props.setPage('dashBoard');
-      this.props.setProposalContainer('proposalDetail');
-      this.props.setProposalShow(propHash);
+      await this.props.setProposalContainer('proposalDetail');
+      await this.props.setPage('dashBoard');
+      await this.props.setProposalShow(propHash);
     }
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, app } = this.props;
 
     return (
       <JssProvider generateClassName={generateClassName}>
         <div className={classes.root}>
           <Favicon url={require('./assets/img/png_favicon.png')} />
+          {!app.loading && <div>
           <Platform rules={{ DeviceType: undefined }}>
             <DesktopLayout />
           </Platform>
           <Platform rules={{ DeviceType: 'mobile' }}>
             <MobileLayout />
-          </Platform>
+          </Platform> </div>}
         </div>
       </JssProvider>
     );
@@ -123,7 +125,8 @@ const dispatchToProps = dispatch => {
     set2FA: auth => dispatch(actions.set2FA(auth)),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
-    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash)),
+    setLoading: value => dispatch(actions.loading(value))
   };
 };
 
