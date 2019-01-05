@@ -57,8 +57,8 @@ export class ProposalDetail extends Component {
 
   render() {
     const { deviceType, totalNodes, proposal } = this.props;
-    const dataString = proposal ? proposal.DataString[0][1] : '';
-    const proposalTitle = proposal ? dataString.title || dataString.name : '';
+    const dataString = this.state.data ? this.state.data.DataString[0][1] : '';
+    const proposalTitle = this.state.data ? dataString.title || dataString.name : '';
     //Platform style switcher
     return (
       <div>
