@@ -18,23 +18,23 @@ export class ProposalList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nextRewardDate: '',
+      nextGovernanceDate: {},
     };
   }
 
 async componentWillMount() {
-  const nextRewardDate = await nextGovernanceRewardDate();
-  this.setState({nextRewardDate});
+  const nextGovernanceDate = await nextGovernanceRewardDate();
+  this.setState({ nextGovernanceDate });
 }
 
   render() {
     const { selectProposal, deviceType } = this.props;
-    const nextRewardDate = this.state.nextRewardDate;
+    const nextGovernanceDate = this.state.nextGovernanceDate;
     return (
       <Grid item md={12} xs={12} style={proposalListStyle.root}>
         <DashBoardHeader
           deviceType={deviceType}
-          data={{ showHeader: 'proposalList', nextRewardDate }}
+          data={{ showHeader: 'proposalList', nextGovernanceDate }}
         />
         {this.props.proposalList.map((proposal, index) => {
           return (
