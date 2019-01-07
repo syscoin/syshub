@@ -15,6 +15,9 @@ import { ProposalApprovalStat } from '../../functionals';
 import { ProposalDescription } from '../../functionals';
 import { ProposalComments } from '../../functionals';
 
+// Import Material-UI components
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 // import components
 import proposalDetailsStyle from './proposalDetails.style';
 
@@ -23,31 +26,21 @@ export class ProposalDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.proposal,
-      url: ''
+      dataString: '',
+      loading: true
     };
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
   }
 
-  componentWillMount() {
-    const proposal = this.state.data;
-    if (proposal) {
-      const descriptionID = proposal.DataString[0][1].descriptionID;
-      return fire
-        .database()
-        .ref('proposalsDescriptions/' + descriptionID)
-        .once('value')
-        .then(snapshot => {
-          proposal.DataString[0][1].description = snapshot.val()
-            ? snapshot.val().detail
-            : proposal.DataString[0][1].description;
-          this.setState({ data: proposal });
-        });
-    }
+  async getProposalDescription(descriptionID) {
+    const proposalDescriptionRef = fire.database().ref(`proposalsDescriptions/${descriptionID}`);
+    const rawProposalDescription = await proposalDescriptionRef.once('value');
+    const proposalDescription = rawProposalDescription.val();
+    return proposalDescription;
   }
 
   setMoreInfoUrl(url, propHash) {
-    if (url !== this.props.globalConst.EMPTY_FIELD) {
+    if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
     }
     const origin = window.location.origin;
@@ -55,15 +48,31 @@ export class ProposalDetail extends Component {
     return newUrl;
   }
 
+  async prepareDataString(proposal) {
+    if (proposal) {
+      const dataString = proposal.DataString[0][1];
+      const descriptionID = dataString.descriptionID;
+      const descriptionObj = await this.getProposalDescription(descriptionID);
+      if (descriptionObj) {
+        dataString.description = descriptionObj.detail;
+      }
+      this.setState({dataString, loading: false});
+    }
+  }
+
   render() {
     const { deviceType, totalNodes, proposal } = this.props;
-    const dataString = this.state.data ? this.state.data.DataString[0][1] : '';
-    const proposalTitle = this.state.data ? dataString.title || dataString.name : '';
+    const { dataString, loading } = this.state;
+    const proposalTitle = this.state.dataString ? dataString.title || dataString.name : '';
+    if (!dataString) { this.prepareDataString(proposal) };
+    
+
     //Platform style switcher
     return (
       <div>
-        {!proposal && <div> Proposal not found </div>}
-        {proposal && (
+        {loading && <LinearProgress />}
+        {!dataString && !loading && <div> Proposal not found </div>}
+        {dataString && (
           <Grid style={proposalDetailsStyle.root}>
             <DashBoardHeader
               data={{
@@ -90,13 +99,16 @@ export class ProposalDetail extends Component {
                   </span>{' '}
                 </h3>
               ) : null}
-              <ProposalPayment deviceType={deviceType} data={dataString} />
+              <ProposalPayment
+                deviceType={deviceType}
+                data={dataString}
+              />
               <ProposalApprovalStat
                 deviceType={deviceType}
                 proposal={proposal}
                 totalNodes={totalNodes}
                 passingPercentage={10}
-              />
+               />
               <ProposalDescription
                 deviceType={deviceType}
                 description={dataString.description}
