@@ -24,12 +24,13 @@ export class ProposalDetail extends Component {
     super(props);
     this.state = {
       data: this.props.proposal,
+      dataString: '',
       url: ''
     };
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
   }
 
-  componentWillMount() {
+/*   async componentWillMount() {
     const proposal = this.state.data;
     if (proposal) {
       const descriptionID = proposal.DataString[0][1].descriptionID;
@@ -44,11 +45,17 @@ export class ProposalDetail extends Component {
           this.setState({ data: proposal });
         });
     }
+  } */
+
+
+  async getProposalDescription(descriptionID) {
+    const proposalDescriptionRef = fire.database().ref(`proposalsDescriptions/${descriptionID}`);
+    const rawProposalDescription = await proposalDescriptionRef.once('value');
+    const proposalDescription = rawProposalDescription.val();
+    return proposalDescription;
   }
 
   setMoreInfoUrl(url, propHash) {
-    console.log('ACZ -->', url);
-    console.log('ACZ -->', propHash);
     if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
     }
@@ -57,15 +64,32 @@ export class ProposalDetail extends Component {
     return newUrl;
   }
 
+  async prepareDataString(proposal) {
+    if (proposal) {
+      const dataString = proposal.DataString[0][1];
+      const descriptionID = dataString.descriptionID;
+      const descriptionObj = await this.getProposalDescription(descriptionID);
+      if (descriptionObj) {
+        dataString.description = descriptionObj.detail;
+      }
+      this.setState({dataString});
+      
+      console.log('ACZ NEW dataString -->', dataString);
+    }
+  }
+
   render() {
     const { deviceType, totalNodes, proposal } = this.props;
-    const dataString = this.state.data ? this.state.data.DataString[0][1] : '';
-    const proposalTitle = this.state.data ? dataString.title || dataString.name : '';
+    const { data, dataString } = this.state;
+    const proposalTitle = this.state.dataString ? dataString.title || dataString.name : '';
+    if (!dataString) { this.prepareDataString(proposal) };
+    
+
     //Platform style switcher
     return (
       <div>
-        {!proposal && <div> Proposal not found </div>}
-        {proposal && (
+        {!dataString && <div> Proposal not found </div>}
+        {dataString && (
           <Grid style={proposalDetailsStyle.root}>
             <DashBoardHeader
               data={{
@@ -92,13 +116,16 @@ export class ProposalDetail extends Component {
                   </span>{' '}
                 </h3>
               ) : null}
-              <ProposalPayment deviceType={deviceType} data={dataString} />
+              <ProposalPayment
+                deviceType={deviceType}
+                data={dataString}
+              />
               <ProposalApprovalStat
                 deviceType={deviceType}
                 proposal={proposal}
                 totalNodes={totalNodes}
                 passingPercentage={10}
-              />
+               />
               <ProposalDescription
                 deviceType={deviceType}
                 description={dataString.description}
