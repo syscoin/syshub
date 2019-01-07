@@ -47,7 +47,9 @@ export class ProposalDetail extends Component {
   }
 
   setMoreInfoUrl(url, propHash) {
-    if (url !== this.props.globalConst.EMPTY_FIELD) {
+    console.log('ACZ -->', url);
+    console.log('ACZ -->', propHash);
+    if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
     }
     const origin = window.location.origin;
