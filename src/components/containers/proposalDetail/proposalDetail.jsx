@@ -15,6 +15,9 @@ import { ProposalApprovalStat } from '../../functionals';
 import { ProposalDescription } from '../../functionals';
 import { ProposalComments } from '../../functionals';
 
+// Import Material-UI components
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 // import components
 import proposalDetailsStyle from './proposalDetails.style';
 
@@ -23,30 +26,11 @@ export class ProposalDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.proposal,
       dataString: '',
-      url: ''
+      loading: true
     };
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
   }
-
-/*   async componentWillMount() {
-    const proposal = this.state.data;
-    if (proposal) {
-      const descriptionID = proposal.DataString[0][1].descriptionID;
-      return fire
-        .database()
-        .ref('proposalsDescriptions/' + descriptionID)
-        .once('value')
-        .then(snapshot => {
-          proposal.DataString[0][1].description = snapshot.val()
-            ? snapshot.val().detail
-            : proposal.DataString[0][1].description;
-          this.setState({ data: proposal });
-        });
-    }
-  } */
-
 
   async getProposalDescription(descriptionID) {
     const proposalDescriptionRef = fire.database().ref(`proposalsDescriptions/${descriptionID}`);
@@ -72,15 +56,13 @@ export class ProposalDetail extends Component {
       if (descriptionObj) {
         dataString.description = descriptionObj.detail;
       }
-      this.setState({dataString});
-      
-      console.log('ACZ NEW dataString -->', dataString);
+      this.setState({dataString, loading: false});
     }
   }
 
   render() {
     const { deviceType, totalNodes, proposal } = this.props;
-    const { data, dataString } = this.state;
+    const { dataString, loading } = this.state;
     const proposalTitle = this.state.dataString ? dataString.title || dataString.name : '';
     if (!dataString) { this.prepareDataString(proposal) };
     
@@ -88,7 +70,8 @@ export class ProposalDetail extends Component {
     //Platform style switcher
     return (
       <div>
-        {!dataString && <div> Proposal not found </div>}
+        {loading && <LinearProgress />}
+        {!dataString && !loading && <div> Proposal not found </div>}
         {dataString && (
           <Grid style={proposalDetailsStyle.root}>
             <DashBoardHeader
