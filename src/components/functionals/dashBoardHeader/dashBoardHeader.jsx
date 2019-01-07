@@ -14,19 +14,23 @@ class DashBoardHeader extends Component {
 
   render() {
     const { classes, deviceType, proposal, data } = this.props;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
       <Grid item container md={12} xs={12} className={style}>
         <Grid item md={12} xs={12} className="no-margin headingView">
-          {data.showHeader === 'ProposalDetail'  ? (
+          {data.showHeader === 'ProposalDetail' &&
             <div className="headingRow">
-              <img alt="a" src={require('../../../assets/img/png_icon_proposal.png')} height="30" />
-              <div className="headingDiv"> {data.name}</div>
+              <div className="titleWrapper">
+                <img alt="a" src={require('../../../assets/img/png_icon_proposal.png')} height="30" />
+                <div className="headingDiv"> {data.name}</div>
+              </div>
               <div className="ownerDetails"></div>
             </div>
-          ) : (
+          }
+          {data.showHeader !== 'ProposalDetail' && 
             <div className="headingRow">
               <div className="headingRight">
                 <span className="activeText">
@@ -35,19 +39,30 @@ class DashBoardHeader extends Component {
                 {` Active Proposal`}
               </div>
               <div className="headingLeft">
-                <span className="TxtRegular">{deviceType!=='mobile' ? `Next reward estimation:` : `Reward estimation:`}</span>
-                { data.nextRewardDate && <span style={{color: 'inherit'}}>{data.nextRewardDate}</span>}
-                { !data.nextRewardDate && 
-                  <div className="loading">
-                    <CircularProgress
-                      size={24}
-                      thickness={5}
-                    />
+
+                {data.nextGovernanceDate.rewardDate &&
+                  <div className="governanceDate">
+                    <span className="TxtRegular">{deviceType!=='mobile' ? `Payout Date:` : `Payout Date:`}</span>
+                    {<span style={{color: 'inherit'}}>{data.nextGovernanceDate.rewardDate}</span>}
                   </div>
                 }
+
+                {data.nextGovernanceDate.votingDeadline &&
+                  <div className="governanceDate">
+                    <span className="TxtRegular">{deviceType!=='mobile' ? `Voting Deadline:` : `Voting Deadline:`}</span>
+                    <span style={{color: 'inherit'}}>{data.nextGovernanceDate.votingDeadline}</span>
+                  </div>
+                }
+
+                { !data.nextGovernanceDate.rewardDate && !data.nextGovernanceDate.votingDeadline &&
+                  <div className="loading">
+                    <CircularProgress size={24} thickness={5} />
+                  </div>
+                }
+
               </div>
             </div>
-          )}
+          }
         </Grid>
       </Grid>
     );

@@ -71,6 +71,7 @@ export const nextGovernanceRewardDate = async () => {
   const blockHeight =  chainInfo.blocks; // 323687;
   const nextSuperBlock = governanceInfo.nextsuperblock;
   const blockGenerationCycle = 63; // Defined by the chain White_paper doc.
+  const votingDeadlineGap = -3;
   
   // manual Next Super Block Calculation
   // const superBlockCycle = governanceInfo.superblockcycle;
@@ -79,6 +80,8 @@ export const nextGovernanceRewardDate = async () => {
   const date = new Date();
   const nextRewardInSeconds = blockGenerationCycle * (nextSuperBlock - blockHeight);
   date.setSeconds(nextRewardInSeconds);
-  var nextRewardDate = date.toDateString();
-  return nextRewardDate;
+  var rewardDate = date.toDateString();
+  date.setDate(date.getDate() + votingDeadlineGap);
+  var votingDeadline = date.toDateString();
+  return {rewardDate, votingDeadline};
 }
