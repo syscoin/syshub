@@ -52,6 +52,7 @@ class DashBoard extends Component {
     this.props.setProposalContainer(container);
     if (value) {
       this.props.setProposalShow(value.Hash);
+
       this.setState({
         proposalID: value
       });
@@ -59,13 +60,9 @@ class DashBoard extends Component {
   }
 
   render() {
-    const {
-      classes,
-      proposals,
-      deviceType,
-      showContainer,
-      appConstants
-    } = this.props;
+    const { classes, proposals, deviceType, showContainer, appConstants } = this.props;
+    const { proposalID } = this.state;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -93,7 +90,7 @@ class DashBoard extends Component {
             proposalDetail: (
               <ProposalDetail
                 deviceType={this.props.deviceType}
-                proposal={this.state.proposalID}
+                proposal={proposalID}
                 totalNodes={this.props.totalNodes || 0}
                 globalConst={appConstants}
               />
