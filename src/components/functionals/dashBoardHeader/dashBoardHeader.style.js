@@ -10,7 +10,7 @@ export default {
       justifyContent: 'center',
       alignItems: 'stretch',
       backgroundColor: '#1991CC',
-      height: '50px',
+      height: '70px',
       margin: '10px',
       fontSize: '20px',
       '& .headingRow': {
@@ -19,10 +19,18 @@ export default {
         justifyContent: 'space-between',
         alignItems: 'center',
         color: white,
-        padding: '0 7px'
+        padding: '0 7px',
+      },
+      '& .titleWrapper': {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0 0 0 10px'
       },
       '& .headingDiv': {
         display: 'initial',
+        fontSize: '1.4em',
         color: white,
         marginLeft: '20px'
       },
@@ -58,8 +66,16 @@ export default {
     },
     '& .headingLeft': {
       display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'stretch',
+      color: white,
+      padding: '5px',
+    },
+    '& .governanceDate': {
+      display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       alignItems: 'center',
       color: 'inherit',
     },
@@ -109,7 +125,7 @@ export default {
     margin: 'auto',
     '& .headingView': {
       backgroundColor: '#1991CC',
-      height: '50px',
+      height: '80px',
       margin: 0,
       fontSize: '20px',
       width: '100%',
@@ -119,7 +135,7 @@ export default {
         justifyContent: 'center',
         alignItems: 'flex-start',
         color: white,
-        paddingLeft: '7px',
+        padding: '10px 7px 0 7px',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
@@ -145,6 +161,9 @@ export default {
         fontSize: '26px',
         color: white,
       },
+    },
+    '& .governanceDate': {
+      padding: '5px 0',
     },
 
 
