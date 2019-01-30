@@ -68,15 +68,6 @@ class MHeaderNav extends Component {
               </IconButton>
             </Tooltip>
           )}
-          {/* <Button
-            size={'large'}
-            type="primary"
-            ghost
-            className="button"
-            onClick={() => this.props.toggleChat()}
-          >
-            <img src={chatIcon} alt="chat icon" height="30" id="chatbox" />
-          </Button> */}
         </Grid>
       </Grid>
     );

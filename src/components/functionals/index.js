@@ -1,4 +1,3 @@
-import ChatBox from './chatBox/chatBox';
 import HeaderStats from './headerStats/headerStats';
 import HeaderNav from './headerNav/headerNav';
 import SiderLogo from './siderLogo/siderLogo';
@@ -21,7 +20,6 @@ import NewsAbout from './newsAbout/newsAbout';
 import NewsFooter from './newsFooter/newsFooter';
 
 export {
-  ChatBox,
   HeaderStats,
   HeaderNav,
   SiderLogo,
