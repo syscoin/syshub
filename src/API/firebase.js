@@ -19,12 +19,12 @@ firebase.initializeApp(config);
 
 const fire = firebase;
 
-const base = Rebase.createClass(fire.database());
-const messages = fire.database().ref('messages');
+const baseOLD = Rebase.createClass(fire.database());
+// const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 const comments = fire.database().ref('comments');
 const commentReplies_V2 = fire.database().ref('commentReplies_V2');
-const votes = fire.database().ref('votes');
+// const votes = fire.database().ref('votes');
 
 //Some useful functions
 const checkVoted = (user, proposal, masternodes) => {
@@ -387,22 +387,15 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
 
 //Check if neccessary
 export {
-  messages,
-  usernames,
-  comments,
-  commentReplies_V2,
-  sendSMSToPhone,
-  verifyPhoneCode,
-  fire,
-  base,
-  doRegister,
-  doLogin,
-  doLogout,
-  doUpdateProfile,
-  doUpdatePassword,
-  doDeleteAccount,
-  votes,
-  checkVoted,
-  voted,
-  getCurrentUser
+  fire, // si
+  messages, // si
+  comments, // si
+  commentReplies_V2, // si
+  doLogout, // si
+  doUpdateProfile, // si
+  doUpdatePassword, // si
+  doDeleteAccount, // si
+  checkVoted, // si
+  voted, // si
+  getCurrentUser // si
 };
