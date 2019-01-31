@@ -1,7 +1,7 @@
 import { fire } from './firebase';
 
 const commentsNode = 'comments';
-const repliesNode = 'commentReplies_V2';
+// const repliesNode = 'commentReplies_V2';
 
 /**
  * 
