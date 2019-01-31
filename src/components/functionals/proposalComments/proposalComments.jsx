@@ -12,7 +12,7 @@ import CommentForm from './commentForm/commentForm';
 
 // import services
 import { comments, commentReplies_V2 } from '../../../API/firebase/firebase';
-import { getProposalComments } from '../../../API/firebase/proposalCommentsFirebase';
+import { getProposalComments, addProposalComments } from '../../../API/firebase/proposalCommentsFirebase';
 
 import injectSheet from 'react-jss';
 import proposalCommentsStyle from './proposalComments.style';
@@ -130,7 +130,7 @@ class ProposalComments extends Component {
     })
   }
 
-  addComment() {
+  async addComment() {
     if (this.state.userComment && this.props.user) {
       let date = new Date();
       let _comment = {
@@ -144,13 +144,13 @@ class ProposalComments extends Component {
         voteDownBy: [],
         message: this.state.userComment,
         replies: []
-
       }
-      comments.child(this.state.proposalID).push(_comment, () => {
-        this.setState({ showAddComment: false })
-      })
+
+      await addProposalComments(this.state.proposalID, _comment);
+
       this.setState({
-        userComment: ''
+        userComment: '',
+        showAddComment: false
       }, () => this.refreshComments());
     }
   }
