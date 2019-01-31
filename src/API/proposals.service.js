@@ -1,4 +1,4 @@
-import { fire } from './firebase';
+import { fire } from './firebase/firebase';
 import { HTTPAsync } from '../redux/helpers';
 
 /**---------------------------------------------------------------------------- */

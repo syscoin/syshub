@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { checkVoted, voted } from '../../../API/firebase';
+import { checkVoted, voted } from '../../../API/firebase/firebase';
 
 //import antd components
 import { Modal, Table } from 'antd';
@@ -17,8 +17,8 @@ import ProposalProgress from '../proposalProgress/proposalProgress'
 import ProposalInfo from '../proposalInfo/propsalInfo'
 
 // Import services
-import { getFire2FAMethod } from '../../../API/twoFAFirebase.service';
-import { getMasternodeList } from '../../../API/masternodeFirebase.service';
+import { getFire2FAMethod } from '../../../API/firebase/twoFAFirebase.service';
+import { getMasternodeList } from '../../../API/firebase/masternodeFirebase.service';
 
 // import style
 import injectSheet from 'react-jss';

@@ -20,7 +20,6 @@ firebase.initializeApp(config);
 const fire = firebase;
 
 const baseOLD = Rebase.createClass(fire.database());
-// const messages = fire.database().ref('messages');
 const usernames = fire.database().ref('usernames');
 const comments = fire.database().ref('comments');
 const commentReplies_V2 = fire.database().ref('commentReplies_V2');
@@ -388,7 +387,6 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
 //Check if neccessary
 export {
   fire, // si
-  messages, // si
   comments, // si
   commentReplies_V2, // si
   doLogout, // si

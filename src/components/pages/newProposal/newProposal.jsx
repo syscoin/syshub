@@ -18,7 +18,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
-import { fire, getCurrentUser } from '../../../API/firebase';
+import { fire, getCurrentUser } from '../../../API/firebase/firebase';
 import { recoverPendingProposal, deletePendingProposal } from '../../../API/proposals.service';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 

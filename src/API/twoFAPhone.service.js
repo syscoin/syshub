@@ -1,5 +1,5 @@
 
-import { fire } from './firebase';
+import { fire } from './firebase/firebase';
 
 export const sendSMSToPhone = async (provider, phoneNumber, appVerifier) => {
   const verificationId = await provider.verifyPhoneNumber(phoneNumber, appVerifier);
