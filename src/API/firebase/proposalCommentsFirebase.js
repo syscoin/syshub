@@ -29,7 +29,7 @@ export const getProposalComments = async (pid, sortAsc) => {
 
 /**
  * 
- * @param {string} pid = comment ID
+ * @param {string} pid = proposal ID
  * @param {string} comment = comment Object to be added
  */
 export const addProposalComments = async (pid, comment) => {
