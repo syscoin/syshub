@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import API
-import { fire } from '../../../API/firebase';
+import { fire } from '../../../API/firebase/firebase';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';

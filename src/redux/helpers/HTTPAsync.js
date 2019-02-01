@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fire } from '../../API/firebase';
+import { fire } from '../../API/firebase/firebase';
 
 
 const getRequest = (url, params) => {

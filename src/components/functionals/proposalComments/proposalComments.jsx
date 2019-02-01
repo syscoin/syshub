@@ -10,8 +10,9 @@ import swal from 'sweetalert';
 import actions from '../../../redux/actions';
 import CommentForm from './commentForm/commentForm';
 
-// import firebase
-import { comments, commentReplies_V2 } from '../../../API/firebase';
+// import services
+import { comments, commentReplies_V2 } from '../../../API/firebase/firebase';
+import { getProposalComments, addProposalComments } from '../../../API/firebase/proposalCommentsFirebase';
 
 import injectSheet from 'react-jss';
 import proposalCommentsStyle from './proposalComments.style';
@@ -73,29 +74,16 @@ class ProposalComments extends Component {
   }
 
   // load Comments
-  loadComments() {
+  async loadComments() {
     // Load comments from firebase
-    // then set in state
-
-    comments.child(this.props.data.proposalID)
-      .orderByChild('createdAt')
-      .once('value', (item) => {
-        let commentsObjs = item.val(),
-          commentsArray = [];
-        for (var key in commentsObjs) {
-          commentsObjs[key]._id = key;
-          commentsObjs[key].showAddReply = false;
-          commentsArray.unshift(commentsObjs[key]);
-        }
-        this.commentsCounts = commentsArray.length;
-        this.setState({
-          allComments: commentsArray
-        }, () => {
-          this.loadReplies(0);
-          //this.commentsLimit = this.commentsLimit;
-        });
-      });
-  }
+    // then set them in state and load responses if any
+    const commentsArray = await getProposalComments(this.props.data.proposalID, false);
+    this.setState({
+      allComments: commentsArray
+    }, () => { 
+      this.loadReplies(0);
+    });
+  } 
 
   // load replies
   loadReplies(index) {
@@ -103,9 +91,12 @@ class ProposalComments extends Component {
     // then set in state
     
     if (this.state.allComments.length > index) {
-      let _commentId = this.state.allComments[index]._id,
-        _comments = Object.assign(this.state.allComments),
-        _childReplies = []
+
+      console.log('ACZ -->', this.state.allComments[index]);
+      
+      let _commentId = this.state.allComments[index]._id;
+      let _comments = Object.assign(this.state.allComments);
+      let _childReplies = [];
 
       commentReplies_V2.child(_commentId).once('value', (item) => {
         let _allReplies = item.val();
@@ -139,7 +130,7 @@ class ProposalComments extends Component {
     })
   }
 
-  addComment() {
+  async addComment() {
     if (this.state.userComment && this.props.user) {
       let date = new Date();
       let _comment = {
@@ -153,13 +144,13 @@ class ProposalComments extends Component {
         voteDownBy: [],
         message: this.state.userComment,
         replies: []
-
       }
-      comments.child(this.state.proposalID).push(_comment, () => {
-        this.setState({ showAddComment: false })
-      })
+
+      await addProposalComments(this.state.proposalID, _comment);
+
       this.setState({
-        userComment: ''
+        userComment: '',
+        showAddComment: false
       }, () => this.refreshComments());
     }
   }

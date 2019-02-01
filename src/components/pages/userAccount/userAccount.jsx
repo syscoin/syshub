@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase';
+import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';

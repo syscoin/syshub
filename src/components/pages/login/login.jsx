@@ -4,8 +4,8 @@ import actions from '../../../redux/actions';
 import swal from 'sweetalert';
 
 // Import Services
-import { fire } from '../../../API/firebase';
-import { getFire2FAstatus } from '../../../API/twoFAFirebase.service';
+import { fire } from '../../../API/firebase/firebase';
+import { getFire2FAstatus } from '../../../API/firebase/twoFAFirebase.service';
 import { loginWithPhone } from '../../../API/twoFAPhone.service';
 import { getAuthSecret, verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
 

@@ -8,9 +8,9 @@ import injectSheet from 'react-jss';
 import actions from './redux/actions';
 
 // Import services
-import { fire } from './API/firebase';
-import { getFire2FAMethod } from './API/twoFAFirebase.service';
-import { getMasternodeList } from './API/masternodeFirebase.service';
+import { fire } from './API/firebase/firebase';
+import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
+import { getMasternodeList } from './API/firebase/masternodeFirebase.service';
 
 // Custom Material-UI Theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';

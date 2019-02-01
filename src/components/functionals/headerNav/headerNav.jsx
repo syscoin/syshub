@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions';
 
-import { doLogout } from '../../../API/firebase';
+import { doLogout } from '../../../API/firebase/firebase';
 import { Grid } from '@material-ui/core';
 
 //Import Material-UI Framework components
