@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { Input } from 'antd';
 
 // import components
-import { fire } from '../../../API/firebase';
+import { fire } from '../../../API/firebase/firebase';
 
 // Import Styles
 import userProfileStyle from './userProfile.style';

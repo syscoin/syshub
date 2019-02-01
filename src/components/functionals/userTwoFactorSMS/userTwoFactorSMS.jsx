@@ -5,9 +5,9 @@ import actions from '../../../redux/actions';
 import swal from 'sweetalert';
 
 // Import Sevices
-import { fire } from '../../../API/firebase';
+import { fire } from '../../../API/firebase/firebase';
 import { sendSMSToPhone, verifyPhoneCode } from '../../../API/twoFAPhone.service';
-import { setFire2FAMethod, getFire2FAstatus } from '../../../API/twoFAFirebase.service';
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/firebase/twoFAFirebase.service';
 import { phoneValidation } from '../../../Helpers';
 
 // import Material-ui components

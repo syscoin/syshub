@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 
 
 // import API services
-import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode, checkMasternodeExists } from '../../../API/masternodeFirebase.service';
+import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode, checkMasternodeExists } from '../../../API/firebase/masternodeFirebase.service';
 
 // import Material-ui Items
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';

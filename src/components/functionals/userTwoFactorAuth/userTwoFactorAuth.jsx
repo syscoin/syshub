@@ -5,8 +5,8 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 // Import Services
-import { fire } from '../../../API/firebase';
-import { setFire2FAMethod, getFire2FAstatus } from '../../../API/twoFAFirebase.service';
+import { fire } from '../../../API/firebase/firebase';
+import { setFire2FAMethod, getFire2FAstatus } from '../../../API/firebase/twoFAFirebase.service';
 import { getAuthQRCode, verifyAuthCode, saveAuthSecret } from '../../../API/twoFAAuthenticator.service';
 
 // import Material-ui components

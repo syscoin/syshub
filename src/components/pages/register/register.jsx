@@ -6,7 +6,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
-import { fire } from '../../../API/firebase';
+import { fire } from '../../../API/firebase/firebase';
 import PropTypes from 'prop-types';
 
 // import style

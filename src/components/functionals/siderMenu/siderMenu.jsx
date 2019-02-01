@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 import { Row, Col } from 'antd';
 
 // API
-import { doLogout } from '../../../API/firebase';
+import { doLogout } from '../../../API/firebase/firebase';
 
 //ReduxActions
 import actions from '../../../redux/actions';
