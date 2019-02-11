@@ -15,15 +15,20 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
+const TWOFA_FIRE_COLLECTION = '2FAAuth';
+const COMMENTS_FIRE_COLLECTION = 'comments';
+const C_REPLIES_FIRE_COLLECTION = 'commentReplies_V2';
+
+
 firebase.initializeApp(config);
 
 const fire = firebase;
 
+
+
 const baseOLD = Rebase.createClass(fire.database());
 const usernames = fire.database().ref('usernames');
-const comments = fire.database().ref('comments');
-const commentReplies_V2 = fire.database().ref('commentReplies_V2');
-// const votes = fire.database().ref('votes');
+// const commentReplies_V2 = fire.database().ref('commentReplies_V2');
 
 //Some useful functions
 const checkVoted = (user, proposal, masternodes) => {
@@ -386,9 +391,11 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
 
 //Check if neccessary
 export {
+  TWOFA_FIRE_COLLECTION,
+  COMMENTS_FIRE_COLLECTION,
+  C_REPLIES_FIRE_COLLECTION,
   fire, // si
-  comments, // si
-  commentReplies_V2, // si
+  // commentReplies_V2, // si
   doLogout, // si
   doUpdateProfile, // si
   doUpdatePassword, // si
