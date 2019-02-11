@@ -11,8 +11,13 @@ import actions from '../../../redux/actions';
 import CommentForm from './commentForm/commentForm';
 
 // import services
-import { comments, commentReplies_V2 } from '../../../API/firebase/firebase';
-import { getProposalComments, addProposalComments } from '../../../API/firebase/proposalCommentsFirebase';
+import {
+  getProposalComments,
+  addProposalComments,
+  setProposalCommentsVote,
+  getProposalCommentsReply,
+  addProposalCommentsReply
+} from '../../../API/firebase/proposalCommentsFirebase';
 
 import injectSheet from 'react-jss';
 import proposalCommentsStyle from './proposalComments.style';
@@ -34,20 +39,25 @@ class ProposalComments extends Component {
       replyBox: '' // replybox Id
     };
     this.commentsCounts = 0;
+    
+    // Comments Methods
+    this.loadComments = this.loadComments.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.setComment = this.setComment.bind(this);
-    this.generateDate = this.generateDate.bind(this);
-    this.loadReplies = this.loadReplies.bind(this);
-    this.voteForComment = this.voteForComment.bind(this);
-    this.voteCount = this.voteCount.bind(this);
-    this.setComment = this.setComment.bind(this);
-    this.editedComment = this.editedComment.bind(this);
-    this.setEditComment = this.setEditComment.bind(this);
     /* this.deleteComment = this.deleteComment.bind(this); */
+    this.setComment = this.setComment.bind(this);
+    this.setEditComment = this.setEditComment.bind(this);
+    this.editedComment = this.editedComment.bind(this);
+    this.voteForComment = this.voteForComment.bind(this);
+    
+    // Replies Methods
+    this.loadReplies = this.loadReplies.bind(this);
     this.commentReply = this.commentReply.bind(this);
+    
+    // Other Methods
+    this.generateDate = this.generateDate.bind(this);
+    this.voteCount = this.voteCount.bind(this);
     this.generateChildCommentsStructure = this.generateChildCommentsStructure.bind(this);
     this.renderChild2 = this.renderChild2.bind(this);
-    this.loadComments = this.loadComments.bind(this);
     this.refreshComments = this.refreshComments.bind(this);
   }
 
@@ -86,41 +96,32 @@ class ProposalComments extends Component {
   } 
 
   // load replies
-  loadReplies(index) {
+  async loadReplies(index) {
     // Load replies from firebase
     // then set in state
     
     if (this.state.allComments.length > index) {
-
-      console.log('ACZ -->', this.state.allComments[index]);
-      
       let _commentId = this.state.allComments[index]._id;
       let _comments = Object.assign(this.state.allComments);
       let _childReplies = [];
-
-      commentReplies_V2.child(_commentId).once('value', (item) => {
-        let _allReplies = item.val();
-
-        this.setState({ allRepliesRaw: _allReplies });
-
-        _comments[index].replies = [];
-        if (index >= 0) {
-          for (var key in _allReplies) {
-            _allReplies[key]._id = key;
-            if (_allReplies[key].isRoot) {
-              _comments[index].replies.push(_allReplies[key]);
-            } else {
-              _childReplies.push(_allReplies[key]);
-            }
+      const _allReplies = await getProposalCommentsReply(_commentId);
+      _comments[index].replies = [];
+      if (index >= 0) {
+        for (var key in _allReplies) {
+          _allReplies[key]._id = key;
+          if (_allReplies[key].isRoot) {
+            _comments[index].replies.push(_allReplies[key]);
+          } else {
+            _childReplies.push(_allReplies[key]);
           }
-          this.setState({
-            allComments: _comments,
-            allReplies: { ...this.state.allReplies, [_commentId]: _childReplies }
-          }, () => {
-            this.loadReplies(index + 1);
-          });
         }
-      })
+        this.setState({
+          allComments: _comments,
+          allReplies: { ...this.state.allReplies, [_commentId]: _childReplies }
+        }, () => {
+          this.loadReplies(index + 1);
+        });
+      }
     }
   }
 
@@ -155,10 +156,10 @@ class ProposalComments extends Component {
     }
   }
 
-  voteForComment(action, commentID) {
+  async voteForComment(action, commentID) {
     if (this.props.user) {
-      let itemIndex = null,
-        _item;
+      let itemIndex = null;
+      let _item;
 
       itemIndex = this.state.allComments.map((_item) => {
         return _item._id;
@@ -194,10 +195,9 @@ class ProposalComments extends Component {
             _item.votes.push(newVote);
           }
         }
-        comments.child(this.props.data.proposalID).child(commentID).set(_item);
+        await setProposalCommentsVote(this.props.data.proposalID, commentID, _item);
       }
     }
-
   }
 
   voteCount(_for, _array) {
@@ -221,7 +221,7 @@ class ProposalComments extends Component {
     this.setState({ editCommentState: !this.state.editCommentState, selectedCommentID: id, userEditComment: message });
   }
 
-  editComment(id) {
+  /* editComment(id) {
     var editedCommentObj,
       editCommentID, date = new Date();
     this.state.allComments.map((comment, key) => {
@@ -238,7 +238,7 @@ class ProposalComments extends Component {
     })
     comments.child(this.props.data.proposalID).child(editCommentID).set(editedCommentObj);
     this.setState({ editCommentState: !this.state.editCommentState })
-  }
+  } */
 
 /*   deleteComment(id) {
     comments.child(this.state.proposalID).child(id).remove().then(() => {
@@ -295,12 +295,9 @@ class ProposalComments extends Component {
       });
   }
 
-
-
   // -- Method call on reply Layer1
-  commentReply(id, text, parentKey) {
-    let _uniqueID = comments.push().key,
-      _replyObject = {
+  async commentReply(id, text, parentKey) {
+    let _replyObject = {
         text: text,
         createdAt: new Date().getTime(),
         createdBy: {
@@ -310,13 +307,8 @@ class ProposalComments extends Component {
         child: [],
         isRoot: parentKey ? false : true
       }
-
-    commentReplies_V2.child(id + '/' + _uniqueID).set(_replyObject, (e) => {
-      if (parentKey) {
-        commentReplies_V2.child(id + '/' + parentKey).child('child').push(_uniqueID);
-      }
-      this.setState({ replyBox: null }, () => this.refreshComments());
-    });
+    await addProposalCommentsReply(id, _replyObject, parentKey);
+    this.setState({ replyBox: null }, () => this.refreshComments());
   }
 
   // Render Child Object
