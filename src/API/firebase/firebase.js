@@ -28,7 +28,6 @@ const fire = firebase;
 
 const baseOLD = Rebase.createClass(fire.database());
 const usernames = fire.database().ref('usernames');
-// const commentReplies_V2 = fire.database().ref('commentReplies_V2');
 
 //Some useful functions
 const checkVoted = (user, proposal, masternodes) => {
@@ -395,7 +394,6 @@ export {
   COMMENTS_FIRE_COLLECTION,
   C_REPLIES_FIRE_COLLECTION,
   fire, // si
-  // commentReplies_V2, // si
   doLogout, // si
   doUpdateProfile, // si
   doUpdatePassword, // si
