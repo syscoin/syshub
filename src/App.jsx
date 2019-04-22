@@ -47,7 +47,7 @@ class App extends Component {
     }
     
     fire.auth().onAuthStateChanged(async user => {
-      // try {
+    // try {
         if (user) {
           const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
           

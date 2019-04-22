@@ -1,6 +1,9 @@
 import { fire } from './firebase';
 import Cryptr from 'cryptr';
 
+export const getMasternodesTotal = async (uid) => {
+
+};
 
 export const getMasternodeList = async (uid) => {
   const masternodesRef = fire.database().ref(`MasterNodes/${uid}`);
