@@ -5,6 +5,9 @@ import { compose } from 'recompose';
 //Imports providers HOC's
 import { withFirebase } from '../../../providers/firebase';
 
+// Imports helpers
+import to from '../../../Helpers/to';
+
 //Import UI components
 import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
@@ -12,7 +15,6 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
-import { fire } from '../../../API/firebase/firebase';
 import PropTypes from 'prop-types';
 
 // import style
@@ -183,26 +185,25 @@ class Register extends Component {
       return;
     }
 
-    firebase
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then(async user => {
-        const currentUser = fire.auth().currentUser;
-
-        if (user.uid === currentUser.uid) {
-          const usernameRef = fire.database().ref('usernames');
-          usernameRef.child(user.uid).set(username);
-          currentUser.updateProfile({ displayName: username });
-          this.props.setPage('home');
-        }
-        this.props.setPage('home');
-      })
-      .catch(err => {
-        swal({
-          title: 'Oops...',
-          text: `${err}`,
-          icon: 'error'
-        });
+    const [err, newUser] = await to(
+      firebase.doCreateUserWithEmailAndPassword(email, password)
+    );
+    if (err) {
+      swal({
+        title: 'Oops...',
+        text: `${err}`,
+        icon: 'error'
       });
+      return;
+    }
+    if (newUser) {
+      const currentUser = await firebase.getCurrentUser();
+      if (newUser.uid === currentUser.uid) {
+        await firebase.addUsername(newUser.uid, username);
+        currentUser.updateProfile({ displayName: username });
+      }
+      this.props.setPage('home');
+    }
   }
 
   render() {

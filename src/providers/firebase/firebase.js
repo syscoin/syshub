@@ -44,6 +44,11 @@ class Firebase {
     return Object.values(userNames).includes(username) === true;
   };
 
+  addUsername = async (key, username) => {
+    const usernameRef = await this.db.ref('usernames');
+    usernameRef.child(key).set(username);
+  };
+
   getCurrentUser = async () => await this.auth.currentUser;
 
   user = uid => this.db.ref(`users/${uid}`);
