@@ -12,13 +12,17 @@ const config = {
 
 class Firebase {
   constructor() {
-    console.log('ACZ --> ', app);
     app.initializeApp(config, 'fbSyshub');
 
+    this.firebaseApp = app;
     this.auth = app.auth();
+    this.db = app.database();
   }
 
   // *** Auth API ***
+
+  newRecaptchaVerifier = (container, params, app) =>
+    new this.firebaseApp.auth.RecaptchaVerifier(container, params, app);
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
@@ -31,6 +35,24 @@ class Firebase {
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+  // *** User API ***
+
+  isUsernameAvailable = async username => {
+    const userNamesRef = await this.db.ref('usernames').once('value');
+    const userNames = userNamesRef.val();
+    return Object.values(userNames).includes(username) === true;
+  };
+
+  getCurrentUser = async () => await this.auth.currentUser;
+
+  user = uid => this.db.ref(`users/${uid}`);
+
+  users = () => this.db.ref('users');
+
+  // *** Database API ***
+
+  getDocumentRef = document => this.db.ref(document);
 }
 
 export default Firebase;
