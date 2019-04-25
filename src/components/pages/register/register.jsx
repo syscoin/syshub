@@ -183,12 +183,6 @@ class Register extends Component {
       return;
     }
 
-    const newUser = await firebase.doCreateUserWithEmailAndPassword(
-      email,
-      password
-    );
-    console.log('ACZ newUser -->', newUser);
-
     firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(async user => {
