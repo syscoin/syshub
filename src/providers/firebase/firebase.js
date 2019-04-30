@@ -38,10 +38,21 @@ class Firebase {
 
   // *** User API ***
 
-  isUsernameAvailable = async username => {
+  /*  isUsernameAvailable = async username => {
     const userNamesRef = await this.db.ref('usernames').once('value');
     const userNames = userNamesRef.val();
     return Object.values(userNames).includes(username) === true;
+  }; */
+
+  isUsernameAvailable = async username => {
+    if (username) {
+      const userNamesRef = await this.db
+        .ref(`userlist/${username}`)
+        .once('value');
+      const userId = userNamesRef.val();
+      return !userId;
+    }
+    return true;
   };
 
   addUsername = async (key, username) => {

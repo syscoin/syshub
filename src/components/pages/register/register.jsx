@@ -121,9 +121,9 @@ class Register extends Component {
 
   async checkUsername(event) {
     const { firebase } = this.props;
-    let { name, value } = event.target;
-
-    if (value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
+    const { name, value } = event.target;
+    const trimmedValue = value.trim();
+    if (trimmedValue.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
@@ -132,11 +132,12 @@ class Register extends Component {
       return;
     }
 
-    const isUsernameAvailable = await firebase.isUsernameAvailable(value);
-
+    const isUsernameAvailable = await firebase.isUsernameAvailable(
+      trimmedValue
+    );
     this.setState({
-      [name]: value,
-      disabled: isUsernameAvailable
+      [name]: trimmedValue,
+      disabled: !isUsernameAvailable
     });
   }
 
