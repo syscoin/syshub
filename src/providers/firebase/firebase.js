@@ -46,7 +46,9 @@ class Firebase {
 
   addUsername = async (key, username) => {
     const usernameRef = await this.db.ref('usernames');
+    const userlistRef = await this.db.ref('userlist');
     usernameRef.child(key).set(username);
+    userlistRef.child(username).set(key);
   };
 
   getCurrentUser = async () => await this.auth.currentUser;
