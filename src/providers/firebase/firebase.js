@@ -21,6 +21,8 @@ class Firebase {
 
   // *** Auth API ***
 
+  useDeviceLanguage = () => this.auth.useDeviceLanguage();
+
   newRecaptchaVerifier = (container, params, app) =>
     new this.firebaseApp.auth.RecaptchaVerifier(container, params, app);
 
