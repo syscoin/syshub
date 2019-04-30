@@ -70,6 +70,12 @@ class Firebase {
 
   // *** Database API ***
 
+  getBdVersion = async () => {
+    const dbVersionRef = await this.db.ref('dbinfo/version').once('value');
+    const dbVersion = dbVersionRef.val();
+    return dbVersion;
+  };
+
   getDocumentRef = document => this.db.ref(document);
 }
 
