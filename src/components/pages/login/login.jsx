@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 
 // Imports helpers
 import to from '../../../Helpers/to';
+import runTasks from '../../../Helpers/hooks';
 
 //Imports providers HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -216,6 +217,7 @@ class Login extends Component {
       const twoFAStatus = await getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
       let phoneConfirmationResult, secret;
+      runTasks('onLoginSuccess');
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
           phoneConfirmationResult = await loginWithPhone(

@@ -12,6 +12,9 @@ import actions from './redux/actions';
 //Imports providers HOC's
 import { withFirebase } from './providers/firebase';
 
+// Imports tasks for Hooks
+import registerDbTasksHooks from './Helpers/hooks/dbTasks';
+
 // Import services
 import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
 import { getMasternodeList } from './API/firebase/masternodeFirebase.service';
@@ -39,6 +42,7 @@ class App extends Component {
   async componentWillMount() {
     await this.tick();
     await this.detectProposalUrl();
+    await this.registerHooks();
   }
 
   async componentDidMount() {
@@ -87,6 +91,11 @@ class App extends Component {
 
   async tick() {
     return await this.props.getSysInfo();
+  }
+
+  registerHooks() {
+    const { firebase } = this.props;
+    registerDbTasksHooks(firebase);
   }
 
   async detectProposalUrl() {
