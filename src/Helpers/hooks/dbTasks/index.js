@@ -1,9 +1,9 @@
 import { addTaskToHook } from '../';
 
-import { sayHi } from './versionUpdate';
+import { dbUpgrade } from './versionUpdate';
 
-const registerDbTasksHooks = dbProvider => {
-  addTaskToHook('onLoginSuccess', () => sayHi(dbProvider));
+const registerDbTasksHooks = paramObj => {
+  addTaskToHook('onLoginSuccess', () => dbUpgrade(paramObj));
 };
 
 export default registerDbTasksHooks;

@@ -38,19 +38,28 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  // *** User API ***
+  // *** General Db helper and API ***
 
-  /*  isUsernameAvailable = async username => {
-    const userNamesRef = await this.db.ref('usernames').once('value');
-    const userNames = userNamesRef.val();
-    return Object.values(userNames).includes(username) === true;
-  }; */
+  getDocumentRef = document => this.db.ref(document);
+
+  getDbVersion = async () => {
+    const dbVersionRef = await this.getDocumentRef('dbinfo/version').once(
+      'value'
+    );
+    const dbVersion = dbVersionRef.val();
+    return dbVersion;
+  };
+
+  setDbVersion = async newVersion => {
+    const dbinfoRef = await this.getDocumentRef('dbinfo/version');
+    dbinfoRef.set(newVersion);
+  };
 
   isUsernameAvailable = async username => {
     if (username) {
-      const userNamesRef = await this.db
-        .ref(`userlist/${username}`)
-        .once('value');
+      const userNamesRef = await this.getDocumentRef(
+        `userlist/${username}`
+      ).once('value');
       const userId = userNamesRef.val();
       return !userId;
     }
@@ -58,27 +67,21 @@ class Firebase {
   };
 
   addUsername = async (key, username) => {
-    const usernameRef = await this.db.ref('usernames');
-    const userlistRef = await this.db.ref('userlist');
+    const usernameRef = await this.getDocumentRef('usernames');
+    const userlistRef = await this.getDocumentRef('userlist');
     usernameRef.child(key).set(username);
     userlistRef.child(username).set(key);
   };
 
   getCurrentUser = async () => await this.auth.currentUser;
 
-  user = uid => this.db.ref(`users/${uid}`);
+  getUsernameById = uid => this.getDocumentRef(`usernames/${uid}`);
 
-  users = () => this.db.ref('users');
-
-  // *** Database API ***
-
-  getBdVersion = async () => {
-    const dbVersionRef = await this.db.ref('dbinfo/version').once('value');
-    const dbVersion = dbVersionRef.val();
-    return dbVersion;
+  getUsernameList = async () => {
+    const usernameRef = await this.getDocumentRef('usernames').once('value');
+    const usernameList = usernameRef.val();
+    return usernameList;
   };
-
-  getDocumentRef = document => this.db.ref(document);
 }
 
 export default Firebase;

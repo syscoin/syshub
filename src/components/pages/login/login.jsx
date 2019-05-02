@@ -162,7 +162,8 @@ class Login extends Component {
       twoFaResult = !!(vSmsCode * vGToken);
     }
     console.log('ACZ loginForm -->', this.loginForm);
-    //this.loginForm.reset();
+    runTasks('onLoginSuccess');
+
     this.props.setPage('home');
     if (!twoFaResult) {
       await firebase.doSignOut();
@@ -217,7 +218,7 @@ class Login extends Component {
       const twoFAStatus = await getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
       let phoneConfirmationResult, secret;
-      runTasks('onLoginSuccess');
+
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
           phoneConfirmationResult = await loginWithPhone(
@@ -243,6 +244,7 @@ class Login extends Component {
           icon: 'success'
         });
         this.loginForm.reset();
+        runTasks('onLoginSuccess');
         this.props.setPage('home');
       }
     }

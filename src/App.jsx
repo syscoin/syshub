@@ -48,7 +48,7 @@ class App extends Component {
   async componentDidMount() {
     const { firebase } = this.props;
     const currentUser = await firebase.getCurrentUser();
-    const dbVersion = await firebase.getBdVersion();
+    const dbVersion = await firebase.getDbVersion();
 
     console.log('ACZ dbVersion -->', dbVersion);
 
@@ -95,7 +95,7 @@ class App extends Component {
 
   registerHooks() {
     const { firebase } = this.props;
-    registerDbTasksHooks(firebase);
+    registerDbTasksHooks({ provider: firebase });
   }
 
   async detectProposalUrl() {
