@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
+//Imports providers HOC's
+import { withFirebase } from '../../../providers/firebase';
+
+// Imports helpers
+import to from '../../../Helpers/to';
+
+//Import UI components
 import { Grid } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Form, Input, Button, Checkbox } from 'antd';
 import ReactPasswordStrength from 'react-password-strength';
 
 import actions from '../../../redux/actions';
-import { fire } from '../../../API/firebase/firebase';
 import PropTypes from 'prop-types';
 
 // import style
@@ -33,13 +41,15 @@ class Register extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { firebase } = this.props;
+
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
 
-    fire.auth().useDeviceLanguage();
+    await firebase.auth.useDeviceLanguage();
 
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier(this.recaptcha, {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier(this.recaptcha, {
       callback: response => {
         this.setState({
           verify: response
@@ -47,10 +57,9 @@ class Register extends Component {
       }
     });
 
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
-
   }
 
   checkPassword = (rule, value, callback) => {
@@ -74,13 +83,15 @@ class Register extends Component {
     //const emaiRegex = /^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
     const emailRegex = /^[a-zA-Z0-9._-]*@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
     const isValidEmail = emailRegex.test(value) ? true : false;
-    const erroMsg = value ? 'Invalid Email address format': 'Enter a valid Email address'
+    const erroMsg = value
+      ? 'Invalid Email address format'
+      : 'Enter a valid Email address';
     if (!isValidEmail) {
       callback(erroMsg);
     } else {
       callback();
     }
-  }
+  };
 
   hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -101,15 +112,18 @@ class Register extends Component {
   };
 
   // specifying your onload callback function
-  callback() { }
+  callback() {}
 
   // specifying verify callback function
   verifyCallback(response) {
     this.setState({ verify: response });
   }
 
-  checkUsername(event) {
-    if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
+  async checkUsername(event) {
+    const { firebase } = this.props;
+    const { name, value } = event.target;
+    const trimmedValue = value.trim();
+    if (trimmedValue.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
         title: 'Oops...',
         text: 'Must be an alphanumeric character',
@@ -118,27 +132,17 @@ class Register extends Component {
       return;
     }
 
+    const isUsernameAvailable = await firebase.isUsernameAvailable(
+      trimmedValue
+    );
     this.setState({
-      [event.target.name]: event.target.value
+      [name]: trimmedValue,
+      disabled: !isUsernameAvailable
     });
-
-    const usernameRef = fire.database().ref('usernames');
-    if (event.target.value) {
-      usernameRef.once('value').then(snapshot => {
-        if (Object.values(snapshot.val()).includes(this.state.usernames) === true) {
-          this.setState({
-            disabled: true
-          });
-        } else {
-          this.setState({
-            disabled: false
-          });
-        }
-      });
-    }
   }
 
-  register(event) {
+  async register(event) {
+    const { firebase } = this.props;
     event.preventDefault();
 
     if (this.state.disabled) {
@@ -182,34 +186,37 @@ class Register extends Component {
       return;
     }
 
-    fire
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        const currentUser = fire.auth().currentUser;
-
-        if (user.uid === currentUser.uid) {
-          const usernameRef = fire.database().ref('usernames');
-          usernameRef.child(user.uid).set(username);
-          currentUser.updateProfile({ displayName: username });
-          this.props.setPage('home');
-        }
-        this.props.setPage('home');
-      })
-      .catch(err => {
-        swal({
-          title: 'Oops...',
-          text: `${err}`,
-          icon: 'error'
-        });
+    const [err, newUser] = await to(
+      firebase.doCreateUserWithEmailAndPassword(email, password)
+    );
+    if (err) {
+      swal({
+        title: 'Oops...',
+        text: `${err}`,
+        icon: 'error'
       });
+      return;
+    }
+    if (newUser) {
+      const currentUser = await firebase.getCurrentUser();
+      if (newUser.uid === currentUser.uid) {
+        await firebase.addUsername(newUser.uid, username);
+        currentUser.updateProfile({ displayName: username });
+      }
+      this.props.setPage('home');
+    }
   }
 
   render() {
     const checkIcon = require('../../../assets/img/check.png'),
       closeIcon = require('../../../assets/img/close.png'),
       { classes, deviceType } = this.props;
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched
+    } = this.props.form;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
@@ -217,7 +224,8 @@ class Register extends Component {
     const username = isFieldTouched('username') && getFieldError('username');
     const email = isFieldTouched('email') && getFieldError('email');
     const password = isFieldTouched('password') && getFieldError('password');
-    const confirmPassword = isFieldTouched('confirm') && getFieldError('confirm');
+    const confirmPassword =
+      isFieldTouched('confirm') && getFieldError('confirm');
 
     return (
       <Grid item className={style} md={12} xs={12}>
@@ -232,12 +240,7 @@ class Register extends Component {
             }}
             className="wrapper"
           >
-            <Grid
-              item
-              lg={12}
-              md={12}
-              xs={12}
-            >
+            <Grid item lg={12} md={12} xs={12}>
               {/* For User Name */}
               <FormItem
                 className="form-group"
@@ -262,6 +265,7 @@ class Register extends Component {
                     className="input-field"
                     placeholder="new-username"
                     onChange={this.checkUsername}
+                    onBlur={this.checkUsername}
                   />
                 )}
 
@@ -271,8 +275,8 @@ class Register extends Component {
                       {!this.state.disabled ? (
                         <img alt="a" src={checkIcon} />
                       ) : (
-                          <img alt="a" src={closeIcon} />
-                        )}
+                        <img alt="a" src={closeIcon} />
+                      )}
                       {this.state.usernames}
                       {this.state.disabled ? ` Not Available` : ` Available`}
                     </div>
@@ -337,7 +341,13 @@ class Register extends Component {
                       placeholder="******"
                       minLength={5}
                       minScore={2}
-                      scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}
+                      scoreWords={[
+                        'weak',
+                        'okay',
+                        'good',
+                        'strong',
+                        'stronger'
+                      ]}
                       inputProps={{
                         name: 'password_input',
                         autoComplete: 'off',
@@ -382,7 +392,10 @@ class Register extends Component {
                 <span htmlFor="confirm-password" className="label">
                   {`Captcha: `}
                 </span>
-                <div ref={ref => (this.recaptcha = ref)} className="recaptcha" />
+                <div
+                  ref={ref => (this.recaptcha = ref)}
+                  className="recaptcha"
+                />
               </FormItem>
               {/* Terms and Service */}
               <FormItem className="form-group terms-of-condition">
@@ -396,7 +409,8 @@ class Register extends Component {
               <FormItem className="form-group form-button-group">
                 <Button
                   disabled={
-                    this.hasErrors(getFieldsError()) || (!this.state.checked || !this.state.verify)
+                    this.hasErrors(getFieldsError()) ||
+                    (!this.state.checked || !this.state.verify)
                       ? true
                       : false
                   }
@@ -434,6 +448,11 @@ function mapDispatchToProps(dispatch) {
 // Todo: Antd form
 const _RegisterForm = Form.create()(Register); // Need to add component like this due to antd Form
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  injectSheet(registerStyle)(_RegisterForm)
-);
+export default compose(
+  withFirebase,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  injectSheet(registerStyle)
+)(_RegisterForm);

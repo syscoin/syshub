@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
 import Platform from 'react-platform-js';
 import Favicon from 'react-favicon';
 import { DesktopLayout, MobileLayout } from './components/layouts';
@@ -7,8 +9,13 @@ import injectSheet from 'react-jss';
 
 import actions from './redux/actions';
 
+//Imports providers HOC's
+import { withFirebase } from './providers/firebase';
+
+// Imports tasks for Hooks
+import registerDbTasksHooks from './Helpers/hooks/dbTasks';
+
 // Import services
-import { fire } from './API/firebase/firebase';
 import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
 import { getMasternodeList } from './API/firebase/masternodeFirebase.service';
 
@@ -24,11 +31,10 @@ import { generateClassName } from './Helpers/classNameJssProvider';
 const sysHubTheme = createMuiTheme({
   palette: {
     primary: { main: palette.primary },
-    secondary: { main: palette.secondary },
+    secondary: { main: palette.secondary }
   },
-  typography: { useNextVariants: true },
+  typography: { useNextVariants: true }
 });
-
 
 class App extends Component {
   state = {};
@@ -36,28 +42,33 @@ class App extends Component {
   async componentWillMount() {
     await this.tick();
     await this.detectProposalUrl();
+    await this.registerHooks();
   }
-  
+
   async componentDidMount() {
-    const currentUser = await fire.auth().currentUser;
-    
+    const { firebase } = this.props;
+    const currentUser = await firebase.getCurrentUser();
+    const dbVersion = await firebase.getDbVersion();
+
+    console.log('ACZ dbVersion -->', dbVersion);
+
     if (currentUser) {
       this.props.setCurrentUser(currentUser);
       return;
     }
-    
-    fire.auth().onAuthStateChanged(async user => {
-    // try {
-        if (user) {
-          const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-          
-          if (twoFA) {
-            user['MasterNodes'] = await getMasternodeList(user.uid);
-            /* const status2FA = await getFire2FAstatus(user.uid);
+
+    firebase.auth.onAuthStateChanged(async user => {
+      // try {
+      if (user) {
+        const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+
+        if (twoFA) {
+          user['MasterNodes'] = await getMasternodeList(user.uid);
+          /* const status2FA = await getFire2FAstatus(user.uid);
             this.props.set2FA(status2FA); */
-          }
-          this.props.setCurrentUser(user);
         }
+        this.props.setCurrentUser(user);
+      }
       // }
       // catch (err) {}
     });
@@ -80,6 +91,11 @@ class App extends Component {
 
   async tick() {
     return await this.props.getSysInfo();
+  }
+
+  registerHooks() {
+    const { firebase } = this.props;
+    registerDbTasksHooks({ provider: firebase });
   }
 
   async detectProposalUrl() {
@@ -144,7 +160,11 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(appStyles)(App));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(appStyles)
+)(App);
