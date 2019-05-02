@@ -4,7 +4,11 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
-import { removeFire2FA, getFire2FAstatus, setFire2FAMethod } from './twoFAFirebase.service';
+import {
+  removeFire2FA,
+  getFire2FAstatus,
+  setFire2FAMethod
+} from './twoFAFirebase.service';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -19,16 +23,12 @@ const TWOFA_FIRE_COLLECTION = '2FAAuth';
 const COMMENTS_FIRE_COLLECTION = 'comments';
 const C_REPLIES_FIRE_COLLECTION = 'commentReplies_V2';
 
-
 firebase.initializeApp(config);
 
 const fire = firebase;
 
-
-
 const baseOLD = Rebase.createClass(fire.database());
 const usernames = fire.database().ref('usernames');
-// const commentReplies_V2 = fire.database().ref('commentReplies_V2');
 
 //Some useful functions
 const checkVoted = (user, proposal, masternodes) => {
@@ -73,7 +73,6 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
-
 const doRegister = () => {};
 
 const doLogin = (email, password) => {
@@ -89,7 +88,8 @@ const doLogout = update => {
     .auth()
     .signOut()
     .then(() => {
-      if (!update) {}
+      if (!update) {
+      }
     });
 };
 
@@ -97,7 +97,10 @@ const doUpdatePassword = (user, callback) => {
   const currentUser = fire.auth().currentUser;
 
   if (currentUser) {
-    const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, user.currentPass);
+    const credentials = fire.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      user.currentPass
+    );
     currentUser
       .reauthenticateWithCredential(credentials)
       .then(() => {
@@ -171,23 +174,27 @@ const doUpdateProfile = user => {
 
       if (user.email) {
         swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Warning',
-            text: 'You are about to change your email, you must input your password first',
-            icon: 'warning',
-            buttons: true,
-            dangerMode: true,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Type your password',
-                type: 'password'
-              }
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Warning',
+          text:
+            'You are about to change your email, you must input your password first',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Type your password',
+              type: 'password'
             }
-          })
+          }
+        })
           .then(password => {
-            const credentials = fire.auth.EmailAuthProvider.credential(currentUser.email, password);
+            const credentials = fire.auth.EmailAuthProvider.credential(
+              currentUser.email,
+              password
+            );
 
             return currentUser.reauthenticateWithCredential(credentials);
           })
@@ -245,13 +252,21 @@ const doDeleteAccount = async () => {
           type: 'password'
         }
       }
-    })
+    });
 
-    if (!password) {return deleted;}
+    if (!password) {
+      return deleted;
+    }
 
-    const credentials = await fire.auth.EmailAuthProvider.credential(currentUser.email, password);
-    const confirmed = await currentUser.reauthenticateWithCredential(credentials).then(() => true).catch(err => false);
-    
+    const credentials = await fire.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      password
+    );
+    const confirmed = await currentUser
+      .reauthenticateWithCredential(credentials)
+      .then(() => true)
+      .catch(err => false);
+
     if (!confirmed) {
       swal({
         title: 'Oops...',
@@ -265,7 +280,8 @@ const doDeleteAccount = async () => {
       allowOutsideClick: false,
       allowEscapeKey: false,
       title: 'WARNING',
-      html: 'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
+      html:
+        'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
       type: 'warning',
       input: 'text',
       showCancelButton: true,
@@ -276,36 +292,56 @@ const doDeleteAccount = async () => {
       confirmButtonClass: 'btn btn-success',
       cancelButtonClass: 'btn btn-danger'
     });
-    
 
     if (value.value === 'DELETE') {
-      await fire.database().ref('comments').once('value', snapshot => {
-        snapshot.forEach(snap => {
-          snap.forEach(comment => {
-            if (comment.val().createdBy.name === currentUser.displayName) {
-              let newComment = { ...comment.val() };
-              newComment.createdBy.name = `${currentUser.displayName}-deleted`;
-              comment.ref.update(newComment);
+      await fire
+        .database()
+        .ref('comments')
+        .once('value', snapshot => {
+          snapshot.forEach(snap => {
+            snap.forEach(comment => {
+              if (comment.val().createdBy.name === currentUser.displayName) {
+                let newComment = { ...comment.val() };
+                newComment.createdBy.name = `${
+                  currentUser.displayName
+                }-deleted`;
+                comment.ref.update(newComment);
+              }
+            });
+          });
+        });
+
+      await fire
+        .database()
+        .ref('messages')
+        .once('value', snapshot => {
+          snapshot.forEach(snap => {
+            if (snap.val().user.id === currentUser.uid) {
+              let newMessage = { ...snap.val() };
+              newMessage.user.displayName = `${
+                currentUser.displayName
+              }-deleted`;
+              snap.ref.update(newMessage);
             }
           });
         });
-      });
-
-      await fire.database().ref('messages').once('value', snapshot => {
-        snapshot.forEach(snap => {
-          if (snap.val().user.id === currentUser.uid) {
-            let newMessage = { ...snap.val()
-            };
-            newMessage.user.displayName = `${currentUser.displayName}-deleted`;
-            snap.ref.update(newMessage);
-          }
-        });
-      });
-      await fire.database().ref(`usernames/${currentUser.uid}`).set(`${currentUser.displayName}-deleted`);
+      await fire
+        .database()
+        .ref(`usernames/${currentUser.uid}`)
+        .set(`${currentUser.displayName}-deleted`);
       removeFire2FA(currentUser.uid);
-      await fire.database().ref(`proposals/${currentUser.uid}`).remove();
-      await fire.database().ref(`MasterNodes/${currentUser.uid}`).remove();
-      const iamDeleted = await currentUser.delete().then(() => true).catch(err => err);
+      await fire
+        .database()
+        .ref(`proposals/${currentUser.uid}`)
+        .remove();
+      await fire
+        .database()
+        .ref(`MasterNodes/${currentUser.uid}`)
+        .remove();
+      const iamDeleted = await currentUser
+        .delete()
+        .then(() => true)
+        .catch(err => err);
       if (iamDeleted) {
         swal({
           title: 'Success',
@@ -322,8 +358,10 @@ const doDeleteAccount = async () => {
         });
       }
     }
-    
-    if (value.dismiss) {return deleted;}
+
+    if (value.dismiss) {
+      return deleted;
+    }
 
     if (value.value !== 'DELETE') {
       swal({
@@ -339,7 +377,7 @@ const doDeleteAccount = async () => {
 
 const getCurrentUser = () => {
   return fire.auth().currentUser;
-}
+};
 
 // refactor this method to run properly
 const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
@@ -348,35 +386,46 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
       .verifyPhoneNumber(phoneNumber, appVerifier)
       .then(verificationId => {
         swal({
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-            title: 'Verify',
-            text: 'Please enter the verification code sent to your mobile device',
-            icon: 'info',
-            buttons: true,
-            dangerMode: false,
-            content: {
-              element: 'input',
-              attributes: {
-                placeholder: 'Confirmation code here',
-                type: 'text'
-              }
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          title: 'Verify',
+          text: 'Please enter the verification code sent to your mobile device',
+          icon: 'info',
+          buttons: true,
+          dangerMode: false,
+          content: {
+            element: 'input',
+            attributes: {
+              placeholder: 'Confirmation code here',
+              type: 'text'
             }
-          })
+          }
+        })
           .then(verificationCode => {
             if (!verificationCode) {
-              throw new Error('Please provide your verificatoin code next time.');
+              throw new Error(
+                'Please provide your verificatoin code next time.'
+              );
             }
-            return fire.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+            return fire.auth.PhoneAuthProvider.credential(
+              verificationId,
+              verificationCode
+            );
           })
           .then(phoneCredential => {
             return user.updatePhoneNumber(phoneCredential);
           })
           .then(() => {
-            fire.database().ref(`2FA/${user.uid}`).set(true, () => // <-- ACZ Delete: after create the correct method
-              fire.database().ref(`2FAAuth/${user.uid}`).set(true, () =>
-                resolve(true)
-            ));
+            fire
+              .database()
+              .ref(`2FA/${user.uid}`)
+              .set(true, () =>
+                // <-- ACZ Delete: after create the correct method
+                fire
+                  .database()
+                  .ref(`2FAAuth/${user.uid}`)
+                  .set(true, () => resolve(true))
+              );
           })
           .catch(err => {
             reject(err);
@@ -388,14 +437,12 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
   });
 };
 
-
 //Check if neccessary
 export {
   TWOFA_FIRE_COLLECTION,
   COMMENTS_FIRE_COLLECTION,
   C_REPLIES_FIRE_COLLECTION,
   fire, // si
-  // commentReplies_V2, // si
   doLogout, // si
   doUpdateProfile, // si
   doUpdatePassword, // si

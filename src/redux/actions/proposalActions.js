@@ -1,20 +1,11 @@
 import constants from '../constants';
-
-import { HTTPAsync } from '../helpers';
-
-/**---------------------------------------------------------------------------- */
-/** TO CHANGE THE URL FOR THE API DO IT IN ".env -> REACT_APP_SYS_MN_API"       */
-/**---------------------------------------------------------------------------- */
-
-const baseApiURL = process.env.REACT_APP_SYS_MN_API;
-
-/**---------------------------------------------------------------------------- */
+import * as proposalService from '../../API/proposals.service';
 
 export default {
   getProposals: () => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.get(`${baseApiURL}/list`, null, constants.SYS_PROPOSALS_GET)
+        proposalService.getProposalList(constants.SYS_PROPOSALS_GET)
       );
     };
   },
@@ -22,11 +13,7 @@ export default {
   checkProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post(
-          `${baseApiURL}/check`,
-          params,
-          constants.SYS_PROPOSALS_CHECK
-        )
+        proposalService.checkProposal(params, constants.SYS_PROPOSALS_CHECK)
       );
     };
   },
@@ -34,11 +21,7 @@ export default {
   prepareProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post(
-          `${baseApiURL}/prepare`,
-          params,
-          constants.SYS_PROPOSALS_PREPARE
-        )
+        proposalService.prepareProposal(params, constants.SYS_PROPOSALS_PREPARE)
       );
     };
   },
@@ -46,11 +29,7 @@ export default {
   submitProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post(
-          `${baseApiURL}/submit`,
-          params,
-          constants.SYS_PROPOSALS_SUBMIT
-        )
+        proposalService.submitProposal(params, constants.SYS_PROPOSALS_SUBMIT)
       );
     };
   },
@@ -58,11 +37,7 @@ export default {
   voteOnProposal: params => {
     return dispatch => {
       return dispatch(
-        HTTPAsync.post(
-          `${baseApiURL}/vote`,
-          params,
-          constants.SYS_PROPOSAL_VOTE
-        )
+        proposalService.voteOnProposal(params, constants.SYS_PROPOSAL_VOTE)
       );
     };
   }
