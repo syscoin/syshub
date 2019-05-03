@@ -49,9 +49,6 @@ class App extends Component {
   async componentDidMount() {
     const { firebase } = this.props;
     const currentUser = await firebase.getCurrentUser();
-    const dbVersion = await firebase.getDbVersion();
-
-    console.log('ACZ dbVersion -->', dbVersion);
 
     if (currentUser) {
       this.props.setCurrentUser(currentUser);

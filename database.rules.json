@@ -4,7 +4,6 @@
       ".read": true,
       ".write": "auth !== null"
     },
-    "testonly": {},
     "dbinfo": {
       ".read": true,
       ".write": "auth !== null"
