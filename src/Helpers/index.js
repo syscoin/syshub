@@ -1,5 +1,5 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
-import swal from './node_modules/sweetalert';
+import swal from 'sweetalert';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
