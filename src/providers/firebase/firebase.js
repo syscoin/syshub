@@ -12,7 +12,7 @@ const config = {
 };
 
 const FIREBASE_COLLECTION_DBINFO = 'dbinfo';
-//const FIREBASE_COLLECTION_TWOFA = '2FAAuth';
+const FIREBASE_COLLECTION_TWOFA = '2FAAuth';
 const FIREBASE_COLLECTION_COMMENTS = 'comments';
 const FIREBASE_COLLECTION_C_REPLIES = 'commentReplies_V2';
 const FIREBASE_COLLECTION_USERNAME = 'usernames';
@@ -234,6 +234,26 @@ class Firebase {
       item => item.mnPrivateKey === encryptedPrivateKey
     );
     return !!foundedMn;
+  };
+
+  /***************
+   * 2FA Manager *
+   ***************/
+
+  /**
+   *
+   * @param {uid} User ID
+   * @return true if find a pending proposal for that user
+   */
+  getFire2FAstatus = async uid => {
+    const rawUser2FAStatus = await this.getRawDocument(
+      `${FIREBASE_COLLECTION_TWOFA}/${uid}`
+    );
+    const user2FAStatus = rawUser2FAStatus.val();
+    if (!user2FAStatus) {
+      return false;
+    }
+    return user2FAStatus;
   };
 }
 

@@ -13,7 +13,6 @@ import runTasks from '../../../Helpers/hooks';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { getFire2FAstatus } from '../../../API/firebase/twoFAFirebase.service';
 import { loginWithPhone } from '../../../API/twoFAPhone.service';
 import {
   getAuthSecret,
@@ -215,7 +214,7 @@ class Login extends Component {
     }
     if (user) {
       const appVerifier = window.recaptchaVerifier;
-      const twoFAStatus = await getFire2FAstatus(user.uid);
+      const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
       let phoneConfirmationResult, secret;
 
