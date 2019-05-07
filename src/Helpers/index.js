@@ -1,5 +1,5 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
-import swal from 'sweetalert';
+import swal from './node_modules/sweetalert';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -16,7 +16,10 @@ const phoneValidation = (phoneNumber, isoCode) => {
   let userNumber = null;
 
   try {
-    userNumber = phoneUtil.parseAndKeepRawInput(phoneNumber, isoCode.toUpperCase());
+    userNumber = phoneUtil.parseAndKeepRawInput(
+      phoneNumber,
+      isoCode.toUpperCase()
+    );
   } catch (e) {
     swal({
       title: 'Oops...',
