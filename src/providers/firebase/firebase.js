@@ -11,12 +11,12 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-const FIREBASE_COLLECTION_DBINFO = 'dbinfo';
-const FIREBASE_COLLECTION_TWOFA = '2FAAuth';
-const FIREBASE_COLLECTION_COMMENTS = 'comments';
-const FIREBASE_COLLECTION_C_REPLIES = 'commentReplies_V2';
-const FIREBASE_COLLECTION_USERNAME = 'usernames';
-const FIREBASE_COLLECTION_USERLIST = 'userlist';
+const FB_COLLECTION_DBINFO = 'dbinfo';
+const FB_COLLECTION_TWOFA = '2FAAuth';
+const FB_COLLECTION_COMMENTS = 'comments';
+const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
+const FB_COLLECTION_USERNAME = 'usernames';
+const FB_COLLECTION_USERLIST = 'userlist';
 
 class Firebase {
   constructor() {
@@ -62,15 +62,13 @@ class Firebase {
   };
 
   getDbVersion = async () => {
-    const dbVersion = await this.getDocument(
-      `${FIREBASE_COLLECTION_DBINFO}/version`
-    );
+    const dbVersion = await this.getDocument(`${FB_COLLECTION_DBINFO}/version`);
     return dbVersion;
   };
 
   setDbVersion = async newVersion => {
     const dbinfoRef = await this.getDocumentRef(
-      `${FIREBASE_COLLECTION_DBINFO}/version`
+      `${FB_COLLECTION_DBINFO}/version`
     );
     dbinfoRef.set(newVersion);
   };
@@ -82,7 +80,7 @@ class Firebase {
   isUsernameAvailable = async username => {
     if (username) {
       const userId = await this.getDocument(
-        `${FIREBASE_COLLECTION_USERLIST}/${username}`
+        `${FB_COLLECTION_USERLIST}/${username}`
       );
       return !userId;
     }
@@ -90,8 +88,8 @@ class Firebase {
   };
 
   addUsername = async (key, username) => {
-    const usernameRef = await this.getDocumentRef(FIREBASE_COLLECTION_USERNAME);
-    const userlistRef = await this.getDocumentRef(FIREBASE_COLLECTION_USERLIST);
+    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAME);
+    const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
     usernameRef.child(key).set(username);
     userlistRef.child(username).set(key);
   };
@@ -99,10 +97,9 @@ class Firebase {
   getCurrentUser = async () => await this.auth.currentUser;
 
   getUsernameById = uid =>
-    this.getDocumentRef(`${FIREBASE_COLLECTION_USERNAME}/${uid}`);
+    this.getDocumentRef(`${FB_COLLECTION_USERNAME}/${uid}`);
 
-  getUsernameList = async () =>
-    await this.getDocument(FIREBASE_COLLECTION_USERNAME);
+  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAME);
 
   /**********************
    * Proposals Comments *
@@ -113,9 +110,7 @@ class Firebase {
    * @param {string} pid = proposal ID
    */
   getProposalComments = async (pid, sortAsc) => {
-    const comments = await this.getDocument(
-      `${FIREBASE_COLLECTION_COMMENTS}/${pid}`
-    );
+    const comments = await this.getDocument(`${FB_COLLECTION_COMMENTS}/${pid}`);
     if (comments) {
       Object.getOwnPropertyNames(comments).forEach((key, idx, array) => {
         comments[key]._id = key;
@@ -142,7 +137,7 @@ class Firebase {
    */
   addProposalComments = async (pid, comment) => {
     const commentsRef = await this.getDocumentRef(
-      `${FIREBASE_COLLECTION_COMMENTS}/${pid}`
+      `${FB_COLLECTION_COMMENTS}/${pid}`
     );
     await commentsRef.push(comment);
   };
@@ -155,7 +150,7 @@ class Firebase {
    */
   setProposalCommentsVote = async (pid, cid, item) => {
     const commentsRef = await this.getDocumentRef(
-      `${FIREBASE_COLLECTION_COMMENTS}/${pid}/${cid}`
+      `${FB_COLLECTION_COMMENTS}/${pid}/${cid}`
     );
     const rawComments = await commentsRef.set(item);
     return rawComments;
@@ -166,7 +161,7 @@ class Firebase {
    * @param {string} cid = comment ID
    */
   getProposalCommentsReply = async cid =>
-    await this.getDocument(`${FIREBASE_COLLECTION_C_REPLIES}/${cid}`);
+    await this.getDocument(`${FB_COLLECTION_C_REPLIES}/${cid}`);
 
   /**
    *
@@ -176,12 +171,12 @@ class Firebase {
    */
   addProposalCommentsReply = async (cid, reply, parentId) => {
     const replyRef = await this.getDocumentRef(
-      `${FIREBASE_COLLECTION_C_REPLIES}/${cid}/`
+      `${FB_COLLECTION_C_REPLIES}/${cid}/`
     );
     const uniqueID = await replyRef.push(reply).key;
     if (parentId) {
       const parentRef = await this.getDocumentRef(
-        `${FIREBASE_COLLECTION_C_REPLIES}/${cid}/${parentId}/child`
+        `${FB_COLLECTION_C_REPLIES}/${cid}/${parentId}/child`
       );
       await parentRef.push(uniqueID);
     }
@@ -243,17 +238,69 @@ class Firebase {
   /**
    *
    * @param {uid} User ID
-   * @return true if find a pending proposal for that user
+   * @return Auth Object with 2FA values
    */
   getFire2FAstatus = async uid => {
     const rawUser2FAStatus = await this.getRawDocument(
-      `${FIREBASE_COLLECTION_TWOFA}/${uid}`
+      `${FB_COLLECTION_TWOFA}/${uid}`
     );
     const user2FAStatus = rawUser2FAStatus.val();
     if (!user2FAStatus) {
       return false;
     }
     return user2FAStatus;
+  };
+
+  getFire2FAMethod = async (uid, method) => {
+    const currentStatus = await this.getFire2FAstatus(uid);
+    if (!currentStatus) {
+      return false;
+    }
+    return currentStatus[method];
+  };
+
+  setFire2FAMethod = async (uid, method, value) => {
+    const currentStatus = await this.getFire2FAstatus(uid);
+    let newStatus = {};
+    if (currentStatus) {
+      newStatus = currentStatus;
+    }
+    if (method === 'authSecret') {
+      newStatus['authSecret'] = value;
+      newStatus['auth'] = !!value;
+    }
+    newStatus[method] = value;
+    newStatus['twoFA'] = !!newStatus.sms || !!newStatus.auth;
+    const twoFARef = this.getDocumentRef(`${FB_COLLECTION_TWOFA}/${uid}`);
+    twoFARef.update(newStatus);
+
+    return newStatus;
+  };
+
+  removeFire2FA = async uid => {
+    await this.getDocumentRef(`${FB_COLLECTION_TWOFA}/${uid}`).remove();
+    return { err: null, msg: '2FA register successfuly deleted' };
+  };
+
+  getAuthSecret = async uid => {
+    const { auth, authSecret } = await this.getFire2FAstatus(uid);
+    const cryptr = new Cryptr(uid);
+    if (!auth) {
+      return false;
+    }
+    const secret = cryptr.decrypt(authSecret);
+    return secret;
+  };
+
+  saveAuthSecret = async (secret, uid) => {
+    const cryptr = new Cryptr(uid);
+    const cryptedSecret = cryptr.encrypt(secret);
+    const newStatus = await this.setFire2FAMethod(
+      uid,
+      'authSecret',
+      cryptedSecret
+    );
+    return newStatus;
   };
 }
 
