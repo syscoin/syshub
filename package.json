@@ -18,8 +18,7 @@
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
   "pre-commit": [
-    "precommit-msg",
-    "lint"
+    "precommit-msg"
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.2",

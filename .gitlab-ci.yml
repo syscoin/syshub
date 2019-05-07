@@ -1,49 +1,52 @@
 image: node
 
 cache:
+  key: '$CI_BUILD_REPO'
   paths:
     - node_modules/
-  key: '$CI_BUILD_REPO'
 
 stages:
-  - developing
-  - staging
-  - production
+  - setup
+  - build and deploy
 
-developing:
-  stage: developing
-  image: cortesa/docker-firebase
-  environment: development
+Setup:
+  stage: setup
+  image: cortesa/docker-firebase:6.8.0
   script:
-    - npm install
-    - npm run build:development
+    - firebase --version
+    - yarn install --pure-lockfile --cache-folder .yarn
+
+Develop:
+  stage: build and deploy
+  image: cortesa/docker-firebase:6.8.0
+  environment: development
+  except:
+    - master
+    - production
+  script:
+    - yarn build:development
     - firebase use --token $FIREBASE_TOKEN syshub-dev
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
-  except:
-    - staging
-    - master
 
-staging:
-  stage: staging
-  image: cortesa/docker-firebase
+Staging:
+  stage: build and deploy
+  image: cortesa/docker-firebase:6.8.0
   environment: development
   only:
     - master
   script:
-    - npm install
-    - npm run build:development
+    - yarn build:development
     - firebase use --token $FIREBASE_TOKEN syshub-dev
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
 
-# it shuold deploys in production
-production:
-  stage: production
-  image: cortesa/docker-firebase
+# it should deploys in production
+Production:
+  stage: build and deploy
+  image: cortesa/docker-firebase:6.8.0
   environment: production
   only:
     - production
   script:
-    - npm install
-    - npm run build:production
+    - yarn build:production
     - firebase use --token $FIREBASE_TOKEN syshub-61377
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
