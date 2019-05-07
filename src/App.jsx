@@ -17,7 +17,6 @@ import registerDbTasksHooks from './Helpers/hooks/dbTasks';
 
 // Import services
 import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
-import { getMasternodeList } from './API/firebase/masternodeFirebase.service';
 
 // Custom Material-UI Theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -61,7 +60,7 @@ class App extends Component {
         const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
 
         if (twoFA) {
-          user['MasterNodes'] = await getMasternodeList(user.uid);
+          user['MasterNodes'] = await firebase.getMasternodeList(user.uid);
           /* const status2FA = await getFire2FAstatus(user.uid);
             this.props.set2FA(status2FA); */
         }

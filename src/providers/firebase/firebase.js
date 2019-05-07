@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import Cryptr from 'cryptr';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -53,11 +54,17 @@ class Firebase {
 
   getDocumentRef = document => this.db.ref(document);
 
+  getRawDocument = document => this.getDocumentRef(document).once('value');
+
+  getDocument = async document => {
+    const rawDocument = await this.getRawDocument(document);
+    return rawDocument.val();
+  };
+
   getDbVersion = async () => {
-    const dbVersionRef = await this.getDocumentRef(
+    const dbVersion = await this.getDocument(
       `${FIREBASE_COLLECTION_DBINFO}/version`
-    ).once('value');
-    const dbVersion = dbVersionRef.val();
+    );
     return dbVersion;
   };
 
@@ -74,10 +81,9 @@ class Firebase {
 
   isUsernameAvailable = async username => {
     if (username) {
-      const userNamesRef = await this.getDocumentRef(
+      const userId = await this.getDocument(
         `${FIREBASE_COLLECTION_USERLIST}/${username}`
-      ).once('value');
-      const userId = userNamesRef.val();
+      );
       return !userId;
     }
     return true;
@@ -95,13 +101,8 @@ class Firebase {
   getUsernameById = uid =>
     this.getDocumentRef(`${FIREBASE_COLLECTION_USERNAME}/${uid}`);
 
-  getUsernameList = async () => {
-    const usernameRef = await this.getDocumentRef(
-      FIREBASE_COLLECTION_USERNAME
-    ).once('value');
-    const usernameList = usernameRef.val();
-    return usernameList;
-  };
+  getUsernameList = async () =>
+    await this.getDocument(FIREBASE_COLLECTION_USERNAME);
 
   /**********************
    * Proposals Comments *
@@ -112,17 +113,16 @@ class Firebase {
    * @param {string} pid = proposal ID
    */
   getProposalComments = async (pid, sortAsc) => {
-    const commentsRef = await this.getDocumentRef(
+    const comments = await this.getDocument(
       `${FIREBASE_COLLECTION_COMMENTS}/${pid}`
-    ).once('value');
-    const commentsListObj = await commentsRef.val();
-    if (commentsListObj) {
-      Object.getOwnPropertyNames(commentsListObj).forEach((key, idx, array) => {
-        commentsListObj[key]._id = key;
-        commentsListObj[key].showAddReply = false;
+    );
+    if (comments) {
+      Object.getOwnPropertyNames(comments).forEach((key, idx, array) => {
+        comments[key]._id = key;
+        comments[key].showAddReply = false;
       });
     }
-    const commentsArray = commentsListObj ? Object.values(commentsListObj) : [];
+    const commentsArray = comments ? Object.values(comments) : [];
     if (sortAsc) {
       commentsArray.sort(function(a, b) {
         return a.createdAt - b.createdAt;
@@ -154,7 +154,6 @@ class Firebase {
    * @param {object} item = object with the vote
    */
   setProposalCommentsVote = async (pid, cid, item) => {
-    // console.log('ACZ -->', pid, cid, item);
     const commentsRef = await this.getDocumentRef(
       `${FIREBASE_COLLECTION_COMMENTS}/${pid}/${cid}`
     );
@@ -166,13 +165,8 @@ class Firebase {
    *
    * @param {string} cid = comment ID
    */
-  getProposalCommentsReply = async cid => {
-    const rawReplies = await this.getDocumentRef(
-      `${FIREBASE_COLLECTION_C_REPLIES}/${cid}`
-    ).once('value');
-    const repliesListObj = await rawReplies.val();
-    return repliesListObj;
-  };
+  getProposalCommentsReply = async cid =>
+    await this.getDocument(`${FIREBASE_COLLECTION_C_REPLIES}/${cid}`);
 
   /**
    *
@@ -196,6 +190,51 @@ class Firebase {
   /***********************
    * Masternodes Manager *
    ***********************/
+
+  getMasternodesTotal = async uid => {};
+
+  getMasternodeList = async uid => {
+    const masternodesListObj = await this.getDocument(`MasterNodes/${uid}`);
+    const mnList = masternodesListObj ? Object.values(masternodesListObj) : [];
+    return mnList;
+  };
+
+  deleteMasternode = async (masternode, uid) => {
+    const masternodesRef = await this.getDocumentRef(`MasterNodes/${uid}`);
+    const selectMasternode = await masternodesRef.child(masternode.keyId);
+    selectMasternode.remove();
+  };
+
+  addMasternode = async (masternode, uid) => {
+    const cryptr = new Cryptr(uid);
+    const newKey = this.db.ref().push().key;
+    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
+    masternode.txid = cryptr.encrypt(masternode.txid);
+    masternode.keyId = newKey;
+    masternode.key = newKey;
+    const newMasternodeRef = this.getDocumentRef(`MasterNodes/${uid}`);
+    const newMasternodeChild = newMasternodeRef.child(masternode.keyId);
+    newMasternodeChild.set(masternode);
+  };
+
+  updateMasternode = async (masternode, uid) => {
+    const cryptr = new Cryptr(uid);
+    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
+    masternode.txid = cryptr.encrypt(masternode.txid);
+    const masternodeRef = this.getDocumentRef(`MasterNodes/${uid}`);
+    const selectedMasternode = await masternodeRef.child(masternode.keyId);
+    selectedMasternode.update(masternode);
+  };
+
+  checkMasternodeExists = async (mnPrivateKey, uid) => {
+    const cryptr = new Cryptr(uid);
+    const encryptedPrivateKey = cryptr.encrypt(mnPrivateKey);
+    const mnList = await this.getMasternodeList(uid);
+    const foundedMn = mnList.find(
+      item => item.mnPrivateKey === encryptedPrivateKey
+    );
+    return !!foundedMn;
+  };
 }
 
 export default Firebase;

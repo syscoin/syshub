@@ -12,9 +12,9 @@ import { Grid } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
 // import custom components
-import ProposalVoting from '../proposalVoting/proposalVoting'
-import ProposalProgress from '../proposalProgress/proposalProgress'
-import ProposalInfo from '../proposalInfo/propsalInfo'
+import ProposalVoting from '../proposalVoting/proposalVoting';
+import ProposalProgress from '../proposalProgress/proposalProgress';
+import ProposalInfo from '../proposalInfo/propsalInfo';
 
 // Import services
 import { getFire2FAMethod } from '../../../API/firebase/twoFAFirebase.service';
@@ -99,7 +99,6 @@ class ProposalCard extends Component {
   }
 
   async cantVoteErrorModal(type) {
-
     const modalType = {
       e2fa: {
         mText: 'Must have 2FA enabled to vote',
@@ -135,15 +134,14 @@ class ProposalCard extends Component {
           }
         }
       }
-    }[type]
+    }[type];
 
-    const modalValue = await swal(
-      {
-        title: 'Oops...',
-        text: modalType.mText,
-        icon: 'error',
-        buttons: modalType.buttons
-      })
+    const modalValue = await swal({
+      title: 'Oops...',
+      text: modalType.mText,
+      icon: 'error',
+      buttons: modalType.buttons
+    });
     if (modalValue) {
       this.props.setPage(modalValue);
     }
@@ -151,7 +149,7 @@ class ProposalCard extends Component {
   }
 
   onVote(vote) {
-    switch(vote) {
+    switch (vote) {
       case 'yes':
         this.voteUp();
         break;
@@ -179,7 +177,7 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-    
+
     let modalType = !twoFA ? 'e2fa' : '';
     modalType = !masternodes ? `${modalType}eMn` : modalType;
     if (modalType) {
@@ -189,8 +187,9 @@ class ProposalCard extends Component {
 
     checkVoted(user, proposal, masternodes)
       .then(value => {
-        if (value) {}
-        
+        if (value) {
+        }
+
         const MN = masternodes;
         let mnData = [];
         for (let i = 0; i < masternodes.length; i++) {
@@ -202,11 +201,11 @@ class ProposalCard extends Component {
           };
           const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
           const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
-          
+
           this.props
-          .voteOnProposal(proposalVoteYes)
-          .then(data => {
-            const mnDataInitLength = mnData.length;
+            .voteOnProposal(proposalVoteYes)
+            .then(data => {
+              const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -322,7 +321,7 @@ class ProposalCard extends Component {
                     )
                   });
                 }
-                
+
                 if (i + 1 === masternodes.length) {
                   this.setState({
                     mnData: mnData
@@ -413,7 +412,7 @@ class ProposalCard extends Component {
         icon: 'error'
       });
     }
-    
+
     let modalType = !twoFA ? 'e2fa' : '';
     modalType = !masternodes ? `${modalType}eMn` : modalType;
     if (modalType) {
@@ -441,7 +440,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteNo)
             .then(data => {
-            const mnDataInitLength = mnData.length;
+              const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -676,7 +675,7 @@ class ProposalCard extends Component {
           this.props
             .voteOnProposal(proposalVoteAbstain)
             .then(data => {
-              const mnDataInitLength = mnData.length;              
+              const mnDataInitLength = mnData.length;
               if (RegExp(/\s-32603\s/).test(data)) {
                 if (RegExp(/Failure to find masternode in list/).test(data)) {
                   mnData.push({
@@ -871,7 +870,7 @@ class ProposalCard extends Component {
       });
   }
 
-render() {
+  render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
 
     const proposalTitle =
@@ -888,20 +887,20 @@ render() {
     const yesCount = parseInt(proposal.YesCount, 10);
     const noCount = parseInt(proposal.NoCount, 10);
     const totalNodes = parseInt(this.props.totalNodes, 10);
-    const totalVotes = parseInt(proposal.AbsoluteYesCount, 10);;
+    const totalVotes = parseInt(proposal.AbsoluteYesCount, 10);
 
-    const logged = user? true : false;
+    const logged = user ? true : false;
     const votingCount = {
       yesCount,
       noCount,
       abstainCount: proposal.AbstainCount
-    }
-    const progressObj={
+    };
+    const progressObj = {
       totalNodes,
       totalVotes,
       passingPercentage: 10,
       funded: proposal.fCachedFunding
-    }
+    };
     const columns = [
       {
         title: 'Name',
@@ -919,17 +918,19 @@ render() {
 
     return (
       <Grid container className={style}>
-        { deviceType === 'desktop' && 
-          <Grid
-            container
-            className="proposalRow"
-            key={proposal.Hash}
-          >
+        {deviceType === 'desktop' && (
+          <Grid container className="proposalRow" key={proposal.Hash}>
             <Grid item md={2} xs={3} className="proposalProgressView">
-              <ProposalProgress progressObj={progressObj}/>
+              <ProposalProgress progressObj={progressObj} />
             </Grid>
-            <Grid item md={7} xs={6} className="proposalInfoView" onClick={() => selectProposal(proposal)}>
-              <ProposalInfo 
+            <Grid
+              item
+              md={7}
+              xs={6}
+              className="proposalInfoView"
+              onClick={() => selectProposal(proposal)}
+            >
+              <ProposalInfo
                 title={proposalTitle}
                 paymentAmount={payment_amount}
                 paymentType={payment_type}
@@ -938,36 +939,55 @@ render() {
               />
             </Grid>
             <Grid item md={3} xs={3} className="proposalVoteView">
-              <ProposalVoting logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+              <ProposalVoting
+                logged={logged}
+                votingCount={votingCount}
+                onVote={vote => this.onVote(vote)}
+              />
             </Grid>
           </Grid>
-        }
-        { deviceType === 'mobile' &&
+        )}
+        {deviceType === 'mobile' && (
           <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className="proposalRow"
-          key={proposal.Hash}
-        >
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            className="proposalRow"
+            key={proposal.Hash}
+          >
             <Grid item md={6} xs={6} className="proposalProgressView">
-              <ProposalProgress deviceType={deviceType}  progressObj={progressObj}/>
+              <ProposalProgress
+                deviceType={deviceType}
+                progressObj={progressObj}
+              />
             </Grid>
             <Grid item md={6} xs={6} className="proposalVoteView">
-              <ProposalVoting deviceType={deviceType} logged={logged} votingCount={votingCount} onVote={(vote) => this.onVote(vote)}/>
+              <ProposalVoting
+                deviceType={deviceType}
+                logged={logged}
+                votingCount={votingCount}
+                onVote={vote => this.onVote(vote)}
+              />
             </Grid>
-            <Grid item md={12} xs={12} className="proposalInfoView"  onClick={() => selectProposal(proposal)}>
-              <ProposalInfo 
-                deviceType={deviceType} 
+            <Grid
+              item
+              md={12}
+              xs={12}
+              className="proposalInfoView"
+              onClick={() => selectProposal(proposal)}
+            >
+              <ProposalInfo
+                deviceType={deviceType}
                 title={proposalTitle}
                 paymentAmount={payment_amount}
                 paymentType={payment_type}
                 daysRemaining={days_remaining}
                 monthRemaining={month_remaining}
               />
+            </Grid>
           </Grid>
-        </Grid>}
+        )}
         <Modal
           title="Results"
           visible={this.state.visible}
@@ -1006,7 +1026,7 @@ const dispatchToProps = dispatch => {
   return {
     voteOnProposal: params => dispatch(actions.voteOnProposal(params)),
     getProposals: () => dispatch(actions.getProposals()),
-    setPage: page => dispatch(actions.setPage(page)),    
+    setPage: page => dispatch(actions.setPage(page))
   };
 };
 
