@@ -1,10 +1,12 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
-
 import React, { Component } from 'react';
 import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import swal from 'sweetalert';
 import { checkVoted, voted } from '../../../API/firebase/firebase';
+
+// Import provider HOC's
+import { withFirebase } from '../../../providers/firebase';
 
 //import antd components
 import { Modal, Table } from 'antd';
@@ -18,7 +20,6 @@ import ProposalInfo from '../proposalInfo/propsalInfo';
 
 // Import services
 import { getFire2FAMethod } from '../../../API/firebase/twoFAFirebase.service';
-import { getMasternodeList } from '../../../API/firebase/masternodeFirebase.service';
 
 // import style
 import injectSheet from 'react-jss';
@@ -165,10 +166,10 @@ class ProposalCard extends Component {
   }
 
   async voteUp(vote) {
-    const { proposal, user } = this.props;
+    const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
     const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-    const masternodes = await getMasternodeList(user.uid);
+    const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -400,10 +401,10 @@ class ProposalCard extends Component {
   }
 
   async voteDown(vote) {
-    const { proposal, user } = this.props;
+    const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
     const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-    const masternodes = await getMasternodeList(user.uid);
+    const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -636,10 +637,10 @@ class ProposalCard extends Component {
   }
 
   async voteNull(vote) {
-    const { proposal, user } = this.props;
+    const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
     const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-    const masternodes = await getMasternodeList(user.uid);
+    const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {
       swal({
@@ -1030,7 +1031,11 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(proposalCardStyle)(ProposalCard));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(proposalCardStyle)
+)(ProposalCard);

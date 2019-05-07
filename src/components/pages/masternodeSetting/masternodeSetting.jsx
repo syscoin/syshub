@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 // import providers HOC's
-import { withFirebase } from '@providers/firebase';
+import { withFirebase } from '../../../providers/firebase';
 
 import swal from 'sweetalert';
 
