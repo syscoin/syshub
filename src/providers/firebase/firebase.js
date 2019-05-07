@@ -12,7 +12,7 @@ const config = {
 };
 
 const FIREBASE_COLLECTION_DBINFO = 'dbinfo';
-const FIREBASE_COLLECTION_TWOFA = '2FAAuth';
+//const FIREBASE_COLLECTION_TWOFA = '2FAAuth';
 const FIREBASE_COLLECTION_COMMENTS = 'comments';
 const FIREBASE_COLLECTION_C_REPLIES = 'commentReplies_V2';
 const FIREBASE_COLLECTION_USERNAME = 'usernames';
