@@ -1,9 +1,3 @@
-import Cryptr from 'cryptr';
-import {
-  setFire2FAMethod,
-  getFire2FAstatus
-} from './firebase/twoFAFirebase.service';
-
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 

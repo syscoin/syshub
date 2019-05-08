@@ -15,9 +15,6 @@ import { withFirebase } from './providers/firebase';
 // Imports tasks for Hooks
 import registerDbTasksHooks from './Helpers/hooks/dbTasks';
 
-// Import services
-import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
-
 // Custom Material-UI Theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import appStyles from './styles/appStyle';
@@ -47,31 +44,12 @@ class App extends Component {
 
   async componentDidMount() {
     const { firebase } = this.props;
-    const currentUser = await firebase.getCurrentUser();
-
-    if (currentUser) {
-      this.props.setCurrentUser(currentUser);
-      return;
-    }
-
-    firebase.auth.onAuthStateChanged(async user => {
-      // try {
-      if (user) {
-        const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-
-        if (twoFA) {
-          user['MasterNodes'] = await firebase.getMasternodeList(user.uid);
-          /* const status2FA = await getFire2FAstatus(user.uid);
-            this.props.set2FA(status2FA); */
-        }
-        this.props.setCurrentUser(user);
-      }
-      // }
-      // catch (err) {}
-    });
-
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
+    firebase.auth.onAuthStateChanged(async user => {
+      this.props.setCurrentUser(user);
+    });
+
     this.props.platformGet({
       os: Platform.OS || '',
       osVersion: Platform.OSVersion || '',

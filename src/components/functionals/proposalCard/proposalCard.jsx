@@ -18,9 +18,6 @@ import ProposalVoting from '../proposalVoting/proposalVoting';
 import ProposalProgress from '../proposalProgress/proposalProgress';
 import ProposalInfo from '../proposalInfo/propsalInfo';
 
-// Import services
-import { getFire2FAMethod } from '../../../API/firebase/twoFAFirebase.service';
-
 // import style
 import injectSheet from 'react-jss';
 import proposalCardStyle from './proposalCard.style';
@@ -168,7 +165,7 @@ class ProposalCard extends Component {
   async voteUp(vote) {
     const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
-    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const twoFA = await firebase.getFire2FAMethod(user.uid, 'twoFA');
     const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {
@@ -403,7 +400,7 @@ class ProposalCard extends Component {
   async voteDown(vote) {
     const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
-    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const twoFA = await firebase.getFire2FAMethod(user.uid, 'twoFA');
     const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {
@@ -639,7 +636,7 @@ class ProposalCard extends Component {
   async voteNull(vote) {
     const { firebase, proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
-    const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
+    const twoFA = await firebase.getFire2FAMethod(user.uid, 'twoFA');
     const masternodes = await firebase.getMasternodeList(user.uid);
 
     if (!user) {

@@ -4,11 +4,7 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
-import {
-  removeFire2FA,
-  getFire2FAstatus,
-  setFire2FAMethod
-} from './twoFAFirebase.service';
+import { removeFire2FA } from './twoFAFirebase.service';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,

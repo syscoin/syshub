@@ -38,10 +38,10 @@ const TWOFA_FIRE_COLLECTION = '2FAAuth';
   return newStatus;
 } */
 
-/* export const removeFire2FA = async uid => {
+export const removeFire2FA = async uid => {
   await fire
     .database()
     .ref(`${TWOFA_FIRE_COLLECTION}/${uid}`)
     .remove();
   return { err: null, msg: '2FA register successfuly deleted' };
-}; */
+};

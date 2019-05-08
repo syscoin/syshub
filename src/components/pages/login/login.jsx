@@ -14,10 +14,7 @@ import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
 import { loginWithPhone } from '../../../API/twoFAPhone.service';
-import {
-  getAuthSecret,
-  verifyAuthCode
-} from '../../../API/twoFAAuthenticator.service';
+import { verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';
@@ -226,7 +223,7 @@ class Login extends Component {
           );
         }
         if (twoFAStatus.auth && twoFAStatus.authSecret) {
-          secret = await getAuthSecret(user.uid);
+          secret = await firebase.getAuthSecret(user.uid);
         }
         await firebase.doSignOut();
         this.setState({

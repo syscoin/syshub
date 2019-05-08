@@ -40,10 +40,10 @@ class MasternodeSetting extends Component {
   }
 
   componentDidMount() {
-    this.getMasternodeList();
+    this.refreshMasternodeList();
   }
 
-  async getMasternodeList() {
+  async refreshMasternodeList() {
     const { firebase } = this.props;
     const user = this.props.app.currentUser;
     const mnList = await firebase.getMasternodeList(user.uid);
@@ -112,7 +112,7 @@ class MasternodeSetting extends Component {
       return;
     }
     await firebase.addMasternode(masternode, user.uid);
-    this.getMasternodeList();
+    this.refreshMasternodeList();
   }
 
   async deleteNode(masternode) {
@@ -123,7 +123,7 @@ class MasternodeSetting extends Component {
       return;
     }
     await firebase.deleteMasternode(masternode, user.uid);
-    this.getMasternodeList();
+    this.refreshMasternodeList();
   }
 
   async editNode(masternode) {
@@ -134,7 +134,7 @@ class MasternodeSetting extends Component {
       return;
     }
     await firebase.updateMasternode(masternode, user.uid);
-    this.getMasternodeList();
+    this.refreshMasternodeList();
   }
 
   handleOnTabClick = (event, activeTab) => {

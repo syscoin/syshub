@@ -19,7 +19,10 @@ import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
 import { fire, getCurrentUser } from '../../../API/firebase/firebase';
-import { recoverPendingProposal, deletePendingProposal } from '../../../API/proposals.service';
+import {
+  recoverPendingProposal,
+  deletePendingProposal
+} from '../../../API/proposals.service';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 //import style
@@ -102,12 +105,14 @@ class NewProposal extends Component {
 
   async componentDidMount() {
     const currentUser = getCurrentUser();
-    if (!currentUser) { return };
+    if (!currentUser) {
+      return;
+    }
 
     const userProp = await recoverPendingProposal(currentUser.uid);
-    if (!userProp) { 
-      return
-     };
+    if (!userProp) {
+      return;
+    }
     const proposalDetail = userProp.descriptionRef;
     if (userProp.hash) {
       deletePendingProposal(currentUser.uid);
@@ -120,77 +125,76 @@ class NewProposal extends Component {
 
     swal({
       title: 'Recovery',
-      text:
-        `It seems you have some information saved in our db, would you like to recover the data?
+      text: `It seems you have some information saved in our db, would you like to recover the data?
 
         If you CANCEL all data will be permanently deleted and the funds will be lost if you have paid any`,
       buttons: true,
       icon: 'info'
     })
-    .then(value => {
-      if (value) {
-        this.setState({
-          recover: value,
-          prepareObj: userProp.prepareObj,
-          proposalDetail
+      .then(value => {
+        if (value) {
+          this.setState({
+            recover: value,
+            prepareObj: userProp.prepareObj,
+            proposalDetail
+          });
+
+          let userProposal = {
+            //there are another def in line 339 both have to be in sync
+            type: 1,
+            name: userProp.name,
+            title: userProp.title,
+            descriptionID: userProp.descriptionID || '',
+            description: userProp.description || '',
+            username: userProp.username,
+            nPayment: userProp.nPayment,
+            first_epoch: userProp.first_epoch,
+            start_epoch: userProp.start_epoch,
+            end_epoch: userProp.end_epoch,
+            payment_address: userProp.payment_address,
+            payment_amount: userProp.payment_amount,
+            url: userProp.url
+          };
+
+          if (userProp.prepareReceipt) {
+            userProposal.prepareReceipt = userProp.prepareReceipt;
+            this.setState({
+              pValue: userProp.prepareReceipt
+            });
+          }
+
+          if (userProp.txid) {
+            userProposal.txid = userProp.txid;
+
+            this.setState({
+              savedPayValue: userProp.txid
+            });
+          }
+
+          if (userProp.submitReceipt) {
+            userProposal.submitReceipt = userProp.submitReceipt;
+
+            this.setState({
+              sValue: userProp.submitReceipt
+            });
+          }
+
+          this.setState({
+            visible: true,
+            userProposal
+          });
+        } else {
+          deletePendingProposal(currentUser.uid);
+          this.setState({ savedProposal: {} });
+        }
+      })
+      .catch(err => {
+        swal({
+          title: 'Oops...',
+          text: `${err}`,
+          icon: 'error'
         });
-
-        let userProposal = {
-          //there are another def in line 339 both have to be in sync
-          type: 1,
-          name: userProp.name,
-          title: userProp.title,
-          descriptionID: userProp.descriptionID || '',
-          description: userProp.description || '',
-          username: userProp.username,
-          nPayment: userProp.nPayment,
-          first_epoch: userProp.first_epoch,
-          start_epoch: userProp.start_epoch,
-          end_epoch: userProp.end_epoch,
-          payment_address: userProp.payment_address,
-          payment_amount: userProp.payment_amount,
-          url: userProp.url
-        };
-
-        if (userProp.prepareReceipt) {
-          userProposal.prepareReceipt = userProp.prepareReceipt;
-          this.setState({
-            pValue: userProp.prepareReceipt
-          });
-        }
-
-        if (userProp.txid) {
-          userProposal.txid = userProp.txid;
-
-          this.setState({
-            savedPayValue: userProp.txid
-          });
-        }
-
-        if (userProp.submitReceipt) {
-          userProposal.submitReceipt = userProp.submitReceipt;
-
-          this.setState({
-            sValue: userProp.submitReceipt
-          });
-        }
-
-        this.setState({
-          visible: true,
-          userProposal
-        });
-      } else {
-        deletePendingProposal(currentUser.uid);
-        this.setState({ savedProposal: {} });
-      }
-    })
-    .catch(err => {
-      swal({
-        title: 'Oops...',
-        text: `${err}`,
-        icon: 'error'
       });
-    });
   }
 
   yearDayMonth(dateInMills, format) {
@@ -344,7 +348,8 @@ class NewProposal extends Component {
   }
 
   onChange(e) {
-    const currentUser = fire.auth().currentUser;
+    const { firebase } = this.props;
+    const currentUser = firebase.currentUser();
     if (!currentUser) {
       return;
     }
