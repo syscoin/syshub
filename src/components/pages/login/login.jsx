@@ -157,13 +157,12 @@ class Login extends Component {
     if (twoFAStatus.auth && twoFAStatus.sms) {
       twoFaResult = !!(vSmsCode * vGToken);
     }
-    console.log('ACZ loginForm -->', this.loginForm);
     runTasks('onLoginSuccess');
 
     this.props.setPage('home');
     if (!twoFaResult) {
       await firebase.doSignOut();
-      this.props.doLogout();
+      this.props.doAppLogout();
       swal({
         title: 'Oops...',
         text: 'You do not pass the 2FA Challenge',
@@ -247,10 +246,10 @@ class Login extends Component {
   }
 
   async onModalClose(showModal) {
-    const { firebase, doLogout } = this.props;
+    const { firebase, doAppLogout } = this.props;
     this.setState({ showModal });
     await firebase.doSignOut();
-    doLogout();
+    doAppLogout();
   }
 
   render() {
@@ -354,7 +353,7 @@ const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    doLogout: () => dispatch(actions.doLogout())
+    doAppLogout: () => dispatch(actions.doLogout())
   };
 };
 

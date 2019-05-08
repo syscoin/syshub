@@ -6,7 +6,11 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase/firebase';
+import {
+  doUpdateProfile,
+  doUpdatePassword,
+  doDeleteAccount
+} from '../../../API/firebase/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
@@ -15,7 +19,6 @@ import UserTwoFactor from '../../functionals/userTwoFactor/userTwoFactor';
 
 // Import styles
 import userAccountStyle from './userAccount.style';
-
 
 class UserAccount extends Component {
   constructor(props) {
@@ -46,7 +49,7 @@ class UserAccount extends Component {
     doUpdatePassword(user, (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
-        this.props.doLogout();
+        this.props.doAppLogout();
         this.props.setPage('login');
       } else {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -55,11 +58,11 @@ class UserAccount extends Component {
   }
 
   async deleteProfile() {
-    const deleted = await doDeleteAccount()
+    const deleted = await doDeleteAccount();
     if (deleted) {
-      this.props.doLogout()
+      this.props.doAppLogout();
       this.props.setPage('home');
-    };
+    }
   }
 
   render() {
@@ -69,13 +72,19 @@ class UserAccount extends Component {
       <div className={style}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
-          <UserProfile deviceType={this.props.deviceType} onUpdateProfile={this.updateProfile} />
+          <UserProfile
+            deviceType={this.props.deviceType}
+            onUpdateProfile={this.updateProfile}
+          />
           <UserChangePsw
             deviceType={this.props.deviceType}
             onUpdatePassword={this.updatePassword}
           />
           <UserTwoFactor deviceType={this.props.deviceType} />
-          <UserDelete deviceType={this.props.deviceType} onDeleteProfile={this.deleteProfile} />
+          <UserDelete
+            deviceType={this.props.deviceType}
+            onDeleteProfile={this.deleteProfile}
+          />
         </Paper>
       </div>
     );
@@ -88,10 +97,13 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    doLogout: () => dispatch(actions.doLogout()),
+    doAppLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     setPage: page => dispatch(actions.setPage(page))
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(userAccountStyle)(UserAccount));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(userAccountStyle)(UserAccount));

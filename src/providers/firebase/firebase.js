@@ -42,7 +42,11 @@ class Firebase {
   doSignInWithEmailAndPassword = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = async update => {
+    this.auth.signOut();
+    if (update) {
+    }
+  };
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
@@ -100,6 +104,12 @@ class Firebase {
     this.getDocumentRef(`${FB_COLLECTION_USERNAME}/${uid}`);
 
   getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAME);
+
+  doLogout = async update => {
+    await this.doSignOut();
+    if (update) {
+    }
+  };
 
   /**********************
    * Proposals Comments *

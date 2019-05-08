@@ -57,7 +57,7 @@ class UserTwoFactorAuth extends Component {
     const { firebase } = this.props;
     fire.auth().useDeviceLanguage();
 
-    const user = await firebase.currentUser();
+    const user = await firebase.getCurrentUser();
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
 
@@ -138,9 +138,9 @@ class UserTwoFactorAuth extends Component {
     window.recaptchaVerifierAuthCode.render();
   }
 
-  handleShowModal() {
+  async handleShowModal() {
     const { firebase } = this.props;
-    const user = firebase.currentUser();
+    const user = await firebase.getCurrentUser();
     const { secret, gAuthSecret, qrCodeURL } = getAuthQRCode(user.email);
     this.setState({
       showModal: true,
@@ -191,7 +191,7 @@ class UserTwoFactorAuth extends Component {
       return;
     }
 
-    const user = firebase.currentUser();
+    const user = await firebase.getCurrentUser();
     let newStatus = await firebase.saveAuthSecret(secret, user.uid);
     newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
@@ -213,7 +213,7 @@ class UserTwoFactorAuth extends Component {
     }
     this.verify = false;
 
-    const user = firebase.currentUser();
+    const user = await firebase.getCurrentUser();
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
 
     if (!twoFAStatus.authSecret) {
@@ -228,7 +228,7 @@ class UserTwoFactorAuth extends Component {
 
   async disableAuth() {
     const { firebase } = this.props;
-    const user = firebase.currentUser();
+    const user = await firebase.getCurrentUser();
 
     if (!this.verify) {
       swal({
@@ -248,7 +248,7 @@ class UserTwoFactorAuth extends Component {
 
   async removeSecret() {
     const { firebase } = this.props;
-    const user = firebase.currentUser();
+    const user = await firebase.getCurrentUser();
     const newStatus = await firebase.setFire2FAMethod(
       user.uid,
       'authSecret',
