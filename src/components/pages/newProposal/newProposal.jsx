@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
+
+// Imports provider HOC's
+import { withFirebase } from '../../../providers/firebase';
+
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -18,7 +23,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
-import { fire, getCurrentUser } from '../../../API/firebase/firebase';
+import { fire } from '../../../API/firebase/firebase';
 import {
   recoverPendingProposal,
   deletePendingProposal
@@ -104,7 +109,8 @@ class NewProposal extends Component {
   }
 
   async componentDidMount() {
-    const currentUser = getCurrentUser();
+    const { firebase } = this.props;
+    const currentUser = firebase.getCurrentUser();
     if (!currentUser) {
       return;
     }
@@ -1088,7 +1094,11 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(newProposalStyle)(NewProposal));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(newProposalStyle)
+)(NewProposal);

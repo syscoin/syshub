@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
+//Import providers HOC's
+import { withFirebase } from '../../../providers/firebase';
+
 import Paper from '@material-ui/core/Paper';
 import injectSheet from 'react-jss';
 import swal from 'sweetalert';
@@ -8,7 +12,6 @@ import swal from 'sweetalert';
 import actions from '../../../redux/actions';
 import {
   doUpdateProfile,
-  doUpdatePassword,
   doDeleteAccount
 } from '../../../API/firebase/firebase';
 
@@ -46,7 +49,8 @@ class UserAccount extends Component {
   }
 
   updatePassword(user) {
-    doUpdatePassword(user, (err, data) => {
+    const { firebase } = this.props;
+    firebase.doPasswordUpdate(user, (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
         this.props.doAppLogout();
@@ -58,7 +62,8 @@ class UserAccount extends Component {
   }
 
   async deleteProfile() {
-    const deleted = await doDeleteAccount();
+    const { firebase } = this.props;
+    const deleted = await firebase.doDeleteAccount();
     if (deleted) {
       this.props.doAppLogout();
       this.props.setPage('home');
@@ -103,7 +108,11 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(userAccountStyle)(UserAccount));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(userAccountStyle)
+)(UserAccount);

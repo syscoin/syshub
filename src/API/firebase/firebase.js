@@ -70,15 +70,15 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
 };
 
 const doRegister = () => {};
-
+/* 
 const doLogin = (email, password) => {
   fire
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {})
     .catch(err => {});
-};
-
+}; */
+/* 
 const doLogout = update => {
   fire
     .auth()
@@ -87,9 +87,9 @@ const doLogout = update => {
       if (!update) {
       }
     });
-};
+}; */
 
-const doUpdatePassword = (user, callback) => {
+/* const doUpdatePassword = (user, callback) => {
   const currentUser = fire.auth().currentUser;
 
   if (currentUser) {
@@ -108,7 +108,7 @@ const doUpdatePassword = (user, callback) => {
       })
       .catch(err => callback(err));
   }
-};
+}; */
 
 const doUpdateProfile = user => {
   const currentUser = fire.auth().currentUser;
@@ -228,7 +228,7 @@ const doUpdateProfile = user => {
   });
 };
 
-const doDeleteAccount = async () => {
+/* const doDeleteAccount = async () => {
   const currentUser = await fire.auth().currentUser;
   let deleted = false;
 
@@ -369,14 +369,14 @@ const doDeleteAccount = async () => {
     }
   }
   return deleted;
-};
+}; */
 
-const getCurrentUser = () => {
+/* const getCurrentUser = () => {
   return fire.auth().currentUser;
-};
+}; */
 
 // refactor this method to run properly
-const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
+/* const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
   return new Promise((resolve, reject) => {
     provider
       .verifyPhoneNumber(phoneNumber, appVerifier)
@@ -431,19 +431,12 @@ const addAuthenticator = (user, provider, phoneNumber, appVerifier) => {
         reject(err);
       });
   });
-};
+}; */
 
 //Check if neccessary
 export {
-  TWOFA_FIRE_COLLECTION,
-  COMMENTS_FIRE_COLLECTION,
-  C_REPLIES_FIRE_COLLECTION,
   fire, // si
-  doLogout, // si
   doUpdateProfile, // si
-  doUpdatePassword, // si
-  doDeleteAccount, // si
   checkVoted, // si
-  voted, // si
-  getCurrentUser // si
+  voted // si
 };

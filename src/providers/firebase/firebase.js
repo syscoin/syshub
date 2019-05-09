@@ -1,6 +1,10 @@
 import app from 'firebase/app';
-import 'firebase/auth';
 import Cryptr from 'cryptr';
+import to from '../../Helpers/to';
+
+// to be removed it is not good mix UI in the provider
+import swal from 'sweetalert';
+import swal2 from 'sweetalert2';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -15,8 +19,10 @@ const FB_COLLECTION_DBINFO = 'dbinfo';
 const FB_COLLECTION_TWOFA = '2FAAuth';
 const FB_COLLECTION_COMMENTS = 'comments';
 const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
-const FB_COLLECTION_USERNAME = 'usernames';
+const FB_COLLECTION_USERNAMES = 'usernames';
 const FB_COLLECTION_USERLIST = 'userlist';
+const FB_COLLECTION_PROPOSALS = 'proposals';
+const FB_COLLECTION_MASTERNODES = 'MasterNodes';
 
 class Firebase {
   constructor() {
@@ -50,7 +56,28 @@ class Firebase {
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
-  doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+  //doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+  doPasswordUpdate = async (user, callback) => {
+    const currentUser = await this.getCurrentUser();
+
+    if (currentUser) {
+      const credentials = this.firebaseApp.auth.EmailAuthProvider.credential(
+        currentUser.email,
+        user.currentPass
+      );
+      currentUser
+        .reauthenticateWithCredential(credentials)
+        .then(() => {
+          return currentUser.updatePassword(user.newPass);
+        })
+        .then(() => {
+          this.doSignOut('fromUpdate');
+          callback(null, 'success');
+        })
+        .catch(err => callback(err));
+    }
+  };
 
   /****************************
    * General Db helper and API *
@@ -92,7 +119,7 @@ class Firebase {
   };
 
   addUsername = async (key, username) => {
-    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAME);
+    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
     const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
     usernameRef.child(key).set(username);
     userlistRef.child(username).set(key);
@@ -101,13 +128,147 @@ class Firebase {
   getCurrentUser = async () => await this.auth.currentUser;
 
   getUsernameById = uid =>
-    this.getDocumentRef(`${FB_COLLECTION_USERNAME}/${uid}`);
+    this.getDocumentRef(`${FB_COLLECTION_USERNAMES}/${uid}`);
 
-  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAME);
+  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAMES);
 
   doLogout = async update => {
     await this.doSignOut();
     if (update) {
+    }
+  };
+
+  doDeleteAccount = async () => {
+    const currentUser = await this.getCurrentUser();
+    let deleted = false;
+
+    if (!currentUser) {
+      return deleted;
+    }
+
+    const password = await swal({
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+      title: 'Authentication Required',
+      text: 'Please provide your password (or dead)',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+      content: {
+        element: 'input',
+        attributes: {
+          placeholder: 'Type your password',
+          type: 'password'
+        }
+      }
+    });
+
+    if (!password) {
+      return deleted;
+    }
+
+    const credentials = await this.firebaseApp.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      password
+    );
+    const confirmed = await currentUser
+      .reauthenticateWithCredential(credentials)
+      .then(() => true)
+      .catch(err => false);
+
+    if (!confirmed) {
+      swal({
+        title: 'Oops...',
+        text: 'Make sure to type the correct password',
+        icon: 'error'
+      });
+      return deleted;
+    }
+
+    const value = await swal2({
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      title: 'WARNING',
+      html:
+        'Type "DELETE" to delete your account permantly, this cannot be undone! <span style="color: red;">YOUR DATA WILL BE DELETED AND CAN NOT BE RECOVERED, ENSURE YOUR MN KEYs AND VINs ARE BACKED UP!!</span>',
+      type: 'warning',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger'
+    });
+
+    if (value.dismiss) {
+      return deleted;
+    }
+
+    if (value.value !== 'DELETE') {
+      swal({
+        title: 'Oops...',
+        text: 'Make sure to type "DELETE", with all caps',
+        icon: 'error'
+      });
+      return deleted;
+    }
+
+    if (value.value === 'DELETE') {
+      //* add "-deleted" to comment author *
+      /*  const rawComments = await this.getRawDocument('comments');
+            rawComments.forEach(snap => {
+              snap.forEach(comment => {
+                if (comment.val().createdBy.uid === currentUser.uid) {
+                  let newComment = { ...comment.val() };
+                  newComment.createdBy.name = `${currentUser.displayName}-deleted`;
+                  comment.ref.update(newComment);
+                }
+              });
+            }); */
+
+      //* Add "-deleted" to the username list *
+
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+      const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
+
+      usernameRef
+        .child(currentUser.uid)
+        .set(`${currentUser.displayName}-deleted`);
+      userlistRef.child(currentUser.displayName).remove();
+      userlistRef
+        .child(`${currentUser.displayName}-deleted`)
+        .set(currentUser.uid);
+
+      this.removeFire2FA(currentUser.uid);
+
+      const proposalsRef = await this.getDocumentRef(FB_COLLECTION_PROPOSALS);
+      proposalsRef.child(currentUser.uid).remove();
+
+      const masternodesRef = await this.getDocumentRef(
+        FB_COLLECTION_MASTERNODES
+      );
+      masternodesRef.child(currentUser.uid).remove();
+
+      const [err, iamDeleted] = await to(currentUser.delete());
+      if (!err) {
+        swal({
+          title: 'Success',
+          text: 'Account Deleted',
+          icon: 'success'
+        });
+        this.doSignOut();
+        deleted = true;
+        return deleted;
+      } else {
+        swal({
+          title: 'Oops...',
+          text: `${iamDeleted}`,
+          icon: 'error'
+        });
+        return deleted;
+      }
     }
   };
 

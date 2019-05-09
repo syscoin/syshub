@@ -23,7 +23,7 @@
     "comments": {
       ".read": true,
       ".write": "auth !== null",
-      ".indexOn": ["createdAt"]
+      ".indexOn": ["createdAt", "createdBy/uid"]
     },
     "commentReplies_V2": {
       ".read": true,
