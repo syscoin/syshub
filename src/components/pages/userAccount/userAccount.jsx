@@ -10,10 +10,7 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import {
-  doUpdateProfile,
-  doDeleteAccount
-} from '../../../API/firebase/firebase';
+import { doUpdateProfile } from '../../../API/firebase/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
@@ -33,19 +30,21 @@ class UserAccount extends Component {
   }
 
   updateProfile(user) {
-    doUpdateProfile(user)
+    const { firebase } = this.props;
+    const [err, updatedUser] = firebase.doUpdateProfile(user);
+    /* doUpdateProfile(user)
       .then(data => {
         swal({
           title: 'Success',
           text: 'Account updated.',
           icon: 'success'
         });
-
+        console.log('ACZ data -->', data);
         this.props.setCurrentUser(data);
       })
       .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      });
+        swal({ title: 'Oops...KK', text: `${err}`, icon: 'error' });
+      }); */
   }
 
   updatePassword(user) {

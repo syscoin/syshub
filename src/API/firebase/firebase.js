@@ -4,8 +4,6 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
-import { removeFire2FA } from './__twoFAFirebase.service';
-
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -126,26 +124,6 @@ const doUpdateProfile = user => {
             displayName: user.username
           })
           .then(() => {
-            messages.on('value', snap => {
-              snap.forEach(message => {
-                if (message.val().user.displayName === oldUsername) {
-                  const updated = {
-                    body: message.val().body,
-                    key: message.val().key,
-                    user: {
-                      displayName: currentUser.displayName,
-                      email: message.val().user.email,
-                      id: message.val().user.id
-                    }
-                  };
-
-                  fire
-                    .database()
-                    .ref('messages/' + message.val().key)
-                    .update(updated);
-                }
-              });
-            });
             if (user.photoURL || user.email) {
               return;
             }
@@ -194,32 +172,8 @@ const doUpdateProfile = user => {
 
             return currentUser.reauthenticateWithCredential(credentials);
           })
-          .then(() => {
-            return currentUser.updateEmail(user.email);
-          })
-          .then(() => {
-            messages.on('value', snap => {
-              snap.forEach(message => {
-                if (message.val().user.email === oldEmail) {
-                  const updated = {
-                    body: message.val().body,
-                    key: message.val().key,
-                    user: {
-                      displayName: message.val().user.displayName,
-                      email: currentUser.email,
-                      id: message.val().user.id
-                    }
-                  };
-
-                  fire
-                    .database()
-                    .ref('messages/' + message.val().key)
-                    .update(updated);
-                }
-              });
-            });
-            resolve(currentUser);
-          })
+          .then(() => currentUser.updateEmail(user.email))
+          .then(() => resolve(currentUser))
           .catch(err => {
             reject(err);
           });

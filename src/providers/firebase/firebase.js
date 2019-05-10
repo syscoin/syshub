@@ -272,6 +272,85 @@ class Firebase {
     }
   };
 
+  doUpdateProfile = async user => {
+    const currentUser = this.getCurrentUser();
+    const oldUsername = currentUser.displayName;
+    const oldEmail = currentUser.email;
+
+    if (!currentUser) {
+      return ['Must be logged'];
+    }
+
+    return new Promise((resolve, reject) => {
+      const usernames = this.getDocumentRef('usernames');
+      if (currentUser) {
+        if (user.username) {
+          usernames.update({
+            [currentUser.uid]: user.username
+          });
+          currentUser
+            .updateProfile({
+              displayName: user.username
+            })
+            .then(() => {
+              if (user.photoURL || user.email) {
+                return;
+              }
+              resolve(currentUser);
+            })
+            .catch(err => resolve(err));
+        }
+
+        if (user.photoURL) {
+          currentUser
+            .updateProfile({
+              photoURL: user.photoURL
+            })
+            .then(() => {
+              if (user.email) {
+                return;
+              }
+              resolve(currentUser);
+            })
+            .catch(err => reject(err));
+        }
+
+        if (user.email) {
+          swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            title: 'Warning',
+            text:
+              'You are about to change your email, you must input your password first',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+            content: {
+              element: 'input',
+              attributes: {
+                placeholder: 'Type your password',
+                type: 'password'
+              }
+            }
+          })
+            .then(password => {
+              const credentials = this.firebaseApp.auth.EmailAuthProvider.credential(
+                currentUser.email,
+                password
+              );
+
+              return currentUser.reauthenticateWithCredential(credentials);
+            })
+            .then(() => currentUser.updateEmail(user.email))
+            .then(() => resolve(currentUser))
+            .catch(err => {
+              reject(err);
+            });
+        }
+      }
+    });
+  };
+
   /**********************
    * Proposals Comments *
    **********************/
