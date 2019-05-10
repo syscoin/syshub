@@ -107,7 +107,7 @@ const doLogout = update => {
       .catch(err => callback(err));
   }
 }; */
-
+/* 
 const doUpdateProfile = user => {
   const currentUser = fire.auth().currentUser;
   const oldUsername = currentUser.displayName;
@@ -180,7 +180,7 @@ const doUpdateProfile = user => {
       }
     }
   });
-};
+}; */
 
 /* const doDeleteAccount = async () => {
   const currentUser = await fire.auth().currentUser;
@@ -390,7 +390,6 @@ const doUpdateProfile = user => {
 //Check if neccessary
 export {
   fire, // si
-  doUpdateProfile, // si
   checkVoted, // si
   voted // si
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import to from '../../../Helpers/to';
 
 //Import providers HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -10,7 +11,6 @@ import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import { doUpdateProfile } from '../../../API/firebase/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
@@ -29,9 +29,22 @@ class UserAccount extends Component {
     this.deleteProfile = this.deleteProfile.bind(this);
   }
 
-  updateProfile(user) {
+  async updateProfile(user) {
     const { firebase } = this.props;
-    const [err, updatedUser] = firebase.doUpdateProfile(user);
+    const [err, { currentUser, error, message }] = await to(
+      firebase.doUpdateProfile(user)
+    );
+    console.log('ACZ -->', currentUser, error, message, err);
+    if (error || err) {
+      swal({ title: 'Oops...', text: `${message}`, icon: 'error' });
+      return;
+    }
+    swal({
+      title: 'Success',
+      text: 'Account updated.',
+      icon: 'success'
+    });
+    this.props.setCurrentUser(currentUser);
     /* doUpdateProfile(user)
       .then(data => {
         swal({
@@ -43,7 +56,6 @@ class UserAccount extends Component {
         this.props.setCurrentUser(data);
       })
       .catch(err => {
-        swal({ title: 'Oops...KK', text: `${err}`, icon: 'error' });
       }); */
   }
 
