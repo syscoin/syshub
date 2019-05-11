@@ -3,7 +3,6 @@ import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import swal from 'sweetalert';
-import { checkVoted, voted } from '../../../API/firebase/firebase';
 
 // Import provider HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -245,19 +244,7 @@ class ProposalCard extends Component {
                 )
               });
             }
-
-            if (i + 1 === masternodes.length) {
-              this.setState({
-                mnData: mnData
-              });
-              this.props.getProposals();
-              this.setState({
-                visible: true
-              });
-            }
-            return;
           }
-
           if (RegExp(/\s-8\s/).test(data)) {
             if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
               mnData.push({
@@ -278,17 +265,6 @@ class ProposalCard extends Component {
                 )
               });
             }
-
-            if (i + 1 === masternodes.length) {
-              this.setState({
-                mnData: mnData
-              });
-              this.props.getProposals();
-              this.setState({
-                visible: true
-              });
-            }
-            return;
           }
 
           mnData.push({
