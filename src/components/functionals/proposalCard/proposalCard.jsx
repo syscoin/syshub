@@ -41,7 +41,6 @@ class ProposalCard extends Component {
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.vote = this.vote.bind(this);
-    this.voteDown = this.voteDown.bind(this);
   }
 
   componentWillMount() {
@@ -146,10 +145,7 @@ class ProposalCard extends Component {
     return;
   }
 
-  async onVote(vote) {
-    const YES = 1;
-    const NO = 2;
-    const ABSTAIN = 3;
+  async onVote(voteOutcome) {
     const { firebase, user } = this.props;
     const masternodes = await firebase.getMasternodeList(user.uid);
 
@@ -171,55 +167,98 @@ class ProposalCard extends Component {
       return;
     }
 
-    switch (vote) {
-      case 'yes':
-        this.vote(masternodes, YES);
-        break;
-      case 'no':
-        this.voteDown();
-        break;
-      case 'abstain':
-        this.voteNull();
-        break;
-      default:
-        break;
-    }
+    this.vote(masternodes, voteOutcome);
   }
 
   async vote(masternodes, voteOutcome) {
     const { proposal, user } = this.props;
     const cryptr = new Cryptr(user.uid);
+
     const MN = masternodes;
     let mnData = [];
-
     for (let i = 0; i < masternodes.length; i++) {
-      const proposalVoteYes = {
+      const proposalVoteNo = {
         mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
         vinMasternode: cryptr.decrypt(MN[i].txid),
         gObjectHash: proposal.Hash,
-        voteOutcome: voteOutcome
+        voteOutcome
       };
       const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
       const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
 
       this.props
-        .voteOnProposal(proposalVoteYes)
+        .voteOnProposal(proposalVoteNo)
         .then(data => {
-          console.log('ACZ -->', data);
-          if (RegExp(/.*(S|s)uccess.*/).test(data)) {
-            mnData.push({
-              key: `${i}`,
-              name: MN[i].name,
-              status: (
-                <img
-                  src={checkIcon}
-                  height="20px"
-                  width="20px"
-                  alt="checkIcon"
-                />
-              )
-            });
-          } else if (RegExp(/\s-8\s/).test(data)) {
+          const mnDataInitLength = mnData.length;
+          if (RegExp(/\s-32603\s/).test(data)) {
+            if (RegExp(/Failure to find masternode in list/).test(data)) {
+              mnData.push({
+                key: `${i}`,
+                name: MN[i].name,
+                status: (
+                  <a
+                    onClick={() =>
+                      this.updateError('Failure to find masternode in list')
+                    }
+                  >
+                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                  </a>
+                )
+              });
+            }
+            if (RegExp(/Error voting/).test(data)) {
+              mnData.push({
+                key: `${i}`,
+                name: MN[i].name,
+                status: (
+                  <a
+                    onClick={() =>
+                      this.updateError(
+                        `Invalid proposal hash. Please check: ${cryptr.decrypt(
+                          MN[i].mnPrivateKey
+                        )}`
+                      )
+                    }
+                  >
+                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                  </a>
+                )
+              });
+            }
+
+            if (mnDataInitLength === mnData.legth) {
+              mnData.push({
+                key: `${i}`,
+                name: MN[i].name,
+                status: (
+                  <a
+                    onClick={() =>
+                      this.updateError(
+                        `Vote has Failed. Please check: ${cryptr.decrypt(
+                          MN[i].mnPrivateKey
+                        )}`
+                      )
+                    }
+                  >
+                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
+                  </a>
+                )
+              });
+            }
+
+            if (i + 1 === masternodes.length) {
+              this.setState({
+                mnData: mnData
+              });
+              this.props.getProposals();
+              this.setState({
+                visible: true
+              });
+            }
+            return;
+          }
+
+          if (RegExp(/\s-8\s/).test(data)) {
             if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
               mnData.push({
                 key: `${i}`,
@@ -244,84 +283,25 @@ class ProposalCard extends Component {
               this.setState({
                 mnData: mnData
               });
-
               this.props.getProposals();
-              let mnKeyIds = [];
-              masternodes.forEach(mnObj => {
-                mnKeyIds.push(mnObj.keyId);
-                //voted(user, proposal, 'Yes', 1, mnKeyIds);
-              });
-
               this.setState({
                 visible: true
               });
             }
             return;
-          } else if (RegExp(/\s-32603\s/).test(data)) {
-            if (RegExp(/Failure to find masternode in list/).test(data)) {
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <a
-                    onClick={() =>
-                      this.updateError('Failure to find masternode in list')
-                    }
-                  >
-                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
-                )
-              });
-            } else if (RegExp(/Error voting/).test(data)) {
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <a
-                    onClick={() =>
-                      this.updateError(
-                        `Invalid proposal hash. Please check: ${cryptr.decrypt(
-                          MN[i].mnPrivateKey
-                        )}`
-                      )
-                    }
-                  >
-                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
-                )
-              });
-            }
-          } else {
-            mnData.push({
-              key: `${i}`,
-              name: MN[i].name,
-              status: (
-                <a
-                  onClick={() =>
-                    this.updateError(
-                      `Vote has Failed. Please check: ${cryptr.decrypt(
-                        MN[i].mnPrivateKey
-                      )}`
-                    )
-                  }
-                >
-                  <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                </a>
-              )
-            });
           }
-          // reviewed till here continue later
+
+          mnData.push({
+            key: `${i}`,
+            name: MN[i].name,
+            status: (
+              <img src={checkIcon} height="20px" width="20px" alt="checkIcon" />
+            )
+          });
           this.setState({
             mnData: mnData
           });
-
           this.props.getProposals();
-          let mnKeyIds = [];
-          masternodes.forEach(mnObj => {
-            mnKeyIds.push(mnObj.keyId);
-            //voted(user, proposal, 'Yes', 1, mnKeyIds);
-          });
-
           if (i + 1 === masternodes.length) {
             this.setState({
               visible: true
@@ -350,447 +330,6 @@ class ProposalCard extends Component {
           }
         });
     }
-    // swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-  }
-
-  async voteDown(vote) {
-    const { firebase, proposal, user } = this.props;
-    const cryptr = new Cryptr(user.uid);
-    const masternodes = await firebase.getMasternodeList(user.uid);
-
-    checkVoted(user, proposal, masternodes)
-      .then(value => {
-        if (value) {
-        }
-
-        const MN = masternodes;
-        let mnData = [];
-        for (let i = 0; i < masternodes.length; i++) {
-          const proposalVoteNo = {
-            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
-            vinMasternode: cryptr.decrypt(MN[i].txid),
-            gObjectHash: proposal.Hash,
-            voteOutcome: 2
-          };
-          const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
-          const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
-
-          this.props
-            .voteOnProposal(proposalVoteNo)
-            .then(data => {
-              const mnDataInitLength = mnData.length;
-              if (RegExp(/\s-32603\s/).test(data)) {
-                if (RegExp(/Failure to find masternode in list/).test(data)) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError('Failure to find masternode in list')
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-                if (RegExp(/Error voting/).test(data)) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Invalid proposal hash. Please check: ${cryptr.decrypt(
-                              MN[i].mnPrivateKey
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (mnDataInitLength === mnData.legth) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Vote has Failed. Please check: ${cryptr.decrypt(
-                              MN[i].mnPrivateKey
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (i + 1 === masternodes.length) {
-                  this.setState({
-                    mnData: mnData
-                  });
-
-                  this.props.getProposals();
-                  let mnKeyIds = [];
-                  masternodes.forEach(mnObj => {
-                    mnKeyIds.push(mnObj.keyId);
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                  });
-
-                  this.setState({
-                    visible: true
-                  });
-                }
-                return;
-              }
-
-              if (RegExp(/\s-8\s/).test(data)) {
-                if (
-                  RegExp(/mn tx hash must be hexadecimal string/).test(data)
-                ) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Invalid txid. Please check: ${cryptr.decrypt(
-                              MN[i].txid
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (i + 1 === masternodes.length) {
-                  this.setState({
-                    mnData: mnData
-                  });
-
-                  this.props.getProposals();
-                  let mnKeyIds = [];
-                  masternodes.forEach(mnObj => {
-                    mnKeyIds.push(mnObj.keyId);
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                  });
-
-                  this.setState({
-                    visible: true
-                  });
-                }
-                return;
-              }
-
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <img
-                    src={checkIcon}
-                    height="20px"
-                    width="20px"
-                    alt="checkIcon"
-                  />
-                )
-              });
-              this.setState({
-                mnData: mnData
-              });
-
-              this.props.getProposals();
-              let mnKeyIds = [];
-              masternodes.forEach(mnObj => {
-                mnKeyIds.push(mnObj.keyId);
-                voted(user, proposal, 'No', 2, mnKeyIds);
-              });
-
-              if (i + 1 === masternodes.length) {
-                this.setState({
-                  visible: true
-                });
-              }
-            })
-            .catch(err => {
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <a
-                    onClick={() =>
-                      this.updateError(`Invalid masternode key or txid`)
-                    }
-                  >
-                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
-                )
-              });
-
-              if (i + 1 === masternodes.length) {
-                this.setState({
-                  visible: true
-                });
-              }
-            });
-        }
-      })
-      .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      });
-  }
-
-  async voteNull(vote) {
-    const { firebase, proposal, user } = this.props;
-    const cryptr = new Cryptr(user.uid);
-    const masternodes = await firebase.getMasternodeList(user.uid);
-
-    checkVoted(user, proposal, masternodes)
-      .then(value => {
-        if (value) {
-        }
-
-        const MN = masternodes;
-        let mnData = [];
-        for (let i = 0; i < masternodes.length; i++) {
-          const proposalVoteAbstain = {
-            mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
-            vinMasternode: cryptr.decrypt(MN[i].txid),
-            gObjectHash: proposal.Hash,
-            voteOutcome: 3
-          };
-          const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
-          const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
-
-          this.props
-            .voteOnProposal(proposalVoteAbstain)
-            .then(data => {
-              const mnDataInitLength = mnData.length;
-              if (RegExp(/\s-32603\s/).test(data)) {
-                if (RegExp(/Failure to find masternode in list/).test(data)) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError('Failure to find masternode in list')
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-                if (RegExp(/Error voting/).test(data)) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Invalid proposal hash. Please check: ${cryptr.decrypt(
-                              MN[i].mnPrivateKey
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (mnDataInitLength === mnData.legth) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Vote has Failed. Please check: ${cryptr.decrypt(
-                              MN[i].mnPrivateKey
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (i + 1 === masternodes.length) {
-                  this.setState({
-                    mnData: mnData
-                  });
-
-                  this.props.getProposals();
-                  let mnKeyIds = [];
-                  masternodes.forEach(mnObj => {
-                    mnKeyIds.push(mnObj.keyId);
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                  });
-
-                  this.setState({
-                    visible: true
-                  });
-                }
-                return;
-              }
-
-              if (RegExp(/\s-8\s/).test(data)) {
-                if (
-                  RegExp(/mn tx hash must be hexadecimal string/).test(data)
-                ) {
-                  mnData.push({
-                    key: `${i}`,
-                    name: MN[i].name,
-                    status: (
-                      <a
-                        onClick={() =>
-                          this.updateError(
-                            `Invalid txid. Please check: ${cryptr.decrypt(
-                              MN[i].txid
-                            )}`
-                          )
-                        }
-                      >
-                        <img
-                          src={xIcon}
-                          height="20px"
-                          width="20px"
-                          alt="xIcon"
-                        />
-                      </a>
-                    )
-                  });
-                }
-
-                if (i + 1 === masternodes.length) {
-                  this.setState({
-                    mnData: mnData
-                  });
-
-                  this.props.getProposals();
-                  let mnKeyIds = [];
-                  masternodes.forEach(mnObj => {
-                    mnKeyIds.push(mnObj.keyId);
-                    voted(user, proposal, 'No', 2, mnKeyIds);
-                  });
-
-                  this.setState({
-                    visible: true
-                  });
-                }
-                return;
-              }
-
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <img
-                    src={checkIcon}
-                    height="20px"
-                    width="20px"
-                    alt="checkIcon"
-                  />
-                )
-              });
-              this.setState({
-                mnData: mnData
-              });
-
-              this.props.getProposals();
-              let mnKeyIds = [];
-              masternodes.forEach(mnObj => {
-                mnKeyIds.push(mnObj.keyId);
-                voted(user, proposal, 'No', 2, mnKeyIds);
-              });
-
-              if (i + 1 === masternodes.length) {
-                this.setState({
-                  visible: true
-                });
-              }
-            })
-            .catch(err => {
-              mnData.push({
-                key: `${i}`,
-                name: MN[i].name,
-                status: (
-                  <a
-                    onClick={() =>
-                      this.updateError(`Invalid masternode key or txid`)
-                    }
-                  >
-                    <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
-                )
-              });
-
-              if (i + 1 === masternodes.length) {
-                this.setState({
-                  visible: true
-                });
-              }
-            });
-        }
-      })
-      .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      });
   }
 
   render() {
