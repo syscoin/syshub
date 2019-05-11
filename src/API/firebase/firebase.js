@@ -67,7 +67,7 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
     });
 };
 
-const doRegister = () => {};
+/* const doRegister = () => {}; */
 /* 
 const doLogin = (email, password) => {
   fire
