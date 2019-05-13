@@ -4,6 +4,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// Import API
+import { fire } from '../../../API/firebase/firebase';
+
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
 import { DashBoardHeader } from '../../functionals';
