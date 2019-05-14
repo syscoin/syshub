@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
+// Import provider HOC's
+import { withFirebase } from '../../../providers/firebase';
+
+// Import UI components
 import actions from '../../../redux/actions';
 import { Grid } from '@material-ui/core';
 import { Icon } from 'antd';
@@ -60,7 +65,14 @@ class DashBoard extends Component {
   }
 
   render() {
-    const { classes, proposals, deviceType, showContainer, appConstants } = this.props;
+    const { firebase } = this.props;
+    const {
+      classes,
+      proposals,
+      deviceType,
+      showContainer,
+      appConstants
+    } = this.props;
     const { proposalID } = this.state;
 
     //Platform style switcher
@@ -91,8 +103,9 @@ class DashBoard extends Component {
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={proposalID}
-                totalNodes={this.props.totalNodes || 0}
+                totalNodes={this.props.totalNodes || 0}
                 globalConst={appConstants}
+                firebase={firebase}
               />
             )
           }[showContainer]
@@ -122,7 +135,11 @@ const dispatchToProps = dispatch => {
     setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
   };
 };
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(dashboardStyle)(DashBoard));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(dashboardStyle)
+)(DashBoard);

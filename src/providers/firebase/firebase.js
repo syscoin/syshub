@@ -22,6 +22,7 @@ const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
 const FB_COLLECTION_USERNAMES = 'usernames';
 const FB_COLLECTION_USERLIST = 'userlist';
 const FB_COLLECTION_PROPOSALS = 'proposals';
+const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
 const FB_COLLECTION_MASTERNODES = 'MasterNodes';
 
 class Firebase {
@@ -336,9 +337,22 @@ class Firebase {
     return { currentUser, error: resultError, message: resultMessage };
   };
 
-  /**********************
-   * Proposals Comments *
-   **********************/
+  /*************
+   * Proposals *
+   *************/
+
+  /**
+   *
+   * @param {string} descriptionID = the ID used to store in DB,
+   * you can find it in the proposal gObject from syscoin
+   */
+  getProposalDescription = async descriptionID => {
+    const proposalDescription = await this.getDocument(
+      `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}`
+    );
+    console.log('ACZ -->', proposalDescription);
+    return proposalDescription;
+  };
 
   /**
    *
