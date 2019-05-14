@@ -24,6 +24,7 @@ const FB_COLLECTION_USERLIST = 'userlist';
 const FB_COLLECTION_PROPOSALS = 'proposals';
 const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
 const FB_COLLECTION_MASTERNODES = 'MasterNodes';
+const FB_STORAGE_AVATARS = 'avatars';
 
 class Firebase {
   constructor() {
@@ -32,6 +33,7 @@ class Firebase {
     this.firebaseApp = app;
     this.auth = app.auth();
     this.db = app.database();
+    this.storage = app.storage();
   }
 
   /***********
@@ -79,6 +81,9 @@ class Firebase {
         .catch(err => callback(err));
     }
   };
+
+  storageAvatar = async (fileName, file) =>
+    this.storage.ref(`/${FB_STORAGE_AVATARS}/${fileName}`).put(file);
 
   /****************************
    * General Db helper and API *
