@@ -23,7 +23,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
-import { fire } from '../../../API/firebase/firebase';
 import {
   recoverPendingProposal,
   deletePendingProposal
@@ -231,7 +230,8 @@ class NewProposal extends Component {
     });
   }
 
-  submitPaymentId() {
+  async submitPaymentId() {
+    const { firebase } = this.props;
     const { currentUser } = this.props.app;
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -249,22 +249,22 @@ class NewProposal extends Component {
       });
     }
 
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
     if (this.state.payValue) {
       let submitObj = { ...this.state.prepareObj };
       let updatedUserProposal = { ...this.state.userProposal };
       if (this.state.payValue) {
         updatedUserProposal.txid = this.state.payValue;
-        proposalRef.set(updatedUserProposal);
+        await firebase.setProposal(currentUser.uid, updatedUserProposal);
         submitObj.txid = this.state.payValue;
 
         this.props
           .submitProposal(submitObj)
-          .then(submitResponse => {
+          .then(async submitResponse => {
             if (submitResponse) {
               updatedUserProposal.submitReceipt = submitResponse;
-              proposalRef.set(updatedUserProposal);
+              await firebase.setProposal(currentUser.uid, updatedUserProposal);
 
               this.setState({
                 sValue: submitResponse,
@@ -285,7 +285,8 @@ class NewProposal extends Component {
     }
   }
 
-  submitHash() {
+  async submitHash() {
+    const { firebase } = this.props;
     const { currentUser } = this.props.app;
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -304,13 +305,14 @@ class NewProposal extends Component {
       });
     }
 
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
 
-    proposalRef.once('value').then(snapshot => {
-      const descriptionID = snapshot.val().descriptionID;
-      const descriptionRef = fire
+    const proposal = await firebase.getProposal(currentUser.uid);
+    if (proposal) {
+      const descriptionID = proposal.descriptionID;
+      /* const descriptionRef = fire
         .database()
-        .ref('proposalsDescriptions/' + descriptionID);
+        .ref('proposalsDescriptions/' + descriptionID); */
 
       if (this.state.hValue) {
         let updateProposalDetail = { ...this.state.proposalDetail };
@@ -319,8 +321,11 @@ class NewProposal extends Component {
         updateProposalDetail.hash = this.state.hValue;
         updatedUserProposal.hash = this.state.hValue;
 
-        descriptionRef.set(updateProposalDetail);
-        proposalRef.set(updatedUserProposal);
+        await firebase.setProposalDescription(
+          descriptionID,
+          updateProposalDetail
+        );
+        await firebase.setProposal(currentUser.uid, updatedUserProposal);
 
         this.setState({
           visible: false
@@ -338,7 +343,7 @@ class NewProposal extends Component {
           icon: 'error'
         });
       }
-    });
+    }
   }
 
   handleOk(e) {
@@ -359,12 +364,12 @@ class NewProposal extends Component {
     if (!currentUser) {
       return;
     }
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
+    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     let updated = { ...this.state.userProposal };
 
     if (e.target.name === 'payValue') {
       updated.txid = e.target.value;
-      proposalRef.set(updated);
+      firebase.setProposal(currentUser.uid, updated);
     }
     this.setState({
       [e.target.name]: e.target.value
@@ -423,7 +428,8 @@ class NewProposal extends Component {
     });
   };
 
-  createPropObj = () => {
+  createPropObj = async () => {
+    const { firebase } = this.props;
     const { app } = this.props;
     const { currentUser } = app;
     const {
@@ -452,12 +458,9 @@ class NewProposal extends Component {
       showEditor: true
     }); */
 
-    const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
-    const descriptionRef = fire
-      .database()
-      .ref('proposalsDescriptions/' + descriptionID);
+    const proposalDescription = { detail: proposal__detail, hash: '' };
 
-    descriptionRef.set({ detail: proposal__detail, hash: '' });
+    firebase.setProposalDescription(descriptionID, proposalDescription);
 
     let userProposal = {
       type: 1,
@@ -483,7 +486,9 @@ class NewProposal extends Component {
       }
     });
 
-    proposalRef.set(userProposal);
+    alert('vamos....');
+    //await firebase.setProposal(currentUser.uid, userProposal);
+    //proposalRef.set(userProposal);
 
     let newProposal = [['proposal', userProposal]];
 
@@ -502,7 +507,7 @@ class NewProposal extends Component {
       prepareObj: prepareObj
     });
     userProposal.prepareObj = prepareObj;
-    proposalRef.set(userProposal);
+    await firebase.setProposal(currentUser.uid, userProposal);
 
     this.props
       .checkProposal(dataHex)
@@ -513,10 +518,10 @@ class NewProposal extends Component {
           throw this.checkErrorManager(data);
         }
       })
-      .then(prepareResponse => {
+      .then(async prepareResponse => {
         if (prepareResponse) {
           userProposal.prepareReceipt = prepareResponse;
-          proposalRef.set(userProposal);
+          await firebase.setProposal(currentUser.uid, userProposal);
 
           this.setState({
             visible: true,

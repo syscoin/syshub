@@ -124,6 +124,7 @@ class UserTwoFactorAuth extends Component {
   }
 
   modalDidMount() {
+    const { firebase } = this.props;
     window.recaptchaVerifierAuthCode = firebase.newRecaptchaVerifier(
       'verifyCode',
       {

@@ -351,6 +351,29 @@ class Firebase {
    * Proposals *
    *************/
 
+  getProposal = async uid => {
+    const proposal = await this.getDocument(
+      `${FB_COLLECTION_PROPOSALS}/${uid}`
+    );
+    return proposal;
+  };
+
+  setProposal = async (uid, payload) => {
+    const proposalRef = await this.getDocumentRef(FB_COLLECTION_PROPOSALS);
+    proposalRef.child(uid).set(payload);
+  };
+
+  /****
+   * @param {string} pdid = Proposal Description ID
+   * @param {string} payload = the data to be storage
+   */
+  setProposalDescription = async (pdid, payload) => {
+    const descriptionRef = await this.getDocumentRef(
+      FB_COLLECTION_P_DESCRIPTIONS
+    );
+    descriptionRef.child(pdid).set(payload);
+  };
+
   /**
    *
    * @param {string} descriptionID = the ID used to store in DB,

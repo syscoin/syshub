@@ -36,6 +36,14 @@
     "usernames": {
       ".read": true,
       ".write": "auth !== null"
+    },
+    "messages": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "votes": {
+      ".read": true,
+      ".write": "auth !== null"
     }
   }
 }
