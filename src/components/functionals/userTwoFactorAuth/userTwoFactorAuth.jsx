@@ -29,7 +29,7 @@ import Close from '@material-ui/icons/Close';
 // Import Style
 import userTwoFactorAuthStyle from './userTwoFactorAuth.style';
 
-// Import Auth libs
+// Import Auth Apps
 const gAuth =
   'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2';
 const aAuth =

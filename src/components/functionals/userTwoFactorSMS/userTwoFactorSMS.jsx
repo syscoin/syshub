@@ -9,7 +9,6 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Sevices
-import { fire } from '../../../API/firebase/firebase';
 import {
   sendSMSToPhone,
   verifyPhoneCode
@@ -71,7 +70,7 @@ class UserTwoFactorSMS extends Component {
 
   async componentDidMount() {
     const { firebase } = this.props;
-    fire.auth().useDeviceLanguage();
+    firebase.useDeviceLanguage();
 
     const user = await firebase.getCurrentUser();
     if (user.phoneNumber == null) {
@@ -85,7 +84,8 @@ class UserTwoFactorSMS extends Component {
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
-      fire
+      alert('Te pillé');
+      /*  fire
         .database()
         .ref('MasterNodes/' + user.uid)
         .once('value', snapshot => {
@@ -98,9 +98,9 @@ class UserTwoFactorSMS extends Component {
           });
           user.MasterNodes = list;
           this.props.setCurrentUser(user);
-        });
+        }); */
     }
-    window.recaptchaVerifierEnable2FASMS = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierEnable2FASMS = firebase.newRecaptchaVerifier(
       'enable2FASMS',
       {
         size: 'invisible',
@@ -112,7 +112,7 @@ class UserTwoFactorSMS extends Component {
     );
     window.recaptchaVerifierEnable2FASMS.render();
 
-    window.recaptchaVerifierDisable2FASMS = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierDisable2FASMS = firebase.newRecaptchaVerifier(
       'disable2FASMS',
       {
         size: 'invisible',
@@ -128,7 +128,7 @@ class UserTwoFactorSMS extends Component {
   async modalDidMount() {
     const { firebase } = this.props;
     const user = await firebase.getCurrentUser();
-    window.recaptchaVerifier = new fire.auth.RecaptchaVerifier('sendSMS', {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('sendSMS', {
       size: 'invisible',
       callback: response => {
         this.verify = response;
@@ -138,7 +138,7 @@ class UserTwoFactorSMS extends Component {
     window.recaptchaVerifier.render();
 
     if (user && user.phoneNumber) {
-      window.recaptchaVerifierDelete = new fire.auth.RecaptchaVerifier(
+      window.recaptchaVerifierDelete = firebase.newRecaptchaVerifier(
         'phoneRemover',
         {
           size: 'invisible',
@@ -194,7 +194,7 @@ class UserTwoFactorSMS extends Component {
       return;
     }
     user
-      .unlink(fire.auth.PhoneAuthProvider.PROVIDER_ID)
+      .unlink(firebase.getPhoneAuthProviderID())
       .then(async user => {
         this.props.setCurrentUser(user);
         swal({
@@ -266,7 +266,7 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset();
       return;
     }
-    const provider = new fire.auth.PhoneAuthProvider();
+    const provider = firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
     const verificationId = await sendSMSToPhone(
       provider,

@@ -45,6 +45,11 @@ class Firebase {
   newRecaptchaVerifier = (container, params, app) =>
     new this.firebaseApp.auth.RecaptchaVerifier(container, params, app);
 
+  newPhoneAuthProvider = () => new this.firebaseApp.auth.PhoneAuthProvider();
+
+  getPhoneAuthProviderID = () =>
+    this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID;
+
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
