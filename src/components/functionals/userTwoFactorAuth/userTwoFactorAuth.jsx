@@ -9,7 +9,6 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { fire } from '../../../API/firebase/firebase';
 import {
   getAuthQRCode,
   verifyAuthCode
@@ -55,7 +54,7 @@ class UserTwoFactorAuth extends Component {
 
   async componentDidMount() {
     const { firebase } = this.props;
-    fire.auth().useDeviceLanguage();
+    firebase.useDeviceLanguage();
 
     const user = await firebase.getCurrentUser();
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
@@ -71,7 +70,7 @@ class UserTwoFactorAuth extends Component {
     }
 
     if (twoFAStatus.auth) {
-      fire
+      /* fire
         .database()
         .ref('MasterNodes/' + user.uid)
         .once('value', snapshot => {
@@ -84,9 +83,9 @@ class UserTwoFactorAuth extends Component {
           });
           user.MasterNodes = list;
           this.props.setCurrentUser(user);
-        });
+        }); */
     }
-    window.recaptchaVerifierEnable2FAAuth = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierEnable2FAAuth = firebase.newRecaptchaVerifier(
       'enable2FAAuth',
       {
         size: 'invisible',
@@ -97,7 +96,7 @@ class UserTwoFactorAuth extends Component {
       }
     );
 
-    window.recaptchaVerifierDisable2FAAuth = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierDisable2FAAuth = firebase.newRecaptchaVerifier(
       'disable2FAAuth',
       {
         size: 'invisible',
@@ -108,7 +107,7 @@ class UserTwoFactorAuth extends Component {
       }
     );
 
-    window.recaptchaVerifierRemoveSecret = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierRemoveSecret = firebase.newRecaptchaVerifier(
       'removeSecret',
       {
         size: 'invisible',
@@ -125,7 +124,7 @@ class UserTwoFactorAuth extends Component {
   }
 
   modalDidMount() {
-    window.recaptchaVerifierAuthCode = new fire.auth.RecaptchaVerifier(
+    window.recaptchaVerifierAuthCode = firebase.newRecaptchaVerifier(
       'verifyCode',
       {
         size: 'invisible',
