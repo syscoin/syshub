@@ -34,6 +34,7 @@ const sysHubTheme = createMuiTheme({
 
 class App extends Component {
   state = {};
+  firebase = this.props.firebase;
 
   async componentWillMount() {
     await this.tick();
@@ -43,10 +44,9 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const { firebase } = this.props;
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
-    firebase.auth.onAuthStateChanged(async user => {
+    this.firebase.auth.onAuthStateChanged(async user => {
       this.props.setCurrentUser(user);
     });
 
@@ -71,8 +71,7 @@ class App extends Component {
     return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
   registerHooks() {
-    const { firebase } = this.props;
-    registerDbTasksHooks({ provider: firebase });
+    registerDbTasksHooks({ provider: this.firebase });
   }
 
   async detectProposalUrl() {

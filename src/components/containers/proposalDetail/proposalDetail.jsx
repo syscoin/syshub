@@ -29,6 +29,8 @@ export class ProposalDetail extends Component {
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
   }
 
+  firebase = this.props.firebase;
+
   setMoreInfoUrl(url, propHash) {
     if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
@@ -39,12 +41,10 @@ export class ProposalDetail extends Component {
   }
 
   async prepareDataString(proposal) {
-    const { firebase } = this.props;
-    console.log('ACZ props -->', this.props);
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
-      const descriptionObj = await firebase.getProposalDescription(
+      const descriptionObj = await this.firebase.getProposalDescription(
         descriptionID
       );
       if (descriptionObj) {

@@ -64,24 +64,29 @@ class UserTwoFactorSMS extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  async componentDidMount() {
-    const { firebase } = this.props;
-    firebase.useDeviceLanguage();
+  firebase = this.props.firebase;
 
-    const user = await firebase.getCurrentUser();
+  async componentDidMount() {
+    this.firebase.useDeviceLanguage();
+
+    const user = await this.firebase.getCurrentUser();
     if (user.phoneNumber == null) {
-      const newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', false);
+      const newStatus = await this.firebase.setFire2FAMethod(
+        user.uid,
+        'sms',
+        false
+      );
       this.props.set2FA(newStatus);
       this.setState({ withNumber: false });
     } else {
       this.setState({ withNumber: true });
     }
 
-    const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
+    const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
     }
-    window.recaptchaVerifierEnable2FASMS = firebase.newRecaptchaVerifier(
+    window.recaptchaVerifierEnable2FASMS = this.firebase.newRecaptchaVerifier(
       'enable2FASMS',
       {
         size: 'invisible',
@@ -93,7 +98,7 @@ class UserTwoFactorSMS extends Component {
     );
     window.recaptchaVerifierEnable2FASMS.render();
 
-    window.recaptchaVerifierDisable2FASMS = firebase.newRecaptchaVerifier(
+    window.recaptchaVerifierDisable2FASMS = this.firebase.newRecaptchaVerifier(
       'disable2FASMS',
       {
         size: 'invisible',
@@ -107,9 +112,8 @@ class UserTwoFactorSMS extends Component {
   }
 
   async modalDidMount() {
-    const { firebase } = this.props;
-    const user = await firebase.getCurrentUser();
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('sendSMS', {
+    const user = await this.firebase.getCurrentUser();
+    window.recaptchaVerifier = this.firebase.newRecaptchaVerifier('sendSMS', {
       size: 'invisible',
       callback: response => {
         this.verify = response;
@@ -119,7 +123,7 @@ class UserTwoFactorSMS extends Component {
     window.recaptchaVerifier.render();
 
     if (user && user.phoneNumber) {
-      window.recaptchaVerifierDelete = firebase.newRecaptchaVerifier(
+      window.recaptchaVerifierDelete = this.firebase.newRecaptchaVerifier(
         'phoneRemover',
         {
           size: 'invisible',
@@ -156,8 +160,7 @@ class UserTwoFactorSMS extends Component {
   };
 
   async removePhone() {
-    const { firebase } = this.props;
-    const user = await firebase.getCurrentUser();
+    const user = await this.firebase.getCurrentUser();
     if (!user) {
       swal({
         title: 'Oops...',
@@ -175,7 +178,7 @@ class UserTwoFactorSMS extends Component {
       return;
     }
     user
-      .unlink(firebase.getPhoneAuthProviderID())
+      .unlink(this.firebase.getPhoneAuthProviderID())
       .then(async user => {
         this.props.setCurrentUser(user);
         swal({
@@ -189,7 +192,7 @@ class UserTwoFactorSMS extends Component {
           window.recaptchaVerifierDelete.reset(widgetId);
         });
 
-        const newStatus = await firebase.setFire2FAMethod(
+        const newStatus = await this.firebase.setFire2FAMethod(
           user.uid,
           'sms',
           false
@@ -204,8 +207,7 @@ class UserTwoFactorSMS extends Component {
   }
 
   async editPhone() {
-    const { firebase } = this.props;
-    const user = await firebase.getCurrentUser();
+    const user = await this.firebase.getCurrentUser();
     if (!user) {
       swal({
         title: 'Oops...',
@@ -218,8 +220,7 @@ class UserTwoFactorSMS extends Component {
   }
 
   async sendSMS() {
-    const { firebase } = this.props;
-    const user = await firebase.getCurrentUser();
+    const user = await this.firebase.getCurrentUser();
     if (!user) {
       swal({
         title: 'Oops...',
@@ -247,6 +248,7 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset();
       return;
     }
+    const provider = this.firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
     const verificationId = await firebase.sendSMSToPhone(
       phoneUtil.format(userNumber, PNF.E164),
@@ -259,8 +261,7 @@ class UserTwoFactorSMS extends Component {
   }
 
   async verifySMSCode() {
-    const { firebase } = this.props;
-    let user = await firebase.getCurrentUser();
+    let user = await this.firebase.getCurrentUser();
     const verificationId = this.state.verificationId;
     const phoneCode = this.state.phoneVerify;
     if (!phoneCode) {
@@ -279,10 +280,14 @@ class UserTwoFactorSMS extends Component {
     );
     if (phoneCredential) {
       user.updatePhoneNumber(phoneCredential);
-      let newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', true);
-      newStatus = await firebase.setFire2FAMethod(user.uid, 'auth', false);
+      let newStatus = await this.firebase.setFire2FAMethod(
+        user.uid,
+        'sms',
+        true
+      );
+      newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
-      user = await firebase.getCurrentUser();
+      user = await this.firebase.getCurrentUser();
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();
@@ -295,9 +300,7 @@ class UserTwoFactorSMS extends Component {
   }
 
   async enableAuth() {
-    const { firebase } = this.props;
-
-    const user = await firebase.getCurrentUser();
+    const user = await this.firebase.getCurrentUser();
 
     if (!this.verify) {
       swal({
@@ -318,14 +321,13 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifierEnable2FASMS.reset(widgetId);
     });
 
-    let newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', true);
-    newStatus = await firebase.setFire2FAMethod(user.uid, 'auth', false);
+    let newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', true);
+    newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
   }
 
   async disableAuth() {
-    const { firebase } = this.props;
-    const user = await firebase.getCurrentUser();
+    const user = await this.firebase.getCurrentUser();
 
     if (!this.verify) {
       swal({
@@ -341,7 +343,11 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifierDisable2FASMS.reset(widgetId);
     });
 
-    const newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', false);
+    const newStatus = await this.firebase.setFire2FAMethod(
+      user.uid,
+      'sms',
+      false
+    );
     this.props.set2FA(newStatus);
   }
 
