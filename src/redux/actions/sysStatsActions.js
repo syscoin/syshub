@@ -3,9 +3,12 @@ import * as mnService from '../../API/masternodes.service';
 import * as sysService from '../../API/syscoin.service';
 
 export default {
-  getSysMnRegistered: () => {
+  getSysMnRegistered: mnRegisteredTotal => {
     return dispatch =>
-      dispatch(mnService.getMnRegistered(constants.SYS_STATS_RMN_GET));
+      dispatch({
+        type: constants.SYS_STATS_RMN_GET,
+        data: mnRegisteredTotal
+      });
   },
 
   getSysUserRegistered: () => {

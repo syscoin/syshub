@@ -46,7 +46,7 @@ class MasternodeSetting extends Component {
   async refreshMasternodeList() {
     const { firebase } = this.props;
     const user = this.props.app.currentUser;
-    const mnList = await firebase.getMasternodeList(user.uid);
+    const mnList = await firebase.getMasternodeListByUser(user.uid);
     this.setState({ nodes: mnList, user });
   }
 

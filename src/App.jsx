@@ -65,7 +65,9 @@ class App extends Component {
   }
 
   async tick() {
-    return await this.props.getSysInfo();
+    const { firebase } = this.props;
+    const mnRegisteredTotal = await firebase.getMasternodesTotalCount();
+    return await this.props.getSysInfo(mnRegisteredTotal);
   }
 
   registerHooks() {
@@ -117,11 +119,11 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysInfo: () => {
+    getSysInfo: mnRegisteredTotal => {
       return (
         dispatch(actions.getSysPrice()),
         dispatch(actions.getSysMnCount()),
-        dispatch(actions.getSysMnRegistered()),
+        dispatch(actions.getSysMnRegistered(mnRegisteredTotal)),
         dispatch(actions.getSysUserRegistered())
       );
     },

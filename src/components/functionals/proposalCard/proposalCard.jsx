@@ -146,7 +146,7 @@ class ProposalCard extends Component {
 
   async onVote(voteOutcome) {
     const { firebase, user } = this.props;
-    const masternodes = await firebase.getMasternodeList(user.uid);
+    const masternodes = await firebase.getMasternodeListByUser(user.uid);
 
     if (!user) {
       swal({

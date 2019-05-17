@@ -507,12 +507,21 @@ class Firebase {
    * Masternodes Manager *
    ***********************/
 
-  getMasternodesTotal = async uid => {};
-
-  getMasternodeList = async uid => {
+  getMasternodeListByUser = async uid => {
     const masternodesListObj = await this.getDocument(`MasterNodes/${uid}`);
     const mnList = masternodesListObj ? Object.values(masternodesListObj) : [];
     return mnList;
+  };
+
+  getMasternodesTotalCount = async uid => {
+    let nMN = 0;
+    const mnList = await this.getDocument(`MasterNodes`);
+    for (var key in mnList) {
+      const value = mnList[key];
+      const myMn = Object.keys(value).length;
+      nMN += myMn;
+    }
+    return nMN;
   };
 
   deleteMasternode = async (masternode, uid) => {
@@ -545,7 +554,7 @@ class Firebase {
   checkMasternodeExists = async (mnPrivateKey, uid) => {
     const cryptr = new Cryptr(uid);
     const encryptedPrivateKey = cryptr.encrypt(mnPrivateKey);
-    const mnList = await this.getMasternodeList(uid);
+    const mnList = await this.getMasternodeListByUser(uid);
     const foundedMn = mnList.find(
       item => item.mnPrivateKey === encryptedPrivateKey
     );
