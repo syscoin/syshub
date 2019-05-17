@@ -1,4 +1,3 @@
-import { fire } from './firebase/firebase';
 import { HTTPAsync } from '../redux/helpers';
 
 /**---------------------------------------------------------------------------- */
@@ -50,39 +49,6 @@ export const submitProposal = (params, actionType) => {
 
 export const voteOnProposal = (params, actionType) => {
   return HTTPAsync.post(`${baseApiURL}/vote`, params, actionType);
-};
-
-/**
- *
- * @param {uid} User ID
- * @return true if find a pending proposal for that user
- */
-export const checkPendingProposal = uid => {
-  const proposalRef = fire.database().ref('proposals/' + uid);
-  return !!proposalRef;
-};
-
-/**
- *
- * @param {uid} User ID
- * remove all register even the description detail
- */
-export const deletePendingProposal = async uid => {
-  const proposalRef = fire.database().ref(`proposals/${uid}`);
-  const rawProposal = await proposalRef.once('value');
-  const recoveredProposal = rawProposal.val();
-  if (proposalRef) {
-    const descID = recoveredProposal.descriptionID;
-    const descriptionRef = fire
-      .database()
-      .ref(`proposalsDescriptions/${descID}`);
-    const rawDescription = await descriptionRef.once('value');
-    const recoveredDescription = rawDescription.val();
-    if (!recoveredDescription.hash) {
-      descriptionRef.remove();
-    }
-  }
-  proposalRef.remove();
 };
 
 /**
