@@ -66,10 +66,10 @@ class App extends Component {
 
   async tick() {
     const { firebase } = this.props;
-    const mnRegisteredTotal = await firebase.getMasternodesTotalCount();
-    return await this.props.getSysInfo(mnRegisteredTotal);
+    const mnRegistered = await firebase.getMasternodesTotalCount();
+    const userRegistered = await firebase.getUsersTotal();
+    return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
-
   registerHooks() {
     const { firebase } = this.props;
     registerDbTasksHooks({ provider: firebase });
@@ -119,12 +119,12 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysInfo: mnRegisteredTotal => {
+    getSysInfo: (mnRegistered, userRegistered) => {
       return (
         dispatch(actions.getSysPrice()),
         dispatch(actions.getSysMnCount()),
-        dispatch(actions.getSysMnRegistered(mnRegisteredTotal)),
-        dispatch(actions.getSysUserRegistered())
+        dispatch(actions.getSysMnRegistered(mnRegistered)),
+        dispatch(actions.getSysUserRegistered(userRegistered))
       );
     },
     setPage: page => dispatch(actions.setPage(page)),

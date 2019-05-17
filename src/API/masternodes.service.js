@@ -16,7 +16,3 @@ export const getMnCount = actionType => {
     actionType
   );
 };
-
-export const getUserRegistered = actionType => {
-  return HTTPAsync.fireUser(actionType);
-};

@@ -129,6 +129,18 @@ class Firebase {
     return true;
   };
 
+  getUsersTotal = async () => {
+    let nUser = 0;
+    const mnList = await this.getDocument(`${FB_COLLECTION_USERNAMES}`);
+    for (var key in mnList) {
+      const value = mnList[key];
+      if (value.indexOf('-deleted') === -1) {
+        nUser += 1;
+      }
+    }
+    return nUser;
+  };
+
   addUsername = async (key, username) => {
     const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
     const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
