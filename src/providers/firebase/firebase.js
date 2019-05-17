@@ -363,6 +363,19 @@ class Firebase {
     proposalRef.child(uid).set(payload);
   };
 
+  /**
+   *
+   * @param {string} descriptionID = the ID used to store in DB,
+   * you can find it in the proposal gObject from syscoin
+   */
+  getProposalDescription = async descriptionID => {
+    const proposalDescription = await this.getDocument(
+      `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}`
+    );
+    console.log('ACZ -->', proposalDescription);
+    return proposalDescription;
+  };
+
   /****
    * @param {string} pdid = Proposal Description ID
    * @param {string} payload = the data to be storage
@@ -376,15 +389,41 @@ class Firebase {
 
   /**
    *
-   * @param {string} descriptionID = the ID used to store in DB,
-   * you can find it in the proposal gObject from syscoin
+   * @param {uid} User ID
+   * @return the proposal object plus the description atached
    */
-  getProposalDescription = async descriptionID => {
-    const proposalDescription = await this.getDocument(
-      `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}`
+  recoverPendingProposal = async uid => {
+    const recoveredProposal = await this.getProposal(uid);
+    console.log('ACZ recoveredProposal -->', uid, recoveredProposal);
+    if (!recoveredProposal) {
+      return false;
+    }
+    const descID = recoveredProposal.descriptionID;
+    const recoveredDescription = await this.getProposalDescription(descID);
+    recoveredProposal.descriptionRef = recoveredDescription;
+    return recoveredProposal;
+  };
+
+  deletePendingProposal = async uid => {
+    const descriptionID = await this.getDocument(
+      `${FB_COLLECTION_PROPOSALS}/${uid}/descriptionID`
     );
-    console.log('ACZ -->', proposalDescription);
-    return proposalDescription;
+    if (descriptionID) {
+      const descriptionHash = await this.getDocument(
+        `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}/hash`
+      );
+      if (!descriptionHash) {
+        const proposalRef = await this.getDocumentRef(
+          `${FB_COLLECTION_PROPOSALS}/${uid}`
+        );
+        const proposalDescriptionRef = await this.getDocumentRef(
+          `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}`
+        );
+        proposalRef.remove();
+        proposalDescriptionRef.remove();
+      }
+      console.log('ACZ --> BORRADO');
+    }
   };
 
   /**

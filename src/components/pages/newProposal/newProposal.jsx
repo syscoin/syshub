@@ -23,10 +23,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
-import {
-  recoverPendingProposal,
-  deletePendingProposal
-} from '../../../API/proposals.service';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 //import style
@@ -109,18 +105,17 @@ class NewProposal extends Component {
 
   async componentDidMount() {
     const { firebase } = this.props;
-    const currentUser = firebase.getCurrentUser();
+    const currentUser = await firebase.getCurrentUser();
     if (!currentUser) {
       return;
     }
-
-    const userProp = await recoverPendingProposal(currentUser.uid);
+    const userProp = await firebase.recoverPendingProposal(currentUser.uid);
     if (!userProp) {
       return;
     }
     const proposalDetail = userProp.descriptionRef;
     if (userProp.hash) {
-      deletePendingProposal(currentUser.uid);
+      firebase.deletePendingProposal(currentUser.uid);
       return;
     }
 
@@ -189,7 +184,7 @@ class NewProposal extends Component {
             userProposal
           });
         } else {
-          deletePendingProposal(currentUser.uid);
+          firebase.deletePendingProposal(currentUser.uid);
           this.setState({ savedProposal: {} });
         }
       })
@@ -360,7 +355,7 @@ class NewProposal extends Component {
 
   onChange(e) {
     const { firebase } = this.props;
-    const currentUser = firebase.currentUser();
+    const currentUser = firebase.getCurrentUser();
     if (!currentUser) {
       return;
     }
@@ -444,14 +439,14 @@ class NewProposal extends Component {
       savedProposal
     } = this.state;
 
-    const descriptionID =
-      savedProposal.descriptionID ||
-      `${currentUser.displayName}${Date.now().toString(36)}`;
-
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
       return;
     }
+
+    const descriptionID =
+      savedProposal.descriptionID ||
+      `${currentUser.displayName}${Date.now().toString(36)}`;
 
     /* this.setState({
       activeStep: this.state.activeStep + 1,
@@ -486,10 +481,6 @@ class NewProposal extends Component {
       }
     });
 
-    alert('vamos....');
-    //await firebase.setProposal(currentUser.uid, userProposal);
-    //proposalRef.set(userProposal);
-
     let newProposal = [['proposal', userProposal]];
 
     const hexedProposal = Hex.strToHex(newProposal);
@@ -507,7 +498,11 @@ class NewProposal extends Component {
       prepareObj: prepareObj
     });
     userProposal.prepareObj = prepareObj;
-    await firebase.setProposal(currentUser.uid, userProposal);
+    await firebase.setProposal(currentUser.uid, {
+      ...userProposal,
+      detail: proposal__detail,
+      state: 'composed'
+    });
 
     this.props
       .checkProposal(dataHex)
@@ -665,7 +660,7 @@ class NewProposal extends Component {
                     addonBefore={`${40 - this.state.proposalTitle.length}`}
                     value={this.state.proposalTitle}
                     onChange={this.proposalTitle}
-                    maxLength={`${40}`}
+                    maxLength={40}
                   />
                 </FormItem>
               </Form>
