@@ -9,10 +9,7 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Sevices
-import {
-  sendSMSToPhone,
-  verifyPhoneCode
-} from '../../../API/twoFAPhone.service';
+
 import { phoneValidation } from '../../../Helpers';
 
 // import Material-ui components
@@ -84,21 +81,6 @@ class UserTwoFactorSMS extends Component {
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
-      alert('Te pillé');
-      /*  fire
-        .database()
-        .ref('MasterNodes/' + user.uid)
-        .once('value', snapshot => {
-          if (snapshot.val() === null) {
-            return;
-          }
-          let list = [];
-          snapshot.forEach(mn => {
-            list.push(mn.val());
-          });
-          user.MasterNodes = list;
-          this.props.setCurrentUser(user);
-        }); */
     }
     window.recaptchaVerifierEnable2FASMS = firebase.newRecaptchaVerifier(
       'enable2FASMS',
@@ -266,10 +248,8 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset();
       return;
     }
-    const provider = firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
-    const verificationId = await sendSMSToPhone(
-      provider,
+    const verificationId = await firebase.sendSMSToPhone(
       phoneUtil.format(userNumber, PNF.E164),
       appVerifier
     );
@@ -294,7 +274,10 @@ class UserTwoFactorSMS extends Component {
       });
       return;
     }
-    const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
+    const phoneCredential = await firebase.verifyPhoneCode(
+      verificationId,
+      phoneCode
+    );
     if (phoneCredential) {
       user.updatePhoneNumber(phoneCredential);
       let newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', true);

@@ -13,7 +13,6 @@ import runTasks from '../../../Helpers/hooks';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { loginWithPhone } from '../../../API/twoFAPhone.service';
 import { verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
 
 // Import Material-ui components
@@ -34,7 +33,7 @@ class Login extends Component {
       twoFAStatus: {}
     };
     this.login = this.login.bind(this);
-    this.smsLogin = this.smsLogin.bind(this);
+    /* this.smsLogin = this.smsLogin.bind(this); */
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
@@ -89,37 +88,6 @@ class Login extends Component {
       .catch(err => {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       });
-  }
-
-  async smsLogin(user, email, password) {
-    const { firebase } = this.props;
-    const appVerifier = window.recaptchaVerifier;
-    await firebase.doSignOut();
-    this.props.setCurrentUser(null);
-    const confirmationResult = await loginWithPhone(
-      `${user.phoneNumber}`,
-      appVerifier
-    );
-    if (confirmationResult) {
-      const swalValue = await swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Two-Factor Phone Authentication',
-        text: 'Please provide the verification code sent to your phone',
-        icon: 'warning',
-        buttons: true,
-        dangerMode: false,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Confirmation code here',
-            type: 'text'
-          }
-        }
-      });
-      const verifiedToken = await confirmationResult.confirm(swalValue);
-      return verifiedToken;
-    }
   }
 
   async twoFALogin(verifiationResutlObj) {
@@ -216,7 +184,7 @@ class Login extends Component {
 
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
-          phoneConfirmationResult = await loginWithPhone(
+          phoneConfirmationResult = await firebase.loginWithPhone(
             `${user.phoneNumber}`,
             appVerifier
           );

@@ -50,6 +50,32 @@ class Firebase {
   getPhoneAuthProviderID = () =>
     this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID;
 
+  sendSMSToPhone = async (phoneNumber, appVerifier) => {
+    const provider = this.newPhoneAuthProvider();
+    const verificationId = await provider.verifyPhoneNumber(
+      phoneNumber,
+      appVerifier
+    );
+    return verificationId;
+  };
+
+  loginWithPhone = async (phoneNumber, appVerifier) => {
+    alert(' desde el bueno');
+    const confirmationResult = await this.auth.signInWithPhoneNumber(
+      `${phoneNumber}`,
+      appVerifier
+    );
+    return confirmationResult;
+  };
+
+  verifyPhoneCode = async (verificationId, smsCode) => {
+    const phoneCredential = await this.firebaseApp.auth.PhoneAuthProvider.credential(
+      verificationId,
+      smsCode
+    );
+    return phoneCredential;
+  };
+
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
