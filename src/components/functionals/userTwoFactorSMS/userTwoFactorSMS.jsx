@@ -9,10 +9,6 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Sevices
-import {
-  sendSMSToPhone,
-  verifyPhoneCode
-} from '../../../API/twoFAPhone.service';
 import { phoneValidation } from '../../../Helpers';
 
 // import Material-ui components
@@ -266,10 +262,8 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset();
       return;
     }
-    const provider = firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
-    const verificationId = await sendSMSToPhone(
-      provider,
+    const verificationId = await firebase.sendSMSToPhone(
       phoneUtil.format(userNumber, PNF.E164),
       appVerifier
     );
@@ -294,7 +288,10 @@ class UserTwoFactorSMS extends Component {
       });
       return;
     }
-    const phoneCredential = await verifyPhoneCode(verificationId, phoneCode);
+    const phoneCredential = await firebase.verifyPhoneCode(
+      verificationId,
+      phoneCode
+    );
     if (phoneCredential) {
       user.updatePhoneNumber(phoneCredential);
       let newStatus = await firebase.setFire2FAMethod(user.uid, 'sms', true);
