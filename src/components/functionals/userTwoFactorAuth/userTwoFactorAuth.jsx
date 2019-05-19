@@ -70,21 +70,8 @@ class UserTwoFactorAuth extends Component {
     }
 
     if (twoFAStatus.auth) {
-      /* fire
-        .database()
-        .ref('MasterNodes/' + user.uid)
-        .once('value', snapshot => {
-          if (snapshot.val() === null) {
-            return;
-          }
-          let list = [];
-          snapshot.forEach(mn => {
-            list.push(mn.val());
-          });
-          user.MasterNodes = list;
-          this.props.setCurrentUser(user);
-        }); */
     }
+
     window.recaptchaVerifierEnable2FAAuth = firebase.newRecaptchaVerifier(
       'enable2FAAuth',
       {
