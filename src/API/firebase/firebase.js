@@ -388,8 +388,8 @@ const doUpdateProfile = user => {
 }; */
 
 //Check if neccessary
-export {
+/* export {
   fire, // si
   checkVoted, // si
   voted // si
-};
+}; */
