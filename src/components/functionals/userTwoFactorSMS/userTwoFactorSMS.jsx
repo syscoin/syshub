@@ -80,21 +80,6 @@ class UserTwoFactorSMS extends Component {
     const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
-      alert('Te pillé');
-      /*  fire
-        .database()
-        .ref('MasterNodes/' + user.uid)
-        .once('value', snapshot => {
-          if (snapshot.val() === null) {
-            return;
-          }
-          let list = [];
-          snapshot.forEach(mn => {
-            list.push(mn.val());
-          });
-          user.MasterNodes = list;
-          this.props.setCurrentUser(user);
-        }); */
     }
     window.recaptchaVerifierEnable2FASMS = firebase.newRecaptchaVerifier(
       'enable2FASMS',
