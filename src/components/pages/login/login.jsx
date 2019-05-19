@@ -13,7 +13,7 @@ import runTasks from '../../../Helpers/hooks';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
+import { verifyAuthCode } from '../../../API/syscoin/twoFAAuthenticator.service';
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';

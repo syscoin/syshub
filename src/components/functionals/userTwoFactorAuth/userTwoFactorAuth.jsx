@@ -12,7 +12,7 @@ import { withFirebase } from '../../../providers/firebase';
 import {
   getAuthQRCode,
   verifyAuthCode
-} from '../../../API/twoFAAuthenticator.service';
+} from '../../../API/syscoin/twoFAAuthenticator.service';
 
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
