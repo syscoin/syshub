@@ -250,7 +250,7 @@ class UserTwoFactorSMS extends Component {
     }
     const provider = this.firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
-    const verificationId = await firebase.sendSMSToPhone(
+    const verificationId = await this.firebase.sendSMSToPhone(
       phoneUtil.format(userNumber, PNF.E164),
       appVerifier
     );
@@ -274,7 +274,7 @@ class UserTwoFactorSMS extends Component {
       });
       return;
     }
-    const phoneCredential = await firebase.verifyPhoneCode(
+    const phoneCredential = await this.firebase.verifyPhoneCode(
       verificationId,
       phoneCode
     );
