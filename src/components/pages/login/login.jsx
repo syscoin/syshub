@@ -96,7 +96,7 @@ class Login extends Component {
     const appVerifier = window.recaptchaVerifier;
     await firebase.doSignOut();
     this.props.setCurrentUser(null);
-    const confirmationResult = await loginWithPhone(
+    const confirmationResult = await firebase.loginWithPhone(
       `${user.phoneNumber}`,
       appVerifier
     );
@@ -216,7 +216,7 @@ class Login extends Component {
 
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
-          phoneConfirmationResult = await loginWithPhone(
+          phoneConfirmationResult = await firebase.loginWithPhone(
             `${user.phoneNumber}`,
             appVerifier
           );
