@@ -91,37 +91,6 @@ class Login extends Component {
       });
   }
 
-  async smsLogin(user, email, password) {
-    const { firebase } = this.props;
-    const appVerifier = window.recaptchaVerifier;
-    await firebase.doSignOut();
-    this.props.setCurrentUser(null);
-    const confirmationResult = await firebase.loginWithPhone(
-      `${user.phoneNumber}`,
-      appVerifier
-    );
-    if (confirmationResult) {
-      const swalValue = await swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Two-Factor Phone Authentication',
-        text: 'Please provide the verification code sent to your phone',
-        icon: 'warning',
-        buttons: true,
-        dangerMode: false,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Confirmation code here',
-            type: 'text'
-          }
-        }
-      });
-      const verifiedToken = await confirmationResult.confirm(swalValue);
-      return verifiedToken;
-    }
-  }
-
   async twoFALogin(verifiationResutlObj) {
     const { firebase } = this.props;
     const { smsCode, gToken } = verifiationResutlObj;
