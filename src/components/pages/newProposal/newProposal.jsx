@@ -244,8 +244,6 @@ class NewProposal extends Component {
       });
     }
 
-    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
-
     if (this.state.payValue) {
       let submitObj = { ...this.state.prepareObj };
       let updatedUserProposal = { ...this.state.userProposal };
@@ -300,14 +298,9 @@ class NewProposal extends Component {
       });
     }
 
-    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
-
     const proposal = await firebase.getProposal(currentUser.uid);
     if (proposal) {
       const descriptionID = proposal.descriptionID;
-      /* const descriptionRef = fire
-        .database()
-        .ref('proposalsDescriptions/' + descriptionID); */
 
       if (this.state.hValue) {
         let updateProposalDetail = { ...this.state.proposalDetail };
@@ -359,7 +352,6 @@ class NewProposal extends Component {
     if (!currentUser) {
       return;
     }
-    //const proposalRef = fire.database().ref('proposals/' + currentUser.uid);
     let updated = { ...this.state.userProposal };
 
     if (e.target.name === 'payValue') {
