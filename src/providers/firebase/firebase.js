@@ -1,4 +1,4 @@
-import app from 'firebase/app';
+import firebase from 'firebase';
 import Cryptr from 'cryptr';
 import to from '../../Helpers/to';
 
@@ -28,12 +28,13 @@ const FB_STORAGE_AVATARS = 'avatars';
 
 class Firebase {
   constructor() {
-    app.initializeApp(config, 'fbSyshub');
+    /* firebase.initializeApp(config, 'fbSyshub'); */
+    firebase.initializeApp(config);
 
-    this.firebaseApp = app;
-    this.auth = app.auth();
-    this.db = app.database();
-    this.storage = app.storage();
+    this.firebaseApp = firebase;
+    this.auth = firebase.auth();
+    this.db = firebase.database();
+    this.storage = firebase.storage();
   }
 
   /***********
@@ -61,10 +62,9 @@ class Firebase {
 
   loginWithPhone = async (phoneNumber, appVerifier) => {
     alert(' desde el bueno');
-    const confirmationResult = await this.auth.signInWithPhoneNumber(
-      `${phoneNumber}`,
-      appVerifier
-    );
+    const confirmationResult = await this.app
+      .auth()
+      .signInWithPhoneNumber(`${phoneNumber}`, appVerifier);
     return confirmationResult;
   };
 

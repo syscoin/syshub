@@ -13,7 +13,6 @@ import runTasks from '../../../Helpers/hooks';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { loginWithPhone } from '../../../API/twoFAPhone.service';
 import { verifyAuthCode } from '../../../API/twoFAAuthenticator.service';
 
 // Import Material-ui components

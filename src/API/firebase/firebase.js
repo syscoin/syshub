@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Rebase from 're-base';
-import firebase from 'firebase';
+import app from 'firebase/app';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
@@ -17,15 +17,15 @@ const TWOFA_FIRE_COLLECTION = '2FAAuth';
 const COMMENTS_FIRE_COLLECTION = 'comments';
 const C_REPLIES_FIRE_COLLECTION = 'commentReplies_V2';
 
-firebase.initializeApp(config);
+app.initializeApp(config);
 
-const fire = firebase;
-
+const fire = app;
+/* 
 const baseOLD = Rebase.createClass(fire.database());
-const usernames = fire.database().ref('usernames');
+const usernames = fire.database().ref('usernames'); */
 
 //Some useful functions
-const checkVoted = (user, proposal, masternodes) => {
+/* const checkVoted = (user, proposal, masternodes) => {
   return new Promise(resolve => {
     fire
       .database()
@@ -52,9 +52,9 @@ const checkVoted = (user, proposal, masternodes) => {
         resolve(err);
       });
   });
-};
+}; */
 
-const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
+/* const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
   fire
     .database()
     .ref('votes/' + user.uid)
@@ -65,7 +65,7 @@ const voted = (user, proposal, voteTxt, voteId, mnKeyIds) => {
       voteId: voteId,
       mnKeyIds: mnKeyIds
     });
-};
+}; */
 
 /* const doRegister = () => {}; */
 /* 
