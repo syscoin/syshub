@@ -33,7 +33,6 @@ class Login extends Component {
       twoFAStatus: {}
     };
     this.login = this.login.bind(this);
-    this.smsLogin = this.smsLogin.bind(this);
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 

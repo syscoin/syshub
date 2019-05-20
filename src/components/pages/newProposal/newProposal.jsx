@@ -83,7 +83,6 @@ class NewProposal extends Component {
     this.createPropObj = this.createPropObj.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.submitPaymentId = this.submitPaymentId.bind(this);
     this.submitHash = this.submitHash.bind(this);
     this.urlInputChange = this.urlInputChange.bind(this);
@@ -347,16 +346,9 @@ class NewProposal extends Component {
   }
 
   onChange(e) {
-    const { firebase } = this.props;
-    const currentUser = firebase.getCurrentUser();
+    const { currentUser } = this.props.app;
     if (!currentUser) {
       return;
-    }
-    let updated = { ...this.state.userProposal };
-
-    if (e.target.name === 'payValue') {
-      updated.txid = e.target.value;
-      firebase.setProposal(currentUser.uid, updated);
     }
     this.setState({
       [e.target.name]: e.target.value
@@ -896,7 +888,7 @@ class NewProposal extends Component {
               <Input
                 value={this.state.payValue}
                 disabled={this.state.sValue ? true : false}
-                onChange={this.onChange}
+                onChange={e => this.onChange(e)}
                 name="payValue"
               />
               <div style={{ textAlign: 'right' }}>
@@ -956,7 +948,7 @@ class NewProposal extends Component {
             <Input
               value={this.state.hValue}
               disabled={!this.state.sValue}
-              onChange={this.onChange}
+              onChange={e => this.onChange(e)}
               name="hValue"
             />
             <div style={{ textAlign: 'right' }}>
