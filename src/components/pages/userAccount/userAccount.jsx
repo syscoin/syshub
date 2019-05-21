@@ -33,9 +33,8 @@ class UserAccount extends Component {
   firebase = this.props.firebase;
 
   async updateProfile(user) {
-    const { firebase } = this.props;
     const [err, { currentUser, error, message }] = await to(
-      firebase.doUpdateProfile(user)
+      this.firebase.doUpdateProfile(user)
     );
     console.log('ACZ -->', currentUser, error, message, err);
     if (error || err) {
@@ -63,8 +62,7 @@ class UserAccount extends Component {
   }
 
   updatePassword(user) {
-    const { firebase } = this.props;
-    firebase.doPasswordUpdate(user, (err, data) => {
+    this.firebase.doPasswordUpdate(user, (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
         this.props.doAppLogout();
@@ -76,8 +74,7 @@ class UserAccount extends Component {
   }
 
   async deleteProfile() {
-    const { firebase } = this.props;
-    const deleted = await firebase.doDeleteAccount();
+    const deleted = await this.firebase.doDeleteAccount();
     if (deleted) {
       this.props.doAppLogout();
       this.props.setPage('home');

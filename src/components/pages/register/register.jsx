@@ -45,20 +45,21 @@ class Register extends Component {
   firebase = this.props.firebase;
 
   async componentDidMount() {
-    const { firebase } = this.props;
-
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
 
-    await firebase.auth.useDeviceLanguage();
+    await this.firebase.auth.useDeviceLanguage();
 
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.setState({
-          verify: response
-        });
+    window.recaptchaVerifier = this.firebase.newRecaptchaVerifier(
+      this.recaptcha,
+      {
+        callback: response => {
+          this.setState({
+            verify: response
+          });
+        }
       }
-    });
+    );
 
     window.recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
@@ -123,7 +124,6 @@ class Register extends Component {
   }
 
   async checkUsername(event) {
-    const { firebase } = this.props;
     const { name, value } = event.target;
     const trimmedValue = value.trim();
     if (trimmedValue.match(/^[0-9a-zA-Z_ ]*$/) == null) {
@@ -135,7 +135,7 @@ class Register extends Component {
       return;
     }
 
-    const isUsernameAvailable = await firebase.isUsernameAvailable(
+    const isUsernameAvailable = await this.firebase.isUsernameAvailable(
       trimmedValue
     );
     this.setState({
@@ -145,7 +145,6 @@ class Register extends Component {
   }
 
   async register(event) {
-    const { firebase } = this.props;
     event.preventDefault();
 
     if (this.state.disabled) {
@@ -190,7 +189,7 @@ class Register extends Component {
     }
 
     const [err, newUser] = await to(
-      firebase.doCreateUserWithEmailAndPassword(email, password)
+      this.firebase.doCreateUserWithEmailAndPassword(email, password)
     );
     if (err) {
       swal({
@@ -201,9 +200,9 @@ class Register extends Component {
       return;
     }
     if (newUser) {
-      const currentUser = await firebase.getCurrentUser();
+      const currentUser = await this.firebase.getCurrentUser();
       if (newUser.uid === currentUser.uid) {
-        await firebase.addUsername(newUser.uid, username);
+        await this.firebase.addUsername(newUser.uid, username);
         currentUser.updateProfile({ displayName: username });
       }
       this.props.setPage('home');
