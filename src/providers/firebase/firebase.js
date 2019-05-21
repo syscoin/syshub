@@ -410,7 +410,6 @@ class Firebase {
     const proposalDescription = await this.getDocument(
       `${FB_COLLECTION_P_DESCRIPTIONS}/${descriptionID}`
     );
-    console.log('ACZ -->', proposalDescription);
     return proposalDescription;
   };
 
@@ -432,7 +431,6 @@ class Firebase {
    */
   recoverPendingProposal = async uid => {
     const recoveredProposal = await this.getProposal(uid);
-    console.log('ACZ recoveredProposal -->', uid, recoveredProposal);
     if (!recoveredProposal) {
       return false;
     }
@@ -460,7 +458,6 @@ class Firebase {
         proposalRef.remove();
         proposalDescriptionRef.remove();
       }
-      console.log('ACZ --> BORRADO');
     }
   };
 

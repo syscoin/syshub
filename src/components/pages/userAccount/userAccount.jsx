@@ -36,7 +36,6 @@ class UserAccount extends Component {
     const [err, { currentUser, error, message }] = await to(
       this.firebase.doUpdateProfile(user)
     );
-    console.log('ACZ -->', currentUser, error, message, err);
     if (error || err) {
       swal({ title: 'Oops...', text: `${message}`, icon: 'error' });
       return;
