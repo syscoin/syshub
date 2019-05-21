@@ -64,6 +64,9 @@ class UserTwoFactorSMS extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   firebase = this.props.firebase;
 
   async componentDidMount() {
@@ -248,7 +251,6 @@ class UserTwoFactorSMS extends Component {
       window.recaptchaVerifier.reset();
       return;
     }
-    const provider = this.firebase.newPhoneAuthProvider();
     const appVerifier = window.recaptchaVerifier;
     const verificationId = await this.firebase.sendSMSToPhone(
       phoneUtil.format(userNumber, PNF.E164),

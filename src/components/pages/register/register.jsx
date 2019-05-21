@@ -41,6 +41,9 @@ class Register extends Component {
     };
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   async componentDidMount() {
     const { firebase } = this.props;
 

@@ -36,6 +36,9 @@ class Login extends Component {
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentDidMount() {
     const { firebase } = this.props;
     firebase.useDeviceLanguage();
@@ -213,7 +216,8 @@ class Login extends Component {
   }
 
   async onModalClose(showModal) {
-    const { firebase, doAppLogout } = this.props;
+    const { firebase } = this.props;
+    const { doAppLogout } = this.props;
     this.setState({ showModal });
     await firebase.doSignOut();
     doAppLogout();

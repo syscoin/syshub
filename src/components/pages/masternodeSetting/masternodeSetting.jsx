@@ -39,6 +39,9 @@ class MasternodeSetting extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentDidMount() {
     this.refreshMasternodeList();
   }

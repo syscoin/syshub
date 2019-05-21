@@ -27,6 +27,9 @@ class DashBoard extends Component {
     this.handleDashboard = this.handleDashboard.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentWillMount() {}
 
   async componentDidMount() {
@@ -65,7 +68,6 @@ class DashBoard extends Component {
   }
 
   render() {
-    const { firebase } = this.props;
     const {
       classes,
       proposals,
@@ -105,7 +107,7 @@ class DashBoard extends Component {
                 proposal={proposalID}
                 totalNodes={this.props.totalNodes || 0}
                 globalConst={appConstants}
-                firebase={firebase}
+                firebase={this.firebase}
               />
             )
           }[showContainer]

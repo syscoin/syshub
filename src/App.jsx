@@ -34,6 +34,7 @@ const sysHubTheme = createMuiTheme({
 
 class App extends Component {
   state = {};
+  // add Firebase as global var in component
   firebase = this.props.firebase;
 
   async componentWillMount() {
@@ -65,9 +66,8 @@ class App extends Component {
   }
 
   async tick() {
-    const { firebase } = this.props;
-    const mnRegistered = await firebase.getMasternodesTotalCount();
-    const userRegistered = await firebase.getUsersTotal();
+    const mnRegistered = await this.firebase.getMasternodesTotalCount();
+    const userRegistered = await this.firebase.getUsersTotal();
     return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
   registerHooks() {

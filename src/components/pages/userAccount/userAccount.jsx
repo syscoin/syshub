@@ -29,6 +29,9 @@ class UserAccount extends Component {
     this.deleteProfile = this.deleteProfile.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   async updateProfile(user) {
     const { firebase } = this.props;
     const [err, { currentUser, error, message }] = await to(

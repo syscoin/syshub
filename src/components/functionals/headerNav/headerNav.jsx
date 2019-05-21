@@ -26,10 +26,13 @@ import socialLinks from '../../../redux/constants/socialLinks';
 // const chatIcon = require('../../../assets/img/png_menu_chat.png');
 
 class HeaderNav extends Component {
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   logout() {
-    const { firebase, app } = this.props;
+    const { app } = this.props;
     if (app.currentUser) {
-      firebase.doSignOut();
+      this.firebase.doSignOut();
       this.props.doAppLogout();
     }
   }

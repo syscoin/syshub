@@ -88,6 +88,9 @@ class NewProposal extends Component {
     this.urlInputChange = this.urlInputChange.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentWillMount() {
     const maxDateOptions = 26;
     const { firstPaymentDate, millsMonth } = this.props.proposal;
