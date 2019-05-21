@@ -30,8 +30,10 @@ class UserProfile extends Component {
     this.checkUserEmail = this.checkUserEmail.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   async submitProfile() {
-    const { firebase } = this.props;
     const username = this.registerName.value;
     const email = this.registerEmail.value;
     const image = this.state.imageFile;
@@ -43,7 +45,7 @@ class UserProfile extends Component {
       if (image != null) {
         const fileName = this.state.imageFile.name;
         const file = this.state.imageFile;
-        const uploadTask = await firebase.storageAvatar(fileName, file);
+        const uploadTask = await this.firebase.storageAvatar(fileName, file);
         const downloadURL = uploadTask.downloadURL;
         updatedUser.photoURL = downloadURL;
         this.props.onUpdateProfile(updatedUser);
@@ -68,7 +70,6 @@ class UserProfile extends Component {
   }
 
   async checkUsername(event) {
-    const { firebase } = this.props;
     const username = this.registerName.value.trim();
     if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
@@ -81,7 +82,9 @@ class UserProfile extends Component {
     }
 
     if (event.target.value) {
-      const isUsernameAvailable = await firebase.isUsernameAvailable(username);
+      const isUsernameAvailable = await this.firebase.isUsernameAvailable(
+        username
+      );
       if (isUsernameAvailable) {
         this.setState({
           disabled: false,

@@ -36,21 +36,25 @@ class Login extends Component {
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
-  componentDidMount() {
-    const { firebase } = this.props;
-    firebase.useDeviceLanguage();
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
 
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.verify = response;
+  componentDidMount() {
+    this.firebase.useDeviceLanguage();
+
+    window.recaptchaVerifier = this.firebase.newRecaptchaVerifier(
+      this.recaptcha,
+      {
+        callback: response => {
+          this.verify = response;
+        }
       }
-    });
+    );
 
     window.recaptchaVerifier.render();
   }
 
   passwordRecovery() {
-    const { firebase } = this.props;
     swal({
       title: 'Password Recovery',
       text:
@@ -68,7 +72,7 @@ class Login extends Component {
     })
       .then(emailInput => {
         if (emailInput) {
-          return firebase.doPasswordReset(emailInput);
+          return this.firebase.doPasswordReset(emailInput);
         } else {
           swal({
             title: 'No email was given.',
@@ -90,7 +94,6 @@ class Login extends Component {
   }
 
   async twoFALogin(verifiationResutlObj) {
-    const { firebase } = this.props;
     const { smsCode, gToken } = verifiationResutlObj;
     const twoFAStatus = this.state.twoFAStatus;
     let vSmsCode = false;
@@ -103,7 +106,7 @@ class Login extends Component {
       const password = this.loginPsw.value;
       vGToken = verifyAuthCode(secret, gToken);
       if (vGToken) {
-        const user = await firebase.doSignInWithEmailAndPassword(
+        const user = await this.firebase.doSignInWithEmailAndPassword(
           email,
           password
         );
@@ -128,7 +131,7 @@ class Login extends Component {
 
     this.props.setPage('home');
     if (!twoFaResult) {
-      await firebase.doSignOut();
+      await this.firebase.doSignOut();
       this.props.doAppLogout();
       swal({
         title: 'Oops...',
@@ -146,7 +149,7 @@ class Login extends Component {
 
   async login(event) {
     event.preventDefault();
-    const { firebase } = this.props;
+
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
 
@@ -161,10 +164,10 @@ class Login extends Component {
       return;
     }
     const [err, user] = await to(
-      firebase.doSignInWithEmailAndPassword(email, password)
+      this.firebase.doSignInWithEmailAndPassword(email, password)
     );
     if (err) {
-      await firebase.doSignOut();
+      await this.firebase.doSignOut();
       this.props.setCurrentUser(null);
       this.loginForm.reset();
       this.verify = undefined;
@@ -177,21 +180,21 @@ class Login extends Component {
     }
     if (user) {
       const appVerifier = window.recaptchaVerifier;
-      const twoFAStatus = await firebase.getFire2FAstatus(user.uid);
+      const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
       let phoneConfirmationResult, secret;
 
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
-          phoneConfirmationResult = await firebase.loginWithPhone(
+          phoneConfirmationResult = await this.firebase.loginWithPhone(
             `${user.phoneNumber}`,
             appVerifier
           );
         }
         if (twoFAStatus.auth && twoFAStatus.authSecret) {
-          secret = await firebase.getAuthSecret(user.uid);
+          secret = await this.firebase.getAuthSecret(user.uid);
         }
-        await firebase.doSignOut();
+        await this.firebase.doSignOut();
         this.setState({
           showModal,
           twoFAStatus,
@@ -213,9 +216,9 @@ class Login extends Component {
   }
 
   async onModalClose(showModal) {
-    const { firebase, doAppLogout } = this.props;
+    const { doAppLogout } = this.props;
     this.setState({ showModal });
-    await firebase.doSignOut();
+    await this.firebase.doSignOut();
     doAppLogout();
   }
 

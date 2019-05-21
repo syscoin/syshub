@@ -42,6 +42,9 @@ class ProposalCard extends Component {
     this.vote = this.vote.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentWillMount() {
     const {
       nPayment,
@@ -145,8 +148,8 @@ class ProposalCard extends Component {
   }
 
   async onVote(voteOutcome) {
-    const { firebase, user } = this.props;
-    const masternodes = await firebase.getMasternodeListByUser(user.uid);
+    const { user } = this.props;
+    const masternodes = await this.firebase.getMasternodeListByUser(user.uid);
 
     if (!user) {
       swal({
@@ -157,7 +160,7 @@ class ProposalCard extends Component {
       return;
     }
 
-    const twoFA = await firebase.getFire2FAMethod(user.uid, 'twoFA');
+    const twoFA = await this.firebase.getFire2FAMethod(user.uid, 'twoFA');
     let modalType = !twoFA ? 'e2fa' : '';
     modalType = !masternodes ? `${modalType}eMn` : modalType;
 

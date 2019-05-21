@@ -88,6 +88,9 @@ class NewProposal extends Component {
     this.urlInputChange = this.urlInputChange.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentWillMount() {
     const maxDateOptions = 26;
     const { firstPaymentDate, millsMonth } = this.props.proposal;
@@ -103,18 +106,19 @@ class NewProposal extends Component {
   }
 
   async componentDidMount() {
-    const { firebase } = this.props;
-    const currentUser = await firebase.getCurrentUser();
+    const currentUser = await this.firebase.getCurrentUser();
     if (!currentUser) {
       return;
     }
-    const userProp = await firebase.recoverPendingProposal(currentUser.uid);
+    const userProp = await this.firebase.recoverPendingProposal(
+      currentUser.uid
+    );
     if (!userProp) {
       return;
     }
     const proposalDetail = userProp.descriptionRef;
     if (userProp.hash) {
-      firebase.deletePendingProposal(currentUser.uid);
+      this.firebase.deletePendingProposal(currentUser.uid);
       return;
     }
 
@@ -183,7 +187,7 @@ class NewProposal extends Component {
             userProposal
           });
         } else {
-          firebase.deletePendingProposal(currentUser.uid);
+          this.firebase.deletePendingProposal(currentUser.uid);
           this.setState({ savedProposal: {} });
         }
       })
@@ -225,7 +229,6 @@ class NewProposal extends Component {
   }
 
   async submitPaymentId() {
-    const { firebase } = this.props;
     const { currentUser } = this.props.app;
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -248,7 +251,7 @@ class NewProposal extends Component {
       let updatedUserProposal = { ...this.state.userProposal };
       if (this.state.payValue) {
         updatedUserProposal.txid = this.state.payValue;
-        await firebase.setProposal(currentUser.uid, updatedUserProposal);
+        await this.firebase.setProposal(currentUser.uid, updatedUserProposal);
         submitObj.txid = this.state.payValue;
 
         this.props
@@ -256,7 +259,10 @@ class NewProposal extends Component {
           .then(async submitResponse => {
             if (submitResponse) {
               updatedUserProposal.submitReceipt = submitResponse;
-              await firebase.setProposal(currentUser.uid, updatedUserProposal);
+              await this.firebase.setProposal(
+                currentUser.uid,
+                updatedUserProposal
+              );
 
               this.setState({
                 sValue: submitResponse,
@@ -278,7 +284,6 @@ class NewProposal extends Component {
   }
 
   async submitHash() {
-    const { firebase } = this.props;
     const { currentUser } = this.props.app;
     if (!currentUser) {
       swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
@@ -297,7 +302,7 @@ class NewProposal extends Component {
       });
     }
 
-    const proposal = await firebase.getProposal(currentUser.uid);
+    const proposal = await this.firebase.getProposal(currentUser.uid);
     if (proposal) {
       const descriptionID = proposal.descriptionID;
 
@@ -308,11 +313,11 @@ class NewProposal extends Component {
         updateProposalDetail.hash = this.state.hValue;
         updatedUserProposal.hash = this.state.hValue;
 
-        await firebase.setProposalDescription(
+        await this.firebase.setProposalDescription(
           descriptionID,
           updateProposalDetail
         );
-        await firebase.setProposal(currentUser.uid, updatedUserProposal);
+        await this.firebase.setProposal(currentUser.uid, updatedUserProposal);
 
         this.setState({
           visible: false
@@ -408,7 +413,6 @@ class NewProposal extends Component {
   };
 
   createPropObj = async () => {
-    const { firebase } = this.props;
     const { app } = this.props;
     const { currentUser } = app;
     const {
@@ -439,7 +443,7 @@ class NewProposal extends Component {
 
     const proposalDescription = { detail: proposal__detail, hash: '' };
 
-    firebase.setProposalDescription(descriptionID, proposalDescription);
+    this.firebase.setProposalDescription(descriptionID, proposalDescription);
 
     let userProposal = {
       type: 1,
@@ -482,7 +486,7 @@ class NewProposal extends Component {
       prepareObj: prepareObj
     });
     userProposal.prepareObj = prepareObj;
-    await firebase.setProposal(currentUser.uid, {
+    await this.firebase.setProposal(currentUser.uid, {
       ...userProposal,
       detail: proposal__detail,
       state: 'composed'
@@ -500,7 +504,7 @@ class NewProposal extends Component {
       .then(async prepareResponse => {
         if (prepareResponse) {
           userProposal.prepareReceipt = prepareResponse;
-          await firebase.setProposal(currentUser.uid, userProposal);
+          await this.firebase.setProposal(currentUser.uid, userProposal);
 
           this.setState({
             visible: true,

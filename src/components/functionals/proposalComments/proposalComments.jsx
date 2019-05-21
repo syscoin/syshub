@@ -59,6 +59,9 @@ class ProposalComments extends Component {
     this.refreshComments = this.refreshComments.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   // @params date: It will be number which represent data in string like (253453453245)
   // @method generateDate: It will convert date to readable date
   generateDate(date) {
@@ -87,8 +90,7 @@ class ProposalComments extends Component {
   async loadComments() {
     // Load comments from firebase
     // then set them in state and load responses if any
-    const { firebase } = this.props;
-    const commentsArray = await firebase.getProposalComments(
+    const commentsArray = await this.firebase.getProposalComments(
       this.props.data.proposalID,
       false
     );
@@ -106,12 +108,13 @@ class ProposalComments extends Component {
   async loadReplies(index) {
     // Load replies from firebase
     // then set in state
-    const { firebase } = this.props;
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id;
       let _comments = Object.assign(this.state.allComments);
       let _childReplies = [];
-      const _allReplies = await firebase.getProposalCommentsReply(_commentId);
+      const _allReplies = await this.firebase.getProposalCommentsReply(
+        _commentId
+      );
       _comments[index].replies = [];
       if (index >= 0) {
         for (var key in _allReplies) {
@@ -145,7 +148,6 @@ class ProposalComments extends Component {
   }
 
   async addComment() {
-    const { firebase } = this.props;
     if (this.state.userComment && this.props.user) {
       let date = new Date();
       let _comment = {
@@ -161,7 +163,7 @@ class ProposalComments extends Component {
         replies: []
       };
 
-      await firebase.addProposalComments(this.state.proposalID, _comment);
+      await this.firebase.addProposalComments(this.state.proposalID, _comment);
 
       this.setState(
         {
@@ -174,7 +176,6 @@ class ProposalComments extends Component {
   }
 
   async voteForComment(action, commentID) {
-    const { firebase } = this.props;
     if (this.props.user) {
       let itemIndex = null;
       let _item;
@@ -218,7 +219,7 @@ class ProposalComments extends Component {
             _item.votes.push(newVote);
           }
         }
-        await firebase.setProposalCommentsVote(
+        await this.firebase.setProposalCommentsVote(
           this.props.data.proposalID,
           commentID,
           _item
@@ -325,7 +326,6 @@ class ProposalComments extends Component {
 
   // -- Method call on reply Layer1
   async commentReply(id, text, parentKey) {
-    const { firebase } = this.props;
     let _replyObject = {
       text: text,
       createdAt: new Date().getTime(),
@@ -336,7 +336,7 @@ class ProposalComments extends Component {
       child: [],
       isRoot: parentKey ? false : true
     };
-    await firebase.addProposalCommentsReply(id, _replyObject, parentKey);
+    await this.firebase.addProposalCommentsReply(id, _replyObject, parentKey);
     this.setState({ replyBox: null }, () => this.refreshComments());
   }
 

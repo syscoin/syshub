@@ -39,14 +39,16 @@ class MasternodeSetting extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   componentDidMount() {
     this.refreshMasternodeList();
   }
 
   async refreshMasternodeList() {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
-    const mnList = await firebase.getMasternodeListByUser(user.uid);
+    const mnList = await this.firebase.getMasternodeListByUser(user.uid);
     this.setState({ nodes: mnList, user });
   }
 
@@ -56,11 +58,10 @@ class MasternodeSetting extends Component {
   }
 
   addNodes(masternodeArray) {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
     const addMnError = [];
     masternodeArray.forEach(async masternode => {
-      const mansternodeExists = await firebase.checkMasternodeExists(
+      const mansternodeExists = await this.firebase.checkMasternodeExists(
         masternode.mnPrivateKey,
         user.uid
       );
@@ -84,9 +85,8 @@ class MasternodeSetting extends Component {
   }
 
   async addNode(masternode) {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
-    const mansternodeExists = await firebase.checkMasternodeExists(
+    const mansternodeExists = await this.firebase.checkMasternodeExists(
       masternode.mnPrivateKey,
       user.uid
     );
@@ -105,35 +105,32 @@ class MasternodeSetting extends Component {
   }
 
   async addMasternode(masternode) {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to add a Master Node');
       return;
     }
-    await firebase.addMasternode(masternode, user.uid);
+    await this.firebase.addMasternode(masternode, user.uid);
     this.refreshMasternodeList();
   }
 
   async deleteNode(masternode) {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to delete a Master Node');
       return;
     }
-    await firebase.deleteMasternode(masternode, user.uid);
+    await this.firebase.deleteMasternode(masternode, user.uid);
     this.refreshMasternodeList();
   }
 
   async editNode(masternode) {
-    const { firebase } = this.props;
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to edit a Master Node');
       return;
     }
-    await firebase.updateMasternode(masternode, user.uid);
+    await this.firebase.updateMasternode(masternode, user.uid);
     this.refreshMasternodeList();
   }
 

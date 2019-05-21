@@ -19,10 +19,12 @@ import SiderLogo from '../siderLogo/siderLogo';
 import siderMenuStyle from './siderMenu.style';
 
 class SiderMenu extends Component {
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
   activeComponemt(pageActive) {
-    const { firebase } = this.props;
     if (pageActive === 'logout') {
-      firebase.doSignOut();
+      this.firebase.doSignOut();
       this.props.doAppLogout();
       this.props.onItemClick('home');
     } else {
