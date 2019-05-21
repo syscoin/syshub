@@ -62,9 +62,11 @@ class Firebase {
 
   loginWithPhone = async (phoneNumber, appVerifier) => {
     alert(' desde el bueno');
-    const confirmationResult = await this.app
-      .auth()
-      .signInWithPhoneNumber(`${phoneNumber}`, appVerifier);
+    console.log('ACZ this -->', this);
+    const confirmationResult = await this.auth.signInWithPhoneNumber(
+      `${phoneNumber}`,
+      appVerifier
+    );
     return confirmationResult;
   };
 
