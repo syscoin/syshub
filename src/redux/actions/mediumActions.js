@@ -1,5 +1,5 @@
 import constants from '../constants';
-import * as mediumService from '../../API/medium.service';
+import * as mediumService from '../../API/medium/medium.service';
 
 const fastXmlParser = require('fast-xml-parser');
 

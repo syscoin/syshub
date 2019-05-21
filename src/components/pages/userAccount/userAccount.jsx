@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import to from '../../../Helpers/to';
+
+//Import providers HOC's
+import { withFirebase } from '../../../providers/firebase';
+
 import Paper from '@material-ui/core/Paper';
 import injectSheet from 'react-jss';
 import swal from 'sweetalert';
 
 import actions from '../../../redux/actions';
-import { doUpdateProfile, doUpdatePassword, doDeleteAccount } from '../../../API/firebase/firebase';
 
 import UserProfile from '../../functionals/userProfile/userProfile';
 import UserChangePsw from '../../functionals/userChangePsw/userChangePsw';
@@ -15,7 +19,6 @@ import UserTwoFactor from '../../functionals/userTwoFactor/userTwoFactor';
 
 // Import styles
 import userAccountStyle from './userAccount.style';
-
 
 class UserAccount extends Component {
   constructor(props) {
@@ -26,27 +29,43 @@ class UserAccount extends Component {
     this.deleteProfile = this.deleteProfile.bind(this);
   }
 
-  updateProfile(user) {
-    doUpdateProfile(user)
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
+  async updateProfile(user) {
+    const [err, { currentUser, error, message }] = await to(
+      this.firebase.doUpdateProfile(user)
+    );
+    console.log('ACZ -->', currentUser, error, message, err);
+    if (error || err) {
+      swal({ title: 'Oops...', text: `${message}`, icon: 'error' });
+      return;
+    }
+    swal({
+      title: 'Success',
+      text: 'Account updated.',
+      icon: 'success'
+    });
+    this.props.setCurrentUser(currentUser);
+    /* doUpdateProfile(user)
       .then(data => {
         swal({
           title: 'Success',
           text: 'Account updated.',
           icon: 'success'
         });
-
+        console.log('ACZ data -->', data);
         this.props.setCurrentUser(data);
       })
       .catch(err => {
-        swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
-      });
+      }); */
   }
 
   updatePassword(user) {
-    doUpdatePassword(user, (err, data) => {
+    this.firebase.doPasswordUpdate(user, (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
-        this.props.doLogout();
+        this.props.doAppLogout();
         this.props.setPage('login');
       } else {
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
@@ -55,11 +74,11 @@ class UserAccount extends Component {
   }
 
   async deleteProfile() {
-    const deleted = await doDeleteAccount()
+    const deleted = await this.firebase.doDeleteAccount();
     if (deleted) {
-      this.props.doLogout()
+      this.props.doAppLogout();
       this.props.setPage('home');
-    };
+    }
   }
 
   render() {
@@ -69,13 +88,19 @@ class UserAccount extends Component {
       <div className={style}>
         <h1 className="title">ACCOUNTS SETTINGS</h1>
         <Paper className="paper-container" elevation={4}>
-          <UserProfile deviceType={this.props.deviceType} onUpdateProfile={this.updateProfile} />
+          <UserProfile
+            deviceType={this.props.deviceType}
+            onUpdateProfile={this.updateProfile}
+          />
           <UserChangePsw
             deviceType={this.props.deviceType}
             onUpdatePassword={this.updatePassword}
           />
           <UserTwoFactor deviceType={this.props.deviceType} />
-          <UserDelete deviceType={this.props.deviceType} onDeleteProfile={this.deleteProfile} />
+          <UserDelete
+            deviceType={this.props.deviceType}
+            onDeleteProfile={this.deleteProfile}
+          />
         </Paper>
       </div>
     );
@@ -88,10 +113,17 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    doLogout: () => dispatch(actions.doLogout()),
+    doAppLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
     setPage: page => dispatch(actions.setPage(page))
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(userAccountStyle)(UserAccount));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(userAccountStyle)
+)(UserAccount);

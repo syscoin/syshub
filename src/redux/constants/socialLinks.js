@@ -2,7 +2,7 @@ const socialLinks = [
   {
     name: 'Discord',
     icon: 'fab fa-discord',
-    link: 'https://discord.gg/sQFwtkE'
+    link: 'https://discord.gg/RkK2AXD'
   },
   {
     name: 'Telegram',

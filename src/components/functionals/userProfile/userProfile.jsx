@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
+// Import provider Hoc's
+import { withFirebase } from '../../../providers/firebase';
+
 import injectSheet from 'react-jss';
 import { Button, Grid, FormGroup } from '@material-ui/core';
 import swal from 'sweetalert';
 import { Input } from 'antd';
-
-// import components
-import { fire } from '../../../API/firebase/firebase';
 
 // Import Styles
 import userProfileStyle from './userProfile.style';
@@ -29,7 +30,10 @@ class UserProfile extends Component {
     this.checkUserEmail = this.checkUserEmail.bind(this);
   }
 
-  submitProfile() {
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
+  async submitProfile() {
     const username = this.registerName.value;
     const email = this.registerEmail.value;
     const image = this.state.imageFile;
@@ -41,49 +45,13 @@ class UserProfile extends Component {
       if (image != null) {
         const fileName = this.state.imageFile.name;
         const file = this.state.imageFile;
-        const uploadTask = fire
-          .storage()
-          .ref('/avatars/' + fileName)
-          .put(file);
-
-        uploadTask.on(
-          'state_changed',
-          function (snapshot) {
-            // this variable can be used to show upload progress
-            //const progress =
-            //  snapshot.bytesTransferred / snapshot.totalBytes * 100;
-          },
-          function (error) {
-            switch (error.code) {
-              case 'storage/unauthorized':
-                // User doesn't have permission to access the object
-                alert('Permission denied');
-                break;
-
-              case 'storage/canceled':
-                // User canceled the upload
-                alert('User canceled the upload');
-                break;
-
-              case 'storage/unknown':
-                // Unknown error occurred, inspect error.serverResponse
-                alert('Unknown error occurred');
-                break;
-              default:
-            }
-          },
-          () => {
-            const downloadURL = uploadTask.snapshot.downloadURL;
-            updatedUser.photoURL = downloadURL;
-            this.props.onUpdateProfile(updatedUser);
-            this.registerName.value = '';
-            this.registerEmail.value = '';
-            this.setState({
-              disabled: true
-            });
-          }
-        );
-
+        const uploadTask = await this.firebase.storageAvatar(fileName, file);
+        const downloadURL = uploadTask.downloadURL;
+        updatedUser.photoURL = downloadURL;
+        this.props.onUpdateProfile(updatedUser);
+        this.registerName.value = '';
+        this.registerEmail.value = '';
+        this.setState({ disabled: true });
         return;
       }
       this.props.onUpdateProfile(updatedUser);
@@ -101,8 +69,8 @@ class UserProfile extends Component {
     this.setState({ disabled });
   }
 
-  checkUsername(event) {
-    const username = this.registerName.value;
+  async checkUsername(event) {
+    const username = this.registerName.value.trim();
     if (event.target.value.match(/^[0-9a-zA-Z_ ]*$/) == null) {
       swal({
         title: 'Oops...',
@@ -113,25 +81,25 @@ class UserProfile extends Component {
       return;
     }
 
-    const usernameRef = fire.database().ref('usernames');
     if (event.target.value) {
-      usernameRef.on('value', snapshot => {
-        if (Object.values(snapshot.val()).includes(username) === true) {
-          this.setState({
-            disabled: true,
-            showUserNameMsg: true
-          });
-        } else {
-          this.setState({
-            disabled: false,
-            showUserNameMsg: true
-          });
-        }
-      });
+      const isUsernameAvailable = await this.firebase.isUsernameAvailable(
+        username
+      );
+      if (isUsernameAvailable) {
+        this.setState({
+          disabled: false,
+          showUserNameMsg: true
+        });
+      } else {
+        this.setState({
+          disabled: true,
+          showUserNameMsg: true
+        });
+      }
     } else {
       this.setState({
         showUserNameMsg: false,
-        disabled: true,
+        disabled: true
       });
     }
   }
@@ -145,7 +113,7 @@ class UserProfile extends Component {
         this.setState({ image: e.target.result, imageFile: file });
       };
       reader.readAsDataURL(event.target.files[0]);
-      this.setState({disabled: false});
+      this.setState({ disabled: false });
     }
   }
 
@@ -174,8 +142,12 @@ class UserProfile extends Component {
               {this.state.image === null ? (
                 <img src={avatar} alt="no user" className="user-image" />
               ) : (
-                  <img src={this.state.image} alt="no user" className="user-image" />
-                )}
+                <img
+                  src={this.state.image}
+                  alt="no user"
+                  className="user-image"
+                />
+              )}
             </div>
             <span className="change-photo-btn upload-image-container">
               <Input
@@ -203,9 +175,11 @@ class UserProfile extends Component {
                 placeholder={currentUser.displayName}
                 onChange={this.checkUsername}
               />
-              {showUserNameMsg && <span className="validation-message">
-                {this.state.disabled === true ? 'Not Available' : 'Available'}
-              </span>}
+              {showUserNameMsg && (
+                <span className="validation-message">
+                  {this.state.disabled === true ? 'Not Available' : 'Available'}
+                </span>
+              )}
             </FormGroup>
 
             {/* For User Email */}
@@ -221,9 +195,11 @@ class UserProfile extends Component {
                 placeholder={currentUser.email}
                 onChange={this.checkUserEmail}
               />
-              {showEmailMsg && <span className="validation-message">
-                {this.state.disabled === true ? 'Not Available' : 'Available'}
-              </span>}
+              {showEmailMsg && (
+                <span className="validation-message">
+                  {this.state.disabled === true ? 'Not Available' : 'Available'}
+                </span>
+              )}
             </FormGroup>
           </Grid>
           <Grid item md={9} lg={12} className="update-button-grid">
@@ -253,4 +229,11 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(userProfileStyle)(UserProfile));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(userProfileStyle)
+)(UserProfile);

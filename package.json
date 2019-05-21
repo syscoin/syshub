@@ -1,6 +1,6 @@
 {
   "name": "syshub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -13,7 +13,7 @@
     "build:development": "npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "lint:log": "eslint . > eslint.log",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
@@ -32,8 +32,8 @@
     "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint": "5.x",
+    "eslint-plugin-react": "7.x",
     "fast-xml-parser": "^2.9.4",
     "firebase": "^4.13.1",
     "font-awesome": "^4.7.0",
@@ -71,5 +71,12 @@
     "sweetalert2": "^7.28.4",
     "underscore": "^1.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-eslint": "9.x",
+    "eslint-config-react-app": "^4.0.0",
+    "eslint-plugin-flowtype": "2.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react-hooks": "1.5.0"
+  }
 }

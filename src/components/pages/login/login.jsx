@@ -13,12 +13,7 @@ import runTasks from '../../../Helpers/hooks';
 import { withFirebase } from '../../../providers/firebase';
 
 // Import Services
-import { getFire2FAstatus } from '../../../API/firebase/twoFAFirebase.service';
-import { loginWithPhone } from '../../../API/twoFAPhone.service';
-import {
-  getAuthSecret,
-  verifyAuthCode
-} from '../../../API/twoFAAuthenticator.service';
+import { verifyAuthCode } from '../../../API/syscoin/twoFAAuthenticator.service';
 
 // Import Material-ui components
 import { Button, Grid, FormGroup } from '@material-ui/core';
@@ -38,25 +33,28 @@ class Login extends Component {
       twoFAStatus: {}
     };
     this.login = this.login.bind(this);
-    this.smsLogin = this.smsLogin.bind(this);
     this.passwordRecovery = this.passwordRecovery.bind(this);
   }
 
-  componentDidMount() {
-    const { firebase } = this.props;
-    firebase.useDeviceLanguage();
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
 
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier(this.recaptcha, {
-      callback: response => {
-        this.verify = response;
+  componentDidMount() {
+    this.firebase.useDeviceLanguage();
+
+    window.recaptchaVerifier = this.firebase.newRecaptchaVerifier(
+      this.recaptcha,
+      {
+        callback: response => {
+          this.verify = response;
+        }
       }
-    });
+    );
 
     window.recaptchaVerifier.render();
   }
 
   passwordRecovery() {
-    const { firebase } = this.props;
     swal({
       title: 'Password Recovery',
       text:
@@ -74,7 +72,7 @@ class Login extends Component {
     })
       .then(emailInput => {
         if (emailInput) {
-          return firebase.doPasswordReset(emailInput);
+          return this.firebase.doPasswordReset(emailInput);
         } else {
           swal({
             title: 'No email was given.',
@@ -95,39 +93,7 @@ class Login extends Component {
       });
   }
 
-  async smsLogin(user, email, password) {
-    const { firebase } = this.props;
-    const appVerifier = window.recaptchaVerifier;
-    await firebase.doSignOut();
-    this.props.setCurrentUser(null);
-    const confirmationResult = await loginWithPhone(
-      `${user.phoneNumber}`,
-      appVerifier
-    );
-    if (confirmationResult) {
-      const swalValue = await swal({
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        title: 'Two-Factor Phone Authentication',
-        text: 'Please provide the verification code sent to your phone',
-        icon: 'warning',
-        buttons: true,
-        dangerMode: false,
-        content: {
-          element: 'input',
-          attributes: {
-            placeholder: 'Confirmation code here',
-            type: 'text'
-          }
-        }
-      });
-      const verifiedToken = await confirmationResult.confirm(swalValue);
-      return verifiedToken;
-    }
-  }
-
   async twoFALogin(verifiationResutlObj) {
-    const { firebase } = this.props;
     const { smsCode, gToken } = verifiationResutlObj;
     const twoFAStatus = this.state.twoFAStatus;
     let vSmsCode = false;
@@ -140,7 +106,7 @@ class Login extends Component {
       const password = this.loginPsw.value;
       vGToken = verifyAuthCode(secret, gToken);
       if (vGToken) {
-        const user = await firebase.doSignInWithEmailAndPassword(
+        const user = await this.firebase.doSignInWithEmailAndPassword(
           email,
           password
         );
@@ -161,13 +127,12 @@ class Login extends Component {
     if (twoFAStatus.auth && twoFAStatus.sms) {
       twoFaResult = !!(vSmsCode * vGToken);
     }
-    console.log('ACZ loginForm -->', this.loginForm);
     runTasks('onLoginSuccess');
 
     this.props.setPage('home');
     if (!twoFaResult) {
-      await firebase.doSignOut();
-      this.props.doLogout();
+      await this.firebase.doSignOut();
+      this.props.doAppLogout();
       swal({
         title: 'Oops...',
         text: 'You do not pass the 2FA Challenge',
@@ -184,7 +149,7 @@ class Login extends Component {
 
   async login(event) {
     event.preventDefault();
-    const { firebase } = this.props;
+
     const email = this.loginEmail.value;
     const password = this.loginPsw.value;
 
@@ -199,10 +164,10 @@ class Login extends Component {
       return;
     }
     const [err, user] = await to(
-      firebase.doSignInWithEmailAndPassword(email, password)
+      this.firebase.doSignInWithEmailAndPassword(email, password)
     );
     if (err) {
-      await firebase.doSignOut();
+      await this.firebase.doSignOut();
       this.props.setCurrentUser(null);
       this.loginForm.reset();
       this.verify = undefined;
@@ -215,21 +180,21 @@ class Login extends Component {
     }
     if (user) {
       const appVerifier = window.recaptchaVerifier;
-      const twoFAStatus = await getFire2FAstatus(user.uid);
+      const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
       let phoneConfirmationResult, secret;
 
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {
-          phoneConfirmationResult = await loginWithPhone(
+          phoneConfirmationResult = await this.firebase.loginWithPhone(
             `${user.phoneNumber}`,
             appVerifier
           );
         }
         if (twoFAStatus.auth && twoFAStatus.authSecret) {
-          secret = await getAuthSecret(user.uid);
+          secret = await this.firebase.getAuthSecret(user.uid);
         }
-        await firebase.doSignOut();
+        await this.firebase.doSignOut();
         this.setState({
           showModal,
           twoFAStatus,
@@ -251,10 +216,10 @@ class Login extends Component {
   }
 
   async onModalClose(showModal) {
-    const { firebase, doLogout } = this.props;
+    const { doAppLogout } = this.props;
     this.setState({ showModal });
-    await firebase.doSignOut();
-    doLogout();
+    await this.firebase.doSignOut();
+    doAppLogout();
   }
 
   render() {
@@ -358,7 +323,7 @@ const dispatchToProps = dispatch => {
   return {
     setPage: page => dispatch(actions.setPage(page)),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    doLogout: () => dispatch(actions.doLogout())
+    doAppLogout: () => dispatch(actions.doLogout())
   };
 };
 

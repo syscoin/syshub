@@ -4,9 +4,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import API
-import { fire } from '../../../API/firebase/firebase';
-
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
 import { DashBoardHeader } from '../../functionals';
@@ -32,12 +29,7 @@ export class ProposalDetail extends Component {
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
   }
 
-  async getProposalDescription(descriptionID) {
-    const proposalDescriptionRef = fire.database().ref(`proposalsDescriptions/${descriptionID}`);
-    const rawProposalDescription = await proposalDescriptionRef.once('value');
-    const proposalDescription = rawProposalDescription.val();
-    return proposalDescription;
-  }
+  firebase = this.props.firebase;
 
   setMoreInfoUrl(url, propHash) {
     if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
@@ -52,20 +44,25 @@ export class ProposalDetail extends Component {
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
-      const descriptionObj = await this.getProposalDescription(descriptionID);
+      const descriptionObj = await this.firebase.getProposalDescription(
+        descriptionID
+      );
       if (descriptionObj) {
         dataString.description = descriptionObj.detail;
       }
-      this.setState({dataString, loading: false});
+      this.setState({ dataString, loading: false });
     }
   }
 
   render() {
     const { deviceType, totalNodes, proposal } = this.props;
     const { dataString, loading } = this.state;
-    const proposalTitle = this.state.dataString ? dataString.title || dataString.name : '';
-    if (!dataString) { this.prepareDataString(proposal) };
-    
+    const proposalTitle = this.state.dataString
+      ? dataString.title || dataString.name
+      : '';
+    if (!dataString) {
+      this.prepareDataString(proposal);
+    }
 
     //Platform style switcher
     return (
@@ -99,16 +96,13 @@ export class ProposalDetail extends Component {
                   </span>{' '}
                 </h3>
               ) : null}
-              <ProposalPayment
-                deviceType={deviceType}
-                data={dataString}
-              />
+              <ProposalPayment deviceType={deviceType} data={dataString} />
               <ProposalApprovalStat
                 deviceType={deviceType}
                 proposal={proposal}
                 totalNodes={totalNodes}
                 passingPercentage={10}
-               />
+              />
               <ProposalDescription
                 deviceType={deviceType}
                 description={dataString.description}
@@ -127,8 +121,7 @@ export class ProposalDetail extends Component {
 }
 
 const stateToProps = state => {
-  return {
-  };
+  return {};
 };
 
 const dispatchToProps = dispatch => {

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
-import { nextGovernanceRewardDate } from '../../../API/proposals.service';
+import { nextGovernanceRewardDate } from '../../../API/syscoin/proposals.service';
 
 // import styles
 import injectSheet from 'react-jss';
@@ -14,18 +14,17 @@ import proposalListStyle from './proposalList.style';
 import { DashBoardHeader, ProposalCard } from '../../functionals';
 
 export class ProposalList extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      nextGovernanceDate: {},
+      nextGovernanceDate: {}
     };
   }
 
-async componentWillMount() {
-  const nextGovernanceDate = await nextGovernanceRewardDate();
-  this.setState({ nextGovernanceDate });
-}
+  async componentWillMount() {
+    const nextGovernanceDate = await nextGovernanceRewardDate();
+    this.setState({ nextGovernanceDate });
+  }
 
   render() {
     const { selectProposal, deviceType } = this.props;
