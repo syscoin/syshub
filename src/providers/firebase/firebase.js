@@ -355,7 +355,10 @@ class Firebase {
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
       const oldUsername = currentUser.displayName;
       currentUser.updateProfile({ displayName: user.username });
-      usernameRef.child(uid).set(`${user.username}`);
+      usernameRef
+        .child(uid)
+        .child('name')
+        .set(`${user.username}`);
       userlistRef.child(oldUsername).remove();
       userlistRef.child(`${user.username}`).set(uid);
       resultMessage.push('Username Updated');
