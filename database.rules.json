@@ -33,6 +33,10 @@
       ".read": true,
       ".write": "auth !== null"
     },
+    "userInfo": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
     "usernames": {
       ".read": true,
       ".write": "auth !== null"
