@@ -16,7 +16,6 @@ const config = {
 };
 
 const FB_COLLECTION_DBINFO = 'dbinfo';
-const FB_COLLECTION_TWOFA = '2FAAuth';
 const FB_COLLECTION_COMMENTS = 'comments';
 const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
 const FB_COLLECTION_USERSINFO = 'usersInfo';
@@ -629,7 +628,7 @@ class Firebase {
    */
   getFire2FAstatus = async uid => {
     const rawUser2FAStatus = await this.getRawDocument(
-      `${FB_COLLECTION_TWOFA}/${uid}`
+      `${FB_COLLECTION_USERSINFO}/${uid}/2FA`
     );
     const user2FAStatus = rawUser2FAStatus.val();
     if (!user2FAStatus) {
@@ -658,14 +657,16 @@ class Firebase {
     }
     newStatus[method] = value;
     newStatus['twoFA'] = !!newStatus.sms || !!newStatus.auth;
-    const twoFARef = this.getDocumentRef(`${FB_COLLECTION_TWOFA}/${uid}`);
+    const twoFARef = this.getDocumentRef(
+      `${FB_COLLECTION_USERSINFO}/${uid}/2FA`
+    );
     twoFARef.update(newStatus);
 
     return newStatus;
   };
 
   removeFire2FA = async uid => {
-    await this.getDocumentRef(`${FB_COLLECTION_TWOFA}/${uid}`).remove();
+    await this.getDocumentRef(`${FB_COLLECTION_USERSINFO}/${uid}/2FA`).remove();
     return { err: null, msg: '2FA register successfuly deleted' };
   };
 
