@@ -11,8 +11,18 @@ const dbUpgradeFrom_0_To_1 = async paramObj => {
      *********************************/
     const usernameList = await firebase.getUsernameList();
     _.mapObject(usernameList, async (val, key) => {
-      const userlistRef = await firebase.getDocumentRef('userlist');
-      userlistRef.child(val).set(key);
+      const userListRef = await firebase.getDocumentRef('usersList');
+      userListRef.child(val).set(key);
+      /* const usernamesRef = await firebase.getDocumentRef('usernames');
+      usernamesRef
+        .child(key)
+        .child('name')
+        .set(val); */
+      const userInfoRef = await firebase.getDocumentRef('userInfo');
+      userInfoRef
+        .child(key)
+        .child('name')
+        .set(val);
     });
     /****************************
      * Actions definition's End *
@@ -48,6 +58,37 @@ const dbUpgradeFrom_1_To_2 = async paramObj => {
   console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
+const dbUpgradeFrom_2_To_3 = async paramObj => {
+  const DB_VERSION_TO_APPLY = '2';
+  const DB_VERSION_UPDATED = '3';
+  const firebase = paramObj.provider;
+  const dbVersion = await firebase.getDbVersion();
+  if (dbVersion.toString() === DB_VERSION_TO_APPLY) {
+    /*********************************
+     * Actions are defined from here *
+     *********************************/
+    let nUser = 0;
+    const mnList = await firebase.getDocument('usernames');
+    for (var key in mnList) {
+      const value = mnList[key].name;
+      if (value.indexOf('-deleted') === -1) {
+        nUser += 1;
+      }
+    }
+    const userListRef = await firebase.getDocumentRef('dbinfo');
+    userListRef.child('nUsers').set(nUser);
+
+    /****************************
+     * Actions definition's End *
+     ****************************/
+
+    firebase.setDbVersion(DB_VERSION_UPDATED);
+    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    return;
+  }
+  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+};
+
 /********************
  * public functions *
  ********************/
@@ -55,4 +96,5 @@ const dbUpgradeFrom_1_To_2 = async paramObj => {
 export const dbUpgrade = async paramObj => {
   await dbUpgradeFrom_0_To_1(paramObj);
   await dbUpgradeFrom_1_To_2(paramObj);
+  await dbUpgradeFrom_2_To_3(paramObj);
 };

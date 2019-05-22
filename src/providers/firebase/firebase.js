@@ -16,15 +16,15 @@ const config = {
 };
 
 // to delete in the next deployment in the rules
-const FB_COLLECTION_USERNAMES = 'usernames';
+//const FB_COLLECTION_USERNAMES = 'usernames';
 //const FB_COLLECTION_MESSAGES = 'messages';
 //const FB_COLLECTION_VOTES = 'votes';
 const FB_COLLECTION_DBINFO = 'dbinfo';
 const FB_COLLECTION_TWOFA = '2FAAuth';
 const FB_COLLECTION_COMMENTS = 'comments';
 const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
-//const FB_COLLECTION_USERNAMES = 'userInfo';
-const FB_COLLECTION_USERLIST = 'userlist';
+const FB_COLLECTION_USERNAMES = 'userInfo';
+const FB_COLLECTION_USERLIST = 'usersList';
 const FB_COLLECTION_PROPOSALS = 'proposals';
 const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
 const FB_COLLECTION_MASTERNODES = 'MasterNodes';
