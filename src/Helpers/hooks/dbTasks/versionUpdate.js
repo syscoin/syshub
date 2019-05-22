@@ -9,16 +9,16 @@ const dbUpgradeFrom_0_To_1 = async paramObj => {
     /*********************************
      * Actions are defined from here *
      *********************************/
-    const usernameList = await firebase.getUsernameList();
+    const usernameList = await firebase.getDocument('usernames');
     _.mapObject(usernameList, async (val, key) => {
       const userListRef = await firebase.getDocumentRef('usersList');
       userListRef.child(val).set(key);
-      /* const usernamesRef = await firebase.getDocumentRef('usernames');
+      /* const usernamesRef = await firebase.getDocumentRef('usersInfo');
       usernamesRef
         .child(key)
         .child('name')
         .set(val); */
-      const userInfoRef = await firebase.getDocumentRef('userInfo');
+      const userInfoRef = await firebase.getDocumentRef('usersInfo');
       userInfoRef
         .child(key)
         .child('name')
@@ -47,6 +47,8 @@ const dbUpgradeFrom_1_To_2 = async paramObj => {
     messagesRef.remove();
     const votesRef = await firebase.getDocumentRef('votes');
     votesRef.remove();
+    const usernamesRef = await firebase.getDocumentRef('usernames');
+    usernamesRef.remove();
     /****************************
      * Actions definition's End *
      ****************************/
@@ -68,7 +70,7 @@ const dbUpgradeFrom_2_To_3 = async paramObj => {
      * Actions are defined from here *
      *********************************/
     let nUser = 0;
-    const mnList = await firebase.getDocument('usernames');
+    const mnList = await firebase.getDocument('usersInfo');
     for (var key in mnList) {
       const value = mnList[key].name;
       if (value.indexOf('-deleted') === -1) {

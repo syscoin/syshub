@@ -15,15 +15,11 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-// to delete in the next deployment in the rules
-//const FB_COLLECTION_USERNAMES = 'usernames';
-//const FB_COLLECTION_MESSAGES = 'messages';
-//const FB_COLLECTION_VOTES = 'votes';
 const FB_COLLECTION_DBINFO = 'dbinfo';
 const FB_COLLECTION_TWOFA = '2FAAuth';
 const FB_COLLECTION_COMMENTS = 'comments';
 const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
-const FB_COLLECTION_USERNAMES = 'userInfo';
+const FB_COLLECTION_USERSINFO = 'usersInfo';
 const FB_COLLECTION_USERLIST = 'usersList';
 const FB_COLLECTION_PROPOSALS = 'proposals';
 const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
@@ -182,7 +178,7 @@ class Firebase {
   };
 
   addUsername = async (key, username) => {
-    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
     const userListRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
     usernameRef
       .child(key)
@@ -195,9 +191,9 @@ class Firebase {
   getCurrentUser = async () => await this.auth.currentUser;
 
   getUsernameById = uid =>
-    this.getDocumentRef(`${FB_COLLECTION_USERNAMES}/${uid}`);
+    this.getDocumentRef(`${FB_COLLECTION_USERSINFO}/${uid}`);
 
-  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAMES);
+  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERSINFO);
 
   doLogout = async update => {
     await this.doSignOut();
@@ -297,7 +293,7 @@ class Firebase {
 
       //* Add "-deleted" to the username list *
 
-      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
 
       // try to figure out why '-deleted' if no reason remove the alias from the DB
@@ -355,7 +351,7 @@ class Firebase {
     }
 
     if (user.username) {
-      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
       const oldUsername = currentUser.displayName;
       currentUser.updateProfile({ displayName: user.username });
