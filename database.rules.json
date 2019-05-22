@@ -29,7 +29,11 @@
       ".read": true,
       ".write": "auth !== null"
     },
-    "userlist": {
+    "usersList": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "usersInfo": {
       ".read": true,
       ".write": "auth !== null"
     },

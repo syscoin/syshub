@@ -67,7 +67,7 @@ class App extends Component {
 
   async tick() {
     const mnRegistered = await this.firebase.getMasternodesTotalCount();
-    const userRegistered = await this.firebase.getUsersTotal();
+    const userRegistered = await this.firebase.getDBnUsers();
     return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
   registerHooks() {

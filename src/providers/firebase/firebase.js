@@ -19,8 +19,8 @@ const FB_COLLECTION_DBINFO = 'dbinfo';
 const FB_COLLECTION_TWOFA = '2FAAuth';
 const FB_COLLECTION_COMMENTS = 'comments';
 const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
-const FB_COLLECTION_USERNAMES = 'usernames';
-const FB_COLLECTION_USERLIST = 'userlist';
+const FB_COLLECTION_USERSINFO = 'usersInfo';
+const FB_COLLECTION_USERLIST = 'usersList';
 const FB_COLLECTION_PROPOSALS = 'proposals';
 const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
 const FB_COLLECTION_MASTERNODES = 'MasterNodes';
@@ -141,6 +141,28 @@ class Firebase {
     dbinfoRef.set(newVersion);
   };
 
+  getDBnUsers = async () => {
+    const dbnUsers = await this.getDocument(`${FB_COLLECTION_DBINFO}/nUsers`);
+    return dbnUsers;
+  };
+
+  addOneDBnUsers = async () => {
+    const nUser = parseFloat(await this.getDBnUsers());
+    const dbnUsersRef = await this.getDocumentRef(
+      `${FB_COLLECTION_DBINFO}/nUsers`
+    );
+    dbnUsersRef.set(nUser + 1);
+  };
+
+  rmvOneDBnUsers = async () => {
+    alert(' Are you sure?');
+    const nUser = parseFloat(await this.getDBnUsers());
+    const dbnUsersRef = await this.getDocumentRef(
+      `${FB_COLLECTION_DBINFO}/nUsers`
+    );
+    dbnUsersRef.set(nUser - 1);
+  };
+
   /********************
    * Users Management *
    ********************/
@@ -155,31 +177,23 @@ class Firebase {
     return true;
   };
 
-  getUsersTotal = async () => {
-    let nUser = 0;
-    const mnList = await this.getDocument(`${FB_COLLECTION_USERNAMES}`);
-    for (var key in mnList) {
-      const value = mnList[key];
-      if (value.indexOf('-deleted') === -1) {
-        nUser += 1;
-      }
-    }
-    return nUser;
-  };
-
   addUsername = async (key, username) => {
-    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
-    const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
-    usernameRef.child(key).set(username);
-    userlistRef.child(username).set(key);
+    const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
+    const userListRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
+    usernameRef
+      .child(key)
+      .child('name')
+      .set(username);
+    userListRef.child(username).set(key);
+    await this.addOneDBnUsers();
   };
 
   getCurrentUser = async () => await this.auth.currentUser;
 
   getUsernameById = uid =>
-    this.getDocumentRef(`${FB_COLLECTION_USERNAMES}/${uid}`);
+    this.getDocumentRef(`${FB_COLLECTION_USERSINFO}/${uid}`);
 
-  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERNAMES);
+  getUsernameList = async () => await this.getDocument(FB_COLLECTION_USERSINFO);
 
   doLogout = async update => {
     await this.doSignOut();
@@ -279,11 +293,13 @@ class Firebase {
 
       //* Add "-deleted" to the username list *
 
-      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
 
+      // try to figure out why '-deleted' if no reason remove the alias from the DB
       usernameRef
         .child(currentUser.uid)
+        .child('name')
         .set(`${currentUser.displayName}-deleted`);
       userlistRef.child(currentUser.displayName).remove();
       userlistRef
@@ -300,6 +316,7 @@ class Firebase {
       );
       masternodesRef.child(currentUser.uid).remove();
 
+      await this.rmvOneDBnUsers();
       const [err, iamDeleted] = await to(currentUser.delete());
       if (!err) {
         swal({
@@ -307,6 +324,8 @@ class Firebase {
           text: 'Account Deleted',
           icon: 'success'
         });
+        alert('Continue ?');
+
         this.doSignOut();
         deleted = true;
         return deleted;
@@ -332,11 +351,14 @@ class Firebase {
     }
 
     if (user.username) {
-      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERNAMES);
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
       const oldUsername = currentUser.displayName;
       currentUser.updateProfile({ displayName: user.username });
-      usernameRef.child(uid).set(`${user.username}`);
+      usernameRef
+        .child(uid)
+        .child('name')
+        .set(`${user.username}`);
       userlistRef.child(oldUsername).remove();
       userlistRef.child(`${user.username}`).set(uid);
       resultMessage.push('Username Updated');
