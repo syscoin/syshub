@@ -13,11 +13,6 @@ const dbUpgradeFrom_0_To_1 = async paramObj => {
     _.mapObject(usernameList, async (val, key) => {
       const userListRef = await firebase.getDocumentRef('usersList');
       userListRef.child(val).set(key);
-      /* const usernamesRef = await firebase.getDocumentRef('usersInfo');
-      usernamesRef
-        .child(key)
-        .child('name')
-        .set(val); */
       const userInfoRef = await firebase.getDocumentRef('usersInfo');
       userInfoRef
         .child(key)
@@ -91,6 +86,37 @@ const dbUpgradeFrom_2_To_3 = async paramObj => {
   console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
+const dbUpgradeFrom_3_To_4 = async paramObj => {
+  const DB_VERSION_TO_APPLY = '3';
+  const DB_VERSION_UPDATED = '4';
+  const firebase = paramObj.provider;
+  const dbVersion = await firebase.getDbVersion();
+  if (dbVersion.toString() === DB_VERSION_TO_APPLY) {
+    /*********************************
+     * Actions are defined from here *
+     *********************************/
+    const twoFAAuthList = await firebase.getDocument('2FAAuth');
+    _.mapObject(twoFAAuthList, async (val, key) => {
+      const userInfoRef = await firebase.getDocumentRef('usersInfo');
+      userInfoRef
+        .child(key)
+        .child('2FA')
+        .set(val);
+    });
+    const twoFAAuthRef = await firebase.getDocumentRef('2FAAuth');
+    twoFAAuthRef.remove();
+
+    /****************************
+     * Actions definition's End *
+     ****************************/
+
+    firebase.setDbVersion(DB_VERSION_UPDATED);
+    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    return;
+  }
+  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+};
+
 /********************
  * public functions *
  ********************/
@@ -99,4 +125,5 @@ export const dbUpgrade = async paramObj => {
   await dbUpgradeFrom_0_To_1(paramObj);
   await dbUpgradeFrom_1_To_2(paramObj);
   await dbUpgradeFrom_2_To_3(paramObj);
+  await dbUpgradeFrom_3_To_4(paramObj);
 };
