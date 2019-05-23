@@ -282,9 +282,7 @@ class UserTwoFactorSMS extends Component {
       phoneCode
     );
     if (phoneCredential) {
-      const [err, userUpdated] = await to(
-        user.updatePhoneNumber(phoneCredential)
-      );
+      const [err] = await to(user.updatePhoneNumber(phoneCredential));
 
       if (err) {
         swal({
@@ -302,6 +300,7 @@ class UserTwoFactorSMS extends Component {
       newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
       user = await this.firebase.getCurrentUser();
+      console.log('ACZ -->', user);
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();
