@@ -11,6 +11,9 @@ import { withFirebase } from '../../../providers/firebase';
 // Import Sevices
 import { phoneValidation } from '../../../Helpers';
 
+// Import helpers
+import to from '../../../Helpers/to';
+
 // import Material-ui components
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -65,8 +68,6 @@ class UserTwoFactorSMS extends Component {
   }
 
   // add Firebase as global var in component
-  firebase = this.props.firebase;
-
   firebase = this.props.firebase;
 
   async componentDidMount() {
@@ -281,7 +282,16 @@ class UserTwoFactorSMS extends Component {
       phoneCode
     );
     if (phoneCredential) {
-      user.updatePhoneNumber(phoneCredential);
+      const [err] = await to(user.updatePhoneNumber(phoneCredential));
+
+      if (err) {
+        swal({
+          title: 'Error',
+          text: `${err}`,
+          icon: 'error'
+        });
+        return;
+      }
       let newStatus = await this.firebase.setFire2FAMethod(
         user.uid,
         'sms',
@@ -290,6 +300,7 @@ class UserTwoFactorSMS extends Component {
       newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
       user = await this.firebase.getCurrentUser();
+      console.log('ACZ -->', user);
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();

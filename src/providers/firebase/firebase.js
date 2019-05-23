@@ -154,7 +154,6 @@ class Firebase {
   };
 
   rmvOneDBnUsers = async () => {
-    alert(' Are you sure?');
     const nUser = parseFloat(await this.getDBnUsers());
     const dbnUsersRef = await this.getDocumentRef(
       `${FB_COLLECTION_DBINFO}/nUsers`
@@ -296,14 +295,13 @@ class Firebase {
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
 
       // try to figure out why '-deleted' if no reason remove the alias from the DB
-      usernameRef
-        .child(currentUser.uid)
-        .child('name')
-        .set(`${currentUser.displayName}-deleted`);
+      usernameRef.child(currentUser.uid).remove();
+      /* .child('name')
+        .set(`${currentUser.displayName}-deleted`); */
       userlistRef.child(currentUser.displayName).remove();
-      userlistRef
+      /* userlistRef
         .child(`${currentUser.displayName}-deleted`)
-        .set(currentUser.uid);
+        .set(currentUser.uid); */
 
       this.removeFire2FA(currentUser.uid);
 
@@ -323,8 +321,6 @@ class Firebase {
           text: 'Account Deleted',
           icon: 'success'
         });
-        alert('Continue ?');
-
         this.doSignOut();
         deleted = true;
         return deleted;
