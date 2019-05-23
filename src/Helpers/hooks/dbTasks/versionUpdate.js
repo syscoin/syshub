@@ -13,11 +13,6 @@ const dbUpgradeFrom_0_To_1 = async paramObj => {
     _.mapObject(usernameList, async (val, key) => {
       const userListRef = await firebase.getDocumentRef('usersList');
       userListRef.child(val).set(key);
-      const userInfoRef = await firebase.getDocumentRef('usersInfo');
-      userInfoRef
-        .child(key)
-        .child('name')
-        .set(val);
     });
     /****************************
      * Actions definition's End *
@@ -38,6 +33,14 @@ const dbUpgradeFrom_1_To_2 = async paramObj => {
     /*********************************
      * Actions are defined from here *
      *********************************/
+    const usernameList = await firebase.getDocument('usernames');
+    _.mapObject(usernameList, async (val, key) => {
+      const userInfoRef = await firebase.getDocumentRef('usersInfo');
+      userInfoRef
+        .child(key)
+        .child('name')
+        .set(val);
+    });
     const messagesRef = await firebase.getDocumentRef('messages');
     messagesRef.remove();
     const votesRef = await firebase.getDocumentRef('votes');
@@ -105,6 +108,14 @@ const dbUpgradeFrom_3_To_4 = async paramObj => {
     });
     const twoFAAuthRef = await firebase.getDocumentRef('2FAAuth');
     twoFAAuthRef.remove();
+
+    const masternodeList = await firebase.getDocument('MasterNodes');
+    let nMnodes = 0;
+    _.mapObject(masternodeList, async (val, key) => {
+      nMnodes += _.size(val);
+    });
+    const userListRef = await firebase.getDocumentRef('dbinfo');
+    userListRef.child('nMnodes').set(nMnodes);
 
     /****************************
      * Actions definition's End *

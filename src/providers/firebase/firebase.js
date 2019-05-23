@@ -161,6 +161,27 @@ class Firebase {
     dbnUsersRef.set(nUser - 1);
   };
 
+  getDBnMnodes = async () => {
+    const dbnMnodes = await this.getDocument(`${FB_COLLECTION_DBINFO}/nMnodes`);
+    return dbnMnodes;
+  };
+
+  addOneDBnMnodes = async () => {
+    const nMnodes = parseFloat(await this.getDBnMnodes());
+    const dbnMnodesRef = await this.getDocumentRef(
+      `${FB_COLLECTION_DBINFO}/nMnodes`
+    );
+    dbnMnodesRef.set(nMnodes + 1);
+  };
+
+  rmvOneDBnMnodes = async () => {
+    const nMnodes = parseFloat(await this.getDBnMnodes());
+    const dbnMnodesRef = await this.getDocumentRef(
+      `${FB_COLLECTION_DBINFO}/nMnodes`
+    );
+    dbnMnodesRef.set(nMnodes - 1);
+  };
+
   /********************
    * Users Management *
    ********************/
@@ -565,21 +586,12 @@ class Firebase {
     return mnList;
   };
 
-  getMasternodesTotalCount = async uid => {
-    let nMN = 0;
-    const mnList = await this.getDocument(`MasterNodes`);
-    for (var key in mnList) {
-      const value = mnList[key];
-      const myMn = Object.keys(value).length;
-      nMN += myMn;
-    }
-    return nMN;
-  };
+  getMasternodesTotalCount = async uid => await this.getDBnMnodes();
 
   deleteMasternode = async (masternode, uid) => {
     const masternodesRef = await this.getDocumentRef(`MasterNodes/${uid}`);
-    const selectMasternode = await masternodesRef.child(masternode.keyId);
-    selectMasternode.remove();
+    masternodesRef.child(masternode.keyId).remove();
+    this.rmvOneDBnMnodes();
   };
 
   addMasternode = async (masternode, uid) => {
@@ -590,8 +602,8 @@ class Firebase {
     masternode.keyId = newKey;
     masternode.key = newKey;
     const newMasternodeRef = this.getDocumentRef(`MasterNodes/${uid}`);
-    const newMasternodeChild = newMasternodeRef.child(masternode.keyId);
-    newMasternodeChild.set(masternode);
+    newMasternodeRef.child(masternode.keyId).set(masternode);
+    this.addOneDBnMnodes();
   };
 
   updateMasternode = async (masternode, uid) => {
