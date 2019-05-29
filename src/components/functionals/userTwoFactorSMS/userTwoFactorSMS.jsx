@@ -300,7 +300,6 @@ class UserTwoFactorSMS extends Component {
       newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
       this.props.set2FA(newStatus);
       user = await this.firebase.getCurrentUser();
-      console.log('ACZ -->', user);
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();
