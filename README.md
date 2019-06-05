@@ -1,4 +1,4 @@
-# SYSHUB Project
+# SYShub Project
 
 SYShub is a voting and proposal portal for the Syscoin Platform governance system. 
 Every 48000 blocks there is an allocation of Syscoin to succesful proposals.
