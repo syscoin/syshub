@@ -1,18 +1,10 @@
 {
   "rules": {
-  	"messages": {
-      ".read": true,
-      ".write": "auth !== null",
-    },
-    "usernames": {
-      ".read": true,
-      ".write": "auth !== null"
-    },
     "2FAAuth": {
       ".read": "auth !== null",
       ".write": "auth !== null"
     },
-    "comments": {
+    "MasterNodes": {
       ".read": true,
       ".write": "auth !== null"
     },
@@ -20,7 +12,12 @@
       ".read": true,
       ".write": "auth !== null"
     },
-    "votes": {
+    "comments": {
+      ".read": true,
+      ".write": "auth !== null",
+      ".indexOn": ["createdAt", "createdBy/uid"]
+    },
+    "dbinfo": {
       ".read": true,
       ".write": "auth !== null"
     },
@@ -32,7 +29,23 @@
       ".read": true,
       ".write": "auth !== null"
     },
-    "MasterNodes": {
+    "usersList": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "usersInfo": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "usernames": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "messages": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "votes": {
       ".read": true,
       ".write": "auth !== null"
     }

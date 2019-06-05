@@ -16,7 +16,10 @@ const phoneValidation = (phoneNumber, isoCode) => {
   let userNumber = null;
 
   try {
-    userNumber = phoneUtil.parseAndKeepRawInput(phoneNumber, isoCode.toUpperCase());
+    userNumber = phoneUtil.parseAndKeepRawInput(
+      phoneNumber,
+      isoCode.toUpperCase()
+    );
   } catch (e) {
     swal({
       title: 'Oops...',

@@ -15,10 +15,6 @@ import { withFirebase } from './providers/firebase';
 // Imports tasks for Hooks
 import registerDbTasksHooks from './Helpers/hooks/dbTasks';
 
-// Import services
-import { getFire2FAMethod } from './API/firebase/twoFAFirebase.service';
-import { getMasternodeList } from './API/firebase/masternodeFirebase.service';
-
 // Custom Material-UI Theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import appStyles from './styles/appStyle';
@@ -38,43 +34,23 @@ const sysHubTheme = createMuiTheme({
 
 class App extends Component {
   state = {};
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
 
   async componentWillMount() {
     await this.tick();
     await this.detectProposalUrl();
     await this.registerHooks();
+    console.log(`sysHub::v${process.env.REACT_APP_VERSION}`);
   }
 
   async componentDidMount() {
-    const { firebase } = this.props;
-    const currentUser = await firebase.getCurrentUser();
-    const dbVersion = await firebase.getDbVersion();
-
-    console.log('ACZ dbVersion -->', dbVersion);
-
-    if (currentUser) {
-      this.props.setCurrentUser(currentUser);
-      return;
-    }
-
-    firebase.auth.onAuthStateChanged(async user => {
-      // try {
-      if (user) {
-        const twoFA = await getFire2FAMethod(user.uid, 'twoFA');
-
-        if (twoFA) {
-          user['MasterNodes'] = await getMasternodeList(user.uid);
-          /* const status2FA = await getFire2FAstatus(user.uid);
-            this.props.set2FA(status2FA); */
-        }
-        this.props.setCurrentUser(user);
-      }
-      // }
-      // catch (err) {}
-    });
-
     let timer = setInterval(() => this.tick(), 35000);
     this.setState({ timer });
+    this.firebase.auth.onAuthStateChanged(async user => {
+      this.props.setCurrentUser(user);
+    });
+
     this.props.platformGet({
       os: Platform.OS || '',
       osVersion: Platform.OSVersion || '',
@@ -90,12 +66,12 @@ class App extends Component {
   }
 
   async tick() {
-    return await this.props.getSysInfo();
+    const mnRegistered = await this.firebase.getMasternodesTotalCount();
+    const userRegistered = await this.firebase.getDBnUsers();
+    return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
-
   registerHooks() {
-    const { firebase } = this.props;
-    registerDbTasksHooks({ provider: firebase });
+    registerDbTasksHooks({ provider: this.firebase });
   }
 
   async detectProposalUrl() {
@@ -142,12 +118,12 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return {
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    getSysInfo: () => {
+    getSysInfo: (mnRegistered, userRegistered) => {
       return (
         dispatch(actions.getSysPrice()),
         dispatch(actions.getSysMnCount()),
-        dispatch(actions.getSysMnRegistered()),
-        dispatch(actions.getSysUserRegistered())
+        dispatch(actions.getSysMnRegistered(mnRegistered)),
+        dispatch(actions.getSysUserRegistered(userRegistered))
       );
     },
     setPage: page => dispatch(actions.setPage(page)),

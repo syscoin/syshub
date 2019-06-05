@@ -1,16 +1,22 @@
 import constants from '../constants';
-import * as mnService from '../../API/masternodes.service';
-import * as sysService from '../../API/syscoin.service';
+import * as mnService from '../../API/syscoin/masternodes.service';
+import * as sysService from '../../API/coinmarketcap/syscoinTiker.service';
 
 export default {
-  getSysMnRegistered: () => {
+  getSysMnRegistered: mnRegistered => {
     return dispatch =>
-      dispatch(mnService.getMnRegistered(constants.SYS_STATS_RMN_GET));
+      dispatch({
+        type: constants.SYS_STATS_RMN_GET,
+        data: mnRegistered
+      });
   },
 
-  getSysUserRegistered: () => {
+  getSysUserRegistered: userRegistered => {
     return dispatch =>
-      dispatch(mnService.getUserRegistered(constants.SYS_STATS_USER_GET));
+      dispatch({
+        type: constants.SYS_STATS_USER_GET,
+        data: userRegistered
+      });
   },
 
   getSysPrice: () => {

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+
+// import providers HOC's
+import { withFirebase } from '../../../providers/firebase';
+
 import swal from 'sweetalert';
-
-
-// import API services
-import { getMasternodeList, addMasternode, deleteMasternode, updateMasternode, checkMasternodeExists } from '../../../API/firebase/masternodeFirebase.service';
 
 // import Material-ui Items
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
@@ -17,7 +18,11 @@ import Tab from '@material-ui/core/Tab';
 import masterNodeSettingStyle from './masternodeSetting.style';
 
 // import custom components
-import { MasternodeList, MasternodeAdd, MasternodeBatchAdd } from '../../functionals';
+import {
+  MasternodeList,
+  MasternodeAdd,
+  MasternodeBatchAdd
+} from '../../functionals';
 
 class MasternodeSetting extends Component {
   constructor(props) {
@@ -25,7 +30,7 @@ class MasternodeSetting extends Component {
 
     this.state = {
       nodes: [],
-      activeTab: 0,
+      activeTab: 0
     };
 
     this.addNode = this.addNode.bind(this);
@@ -34,14 +39,17 @@ class MasternodeSetting extends Component {
     this.editNode = this.editNode.bind(this);
   }
 
-componentDidMount() {
-    this.getMasternodeList();
+  // add Firebase as global var in component
+  firebase = this.props.firebase;
+
+  componentDidMount() {
+    this.refreshMasternodeList();
   }
-  
-  async getMasternodeList () {
+
+  async refreshMasternodeList() {
     const user = this.props.app.currentUser;
-    const mnList = await getMasternodeList(user.uid);
-    this.setState({ nodes: mnList, user });    
+    const mnList = await this.firebase.getMasternodeListByUser(user.uid);
+    this.setState({ nodes: mnList, user });
   }
 
   prepareMasternodeError(pkArray) {
@@ -51,20 +59,25 @@ componentDidMount() {
 
   addNodes(masternodeArray) {
     const user = this.props.app.currentUser;
-    const addMnError = []
+    const addMnError = [];
     masternodeArray.forEach(async masternode => {
-      const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+      const mansternodeExists = await this.firebase.checkMasternodeExists(
+        masternode.mnPrivateKey,
+        user.uid
+      );
       if (!mansternodeExists) {
         this.addMasternode(masternode);
       } else {
         addMnError.push(masternode.mnPrivateKey);
       }
-      
+
       if (addMnError.length > 0) {
         swal({
           className: 'sweetalertModal',
           title: 'Skipping',
-          text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(addMnError)}\n\n already exists`,
+          text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(
+            addMnError
+          )}\n\n already exists`,
           icon: 'error'
         });
       }
@@ -73,14 +86,19 @@ componentDidMount() {
 
   async addNode(masternode) {
     const user = this.props.app.currentUser;
-    const mansternodeExists = await checkMasternodeExists(masternode.mnPrivateKey, user.uid);
+    const mansternodeExists = await this.firebase.checkMasternodeExists(
+      masternode.mnPrivateKey,
+      user.uid
+    );
     if (!mansternodeExists) {
       this.addMasternode(masternode);
     } else {
       swal({
         className: 'sweetalertModal',
         title: 'Skipping',
-        text: `The Masternode with the Private-key:\n\n ${masternode.mnPrivateKey}\n\n already exists`,
+        text: `The Masternode with the Private-key:\n\n ${
+          masternode.mnPrivateKey
+        }\n\n already exists`,
         icon: 'error'
       });
     }
@@ -92,8 +110,8 @@ componentDidMount() {
       alert('Must be logged in to add a Master Node');
       return;
     }
-      await addMasternode(masternode, user.uid);
-      this.getMasternodeList();
+    await this.firebase.addMasternode(masternode, user.uid);
+    this.refreshMasternodeList();
   }
 
   async deleteNode(masternode) {
@@ -102,9 +120,8 @@ componentDidMount() {
       alert('Must be logged in to delete a Master Node');
       return;
     }
-    await deleteMasternode(masternode, user.uid);
-    this.getMasternodeList();
-
+    await this.firebase.deleteMasternode(masternode, user.uid);
+    this.refreshMasternodeList();
   }
 
   async editNode(masternode) {
@@ -113,8 +130,8 @@ componentDidMount() {
       alert('Must be logged in to edit a Master Node');
       return;
     }
-    await updateMasternode(masternode, user.uid);
-    this.getMasternodeList();
+    await this.firebase.updateMasternode(masternode, user.uid);
+    this.refreshMasternodeList();
   }
 
   handleOnTabClick = (event, activeTab) => {
@@ -123,7 +140,7 @@ componentDidMount() {
 
   render() {
     const { classes, deviceType } = this.props;
-    const {activeTab} = this.state;
+    const { activeTab } = this.state;
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
     return (
@@ -143,8 +160,18 @@ componentDidMount() {
             <Tab icon={<Add />} label="ADD" />
             <Tab icon={<PlaylistAdd />} label="MULTIPLE ADD" />
           </Tabs>
-          { activeTab === 0 && <MasternodeAdd deviceType={this.props.deviceType} addNode={this.addNode} /> }
-          { activeTab === 1 && <MasternodeBatchAdd deviceType={this.props.deviceType} addNodes={this.addNodes} /> }
+          {activeTab === 0 && (
+            <MasternodeAdd
+              deviceType={this.props.deviceType}
+              addNode={this.addNode}
+            />
+          )}
+          {activeTab === 1 && (
+            <MasternodeBatchAdd
+              deviceType={this.props.deviceType}
+              addNodes={this.addNodes}
+            />
+          )}
           <MasternodeList
             deviceType={this.props.deviceType}
             nodes={this.state.nodes}
@@ -167,4 +194,11 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(masterNodeSettingStyle)(MasternodeSetting));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(masterNodeSettingStyle)
+)(MasternodeSetting);
