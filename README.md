@@ -1,10 +1,10 @@
 # SYSHUB Project
 
-## Develop by [Thrifa](http://www.thrifa.io)
+## Develop by 
 
-Develop site: https://syshub-dev.herokuapp.com
+Develop site: https://syshub-dev.web.app/
 
-Staging site: https://syshub-staging.herokuapp.com
+Staging site: https://syshub.org
 
 ## Scripts
 
