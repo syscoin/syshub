@@ -8,13 +8,12 @@ cache:
 before_install:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
-  - if [$TRAVIS_BRANCH != "master"]; then
-    yarn build:development;
-    fi
 
 jobs:
   include:
     - stage: deployDev
+      script:
+        - yarn build:development
       deploy:
         skip_cleanup: true
         provider: firebase
