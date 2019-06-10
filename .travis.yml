@@ -8,7 +8,7 @@ cache:
 before_install:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
-  - if [$TRAVIS_BRANCH = "master"]; then
+  - if [$TRAVIS_BRANCH != "master"]; then
     yarn build:development;
     fi
 
