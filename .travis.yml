@@ -6,9 +6,8 @@ cache:
     - node_modules
 
 before_install:
-  script:
-    - npm install --quite firebase-tools -g
-    - firebase firebase --version
+  - npm install --quite firebase-tools -g
+  - firebase firebase --version
 
 jobs:
   include:
