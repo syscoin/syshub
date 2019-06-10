@@ -8,8 +8,9 @@ cache:
 before_install:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
-  if: branch = master
-  - yarn build:development
+  - if [$TRAVIS_BRANCH = "master"]; then
+    yarn build:development;
+    fi
 
 jobs:
   include:
@@ -19,4 +20,4 @@ jobs:
         provider: firebase
         token: $FIREBASE_TOKEN
         project: syshub-dev
-        message: "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID"
+        message: 'Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID'
