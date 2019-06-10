@@ -11,3 +11,5 @@ before_script:
 
 script:
   - yarn build:development
+  - firebase use --token $FIREBASE_TOKEN syshub-dev
+  - firebase deploy -m "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
