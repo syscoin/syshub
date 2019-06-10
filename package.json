@@ -28,7 +28,7 @@
     "@types/grecaptcha": "^2.0.35",
     "antd": "^3.10.8",
     "antd-mobile": "^2.2.5",
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
