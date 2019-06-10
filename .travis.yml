@@ -21,4 +21,4 @@ jobs:
         message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
         on:
           all_branches: true
-          condition: $TRAVIS_BRANCH != travisCI_Config
+          condition: $TRAVIS_BRANCH != master
