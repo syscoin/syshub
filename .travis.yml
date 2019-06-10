@@ -8,11 +8,15 @@ cache:
 before_install:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
+  if: branch = master
+  - yarn build:development
 
 jobs:
   include:
-    - stage: deploy
-      script:
-        - yarn build:development
-        - firebase use --token $FIREBASE_TOKEN syshub-dev
-        - firebase deploy -m "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
+    - stage: deployDev
+      deploy:
+        skip_cleanup: true
+        provider: firebase
+        token: $FIREBASE_TOKEN
+        project: syshub-dev
+        message: "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID"
