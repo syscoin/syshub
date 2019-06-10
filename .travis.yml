@@ -20,4 +20,5 @@ jobs:
         project: syshub-dev
         message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
         on:
-          branch: travisCI_Config
+          all_branches: true
+          condition: $TRAVIS_BRANCH != travisCI_Config
