@@ -4,33 +4,25 @@ node_js:
 cache:
   directories:
     - node_modules
-before_install:
+
+before_script:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
+
+stages:
+  - deploy Develop
+  - name: deploy Stage
+    if: branch = master
+
 jobs:
   include:
-    - stage: deployDev
+    - stage: deploy Develop
       script:
         - yarn build:development
-      deploy:
-        skip_cleanup: true
-        provider: firebase
-        token:
-          secure: knI+Bt9lIzoefwjRyVXzCNFKtPjsFB45WNXXldqRWCRvbs3cEj6t92vsfxWoeY7tO0OXcUBlp7vbx1pyLywkBQ0GTVUQEgq8eRoCcrNVr1zsTveoAL0oR2twJJKJrWEwcufVplxfFt0yQopRC8tSu4rTz/JmzaaCCcoC7dFHgI2AuCwo96iVnythRhJMNJATnnhGeTAZTD09nYkPf3UZ6fJSMOUdtPKAODdFMdORGVlWQ6tME39hjAxG3V3JgYnwHsAmThGL7qJM3bRuDiPUY68gKh4MbUXX4ApMfR2YjYF+e7Z31a3cPTuGonjmOQ7NlDSJRLib/UBSc31njG1z69PpZkf1h/6UJ9zc030DBJ76KRJEu/BY7xOeaR1abO4iAQeJV+K902+v+oJc2zzHlHMQjf6+LtqgZzdTpmdsH8MuC5QUK2CUmtNWJ/+G6OpMGVM9EcQ8WvUizs1odNnHDl4jVPB+QMKmZpIp5sMx1SvOSfnlarVfE1BYaXffPclNGV5mdMZh14fK18xmd9RThikp9MG5cXRDY674Zkmnow3dYDqZIEBoabkaO3P+A18tPJNFe8IDKMngb2XXVlFO9SteyIVaVfEWjFZpmSqjBuW2jDf5SAvr8En1JqCvvhtOzPN2iofjJjOaDeHE0zjy+eDa5C6R8zETyakkCaOE7Yk=
-        project: syshub-dev
-        message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
-        on:
-          all_branches: true
-          condition: $TRAVIS_BRANCH != master
-    - stage: deployStage
+        - firebase use --token $FIREBASE_TOKEN syshub-dev
+        - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
+    - stage: deploy Stage
       script:
         - yarn build:development
-      deploy:
-        skip_cleanup: true
-        provider: firebase
-        token:
-          secure: knI+Bt9lIzoefwjRyVXzCNFKtPjsFB45WNXXldqRWCRvbs3cEj6t92vsfxWoeY7tO0OXcUBlp7vbx1pyLywkBQ0GTVUQEgq8eRoCcrNVr1zsTveoAL0oR2twJJKJrWEwcufVplxfFt0yQopRC8tSu4rTz/JmzaaCCcoC7dFHgI2AuCwo96iVnythRhJMNJATnnhGeTAZTD09nYkPf3UZ6fJSMOUdtPKAODdFMdORGVlWQ6tME39hjAxG3V3JgYnwHsAmThGL7qJM3bRuDiPUY68gKh4MbUXX4ApMfR2YjYF+e7Z31a3cPTuGonjmOQ7NlDSJRLib/UBSc31njG1z69PpZkf1h/6UJ9zc030DBJ76KRJEu/BY7xOeaR1abO4iAQeJV+K902+v+oJc2zzHlHMQjf6+LtqgZzdTpmdsH8MuC5QUK2CUmtNWJ/+G6OpMGVM9EcQ8WvUizs1odNnHDl4jVPB+QMKmZpIp5sMx1SvOSfnlarVfE1BYaXffPclNGV5mdMZh14fK18xmd9RThikp9MG5cXRDY674Zkmnow3dYDqZIEBoabkaO3P+A18tPJNFe8IDKMngb2XXVlFO9SteyIVaVfEWjFZpmSqjBuW2jDf5SAvr8En1JqCvvhtOzPN2iofjJjOaDeHE0zjy+eDa5C6R8zETyakkCaOE7Yk=
-        project: syshub-dev
-        message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
-        on:
-          branch: master
+        - firebase use --token $FIREBASE_TOKEN syshub-dev
+        - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
