@@ -17,3 +17,5 @@ jobs:
           - yarn build:development
           - firebase use --token $FIREBASE_TOKEN syshub-dev
           - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
+        on:
+          branch: travisCI_Config
