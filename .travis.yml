@@ -16,9 +16,21 @@ jobs:
         skip_cleanup: true
         provider: firebase
         token:
-          secure: YdCfroZYhRrACF2ALqXMIi93jHFm9uZHk/bwSZlQaxKa3KuFPS/mPfQjbth2zHHY3jE+EQmv4bFWlPgly0rLUquzqAOZxUcvijAJyzycfwALfa88+PazIQLv0LXFQYd4H2OBPO2QTT1GLep0QX+KRcaxDVnCXIIx0g9b3to3AGyWY5UX25d8bBN/5xBvKtjkBpGkbmeXspxLm1up3tfRqSy5FYoFxi0D52ry9n+MIEQfJ922wGKZIj8qClY+zVwBzb8gzXXaWQMOOVYvKccCHHS/URsOeMuVtzc+AwIjzBupeWdssnrSGxZs1LISwMg54uts7Dw+GW2/bfeqp9FpPObCC4J79MXj+vWi5MEOAwqmveK+r0y9bxOaWoJdfWHgL+FvfOoB60zb4VJhIEu/riBY4dTg32nAGt7a9kojubN4AgLE4VjU+hGtAkmPA6o5WLA6mNzOanH4rveGTv3fTIF0NzdV4C3dlqCl6eCmPo7VMUN8AD2wrHoAiA4X0xT2dg1X+DnHzQ2Ndk950+UfeNG0ktKAPaRRJUCcVLkjk8es5BayRdF7IbCg7UNLW2d//Nr31pBCgdNyygRdnyfVJt+u7qu2UFA8QSbMLrhyq4IINE8E3FoVHh7ig3jd2hrMVfnJb6/qmP6JwyJFK7h7bDoMnhjz3rrtEsoBu2s1QaI=
+          secure: knI+Bt9lIzoefwjRyVXzCNFKtPjsFB45WNXXldqRWCRvbs3cEj6t92vsfxWoeY7tO0OXcUBlp7vbx1pyLywkBQ0GTVUQEgq8eRoCcrNVr1zsTveoAL0oR2twJJKJrWEwcufVplxfFt0yQopRC8tSu4rTz/JmzaaCCcoC7dFHgI2AuCwo96iVnythRhJMNJATnnhGeTAZTD09nYkPf3UZ6fJSMOUdtPKAODdFMdORGVlWQ6tME39hjAxG3V3JgYnwHsAmThGL7qJM3bRuDiPUY68gKh4MbUXX4ApMfR2YjYF+e7Z31a3cPTuGonjmOQ7NlDSJRLib/UBSc31njG1z69PpZkf1h/6UJ9zc030DBJ76KRJEu/BY7xOeaR1abO4iAQeJV+K902+v+oJc2zzHlHMQjf6+LtqgZzdTpmdsH8MuC5QUK2CUmtNWJ/+G6OpMGVM9EcQ8WvUizs1odNnHDl4jVPB+QMKmZpIp5sMx1SvOSfnlarVfE1BYaXffPclNGV5mdMZh14fK18xmd9RThikp9MG5cXRDY674Zkmnow3dYDqZIEBoabkaO3P+A18tPJNFe8IDKMngb2XXVlFO9SteyIVaVfEWjFZpmSqjBuW2jDf5SAvr8En1JqCvvhtOzPN2iofjJjOaDeHE0zjy+eDa5C6R8zETyakkCaOE7Yk=
         project: syshub-dev
         message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
         on:
           all_branches: true
           condition: $TRAVIS_BRANCH != master
+    - stage: deployStage
+      script:
+        - yarn build:development
+      deploy:
+        skip_cleanup: true
+        provider: firebase
+        token:
+          secure: knI+Bt9lIzoefwjRyVXzCNFKtPjsFB45WNXXldqRWCRvbs3cEj6t92vsfxWoeY7tO0OXcUBlp7vbx1pyLywkBQ0GTVUQEgq8eRoCcrNVr1zsTveoAL0oR2twJJKJrWEwcufVplxfFt0yQopRC8tSu4rTz/JmzaaCCcoC7dFHgI2AuCwo96iVnythRhJMNJATnnhGeTAZTD09nYkPf3UZ6fJSMOUdtPKAODdFMdORGVlWQ6tME39hjAxG3V3JgYnwHsAmThGL7qJM3bRuDiPUY68gKh4MbUXX4ApMfR2YjYF+e7Z31a3cPTuGonjmOQ7NlDSJRLib/UBSc31njG1z69PpZkf1h/6UJ9zc030DBJ76KRJEu/BY7xOeaR1abO4iAQeJV+K902+v+oJc2zzHlHMQjf6+LtqgZzdTpmdsH8MuC5QUK2CUmtNWJ/+G6OpMGVM9EcQ8WvUizs1odNnHDl4jVPB+QMKmZpIp5sMx1SvOSfnlarVfE1BYaXffPclNGV5mdMZh14fK18xmd9RThikp9MG5cXRDY674Zkmnow3dYDqZIEBoabkaO3P+A18tPJNFe8IDKMngb2XXVlFO9SteyIVaVfEWjFZpmSqjBuW2jDf5SAvr8En1JqCvvhtOzPN2iofjJjOaDeHE0zjy+eDa5C6R8zETyakkCaOE7Yk=
+        project: syshub-dev
+        message: 'Branch: $TRAVIS_BRANCH, Commit: $TRAVIS_COMMIT Build: $TRAVIS_BUILD_ID'
+        on:
+          branch: master
