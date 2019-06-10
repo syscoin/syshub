@@ -5,12 +5,13 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  script:
+    - npm install --quite firebase-tools -g
+    - firebase firebase --version
+
 jobs:
   include:
-    - stage: add Firebase
-      script:
-        - npm install --quite firebase-tools -g
-        - firebase firebase --version
     - stage: deploy
       script:
         - yarn build:development
