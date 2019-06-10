@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - '8.12'
+env:
+  global:
+    - secure: bEMKywitdKPYOuZfaI/GPOepepSay+XRGIlNh06e8ZtmKYnpi2GBIm3BnQB3qr+hA4JKuL6/iXOliePL0YTXiY37wV7H05i0yoySm2LP4M5t+hiKo49bVjgsFNd2gi8HYuXk74grDCnOz65kf1fWq+RHg8HDWCxh8vWh8vlbC8i9qAZjYSwc0Zk6rL/VJdFzYBqHlSz5xJWuC8lRbwjJ84Yx44ZZw16iQd0pCsSJKecBbLgBS3XSh7xCqB2/lHo9dbrurm8RXeONPQzprtvNLmXbTm4l/fad5hXL2dm6h70PxM4yATQ6L8uxSkYWjSjgWSd4Z9AqM3b+hcxu0OyQebklryukcayB9M1okjBNvyEzHRqE1fgUfxCgqeyftG0+2GDp+Nnw3+KEwpGm0VIPJ+ULA+ToMvhIoMqee5li5WHRry0jpGFZSJvbQarQA4oylMunwjshw7lyjVPLTo7tLilhID1yD0Y2Ze8qZT/6JiUQVKXR9Dn8IPYpRFSj+2hvmycPlvezzShEFEb6t4QxC8hXUPzs+ViOGT9hWnmvn7H9nqFkIBp7Z7+hPWtvKV+D4lG2BiYxcFbwYbRtqWSynjDKnK8zp2TdlupMDCPJidlz9FjXuson7Z5tQTHxZXtAOzbodyotAHfqkzCLNoOWrB1RbPsiGE3iJU8/0Ih/FMU=
 cache:
   directories:
     - node_modules
@@ -10,12 +13,10 @@ before_install:
 jobs:
   include:
     - stage: deployDev
-      script:
-        - yarn build:development
       deploy:
         skip_cleanup: true
-        provider: firebase
-        token:
-          secure: YdCfroZYhRrACF2ALqXMIi93jHFm9uZHk/bwSZlQaxKa3KuFPS/mPfQjbth2zHHY3jE+EQmv4bFWlPgly0rLUquzqAOZxUcvijAJyzycfwALfa88+PazIQLv0LXFQYd4H2OBPO2QTT1GLep0QX+KRcaxDVnCXIIx0g9b3to3AGyWY5UX25d8bBN/5xBvKtjkBpGkbmeXspxLm1up3tfRqSy5FYoFxi0D52ry9n+MIEQfJ922wGKZIj8qClY+zVwBzb8gzXXaWQMOOVYvKccCHHS/URsOeMuVtzc+AwIjzBupeWdssnrSGxZs1LISwMg54uts7Dw+GW2/bfeqp9FpPObCC4J79MXj+vWi5MEOAwqmveK+r0y9bxOaWoJdfWHgL+FvfOoB60zb4VJhIEu/riBY4dTg32nAGt7a9kojubN4AgLE4VjU+hGtAkmPA6o5WLA6mNzOanH4rveGTv3fTIF0NzdV4C3dlqCl6eCmPo7VMUN8AD2wrHoAiA4X0xT2dg1X+DnHzQ2Ndk950+UfeNG0ktKAPaRRJUCcVLkjk8es5BayRdF7IbCg7UNLW2d//Nr31pBCgdNyygRdnyfVJt+u7qu2UFA8QSbMLrhyq4IINE8E3FoVHh7ig3jd2hrMVfnJb6/qmP6JwyJFK7h7bDoMnhjz3rrtEsoBu2s1QaI=
-        project: syshub-dev
-        message: Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID
+        provider: script
+        script:
+          - yarn build:development
+          - firebase use --token $FIREBASE_TOKEN syshub-dev
+          - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
