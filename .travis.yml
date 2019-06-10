@@ -10,7 +10,8 @@ before_script:
   - firebase firebase --version
 
 stages:
-  - deploy Develop
+  - name: deploy Develop
+    if: branch NOT IN (master, production)
   - name: deploy Stage
     if: branch = master
 
