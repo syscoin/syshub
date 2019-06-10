@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - '8.12'
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm install --quite firebase-tools -g
+  - firebase firebase --version
+
+script:
+  - yarn build:development
