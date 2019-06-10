@@ -14,6 +14,8 @@ stages:
     if: branch NOT IN (master, production)
   - name: deploy Stage
     if: branch = master
+  - name: deploy Production
+    if: branch = production
 
 jobs:
   include:
@@ -26,4 +28,9 @@ jobs:
       script:
         - yarn build:development
         - firebase use --token $FIREBASE_TOKEN syshub-dev
+        - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
+    - stage: deploy Production
+      script:
+        - yarn build:development
+        - firebase use --token $FIREBASE_TOKEN syshub-61377
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
