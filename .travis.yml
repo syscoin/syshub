@@ -11,7 +11,7 @@ before_script:
 
 stages:
   - name: deploy Develop
-    if: branch =~^master|production$
+    if: branch NOT IN (master, production)
   - name: deploy Stage
     if: branch = master
 
