@@ -5,11 +5,16 @@ cache:
   directories:
     - node_modules
 
-before_script:
+before_deploy:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
 
-script:
-  - yarn build:development
-  - firebase use --token $FIREBASE_TOKEN syshub-dev
-  - firebase deploy -m "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+      - yarn build:development
+      - firebase use --token $FIREBASE_TOKEN syshub-dev
+      - firebase deploy -m "Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
+    on:
+      branch: master
