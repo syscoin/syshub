@@ -4,11 +4,9 @@ node_js:
 cache:
   directories:
     - node_modules
-
 before_install:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
-
 jobs:
   include:
     - stage: deployDev
@@ -17,6 +15,7 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: firebase
-        token: $FIREBASE_TOKEN
+        token:
+          secure: YdCfroZYhRrACF2ALqXMIi93jHFm9uZHk/bwSZlQaxKa3KuFPS/mPfQjbth2zHHY3jE+EQmv4bFWlPgly0rLUquzqAOZxUcvijAJyzycfwALfa88+PazIQLv0LXFQYd4H2OBPO2QTT1GLep0QX+KRcaxDVnCXIIx0g9b3to3AGyWY5UX25d8bBN/5xBvKtjkBpGkbmeXspxLm1up3tfRqSy5FYoFxi0D52ry9n+MIEQfJ922wGKZIj8qClY+zVwBzb8gzXXaWQMOOVYvKccCHHS/URsOeMuVtzc+AwIjzBupeWdssnrSGxZs1LISwMg54uts7Dw+GW2/bfeqp9FpPObCC4J79MXj+vWi5MEOAwqmveK+r0y9bxOaWoJdfWHgL+FvfOoB60zb4VJhIEu/riBY4dTg32nAGt7a9kojubN4AgLE4VjU+hGtAkmPA6o5WLA6mNzOanH4rveGTv3fTIF0NzdV4C3dlqCl6eCmPo7VMUN8AD2wrHoAiA4X0xT2dg1X+DnHzQ2Ndk950+UfeNG0ktKAPaRRJUCcVLkjk8es5BayRdF7IbCg7UNLW2d//Nr31pBCgdNyygRdnyfVJt+u7qu2UFA8QSbMLrhyq4IINE8E3FoVHh7ig3jd2hrMVfnJb6/qmP6JwyJFK7h7bDoMnhjz3rrtEsoBu2s1QaI=
         project: syshub-dev
-        message: 'Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID'
+        message: Travis, Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID
