@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "babel-eslint": "9.x",
+    "dotenv-cli": "^2.0.0",
     "eslint-config-react-app": "^4.0.0",
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",
