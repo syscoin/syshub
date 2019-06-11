@@ -30,6 +30,9 @@ class Firebase {
     /* firebase.initializeApp(config, 'fbSyshub'); */
     firebase.initializeApp(config);
 
+    console.log('ACZ Node Env -->', process.env.NODE_ENV);
+    console.log('ACZ Firebase apiKey-->', config.apiKey);
+
     this.firebaseApp = firebase;
     this.auth = firebase.auth();
     this.db = firebase.database();
