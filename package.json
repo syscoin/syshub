@@ -9,8 +9,7 @@
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
-    "build:production": "sh -ac '. .env.prod; npm run build'",
-    "build:development": "npm run build",
+    "build:development": "dotenv -e .env.development npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
@@ -18,8 +17,7 @@
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
   "pre-commit": [
-    "precommit-msg",
-    "lint"
+    "precommit-msg"
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.2",
@@ -73,6 +71,7 @@
   },
   "devDependencies": {
     "babel-eslint": "9.x",
+    "dotenv-cli": "^2.0.0",
     "eslint-config-react-app": "^4.0.0",
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",

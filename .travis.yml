@@ -31,6 +31,6 @@ jobs:
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
     - stage: deploy Production
       script:
-        - yarn build:production
-        - firebase use --token $FIREBASE_TOKEN syshub-61377
+        - yarn build
+        - firebase use --token $FIREBASE_TOKEN syshub-dev
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
