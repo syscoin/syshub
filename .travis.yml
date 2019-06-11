@@ -8,6 +8,7 @@ cache:
 before_script:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
+  - yarn build
 
 stages:
   - name: deploy Develop
@@ -21,16 +22,13 @@ jobs:
   include:
     - stage: deploy Develop
       script:
-        - yarn build:development
         - firebase use --token $FIREBASE_TOKEN syshub-dev
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
     - stage: deploy Stage
       script:
-        - yarn build:development
         - firebase use --token $FIREBASE_TOKEN syshub-dev
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
     - stage: deploy Production
       script:
-        - yarn build:production
-        - firebase use --token $FIREBASE_TOKEN syshub-61377
+        - firebase use --token $FIREBASE_TOKEN syshub-dev
         - firebase deploy -m "Branch $TRAVIS_BRANCH, Commit $TRAVIS_COMMIT, Build $TRAVIS_BUILD_ID" --token $FIREBASE_TOKEN
