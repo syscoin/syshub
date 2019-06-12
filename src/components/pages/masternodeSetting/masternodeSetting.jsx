@@ -33,7 +33,6 @@ class MasternodeSetting extends Component {
       activeTab: 0
     };
 
-    //this.addNodes = this.addNodes.bind(this);
     this.addMasternodes = this.addMasternodes.bind(this);
     this.deleteNode = this.deleteNode.bind(this);
     this.editNode = this.editNode.bind(this);
@@ -56,53 +55,6 @@ class MasternodeSetting extends Component {
     const arrayJoined = pkArray.join();
     return arrayJoined.replace(/,/g, ',\n');
   }
-
-  /* async addNodes(masternodeArray) {
-    const user = this.props.app.currentUser;
-    const addMnError = [];
-    masternodeArray.forEach(async masternode => {
-      const mansternodeExists = await this.firebase.checkMasternodeExists(
-        masternode.mnPrivateKey,
-        user.uid
-      );
-      if (!mansternodeExists) {
-        await this.addMasternode(masternode);
-      } else {
-        addMnError.push(masternode.mnPrivateKey);
-      }
-
-      if (addMnError.length > 0) {
-        swal({
-          className: 'sweetalertModal',
-          title: 'Skipping',
-          text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(
-            addMnError
-          )}\n\n already exists`,
-          icon: 'error'
-        });
-      }
-    });
-  } */
-
-  /*   async addNode(masternode) {
-    const user = this.props.app.currentUser;
-    const mansternodeExists = await this.firebase.checkMasternodeExists(
-      masternode.mnPrivateKey,
-      user.uid
-    );
-    if (!mansternodeExists) {
-      await this.addMasternode(masternode);
-    } else {
-      swal({
-        className: 'sweetalertModal',
-        title: 'Skipping',
-        text: `The Masternode with the Private-key:\n\n ${
-          masternode.mnPrivateKey
-        }\n\n already exists`,
-        icon: 'error'
-      });
-    }
-  } */
 
   async addMasternodes(masternodeArray) {
     const user = this.props.app.currentUser;

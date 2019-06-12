@@ -163,7 +163,6 @@ class Firebase {
 
   getDBnMnodes = async () => {
     const dbnMnodes = await this.getDocument(`${FB_COLLECTION_DBINFO}/nMnodes`);
-    console.log('ACZ dbnMnodes_OLD --> ', dbnMnodes);
     return dbnMnodes;
   };
 
@@ -175,12 +174,7 @@ class Firebase {
     if (!mnAdded) {
       mnAdded = masternodeArray.length - addMnError.length;
     }
-    console.log('ACZ 2 -->', mnAdded, nMnodes, nMnodes + mnAdded);
     await dbnMnodesRef.set(nMnodes + mnAdded);
-    console.log(
-      'ACZ dbnMnodes_NEW --> ',
-      parseFloat(await this.getDBnMnodes())
-    );
   };
 
   rmvOneDBnMnodes = async () => {
