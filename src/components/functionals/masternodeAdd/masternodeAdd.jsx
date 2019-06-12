@@ -31,7 +31,7 @@ class MasterNodeAdd extends Component {
       return;
     }
     if (this.state.newNode.name && this.state.newNode.mnPrivateKey) {
-      this.props.addNode(this.state.newNode);
+      this.props.addNode([this.state.newNode]);
       this.setState({ newNode: { name: '', mnPrivateKey: '', txid: '' } });
     }
   }
@@ -130,6 +130,7 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(masternodeAddStyle)(MasterNodeAdd)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(masternodeAddStyle)(MasterNodeAdd));

@@ -33,8 +33,8 @@ class MasternodeSetting extends Component {
       activeTab: 0
     };
 
-    this.addNode = this.addNode.bind(this);
-    this.addNodes = this.addNodes.bind(this);
+    //this.addNodes = this.addNodes.bind(this);
+    this.addMasternodes = this.addMasternodes.bind(this);
     this.deleteNode = this.deleteNode.bind(this);
     this.editNode = this.editNode.bind(this);
   }
@@ -57,7 +57,7 @@ class MasternodeSetting extends Component {
     return arrayJoined.replace(/,/g, ',\n');
   }
 
-  addNodes(masternodeArray) {
+  /* async addNodes(masternodeArray) {
     const user = this.props.app.currentUser;
     const addMnError = [];
     masternodeArray.forEach(async masternode => {
@@ -66,7 +66,7 @@ class MasternodeSetting extends Component {
         user.uid
       );
       if (!mansternodeExists) {
-        this.addMasternode(masternode);
+        await this.addMasternode(masternode);
       } else {
         addMnError.push(masternode.mnPrivateKey);
       }
@@ -82,16 +82,16 @@ class MasternodeSetting extends Component {
         });
       }
     });
-  }
+  } */
 
-  async addNode(masternode) {
+  /*   async addNode(masternode) {
     const user = this.props.app.currentUser;
     const mansternodeExists = await this.firebase.checkMasternodeExists(
       masternode.mnPrivateKey,
       user.uid
     );
     if (!mansternodeExists) {
-      this.addMasternode(masternode);
+      await this.addMasternode(masternode);
     } else {
       swal({
         className: 'sweetalertModal',
@@ -102,16 +102,29 @@ class MasternodeSetting extends Component {
         icon: 'error'
       });
     }
-  }
+  } */
 
-  async addMasternode(masternode) {
+  async addMasternodes(masternodeArray) {
     const user = this.props.app.currentUser;
     if (!user) {
       alert('Must be logged in to add a Master Node');
       return;
     }
-    await this.firebase.addMasternode(masternode, user.uid);
+    const { error, success } = await this.firebase.addMasternodes(
+      masternodeArray,
+      user.uid
+    );
     this.refreshMasternodeList();
+    if (!success) {
+      swal({
+        className: 'sweetalertModal',
+        title: 'Skipping',
+        text: `The Masternodes with the Private-key:\n\n ${this.prepareMasternodeError(
+          error
+        )}\n\n already exists`,
+        icon: 'error'
+      });
+    }
   }
 
   async deleteNode(masternode) {
@@ -163,13 +176,13 @@ class MasternodeSetting extends Component {
           {activeTab === 0 && (
             <MasternodeAdd
               deviceType={this.props.deviceType}
-              addNode={this.addNode}
+              addNode={this.addMasternodes}
             />
           )}
           {activeTab === 1 && (
             <MasternodeBatchAdd
               deviceType={this.props.deviceType}
-              addNodes={this.addNodes}
+              addNodes={this.addMasternodes}
             />
           )}
           <MasternodeList
