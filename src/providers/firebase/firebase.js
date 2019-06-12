@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import Cryptr from 'cryptr';
 import to from '../../Helpers/to';
-import _ from 'underscore';
 
 // to be removed it is not good mix UI in the provider
 import swal from 'sweetalert';
