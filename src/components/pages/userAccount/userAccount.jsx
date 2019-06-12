@@ -46,18 +46,6 @@ class UserAccount extends Component {
       icon: 'success'
     });
     this.props.setCurrentUser(currentUser);
-    /* doUpdateProfile(user)
-      .then(data => {
-        swal({
-          title: 'Success',
-          text: 'Account updated.',
-          icon: 'success'
-        });
-        console.log('ACZ data -->', data);
-        this.props.setCurrentUser(data);
-      })
-      .catch(err => {
-      }); */
   }
 
   updatePassword(user) {
