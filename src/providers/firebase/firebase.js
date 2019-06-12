@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import Cryptr from 'cryptr';
 import to from '../../Helpers/to';
+import _ from 'underscore';
 
 // to be removed it is not good mix UI in the provider
 import swal from 'sweetalert';
@@ -163,15 +164,24 @@ class Firebase {
 
   getDBnMnodes = async () => {
     const dbnMnodes = await this.getDocument(`${FB_COLLECTION_DBINFO}/nMnodes`);
+    console.log('ACZ dbnMnodes_OLD --> ', dbnMnodes);
     return dbnMnodes;
   };
 
-  addOneDBnMnodes = async () => {
+  addOneDBnMnodes = async (mnAdded, masternodeArray, addMnError) => {
     const nMnodes = parseFloat(await this.getDBnMnodes());
     const dbnMnodesRef = await this.getDocumentRef(
       `${FB_COLLECTION_DBINFO}/nMnodes`
     );
-    dbnMnodesRef.set(nMnodes + 1);
+    if (!mnAdded) {
+      mnAdded = masternodeArray.length - addMnError.length;
+    }
+    console.log('ACZ 2 -->', mnAdded, nMnodes, nMnodes + mnAdded);
+    await dbnMnodesRef.set(nMnodes + mnAdded);
+    console.log(
+      'ACZ dbnMnodes_NEW --> ',
+      parseFloat(await this.getDBnMnodes())
+    );
   };
 
   rmvOneDBnMnodes = async () => {
@@ -189,7 +199,7 @@ class Firebase {
   isUsernameAvailable = async username => {
     if (username) {
       const userId = await this.getDocument(
-        `${FB_COLLECTION_USERLIST}/${username}`
+        `${FB_COLLECTION_USERLIST}/${username.toLowerCase()}`
       );
       return !userId;
     }
@@ -202,8 +212,8 @@ class Firebase {
     usernameRef
       .child(key)
       .child('name')
-      .set(username);
-    userListRef.child(username).set(key);
+      .set(username.toLowerCase());
+    userListRef.child(username.toLowerCase()).set(key);
     await this.addOneDBnUsers();
   };
 
@@ -581,7 +591,9 @@ class Firebase {
    ***********************/
 
   getMasternodeListByUser = async uid => {
-    const masternodesListObj = await this.getDocument(`MasterNodes/${uid}`);
+    const masternodesListObj = await this.getDocument(
+      `${FB_COLLECTION_MASTERNODES}/${uid}`
+    );
     const mnList = masternodesListObj ? Object.values(masternodesListObj) : [];
     return mnList;
   };
@@ -589,28 +601,46 @@ class Firebase {
   getMasternodesTotalCount = async uid => await this.getDBnMnodes();
 
   deleteMasternode = async (masternode, uid) => {
-    const masternodesRef = await this.getDocumentRef(`MasterNodes/${uid}`);
+    const masternodesRef = await this.getDocumentRef(
+      `${FB_COLLECTION_MASTERNODES}/${uid}`
+    );
     masternodesRef.child(masternode.keyId).remove();
     this.rmvOneDBnMnodes();
   };
 
-  addMasternode = async (masternode, uid) => {
+  addMasternodes = async (masternodeArray, uid) => {
     const cryptr = new Cryptr(uid);
-    const newKey = this.db.ref().push().key;
-    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-    masternode.txid = cryptr.encrypt(masternode.txid);
-    masternode.keyId = newKey;
-    masternode.key = newKey;
-    const newMasternodeRef = this.getDocumentRef(`MasterNodes/${uid}`);
-    newMasternodeRef.child(masternode.keyId).set(masternode);
-    this.addOneDBnMnodes();
+    let addMnError = [];
+    masternodeArray.forEach(async masternode => {
+      const mansternodeExists = await this.checkMasternodeExists(
+        masternode.mnPrivateKey,
+        uid
+      );
+      if (!mansternodeExists) {
+        const newKey = this.db.ref().push().key;
+        masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
+        masternode.txid = cryptr.encrypt(masternode.txid);
+        masternode.keyId = newKey;
+        masternode.key = newKey;
+        const newMasternodeRef = this.getDocumentRef(
+          `${FB_COLLECTION_MASTERNODES}/${uid}`
+        );
+        newMasternodeRef.child(masternode.keyId).set(masternode);
+      } else {
+        addMnError.push(masternode.mnPrivateKey);
+      }
+    });
+    await this.addOneDBnMnodes(null, masternodeArray, addMnError);
+    return { error: addMnError, success: !addMnError.length };
   };
 
   updateMasternode = async (masternode, uid) => {
     const cryptr = new Cryptr(uid);
     masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
     masternode.txid = cryptr.encrypt(masternode.txid);
-    const masternodeRef = this.getDocumentRef(`MasterNodes/${uid}`);
+    const masternodeRef = this.getDocumentRef(
+      `${FB_COLLECTION_MASTERNODES}/${uid}`
+    );
     const selectedMasternode = await masternodeRef.child(masternode.keyId);
     selectedMasternode.update(masternode);
   };

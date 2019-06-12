@@ -15,8 +15,8 @@ class MasternodeBatchAdd extends Component {
 
     this.state = {
       newNodes: [],
-      helperText:'',
-      textFieldValue:''
+      helperText: '',
+      textFieldValue: ''
     };
 
     this.addNodes = this.addNodes.bind(this);
@@ -32,28 +32,32 @@ class MasternodeBatchAdd extends Component {
       });
       return;
     }
-    if (mNode.name && mNode.mnPrivateKey) { return true };
-    return false
+    if (mNode.name && mNode.mnPrivateKey) {
+      return true;
+    }
+    return false;
   }
 
   addNodes(event) {
     event.preventDefault();
     this.props.addNodes(this.state.newNodes);
-    this.setState({textFieldValue: ''});
+    this.setState({ textFieldValue: '', helperText: '', newNodes: [] });
   }
 
   parseLines(lines) {
     const MNArray = [];
-    const commentsRemoved = lines.filter(line => line[0]!=="#");
+    const commentsRemoved = lines.filter(line => line[0] !== '#');
     commentsRemoved.map(line => {
-      const LineArray = line.split(" ");
+      const LineArray = line.split(' ');
       if (LineArray.length === 5) {
         const newMNodeDef = {
           name: LineArray[0],
           mnPrivateKey: LineArray[2],
           txid: `${LineArray[3]}-${LineArray[4]}`
+        };
+        if (this.checkMNode(newMNodeDef)) {
+          MNArray.push(newMNodeDef);
         }
-      if (this.checkMNode(newMNodeDef)) {MNArray.push(newMNodeDef)}
       }
       return true;
     });
@@ -68,7 +72,7 @@ class MasternodeBatchAdd extends Component {
     this.setState({
       newNodes,
       textFieldValue,
-      helperText: `Found ${count} Masternodes`,
+      helperText: `Found ${count} Masternodes`
     });
   }
 
@@ -104,9 +108,9 @@ class MasternodeBatchAdd extends Component {
                   margin="normal"
                   variant="outlined"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
-                  onChange={(event)=>this.processTextFieldContent(event)}
+                  onChange={event => this.processTextFieldContent(event)}
                 />
               </FormGroup>
 
@@ -132,6 +136,7 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(masternodeBatchAddStyle)(MasternodeBatchAdd)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(masternodeBatchAddStyle)(MasternodeBatchAdd));

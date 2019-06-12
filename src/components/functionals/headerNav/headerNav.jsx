@@ -53,6 +53,7 @@ class HeaderNav extends Component {
         </Tooltip>
       );
     }
+    userName = `${userName.charAt(0).toUpperCase()}${userName.slice(1)}`;
     return <span className="TxtBold">{userName}</span>;
   }
 
