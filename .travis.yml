@@ -17,7 +17,7 @@ before_script:
 
 stages:
   - name: deploy Stage
-    if: branch = master
+    if: branch = master AND NOT type = pull_request
   - name: deploy Production
     if: branch = production
 
