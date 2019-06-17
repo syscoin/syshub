@@ -13,7 +13,9 @@ import proposalPaymentStyle from './proposalPayment.style';
 class ProposalPayment extends Component {
   constructor(props) {
     super(props);
-    var sdate = new Date((this.props.data.first_epoch || this.props.data.start_epoch) * 1000);
+    var sdate = new Date(
+      (this.props.data.start_epoch || this.props.data.first_epoch) * 1000
+    );
     var startDate = sdate.toDateString();
     var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
@@ -40,13 +42,15 @@ class ProposalPayment extends Component {
       let timeDiff = endDate.getTime() - today.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
-      const payment_type = nPayment > 1 ? `${nPayment} Payments.  Total of ${payment_amount * nPayment} SYS` : 'One-time payment';
+      const payment_type =
+        nPayment > 1
+          ? `${nPayment} Payments.  Total of ${payment_amount * nPayment} SYS`
+          : 'One-time payment';
       this.setState({
         days_remaining,
         month_remaining,
         payment_amount,
-        payment_type,
-
+        payment_type
       });
     }
     //this.setState({ payment_amount, payment_type: 'one-time payment' });
@@ -82,7 +86,7 @@ class ProposalPayment extends Component {
                     id="onTimePayment"
                     className="input-field"
                     placeholder="Amount"
-                    onChange={e => { }}
+                    onChange={e => {}}
                     value={this.state.oneTimePayment + ' SYS'}
                     disabled={true}
                   />
@@ -123,12 +127,12 @@ class ProposalPayment extends Component {
               <FormGroup className="FormGroup">
                 <Typography color="inherit">
                   <input
-                    ref={ref => { }}
+                    ref={ref => {}}
                     name="Paymentdate"
                     id="Paymentdate"
                     className="input-field"
                     placeholder="Start Date / End Date"
-                    onChange={e => { }}
+                    onChange={e => {}}
                     value={this.state.startDate + ' / ' + this.state.endDate}
                     disabled={true}
                   />
