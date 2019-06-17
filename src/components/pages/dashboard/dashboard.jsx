@@ -73,12 +73,16 @@ class DashBoard extends Component {
       proposals,
       deviceType,
       showContainer,
-      appConstants
+      appConstants,
+      mnCount
     } = this.props;
     const { proposalID } = this.state;
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const totalNodes = mnCount.enabled;
+
+    console.log('ACZ mnCount -->', mnCount);
 
     return (
       <Grid className={style}>
@@ -96,7 +100,7 @@ class DashBoard extends Component {
                 deviceType={this.props.deviceType}
                 selectProposal={this.handleDashboard}
                 proposalList={proposals.list}
-                totalNodes={this.props.totalNodes}
+                totalNodes={totalNodes}
                 currentUser={this.props.currentUser}
                 globalConst={appConstants}
               />
@@ -105,7 +109,7 @@ class DashBoard extends Component {
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={proposalID}
-                totalNodes={this.props.totalNodes || 0}
+                totalNodes={totalNodes || 0}
                 globalConst={appConstants}
                 firebase={this.firebase}
               />
@@ -121,7 +125,7 @@ const stateToProps = state => {
   return {
     proposals: state.proposals,
     //    totalNodes: state.sysStats.value.general.registered_masternodes_verified * 0.1,
-    totalNodes: Math.floor(state.sysStats.mnCount.enabled),
+    mnCount: state.sysStats.mnCount || {},
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
     selectedProposal: state.app.dashBoard.selectedProposal,
