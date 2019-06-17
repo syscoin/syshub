@@ -16,13 +16,17 @@ before_script:
   - firebase firebase --version
 
 stages:
+  - name: pull Request
+    if: type = pull_request
   - name: deploy Stage
     if: branch = master AND NOT type = pull_request
   - name: deploy Production
-    if: branch = production
+    if: branch = production AND NOT type = pull_request
 
 jobs:
   include:
+    - stage: pull Request
+      script: yarn build
     - stage: deploy Stage
       script:
         - yarn build:development
