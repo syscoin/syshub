@@ -22,6 +22,7 @@ const FB_COLLECTION_USERSINFO = 'usersInfo';
 const FB_COLLECTION_USERLIST = 'usersList';
 const FB_COLLECTION_PROPOSALS = 'proposals';
 const FB_COLLECTION_P_DESCRIPTIONS = 'proposalsDescriptions';
+const FB_COLLECTION_P_HIDDEN = 'proposalsHidden';
 const FB_COLLECTION_MASTERNODES = 'MasterNodes';
 const FB_STORAGE_AVATARS = 'avatars';
 
@@ -578,6 +579,9 @@ class Firebase {
       await parentRef.push(uniqueID);
     }
   };
+
+  haveToHideThisProposal = async phash =>
+    !!(await this.getDocument(`${FB_COLLECTION_P_HIDDEN}/${phash}`));
 
   /***********************
    * Masternodes Manager *

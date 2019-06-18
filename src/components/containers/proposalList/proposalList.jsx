@@ -17,13 +17,26 @@ export class ProposalList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nextGovernanceDate: {}
+      nextGovernanceDate: {},
+      hiddenCards: 0
     };
   }
 
   async componentWillMount() {
     const nextGovernanceDate = await nextGovernanceRewardDate();
     this.setState({ nextGovernanceDate });
+  }
+
+  componentDidMount() {
+    const nCards = this;
+    console.log('ACZ nCards -->', nCards);
+  }
+
+  addOneHiddenCard() {
+    this.setState({
+      hiddenCards: this.state.hiddenCards + 1
+    });
+    console.log('ACZ hiddenCards -->', this.state.hiddenCards);
   }
 
   render() {
@@ -34,16 +47,18 @@ export class ProposalList extends Component {
         <DashBoardHeader
           deviceType={deviceType}
           data={{ showHeader: 'proposalList', nextGovernanceDate }}
+          hiddenCards={this.state.hiddenCards}
         />
         {proposalList.map((proposal, index) => {
           return (
             <ProposalCard
+              key={index}
               deviceType={deviceType}
               totalNodes={this.props.totalNodes}
               logged={this.props.user ? true : false}
               proposal={proposal}
               selectProposal={selectProposal}
-              key={index}
+              onHidden={() => this.addOneHiddenCard()}
             />
           );
         })}
