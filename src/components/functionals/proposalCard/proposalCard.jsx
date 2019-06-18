@@ -84,8 +84,6 @@ class ProposalCard extends Component {
       });
     }
     //this.setState({ payment_amount, payment_type: 'one-time payment' });
-
-    console.log('ACZ hideMe -->', hideME, this.props.proposal.Hash);
   }
 
   updateError(error) {

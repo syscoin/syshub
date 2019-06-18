@@ -29,14 +29,12 @@ export class ProposalList extends Component {
 
   componentDidMount() {
     const nCards = this;
-    console.log('ACZ nCards -->', nCards);
   }
 
   addOneHiddenCard() {
     this.setState({
       hiddenCards: this.state.hiddenCards + 1
     });
-    console.log('ACZ hiddenCards -->', this.state.hiddenCards);
   }
 
   render() {
