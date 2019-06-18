@@ -33,7 +33,8 @@ class ProposalCard extends Component {
       mnError: '',
       visible: false,
       mnData: [],
-      showError: false
+      showError: false,
+      hideME: false
     };
 
     this.updateError = this.updateError.bind(this);
@@ -45,7 +46,7 @@ class ProposalCard extends Component {
   // add Firebase as global var in component
   firebase = this.props.firebase;
 
-  componentWillMount() {
+  async componentWillMount() {
     const {
       nPayment,
       end_epoch,
@@ -57,6 +58,12 @@ class ProposalCard extends Component {
     //const startDate = new Date(first_epoch * 1000);
     const endDate = new Date(end_epoch * 1000);
     //const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
+    const hideME = await this.firebase.haveToHideThisProposal(
+      this.props.proposal.Hash
+    );
+    if (hideME) {
+      this.props.onHidden();
+    }
     if (endDate > today) {
       const timeDiff = endDate.getTime() - today.getTime();
       const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
@@ -72,10 +79,13 @@ class ProposalCard extends Component {
           '/' +
           (parseInt(endDate.getMonth(), 10) + 1) +
           '/' +
-          endDate.getFullYear()
+          endDate.getFullYear(),
+        hideME
       });
     }
     //this.setState({ payment_amount, payment_type: 'one-time payment' });
+
+    console.log('ACZ hideMe -->', hideME, this.props.proposal.Hash);
   }
 
   updateError(error) {
@@ -314,17 +324,10 @@ class ProposalCard extends Component {
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
 
-    // realy quick and dirty solution, don't ask for my head in a silver plate
-
-    if (
-      proposal.Hash ===
-      '3147539add513647208f91d792831cc7fd7fc06109ff01ada6ddb910acd28f3f'
-    ) {
+    if (this.state.hideME) {
       return null;
     }
-    // end of the dirty
 
-    console.log('ACZ proposal -->', proposal, proposal.Hash);
     const proposalTitle =
       proposal.DataString[0][1].title || proposal.DataString[0][1].name;
     let {

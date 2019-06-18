@@ -581,7 +581,7 @@ class Firebase {
   };
 
   haveToHideThisProposal = async phash =>
-    await this.getDocument(`${FB_COLLECTION_P_HIDDEN}/${phash}`);
+    !!(await this.getDocument(`${FB_COLLECTION_P_HIDDEN}/${phash}`));
 
   /***********************
    * Masternodes Manager *
