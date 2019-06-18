@@ -27,16 +27,10 @@ export class ProposalList extends Component {
     this.setState({ nextGovernanceDate });
   }
 
-  componentDidMount() {
-    const nCards = this;
-    console.log('ACZ nCards -->', nCards);
-  }
-
   addOneHiddenCard() {
     this.setState({
       hiddenCards: this.state.hiddenCards + 1
     });
-    console.log('ACZ hiddenCards -->', this.state.hiddenCards);
   }
 
   render() {
