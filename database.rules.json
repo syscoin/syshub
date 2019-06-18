@@ -29,6 +29,10 @@
       ".read": true,
       ".write": "auth !== null"
     },
+    "proposalsHidden": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
     "usersList": {
       ".read": true,
       ".write": "auth !== null"
