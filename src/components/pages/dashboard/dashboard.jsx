@@ -82,8 +82,6 @@ class DashBoard extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const totalNodes = mnCount.enabled;
 
-    console.log('ACZ mnCount -->', mnCount);
-
     return (
       <Grid className={style}>
         <h1 className="proposal-heading">PROPOSAL DASHBOARD</h1>
