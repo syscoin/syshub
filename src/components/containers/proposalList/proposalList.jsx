@@ -27,10 +27,6 @@ export class ProposalList extends Component {
     this.setState({ nextGovernanceDate });
   }
 
-  componentDidMount() {
-    const nCards = this;
-  }
-
   addOneHiddenCard() {
     this.setState({
       hiddenCards: this.state.hiddenCards + 1
