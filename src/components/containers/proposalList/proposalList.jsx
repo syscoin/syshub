@@ -27,7 +27,7 @@ export class ProposalList extends Component {
   }
 
   render() {
-    const { selectProposal, deviceType } = this.props;
+    const { selectProposal, deviceType, proposalList } = this.props;
     const nextGovernanceDate = this.state.nextGovernanceDate;
     return (
       <Grid item md={12} xs={12} style={proposalListStyle.root}>
@@ -35,7 +35,7 @@ export class ProposalList extends Component {
           deviceType={deviceType}
           data={{ showHeader: 'proposalList', nextGovernanceDate }}
         />
-        {this.props.proposalList.map((proposal, index) => {
+        {proposalList.map((proposal, index) => {
           return (
             <ProposalCard
               deviceType={deviceType}

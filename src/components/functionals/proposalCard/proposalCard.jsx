@@ -314,6 +314,17 @@ class ProposalCard extends Component {
   render() {
     const { classes, selectProposal, user, proposal, deviceType } = this.props;
 
+    // realy quick and dirty solution, don't ask for my head in a silver plate
+
+    if (
+      proposal.Hash ===
+      '3147539add513647208f91d792831cc7fd7fc06109ff01ada6ddb910acd28f3f'
+    ) {
+      return null;
+    }
+    // end of the dirty
+
+    console.log('ACZ proposal -->', proposal, proposal.Hash);
     const proposalTitle =
       proposal.DataString[0][1].title || proposal.DataString[0][1].name;
     let {
