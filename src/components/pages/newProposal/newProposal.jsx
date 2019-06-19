@@ -76,7 +76,7 @@ class NewProposal extends Component {
       showEditor: true,
       proposalTitle: '',
       proposalName: '',
-      paymentQuantity: 13,
+      paymentQuantity: 1,
       proposalDetail: '',
       proposalStartEpoch: 0,
       proposalEndEpoch: 0,
