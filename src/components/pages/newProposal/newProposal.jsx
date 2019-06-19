@@ -357,7 +357,7 @@ class NewProposal extends Component {
         });
         swal({
           title: 'Success',
-          text: 'Proposal has been created.',
+          text: 'Proposal has been created.\n\nPLEASE WAIT FOR 6 BLOCKS',
           icon: 'success'
         });
         this.props.setPage('home');
