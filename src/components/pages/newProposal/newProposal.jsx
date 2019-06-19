@@ -721,7 +721,7 @@ class NewProposal extends Component {
         return (
           <Row>
             <Row className="paymentDetail-row">
-              <Col span={deviceType === 'mobile' ? 10 : 9}>
+              {/* <Col span={deviceType === 'mobile' ? 10 : 9}>
                 <label className="label">Payment Date</label>
                 <Select
                   placeholder="Select a Date"
@@ -735,11 +735,8 @@ class NewProposal extends Component {
                     </Option>
                   ))}
                 </Select>
-              </Col>
-              <Col
-                span={deviceType === 'mobile' ? 10 : 7}
-                offset={deviceType === 'mobile' ? 4 : 0}
-              >
+              </Col> */}
+              <Col span={deviceType === 'mobile' ? 10 : 6}>
                 <label># of Payments</label>
                 <InputNumber
                   min={1}
@@ -750,6 +747,19 @@ class NewProposal extends Component {
                   onChange={this.paymentQuantity}
                   type="number"
                 />
+              </Col>
+              <Col
+                span={deviceType === 'mobile' ? 10 : 6}
+                offset={deviceType === 'mobile' ? 4 : 0}
+              >
+                <label>Amount</label>
+                <InputNumber
+                  min={0}
+                  className="amount-input"
+                  value={this.state.amount}
+                  onChange={this.getAmount}
+                />
+                {` SYS`}
               </Col>
               <Col span={deviceType === 'mobile' ? 24 : 8}>
                 <label>Payment Address</label>
@@ -762,18 +772,8 @@ class NewProposal extends Component {
               </Col>
             </Row>
             <Row className="amount-row">
-              <Col span={deviceType === 'mobile' ? 24 : 24}>
-                <label>Amount</label>
-                <Row>
-                  <InputNumber
-                    min={0}
-                    className="amount-input"
-                    value={this.state.amount}
-                    onChange={this.getAmount}
-                  />
-                  {` SYS`}
-                </Row>
-                <Row>
+              <Row>
+                <Col span={deviceType === 'mobile' ? 24 : 24}>
                   <p />
                   <p>
                     <strong>Total amount:&nbsp;</strong>
@@ -786,8 +786,8 @@ class NewProposal extends Component {
                         : ''
                     }`}
                   </p>
-                </Row>
-              </Col>
+                </Col>
+              </Row>
             </Row>
           </Row>
         );
