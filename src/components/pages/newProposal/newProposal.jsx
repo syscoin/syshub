@@ -16,7 +16,7 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import { Row, Col, Icon } from 'antd';
-import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
+import { Form, Input, Button, InputNumber, Modal } from 'antd';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
