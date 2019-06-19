@@ -216,6 +216,15 @@ export default {
         marginTop: 15,
         '& label': {
           display: 'block'
+        },
+        '& .paymentInfo_Wrapper': {
+          margin: '0 0 0 5px'
+        },
+        '& .paymentInfo_payoutDates': {
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+          margin: '0 0 0 10px',
+          width: '80%'
         }
       },
       '& .amount-input': {
@@ -237,9 +246,6 @@ export default {
     '& .editor-title': {
       fontSize: 16,
       marginTop: 8
-    },
-    '& .payment-input': {
-      width: '100%'
     },
     '& .amount-input': {
       width: '100%',

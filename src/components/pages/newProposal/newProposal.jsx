@@ -4,8 +4,9 @@ import { compose } from 'recompose';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 
-// Imports provider HOC's
+// Imports provider HOC's & services
 import { withFirebase } from '../../../providers/firebase';
+import { nextGovernanceRewardDate } from '../../../API/syscoin/proposals.service';
 
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
@@ -15,7 +16,7 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
 import { Row, Col, Icon } from 'antd';
-import { Form, Input, Button, InputNumber, Select, Modal } from 'antd';
+import { Form, Input, Button, InputNumber, Modal } from 'antd';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -25,13 +26,47 @@ import Paper from '@material-ui/core/Paper';
 import { Hex } from '../../../redux/helpers';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+// import custom components
+// Todo - Split this component in more simple one
+
 //import style
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import newProposalStyle from './newProposal.style';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const { TextArea } = Input;
+
+const yearDayMonth = (dateInMills, format) => {
+  const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
+  const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) +
+    1}`.slice(-2);
+  const firstYear = new Date(dateInMills).getFullYear();
+
+  switch (format) {
+    case 'usa':
+      return `${firstMonth}/${firstDay}/${firstYear}`;
+    case 'eu':
+      return `${firstDay}/${firstMonth}/${firstYear}`;
+    default:
+      return `${firstYear}-${firstMonth}-${firstDay}`;
+  }
+};
+
+const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
+  //console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
+  const { rewardDateEpoch, superblockCycleEpoch } = nextGovernanceDate;
+
+  const proposalPayoutDates = [];
+  for (let i = 0; i < nPayments; i++) {
+    proposalPayoutDates.push(rewardDateEpoch + superblockCycleEpoch * i);
+  }
+  const gapEnsurePayment = superblockCycleEpoch / 2;
+  const paymentInfo = {
+    proposalPayoutDates,
+    endEpoch: proposalPayoutDates[nPayments - 1] + gapEnsurePayment
+  };
+  return paymentInfo;
+};
 
 class NewProposal extends Component {
   constructor(props) {
@@ -42,12 +77,12 @@ class NewProposal extends Component {
       proposalTitle: '',
       proposalName: '',
       paymentQuantity: 1,
-      paymentDateOptions: [],
       proposalDetail: '',
       proposalStartEpoch: 0,
       proposalEndEpoch: 0,
+      proposalPayoutDates: [],
       address: '',
-      amount: 0,
+      amount: 1,
       totalAmount: 0,
       recover: false,
       stepperSubHeading: '',
@@ -68,13 +103,14 @@ class NewProposal extends Component {
       prepareObj: {},
       userProposal: {},
       hashError: '',
-      txIdError: ''
+      txIdError: '',
+      nextGovernanceDate: {}
     };
 
     this.getStepContent = this.getStepContent.bind(this);
     this.getSteps = this.getSteps.bind(this);
     this.proposalTitle = this.proposalTitle.bind(this);
-    this.onDateChange = this.onDateChange.bind(this);
+    //this.onDateChange = this.onDateChange.bind(this);
     this.paymentQuantity = this.paymentQuantity.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.getAmount = this.getAmount.bind(this);
@@ -91,18 +127,20 @@ class NewProposal extends Component {
   // add Firebase as global var in component
   firebase = this.props.firebase;
 
-  componentWillMount() {
-    const maxDateOptions = 26;
-    const { firstPaymentDate, millsMonth } = this.props.proposal;
-    const today = new Date().getTime();
-    const monthGap = Math.ceil((today - firstPaymentDate) / millsMonth);
-    const firstOption = firstPaymentDate + monthGap * millsMonth;
-    let paymentDateOptions = [];
-    for (let i = 0; i < maxDateOptions; i++) {
-      let mills = firstOption + i * millsMonth;
-      paymentDateOptions.push({ mills, ymd: this.yearDayMonth(mills, 'usa') });
-    }
-    this.setState({ paymentDateOptions });
+  async componentWillMount() {
+    const { paymentQuantity } = this.state;
+    const nextGovernanceDate = await this.getGovernanceDate();
+    const proposalStartEpoch = Math.round(new Date().getTime() / 1000);
+    const { endEpoch, proposalPayoutDates } = lastPaymentCalculator(
+      paymentQuantity,
+      nextGovernanceDate
+    );
+    this.setState({
+      nextGovernanceDate,
+      proposalStartEpoch,
+      proposalEndEpoch: endEpoch,
+      proposalPayoutDates
+    });
   }
 
   async componentDidMount() {
@@ -200,29 +238,24 @@ class NewProposal extends Component {
       });
   }
 
-  yearDayMonth(dateInMills, format) {
-    const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
-    const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) +
-      1}`.slice(-2);
-    const firstYear = new Date(dateInMills).getFullYear();
-
-    switch (format) {
-      case 'usa':
-        return `${firstMonth}/${firstDay}/${firstYear}`;
-      case 'eu':
-        return `${firstDay}/${firstMonth}/${firstYear}`;
-      default:
-        return `${firstYear}-${firstMonth}-${firstDay}`;
-    }
+  async getGovernanceDate() {
+    const nextGovernanceDate = await nextGovernanceRewardDate();
+    Object.assign(nextGovernanceDate);
+    return nextGovernanceDate;
   }
 
   //payment quantity
+
   paymentQuantity(value) {
-    const millsMonth = this.props.proposal.millsMonth;
-    const proposalEndEpoch =
-      this.state.proposalStartEpoch + (millsMonth / 1000) * (value - 1);
+    const { nextGovernanceDate } = this.state;
+    const { endEpoch, proposalPayoutDates } = lastPaymentCalculator(
+      value,
+      nextGovernanceDate
+    );
+
     this.setState({
-      proposalEndEpoch,
+      proposalEndEpoch: endEpoch,
+      proposalPayoutDates,
       totalAmount: this.state.amount * value,
       paymentQuantity: value
     });
@@ -324,7 +357,7 @@ class NewProposal extends Component {
         });
         swal({
           title: 'Success',
-          text: 'Proposal has been created.',
+          text: 'Proposal has been created.\n\nPLEASE WAIT FOR 6 BLOCKS',
           icon: 'success'
         });
         this.props.setPage('home');
@@ -416,7 +449,6 @@ class NewProposal extends Component {
     const { app } = this.props;
     const { currentUser } = app;
     const {
-      //paymentQuantity,
       proposalName,
       proposalTitle,
       address,
@@ -491,7 +523,6 @@ class NewProposal extends Component {
       detail: proposal__detail,
       state: 'composed'
     });
-
     this.props
       .checkProposal(dataHex)
       .then(data => {
@@ -545,7 +576,7 @@ class NewProposal extends Component {
     );
   };
 
-  //date change function
+  /*  //date change function
   onDateChange(value) {
     this.setState({
       proposalStartEpoch: value,
@@ -553,7 +584,7 @@ class NewProposal extends Component {
       paymentQuantity: 1,
       totalAmount: this.state.amount
     });
-  }
+  } */
 
   //proposal title function
   proposalTitle(e) {
@@ -721,25 +752,7 @@ class NewProposal extends Component {
         return (
           <Row>
             <Row className="paymentDetail-row">
-              <Col span={deviceType === 'mobile' ? 10 : 9}>
-                <label className="label">Payment Date</label>
-                <Select
-                  placeholder="Select a Date"
-                  style={{ width: 120 }}
-                  onChange={value => this.onDateChange(value)}
-                  defaultValue={this.state.proposalStartEpoch}
-                >
-                  {this.state.paymentDateOptions.map((item, i) => (
-                    <Option key={`ACZ_${i}`} value={item.mills / 1000}>
-                      {item.ymd}
-                    </Option>
-                  ))}
-                </Select>
-              </Col>
-              <Col
-                span={deviceType === 'mobile' ? 10 : 7}
-                offset={deviceType === 'mobile' ? 4 : 0}
-              >
+              <Col span={deviceType === 'mobile' ? 10 : 6}>
                 <label># of Payments</label>
                 <InputNumber
                   min={1}
@@ -750,6 +763,19 @@ class NewProposal extends Component {
                   onChange={this.paymentQuantity}
                   type="number"
                 />
+              </Col>
+              <Col
+                span={deviceType === 'mobile' ? 10 : 6}
+                offset={deviceType === 'mobile' ? 4 : 0}
+              >
+                <label>Amount</label>
+                <InputNumber
+                  min={0}
+                  className="amount-input"
+                  value={this.state.amount}
+                  onChange={this.getAmount}
+                />
+                {` SYS`}
               </Col>
               <Col span={deviceType === 'mobile' ? 24 : 8}>
                 <label>Payment Address</label>
@@ -762,32 +788,32 @@ class NewProposal extends Component {
               </Col>
             </Row>
             <Row className="amount-row">
-              <Col span={deviceType === 'mobile' ? 24 : 24}>
-                <label>Amount</label>
-                <Row>
-                  <InputNumber
-                    min={0}
-                    className="amount-input"
-                    value={this.state.amount}
-                    onChange={this.getAmount}
-                  />
-                  {` SYS`}
-                </Row>
-                <Row>
+              <Row>
+                <Col span={deviceType === 'mobile' ? 24 : 24}>
                   <p />
-                  <p>
-                    <strong>Total amount:&nbsp;</strong>
-                    {`${this.state.totalAmount || this.state.amount} SYS ${
-                      this.state.proposalStartEpoch
-                        ? `with a final payment on ${this.yearDayMonth(
-                            this.state.proposalEndEpoch * 1000,
-                            'usa'
-                          )}`
-                        : ''
-                    }`}
-                  </p>
-                </Row>
-              </Col>
+                  <h3>Payment Info:</h3>
+                  <div className="paymentInfo_Wrapper">
+                    <p className="">
+                      {`This proposal will result in ${
+                        this.state.paymentQuantity
+                      } payments of ${this.state.amount} sys`}
+                    </p>
+                    <div className="">
+                      <div className="">{`  Payout dates approximately:`}</div>
+                      <div className="paymentInfo_payoutDates">
+                        {this.state.proposalPayoutDates.map(epoch => {
+                          return <div>{yearDayMonth(epoch * 1000, 'usa')}</div>;
+                        })}
+                      </div>
+                    </div>
+                    <p />
+                    <p className="">
+                      {`Total amount: ${this.state.totalAmount ||
+                        this.state.amount} SYS`}
+                    </p>
+                  </div>
+                </Col>
+              </Row>
             </Row>
           </Row>
         );
@@ -844,8 +870,10 @@ class NewProposal extends Component {
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle =
       deviceType === 'mobile' ? classes.mobileModal : classes.modal;
+
     const steps = this.getSteps();
     const { activeStep } = this.state;
+
     return (
       <div>
         {/* Receipt Modal */}
