@@ -90,24 +90,20 @@ class ProposalComments extends Component {
   async loadComments() {
     // Load comments from firebase
     // then set them in state and load responses if any
-    const commentsArray = await this.firebase.getProposalComments(
+    const allComments = await this.firebase.getProposalComments(
       this.props.data.proposalID,
       false
     );
-    this.setState(
-      {
-        allComments: commentsArray
-      },
-      () => {
-        this.loadReplies(0);
-      }
-    );
+    this.setState({ allComments }, () => {
+      this.loadReplies(0);
+    });
   }
 
   // load replies
   async loadReplies(index) {
     // Load replies from firebase
     // then set in state
+
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id;
       let _comments = Object.assign(this.state.allComments);
@@ -188,6 +184,7 @@ class ProposalComments extends Component {
 
       if (itemIndex > -1) {
         _item = Object.assign(this.state.allComments[itemIndex]);
+        _item.replies = [];
         let date = new Date();
         _item.updatedAt = date.getTime();
         if (!_item.votes) {
@@ -224,6 +221,7 @@ class ProposalComments extends Component {
           commentID,
           _item
         );
+        this.refreshComments();
       }
     }
   }
