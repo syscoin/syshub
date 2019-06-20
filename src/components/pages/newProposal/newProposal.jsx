@@ -61,7 +61,7 @@ const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
   } = nextGovernanceDate;
 
   const todayEpoch = Math.round(new Date().getTime() / 1000);
-  const afterVotingDeadLine = todayEpoch > votingDeadLineEpoch ? true : false;
+  const afterVotingDeadLine = todayEpoch >= votingDeadLineEpoch ? true : false;
 
   const firstRewardDateEpoch =
     rewardDateEpoch + (afterVotingDeadLine ? superblockCycleEpoch : 0);
