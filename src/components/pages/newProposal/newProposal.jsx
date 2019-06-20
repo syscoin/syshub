@@ -54,11 +54,20 @@ const yearDayMonth = (dateInMills, format) => {
 
 const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
   //console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
-  const { rewardDateEpoch, superblockCycleEpoch } = nextGovernanceDate;
+  const {
+    rewardDateEpoch,
+    superblockCycleEpoch,
+    votingDeadLineEpoch
+  } = nextGovernanceDate;
 
+  const todayEpoch = Math.round(new Date().getTime() / 1000);
+  const afterVotingDeadLine = todayEpoch >= votingDeadLineEpoch ? true : false;
+
+  const firstRewardDateEpoch =
+    rewardDateEpoch + (afterVotingDeadLine ? superblockCycleEpoch : 0);
   const proposalPayoutDates = [];
   for (let i = 0; i < nPayments; i++) {
-    proposalPayoutDates.push(rewardDateEpoch + superblockCycleEpoch * i);
+    proposalPayoutDates.push(firstRewardDateEpoch + superblockCycleEpoch * i);
   }
   const gapEnsurePayment = superblockCycleEpoch / 2;
   const paymentInfo = {
@@ -801,8 +810,12 @@ class NewProposal extends Component {
                     <div className="">
                       <div className="">{`  Payout dates approximately:`}</div>
                       <div className="paymentInfo_payoutDates">
-                        {this.state.proposalPayoutDates.map(epoch => {
-                          return <div>{yearDayMonth(epoch * 1000, 'usa')}</div>;
+                        {this.state.proposalPayoutDates.map((epoch, index) => {
+                          return (
+                            <div key={index}>
+                              {yearDayMonth(epoch * 1000, 'usa')}
+                            </div>
+                          );
                         })}
                       </div>
                     </div>
