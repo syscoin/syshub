@@ -790,7 +790,7 @@ class NewProposal extends Component {
                 <label>Payment Address</label>
                 <Input
                   type="text"
-                  placeholder="TAhk13PnY9f6Kw3K8f797G8rD4QBtb5f1B"
+                  placeholder="sys1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                   value={this.state.address}
                   onChange={this.getAddress}
                 />
