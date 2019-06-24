@@ -92,7 +92,7 @@ class ProposalOwner extends Component {
                     name="onTimePayment"
                     id="onTimePayment"
                     className="input-field"
-                    placeholder="proposal owner"
+                    placeholder="no user name defined"
                     onChange={e => {}}
                     value={this.state.owner}
                     disabled={true}
