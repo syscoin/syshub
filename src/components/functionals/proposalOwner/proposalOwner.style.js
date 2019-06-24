@@ -14,15 +14,11 @@ export default {
         fontWeight: 200
       }
     },
-    '& .paymentInfo': {
-      marginTop: 60
-    },
-    '& .paymentsView': {
+    '& .ownerView': {
       margin: 0,
       marginTop: 30,
-      '& .OnTimePaymentView': {
-        flexBasis: '35% !important',
-        maxWidth: '26.6%',
+      '& .OnTimeOwnerView': {
+        flexBasis: '60% !important',
         padding: 0,
         marginLeft: '4%',
         fontSize: 14,
@@ -33,6 +29,11 @@ export default {
         },
         '& .form': {
           '& .FormGroup': {
+            display: 'grid',
+            gridTemplateColumns: 'auto auto',
+            gridTemplateRows: 'auto',
+            alignItems: 'center',
+            gridColumnGap: '5px',
             '& .input-field': {
               color: primaryLight,
               padding: 5,
@@ -55,6 +56,10 @@ export default {
               /* Firefox 18- */
               color: primaryLight
             }
+          },
+          '& .collateralHashInfo:hover': {
+            color: primaryLight,
+            cursor: 'pointer'
           }
         }
       }
@@ -68,10 +73,10 @@ export default {
         fontSize: 20
       }
     },
-    '& .paymentsView': {
+    '& .ownerView': {
       marginTop: 0,
       width: '100%',
-      '& .OnTimePaymentView': {
+      '& .OnTimeOwnerView': {
         maxWidth: '100%',
         width: '100%',
         flexBasis: 'inherit',

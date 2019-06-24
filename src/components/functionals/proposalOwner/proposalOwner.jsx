@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import { Grid, FormGroup } from '@material-ui/core';
 
 import injectSheet from 'react-jss';
-import proposalPaymentStyle from './proposalPayment.style';
+import proposalPaymentStyle from './proposalOwner.style';
 
-class ProposalPayment extends Component {
+class ProposalOwner extends Component {
   constructor(props) {
     super(props);
     var sdate = new Date(
@@ -20,6 +20,7 @@ class ProposalPayment extends Component {
     var edate = new Date(this.props.data.end_epoch * 1000);
     var endDate = edate.toDateString();
     this.state = {
+      owner: this.props.data.username,
       oneTimePayment: this.props.data.payment_amount,
       payment_type: '',
       compeletePayment: '',
@@ -30,8 +31,16 @@ class ProposalPayment extends Component {
   }
 
   componentWillMount() {
-    const { nPayment, end_epoch, payment_amount } = this.props.data;
+    const {
+      nPayment,
+      end_epoch,
+      payment_amount,
+      collateralHash,
+      username
+    } = this.props.data;
     //const millsMonth = 30 * 24 * 60 * 60 * 1000;
+
+    console.log('ACZ owner data -->', this.props.data);
     const today = new Date();
 
     //const startDate = new Date(first_epoch * 1000);
@@ -42,11 +51,9 @@ class ProposalPayment extends Component {
       let timeDiff = endDate.getTime() - today.getTime();
       let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
-      const payment_type =
-        nPayment > 1
-          ? `${nPayment} Payments.  Total of ${payment_amount * nPayment} SYS`
-          : 'One-time payment';
+      const payment_type = 'User name';
       this.setState({
+        collateralHash,
         days_remaining,
         month_remaining,
         payment_amount,
@@ -63,21 +70,19 @@ class ProposalPayment extends Component {
 
     return (
       <Grid item md={12} className={style}>
-        <Grid item className="paymentInfo">
-          <div className="heading">
-            <Typography variant="headline" gutterBottom>
-              PAYMENTS
-            </Typography>
-          </div>
+        <Grid item className="no-margin">
+          <Typography variant="headline" gutterBottom>
+            OWNER
+          </Typography>
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
-        <Grid item container md={12} className="paymentsView">
-          <Grid item md={3} className="OnTimePaymentView">
+        <Grid item container md={12} className="ownerView">
+          <Grid item md={3} className="OnTimeOwnerView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
-                {this.state.payment_type}
+                User name
               </Typography>
             </div>
             <form className="form">
@@ -87,42 +92,19 @@ class ProposalPayment extends Component {
                     name="onTimePayment"
                     id="onTimePayment"
                     className="input-field"
-                    placeholder="Amount"
+                    placeholder="proposal owner"
                     onChange={e => {}}
-                    value={this.state.oneTimePayment + ' SYS'}
+                    value={this.state.owner}
                     disabled={true}
                   />
                 </Typography>
               </FormGroup>
             </form>
           </Grid>
-          <Grid item md={3} className="OnTimePaymentView">
-            {/* <div className="heading">
-              <Typography variant="subheading" gutterBottom>
-                Payment
-              </Typography>
-            </div> 
-
-            <form className="form">
-              <FormGroup className="FormGroup">
-                <Typography color="inherit">
-                  <input
-                    name="compeletePayment"
-                    id="compeletePayment"
-                    className="input-field"
-                    value="no payments occurred yet"
-                    onChange={e => { }}
-                    disabled={true}
-                  />
-                </Typography>
-              </FormGroup>
-            </form>*/}
-          </Grid>
-
-          <Grid item md={3} className="OnTimePaymentView">
+          <Grid item md={9} className="OnTimeOwnerView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
-                Start & End Date
+                Collateral hash
               </Typography>
             </div>
             <form className="form">
@@ -130,15 +112,26 @@ class ProposalPayment extends Component {
                 <Typography color="inherit">
                   <input
                     ref={ref => {}}
-                    name="Paymentdate"
-                    id="Paymentdate"
+                    name="collateralHash"
+                    id="collateralHash"
                     className="input-field"
-                    placeholder="Start Date / End Date"
+                    placeholder="Collateral Hash"
                     onChange={e => {}}
-                    value={this.state.startDate + ' / ' + this.state.endDate}
+                    value={this.state.collateralHash}
                     disabled={true}
                   />
                 </Typography>
+                <div className="collateralHashInfo">
+                  <a
+                    href={`https://chainz.cryptoid.info/sys/tx.dws?${
+                      this.state.collateralHash
+                    }`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fas fa-external-link-alt" />
+                  </a>
+                </div>
               </FormGroup>
             </form>
           </Grid>
@@ -148,8 +141,7 @@ class ProposalPayment extends Component {
   }
 }
 
-ProposalPayment.propTypes = {
+ProposalOwner.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
-export default injectSheet(proposalPaymentStyle)(ProposalPayment);
+export default injectSheet(proposalPaymentStyle)(ProposalOwner);
