@@ -1,5 +1,4 @@
 import palette from '../../../styles/palette';
-import { ImportantDevices } from '@material-ui/icons';
 
 const greyDark = palette.greyDark;
 const white = palette.white;
@@ -25,7 +24,7 @@ export default {
   },
   footerVersion: {
     alignSelf: 'end',
-    fontSize: '8px',
+    fontSize: '9px',
     color: white
   }
 };

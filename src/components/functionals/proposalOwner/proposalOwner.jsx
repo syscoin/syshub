@@ -31,13 +31,7 @@ class ProposalOwner extends Component {
   }
 
   componentWillMount() {
-    const {
-      nPayment,
-      end_epoch,
-      payment_amount,
-      collateralHash,
-      username
-    } = this.props.data;
+    const { end_epoch, payment_amount, collateralHash } = this.props.data;
     //const millsMonth = 30 * 24 * 60 * 60 * 1000;
 
     console.log('ACZ owner data -->', this.props.data);
