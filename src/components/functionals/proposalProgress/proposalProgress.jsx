@@ -18,21 +18,23 @@ class ProposalProgress extends Component {
     totalNodes: 0,
     totalVotes: 0,
     status: ''
-  }
+  };
 
-  componentWillMount(){
+  componentWillMount() {
     this.prepareData();
   }
 
   prepareData() {
     const { progressObj } = this.props;
     const { totalNodes, totalVotes, passingPercentage, funded } = progressObj;
-    const votesToBeFunded = Math.floor(totalNodes * passingPercentage /100);
+    const votesToBeFunded = Math.floor((totalNodes * passingPercentage) / 100);
     const votesLeftToBeFunded = votesToBeFunded - totalVotes;
-    const progress = Math.min(Math.floor(totalVotes / totalNodes * 100), 100);
+    const progress = Math.min(Math.floor((totalVotes / totalNodes) * 100), 100);
     let status = progress >= passingPercentage ? 'passing' : 'unfunded';
     let tootipMsg;
-    if (funded ) { status = 'funded' } ;
+    if (funded) {
+      status = 'funded';
+    }
     switch (status) {
       case 'unfunded':
         tootipMsg = `Additional ${votesLeftToBeFunded} yes votes is needed to become funded`;
@@ -58,7 +60,7 @@ class ProposalProgress extends Component {
   }
 
   render() {
-    const { classes} = this.props;
+    const { classes } = this.props;
     const { progress, totalNodes, totalVotes, tootipMsg, status } = this.state;
     return (
       <div className={classes.root}>
@@ -68,7 +70,7 @@ class ProposalProgress extends Component {
             color="primary"
             className={`proposalProgressButton ${status}`}
             onClick={this.handleButtonClick}
-            >
+          >
             <div className="proposalProgressInner">
               {/* <img alt="a" src={docIcon} className="proposalProgressIcon" /> */}
               <div className="proposalProgressPercentage">{`${progress}%`}</div>
@@ -92,6 +94,5 @@ class ProposalProgress extends Component {
     );
   }
 }
-
 
 export default injectSheet(proposalProgressStyle)(ProposalProgress);
