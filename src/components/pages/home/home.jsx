@@ -44,4 +44,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(homeStyle)(Home));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(homeStyle)(Home));
