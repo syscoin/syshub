@@ -4,26 +4,24 @@ const greyLight = palette.greyLight;
 
 export default {
   wrapper: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    background: greyLight,
+    alignItems: 'flex-start',
+    height: '100%',
     padding: '0px',
+    background: greyLight
   },
   contentWrapper: {
+    position: 'relative',
+
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     background: greyLight,
     minWidth: '100%',
-    padding: '0px',
-  },
-  wrapperHome: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    minHeight: '80%',
-    background: greyLight,
-    padding: '0px',
+    height: '100%',
+    padding: '0px'
   }
 };
