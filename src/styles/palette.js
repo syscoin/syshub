@@ -12,7 +12,7 @@ const basicColors = {
   greyLight: 'rgba(240, 242, 245, 1)',
   greyDark: 'rgba(70, 71, 69, 1)',
   greyHover: 'rgba(189, 195, 199, 0.3)',
-  
+
   red: 'rgba(214, 20, 20, 1)',
   redHover: 'rgba(214, 20, 20, 0.3)',
 
@@ -22,16 +22,13 @@ const basicColors = {
 
   transparentBlack: 'rgba(0, 0, 0, 0.70)',
 
-  boxShadow: '-1px 18px 38px -18px rgba(0,0,0,0.25)',
-
-
-
+  boxShadow: '-1px 18px 20px -18px rgba(0,0,0,0.25)'
 };
 
 const themeColors = {
   textBlue: basicColors.primary,
   text: basicColors.greyDark,
-  textLight: basicColors.grey,
+  textLight: basicColors.grey
 };
 
 export default { ...basicColors, ...themeColors };

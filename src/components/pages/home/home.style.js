@@ -1,9 +1,6 @@
-
-
 export default {
   root: {
-    '& .wrapper': {
-    }
+    '& .wrapper': {}
   },
-  mRoot: {},
+  mRoot: {}
 };

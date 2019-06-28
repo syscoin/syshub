@@ -39,7 +39,7 @@ class DashBoardHeader extends Component {
             <div className="headingRow">
               <div className="headingRight">
                 <span className="activeText">{proposalsShown}</span>
-                {` Active Proposal`}
+                {` Active Proposal${proposalsShown > 1 ? 's' : ''}`}
               </div>
               <div className="headingLeft">
                 {data.nextGovernanceDate.rewardDate && (

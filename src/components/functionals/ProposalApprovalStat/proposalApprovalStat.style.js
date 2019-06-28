@@ -7,12 +7,21 @@ const red = palette.red;
 
 export default {
   root: {
+    '& .progressContainer': {
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRow: 'auto',
+      justifyItems: 'start',
+      alignItems: 'end',
+      padding: '0 0 5px 20px',
+      width: '100%'
+    },
     '& .no-margin': {
       margin: 0,
       '& .heading': {
         fontSize: 20,
-        color: greyDark,
-      },
+        color: greyDark
+      }
     },
     '& .approvalStatus': {
       margin: 0,
@@ -20,8 +29,8 @@ export default {
       '& .heading': {
         fontSize: 20,
         color: greyDark,
-        fontWeight: 200,
-      },
+        fontWeight: 200
+      }
     },
     '& .topApprovalView': {
       margin: 0,
@@ -30,7 +39,7 @@ export default {
         marginLeft: '4%',
         padding: 0,
         color: primaryDark,
-        fontSize: 16,
+        fontSize: 16
       },
       '& .approvalValue': {
         color: greyDark,
@@ -38,28 +47,28 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: red,
+          color: red
         },
         '& .approvalColorFont': {
           '&.funded': {
-            color: green,
+            color: green
           },
           '&.passing': {
-            color: primaryDark,
+            color: primaryDark
           },
           '&.unfunded': {
-            color: red,
+            color: red
           }
         },
         '& .voteRedColorFont': {
           color: red,
-          marginRight: '6%',
+          marginRight: '6%'
         },
         '& .voteGreenColorFont': {
           color: green,
-          marginRight: '6%',
-        },
-      },
+          marginRight: '6%'
+        }
+      }
     },
     '& .approvalView': {
       margin: 0,
@@ -68,7 +77,7 @@ export default {
         marginLeft: '4%',
         padding: 0,
         color: primaryDark,
-        fontSize: 16,
+        fontSize: 16
       },
       '& .approvalValue': {
         color: greyDark,
@@ -76,18 +85,18 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: red,
+          color: red
         },
         '& .voteRedColorFont': {
           color: red,
-          marginRight: '6%',
+          marginRight: '6%'
         },
         '& .voteGreenColorFont': {
           color: green,
-          marginRight: '6%',
-        },
-      },
-    },
+          marginRight: '6%'
+        }
+      }
+    }
   },
   mRoot: {
     extend: 'root',
@@ -95,7 +104,7 @@ export default {
     '& .approvalStatus': {
       '& .heading': {
         '&>p': {
-          fontSize: 20,
+          fontSize: 20
         }
       }
     },
@@ -104,14 +113,14 @@ export default {
       width: '100%',
       '& .approvalKey': {
         marginLeft: 0,
-        width: '30%',
+        width: '30%'
       }
     },
     '& .approvalView': {
       '& .approvalKey': {
         marginLeft: 0,
-        width: '30%',
+        width: '30%'
       }
     }
-  },
+  }
 };

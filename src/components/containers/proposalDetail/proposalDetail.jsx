@@ -6,11 +6,16 @@ import { connect } from 'react-redux';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
-import { DashBoardHeader } from '../../functionals';
-import { ProposalPayment } from '../../functionals';
-import { ProposalApprovalStat } from '../../functionals';
-import { ProposalDescription } from '../../functionals';
-import { ProposalComments } from '../../functionals';
+
+//Import custom Components
+import {
+  DashBoardHeader,
+  ProposalOwner,
+  ProposalPayment,
+  ProposalApprovalStat,
+  ProposalDescription,
+  ProposalComments
+} from '../../functionals';
 
 // Import Material-UI components
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -42,6 +47,7 @@ export class ProposalDetail extends Component {
 
   async prepareDataString(proposal) {
     if (proposal) {
+      const collateralHash = proposal.CollateralHash;
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
       const descriptionObj = await this.firebase.getProposalDescription(
@@ -50,6 +56,7 @@ export class ProposalDetail extends Component {
       if (descriptionObj) {
         dataString.description = descriptionObj.detail;
       }
+      dataString.collateralHash = collateralHash;
       this.setState({ dataString, loading: false });
     }
   }
@@ -96,6 +103,7 @@ export class ProposalDetail extends Component {
                   </span>{' '}
                 </h3>
               ) : null}
+              <ProposalOwner deviceType={deviceType} data={dataString} />
               <ProposalPayment deviceType={deviceType} data={dataString} />
               <ProposalApprovalStat
                 deviceType={deviceType}

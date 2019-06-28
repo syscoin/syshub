@@ -11,14 +11,14 @@ export default {
   root: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     '& .proposalProgressWrapper': {
       position: 'relative',
       width: '100px',
-      height: '100px',
+      height: '100px'
     },
-    '& .proposalProgressButton':{
+    '& .proposalProgressButton': {
       backgroundColor: white,
       border: `11px solid ${greyLight}`,
       position: 'absolute',
@@ -28,29 +28,32 @@ export default {
       marginLeft: 0,
       width: '100%',
       height: '100%',
-      boxShadow:'none',
+      boxShadow: 'none',
       '&.funded': {
-        backgroundColor: greenHover,
-      },
+        backgroundColor: greenHover
+      }
     },
-    '& .proposalProgressInner':{
+    '& .proposalProgressInner': {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent:'center',
-      alignItems: 'center',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     '& .proposalProgressIcon': {
       width: '49%',
       height: '49%',
       margin: '3px 0 0 0'
-
     },
     '& .proposalProgressPercentage': {
-      margin: '20% 0 0 0',
-      fontSize: '1.9em',
+      position: 'absolute',
+      top: '10%',
+      margin: '0 0 0 0',
+      fontSize: '1.9em'
     },
-    '& .proposalProgressStatus':{
-      margin: '3px 0 0 0',
+    '& .proposalProgressStatus': {
+      position: 'absolute',
+      top: '63%',
+      margin: '0 0 0 0',
       fontSize: '0.8em'
     },
     '& .proposalProgress': {
@@ -58,27 +61,27 @@ export default {
       top: 0,
       left: 0,
       zIndex: 0,
-      '&.unfunded':{
-        '&>svg>circle':{
+      '&.unfunded': {
+        '&>svg>circle': {
           stroke: red
         }
       },
-      '&.passing':{
-        '&>svg>circle':{
+      '&.passing': {
+        '&>svg>circle': {
           stroke: greenLight
         }
       },
-      '&.funded':{
-        '& svg>circle':{
+      '&.funded': {
+        '& svg>circle': {
           stroke: greenLight
-        },
-      },
+        }
+      }
     },
     '& .proposalProgressInfo': {
       '&.funded': {
         fontWeight: 'bold',
         color: green
-      },
-    },
+      }
+    }
   }
-}
+};
