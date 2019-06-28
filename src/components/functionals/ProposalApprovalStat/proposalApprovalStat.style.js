@@ -101,6 +101,11 @@ export default {
   mRoot: {
     extend: 'root',
     width: '100%',
+    '& .progressContainer': {
+      justifyItems: 'center',
+      padding: '20px',
+      width: '100%'
+    },
     '& .approvalStatus': {
       '& .heading': {
         '&>p': {

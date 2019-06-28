@@ -13,48 +13,10 @@ import proposalPaymentStyle from './proposalOwner.style';
 class ProposalOwner extends Component {
   constructor(props) {
     super(props);
-    var sdate = new Date(
-      (this.props.data.start_epoch || this.props.data.first_epoch) * 1000
-    );
-    var startDate = sdate.toDateString();
-    var edate = new Date(this.props.data.end_epoch * 1000);
-    var endDate = edate.toDateString();
     this.state = {
       owner: this.props.data.username,
-      oneTimePayment: this.props.data.payment_amount,
-      payment_type: '',
-      compeletePayment: '',
-      Paymentdate: '',
-      startDate: startDate,
-      endDate: endDate
+      collateralHash: this.props.data.collateralHash
     };
-  }
-
-  componentWillMount() {
-    const { end_epoch, payment_amount, collateralHash } = this.props.data;
-    //const millsMonth = 30 * 24 * 60 * 60 * 1000;
-
-    console.log('ACZ owner data -->', this.props.data);
-    const today = new Date();
-
-    //const startDate = new Date(first_epoch * 1000);
-    const endDate = new Date(end_epoch * 1000);
-    //const nPayment = Math.round((endDate - startDate) / millsMonth) + 1;
-
-    if (endDate > today) {
-      let timeDiff = endDate.getTime() - today.getTime();
-      let days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
-      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
-      const payment_type = 'User name';
-      this.setState({
-        collateralHash,
-        days_remaining,
-        month_remaining,
-        payment_amount,
-        payment_type
-      });
-    }
-    //this.setState({ payment_amount, payment_type: 'one-time payment' });
   }
 
   render() {
@@ -101,8 +63,8 @@ class ProposalOwner extends Component {
                 Collateral hash
               </Typography>
             </div>
-            <form className="form">
-              <FormGroup className="FormGroup">
+            <form className="form ">
+              <FormGroup className="FormGroup withLink">
                 <Typography color="inherit">
                   <input
                     ref={ref => {}}

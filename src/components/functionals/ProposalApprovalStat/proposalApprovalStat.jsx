@@ -221,7 +221,7 @@ class ProposalApprovalStat extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container md={3}>
+          <Grid item container xs={12} md={3}>
             <div className="progressContainer">
               <ProposalProgress
                 deviceType={deviceType}

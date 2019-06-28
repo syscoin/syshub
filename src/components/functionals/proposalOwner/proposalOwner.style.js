@@ -34,6 +34,12 @@ export default {
             gridTemplateRows: 'auto',
             alignItems: 'center',
             gridColumnGap: '5px',
+            '&.withLink': {
+              display: 'grid',
+              gridTemplateColumns: '1fr auto',
+              gridTemplateRows: 'auto',
+              gridColumnGap: '10px'
+            },
             '& .input-field': {
               color: primaryLight,
               padding: 5,
@@ -87,6 +93,8 @@ export default {
         },
         '& .form': {
           '& .FormGroup': {
+            gridTemplateColumns: 'auto',
+            gridTemplateRows: 'auto auto',
             '& .input-field': {
               height: 35,
               width: '100%'
