@@ -206,13 +206,13 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError('Failure to find masternode in list')
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -221,7 +221,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Invalid proposal hash. Please check: ${cryptr.decrypt(
@@ -231,7 +231,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -241,7 +241,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Vote has Failed. Please check: ${cryptr.decrypt(
@@ -251,7 +251,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -262,7 +262,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Invalid txid. Please check: ${cryptr.decrypt(
@@ -272,7 +272,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -300,13 +300,13 @@ class ProposalCard extends Component {
             key: `${i}`,
             name: MN[i].name,
             status: (
-              <a
+              <div
                 onClick={() =>
                   this.updateError(`Invalid masternode key or txid`)
                 }
               >
                 <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-              </a>
+              </div>
             )
           });
 

@@ -30,7 +30,7 @@ const { Content } = Layout;
 const AppContent = ({ showPage, deviceType }) => {
   const [activePage, setActivePage] = useState();
 
-  useEffect(() => setActivePage(showPage));
+  useEffect(() => setActivePage(showPage), [showPage]);
 
   const showThisPage = page => ({ style }) => (
     <animated.div style={{ ...style }}>

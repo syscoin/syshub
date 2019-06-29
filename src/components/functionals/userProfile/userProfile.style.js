@@ -19,7 +19,7 @@ export default {
       borderBottom: '0.1px solid ' + greyLight
     },
     '& .profile-image-grid': {
-      maxWidth:205,
+      maxWidth: 205,
       marginLeft: 20,
       textAlign: 'center',
       '& .avatar-container': {
@@ -32,17 +32,19 @@ export default {
       },
       '& .change-photo-btn': {
         fontSize: '12px',
-        width:'100%',
+        width: '100%',
         '& .link-color': {
+          border: 'none',
+          backgroundColor: 'transparent',
           color: primary,
-          fontWeight: 'normal',
-          cursor: 'pointer'
+          fontWeight: 'normal'
         }
       },
       '& .upload-image-container': {
         overflow: 'hidden',
         position: 'relative',
         display: 'inline-block',
+        cursor: 'pointer',
         '& input[type=file]': {
           cursor: 'pointer',
           display: 'block',
@@ -123,7 +125,7 @@ export default {
       textAlign: 'center',
       '& .upload-image-container': {
         width: '100%',
-        margin: 'auto',
+        margin: 'auto'
       }
     },
     '& .profile-credential-grid': {

@@ -294,15 +294,20 @@ class Login extends Component {
                     Login
                   </Button>
                   <br />
-                  <a onClick={this.passwordRecovery}>Forget Your Password?</a>
+                  <div
+                    className="login_linkLike"
+                    onClick={this.passwordRecovery}
+                  >
+                    Forget Your Password?
+                  </div>
                   <br />
                   Don’t have an account?{' '}
-                  <a
+                  <span
                     onClick={() => this.props.setPage('register')}
-                    className="signUpTxt"
+                    className="login_linkLike signUpTxt "
                   >
                     Sign Up
-                  </a>
+                  </span>
                 </FormGroup>
               </Grid>
             </form>
