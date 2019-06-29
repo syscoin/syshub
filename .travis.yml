@@ -11,6 +11,9 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - npm install -g yarn
+
 before_script:
   - npm install --quite firebase-tools -g
   - firebase firebase --version
