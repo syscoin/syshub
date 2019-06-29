@@ -13,10 +13,12 @@ class SiderLogo extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div>
-          <a onClick={() => this.props.setPage('home')}>
-            <img alt="a" src={require('../../../assets/img/png_menu_logo.png')} width="100%" />
-          </a>
+        <div onClick={() => this.props.setPage('home')}>
+          <img
+            alt="a"
+            src={require('../../../assets/img/png_menu_logo.png')}
+            width="100%"
+          />
         </div>
       </div>
     );
@@ -33,4 +35,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(siderLogoStyle)(SiderLogo));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(siderLogoStyle)(SiderLogo));
