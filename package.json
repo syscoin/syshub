@@ -30,7 +30,6 @@
     "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "eslint": "5.x",
     "eslint-plugin-react": "7.x",
     "fast-xml-parser": "^2.9.4",
     "firebase": "^4.13.1",
@@ -58,7 +57,7 @@
     "react-password-strength": "^2.3.1",
     "react-platform-js": "0.0.1",
     "react-redux": "^5.0.7",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "2.1.0",
     "react-scroll": "^1.7.10",
     "react-spinkit": "^3.0.0",
     "react-spring": "^8.0.25",
@@ -78,5 +77,11 @@
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react-hooks": "1.5.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
