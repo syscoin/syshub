@@ -30,7 +30,6 @@
     "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "eslint-plugin-react": "7.x",
     "fast-xml-parser": "^2.9.4",
     "firebase": "^4.13.1",
     "font-awesome": "^4.7.0",
@@ -70,13 +69,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "babel-eslint": "9.x",
-    "dotenv-cli": "^2.0.0",
-    "eslint-config-react-app": "^4.0.0",
-    "eslint-plugin-flowtype": "2.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react-hooks": "1.5.0"
+    "dotenv-cli": "^2.0.0"
   },
   "browserslist": [
     ">0.2%",
