@@ -70,7 +70,7 @@ export class ProposalDetail extends Component {
     if (!dataString) {
       this.prepareDataString(proposal);
     }
-
+    console.log('ACZ proposal -->', proposal);
     //Platform style switcher
     return (
       <div>

@@ -1,0 +1,14 @@
+.paymentDateWrapper {
+  border: 1px solid blue;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  margin: 30px 8% 0 4%;
+}
+
+.paymentDateContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: 0 0 0 10px;
+  width: 80%;
+}
