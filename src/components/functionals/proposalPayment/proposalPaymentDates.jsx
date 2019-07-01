@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Import Services
+import { calculatePaymentDates } from '../../../API/syscoin/proposals.service';
+
 // Import lib components
 import Typography from '@material-ui/core/Typography';
 
@@ -26,22 +29,22 @@ const PaymentDate = ({ epoch }) => (
   <div>{yearDayMonth(epoch * 1000, 'usa')}</div>
 );
 
-const ProposalPaymentDates = () => {
+const ProposalPaymentDates = ({ data }) => {
   const [payoutDates, setPayoutDates] = useState([]);
 
-  useEffect(() => setPayoutDates(calcPayoutDates()), []);
+  const { nPayment, start_epoch, end_epoch } = data;
 
-  const calcPayoutDates = () => [
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000,
-    new Date().getTime() / 1000
-  ];
+  useEffect(() => {
+    const getPaymentDates = async () => {
+      const dates = await calculatePaymentDates(
+        nPayment,
+        start_epoch,
+        end_epoch
+      );
+      setPayoutDates(dates);
+    };
+    getPaymentDates();
+  }, [nPayment, start_epoch, end_epoch]);
 
   return (
     <div className="paymentDateWrapper">

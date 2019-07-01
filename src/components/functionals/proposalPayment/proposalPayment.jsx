@@ -65,7 +65,6 @@ class ProposalPayment extends Component {
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-    console.log('ACZ data -->', this.props);
     return (
       <Grid item md={12} className={style}>
         <Grid item className="paymentInfo">
@@ -148,7 +147,7 @@ class ProposalPayment extends Component {
             </form>
           </Grid>
         </Grid>
-        {nPayment > 1 && <ProposalPaymentDates />}
+        {nPayment > 1 && <ProposalPaymentDates data={data} />}
       </Grid>
     );
   }

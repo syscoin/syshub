@@ -8,6 +8,9 @@ const baseApiURL = process.env.REACT_APP_SYS_MN_API;
 
 /**---------------------------------------------------------------------------- */
 
+const BLOCK_GENERATION_CYCLE_SECONDS = 60;
+const VOTING_DEADLINE_GAP_DAYS = 3;
+
 /**
  *
  * @param {actionType} Redux action type
@@ -66,8 +69,8 @@ export const nextGovernanceRewardDate = async () => {
   const blockHeight = chainInfo.blocks; // 323687;
   const { nextsuperblock, superblockcycle } = governanceInfo;
   //const blockGenerationCycle = 63; // Defined by the chain White_paper doc.
-  const blockGenerationCycle = 60; // Defined by the chain White_paper doc.
-  const votingDeadlineGap = -3;
+  const blockGenerationCycle = BLOCK_GENERATION_CYCLE_SECONDS; // Defined by the chain White_paper doc.
+  const votingDeadlineGap = VOTING_DEADLINE_GAP_DAYS;
 
   // manual Next Super Block Calculation
   // const superBlockCycle = governanceInfo.superblockcycle;
@@ -80,7 +83,7 @@ export const nextGovernanceRewardDate = async () => {
   date.setSeconds(nextRewardInSeconds);
   const rewardDateEpoch = Math.round(date.getTime() / 1000);
   const rewardDate = date.toDateString();
-  date.setDate(date.getDate() + votingDeadlineGap);
+  date.setDate(date.getDate() - votingDeadlineGap);
   const votingDeadLineEpoch = Math.round(date.getTime() / 1000);
   const votingDeadline = date.toDateString();
   return {
@@ -90,4 +93,28 @@ export const nextGovernanceRewardDate = async () => {
     votingDeadLineEpoch,
     superblockCycleEpoch
   };
+};
+
+export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
+  const dates = [];
+  const nowEpoch = Math.round(new Date().getTime() / 1000);
+  const chainInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getinfo`, null);
+  const governanceInfo = await HTTPAsync.onlyGet(
+    `${baseApiURL}/getgovernanceinfo`,
+    null
+  );
+  const { blocks } = chainInfo; // 323687;
+  const { lastsuperblock, superblockcycle } = governanceInfo; // 323687;
+  const lastsuperblockGapSeconds =
+    (blocks - lastsuperblock) * BLOCK_GENERATION_CYCLE_SECONDS;
+  const lastsuperblockEpoch = nowEpoch - lastsuperblockGapSeconds;
+
+  if (lastsuperblockEpoch > startEpoch) {
+    dates.unshift(lastsuperblockEpoch);
+  }
+
+  dates.push(new Date().getTime() / 1000);
+  dates.push(new Date().getTime() / 1000);
+  dates.push(new Date().getTime() / 1000);
+  return dates;
 };
