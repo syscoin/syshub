@@ -100,29 +100,7 @@ class ProposalPayment extends Component {
               </FormGroup>
             </form>
           </Grid>
-          <Grid item md={3} className="OnTimePaymentView">
-            {/* <div className="heading">
-              <Typography variant="subheading" gutterBottom>
-                Payment
-              </Typography>
-            </div> 
-
-            <form className="form">
-              <FormGroup className="FormGroup">
-                <Typography color="inherit">
-                  <input
-                    name="compeletePayment"
-                    id="compeletePayment"
-                    className="input-field"
-                    value="no payments occurred yet"
-                    onChange={e => { }}
-                    disabled={true}
-                  />
-                </Typography>
-              </FormGroup>
-            </form>*/}
-          </Grid>
-
+          <Grid item md={3} className="OnTimePaymentView" />
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>

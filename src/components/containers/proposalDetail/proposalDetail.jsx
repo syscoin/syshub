@@ -47,7 +47,6 @@ export class ProposalDetail extends Component {
 
   async prepareDataString(proposal) {
     if (proposal) {
-      const collateralHash = proposal.CollateralHash;
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
       const descriptionObj = await this.firebase.getProposalDescription(
@@ -56,7 +55,8 @@ export class ProposalDetail extends Component {
       if (descriptionObj) {
         dataString.description = descriptionObj.detail;
       }
-      dataString.collateralHash = collateralHash;
+      dataString.collateralHash = proposal.CollateralHash;
+      dataString.funded = proposal.fCachedFunding;
       this.setState({ dataString, loading: false });
     }
   }

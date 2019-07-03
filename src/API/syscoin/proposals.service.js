@@ -95,7 +95,12 @@ export const nextGovernanceRewardDate = async () => {
   };
 };
 
-export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
+export const calculatePaymentDates = async (
+  nPayment,
+  startEpoch,
+  endEpoch,
+  firstEpoch
+) => {
   const dates = [];
   const nowEpoch = Math.round(new Date().getTime() / 1000);
   const chainInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getinfo`, null);
@@ -104,17 +109,36 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
     null
   );
   const { blocks } = chainInfo; // 323687;
-  const { lastsuperblock, superblockcycle } = governanceInfo; // 323687;
-  const lastsuperblockGapSeconds =
-    (blocks - lastsuperblock) * BLOCK_GENERATION_CYCLE_SECONDS;
-  const lastsuperblockEpoch = nowEpoch - lastsuperblockGapSeconds;
+  const { lastsuperblock, nextsuperblock, superblockcycle } = governanceInfo; // 323687;
 
-  if (lastsuperblockEpoch > startEpoch) {
-    dates.unshift(lastsuperblockEpoch);
+  const superBlocksGapSeconds =
+    superblockcycle * BLOCK_GENERATION_CYCLE_SECONDS;
+
+  const nextSuperBlockGapSeconds =
+    (nextsuperblock - blocks) * BLOCK_GENERATION_CYCLE_SECONDS;
+  const lastSuperBlockGapSeconds =
+    (blocks - lastsuperblock) * BLOCK_GENERATION_CYCLE_SECONDS;
+  //const votingDeadlinesGap = VOTING_DEADLINE_GAP_DAYS * 24 * 60 * 60;
+  const votingDeadlinesGap = 3 * 24 * 60 * 60;
+  const nextSuperBlockEpoch = nowEpoch + nextSuperBlockGapSeconds;
+  const lastSuperBlockEpoch = nowEpoch - lastSuperBlockGapSeconds;
+
+  // calculate previous SuperBlocks
+  dates.unshift(lastSuperBlockEpoch);
+  while (startEpoch <= dates[0] - votingDeadlinesGap) {
+    const previousSuperBlock = dates[0] - superBlocksGapSeconds;
+    dates.unshift(previousSuperBlock);
+  }
+  dates.shift();
+  if (dates.length === 0) {
+    dates.unshift(nextSuperBlockEpoch);
   }
 
-  dates.push(new Date().getTime() / 1000);
-  dates.push(new Date().getTime() / 1000);
-  dates.push(new Date().getTime() / 1000);
+  while (endEpoch >= dates[dates.length - 1]) {
+    const nextSuperBlock = dates[dates.length - 1] + superBlocksGapSeconds;
+    dates.push(nextSuperBlock);
+  }
+  dates.pop();
+
   return dates;
 };
