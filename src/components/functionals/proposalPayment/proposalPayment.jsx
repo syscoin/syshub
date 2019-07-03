@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 
 import { Grid, FormGroup } from '@material-ui/core';
 
+// import custom components
+import ProposalPaymentDates from './proposalPaymentDates';
+
 import injectSheet from 'react-jss';
 import proposalPaymentStyle from './proposalPayment.style';
 
@@ -57,10 +60,11 @@ class ProposalPayment extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, data } = this.props;
+    const { nPayment } = data;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
     return (
       <Grid item md={12} className={style}>
         <Grid item className="paymentInfo">
@@ -96,29 +100,7 @@ class ProposalPayment extends Component {
               </FormGroup>
             </form>
           </Grid>
-          <Grid item md={3} className="OnTimePaymentView">
-            {/* <div className="heading">
-              <Typography variant="subheading" gutterBottom>
-                Payment
-              </Typography>
-            </div> 
-
-            <form className="form">
-              <FormGroup className="FormGroup">
-                <Typography color="inherit">
-                  <input
-                    name="compeletePayment"
-                    id="compeletePayment"
-                    className="input-field"
-                    value="no payments occurred yet"
-                    onChange={e => { }}
-                    disabled={true}
-                  />
-                </Typography>
-              </FormGroup>
-            </form>*/}
-          </Grid>
-
+          <Grid item md={3} className="OnTimePaymentView" />
           <Grid item md={3} className="OnTimePaymentView">
             <div className="heading">
               <Typography variant="subheading" gutterBottom>
@@ -143,6 +125,7 @@ class ProposalPayment extends Component {
             </form>
           </Grid>
         </Grid>
+        {nPayment > 1 && <ProposalPaymentDates data={data} />}
       </Grid>
     );
   }

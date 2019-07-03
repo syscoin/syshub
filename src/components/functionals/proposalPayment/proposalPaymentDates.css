@@ -1,0 +1,23 @@
+.paymentDatesWrapper {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  margin: 30px 8% 0 4%; }
+
+.paymentDatesContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: 0 0 0 10px;
+  width: 80%; }
+
+.paymentDateItemContainer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 5px;
+  justify-items: start;
+  align-items: start;
+  width: 100%; }
+
+.paymentDatesUnfunded {
+  color: red; }
