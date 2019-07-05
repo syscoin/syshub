@@ -1,8 +1,20 @@
 import constants from '../constants';
 
-
 const initialState = {
   cards: [
+    {
+      img: 'png_stats_gov.png',
+      key: 'governance',
+      text: [
+        'GOVERNANCE INFO',
+        [
+          'Payout date',
+          'Governance available',
+          'Voting Deadline',
+          'Active Proposals'
+        ]
+      ]
+    },
     {
       img: 'png_stasts_sys.png',
       key: 'changeRate',
@@ -24,6 +36,13 @@ const initialState = {
   users: 0
 };
 
+/*
+Payout date,
+Governance available,
+Voting Deadline,
+Active Proposals,
+*/
+
 function smartParse(json, def) {
   try {
     return JSON.parse(json);
@@ -34,7 +53,6 @@ function smartParse(json, def) {
 
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
-
     case constants.SYS_STATS_PRICE_GET: {
       const sysPrice = smartParse(action.data.data, [])[0];
       return { ...state, sysPrice };

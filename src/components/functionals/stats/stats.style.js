@@ -39,7 +39,7 @@ export default {
     },
     '& .statsGridDiv': {
       width: '100%',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       padding: '0 2%'
     },
     '& .statsTextHeading': {
@@ -99,6 +99,33 @@ export default {
       },
       '& .goingUp': { color: green },
       '& .goingDown': { color: red }
+    },
+    '& .govTxtBody': {
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto',
+      justifyItems: 'stretch',
+      alignItems: 'center',
+      border: '1px solid red',
+      fontWeight: 'normal',
+      height: '100%',
+      '& .govTxtRow': {
+        border: '1px solid blue',
+        display: 'grid',
+        gridTemplateColumns: 'auto auto',
+        gridTemplateRows: 'auto',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      },
+      '& .govTxtTitle': { fontSize: '1rem', color: grey },
+      '& .govTxtData': { fontSize: '1.1rem', color: primary },
+      '& .symbol': {
+        fontSize: '1rem',
+        color: primary
+      },
+      '& .percentage': {
+        fontSize: '1.3rem'
+      }
     }
   },
   mRoot: {

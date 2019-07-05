@@ -64,16 +64,13 @@ class Stats extends Component {
         {loading && (
           <div className={'changeTxtHeading'}>
             <div className="changeTxtBody firstLine">
-              {' '}
               ${this.getValue(item.key).usdChangeRate}
               <span className="symbol"> USD</span>
             </div>
             <div className="changeTxtBody">
-              {' '}
               {this.getValue(item.key).btcChangeRate} BTC
             </div>
             <div className="changeTxtBody">
-              {' '}
               {this.getValue(item.key).satoshiChangeRate} SATOSHI
             </div>
             <div
@@ -81,7 +78,6 @@ class Stats extends Component {
                 percent_change > 0 ? 'goingUp' : 'goingDown'
               }`}
             >
-              {' '}
               {`${percent_change} %`}
             </div>
           </div>
@@ -90,10 +86,47 @@ class Stats extends Component {
     );
   }
 
+  governanceContent(item) {
+    const loading = true;
+    return (
+      <div>
+        {!loading && (
+          <div className="loading">
+            <CircularProgress />
+          </div>
+        )}
+        {loading && (
+          <div className={'govTxtBody'}>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][0]}:</div>
+              <div className="govTxtData">0.12345678</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtData">0.12345678</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][2]}:</div>
+              <div className="govTxtData">0.12345678</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][3]}:</div>
+              <div className="govTxtData">0.12345678</div>
+            </div>
+          </div>
+        )}
+        <div className="statsText">{item.text[0]}</div>
+      </div>
+    );
+  }
+
   defineCardContent(item) {
     let loading = !!this.getValue(item.key);
-    if (item.text.length > 1) {
+    // This if chain is a shit that need to be changed in a really near future (5/7/2019)
+    if (item.key === 'changeRate') {
       return this.changeContent(item);
+    } else if (item.key === 'governance') {
+      return this.governanceContent(item);
     } else {
       return (
         <div>
@@ -127,7 +160,7 @@ class Stats extends Component {
         </h1>
         <div className="statsMainDiv">
           <GridList
-            cols={deviceType === 'mobile' ? 3 : 4}
+            cols={deviceType === 'mobile' ? 2 : 3}
             cellHeight={300}
             className="statsGridDiv"
           >
