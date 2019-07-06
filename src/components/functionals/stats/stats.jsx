@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Equalizer } from '@material-ui/icons';
 
 // import Matrial-UI components
+import { Equalizer } from '@material-ui/icons';
 import GridList from '@material-ui/core/GridList';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -47,7 +47,12 @@ class Stats extends Component {
               this.props.sysInfo.mnCount.enabled
             }`
           : '',
-      totUsers: this.props.sysInfo ? this.props.sysInfo.users : ''
+      totUsers: this.props.sysInfo ? this.props.sysInfo.users : '',
+      governance: {
+        payoutDate: '2/5/2019',
+        governanceAvailable: 123618726,
+        votingDeadline: '1/5/2019'
+      }
     }[field];
   }
 
@@ -87,7 +92,10 @@ class Stats extends Component {
   }
 
   governanceContent(item) {
-    const loading = true;
+    const { payoutDate, governanceAvailable, votingDeadline } = this.getValue(
+      item.key
+    );
+    const loading = this.getValue(item.key).payoutDate;
     return (
       <div>
         {!loading && (
@@ -99,19 +107,18 @@ class Stats extends Component {
           <div className={'govTxtBody'}>
             <div className="govTxtRow">
               <div className="govTxtTitle">{item.text[1][0]}:</div>
-              <div className="govTxtData">0.12345678</div>
-            </div>
-            <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][1]}:</div>
-              <div className="govTxtData">0.12345678</div>
+              <div className="govTxtData">{payoutDate}</div>
             </div>
             <div className="govTxtRow">
               <div className="govTxtTitle">{item.text[1][2]}:</div>
-              <div className="govTxtData">0.12345678</div>
+              <div className="govTxtData">{votingDeadline}</div>
             </div>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][3]}:</div>
-              <div className="govTxtData">0.12345678</div>
+              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtData">
+                {governanceAvailable}
+                <span className="symbol"> SYS</span>
+              </div>
             </div>
           </div>
         )}

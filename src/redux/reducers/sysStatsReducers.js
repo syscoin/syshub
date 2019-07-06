@@ -3,6 +3,11 @@ import constants from '../constants';
 const initialState = {
   cards: [
     {
+      img: 'png_stasts_sys.png',
+      key: 'changeRate',
+      text: ['USD', 'BTC', 'SATOSHI']
+    },
+    {
       img: 'png_stats_gov.png',
       key: 'governance',
       text: [
@@ -14,11 +19,6 @@ const initialState = {
           'Active Proposals'
         ]
       ]
-    },
-    {
-      img: 'png_stasts_sys.png',
-      key: 'changeRate',
-      text: ['USD', 'BTC', 'SATOSHI']
     },
     {
       img: 'png_menu_masternodes_selected.png',

@@ -106,11 +106,11 @@ export default {
       gridTemplateRows: 'auto',
       justifyItems: 'stretch',
       alignItems: 'center',
-      border: '1px solid red',
-      fontWeight: 'normal',
+      gridRowGap: '5px',
+      fontWeight: 'bold',
+      padding: '20px 10px 0 10px',
       height: '100%',
       '& .govTxtRow': {
-        border: '1px solid blue',
         display: 'grid',
         gridTemplateColumns: 'auto auto',
         gridTemplateRows: 'auto',
@@ -118,9 +118,13 @@ export default {
         alignItems: 'center'
       },
       '& .govTxtTitle': { fontSize: '1rem', color: grey },
-      '& .govTxtData': { fontSize: '1.1rem', color: primary },
+      '& .govTxtData': {
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        color: primary
+      },
       '& .symbol': {
-        fontSize: '1rem',
+        fontSize: '0.9rem',
         color: primary
       },
       '& .percentage': {
