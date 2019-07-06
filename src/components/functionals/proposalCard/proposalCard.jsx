@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 //import antd components
-import { Modal, Table } from 'antd';
+import { Modal, Table, Button } from 'antd';
 import { Grid } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
@@ -444,8 +444,12 @@ class ProposalCard extends Component {
         <Modal
           title="Results"
           visible={this.state.visible}
-          onCancel={this.handleCancel}
           onOk={this.handleOk}
+          footer={[
+            <Button key="submit" type="primary" onClick={this.handleOk}>
+              Ok
+            </Button>
+          ]}
           style={{ top: '200px', textAlign: 'center' }}
         >
           <Table
