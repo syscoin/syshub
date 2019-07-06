@@ -68,6 +68,7 @@ class App extends Component {
   async tick() {
     const mnRegistered = await this.firebase.getMasternodesTotalCount();
     const userRegistered = await this.firebase.getDBnUsers();
+    this.props.getSysGovernanceInfo();
     return await this.props.getSysInfo(mnRegistered, userRegistered);
   }
   registerHooks() {
@@ -132,7 +133,8 @@ const dispatchToProps = dispatch => {
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
     setProposalShow: propHash => dispatch(actions.setProposalShow(propHash)),
-    setLoading: value => dispatch(actions.loading(value))
+    setLoading: value => dispatch(actions.loading(value)),
+    getSysGovernanceInfo: () => dispatch(actions.getSysGovernanceInfo())
   };
 };
 

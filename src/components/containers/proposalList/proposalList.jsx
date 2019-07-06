@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
-import { nextGovernanceRewardDate } from '../../../API/syscoin/proposals.service';
+import { nextGovernanceRewardInfo } from '../../../API/syscoin/proposals.service';
 
 // import styles
 import injectSheet from 'react-jss';
@@ -23,7 +23,7 @@ export class ProposalList extends Component {
   }
 
   async componentWillMount() {
-    const nextGovernanceDate = await nextGovernanceRewardDate();
+    const nextGovernanceDate = await nextGovernanceRewardInfo();
     this.setState({ nextGovernanceDate });
   }
 
