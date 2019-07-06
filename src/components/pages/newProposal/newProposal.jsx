@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 
 // Imports provider HOC's & services
 import { withFirebase } from '../../../providers/firebase';
-import { nextGovernanceRewardDate } from '../../../API/syscoin/proposals.service';
+import { nextGovernanceRewardInfo } from '../../../API/syscoin/proposals.service';
 
 //import for text editor
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
@@ -249,7 +249,7 @@ class NewProposal extends Component {
   }
 
   async getGovernanceDate() {
-    const nextGovernanceDate = await nextGovernanceRewardDate();
+    const nextGovernanceDate = await nextGovernanceRewardInfo();
     Object.assign(nextGovernanceDate);
     return nextGovernanceDate;
   }

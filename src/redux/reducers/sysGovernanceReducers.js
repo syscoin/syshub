@@ -1,19 +1,19 @@
 import constants from '../constants';
 
 const initialState = {
-  payoutDate: '2/5/2019',
-  governanceAvailable: 123618726,
-  votingDeadline: '1/5/2019'
+  payoutDate: '',
+  governanceAvailable: 0,
+  votingDeadline: ''
 };
 
 const governance = (state = initialState, action) => {
   switch (action.type) {
     case constants.SYS_GOVERNANCE_INFO: {
-      const { payoutDate, governanceAvailable, votingDeadline } = action.data;
+      const { rewardDate, votingDeadline, nextSuperBlockBudget } = action.data;
       return {
         ...state,
-        payoutDate,
-        governanceAvailable,
+        payoutDate: rewardDate,
+        governanceAvailable: nextSuperBlockBudget.budget,
         votingDeadline
       };
     }

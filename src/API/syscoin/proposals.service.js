@@ -54,20 +54,39 @@ export const voteOnProposal = (params, actionType) => {
   return HTTPAsync.post(`${baseApiURL}/vote`, params, actionType);
 };
 
+export const getGovernanceInfo = actionType => {
+  return dispatch =>
+    nextGovernanceRewardInfo().then(data => {
+      if (actionType != null) {
+        dispatch({
+          type: actionType,
+          data: data
+        });
+      }
+
+      return data;
+    });
+};
+
 /**
  *
  * @param none
  * @returns the next reward date
  */
 
-export const nextGovernanceRewardDate = async () => {
+export const nextGovernanceRewardInfo = async () => {
   const chainInfo = await HTTPAsync.onlyGet(`${baseApiURL}/getinfo`, null);
   const governanceInfo = await HTTPAsync.onlyGet(
     `${baseApiURL}/getgovernanceinfo`,
     null
   );
-  const blockHeight = chainInfo.blocks; // 323687;
   const { nextsuperblock, superblockcycle } = governanceInfo;
+
+  const [lastSuperBlockBudget, nextSuperBlockBudget] = await HTTPAsync.onlyGet(
+    `${baseApiURL}/getsuperblockbudget`,
+    null
+  );
+  const blockHeight = chainInfo.blocks; // 323687;
   //const blockGenerationCycle = 63; // Defined by the chain White_paper doc.
   const blockGenerationCycle = BLOCK_GENERATION_CYCLE_SECONDS; // Defined by the chain White_paper doc.
   const votingDeadlineGap = VOTING_DEADLINE_GAP_DAYS;
@@ -91,7 +110,9 @@ export const nextGovernanceRewardDate = async () => {
     votingDeadline,
     rewardDateEpoch,
     votingDeadLineEpoch,
-    superblockCycleEpoch
+    superblockCycleEpoch,
+    lastSuperBlockBudget,
+    nextSuperBlockBudget
   };
 };
 

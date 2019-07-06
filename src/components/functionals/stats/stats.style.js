@@ -30,7 +30,7 @@ export default {
       margin: '20px',
       textAlign: 'center',
       borderRadius: '10px',
-      height: '255px !important'
+      height: '270px !important'
     },
     '& .statsCardHeader': {
       background: primary,
@@ -117,7 +117,13 @@ export default {
         justifyContent: 'space-between',
         alignItems: 'center'
       },
-      '& .govTxtTitle': { fontSize: '1rem', color: grey },
+      '& .govTxtTitle': {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        fontSize: '1rem',
+        color: grey
+      },
       '& .govTxtData': {
         fontSize: '1.2rem',
         fontWeight: 'bold',

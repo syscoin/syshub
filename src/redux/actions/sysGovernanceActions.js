@@ -1,12 +1,12 @@
 import constants from '../constants';
-import { nextGovernanceRewardDate } from '../../API/syscoin/proposals.service';
+import * as proposalService from '../../API/syscoin/proposals.service';
 
 export default {
   getSysGovernanceInfo: () => {
-    return dispatch =>
-      dispatch({
-        type: constants.SYS_GOVERNANCE_INFO,
-        data: nextGovernanceRewardDate()
-      });
+    return dispatch => {
+      return dispatch(
+        proposalService.getGovernanceInfo(constants.SYS_GOVERNANCE_INFO)
+      );
+    };
   }
 };
