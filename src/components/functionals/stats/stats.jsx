@@ -49,9 +49,15 @@ class Stats extends Component {
           : '',
       totUsers: this.props.sysInfo ? this.props.sysInfo.users : '',
       governance: {
-        payoutDate: '2/5/2019',
-        governanceAvailable: 123618726,
-        votingDeadline: '1/5/2019'
+        payoutDate: this.props.governance
+          ? this.props.governance.payoutDate
+          : '',
+        governanceAvailable: this.props.governance
+          ? this.props.governance.governanceAvailable
+          : '',
+        votingDeadline: this.props.governance
+          ? this.props.governance.votingDeadline
+          : ''
       }
     }[field];
   }
@@ -206,7 +212,8 @@ function mapStateToProps(state) {
       mnRegistered: state.sysStats.mnRegistered,
       sysPrice: state.sysStats.sysPrice,
       users: state.sysStats.users
-    }
+    },
+    governance: state.governance
   };
 }
 
