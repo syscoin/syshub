@@ -153,6 +153,14 @@ export default {
         marginLeft: 0,
         width: '30%'
       }
+    },
+    '& .votingStringContainer': {
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto 1fr 20px',
+      justifyItems: 'start',
+      overflow: 'hidden',
+      textOverflow: 'ellipses',
+      margin: '15px 0 0 0'
     }
   }
 };
