@@ -1,5 +1,7 @@
 import palette from '../../../styles/palette';
 
+const primary = palette.primary;
+const primaryHover = palette.primaryHover;
 const primaryDark = palette.primaryDark;
 const greyDark = palette.greyDark;
 const green = palette.green;
@@ -95,6 +97,31 @@ export default {
           color: green,
           marginRight: '6%'
         }
+      }
+    },
+    '& .votingStringContainer': {
+      display: 'grid',
+      gridTemplateColumns: 'auto 1fr',
+      gridTemplateRows: 'auto 20px',
+      justifyItems: 'center',
+      alignItems: 'center',
+      margin: '15px 0 0 25px',
+      width: '100%'
+    },
+    '& .votingStringTitle': {
+      margin: 0,
+      color: primaryDark
+    },
+    '& .votingStringText': {
+      margin: 0,
+      padding: '0 5px',
+      fontFamily: 'Monaco, monospace !Important',
+      fontSize: '12px',
+      borderRadius: '5px',
+      '&:hover': {
+        background: primaryHover,
+        color: primary,
+        cursor: 'pointer'
       }
     }
   },
