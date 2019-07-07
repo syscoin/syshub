@@ -257,7 +257,9 @@ class ProposalApprovalStat extends Component {
             </CopyToClipboard>
             {this.state.copied ? (
               <div style={{ textAlign: 'center' }}>
-                <span style={{ color: 'red' }}>Copied</span>
+                <span style={{ color: 'red', margin: '0 0 0 12px' }}>
+                  Copied
+                </span>
               </div>
             ) : null}
           </div>

@@ -105,7 +105,7 @@ export default {
       gridTemplateRows: 'auto 20px',
       justifyItems: 'center',
       alignItems: 'center',
-      margin: '15px 0 0 25px',
+      margin: '15px 0 0 29px',
       width: '100%'
     },
     '& .votingStringTitle': {
@@ -113,7 +113,7 @@ export default {
       color: primaryDark
     },
     '& .votingStringText': {
-      margin: 0,
+      margin: '0 0 0 12px',
       padding: '0 5px',
       fontFamily: 'Monaco, monospace !Important',
       fontSize: '12px',
