@@ -122,6 +122,7 @@ export default {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         fontSize: '1rem',
+        textAlign: 'left',
         color: grey
       },
       '& .govTxtData': {

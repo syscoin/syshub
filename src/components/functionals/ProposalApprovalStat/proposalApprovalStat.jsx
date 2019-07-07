@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
-//import antd components
+//import lib's components
 import { Grid } from '@material-ui/core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Tooltip from '@material-ui/core/Tooltip';
 
 //import custom components
 import ProposalProgress from '../proposalProgress/proposalProgress';
@@ -48,7 +50,8 @@ class ProposalApprovalStat extends Component {
       AbstainCount: 0,
       progress: 0,
       passingPercentage: 0,
-      status: ''
+      status: '',
+      copied: false
     };
   }
   componentWillMount() {
@@ -74,6 +77,10 @@ class ProposalApprovalStat extends Component {
           endDate.getFullYear()
       });
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   prepareData() {
@@ -111,8 +118,14 @@ class ProposalApprovalStat extends Component {
     });
   }
 
+  onCopyToClipboard() {
+    clearInterval(this.timer);
+    this.timer = setInterval(() => this.setState({ copied: false }), 5000);
+    this.setState({ copied: true });
+  }
+
   render() {
-    const { classes, deviceType } = this.props;
+    const { classes, deviceType, proposal } = this.props;
     const {
       days_remaining,
       month_remaining,
@@ -208,16 +221,10 @@ class ProposalApprovalStat extends Component {
                 <div className="voteGreenColorFont">
                   <Typography color="inherit"> {YesCount} Yes </Typography>
                 </div>
-                {'  '}
                 <div className="voteRedColorFont">
-                  {' '}
                   <Typography color="inherit"> {NoCount} No </Typography>
                 </div>
-                {'  '}
-                <Typography color="inherit">
-                  {' '}
-                  {AbstainCount} Abstain{' '}
-                </Typography>
+                <Typography color="inherit">{AbstainCount} Abstain </Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -229,6 +236,33 @@ class ProposalApprovalStat extends Component {
               />
             </div>
           </Grid>
+          <div className="votingStringContainer">
+            <Typography
+              className="votingStringTitle"
+              variant="subheading"
+              gutterBottom
+              color="inherit"
+            >
+              Voting String:
+            </Typography>
+            <CopyToClipboard
+              text={`gobject vote-many ${proposal.Hash} funding yes`}
+              onCopy={() => this.onCopyToClipboard()}
+            >
+              <Tooltip title={'copy to clipboard'}>
+                <div className="votingStringText">
+                  {`gobject vote-many ${proposal.Hash} funding yes`}
+                </div>
+              </Tooltip>
+            </CopyToClipboard>
+            {this.state.copied ? (
+              <div style={{ textAlign: 'center' }}>
+                <span style={{ color: 'red', margin: '0 0 0 12px' }}>
+                  Copied
+                </span>
+              </div>
+            ) : null}
+          </div>
         </Grid>
       </Grid>
     );

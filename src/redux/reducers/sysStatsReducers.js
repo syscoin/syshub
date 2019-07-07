@@ -13,10 +13,10 @@ const initialState = {
       text: [
         'GOVERNANCE INFO',
         [
-          'Payout date',
-          'Governance available',
+          'NextPayout date',
+          'Block height',
           'Voting Deadline',
-          'Active Proposals'
+          'Governance available',
         ]
       ]
     },

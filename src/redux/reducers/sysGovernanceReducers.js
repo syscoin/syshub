@@ -13,8 +13,9 @@ const governance = (state = initialState, action) => {
       return {
         ...state,
         payoutDate: rewardDate,
-        governanceAvailable: nextSuperBlockBudget.budget,
-        votingDeadline
+        blockHeight: nextSuperBlockBudget.block,
+        votingDeadline,
+        governanceAvailable: nextSuperBlockBudget.budget
       };
     }
     default:

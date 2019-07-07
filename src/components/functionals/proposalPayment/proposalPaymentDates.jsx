@@ -33,8 +33,8 @@ const PaymentDate = ({ epoch }) => {
   return (
     <div className="paymentDateItemContainer">
       <div className="paymentDateItemStatus">
-        {!isPayed && <i class="far fa-square" />}
-        {isPayed && <i class="far fa-check-square" />}
+        {!isPayed && <i className="far fa-square" />}
+        {isPayed && <i className="far fa-check-square" />}
       </div>
       <div className="paymentDateItemDate">
         {yearDayMonth(epoch * 1000, 'usa')}

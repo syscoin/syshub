@@ -1,5 +1,7 @@
 import palette from '../../../styles/palette';
 
+const primary = palette.primary;
+const primaryHover = palette.primaryHover;
 const primaryDark = palette.primaryDark;
 const greyDark = palette.greyDark;
 const green = palette.green;
@@ -96,6 +98,31 @@ export default {
           marginRight: '6%'
         }
       }
+    },
+    '& .votingStringContainer': {
+      display: 'grid',
+      gridTemplateColumns: 'auto 1fr',
+      gridTemplateRows: 'auto 20px',
+      justifyItems: 'center',
+      alignItems: 'center',
+      margin: '15px 0 0 29px',
+      width: '100%'
+    },
+    '& .votingStringTitle': {
+      margin: 0,
+      color: primaryDark
+    },
+    '& .votingStringText': {
+      margin: '0 0 0 12px',
+      padding: '0 5px',
+      fontFamily: 'Monaco, monospace !Important',
+      fontSize: '12px',
+      borderRadius: '5px',
+      '&:hover': {
+        background: primaryHover,
+        color: primary,
+        cursor: 'pointer'
+      }
     }
   },
   mRoot: {
@@ -126,6 +153,14 @@ export default {
         marginLeft: 0,
         width: '30%'
       }
+    },
+    '& .votingStringContainer': {
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto 1fr 20px',
+      justifyItems: 'start',
+      overflow: 'hidden',
+      textOverflow: 'ellipses',
+      margin: '15px 0 0 0'
     }
   }
 };
