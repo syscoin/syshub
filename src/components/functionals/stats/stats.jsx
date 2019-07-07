@@ -52,11 +52,14 @@ class Stats extends Component {
         payoutDate: this.props.governance
           ? this.props.governance.payoutDate
           : '',
-        governanceAvailable: this.props.governance
-          ? this.props.governance.governanceAvailable
+        blockHeight: this.props.governance
+          ? this.props.governance.blockHeight
           : '',
         votingDeadline: this.props.governance
           ? this.props.governance.votingDeadline
+          : '',
+        governanceAvailable: this.props.governance
+          ? this.props.governance.governanceAvailable
           : ''
       }
     }[field];
@@ -98,9 +101,12 @@ class Stats extends Component {
   }
 
   governanceContent(item) {
-    const { payoutDate, governanceAvailable, votingDeadline } = this.getValue(
-      item.key
-    );
+    const {
+      payoutDate,
+      governanceAvailable,
+      votingDeadline,
+      blockHeight
+    } = this.getValue(item.key);
     const loading = this.getValue(item.key).payoutDate;
     return (
       <div>
@@ -116,11 +122,15 @@ class Stats extends Component {
               <div className="govTxtData">{payoutDate}</div>
             </div>
             <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtData">{blockHeight}</div>
+            </div>
+            <div className="govTxtRow">
               <div className="govTxtTitle">{item.text[1][2]}:</div>
               <div className="govTxtData">{votingDeadline}</div>
             </div>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtTitle">{item.text[1][3]}:</div>
               <div className="govTxtData">
                 {governanceAvailable}
                 <span className="symbol"> SYS</span>
@@ -128,7 +138,7 @@ class Stats extends Component {
             </div>
           </div>
         )}
-        <div className="statsText">{item.text[0]}</div>
+        {/* <div className="statsText">{item.text[0]}</div> */}
       </div>
     );
   }
