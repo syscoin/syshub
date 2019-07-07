@@ -16,7 +16,7 @@ class ProposalDescription extends Component {
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const urlLink = url.includes('http') ? url : `http://${url}`;
-    
+
     return (
       <Grid item md={12} className={style}>
         <Grid item className="approvalStatus">
@@ -31,14 +31,20 @@ class ProposalDescription extends Component {
         </Grid>
         <Grid item container md={12} className="proposalView">
           <Grid item md={11} className="proposalDetails">
-            <Grid><div dangerouslySetInnerHTML={{ __html: description }} /></Grid>
+            <Grid>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item container md={12} className="proposalUrl">
-          <Typography variant="subheading" gutterBottom color='inherit'>
+          <Typography variant="subheading" gutterBottom color="inherit">
             More Info: &nbsp;
           </Typography>
-          <div><a href={urlLink} target="_blank"> {url}</a></div>
+          <div>
+            <a href={urlLink} target="_blank" rel="noopener noreferrer">
+              {url}
+            </a>
+          </div>
         </Grid>
       </Grid>
     );

@@ -21,7 +21,8 @@ export default {
       display: 'flex',
       justifyContent: 'space-around',
       overflow: 'hidden',
-      width: '100%'
+      width: '100%',
+      height: '100%'
     },
     '& .statsCard': {
       boxShadow: boxShadow,
@@ -29,8 +30,7 @@ export default {
       margin: '20px',
       textAlign: 'center',
       borderRadius: '10px',
-      height: '255px !important'
-
+      height: '270px !important'
     },
     '& .statsCardHeader': {
       background: primary,
@@ -39,7 +39,7 @@ export default {
     },
     '& .statsGridDiv': {
       width: '100%',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       padding: '0 2%'
     },
     '& .statsTextHeading': {
@@ -56,7 +56,7 @@ export default {
       color: 'rgb(189, 195, 199)',
       padding: '10px 0',
       fontSize: '1.4em',
-      height: '50px',
+      height: '50px'
     },
     '& .statsPercentage': {
       //border: '1px solid red',
@@ -75,7 +75,7 @@ export default {
     '& .loading': {
       marginTop: '30px',
       '&>div>svg>circle': {
-        stroke: `${primary } !Important`
+        stroke: `${primary} !Important`
       }
     },
     '& .changeTxtHeading': {
@@ -83,9 +83,9 @@ export default {
       marginTop: '20px',
       height: '60px',
       '& .changeTxtBody': {
-        color: grey,
+        color: grey
       },
-      '& .firstLine': {
+      '& .firstLine': {
         lineHeight: '2rem',
         fontSize: '1.5rem',
         color: primary
@@ -97,9 +97,47 @@ export default {
       '& .percentage': {
         fontSize: '1.3rem'
       },
-      '& .goingUp':{ color: green},
-      '& .goingDown':{color: red},
+      '& .goingUp': { color: green },
+      '& .goingDown': { color: red }
     },
+    '& .govTxtBody': {
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto',
+      justifyItems: 'stretch',
+      alignItems: 'center',
+      gridRowGap: '5px',
+      fontWeight: 'bold',
+      padding: '20px 10px 0 10px',
+      height: '100%',
+      '& .govTxtRow': {
+        display: 'grid',
+        gridTemplateColumns: 'auto auto',
+        gridTemplateRows: 'auto',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      },
+      '& .govTxtTitle': {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        fontSize: '1rem',
+        textAlign: 'left',
+        color: grey
+      },
+      '& .govTxtData': {
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        color: primary
+      },
+      '& .symbol': {
+        fontSize: '0.9rem',
+        color: primary
+      },
+      '& .percentage': {
+        fontSize: '1.3rem'
+      }
+    }
   },
   mRoot: {
     extend: 'root',

@@ -7,6 +7,7 @@ import Stats from './stats/stats';
 import FooterInfo from './footerInfo/footerInfo';
 import DashBoardHeader from './dashBoardHeader/dashBoardHeader';
 import ProposalCard from './proposalCard/proposalCard';
+import ProposalOwner from './proposalOwner/proposalOwner';
 import ProposalPayment from './proposalPayment/proposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat/proposalApprovalStat';
 import ProposalDescription from './proposalDescription/proposalDescription';
@@ -29,6 +30,7 @@ export {
   FooterInfo,
   DashBoardHeader,
   ProposalCard,
+  ProposalOwner,
   ProposalPayment,
   ProposalApprovalStat,
   ProposalDescription,
@@ -39,5 +41,5 @@ export {
   NewsHeader,
   NewsBody,
   NewsAbout,
-  NewsFooter,
+  NewsFooter
 };

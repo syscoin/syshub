@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Equalizer } from '@material-ui/icons';
 
 // import Matrial-UI components
+import { Equalizer } from '@material-ui/icons';
 import GridList from '@material-ui/core/GridList';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -47,7 +47,21 @@ class Stats extends Component {
               this.props.sysInfo.mnCount.enabled
             }`
           : '',
-      totUsers: this.props.sysInfo ? this.props.sysInfo.users : ''
+      totUsers: this.props.sysInfo ? this.props.sysInfo.users : '',
+      governance: {
+        payoutDate: this.props.governance
+          ? this.props.governance.payoutDate
+          : '',
+        blockHeight: this.props.governance
+          ? this.props.governance.blockHeight
+          : '',
+        votingDeadline: this.props.governance
+          ? this.props.governance.votingDeadline
+          : '',
+        governanceAvailable: this.props.governance
+          ? this.props.governance.governanceAvailable
+          : ''
+      }
     }[field];
   }
 
@@ -64,16 +78,13 @@ class Stats extends Component {
         {loading && (
           <div className={'changeTxtHeading'}>
             <div className="changeTxtBody firstLine">
-              {' '}
               ${this.getValue(item.key).usdChangeRate}
               <span className="symbol"> USD</span>
             </div>
             <div className="changeTxtBody">
-              {' '}
               {this.getValue(item.key).btcChangeRate} BTC
             </div>
             <div className="changeTxtBody">
-              {' '}
               {this.getValue(item.key).satoshiChangeRate} SATOSHI
             </div>
             <div
@@ -81,7 +92,6 @@ class Stats extends Component {
                 percent_change > 0 ? 'goingUp' : 'goingDown'
               }`}
             >
-              {' '}
               {`${percent_change} %`}
             </div>
           </div>
@@ -90,10 +100,56 @@ class Stats extends Component {
     );
   }
 
+  governanceContent(item) {
+    const {
+      payoutDate,
+      governanceAvailable,
+      votingDeadline,
+      blockHeight
+    } = this.getValue(item.key);
+    const loading = this.getValue(item.key).payoutDate;
+    return (
+      <div>
+        {!loading && (
+          <div className="loading">
+            <CircularProgress />
+          </div>
+        )}
+        {loading && (
+          <div className={'govTxtBody'}>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][0]}:</div>
+              <div className="govTxtData">{payoutDate}</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtData">{blockHeight}</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][2]}:</div>
+              <div className="govTxtData">{votingDeadline}</div>
+            </div>
+            <div className="govTxtRow">
+              <div className="govTxtTitle">{item.text[1][3]}:</div>
+              <div className="govTxtData">
+                {governanceAvailable}
+                <span className="symbol"> SYS</span>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* <div className="statsText">{item.text[0]}</div> */}
+      </div>
+    );
+  }
+
   defineCardContent(item) {
     let loading = !!this.getValue(item.key);
-    if (item.text.length > 1) {
+    // This if chain is a shit that need to be changed in a really near future (5/7/2019)
+    if (item.key === 'changeRate') {
       return this.changeContent(item);
+    } else if (item.key === 'governance') {
+      return this.governanceContent(item);
     } else {
       return (
         <div>
@@ -127,7 +183,7 @@ class Stats extends Component {
         </h1>
         <div className="statsMainDiv">
           <GridList
-            cols={deviceType === 'mobile' ? 3 : 4}
+            cols={deviceType === 'mobile' ? 2 : 3}
             cellHeight={300}
             className="statsGridDiv"
           >
@@ -166,7 +222,8 @@ function mapStateToProps(state) {
       mnRegistered: state.sysStats.mnRegistered,
       sysPrice: state.sysStats.sysPrice,
       users: state.sysStats.users
-    }
+    },
+    governance: state.governance
   };
 }
 

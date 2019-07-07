@@ -1,6 +1,6 @@
 {
   "name": "syshub",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -30,8 +30,7 @@
     "cryptr": "^3.0.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "eslint": "5.x",
-    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "^1.6.0",
     "fast-xml-parser": "^2.9.4",
     "firebase": "^4.13.1",
     "font-awesome": "^4.7.0",
@@ -58,9 +57,10 @@
     "react-password-strength": "^2.3.1",
     "react-platform-js": "0.0.1",
     "react-redux": "^5.0.7",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "3.0.1",
     "react-scroll": "^1.7.10",
     "react-spinkit": "^3.0.0",
+    "react-spring": "^8.0.25",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.3.0",
@@ -70,12 +70,12 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "babel-eslint": "9.x",
-    "dotenv-cli": "^2.0.0",
-    "eslint-config-react-app": "^4.0.0",
-    "eslint-plugin-flowtype": "2.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react-hooks": "1.5.0"
-  }
+    "dotenv-cli": "^2.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

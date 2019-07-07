@@ -56,13 +56,6 @@ export default {
       data: value
     };
   },
-  /* 
-  setAuth: value => { // <-- ACZ Delete: deprecated, will be removed
-    return {
-      type: constants.SET_AUTH,
-      data: value
-    };
-  }, */
   set2FA: value => {
     return {
       type: constants.SET_2FA,

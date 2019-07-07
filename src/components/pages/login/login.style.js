@@ -6,11 +6,14 @@ const greyDark = palette.greyDark;
 const greyLight = palette.greyLight;
 const secondary = palette.secondary;
 
-
 export default {
   root: {
     padding: '10px 0px 0px 0px',
     height: '50vh',
+    '& .login_linkLike:hover': {
+      cursor: 'pointer',
+      color: primary
+    },
     '& .form__container': {
       backgroundColor: white,
       padding: '20px',
@@ -89,7 +92,7 @@ export default {
       textTransform: 'uppercase',
       padding: 15,
       fontWeight: 300,
-      margin: 'auto',
+      margin: 'auto'
     }
   },
   mRoot: {

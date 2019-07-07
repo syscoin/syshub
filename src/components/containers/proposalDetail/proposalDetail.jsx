@@ -6,11 +6,16 @@ import { connect } from 'react-redux';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
-import { DashBoardHeader } from '../../functionals';
-import { ProposalPayment } from '../../functionals';
-import { ProposalApprovalStat } from '../../functionals';
-import { ProposalDescription } from '../../functionals';
-import { ProposalComments } from '../../functionals';
+
+//Import custom Components
+import {
+  DashBoardHeader,
+  ProposalOwner,
+  ProposalPayment,
+  ProposalApprovalStat,
+  ProposalDescription,
+  ProposalComments
+} from '../../functionals';
 
 // Import Material-UI components
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -50,6 +55,8 @@ export class ProposalDetail extends Component {
       if (descriptionObj) {
         dataString.description = descriptionObj.detail;
       }
+      dataString.collateralHash = proposal.CollateralHash;
+      dataString.funded = proposal.fCachedFunding;
       this.setState({ dataString, loading: false });
     }
   }
@@ -63,7 +70,6 @@ export class ProposalDetail extends Component {
     if (!dataString) {
       this.prepareDataString(proposal);
     }
-
     //Platform style switcher
     return (
       <div>
@@ -96,6 +102,7 @@ export class ProposalDetail extends Component {
                   </span>{' '}
                 </h3>
               ) : null}
+              <ProposalOwner deviceType={deviceType} data={dataString} />
               <ProposalPayment deviceType={deviceType} data={dataString} />
               <ProposalApprovalStat
                 deviceType={deviceType}

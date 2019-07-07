@@ -24,7 +24,7 @@ class Home extends Component {
           onJoin={() => this.props.setPage('register')}
           logged={this.props.logged}
           deviceType={this.props.deviceType}
-        /> */}
+        />  */}
           <Stats deviceType={this.props.deviceType} />
         </div>
       </div>
@@ -44,4 +44,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(injectSheet(homeStyle)(Home));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(homeStyle)(Home));

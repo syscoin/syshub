@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import { withFirebase } from '../../../providers/firebase';
 
 //import antd components
-import { Modal, Table } from 'antd';
+import { Modal, Table, Button } from 'antd';
 import { Grid } from '@material-ui/core';
 import Cryptr from 'cryptr';
 
@@ -206,13 +206,13 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError('Failure to find masternode in list')
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -221,7 +221,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Invalid proposal hash. Please check: ${cryptr.decrypt(
@@ -231,7 +231,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -241,7 +241,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Vote has Failed. Please check: ${cryptr.decrypt(
@@ -251,7 +251,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -262,7 +262,7 @@ class ProposalCard extends Component {
                 key: `${i}`,
                 name: MN[i].name,
                 status: (
-                  <a
+                  <div
                     onClick={() =>
                       this.updateError(
                         `Invalid txid. Please check: ${cryptr.decrypt(
@@ -272,7 +272,7 @@ class ProposalCard extends Component {
                     }
                   >
                     <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-                  </a>
+                  </div>
                 )
               });
             }
@@ -300,13 +300,13 @@ class ProposalCard extends Component {
             key: `${i}`,
             name: MN[i].name,
             status: (
-              <a
+              <div
                 onClick={() =>
                   this.updateError(`Invalid masternode key or txid`)
                 }
               >
                 <img src={xIcon} height="20px" width="20px" alt="xIcon" />
-              </a>
+              </div>
             )
           });
 
@@ -444,8 +444,12 @@ class ProposalCard extends Component {
         <Modal
           title="Results"
           visible={this.state.visible}
-          onCancel={this.handleCancel}
           onOk={this.handleOk}
+          footer={[
+            <Button key="submit" type="primary" onClick={this.handleOk}>
+              Ok
+            </Button>
+          ]}
           style={{ top: '200px', textAlign: 'center' }}
         >
           <Table

@@ -1,5 +1,7 @@
 import palette from '../../../styles/palette';
 
+const primary = palette.primary;
+const primaryHover = palette.primaryHover;
 const primaryDark = palette.primaryDark;
 const greyDark = palette.greyDark;
 const green = palette.green;
@@ -7,12 +9,21 @@ const red = palette.red;
 
 export default {
   root: {
+    '& .progressContainer': {
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRow: 'auto',
+      justifyItems: 'start',
+      alignItems: 'end',
+      padding: '0 0 5px 20px',
+      width: '100%'
+    },
     '& .no-margin': {
       margin: 0,
       '& .heading': {
         fontSize: 20,
-        color: greyDark,
-      },
+        color: greyDark
+      }
     },
     '& .approvalStatus': {
       margin: 0,
@@ -20,8 +31,8 @@ export default {
       '& .heading': {
         fontSize: 20,
         color: greyDark,
-        fontWeight: 200,
-      },
+        fontWeight: 200
+      }
     },
     '& .topApprovalView': {
       margin: 0,
@@ -30,7 +41,7 @@ export default {
         marginLeft: '4%',
         padding: 0,
         color: primaryDark,
-        fontSize: 16,
+        fontSize: 16
       },
       '& .approvalValue': {
         color: greyDark,
@@ -38,28 +49,28 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: red,
+          color: red
         },
         '& .approvalColorFont': {
           '&.funded': {
-            color: green,
+            color: green
           },
           '&.passing': {
-            color: primaryDark,
+            color: primaryDark
           },
           '&.unfunded': {
-            color: red,
+            color: red
           }
         },
         '& .voteRedColorFont': {
           color: red,
-          marginRight: '6%',
+          marginRight: '6%'
         },
         '& .voteGreenColorFont': {
           color: green,
-          marginRight: '6%',
-        },
-      },
+          marginRight: '6%'
+        }
+      }
     },
     '& .approvalView': {
       margin: 0,
@@ -68,7 +79,7 @@ export default {
         marginLeft: '4%',
         padding: 0,
         color: primaryDark,
-        fontSize: 16,
+        fontSize: 16
       },
       '& .approvalValue': {
         color: greyDark,
@@ -76,26 +87,56 @@ export default {
         padding: 0,
         display: '-webkit-box',
         '& .approvalRedColorFont': {
-          color: red,
+          color: red
         },
         '& .voteRedColorFont': {
           color: red,
-          marginRight: '6%',
+          marginRight: '6%'
         },
         '& .voteGreenColorFont': {
           color: green,
-          marginRight: '6%',
-        },
-      },
+          marginRight: '6%'
+        }
+      }
     },
+    '& .votingStringContainer': {
+      display: 'grid',
+      gridTemplateColumns: 'auto 1fr',
+      gridTemplateRows: 'auto 20px',
+      justifyItems: 'center',
+      alignItems: 'center',
+      margin: '15px 0 0 29px',
+      width: '100%'
+    },
+    '& .votingStringTitle': {
+      margin: 0,
+      color: primaryDark
+    },
+    '& .votingStringText': {
+      margin: '0 0 0 12px',
+      padding: '0 5px',
+      fontFamily: 'Monaco, monospace !Important',
+      fontSize: '12px',
+      borderRadius: '5px',
+      '&:hover': {
+        background: primaryHover,
+        color: primary,
+        cursor: 'pointer'
+      }
+    }
   },
   mRoot: {
     extend: 'root',
     width: '100%',
+    '& .progressContainer': {
+      justifyItems: 'center',
+      padding: '20px',
+      width: '100%'
+    },
     '& .approvalStatus': {
       '& .heading': {
         '&>p': {
-          fontSize: 20,
+          fontSize: 20
         }
       }
     },
@@ -104,14 +145,22 @@ export default {
       width: '100%',
       '& .approvalKey': {
         marginLeft: 0,
-        width: '30%',
+        width: '30%'
       }
     },
     '& .approvalView': {
       '& .approvalKey': {
         marginLeft: 0,
-        width: '30%',
+        width: '30%'
       }
+    },
+    '& .votingStringContainer': {
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto 1fr 20px',
+      justifyItems: 'start',
+      overflow: 'hidden',
+      textOverflow: 'ellipses',
+      margin: '15px 0 0 0'
     }
-  },
+  }
 };

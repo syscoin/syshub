@@ -156,7 +156,7 @@ class UserProfile extends Component {
                 className="filetype"
                 id="group_image"
               />
-              <a className="link-color"> click to change photo</a>
+              <i className="link-color">click to change photo</i>
             </span>
           </Grid>
 

@@ -4,11 +4,36 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
-//import antd components
-import { Grid} from '@material-ui/core';
+//import lib's components
+import { Grid } from '@material-ui/core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Tooltip from '@material-ui/core/Tooltip';
+
+//import custom components
+import ProposalProgress from '../proposalProgress/proposalProgress';
 
 import injectSheet from 'react-jss';
 import proposalApprovalStatStyle from './proposalApprovalStat.style';
+
+const StatusText = ({ status, totalVotes, pendingVotes, totalNodes }) => {
+  return (
+    <span>
+      <span className={`approvalColorFont ${status}`}>
+        {status.toUpperCase()}
+      </span>
+      {status !== 'unfunded' ? (
+        ''
+      ) : (
+        <span>
+          {` - Insufficient Votes | `}
+          <span
+            className={`approvalColorFont ${status}`}
+          >{`${pendingVotes} to pass`}</span>
+        </span>
+      )}
+    </span>
+  );
+};
 
 class ProposalApprovalStat extends Component {
   constructor(props) {
@@ -19,17 +44,19 @@ class ProposalApprovalStat extends Component {
       endDate: '',
       totalNodes: 0,
       totalVotes: 0,
+      pendingVotes: 0,
       YesCount: 0,
       NoCount: 0,
       AbstainCount: 0,
       progress: 0,
       passingPercentage: 0,
-      status: ''
+      status: '',
+      copied: false
     };
   }
   componentWillMount() {
     this.prepareData();
-    
+
     let startDate = new Date();
     let endDate = new Date(
       this.props.proposal.DataString[0][1].end_epoch * 1000
@@ -52,33 +79,76 @@ class ProposalApprovalStat extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   prepareData() {
     const { totalNodes, proposal, passingPercentage } = this.props;
-    const { AbsoluteYesCount, YesCount, NoCount, AbstainCount, fCachedFunding } = proposal;
-    
+    const {
+      AbsoluteYesCount,
+      YesCount,
+      NoCount,
+      AbstainCount,
+      fCachedFunding
+    } = proposal;
+
     const funded = fCachedFunding;
-    const progress = Math.min(Math.floor(AbsoluteYesCount / totalNodes * 100), 100);
+    const votesToBeFunded = Math.floor(totalNodes / passingPercentage);
+    const pendingVotes = votesToBeFunded - AbsoluteYesCount;
+    const progress = Math.min(
+      Math.floor((AbsoluteYesCount / totalNodes) * 100),
+      100
+    );
     let status = progress >= passingPercentage ? 'passing' : 'unfunded';
-    if (funded ) { status = 'funded' } ;
+    if (funded) {
+      status = 'funded';
+    }
     this.setState({
       totalNodes,
       totalVotes: AbsoluteYesCount,
+      pendingVotes,
       YesCount,
       NoCount,
       AbstainCount,
       progress,
       passingPercentage,
-      status
+      status,
+      funded
     });
   }
 
+  onCopyToClipboard() {
+    clearInterval(this.timer);
+    this.timer = setInterval(() => this.setState({ copied: false }), 5000);
+    this.setState({ copied: true });
+  }
+
   render() {
-    const { classes, deviceType } = this.props;
-    const { days_remaining, month_remaining, endDate, totalNodes,totalVotes, YesCount, NoCount, AbstainCount, status } = this.state;
-    
+    const { classes, deviceType, proposal } = this.props;
+    const {
+      days_remaining,
+      month_remaining,
+      endDate,
+      totalNodes,
+      totalVotes,
+      pendingVotes,
+      YesCount,
+      NoCount,
+      AbstainCount,
+      status,
+      funded
+    } = this.state;
+
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
 
+    const progressObj = {
+      totalNodes,
+      totalVotes,
+      passingPercentage: 10,
+      funded
+    };
 
     return (
       <Grid item md={12} className={style}>
@@ -86,64 +156,113 @@ class ProposalApprovalStat extends Component {
           <div className="heading">
             <Typography variant="headline" gutterBottom>
               APPROVAL STATUS
-      </Typography>
+            </Typography>
           </div>
         </Grid>
         <Grid item md={11} className="no-margin">
           <hr />
         </Grid>
-        <Grid item container md={12} className="topApprovalView">
-          <Grid item md={3} className="approvalKey">
-            <Typography variant="subheading" gutterBottom color='inherit'>
-              Status:
-            </Typography>
-          </Grid>
-          <Grid item md={6} className="approvalValue">
-            <span> 
-              <span className={`approvalColorFont ${status}`}>{status.toUpperCase()}</span>
-              {status !== 'unfunded' ? ' - Sufficient Votes ': ' - Insufficient Votes '}
-              <span className={`approvalColorFont ${status}`}>{totalVotes}</span>/{Math.round(totalNodes)}
-            </span>
-          </Grid>
-        </Grid>
+        <Grid item container md={11}>
+          <Grid item container md={9}>
+            <Grid item container md={12} className="topApprovalView">
+              <Grid item md={3} className="approvalKey">
+                <Typography variant="subheading" gutterBottom color="inherit">
+                  Status:
+                </Typography>
+              </Grid>
+              <Grid item md={6} className="approvalValue">
+                <StatusText
+                  status={status}
+                  totalVotes={totalVotes}
+                  pendingVotes={pendingVotes}
+                  totalNodes={totalNodes}
+                />
+              </Grid>
+            </Grid>
+            <Grid item container md={12} className="approvalView">
+              <Grid item md={3} className="approvalKey">
+                <Typography variant="subheading" gutterBottom color="inherit">
+                  {' '}
+                  Voting Deadline:
+                </Typography>
+              </Grid>
+              <Grid item md={6} className="approvalValue">
+                <Typography gutterBottom>
+                  {days_remaining !== 0 ? (
+                    <span>
+                      <span className="approvalRedColorFont">
+                        {days_remaining < 30 ? days_remaining : month_remaining}
+                      </span>
+                      {days_remaining < 30 ? (
+                        <span>{` Day${
+                          days_remaining > 1 ? 's' : ''
+                        } Remaining `}</span>
+                      ) : (
+                        <span>{` Month${
+                          month_remaining > 1 ? 's' : ''
+                        } Remaining `}</span>
+                      )}
+                      <span>({endDate})</span>
+                    </span>
+                  ) : (
+                    <span>---</span>
+                  )}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container md={12} className="approvalView">
+              <Grid item md={3} className="approvalKey">
+                <Typography variant="subheading" gutterBottom color="inherit">
+                  Vote Breakdown:
+                </Typography>
+              </Grid>
 
-        <Grid item container md={12} className="approvalView">
-          <Grid item md={3} className="approvalKey">
-            <Typography variant="subheading" gutterBottom color='inherit'> Voting Deadline:</Typography>
+              <Grid item md={6} className="approvalValue">
+                <div className="voteGreenColorFont">
+                  <Typography color="inherit"> {YesCount} Yes </Typography>
+                </div>
+                <div className="voteRedColorFont">
+                  <Typography color="inherit"> {NoCount} No </Typography>
+                </div>
+                <Typography color="inherit">{AbstainCount} Abstain </Typography>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item md={6} className="approvalValue">
-            <Typography gutterBottom>
-              {days_remaining !== 0 ? (
-                <span>
-                  <span className="approvalRedColorFont">
-                    {days_remaining < 30 ? days_remaining : month_remaining}
-                  </span>
-                  {days_remaining < 30 ?
-                    (<span>{` Day${days_remaining > 1 ? 's' : ''} Remaining `}</span>) :
-                    (<span>{` Month${month_remaining > 1 ? 's' : ''} Remaining `}</span>)
-                  }
-                  <span>({endDate})</span>
+          <Grid item container xs={12} md={3}>
+            <div className="progressContainer">
+              <ProposalProgress
+                deviceType={deviceType}
+                progressObj={progressObj}
+              />
+            </div>
+          </Grid>
+          <div className="votingStringContainer">
+            <Typography
+              className="votingStringTitle"
+              variant="subheading"
+              gutterBottom
+              color="inherit"
+            >
+              Voting String:
+            </Typography>
+            <CopyToClipboard
+              text={`gobject vote-many ${proposal.Hash} funding yes`}
+              onCopy={() => this.onCopyToClipboard()}
+            >
+              <Tooltip title={'copy to clipboard'}>
+                <div className="votingStringText">
+                  {`gobject vote-many ${proposal.Hash} funding yes`}
+                </div>
+              </Tooltip>
+            </CopyToClipboard>
+            {this.state.copied ? (
+              <div style={{ textAlign: 'center' }}>
+                <span style={{ color: 'red', margin: '0 0 0 12px' }}>
+                  Copied
                 </span>
-              ) : (
-                  <span>---</span>
-                )}
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Grid item container md={12} className="approvalView">
-          <Grid item md={3} className="approvalKey">
-            <Typography variant="subheading" gutterBottom color='inherit'>
-              Vote Breakdown:
-            </Typography>
-          </Grid>
-
-          <Grid item md={6} className="approvalValue">
-            <div className="voteGreenColorFont"><Typography color='inherit'> {YesCount} Yes </Typography></div>{'  '}
-            <div className="voteRedColorFont"> <Typography color='inherit'> {NoCount} No </Typography></div>{'  '}
-            <Typography color='inherit'> {AbstainCount} Abstain </Typography>
-          </Grid>
-
+              </div>
+            ) : null}
+          </div>
         </Grid>
       </Grid>
     );

@@ -1,20 +1,19 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withRoot } from '../../HOC';
-import { Layout } from 'antd';
 import appFooterStyle from './appFooter.style';
 
-const { Footer } = Layout;
-
-class AppFooter extends Component {
-  render() {
-    return (
-      <div style={appFooterStyle.footer}>
-        <Footer style={appFooterStyle.wraper}>{`© 2018 Syscoin Foundation with contributions from Blockchain Foundry Inc.`}</Footer>
+const AppFooter = () => {
+  const [appVersion] = useState(process.env.REACT_APP_VERSION);
+  return (
+    <div style={appFooterStyle.wrapper}>
+      <div style={appFooterStyle.footerTxt}>
+        {`© 2018 Syscoin Foundation with contributions from Blockchain Foundry Inc.`}{' '}
       </div>
-    );
-  }
-}
+      <div style={appFooterStyle.footerVersion}>{`v${appVersion}`}</div>
+    </div>
+  );
+};
 
 export default withRoot(AppFooter);

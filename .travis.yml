@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '8.12'
+  - '10.16'
 
 branches:
   only:
@@ -10,6 +10,9 @@ branches:
 cache:
   directories:
     - node_modules
+
+before_install:
+  - npm install -g yarn
 
 before_script:
   - npm install --quite firebase-tools -g
