@@ -221,6 +221,7 @@ class Firebase {
   doLogout = async update => {
     await this.doSignOut();
     if (update) {
+      update();
     }
   };
 

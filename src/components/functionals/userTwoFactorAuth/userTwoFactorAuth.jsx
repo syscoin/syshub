@@ -58,7 +58,7 @@ class UserTwoFactorAuth extends Component {
   async componentDidMount() {
     this.firebase.useDeviceLanguage();
 
-    const user = await this.firebase.getCurrentUser();
+    const user = (await this.firebase.getCurrentUser()) || {};
     const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
 

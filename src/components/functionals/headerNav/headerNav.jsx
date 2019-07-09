@@ -30,10 +30,13 @@ class HeaderNav extends Component {
   firebase = this.props.firebase;
 
   logout() {
-    const { app } = this.props;
+    const { app, setPage, doAppLogout } = this.props;
+    console.log('ACZ this.props -->', this.props);
     if (app.currentUser) {
-      this.firebase.doSignOut();
-      this.props.doAppLogout();
+      setPage('home');
+      this.firebase.doLogout(() => {
+        doAppLogout();
+      });
     }
   }
 
