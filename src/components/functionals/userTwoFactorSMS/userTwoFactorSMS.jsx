@@ -74,7 +74,6 @@ class UserTwoFactorSMS extends Component {
     this.firebase.useDeviceLanguage();
 
     const user = (await this.firebase.getCurrentUser()) || {};
-    console.log('ACZ user-->', user);
     if (user.phoneNumber == null) {
       const newStatus = await this.firebase.setFire2FAMethod(
         user.uid,
@@ -186,11 +185,7 @@ class UserTwoFactorSMS extends Component {
       .unlink(this.firebase.getPhoneAuthProviderID())
       .then(async user => {
         this.props.setCurrentUser(user);
-        swal({
-          title: 'Success',
-          text: `Removed phone number from this account.`,
-          icon: 'success'
-        });
+        this.props.onStatusChange('Phone number removed');
 
         this.verify = undefined;
         window.recaptchaVerifierDelete.render().then(widgetId => {
@@ -273,7 +268,7 @@ class UserTwoFactorSMS extends Component {
       swal({
         title: 'Oops...',
         text:
-          'Please provide your verificatoin code next time. Process canceled',
+          'Please provide your verification code next time. Process canceled',
         icon: 'error'
       });
       return;
@@ -304,6 +299,7 @@ class UserTwoFactorSMS extends Component {
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();
+      this.props.onStatusChange('Phone number updated');
       /* swal({
         title: 'Sucess',
         text: `New Phone Number added & Two Factor Authentication Enabled`,
@@ -337,15 +333,7 @@ class UserTwoFactorSMS extends Component {
     let newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', true);
     newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
-    swal({
-      title: 'SMS 2FA enabled',
-      text: 'Please login again',
-      icon: 'success'
-    });
-    this.firebase.doLogout(() => {
-      this.props.doAppLogout();
-      this.props.setPage('login');
-    });
+    this.props.onStatusChange('SMS 2FA enabled');
   }
 
   async disableAuth() {
@@ -371,6 +359,7 @@ class UserTwoFactorSMS extends Component {
       false
     );
     this.props.set2FA(newStatus);
+    this.props.onStatusChange('SMS 2FA disabled');
   }
 
   handleShowModal() {
@@ -598,9 +587,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    doAppLogout: () => dispatch(actions.doLogout()),
     setCurrentUser: user => dispatch(actions.setCurrentUser(user)),
-    setPage: page => dispatch(actions.setPage(page)),
     set2FA: auth => dispatch(actions.set2FA(auth))
   };
 };
