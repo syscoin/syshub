@@ -10,9 +10,7 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyAlign: 'flex-start',
-    width: '100%',
-    marginTop: 50,
-    height: 'calc(100vh - 122px)'
+    marginTop: 50
   },
   button: {
     height: '50px',
@@ -24,7 +22,7 @@ export default {
     borderStyle: 'solid',
     borderColor: grey,
     '&>img': {
-      marginLeft: 20,
+      marginLeft: 20
     },
     '&:hover': {
       background: `linear-gradient(${greyLight}, ${white})`
@@ -42,6 +40,9 @@ export default {
   },
 
   menuTxt: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
     padding: '0 0 0 20px',
     fontSize: '0.9em'
   },
@@ -55,21 +56,21 @@ export default {
     marginTop: 0,
     width: 'calc(100% + 1px)',
     height: '100%',
-    '& .stats__container':{
+    '& .stats__container': {
       background: primary,
       '& .stats__wrapper': {
         color: white,
         fontSize: '3.5vw',
         padding: 10,
         height: 45,
-        '& span':{
+        '& span': {
           verticalAlign: 'sub',
           color: white
         },
         '& b': {
           color: white
         },
-        '& img':{
+        '& img': {
           width: '25%',
           maxWidth: 25,
           marginRight: 10

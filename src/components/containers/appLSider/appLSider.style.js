@@ -1,24 +1,21 @@
 import palette from '../../../styles/palette';
 
-const primary = palette.primary;
 const greyLight = palette.greyLight;
 const grey = palette.grey;
 const transparentBlack = palette.transparentBlack;
 
-const wraper = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyAlign: 'flex-start',
-  flex: '0 1 15%',
+const wrapper = {
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  gridTemplateRows: 'auto',
+  width: '100%',
+  height: '100%',
   background: greyLight,
   borderRight: `1px solid ${grey}`,
-  borderLeft: `1px solid ${grey}`,
-};
-const sider = {
-  backgroundColor: primary,
+  borderLeft: `1px solid ${grey}`
 };
 
-const mWraper = {
+const mWrapper = {
   display: 'flex',
   flexDirection: 'column',
   justifyAlign: 'flex-start',
@@ -28,11 +25,10 @@ const mWraper = {
   position: 'fixed',
   height: '100%',
   backgroundColor: transparentBlack,
-  width: '100%',
+  width: '100%'
 };
 
 export default {
-  wraper,
-  sider,
-  mWraper
+  wrapper,
+  mWrapper
 };
