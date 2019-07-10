@@ -12,7 +12,6 @@ import { SiderMenu } from '../../functionals';
 // Styles
 import appLSiderStyle from './appLSider.style';
 
-
 class AppLSider extends Component {
   itemClick(pageActive) {
     this.props.setPage(pageActive);
@@ -21,8 +20,9 @@ class AppLSider extends Component {
   render() {
     const { deviceType, app } = this.props;
     const style =
-      deviceType === 'mobile' ? appLSiderStyle.mWraper : appLSiderStyle.wraper;
-
+      deviceType === 'mobile'
+        ? appLSiderStyle.mWrapper
+        : appLSiderStyle.wrapper;
     return (
       <div style={style}>
         <SiderMenu
@@ -51,4 +51,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(stateToProps, dispatchToProps)(withRoot(AppLSider));
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(withRoot(AppLSider));

@@ -122,9 +122,10 @@ class UserProfile extends Component {
     const { showEmailMsg, showUserNameMsg } = this.state;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-
+    const userName = currentUser ? currentUser.displayName : '';
+    const userEmail = currentUser ? currentUser.email : '';
     const avatar =
-      this.props.currentUser && this.props.currentUser.photoURL
+      currentUser && currentUser.photoURL
         ? this.props.currentUser.photoURL
         : require('../../../assets/img/no-user-image.gif');
 
@@ -172,7 +173,7 @@ class UserProfile extends Component {
                 name="usernames"
                 id="user-name"
                 className="input-field"
-                placeholder={currentUser.displayName}
+                placeholder={userName}
                 onChange={this.checkUsername}
               />
               {showUserNameMsg && (
@@ -192,7 +193,7 @@ class UserProfile extends Component {
                 name="email"
                 id="user-email"
                 className="input-field"
-                placeholder={currentUser.email}
+                placeholder={userEmail}
                 onChange={this.checkUserEmail}
               />
               {showEmailMsg && (
