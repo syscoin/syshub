@@ -1,29 +1,55 @@
 import palette from '../../../styles/palette';
 
 const grey = palette.grey;
+const greyLight = palette.greyLight;
 const boxShadow = palette.boxShadow;
 
 export default {
-  wrapper: {
-    //border: '1px solid red',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'start',
-    minWidth: 'calc(100% - 20px)',
-    height: '100%',
-    borderleft: `1px solid ${grey}`,
-    borderRight: `1px solid ${grey}`,
-
+  appContainer: {
+    display: 'grid',
+    gridTemplateColumns: '8% auto 8%',
+    gridTemplateRows: '66px auto 60px',
+    gridTemplateAreas: `
+    "header header header"
+    ".      main   . "
+    "footer footer footer"`,
+    width: '100%',
+    height: '100%'
   },
-  appContent: {
-    height: 'calc(100vh - 140px)',
-    marginLeft: 20,
-    marginTop: 20,
-    width: 'calc(80% - 75px)'
-
+  headerContainer: {
+    gridArea: 'header'
+  },
+  footerContainer: {
+    gridArea: 'footer'
+  },
+  mainContainer: {
+    gridArea: 'main',
+    display: 'grid',
+    gridTemplateColumns: '24% auto',
+    gridTemplateRows: '1fr',
+    gridTemplateAreas: `
+    "menu content"`,
+    alignItems: 'start',
+    width: '100%',
+    background: `${greyLight}`,
+    borderleft: `1px solid ${grey}`,
+    borderRight: `1px solid ${grey}`
+  },
+  menuContainer: {
+    gridArea: 'menu',
+    width: '100%',
+    height: '100%',
+    maxWidth: '330px'
+  },
+  contentContainer: {
+    gridArea: 'content',
+    width: '100%',
+    height: '100%',
+    maxWidth: '1205px'
   },
   progressWrapper: {
-    margin: '20px 0 0 0',
+    margin: '30px auto',
+    width: '80%'
   },
   appContentWithChatBox: {
     width: 'calc(61.5% - 20px)',

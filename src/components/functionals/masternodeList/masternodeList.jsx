@@ -80,7 +80,7 @@ class MasterNodeList extends Component {
       onOk() {
         confrimDelete();
       },
-      onCancel() { }
+      onCancel() {}
     });
   }
 
@@ -95,6 +95,10 @@ class MasterNodeList extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
+
+    if (!app.currentUser) {
+      return null;
+    }
 
     const cryptr = new Cryptr(app.currentUser.uid);
 
@@ -125,10 +129,16 @@ class MasterNodeList extends Component {
         key: 'action',
         render: (text, record) => (
           <span>
-            <Button className="edit-btn" onClick={() => this.showEditModal(record)}>
+            <Button
+              className="edit-btn"
+              onClick={() => this.showEditModal(record)}
+            >
               Edit
             </Button>
-            <Button className="delete-btn" onClick={() => this.showDeleteConfirm(record)}>
+            <Button
+              className="delete-btn"
+              onClick={() => this.showDeleteConfirm(record)}
+            >
               Delete
             </Button>
           </span>
@@ -246,6 +256,7 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(stateToProps, dispatchToProps)(
-  injectSheet(masternodeListStyle)(MasterNodeList)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(injectSheet(masternodeListStyle)(MasterNodeList));

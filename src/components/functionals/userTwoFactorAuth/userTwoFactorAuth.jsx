@@ -58,7 +58,7 @@ class UserTwoFactorAuth extends Component {
   async componentDidMount() {
     this.firebase.useDeviceLanguage();
 
-    const user = await this.firebase.getCurrentUser();
+    const user = (await this.firebase.getCurrentUser()) || {};
     const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
     this.props.set2FA(twoFAStatus);
 
@@ -182,6 +182,7 @@ class UserTwoFactorAuth extends Component {
     newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
     this.handleHideModal();
+    this.props.onStatusChange('Google Authenticator Enabled');
   }
 
   async enableAuth() {
@@ -213,6 +214,7 @@ class UserTwoFactorAuth extends Component {
     );
     newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', false);
     this.props.set2FA(newStatus);
+    this.props.onStatusChange('Google Authenticator Enabled');
   }
 
   async disableAuth() {
@@ -236,6 +238,7 @@ class UserTwoFactorAuth extends Component {
 
     this.verify = false;
     window.recaptchaVerifierDisable2FAAuth.reset();
+    this.props.onStatusChange('Google Authenticator disabled');
   }
 
   async removeSecret() {
@@ -247,6 +250,7 @@ class UserTwoFactorAuth extends Component {
     );
     this.props.set2FA(newStatus);
     window.recaptchaVerifierRemoveSecret.reset();
+    this.props.onStatusChange('Secret number removed');
   }
 
   render() {

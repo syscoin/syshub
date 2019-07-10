@@ -131,8 +131,7 @@ class Login extends Component {
 
     this.props.setPage('home');
     if (!twoFaResult) {
-      await this.firebase.doSignOut();
-      this.props.doAppLogout();
+      await this.firebase.doLogout(() => this.props.doAppLogout());
       swal({
         title: 'Oops...',
         text: 'You do not pass the 2FA Challenge',
@@ -167,8 +166,7 @@ class Login extends Component {
       this.firebase.doSignInWithEmailAndPassword(email, password)
     );
     if (err) {
-      await this.firebase.doSignOut();
-      this.props.setCurrentUser(null);
+      await this.firebase.doLogout(() => this.props.setCurrentUser(null));
       this.loginForm.reset();
       this.verify = undefined;
       window.recaptchaVerifier.reset();
@@ -194,7 +192,7 @@ class Login extends Component {
         if (twoFAStatus.auth && twoFAStatus.authSecret) {
           secret = await this.firebase.getAuthSecret(user.uid);
         }
-        await this.firebase.doSignOut();
+        await this.firebase.doLogout();
         this.setState({
           showModal,
           twoFAStatus,
@@ -218,7 +216,7 @@ class Login extends Component {
   async onModalClose(showModal) {
     const { doAppLogout } = this.props;
     this.setState({ showModal });
-    await this.firebase.doSignOut();
+    await this.firebase.doLogout();
     doAppLogout();
   }
 

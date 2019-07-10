@@ -24,9 +24,10 @@ class SiderMenu extends Component {
 
   activeComponemt(pageActive) {
     if (pageActive === 'logout') {
-      this.firebase.doSignOut();
-      this.props.doAppLogout();
-      this.props.onItemClick('home');
+      this.firebase.doLogout(() => {
+        this.props.doAppLogout();
+        this.props.onItemClick('home');
+      });
     } else {
       this.props.onItemClick(pageActive);
     }

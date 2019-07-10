@@ -73,7 +73,7 @@ class UserTwoFactorSMS extends Component {
   async componentDidMount() {
     this.firebase.useDeviceLanguage();
 
-    const user = await this.firebase.getCurrentUser();
+    const user = (await this.firebase.getCurrentUser()) || {};
     if (user.phoneNumber == null) {
       const newStatus = await this.firebase.setFire2FAMethod(
         user.uid,
@@ -185,11 +185,7 @@ class UserTwoFactorSMS extends Component {
       .unlink(this.firebase.getPhoneAuthProviderID())
       .then(async user => {
         this.props.setCurrentUser(user);
-        swal({
-          title: 'Success',
-          text: `Removed phone number from this account.`,
-          icon: 'success'
-        });
+        this.props.onStatusChange('Phone number removed');
 
         this.verify = undefined;
         window.recaptchaVerifierDelete.render().then(widgetId => {
@@ -272,7 +268,7 @@ class UserTwoFactorSMS extends Component {
       swal({
         title: 'Oops...',
         text:
-          'Please provide your verificatoin code next time. Process canceled',
+          'Please provide your verification code next time. Process canceled',
         icon: 'error'
       });
       return;
@@ -303,6 +299,7 @@ class UserTwoFactorSMS extends Component {
       this.props.setCurrentUser(user);
       this.setState({ withNumber: true });
       this.handleHideModal();
+      this.props.onStatusChange('Phone number updated');
       /* swal({
         title: 'Sucess',
         text: `New Phone Number added & Two Factor Authentication Enabled`,
@@ -336,6 +333,7 @@ class UserTwoFactorSMS extends Component {
     let newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', true);
     newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
     this.props.set2FA(newStatus);
+    this.props.onStatusChange('SMS 2FA enabled');
   }
 
   async disableAuth() {
@@ -361,6 +359,7 @@ class UserTwoFactorSMS extends Component {
       false
     );
     this.props.set2FA(newStatus);
+    this.props.onStatusChange('SMS 2FA disabled');
   }
 
   handleShowModal() {
@@ -385,6 +384,7 @@ class UserTwoFactorSMS extends Component {
 
   render() {
     const { classes, deviceType, app } = this.props;
+    const currentUser = app.currentUser || {};
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -415,10 +415,10 @@ class UserTwoFactorSMS extends Component {
                 This enable Two-Factor Authentication for your account,
                 <br /> Follow the instruction to complete setup
               </p>
-              {app.currentUser.phoneNumber && (
-                <h3> {`Current number: ${app.currentUser.phoneNumber}`}</h3>
+              {currentUser.phoneNumber && (
+                <h3> {`Current number: ${currentUser.phoneNumber}`}</h3>
               )}
-              {!app.currentUser.phoneNumber && (
+              {!currentUser.phoneNumber && (
                 <h3> {`Current number: Not found`}</h3>
               )}
             </div>
@@ -507,7 +507,7 @@ class UserTwoFactorSMS extends Component {
               justify="center"
               className="formPhoneBtn"
             >
-              {app.currentUser && app.currentUser.phoneNumber && (
+              {currentUser && currentUser.phoneNumber && (
                 <Button
                   id="phoneRemover"
                   key={2}
@@ -570,7 +570,7 @@ class UserTwoFactorSMS extends Component {
                 !this.props.app.twoFA.sms ? 'show' : 'hide'
               }`}
             >
-              Enable 2FA SMS{' '}
+              Enable 2FA SMS
             </Button>
           </Grid>
         </Grid>
