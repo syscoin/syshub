@@ -6,14 +6,14 @@ const app = (state = initialState, action) => {
     case constants.APP_USER_LOGIN:
       return {
         ...state,
-        currentUser: action.data,
+        currentUser: action.data
       };
 
     case constants.APP_USER_LOGOUT:
       return {
         ...state,
         currentUser: action.data,
-        showPage: 'home',
+        showPage: action.goToPage
       };
 
     case constants.APP_PAGE_SHOW: {

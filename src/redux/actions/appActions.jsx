@@ -7,10 +7,11 @@ export default {
       data: user
     };
   },
-  doLogout: () => {
+  doLogout: goToPage => {
     return {
       type: constants.APP_USER_LOGOUT,
-      data: null
+      data: null,
+      goToPage: goToPage || 'home'
     };
   },
   setPage: value => {

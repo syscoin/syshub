@@ -39,10 +39,10 @@ class UserTwoFactor extends Component {
       title: modalTitle,
       text: 'Please login again',
       icon: 'success'
-    });
-    this.firebase.doLogout(() => {
-      this.props.doAppLogout();
-      this.props.setPage('login');
+    }).then(() => {
+      this.firebase.doLogout(() => {
+        this.props.doAppLogout('login');
+      });
     });
   }
 
@@ -97,7 +97,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
   return {
-    doAppLogout: () => dispatch(actions.doLogout()),
+    doAppLogout: goTo => dispatch(actions.doLogout(goTo)),
     setPage: page => dispatch(actions.setPage(page))
   };
 };
