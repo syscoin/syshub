@@ -46,8 +46,11 @@ class DashBoard extends Component {
         item => item.Hash === propHash
       )[0];
       this.setState({
-        proposalID: selectedProp
+        proposalID: selectedProp || ''
       });
+      /* if (!selectedProp) {
+        window.location.pathname = '';
+      } */
 
       // alert(propHash);
     }
@@ -77,6 +80,7 @@ class DashBoard extends Component {
       mnCount
     } = this.props;
     const { proposalID } = this.state;
+    console.log('ACZ proposalID --> ', proposalID);
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;

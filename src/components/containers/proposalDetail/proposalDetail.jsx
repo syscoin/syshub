@@ -3,6 +3,7 @@
 //Import react/redux
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import swal from 'sweetalert';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
@@ -46,6 +47,7 @@ export class ProposalDetail extends Component {
   }
 
   async prepareDataString(proposal) {
+    console.log('ACZ proposal -->', proposal);
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
@@ -58,6 +60,14 @@ export class ProposalDetail extends Component {
       dataString.collateralHash = proposal.CollateralHash;
       dataString.funded = proposal.fCachedFunding;
       this.setState({ dataString, loading: false });
+    } else {
+      this.setState({ loading: false });
+      swal({
+        title: 'Oops...',
+        text: 'This proposal has expired',
+        icon: 'error',
+        button: 'Home'
+      }).then(value => (window.location.pathname = '/'));
     }
   }
 
@@ -67,15 +77,17 @@ export class ProposalDetail extends Component {
     const proposalTitle = this.state.dataString
       ? dataString.title || dataString.name
       : '';
-    if (!dataString) {
+
+    if (!dataString && loading) {
       this.prepareDataString(proposal);
     }
     //Platform style switcher
     return (
       <div>
         {loading && <LinearProgress />}
-        {!dataString && !loading && <div> Proposal not found </div>}
-        {dataString && (
+        {/*this is rendered when proposal are not found in the governance objects list*/
+        !dataString && !loading && <div />}
+        {dataString && !loading && (
           <Grid style={proposalDetailsStyle.root}>
             <DashBoardHeader
               data={{
