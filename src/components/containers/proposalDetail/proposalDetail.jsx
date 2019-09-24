@@ -37,13 +37,17 @@ export class ProposalDetail extends Component {
 
   firebase = this.props.firebase;
 
-  setMoreInfoUrl(url, propHash) {
+  setMoreInfoUrl(url) {
     if (!!url && url !== this.props.globalConst.EMPTY_FIELD) {
       return url;
     }
+    return null;
+  }
+
+  setProposalUrl(propHash) {
     const origin = window.location.origin;
-    const newUrl = `${origin}/p/${propHash}`;
-    return newUrl;
+    const proposalUrl = `${origin}/p/${propHash}`;
+    return proposalUrl;
   }
 
   async prepareDataString(proposal) {
@@ -125,7 +129,8 @@ export class ProposalDetail extends Component {
               <ProposalDescription
                 deviceType={deviceType}
                 description={dataString.description}
-                url={this.setMoreInfoUrl(dataString.url, proposal.Hash)}
+                moreInfoUrl={this.setMoreInfoUrl(dataString.url)}
+                proposalUrl={this.setProposalUrl(proposal.Hash)}
               />
               <ProposalComments
                 deviceType={deviceType}

@@ -12,10 +12,18 @@ import proposalDescriptionStyle from './proposalDescription.style';
 
 class ProposalDescription extends Component {
   render() {
-    const { classes, deviceType, description, url } = this.props;
+    const {
+      classes,
+      deviceType,
+      description,
+      moreInfoUrl,
+      proposalUrl
+    } = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
-    const urlLink = url.includes('http') ? url : `http://${url}`;
+    const urlLink = proposalUrl.includes('http')
+      ? proposalUrl
+      : `http://${proposalUrl}`;
 
     return (
       <Grid item md={12} className={style}>
@@ -36,13 +44,25 @@ class ProposalDescription extends Component {
             </Grid>
           </Grid>
         </Grid>
+        {moreInfoUrl && (
+          <Grid item container md={12} className="proposalUrl">
+            <Typography variant="subheading" gutterBottom color="inherit">
+              More Info: &nbsp;
+            </Typography>
+            <div>
+              <a href={urlLink} target="_blank" rel="noopener noreferrer">
+                {moreInfoUrl}
+              </a>
+            </div>
+          </Grid>
+        )}
         <Grid item container md={12} className="proposalUrl">
           <Typography variant="subheading" gutterBottom color="inherit">
-            More Info: &nbsp;
+            Proposal Url: &nbsp;
           </Typography>
           <div>
             <a href={urlLink} target="_blank" rel="noopener noreferrer">
-              {url}
+              {proposalUrl}
             </a>
           </div>
         </Grid>
