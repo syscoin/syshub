@@ -42,9 +42,12 @@ class DashBoard extends Component {
     // this.props.setProposalContainer('dashBoard');
     if (proposals) {
       const proposalList = proposals.list;
+      console.log('ACZ proposallists', proposalList);
       const selectedProp = proposalList.filter(
         item => item.Hash === propHash
       )[0];
+      console.log('ACZ selectedProp', selectedProp);
+
       this.setState({
         proposalID: selectedProp || ''
       });
@@ -107,7 +110,7 @@ class DashBoard extends Component {
                 globalConst={appConstants}
               />
             ),
-            proposalDetail: (
+            proposalDetail: proposalID && (
               <ProposalDetail
                 deviceType={this.props.deviceType}
                 proposal={proposalID}

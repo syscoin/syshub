@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 
 //import material-ui components
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -65,8 +65,7 @@ class ProposalProgress extends Component {
     return (
       <div className={classes.root}>
         <div className="proposalProgressWrapper">
-          <Button
-            variant="fab"
+          <Fab
             color="primary"
             className={`proposalProgressButton ${status}`}
             onClick={this.handleButtonClick}
@@ -76,7 +75,7 @@ class ProposalProgress extends Component {
               <div className="proposalProgressPercentage">{`${progress}%`}</div>
               <div className="proposalProgressStatus">{`${status.toUpperCase()}`}</div>
             </div>
-          </Button>
+          </Fab>
           <Tooltip title={tootipMsg} placement="right-end">
             <CircularProgress
               className={`proposalProgress ${status}`}

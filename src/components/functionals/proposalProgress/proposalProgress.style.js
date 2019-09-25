@@ -6,6 +6,7 @@ const green = palette.green;
 const greenLight = palette.greenLight;
 const greenHover = palette.greenHover;
 const greyLight = palette.greyLight;
+const greyDark = palette.greyDark;
 
 export default {
   root: {
@@ -47,14 +48,18 @@ export default {
     '& .proposalProgressPercentage': {
       position: 'absolute',
       top: '10%',
-      margin: '0 0 0 0',
-      fontSize: '1.9em'
+      margin: '10px 0 0 0',
+      fontSize: '1.9em',
+      fontWeight: 'bold',
+      color: `${greyDark}`
     },
     '& .proposalProgressStatus': {
       position: 'absolute',
       top: '63%',
       margin: '0 0 0 0',
-      fontSize: '0.8em'
+      fontSize: '0.8em',
+      fontWeight: 'bold',
+      color: `${greyDark}`
     },
     '& .proposalProgress': {
       position: 'absolute',
