@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import swal from 'sweetalert';
 
 // Import provider HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -22,7 +23,8 @@ class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      proposalID: ''
+      proposalID: '',
+      loading: true
     };
     this.handleDashboard = this.handleDashboard.bind(this);
   }
@@ -30,32 +32,31 @@ class DashBoard extends Component {
   // add Firebase as global var in component
   firebase = this.props.firebase;
 
-  componentWillMount() {}
-
-  async componentDidMount() {
+  async componentWillMount() {
     await this.props.getProposals();
     this.selectProposalByHash(this.props.selectedProposal);
   }
+
+  async componentDidMount() {}
 
   selectProposalByHash(propHash) {
     const { proposals } = this.props;
     // this.props.setProposalContainer('dashBoard');
     if (proposals) {
       const proposalList = proposals.list;
-      console.log('ACZ proposallists', proposalList);
       const selectedProp = proposalList.filter(
         item => item.Hash === propHash
       )[0];
-      console.log('ACZ selectedProp', selectedProp);
-
-      this.setState({
-        proposalID: selectedProp || ''
-      });
-      /* if (!selectedProp) {
-        window.location.pathname = '';
-      } */
-
-      // alert(propHash);
+      selectedProp &&
+        this.setState({
+          proposalID: selectedProp,
+          loading: false
+        });
+      !selectedProp &&
+        this.setState({
+          proposalID: '',
+          loading: false
+        });
     }
   }
 
@@ -68,9 +69,25 @@ class DashBoard extends Component {
       this.props.setProposalShow(value.Hash);
 
       this.setState({
-        proposalID: value
+        proposalID: value,
+        loading: false
       });
     }
+  }
+
+  showProposalNotFoundModal() {
+    const { proposalID, loading } = this.state;
+    if (!proposalID && !loading) {
+      swal({
+        title: 'Oops...',
+        text: 'This proposal has expired',
+        icon: 'error',
+        button: 'Home'
+      }).then(value => (window.location.pathname = '/'));
+    } else {
+      return true;
+    }
+    return false;
   }
 
   render() {
@@ -83,7 +100,6 @@ class DashBoard extends Component {
       mnCount
     } = this.props;
     const { proposalID } = this.state;
-    console.log('ACZ proposalID --> ', proposalID);
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -92,12 +108,13 @@ class DashBoard extends Component {
     return (
       <Grid className={style}>
         <h1 className="proposal-heading">PROPOSAL DASHBOARD</h1>
-        {showContainer === 'proposalDetail' && (
-          <div className="iconWraper" onClick={() => this.handleDashboard()}>
-            <Icon type="backward" className="icon" />
-            <span className="iconTxt">{`  Back to List`}</span>
-          </div>
-        )}
+        {showContainer === 'proposalDetail' &&
+          this.showProposalNotFoundModal() && (
+            <div className="iconWraper" onClick={() => this.handleDashboard()}>
+              <Icon type="backward" className="icon" />
+              <span className="iconTxt">{`  Back to List`}</span>
+            </div>
+          )}
         {
           {
             dashBoard: (

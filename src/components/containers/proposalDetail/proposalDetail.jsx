@@ -3,7 +3,6 @@
 //Import react/redux
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import swal from 'sweetalert';
 
 //Import UI Components
 import Grid from '@material-ui/core/Grid';
@@ -51,7 +50,6 @@ export class ProposalDetail extends Component {
   }
 
   async prepareDataString(proposal) {
-    console.log('ACZ proposal -->', proposal);
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
@@ -66,12 +64,6 @@ export class ProposalDetail extends Component {
       this.setState({ dataString, loading: false });
     } else {
       this.setState({ loading: false });
-      swal({
-        title: 'Oops...',
-        text: 'This proposal has expired',
-        icon: 'error',
-        button: 'Home'
-      }).then(value => (window.location.pathname = '/'));
     }
   }
 
@@ -100,7 +92,6 @@ export class ProposalDetail extends Component {
               }}
               deviceType={deviceType}
             />
-
             <Grid
               container
               style={

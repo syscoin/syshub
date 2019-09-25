@@ -31,7 +31,6 @@ class HeaderNav extends Component {
 
   logout() {
     const { app, setPage, doAppLogout } = this.props;
-    console.log('ACZ this.props -->', this.props);
     if (app.currentUser) {
       setPage('home');
       this.firebase.doLogout(() => {
