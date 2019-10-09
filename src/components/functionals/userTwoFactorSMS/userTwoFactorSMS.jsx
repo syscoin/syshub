@@ -90,18 +90,6 @@ class UserTwoFactorSMS extends Component {
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
     }
-    window.recaptchaVerifierEnable2FASMS = this.firebase.newRecaptchaVerifier(
-      'enable2FASMS',
-      {
-        size: 'invisible',
-        callback: response => {
-          this.verify = response;
-          console.log('')
-          this.enableAuth();
-        }
-      }
-    );
-    window.recaptchaVerifierEnable2FASMS.render();
 
     window.recaptchaVerifierDisable2FASMS = this.firebase.newRecaptchaVerifier(
       'disable2FASMS',
@@ -312,24 +300,10 @@ class UserTwoFactorSMS extends Component {
   async enableAuth() {
     const user = await this.firebase.getCurrentUser();
 
-    if (!this.verify) {
-      swal({
-        title: 'Oops...',
-        text: 'Please complete reCAPTCHA',
-        icon: 'error'
-      });
-      return;
-    }
-
     if (!user.phoneNumber) {
       this.handleShowModal();
       return;
     }
-
-    this.verify = undefined;
-    window.recaptchaVerifierEnable2FASMS.render().then(widgetId => {
-      window.recaptchaVerifierEnable2FASMS.reset(widgetId);
-    });
 
     let newStatus = await this.firebase.setFire2FAMethod(user.uid, 'sms', true);
     newStatus = await this.firebase.setFire2FAMethod(user.uid, 'auth', false);
@@ -378,9 +352,6 @@ class UserTwoFactorSMS extends Component {
       showVerifyCode: false
     });
     this.verify = false;
-    window.recaptchaVerifierEnable2FASMS.render().then(widgetId => {
-      window.recaptchaVerifierEnable2FASMS.reset(widgetId);
-    });
   }
 
   render() {
@@ -571,6 +542,7 @@ class UserTwoFactorSMS extends Component {
               className={`twoFactorBtn active ${
                 !this.props.app.twoFA.sms ? 'show' : 'hide'
               }`}
+              onClick={this.enableAuth}
             >
               Enable 2FA SMS
             </Button>
