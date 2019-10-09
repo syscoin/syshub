@@ -74,7 +74,7 @@ class UserTwoFactorAuth extends Component {
     if (twoFAStatus.auth) {
     }
 
-    window.recaptchaVerifierEnable2FAAuth = this.firebase.newRecaptchaVerifier(
+    /* window.recaptchaVerifierEnable2FAAuth = this.firebase.newRecaptchaVerifier(
       'enable2FAAuth',
       {
         size: 'invisible',
@@ -83,9 +83,9 @@ class UserTwoFactorAuth extends Component {
           this.enableAuth();
         }
       }
-    );
+    ); */
 
-    window.recaptchaVerifierDisable2FAAuth = this.firebase.newRecaptchaVerifier(
+    /* window.recaptchaVerifierDisable2FAAuth = this.firebase.newRecaptchaVerifier(
       'disable2FAAuth',
       {
         size: 'invisible',
@@ -94,7 +94,7 @@ class UserTwoFactorAuth extends Component {
           this.disableAuth();
         }
       }
-    );
+    ); */
 
     window.recaptchaVerifierRemoveSecret = this.firebase.newRecaptchaVerifier(
       'removeSecret',
@@ -107,8 +107,8 @@ class UserTwoFactorAuth extends Component {
       }
     );
 
-    window.recaptchaVerifierEnable2FAAuth.render();
-    window.recaptchaVerifierDisable2FAAuth.render();
+    /* window.recaptchaVerifierEnable2FAAuth.render();
+    window.recaptchaVerifierDisable2FAAuth.render(); */
     window.recaptchaVerifierRemoveSecret.render();
   }
 
@@ -147,7 +147,7 @@ class UserTwoFactorAuth extends Component {
       tokenInputError: false
     });
     this.verify = false;
-    window.recaptchaVerifierEnable2FAAuth.reset();
+    /* window.recaptchaVerifierEnable2FAAuth.reset(); */
   }
 
   onChange(e) {
@@ -186,9 +186,9 @@ class UserTwoFactorAuth extends Component {
   }
 
   async enableAuth() {
-    window.recaptchaVerifierEnable2FAAuth.reset();
+    /* window.recaptchaVerifierEnable2FAAuth.reset(); */
 
-    if (!this.verify) {
+   /*  if (!this.verify) {
       swal({
         title: 'Oops...',
         text: 'Please complete reCAPTCHA',
@@ -197,7 +197,7 @@ class UserTwoFactorAuth extends Component {
       this.verify = false;
       return;
     }
-    this.verify = false;
+    this.verify = false; */
 
     const user = await this.firebase.getCurrentUser();
     const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
@@ -220,14 +220,14 @@ class UserTwoFactorAuth extends Component {
   async disableAuth() {
     const user = await this.firebase.getCurrentUser();
 
-    if (!this.verify) {
+ /*    if (!this.verify) {
       swal({
         title: 'Oops...',
         text: 'Please complete reCAPTCHA',
         icon: 'error'
       });
       return;
-    }
+    } */
 
     const newStatus = await this.firebase.setFire2FAMethod(
       user.uid,
@@ -237,7 +237,7 @@ class UserTwoFactorAuth extends Component {
     this.props.set2FA(newStatus);
 
     this.verify = false;
-    window.recaptchaVerifierDisable2FAAuth.reset();
+    /* window.recaptchaVerifierDisable2FAAuth.reset(); */
     this.props.onStatusChange('Google Authenticator disabled');
   }
 
@@ -402,6 +402,7 @@ class UserTwoFactorAuth extends Component {
               className={`twoFactorBtn active ${
                 this.props.app.twoFA.auth ? 'show' : 'hide'
               }`}
+              onClick={this.disableAuth}
             >
               Disable 2FA Auth
             </Button>
@@ -410,6 +411,7 @@ class UserTwoFactorAuth extends Component {
               className={`twoFactorBtn active ${
                 !this.props.app.twoFA.auth ? 'show' : 'hide'
               }`}
+              onClick={this.enableAuth}
             >
               Enable 2FA Auth
             </Button>
