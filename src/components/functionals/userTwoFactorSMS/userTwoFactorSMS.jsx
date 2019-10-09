@@ -551,6 +551,7 @@ class UserTwoFactorSMS extends Component {
                 this.state.withNumber ? 'active' : 'disabled'
               }`}
               style={{ marginBottom: '15px' }}
+              disabled={!this.state.withNumber}
             >
               Edit Phone
             </Button>

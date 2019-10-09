@@ -390,6 +390,8 @@ class UserTwoFactorAuth extends Component {
                 app.twoFA.authSecret ? 'active' : 'disabled'
               }`}
               style={{ marginBottom: '15px' }}
+
+              disabled={!app.twoFA.authSecret}
             >
               Remove Secret
             </Button>
