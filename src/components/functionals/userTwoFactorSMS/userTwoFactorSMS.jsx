@@ -96,6 +96,7 @@ class UserTwoFactorSMS extends Component {
         size: 'invisible',
         callback: response => {
           this.verify = response;
+          console.log('')
           this.enableAuth();
         }
       }
