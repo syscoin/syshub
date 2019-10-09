@@ -90,18 +90,6 @@ class UserTwoFactorSMS extends Component {
     this.props.set2FA(twoFAStatus);
     if (twoFAStatus.twoFA) {
     }
-
-    /* window.recaptchaVerifierDisable2FASMS = this.firebase.newRecaptchaVerifier(
-      'disable2FASMS',
-      {
-        size: 'invisible',
-        callback: response => {
-          this.verify = response;
-          this.disableAuth();
-        }
-      }
-    );
-    window.recaptchaVerifierDisable2FASMS.render(); */
   }
 
   async modalDidMount() {
@@ -289,11 +277,6 @@ class UserTwoFactorSMS extends Component {
       this.setState({ withNumber: true });
       this.handleHideModal();
       this.props.onStatusChange('Phone number updated');
-      /* swal({
-        title: 'Sucess',
-        text: `New Phone Number added & Two Factor Authentication Enabled`,
-        icon: 'success'
-      }); */
     }
   }
 
@@ -313,20 +296,6 @@ class UserTwoFactorSMS extends Component {
 
   async disableAuth() {
     const user = await this.firebase.getCurrentUser();
-
-   /*  if (!this.verify) {
-      swal({
-        title: 'Oops...',
-        text: 'Please complete reCAPTCHA',
-        icon: 'error'
-      });
-      return;
-    } */
-
-   /*  this.verify = undefined; */
-   /*  window.recaptchaVerifierDisable2FASMS.render().then(widgetId => {
-      window.recaptchaVerifierDisable2FASMS.reset(widgetId);
-    }); */
 
     const newStatus = await this.firebase.setFire2FAMethod(
       user.uid,
