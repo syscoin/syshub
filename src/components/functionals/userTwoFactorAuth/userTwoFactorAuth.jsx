@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
-import swal from 'sweetalert';
 
 //Import provider HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -74,28 +73,6 @@ class UserTwoFactorAuth extends Component {
     if (twoFAStatus.auth) {
     }
 
-    /* window.recaptchaVerifierEnable2FAAuth = this.firebase.newRecaptchaVerifier(
-      'enable2FAAuth',
-      {
-        size: 'invisible',
-        callback: response => {
-          this.verify = response;
-          this.enableAuth();
-        }
-      }
-    ); */
-
-    /* window.recaptchaVerifierDisable2FAAuth = this.firebase.newRecaptchaVerifier(
-      'disable2FAAuth',
-      {
-        size: 'invisible',
-        callback: response => {
-          this.verify = response;
-          this.disableAuth();
-        }
-      }
-    ); */
-
     window.recaptchaVerifierRemoveSecret = this.firebase.newRecaptchaVerifier(
       'removeSecret',
       {
@@ -107,8 +84,6 @@ class UserTwoFactorAuth extends Component {
       }
     );
 
-    /* window.recaptchaVerifierEnable2FAAuth.render();
-    window.recaptchaVerifierDisable2FAAuth.render(); */
     window.recaptchaVerifierRemoveSecret.render();
   }
 
@@ -147,7 +122,6 @@ class UserTwoFactorAuth extends Component {
       tokenInputError: false
     });
     this.verify = false;
-    /* window.recaptchaVerifierEnable2FAAuth.reset(); */
   }
 
   onChange(e) {
@@ -186,18 +160,6 @@ class UserTwoFactorAuth extends Component {
   }
 
   async enableAuth() {
-    /* window.recaptchaVerifierEnable2FAAuth.reset(); */
-
-   /*  if (!this.verify) {
-      swal({
-        title: 'Oops...',
-        text: 'Please complete reCAPTCHA',
-        icon: 'error'
-      });
-      this.verify = false;
-      return;
-    }
-    this.verify = false; */
 
     const user = await this.firebase.getCurrentUser();
     const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
@@ -220,15 +182,6 @@ class UserTwoFactorAuth extends Component {
   async disableAuth() {
     const user = await this.firebase.getCurrentUser();
 
- /*    if (!this.verify) {
-      swal({
-        title: 'Oops...',
-        text: 'Please complete reCAPTCHA',
-        icon: 'error'
-      });
-      return;
-    } */
-
     const newStatus = await this.firebase.setFire2FAMethod(
       user.uid,
       'auth',
@@ -237,7 +190,6 @@ class UserTwoFactorAuth extends Component {
     this.props.set2FA(newStatus);
 
     this.verify = false;
-    /* window.recaptchaVerifierDisable2FAAuth.reset(); */
     this.props.onStatusChange('Google Authenticator disabled');
   }
 
@@ -376,7 +328,6 @@ class UserTwoFactorAuth extends Component {
             )}
           </div>
         </Grid>
-        {/* <div className="reCapthaWraper" ref={ref => (this.recaptcha = ref)} /> */}
         <Grid
           container
           direction="row"
