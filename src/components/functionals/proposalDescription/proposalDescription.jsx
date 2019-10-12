@@ -50,7 +50,7 @@ class ProposalDescription extends Component {
               More Info: &nbsp;
             </Typography>
             <div>
-              <a href={urlLink} target="_blank" rel="noopener noreferrer">
+              <a href={moreInfoUrl} target="_blank" rel="noopener noreferrer">
                 {moreInfoUrl}
               </a>
             </div>
