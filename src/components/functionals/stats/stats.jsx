@@ -91,6 +91,17 @@ class Stats extends Component {
             >
               {`${percent_change} %`}
             </div>
+            <span className="changeTxtBody">
+              Powered by{" "}
+              <a
+                className="changeTxtLink"
+                href="https://www.coingecko.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CoinGecko
+              </a>
+            </span>
           </div>
         )}
       </div>
