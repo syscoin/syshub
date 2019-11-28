@@ -1,34 +1,34 @@
-import constants from '../constants';
+import constants from "../constants";
 
 const initialState = {
   cards: [
     {
-      img: 'png_stasts_sys.png',
-      key: 'changeRate',
-      text: ['USD', 'BTC', 'SATOSHI']
+      img: "png_stasts_sys.png",
+      key: "changeRate",
+      text: ["USD", "BTC", "SATOSHI"]
     },
     {
-      img: 'png_stats_gov.png',
-      key: 'governance',
+      img: "png_stats_gov.png",
+      key: "governance",
       text: [
-        'GOVERNANCE INFO',
+        "GOVERNANCE INFO",
         [
-          'Next Payout Date',
-          'Block Height',
-          'Voting Deadline',
-          'Governance Available',
+          "Next Payout Date",
+          "Block Height",
+          "Voting Deadline",
+          "Governance Available"
         ]
       ]
     },
     {
-      img: 'png_menu_masternodes_selected.png',
-      key: 'masternodes',
-      text: ['REGISTERED MASTERNODES']
+      img: "png_menu_masternodes_selected.png",
+      key: "masternodes",
+      text: ["REGISTERED MASTERNODES"]
     },
     {
-      img: 'png_stats_users.png',
-      key: 'totUsers',
-      text: ['ALL USERS']
+      img: "png_stats_users.png",
+      key: "totUsers",
+      text: ["ALL USERS"]
     }
   ],
   totMn: 0,
@@ -44,6 +44,7 @@ Active Proposals,
 */
 
 function smartParse(json, def) {
+  if (typeof json === "object") return json;
   try {
     return JSON.parse(json);
   } catch (e) {
@@ -54,7 +55,8 @@ function smartParse(json, def) {
 const sysStats = (state = initialState, action) => {
   switch (action.type) {
     case constants.SYS_STATS_PRICE_GET: {
-      const sysPrice = smartParse(action.data.data, [])[0];
+      const sysPrice = smartParse(action.data, []);
+      console.log("ACZ sysPrice -->", sysPrice);
       return { ...state, sysPrice };
     }
     case constants.SYS_STATS_TMN_GET: {

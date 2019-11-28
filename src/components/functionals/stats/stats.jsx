@@ -1,66 +1,63 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // import Matrial-UI components
-import { Equalizer } from '@material-ui/icons';
-import GridList from '@material-ui/core/GridList';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Equalizer } from "@material-ui/icons";
+import GridList from "@material-ui/core/GridList";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { connect } from 'react-redux'; //to pass functions
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux"; //to pass functions
+import { bindActionCreators } from "redux";
 
 // import style
-import injectSheet from 'react-jss';
-import statsStyle from './stats.style';
+import injectSheet from "react-jss";
+import statsStyle from "./stats.style";
 
 class Stats extends Component {
   getValue(field) {
     return {
       changeRate: {
         usdChangeRate: this.props.sysInfo.sysPrice
-          ? parseFloat(this.props.sysInfo.sysPrice.price_usd).toFixed(8)
-          : '',
+          ? parseFloat(this.props.sysInfo.sysPrice.usd).toFixed(8)
+          : "",
         btcChangeRate: this.props.sysInfo.sysPrice
-          ? parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8)
-          : '',
+          ? parseFloat(this.props.sysInfo.sysPrice.btc).toFixed(8)
+          : "",
         satoshiChangeRate: this.props.sysInfo.sysPrice
           ? Math.floor(
-              parseFloat(this.props.sysInfo.sysPrice.price_btc).toFixed(8) *
-                100000000
+              parseFloat(this.props.sysInfo.sysPrice.btc).toFixed(8) * 100000000
             )
-          : '',
+          : "",
         percent_change_1h: this.props.sysInfo.sysPrice
-          ? parseFloat(this.props.sysInfo.sysPrice.percent_change_1h)
-          : '',
+          ? parseFloat(this.props.sysInfo.sysPrice.price_change_percentage_1h)
+          : "",
         percent_change_24h: this.props.sysInfo.sysPrice
-          ? parseFloat(this.props.sysInfo.sysPrice.percent_change_24h)
-          : '',
+          ? parseFloat(this.props.sysInfo.sysPrice.price_change_percentage_24h)
+          : "",
         percent_change_7d: this.props.sysInfo.sysPrice
-          ? parseFloat(this.props.sysInfo.sysPrice.percent_change_7d)
-          : ''
+          ? parseFloat(this.props.sysInfo.sysPrice.price_change_percentage_7d)
+          : ""
       },
       masternodes:
         this.props.sysInfo.mnRegistered && this.props.sysInfo.mnCount
-          ? `${this.props.sysInfo.mnRegistered} / ${
-              this.props.sysInfo.mnCount.enabled
-            }`
-          : '',
-      totUsers: this.props.sysInfo ? this.props.sysInfo.users : '',
+          ? `${this.props.sysInfo.mnRegistered} / ${this.props.sysInfo.mnCount.enabled}`
+          : "",
+      totUsers: this.props.sysInfo ? this.props.sysInfo.users : "",
       governance: {
         payoutDate: this.props.governance
           ? this.props.governance.payoutDate
-          : '',
+          : "",
         blockHeight: this.props.governance
           ? this.props.governance.blockHeight
-          : '',
+          : "",
         votingDeadline: this.props.governance
           ? this.props.governance.votingDeadline
-          : '',
+          : "",
         governanceAvailable: this.props.governance
           ? this.props.governance.governanceAvailable
-          : ''
+          : ""
       }
     }[field];
   }
@@ -76,7 +73,7 @@ class Stats extends Component {
           </div>
         )}
         {loading && (
-          <div className={'changeTxtHeading'}>
+          <div className={"changeTxtHeading"}>
             <div className="changeTxtBody firstLine">
               ${this.getValue(item.key).usdChangeRate}
               <span className="symbol"> USD</span>
@@ -89,7 +86,7 @@ class Stats extends Component {
             </div>
             <div
               className={`changeTxtBody percentage ${
-                percent_change > 0 ? 'goingUp' : 'goingDown'
+                percent_change > 0 ? "goingUp" : "goingDown"
               }`}
             >
               {`${percent_change} %`}
@@ -116,7 +113,7 @@ class Stats extends Component {
           </div>
         )}
         {loading && (
-          <div className={'govTxtBody'}>
+          <div className={"govTxtBody"}>
             <div className="govTxtRow">
               <div className="govTxtTitle">{item.text[1][0]}:</div>
               <div className="govTxtData">{payoutDate}</div>
@@ -146,9 +143,9 @@ class Stats extends Component {
   defineCardContent(item) {
     let loading = !!this.getValue(item.key);
     // This if chain is a shit that need to be changed in a really near future (5/7/2019)
-    if (item.key === 'changeRate') {
+    if (item.key === "changeRate") {
       return this.changeContent(item);
-    } else if (item.key === 'governance') {
+    } else if (item.key === "governance") {
       return this.governanceContent(item);
     } else {
       return (
@@ -160,7 +157,7 @@ class Stats extends Component {
           )}
           {loading && (
             <div>
-              <div className={'statsTextHeading'}>
+              <div className={"statsTextHeading"}>
                 <h1> {this.getValue(item.key)}</h1>
               </div>
               <div className="statsText">{item.text}</div>
@@ -174,7 +171,7 @@ class Stats extends Component {
   render() {
     const { classes, deviceType } = this.props;
 
-    const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
+    const style = deviceType === "mobile" ? classes.mRoot : classes.root;
 
     return (
       <div className={style}>
@@ -183,7 +180,7 @@ class Stats extends Component {
         </h1>
         <div className="statsMainDiv">
           <GridList
-            cols={deviceType === 'mobile' ? 2 : 3}
+            cols={deviceType === "mobile" ? 2 : 3}
             cellHeight={300}
             className="statsGridDiv"
           >
@@ -195,12 +192,12 @@ class Stats extends Component {
                     title={
                       <img
                         alt="a"
-                        src={require('../../../assets/img/' + item.img)}
+                        src={require("../../../assets/img/" + item.img)}
                         height="40"
                       />
                     }
                   />
-                  <CardContent height={'50%'} style={{ position: 'relative' }}>
+                  <CardContent height={"50%"} style={{ position: "relative" }}>
                     {this.defineCardContent(item)}
                   </CardContent>
                 </Card>

@@ -12,7 +12,7 @@ const baseApiURL = process.env.REACT_APP_SYS_MN_API;
 const PROVIDERS = {
   coinmarketcap: `${baseApiURL}/curl?url="https://api.coinmarketcap.com/v1/ticker/syscoin/"`,
   coingecko:
-    "https://api.coingecko.com/api/v3/simple/price?ids=syscoin&vs_currencies=usd"
+    "https://api.coingecko.com/api/v3/coins/syscoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false"
 };
 
 const activeProvider = "coingecko";
@@ -29,11 +29,24 @@ const coingeckoFetcher = (url, params, actionType) => {
         return response.data;
       })
       .then(data => {
+        const {
+          current_price: { usd, btc },
+          price_change_percentage_24h,
+          price_change_percentage_1h,
+          price_change_percentage_7d
+        } = data.market_data;
+
         console.log("ACZ data -->", data);
         if (actionType != null) {
           dispatch({
             type: actionType,
-            data: data
+            data: {
+              usd,
+              btc,
+              price_change_percentage_24h,
+              price_change_percentage_1h,
+              price_change_percentage_7d
+            }
           });
         }
         return data;
