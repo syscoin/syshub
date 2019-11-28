@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const getRequest = (url, params) => {
   return new Promise((resolve, reject) => {
     axios
       .get(url, params)
       .then(response => {
-        resolve(response.data);
+        resolve(response.data || response);
       })
       .catch(err => {
         reject(err || err.message);
