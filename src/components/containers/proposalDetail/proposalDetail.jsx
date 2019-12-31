@@ -1,11 +1,11 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 //Import react/redux
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 //Import UI Components
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
 //Import custom Components
 import {
@@ -15,20 +15,20 @@ import {
   ProposalApprovalStat,
   ProposalDescription,
   ProposalComments
-} from '../../functionals';
+} from "../../functionals";
 
 // Import Material-UI components
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 // import components
-import proposalDetailsStyle from './proposalDetails.style';
+import proposalDetailsStyle from "./proposalDetails.style";
 
 //Definition React Component
 export class ProposalDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataString: '',
+      dataString: "",
       loading: true
     };
     this.setMoreInfoUrl = this.setMoreInfoUrl.bind(this);
@@ -50,6 +50,7 @@ export class ProposalDetail extends Component {
   }
 
   async prepareDataString(proposal) {
+    console.log("ACZ proposal -->", proposal);
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;
@@ -72,7 +73,7 @@ export class ProposalDetail extends Component {
     const { dataString, loading } = this.state;
     const proposalTitle = this.state.dataString
       ? dataString.title || dataString.name
-      : '';
+      : "";
 
     if (!dataString && loading) {
       this.prepareDataString(proposal);
@@ -87,7 +88,7 @@ export class ProposalDetail extends Component {
           <Grid style={proposalDetailsStyle.root}>
             <DashBoardHeader
               data={{
-                showHeader: 'ProposalDetail',
+                showHeader: "ProposalDetail",
                 name: proposalTitle
               }}
               deviceType={deviceType}
@@ -95,18 +96,18 @@ export class ProposalDetail extends Component {
             <Grid
               container
               style={
-                deviceType === 'mobile'
+                deviceType === "mobile"
                   ? proposalDetailsStyle.proposalDetailsMRoot
                   : proposalDetailsStyle.proposalDetailsRoot
               }
             >
-              {deviceType === 'mobile' ? (
+              {deviceType === "mobile" ? (
                 <h3 style={proposalDetailsStyle.proposalTitle}>
-                  {' '}
-                  Proposal Title:{' '}
-                  <span style={{ padding: '0px 10px' }}>
+                  {" "}
+                  Proposal Title:{" "}
+                  <span style={{ padding: "0px 10px" }}>
                     {dataString.name}
-                  </span>{' '}
+                  </span>{" "}
                 </h3>
               ) : null}
               <ProposalOwner deviceType={deviceType} data={dataString} />
@@ -143,7 +144,4 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(ProposalDetail);
+export default connect(stateToProps, dispatchToProps)(ProposalDetail);
