@@ -4,8 +4,6 @@ import { Int64LE } from 'int64-buffer'
 import secp256k1 from 'secp256k1'
 import { swapEndiannessInPlace, swapEndianness } from 'buffer-math'
 
-console.log(secp256k1)
-
 export default (obj) => {
   const {
     mnPrivateKey,
