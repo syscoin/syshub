@@ -31,21 +31,3 @@ export const verifyAuthCode = (secret, token) => {
   });
   return verified;
 };
-
-/* export const saveAuthSecret = async (secret, uid) => {
-  const cryptr = new Cryptr(uid);
-  const cryptedSecret = cryptr.encrypt(secret);
-  const newStatus = await setFire2FAMethod(uid, 'authSecret', cryptedSecret);
-  return newStatus;
-} 
-
-export const getAuthSecret = async (uid) => {
-  const { auth, authSecret} = await getFire2FAstatus(uid);
-  if (!auth) {
-    return false;
-  }
-
-  const cryptr = new Cryptr(uid);
-  const secret = cryptr.decrypt(authSecret);
-  return secret;
-} */
