@@ -35,14 +35,11 @@ class MasterNodeList extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
-    const uid = this.props.app.currentUser.uid
-    this.encryptedKey = (await this.firebase.getUsernameById(uid).once('value')).val().encryptionKey;
-    this.pwd = window.localStorage.getItem(uid);
+    this.cipher = await this.firebase.getCipher();
   }
 
   decryptString(str) {
-    const cipher = this.firebase.getCipher();
-    return cipher.decrypt(str);
+    return this.cipher.decrypt(str);
   }
 
   showEditModal(record) {
