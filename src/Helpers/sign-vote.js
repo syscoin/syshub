@@ -70,22 +70,13 @@ export default (obj) => {
   if (voteOutcomeNum == 2) vote = 'no';
   if (voteOutcomeNum == 3) vote = 'abstain';
 
-  var rpcCommand =
-    'voteraw ' +
-    masterNodeTx[0] +
-    ' ' +
-    masterNodeTx[1] +
-    ' ' +
-    gObjectHashBuffer.toString('hex') +
-    ' ' +
-    signal +
-    ' ' +
-    vote +
-    ' ' +
-    time +
-    ' ' +
-    signature;
-
-  console.log(rpcCommand)
-
+  return {
+    txHash: masterNodeTx[0],
+    txIndex: masterNodeTx[1],
+    governanceHash: gObjectHashBuffer.toString('hex'),
+    signal,
+    vote,
+    time,
+    signature
+  }
 }

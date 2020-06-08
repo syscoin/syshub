@@ -1,10 +1,12 @@
 import firebase from 'firebase';
-import Cryptr from 'cryptr';
+import aes from 'aes256';
 import to from '../../Helpers/to';
 
 // to be removed it is not good mix UI in the provider
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
+
+window.firebase = firebase
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -40,6 +42,20 @@ class Firebase {
   /***********
    * Auth API *
    ************/
+
+  async getUserData(uid) {
+    const snapshot = await this.getUsernameById(uid).once('value');
+    return snapshot.val();
+  }
+
+  async getCipher() {
+    const user = await this.firebaseApp.getCurrentUser();
+    const userData = await this.getUserData(user.uid);
+    const pwd = window.localStorage.getItem(user.uid);
+    const encryptionKey = aes.decrypt(pwd, userData.encryptedKey);
+
+    return aes.createCipher(encryptionKey);
+  }
 
   useDeviceLanguage = () => this.auth.useDeviceLanguage();
 
@@ -390,6 +406,14 @@ class Firebase {
       resultMessage.push('Avatar Updated');
     }
 
+    if (user.encryptionKey) {
+      const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
+      usernameRef
+        .child(uid)
+        .child('encryptionKey')
+        .set(user.encryptionKey)
+    }
+
     if (user.email) {
       const password = await swal({
         closeOnClickOutside: false,
@@ -607,7 +631,9 @@ class Firebase {
   };
 
   addMasternodes = async (masternodeArray, uid) => {
-    const cryptr = new Cryptr(uid);
+    const encryptedKey = (await this.getUserData(uid)).encryptionKey;
+    const userPwd = await window.localStorage.getItem(uid);
+    const encryptionKey = aes.decrypt(userPwd, encryptedKey);
     let addMnError = [];
     masternodeArray.forEach(async masternode => {
       const mansternodeExists = await this.checkMasternodeExists(
@@ -616,8 +642,8 @@ class Firebase {
       );
       if (!mansternodeExists) {
         const newKey = this.db.ref().push().key;
-        masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-        masternode.txid = cryptr.encrypt(masternode.txid);
+        masternode.mnPrivateKey = aes.encrypt(encryptionKey, masternode.mnPrivateKey);
+        masternode.txid = aes.encrypt(encryptionKey, masternode.txid);
         masternode.keyId = newKey;
         masternode.key = newKey;
         const newMasternodeRef = this.getDocumentRef(
@@ -633,9 +659,9 @@ class Firebase {
   };
 
   updateMasternode = async (masternode, uid) => {
-    const cryptr = new Cryptr(uid);
-    masternode.mnPrivateKey = cryptr.encrypt(masternode.mnPrivateKey);
-    masternode.txid = cryptr.encrypt(masternode.txid);
+    const cipher = await this.getCipher();
+    masternode.mnPrivateKey = cipher.encrypt(masternode.mnPrivateKey);
+    masternode.txid = cipher.encrypt(masternode.txid);
     const masternodeRef = this.getDocumentRef(
       `${FB_COLLECTION_MASTERNODES}/${uid}`
     );
@@ -644,8 +670,8 @@ class Firebase {
   };
 
   checkMasternodeExists = async (mnPrivateKey, uid) => {
-    const cryptr = new Cryptr(uid);
-    const encryptedPrivateKey = cryptr.encrypt(mnPrivateKey);
+    const cipher = await this.getCipher();
+    const encryptedPrivateKey = cipher.encrypt(mnPrivateKey);
     const mnList = await this.getMasternodeListByUser(uid);
     const foundedMn = mnList.find(
       item => item.mnPrivateKey === encryptedPrivateKey
@@ -708,17 +734,17 @@ class Firebase {
 
   getAuthSecret = async uid => {
     const { auth, authSecret } = await this.getFire2FAstatus(uid);
-    const cryptr = new Cryptr(uid);
+    const cipher = await this.getCipher();
     if (!auth) {
       return false;
     }
-    const secret = cryptr.decrypt(authSecret);
+    const secret = cipher.decrypt(authSecret);
     return secret;
   };
 
   saveAuthSecret = async (secret, uid) => {
-    const cryptr = new Cryptr(uid);
-    const cryptedSecret = cryptr.encrypt(secret);
+    const cipher = await this.getCipher();
+    const cryptedSecret = cipher.encrypt(secret);
     const newStatus = await this.setFire2FAMethod(
       uid,
       'authSecret',

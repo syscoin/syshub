@@ -25,6 +25,9 @@ import TwoFactorModalChallenge from '../../functionals/twoFactorModalChallenge/t
 import injectSheet from 'react-jss';
 import loginStyle from './login.style';
 
+import uid from 'uid'
+import aes from 'aes256'
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -176,11 +179,22 @@ class Login extends Component {
         icon: 'error'
       });
     }
+
     if (user) {
       const appVerifier = window.recaptchaVerifier;
       const twoFAStatus = await this.firebase.getFire2FAstatus(user.uid);
       const showModal = twoFAStatus.twoFA;
+      const userData = (await this.firebase.getUsernameById(user.uid).once('value')).val();
       let phoneConfirmationResult, secret;
+
+      localStorage.setItem(user.uid, password);
+
+      if (!userData.encryptionKey) {
+        const UniqueId = uid(50);
+        const encryptedUid = aes.encrypt(password, UniqueId);
+
+        await this.firebase.doUpdateProfile({ encryptionKey: encryptedUid });
+      }
 
       if (showModal) {
         if (user.phoneNumber && twoFAStatus.sms) {

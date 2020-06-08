@@ -3,6 +3,7 @@ import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import swal from 'sweetalert';
+import aes from 'aes256';
 
 // Import provider HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -10,7 +11,6 @@ import { withFirebase } from '../../../providers/firebase';
 //import antd components
 import { Modal, Table, Button } from 'antd';
 import { Grid } from '@material-ui/core';
-import Cryptr from 'cryptr';
 
 // import custom components
 import ProposalVoting from '../proposalVoting/proposalVoting';
@@ -20,6 +20,8 @@ import ProposalInfo from '../proposalInfo/propsalInfo';
 // import style
 import injectSheet from 'react-jss';
 import proposalCardStyle from './proposalCard.style';
+
+import signVote from '../../../Helpers/sign-vote'
 
 class ProposalCard extends Component {
   constructor(props) {
@@ -182,22 +184,26 @@ class ProposalCard extends Component {
 
   async vote(masternodes, voteOutcome) {
     const { proposal, user } = this.props;
-    const cryptr = new Cryptr(user.uid);
+    const cipher = await this.firebase.getCipher();
 
     const MN = masternodes;
     let mnData = [];
     for (let i = 0; i < masternodes.length; i++) {
+      const decryptedMn = cipher.decrypt(MN[i].mnPrivateKey)
+      const decryptedTxid = cipher.decrypt(MN[i].txid)
       const proposalVoteNo = {
-        mnPrivateKey: cryptr.decrypt(MN[i].mnPrivateKey),
-        vinMasternode: cryptr.decrypt(MN[i].txid),
+        mnPrivateKey: decryptedMn,
+        vinMasternode: decryptedTxid,
         gObjectHash: proposal.Hash,
         voteOutcome
       };
       const checkIcon = 'https://s3.amazonaws.com/masterminer/success.png';
       const xIcon = 'https://s3.amazonaws.com/masterminer/error.png';
 
+      const voteData = signVote(proposalVoteNo);
+
       this.props
-        .voteOnProposal(proposalVoteNo)
+        .voteOnProposal(voteData)
         .then(data => {
           const mnDataInitLength = mnData.length;
           if (RegExp(/\s-32603\s/).test(data)) {
@@ -224,9 +230,7 @@ class ProposalCard extends Component {
                   <div
                     onClick={() =>
                       this.updateError(
-                        `Invalid proposal hash. Please check: ${cryptr.decrypt(
-                          MN[i].mnPrivateKey
-                        )}`
+                        `Invalid proposal hash. Please check: ${decryptedMn}`
                       )
                     }
                   >
@@ -244,9 +248,7 @@ class ProposalCard extends Component {
                   <div
                     onClick={() =>
                       this.updateError(
-                        `Vote has Failed. Please check: ${cryptr.decrypt(
-                          MN[i].mnPrivateKey
-                        )}`
+                        `Vote has Failed. Please check: ${decryptedMn}`
                       )
                     }
                   >
@@ -265,9 +267,7 @@ class ProposalCard extends Component {
                   <div
                     onClick={() =>
                       this.updateError(
-                        `Invalid txid. Please check: ${cryptr.decrypt(
-                          MN[i].txid
-                        )}`
+                        `Invalid txid. Please check: ${decryptedTxid}`
                       )
                     }
                   >

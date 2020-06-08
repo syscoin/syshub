@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { FormGroup } from '@material-ui/core';
-import Cryptr from 'cryptr';
+import aes from 'aes256';
+import { withFirebase } from '../../../providers/firebase';
 
 // import style
 import injectSheet from 'react-jss';
 import masternodeListStyle from './masternodeList.style';
 import { Table, Modal, Button } from 'antd';
+import { compose } from 'recompose';
 const confirm = Modal.confirm;
 
 class MasterNodeList extends Component {
@@ -30,17 +32,28 @@ class MasterNodeList extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  showEditModal(record) {
-    const cryptr = new Cryptr(this.props.app.currentUser.uid);
+  firebase = this.props.firebase;
 
+  async componentWillMount() {
+    const uid = this.props.app.currentUser.uid
+    this.encryptedKey = (await this.firebase.getUsernameById(uid).once('value')).val().encryptionKey;
+    this.pwd = window.localStorage.getItem(uid);
+  }
+
+  decryptString(str) {
+    const cipher = this.firebase.getCipher();
+    return cipher.decrypt(str);
+  }
+
+  showEditModal(record) {
     this.editNode = record;
     this.setState({
       editNodeModal: true,
       editNodeRecord: {
         name: record.name,
-        mnPrivateKey: cryptr.decrypt(record.mnPrivateKey),
+        mnPrivateKey: this.decryptString(record.mnPrivateKey),
         key: record.key,
-        txid: cryptr.decrypt(record.txid),
+        txid: this.decryptString(record.txid),
         keyId: record.keyId
       }
     });
@@ -100,8 +113,6 @@ class MasterNodeList extends Component {
       return null;
     }
 
-    const cryptr = new Cryptr(app.currentUser.uid);
-
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle = deviceType === 'mobile' ? classes.mModal : classes.modal;
@@ -120,8 +131,8 @@ class MasterNodeList extends Component {
         render: text => (
           <span>
             {deviceType === 'mobile'
-              ? cryptr.decrypt(text).substring(0, 7) + '...'
-              : cryptr.decrypt(text)}
+              ? this.decryptString(text).substring(0, 7) + '...'
+              : this.decryptString(text)}
           </span>
         )
       },
@@ -256,7 +267,11 @@ const dispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(injectSheet(masternodeListStyle)(MasterNodeList));
+export default compose(
+  withFirebase,
+  connect(
+    stateToProps,
+    dispatchToProps
+  ),
+  injectSheet(masternodeListStyle)
+)(MasterNodeList)
