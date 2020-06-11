@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { FormGroup } from '@material-ui/core';
-import aes from 'aes256';
 import { withFirebase } from '../../../providers/firebase';
 
 // import style
@@ -154,7 +153,7 @@ class MasterNodeList extends Component {
       }
     ];
 
-    return (
+    return this.cipher ? (
       <div>
         {/* Edit Modal */}
         <Modal
@@ -236,7 +235,7 @@ class MasterNodeList extends Component {
             <h2 className="list-title">Masternode List</h2>
           </div>
           <div className="node-list-table">
-            {this.props.nodes.length > 0 ? (
+            {this.props.nodes.length ? (
               <Table
                 pagination={{
                   pageSize: 4,
@@ -250,7 +249,7 @@ class MasterNodeList extends Component {
           </div>
         </div>
       </div>
-    );
+    ) : <div />;
   }
 }
 

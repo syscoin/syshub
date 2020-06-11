@@ -48,11 +48,14 @@ class Firebase {
     return snapshot.val();
   }
 
-  async getCipher() {
-    const user = await this.firebaseApp.getCurrentUser();
+  async getCipher(uid) {
+    if (uid) {
+      return aes.createCipher(uid);
+    }
+    const user = await this.getCurrentUser();
     const userData = await this.getUserData(user.uid);
     const pwd = window.localStorage.getItem(user.uid);
-    const encryptionKey = aes.decrypt(pwd, userData.encryptedKey);
+    const encryptionKey = aes.decrypt(pwd, userData.encryptionKey);
 
     return aes.createCipher(encryptionKey);
   }
@@ -734,7 +737,7 @@ class Firebase {
 
   getAuthSecret = async uid => {
     const { auth, authSecret } = await this.getFire2FAstatus(uid);
-    const cipher = await this.getCipher();
+    const cipher = await this.getCipher(uid);
     if (!auth) {
       return false;
     }
