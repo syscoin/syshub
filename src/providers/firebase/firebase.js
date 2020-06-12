@@ -6,8 +6,6 @@ import to from '../../Helpers/to';
 import swal from 'sweetalert';
 import swal2 from 'sweetalert2';
 
-window.firebase = firebase
-
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
