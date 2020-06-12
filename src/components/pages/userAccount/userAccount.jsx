@@ -52,11 +52,12 @@ class UserAccount extends Component {
   async updatePassword(user) {
     const newUser = await this.firebase.getCurrentUser();
     const userData = await this.firebase.getUserData(newUser.uid);
+    const oldEncryptionKey = userData.encryptionKey
 
     // Re-encrypt encryption key with new password
-    const cipher = await this.firebase.getCipher();
+    const pwd = window.localStorage.getItem(newUser.uid);
 
-    const encryptionKey = cipher.decrypt(userData.encryptionKey);
+    const encryptionKey = aes.decrypt(pwd, oldEncryptionKey);
     const reEncryptedKey = aes.encrypt(user.newPass, encryptionKey);
 
     await this.firebase.doUpdateProfile({ encryptionKey: reEncryptedKey });
@@ -68,7 +69,7 @@ class UserAccount extends Component {
         this.props.doAppLogout();
         this.props.setPage('login');
       } else {
-        await this.firebase.doUpdateProfile({ encryptionKey: userData.encryptionKey });
+        await this.firebase.doUpdateProfile({ encryptionKey: oldEncryptionKey });
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       }
     });
