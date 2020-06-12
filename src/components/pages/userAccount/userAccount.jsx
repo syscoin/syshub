@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import to from '../../../Helpers/to';
+import aes from 'aes256'
 
 //Import providers HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -48,13 +49,26 @@ class UserAccount extends Component {
     this.props.setCurrentUser(currentUser);
   }
 
-  updatePassword(user) {
-    this.firebase.doPasswordUpdate(user, (err, data) => {
+  async updatePassword(user) {
+    const newUser = await this.firebase.getCurrentUser();
+    const userData = await this.firebase.getUserData(newUser.uid);
+
+    // Re-encrypt encryption key with new password
+    const cipher = await this.firebase.getCipher();
+
+    const encryptionKey = cipher.decrypt(userData.encryptionKey);
+    const reEncryptedKey = aes.encrypt(user.newPass, encryptionKey);
+
+    await this.firebase.doUpdateProfile({ encryptionKey: reEncryptedKey });
+
+    this.firebase.doPasswordUpdate(user, async (err, data) => {
       if (!err) {
         swal({ title: 'Success', text: 'Account Updated', icon: 'success' });
+
         this.props.doAppLogout();
         this.props.setPage('login');
       } else {
+        await this.firebase.doUpdateProfile({ encryptionKey: userData.encryptionKey });
         swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
       }
     });
