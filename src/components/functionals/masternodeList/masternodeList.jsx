@@ -33,8 +33,11 @@ class MasterNodeList extends Component {
 
   firebase = this.props.firebase;
 
-  async componentWillMount() {
-    this.cipher = await this.firebase.getCipher();
+  async componentDidUpdate() {
+    if (!this.cipher) {
+      this.cipher = await this.firebase.getCipher();
+      this.forceUpdate();
+    }
   }
 
   decryptString(str) {
