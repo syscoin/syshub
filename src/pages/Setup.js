@@ -411,12 +411,6 @@ export class Setup extends Component {
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div className="install__block">
-                            <h4>Resources</h4>
-                            <p><Link href="https://sysnode.info">Sysnode.info <span className="badge badge-notification clicks" title="3 clicks">3</span></Link>: This website has an array of tools such as Masternode Stats, Monitoring and keeping up to date with current news with Syscoin.</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div className="install__block">
                             <h4>Acknowledgements</h4>
                             <p>Special thanks to demesm and doublesharp for the initial script, Bigpoppa for most of the conversion and bitje, johnp and the Syscoin team for upgrading and working out minor issues to get it running on SYS4.</p>
                         </div>
