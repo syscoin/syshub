@@ -6,8 +6,8 @@ class Footer extends Component {
             <div className="container">
                 <div className="row">
                 <div className="col-12 col-lg-6 text-center text-lg-left order-2 order-lg-1 small">
-                        <span className="copyright">&copy; 2020 SYSNODE. All Rights Reserved.</span>
-                    </div>
+                        <span className="copyright"><a className="nav-link" rel="noopener noreferrer" href="https://github.com/bigpoppa-sys/sysnode-info" target="_blank">An Open Source Community Project - BigPoppa</a></span>
+                    </div> 
                     <div className="col-md-auto text-center text-lg-right order-2 order-lg-1">
                         <ul className="list-inline mb-0 social__icon">
                             <li className="list-inline-item"><a className="nav-link" rel="noopener noreferrer" href="https://www.facebook.com/Syscoin/" target="_blank"><i className="fa fa-facebook"></i></a></li>
