@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import AnyChart from 'anychart-react';
+import { withTranslation } from "react-i18next";
 
 export class Doughnut extends Component {
-    constructor(props){  
-        super(props);  
-        this.state = {  
+    constructor(props){
+        super(props);
+        this.state = {
             dataload: 0,
             chart1_details: [],
             chart1_mid: "",
@@ -12,7 +13,7 @@ export class Doughnut extends Component {
             chart2_mid: ""
         }
     }
-    
+
     componentDidMount() {
         this.loadCharts(this.props.chartData);
     }
@@ -20,6 +21,7 @@ export class Doughnut extends Component {
         return Number(number.toString().replace(/,/g, ''));
     }
     loadCharts(response) {
+        const { t } = this.props;
         var total_enabled=this.formatNumber(response.total)-this.formatNumber(response.new_start_required);
         var total_new_start=this.formatNumber(response.total)-this.formatNumber(response.enabled);
         var total_sent=this.formatNumber(response.sentinel_ping_expired);
@@ -29,22 +31,23 @@ export class Doughnut extends Component {
         var rem_supply=this.formatNumber(response.current_supply)-this.formatNumber(response.total_locked);
         var coins_percent_locked=response.coins_percent_locked;
 
-        this.setState({ 
-            dataload: 1, 
+        this.setState({
+            dataload: 1,
             chart1_details: [
-                {x: "Enabled", value: total_enabled, fill:'#ee6c01'},
-                {x: "New Start Required", value: total_new_start, fill:'#0b209a'},
-                {x: "Sentinel Ping Expired", value: total_sent, fill:'#fff'},
+                {x: t('doughnut.charts.masterNodes.enabled'), value: total_enabled, fill:'#ee6c01'},
+                {x: t('doughnut.charts.masterNodes.startRequired'), value: total_new_start, fill:'#0b209a'},
+                {x: t('doughnut.charts.masterNodes.pingExpired'), value: total_sent, fill:'#fff'},
             ],
             chart1_mid: final,
             chart2_details: [
-                {x: "Coins Locked", value: total_locked, fill:'#ee6c01', tooltip_text:"1000 coins locked"},
-                {x: "Remaining Supply", value: rem_supply, fill:'#0b209a', tooltip_text:"9000 supply remaining"}
+                {x: t('doughnut.charts.coinsLocked.coinLocked'), value: total_locked, fill:'#ee6c01', tooltip_text:"1000 coins locked"},
+                {x: t('doughnut.charts.coinsLocked.remainingSupply'), value: rem_supply, fill:'#0b209a', tooltip_text:"9000 supply remaining"}
             ],
             chart2_mid: coins_percent_locked
         });
     }
     render() {
+        const { t } = this.props;
         var chart1_settings = {
             id: "firstChart",
             width: "100%",
@@ -63,7 +66,7 @@ export class Doughnut extends Component {
               vAlign: 'middle'
             },
             title: {
-                text: 'Total Masternodes',
+                text: t('doughnut.charts.masterNodes.title'),
                 fontColor: "#fff",
                 fontWeight: 'bold'
             }
@@ -86,7 +89,7 @@ export class Doughnut extends Component {
               vAlign: 'middle'
             },
             title: {
-                text: 'Coins Locked',
+                text: t('doughnut.charts.coinsLocked.title'),
                 fontColor: "#fff",
                 fontWeight: 'bold'
             }
@@ -98,7 +101,7 @@ export class Doughnut extends Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="Heading__Bar text-center mb-5">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -115,10 +118,10 @@ export class Doughnut extends Component {
         )
         } else {
             return(
-                <p>Data is being loading...</p>
+                <p>{t('doughnut.loading')}...</p>
             )
         }
     }
 }
 
-export default Doughnut;
+export default withTranslation()(Doughnut);
