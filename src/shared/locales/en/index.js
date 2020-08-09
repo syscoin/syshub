@@ -5,6 +5,7 @@ import income from './partials/income/index';
 import investment from './partials/investment/index';
 import price from './partials/price/index';
 import priceLineChart from './partials/priceLineChart/index';
+import worldMap from './partials/worldMap/index';
 
 export default {
   ...home,
@@ -13,5 +14,5 @@ export default {
   ...income,
   ...investment,
   ...price,
-  ...priceLineChart,
+  ...worldMap,
 }
