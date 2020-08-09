@@ -3,6 +3,7 @@ import banner from './banner/index';
 import doughnut from './partials/doughnut/index';
 import income from './partials/income/index';
 import investment from './partials/investment/index';
+import price from './partials/price/index';
 
 export default {
   ...home,
@@ -10,4 +11,5 @@ export default {
   ...doughnut,
   ...income,
   ...investment,
+  ...price,
 }
