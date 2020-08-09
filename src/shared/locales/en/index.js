@@ -14,5 +14,6 @@ export default {
   ...income,
   ...investment,
   ...price,
+  ...priceLineChart,
   ...worldMap,
 }
