@@ -249,8 +249,8 @@ icons:
     categories:
       - Web Application Icons
 
-  - name:       home
-    id:         home
+  - name:       banner
+    id:         banner
     unicode:    f015
     created:    0.4
     filter:
@@ -6784,7 +6784,7 @@ icons:
       - Brand Icons
 
   - name:       Socialhome
-    id:         social-home
+    id:         social-banner
     unicode:    f2ec
     created:    1.0
     url:        socialhome.network
