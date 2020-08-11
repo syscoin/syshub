@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { withTranslation } from "react-i18next";
+import {Investment} from "./Investment";
 
 export class Price extends Component {
-    constructor(props){  
-        super(props);  
-        this.state = {  
+    constructor(props){
+        super(props);
+        this.state = {
             dataload: 0,
             priceData: []
         }
     }
     componentDidMount() {
-        this.setState({ 
-            dataload: 1, 
+        this.setState({
+            dataload: 1,
             priceData: this.props.priceData
         });
     }
@@ -27,6 +29,7 @@ export class Price extends Component {
         return html;
     }
     render() {
+        const { t } = this.props;
         if(this.state.dataload===1) {
         return(
             <section className="section__Income__price bg-cover pt-0">
@@ -34,20 +37,20 @@ export class Price extends Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="Heading__Bar text-center mb-5">
-                            <h1 className="text-white display-4 animation font-weight-bold" data-animation="fadeInUp" data-animation-delay="1s">Price Stats</h1>
+                            <h1 className="text-white display-4 animation font-weight-bold" data-animation="fadeInUp" data-animation-delay="1s">{t('price.title')}</h1>
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1.3s"> 
+                    <div className="col-12 col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1.3s">
                         <div className="table-responsive">
                             <table className="table live__table table-bordered table-dark table-striped">
                                 <thead className="table-heading">
                                     <tr>
-                                        <th>Price</th>    
-                                        <th>Volume</th>
-                                        <th>Marketcap</th>        
-                                        <th>Change</th>       
+                                        <th>{t('price.priceTable.price')}</th>
+                                        <th>{t('price.priceTable.volume')}</th>
+                                        <th>{t('price.priceTable.marketcap')}</th>
+                                        <th>{t('price.priceTable.change')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="table-body">
@@ -73,10 +76,10 @@ export class Price extends Component {
         )
         } else {
             return(
-                <p>Data is being loading..</p>
+                <p>{t('price.loading')}</p>
             )
         }
     }
 }
 
-export default Price;
+export default withTranslation()(Price);

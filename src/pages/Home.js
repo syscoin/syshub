@@ -8,11 +8,12 @@ import Price from './partials/Price';
 import Investment from './partials/Investment';
 import WorldMap from './partials/WorldMap';
 import MetaTags from 'react-meta-tags';
+import { withTranslation } from "react-i18next";
 
 export class Home extends Component {
-    constructor(props){  
-        super(props);  
-        this.state = {  
+    constructor(props){
+        super(props);
+        this.state = {
             dataload: 0,
             api_data: []
         }
@@ -31,20 +32,21 @@ export class Home extends Component {
             console.log(error);
         });
         var response=data.data;
-        
-        this.setState({ 
-            dataload: 1, 
+
+        this.setState({
+            dataload: 1,
             api_data: response
         });
     }
     render() {
+        const { t } = this.props;
         if(this.state.dataload===1) {
             return(
                 <main className="homePage">
                     <MetaTags>
-                        <title>Syscoin Masternodes</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                        <title>{t('home.title')}</title>
+                        <meta name="keywords" content={t('home.keywords')} />
+                        <meta name="description" content={t('home.description')} />
                     </MetaTags>
                     <Banner />
                     <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
@@ -58,10 +60,10 @@ export class Home extends Component {
             return(
                 <main className="homePage">
                     <MetaTags>
-                        <title>Syscoin Masternodes</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
-                    </MetaTags>
+                        <title>{t('home.title')}</title>
+                        <meta name="keywords" content={t('home.keywords')} />
+                        <meta name="description" content={t('home.description')} />
+                      </MetaTags>
                     <Banner />
                 </main>
             )
@@ -69,4 +71,4 @@ export class Home extends Component {
     }
 }
 
-export default Home;
+export default withTranslation()(Home);

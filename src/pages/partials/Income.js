@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
+import { withTranslation } from "react-i18next";
 
 export class Income extends Component {
-    constructor(props){  
-        super(props);  
-        this.state = {  
+    constructor(props){
+        super(props);
+        this.state = {
             dataload: 0,
             incomeData: [],
             incomeSenOneYrData: []
         }
     }
     componentDidMount() {
-        this.setState({ 
-            dataload: 1, 
+        this.setState({
+            dataload: 1,
             incomeData: this.props.incomeData,
             incomeSenOneYrData: this.props.incomeSenOneYrData
         });
     }
     render() {
+        const { t } = this.props;
         if(this.state.dataload===1) {
         return(
             <section className="section__Income bg-cover pt-0">
@@ -24,16 +26,16 @@ export class Income extends Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="Heading__Bar text-center mb-5">
-                            <h1 className="text-white display-4 animation font-weight-bold" data-animation="fadeInUp" data-animation-delay="1s">Income Stats</h1>
+                            <h1 className="text-white display-4 animation font-weight-bold" data-animation="fadeInUp" data-animation-delay="1s">{t('income.title')}</h1>
                         </div>
                     </div>
                 </div>
                 <ul className="nav nav-tabs" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Latest Stats</a>
+                        <a className="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">{t('income.tabs.latestStats')}</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" data-toggle="tab" href="#tabs-2" role="tab">1 Year Seniority</a>
+                        <a className="nav-link" data-toggle="tab" href="#tabs-2" role="tab">{t('income.tabs.oneYearSeniority')}</a>
                     </li>
                 </ul>
                 <div className="tab-content">
@@ -41,7 +43,7 @@ export class Income extends Component {
                         <div className="row">
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-lg-0" data-animation="fadeInUp" data-animation-delay="1s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Daily Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.daily')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeData.usd.daily}</div>
                                         <div>{this.state.incomeData.btc.daily}</div>
@@ -51,7 +53,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-lg-0" data-animation="fadeInUp" data-animation-delay="1.1s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Weekly Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.weekly')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeData.usd.weekly}</div>
                                         <div>{this.state.incomeData.btc.weekly}</div>
@@ -61,7 +63,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-md-0" data-animation="fadeInUp" data-animation-delay="1.2s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Monthly Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.monthly')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeData.usd.monthly}</div>
                                         <div>{this.state.incomeData.btc.monthly}</div>
@@ -71,7 +73,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation" data-animation="fadeInUp" data-animation-delay="1.3s">
                             <div className="pricebar__block text-center">
-                                <div className="pricebar__block__title">Yearly Income</div>
+                                <div className="pricebar__block__title">{t('income.income.yearly')}</div>
                                 <div className="pricebar__block__content">
                                     <div>{this.state.incomeData.usd.yearly}</div>
                                     <div>{this.state.incomeData.btc.yearly}</div>
@@ -85,7 +87,7 @@ export class Income extends Component {
                         <div className="row">
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-lg-0" data-animation="fadeInUp" data-animation-delay="1s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Daily Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.daily')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeSenOneYrData.usd.daily}</div>
                                         <div>{this.state.incomeSenOneYrData.btc.daily}</div>
@@ -95,7 +97,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-lg-0" data-animation="fadeInUp" data-animation-delay="1.1s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Weekly Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.weekly')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeSenOneYrData.usd.weekly}</div>
                                         <div>{this.state.incomeSenOneYrData.btc.weekly}</div>
@@ -105,7 +107,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation mb-5 mb-md-0" data-animation="fadeInUp" data-animation-delay="1.2s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Monthly Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.monthly')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeSenOneYrData.usd.monthly}</div>
                                         <div>{this.state.incomeSenOneYrData.btc.monthly}</div>
@@ -115,7 +117,7 @@ export class Income extends Component {
                             </div>
                             <div className="col-12 col-md-6 col-lg-3 animation" data-animation="fadeInUp" data-animation-delay="1.3s">
                                 <div className="pricebar__block text-center">
-                                    <div className="pricebar__block__title">Yearly Income</div>
+                                    <div className="pricebar__block__title">{t('income.income.yearly')}</div>
                                     <div className="pricebar__block__content">
                                         <div>{this.state.incomeSenOneYrData.usd.yearly}</div>
                                         <div>{this.state.incomeSenOneYrData.btc.yearly}</div>
@@ -126,17 +128,17 @@ export class Income extends Component {
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </section>
         )
         } else {
             return(
-                <p>Data is being loaded</p>
+                <p>{t('income.loading')}</p>
             )
-        } 
-        
+        }
+
     }
 }
 
-export default Income;
+export default withTranslation()(Income);

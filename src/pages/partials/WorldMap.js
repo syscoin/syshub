@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Datamaps from 'datamaps';
+import { withTranslation } from "react-i18next";
 
 export class WorldMap extends Component {
-    constructor(props){  
-        super(props);  
+    constructor(props){
+        super(props);
         window.addEventListener('resize', this.resize);
     }
     resize = () => {
@@ -38,6 +39,7 @@ export class WorldMap extends Component {
         }
     }
     drawMap = (mapdata,mapfill) => {
+        const { t } = this.props;
         var map = new Datamaps(Object.assign({}, {
             ...this.props
         }, {
@@ -50,29 +52,30 @@ export class WorldMap extends Component {
                     if(data === null){
                         console.log(geo.properties.name)
                         return ['<div class="hoverinfo"><strong>',
-                        'No masternodes in ' + geo.properties.name + '</strong></div>'].join('')
+                        `${t('worldMap.noMasternodes')} ` + geo.properties.name + '</strong></div>'].join('')
                     }else{
                         console.log(geo.properties.name,data.masternodes)
                         return ['<div class="hoverinfo"><strong>',
                         geo.properties.name + ': ' + data.masternodes,
                         '</strong></div>'].join('');
                     }
-                    
+
                 }
             }
         }));
 
         this.map = map;
-        
+
     }
     render() {
+        const { t } = this.props;
         return(
             <section className="section__map gradient_box2 pt-0">
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-lg-12" data-animation="fadeInUp" data-animation-delay="1s">
                             <div className="Heading__Bar mb-5 text-center">
-                                <h1 className="text-white display-4 font-weight-bold">Masternode Locations</h1>
+                                <h1 className="text-white display-4 font-weight-bold">{t('worldMap.title')}</h1>
                             </div>
                             <div ref="world_map_container" className="world_map"></div>
                         </div>
@@ -80,8 +83,8 @@ export class WorldMap extends Component {
                 </div>
             </section>
         )
-        
+
     }
 }
 
-export default WorldMap;
+export default withTranslation()(WorldMap);
