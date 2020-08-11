@@ -5,38 +5,42 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import MetaTags from 'react-meta-tags';
-const columns = [
-    { 
-        text: 'Address',
-        dataField: 'address'
-    },
-    { 
-        text: 'Protocol',
-        dataField: 'protocol'
-    },
-    { 
-        text: 'Status',
-        dataField: 'status'
-    },
-    { 
-        text: 'Payee',
-        dataField: 'payee'
-    },
-    {
-        text: 'Last payment',
-        dataField: 'lastpaidtime'
-    },
-    {
-        text: 'Active time',
-        dataField: 'activeseconds'
-    },
-    {
-        text: 'Last seen',
-        dataField: 'lastseen'
-    }
-];
+import { withTranslation } from "react-i18next";
 
-const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize, onSizeChange, changeFieldOrder }) => (
+const getColumns = (t) => {
+    return  [
+        {
+            text: t('check.table.address'),
+            dataField: 'address'
+        },
+        {
+            text: t('check.table.protocol'),
+            dataField: 'protocol'
+        },
+        {
+            text: t('check.table.status'),
+            dataField: 'status'
+        },
+        {
+            text: t('check.table.payee'),
+            dataField: 'payee'
+        },
+        {
+            text: t('check.table.lastpaidtime'),
+            dataField: 'lastpaidtime'
+        },
+        {
+            text: t('check.table.activeseconds'),
+            dataField: 'activeseconds'
+        },
+        {
+            text: t('check.table.lastseen'),
+            dataField: 'lastseen'
+        }
+    ];
+}
+
+const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize, onSizeChange, changeFieldOrder, t }) => (
     <div>
       <PaginationProvider
         pagination={
@@ -58,16 +62,16 @@ const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize, o
                 remote
                 keyField="address"
                 data={ data }
-                columns={ columns }
+                columns={ getColumns(t) }
                 onTableChange={ onTableChange }
                 { ...paginationTableProps }
               />
               <div className="page-row">
                   <div className="pull-left">
                         <p>
-                            Showing { totalSize>0?paginationProps.page>1?(paginationProps.sizePerPage*(paginationProps.page-1))+1:1:0 } to { (paginationProps.sizePerPage*paginationProps.page)>totalSize?totalSize:(paginationProps.sizePerPage*paginationProps.page) } of {totalSize} records
+                            {`${t('check.legend.d1')} ${totalSize>0?paginationProps.page>1?(paginationProps.sizePerPage*(paginationProps.page-1))+1:1:0} ${t('check.legend.d2')} ${(paginationProps.sizePerPage*paginationProps.page)>totalSize?totalSize:(paginationProps.sizePerPage*paginationProps.page)} ${t('check.legend.d3')} ${totalSize} ${t('check.legend.d4')} `}
                             <input type="number" value={sizePerPage} onChange={ onSizeChange } className="form-psize"/>
-                        </p>    
+                        </p>
                   </div>
                   <div className="pull-right">
                         <PaginationListStandalone
@@ -75,19 +79,19 @@ const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize, o
                         />
                   </div>
               </div>
-              
+
             </div>
           )
         }
       </PaginationProvider>
     </div>
   );
-  
+
 
 export class Check extends Component {
-    constructor(props){  
-        super(props);  
-        this.state = {  
+    constructor(props){
+        super(props);
+        this.state = {
             dataload: 0,
             page: 1,
             tableData: [],
@@ -117,7 +121,7 @@ export class Check extends Component {
         this.loadData(src,page,sizePerPage);
     }
     changeFieldOrder(field,order) {
-        
+
     }
     onSizeChange(e) {
         var size=e.target.value;
@@ -156,45 +160,47 @@ export class Check extends Component {
             "Access-Control-Allow-Origin": "*",
         }
         };
-        
+
         await axios.post('https://syscoin.dev/mnSearch', postData, axiosConfig)
         .then((res) => {
-            this.setState({ 
-                dataload: 1, 
+            this.setState({
+                dataload: 1,
                 tableData: res.data.returnArr,
                 totalRecords: res.data.mnNumb
             });
         })
         .catch((err) => {
-            this.setState({ 
+            this.setState({
                 dataload: 2
             });
         });
     }
     render() {
         const { dataload, page, tableData, sizePerPage, totalRecords } = this.state;
+        const { t } = this.props;
+
         if(dataload===1) {
         return(
             <main className="checkPage">
                 <MetaTags>
-                        <title>Syscoin Masternodes - Masternode Check</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                        <title>{t('check.meta.title')}</title>
+                        <meta name="keywords" content={t('check.meta.keywords')} />
+                        <meta name="description" content={t('check.meta.description')} />
                 </MetaTags>
-                <InnerBanner heading="Masternode Check"/>
+                <InnerBanner heading={t('check.title')}/>
                 <section className="section_datatable bg-white">
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 small">
                         <div className="custom__datatable table-responsive">
                             <div className="pc-left">
-                                <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>Reset Search</button>
+                                <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>{t('check.table.resetBtn')}</button>
                             </div>
                             <div className="pc-right">
-                                <input id="srcVal" type="text" className="form-control" placeholder="Type in your IP address" onKeyUp={this.searchInTable}/>
+                                <input id="srcVal" type="text" className="form-control" placeholder={t('check.table.ipInput')} onKeyUp={this.searchInTable}/>
                             </div>
                         </div>
-                        
+
                         <RemotePagination
                             data={ tableData }
                             page={ page }
@@ -203,6 +209,7 @@ export class Check extends Component {
                             onTableChange={ this.handleTableChange }
                             onSizeChange={ this.onSizeChange }
                             changeFieldOrder={this.changeFieldOrder }
+                            t= {t}
                         />
                     </div>
                 </div>
@@ -214,9 +221,9 @@ export class Check extends Component {
             return(
                 <main className="checkPage">
                     <MetaTags>
-                        <title>Syscoin Masternodes - Masternode Check</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                        <title>{t('check.meta.title')}</title>
+                        <meta name="keywords" content={t('check.meta.keywords')} />
+                        <meta name="description" content={t('check.meta.description')} />
                     </MetaTags>
                 <InnerBanner heading="Masternode Check"/>
                 <section className="section_datatable bg-white">
@@ -224,10 +231,10 @@ export class Check extends Component {
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12">
                         <div className="custom__datatable table-responsive">
-                            
+
                         </div>
-                        
-                        <p>Loading...</p>
+
+                        <p>{t('check.loading')}</p>
                     </div>
                 </div>
             </div>
@@ -238,4 +245,4 @@ export class Check extends Component {
     }
 }
 
-export default Check;
+export default withTranslation()(Check);
