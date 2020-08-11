@@ -52,7 +52,10 @@ class Firebase {
     }
     const user = await this.getCurrentUser();
     const userData = await this.getUserData(user.uid);
+    console.log(userData)
+    console.log(userData.encryptionKey)
     const pwd = window.localStorage.getItem(user.uid);
+    console.log(pwd)
     const encryptionKey = aes.decrypt(pwd, userData.encryptionKey);
 
     return aes.createCipher(encryptionKey);
@@ -392,7 +395,7 @@ class Firebase {
       const usernameRef = await this.getDocumentRef(FB_COLLECTION_USERSINFO);
       const userlistRef = await this.getDocumentRef(FB_COLLECTION_USERLIST);
       const oldUsername = currentUser.displayName;
-      currentUser.updateProfile({ displayName: user.username });
+      currentUser.updateProfile({displayName: user.username});
       usernameRef
         .child(uid)
         .child('name')
@@ -403,7 +406,7 @@ class Firebase {
     }
 
     if (user.photoURL) {
-      currentUser.updateProfile({ photoURL: user.photoURL });
+      currentUser.updateProfile({photoURL: user.photoURL});
       resultMessage.push('Avatar Updated');
     }
 
@@ -450,7 +453,7 @@ class Firebase {
           });
       }
     }
-    return { currentUser, error: resultError, message: resultMessage };
+    return {currentUser, error: resultError, message: resultMessage};
   };
 
   /*************
@@ -543,11 +546,11 @@ class Firebase {
     }
     const commentsArray = comments ? Object.values(comments) : [];
     if (sortAsc) {
-      commentsArray.sort(function(a, b) {
+      commentsArray.sort(function (a, b) {
         return a.createdAt - b.createdAt;
       });
     } else {
-      commentsArray.sort(function(b, a) {
+      commentsArray.sort(function (b, a) {
         return a.createdAt - b.createdAt;
       });
     }
@@ -656,7 +659,7 @@ class Firebase {
       }
     });
     await this.addOneDBnMnodes(null, masternodeArray, addMnError);
-    return { error: addMnError, success: !addMnError.length };
+    return {error: addMnError, success: !addMnError.length};
   };
 
   updateMasternode = async (masternode, uid) => {
@@ -730,11 +733,11 @@ class Firebase {
 
   removeFire2FA = async uid => {
     await this.getDocumentRef(`${FB_COLLECTION_USERSINFO}/${uid}/2FA`).remove();
-    return { err: null, msg: '2FA register successfuly deleted' };
+    return {err: null, msg: '2FA register successfuly deleted'};
   };
 
   getAuthSecret = async uid => {
-    const { auth, authSecret } = await this.getFire2FAstatus(uid);
+    const {auth, authSecret} = await this.getFire2FAstatus(uid);
     const cipher = await this.getCipher(uid);
     if (!auth) {
       return false;
