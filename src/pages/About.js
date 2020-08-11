@@ -20,7 +20,7 @@ export class About extends Component {
                 <div className="row">
                     <div className="col-lg-7 col-md-12 col-sm-12 order-2 order-lg-1">
                         <div className="custom__about__left">
-                            <h3>{t('about.masternodes.question.p1')} <span className="text-primary">{t('about.left.question.p2')}</span></h3>
+                            <h3>{t('about.masternodes.question.p1')} <span className="text-primary">{t('about.masternodes.question.p2')}</span></h3>
                             <ul className="list-unstyled">
                                 <li><i className="fa fa-angle-right pr-1"></i> {t('about.masternodes.featureList.f1')}</li>
                                 <li><i className="fa fa-angle-right pr-1"></i> {t('about.masternodes.featureList.f2')}</li>
