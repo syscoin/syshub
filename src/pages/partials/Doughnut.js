@@ -22,8 +22,8 @@ export class Doughnut extends Component {
     }
     loadCharts(response) {
         const { t } = this.props;
-        var total_enabled=this.formatNumber(response.total)-this.formatNumber(response.new_start_required);
-        var total_new_start=this.formatNumber(response.total)-this.formatNumber(response.enabled);
+        var total_enabled=this.formatNumber(response.enabled);
+        var total_new_start=this.formatNumber(response.new_start_required);
         var total_sent=this.formatNumber(response.sentinel_ping_expired);
         var final=total_enabled+total_new_start+total_sent;
 
