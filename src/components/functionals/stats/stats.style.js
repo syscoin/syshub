@@ -22,7 +22,7 @@ export default {
       justifyContent: "space-around",
       overflow: "hidden",
       width: "100%",
-      height: "100%"
+      height: "73.5vh"
     },
     "& .statsCard": {
       boxShadow: boxShadow,
@@ -108,7 +108,7 @@ export default {
       alignItems: "center",
       gridRowGap: "5px",
       fontWeight: "bold",
-      padding: "20px 10px 0 10px",
+      padding: "20px 0px",
       height: "100%",
       "& .govTxtRow": {
         display: "grid",
@@ -126,7 +126,7 @@ export default {
         color: grey
       },
       "& .govTxtData": {
-        fontSize: "1.2rem",
+        fontSize: "1.1rem",
         fontWeight: "bold",
         color: primary
       },
