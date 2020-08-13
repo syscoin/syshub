@@ -13,6 +13,7 @@ export default {
     marginTop: 50
   },
   button: {
+    cursor: 'pointer',
     height: '50px',
     width: '100%',
     border: 'none',
