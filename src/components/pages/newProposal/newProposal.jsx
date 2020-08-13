@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
 import actions from '../../../redux/actions';
 import injectSheet from 'react-jss';
 
 // Imports provider HOC's & services
-import { withFirebase } from '../../../providers/firebase';
-import { nextGovernanceRewardInfo } from '../../../API/syscoin/proposals.service';
+import {withFirebase} from '../../../providers/firebase';
+import {nextGovernanceRewardInfo} from '../../../API/syscoin/proposals.service';
 
 //import for text editor
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import {EditorState, convertToRaw, ContentState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 // import components
-import { Editor } from 'react-draft-wysiwyg';
+import {Editor} from 'react-draft-wysiwyg';
 import swal from 'sweetalert';
-import { Row, Col, Icon } from 'antd';
-import { Form, Input, Button, InputNumber, Modal } from 'antd';
+import {Row, Col, Icon} from 'antd';
+import {Form, Input, Button, InputNumber, Modal} from 'antd';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
-import { Hex } from '../../../redux/helpers';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import {Hex} from '../../../redux/helpers';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 // import custom components
 // Todo - Split this component in more simple one
@@ -34,12 +34,12 @@ import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.cs
 import newProposalStyle from './newProposal.style';
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
+const {TextArea} = Input;
 
 const yearDayMonth = (dateInMills, format) => {
   const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
   const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) +
-    1}`.slice(-2);
+  1}`.slice(-2);
   const firstYear = new Date(dateInMills).getFullYear();
 
   switch (format) {
@@ -137,9 +137,9 @@ class NewProposal extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
-    const { paymentQuantity } = this.state;
+    const {paymentQuantity} = this.state;
     const nextGovernanceDate = await this.getGovernanceDate();
-    const { endEpoch, proposalPayoutDates } = lastPaymentCalculator(
+    const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
       paymentQuantity,
       nextGovernanceDate
     );
@@ -236,7 +236,7 @@ class NewProposal extends Component {
           });
         } else {
           this.firebase.deletePendingProposal(currentUser.uid);
-          this.setState({ savedProposal: {} });
+          this.setState({savedProposal: {}});
         }
       })
       .catch(err => {
@@ -257,8 +257,8 @@ class NewProposal extends Component {
   //payment quantity
 
   paymentQuantity(value) {
-    const { nextGovernanceDate } = this.state;
-    const { endEpoch, proposalPayoutDates } = lastPaymentCalculator(
+    const {nextGovernanceDate} = this.state;
+    const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
       value,
       nextGovernanceDate
     );
@@ -272,9 +272,9 @@ class NewProposal extends Component {
   }
 
   async submitPaymentId() {
-    const { currentUser } = this.props.app;
+    const {currentUser} = this.props.app;
     if (!currentUser) {
-      swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
+      swal({title: 'Oops', text: 'Must register/login.', icon: 'error'});
       return;
     }
 
@@ -290,8 +290,8 @@ class NewProposal extends Component {
     }
 
     if (this.state.payValue) {
-      let submitObj = { ...this.state.prepareObj };
-      let updatedUserProposal = { ...this.state.userProposal };
+      let submitObj = {...this.state.prepareObj};
+      let updatedUserProposal = {...this.state.userProposal};
       if (this.state.payValue) {
         updatedUserProposal.txid = this.state.payValue;
         await this.firebase.setProposal(currentUser.uid, updatedUserProposal);
@@ -314,7 +314,7 @@ class NewProposal extends Component {
             }
           })
           .catch(err => {
-            swal({ title: 'Oops...', text: `${err}`, icon: 'error' });
+            swal({title: 'Oops...', text: `${err}`, icon: 'error'});
           });
       }
     } else {
@@ -327,9 +327,9 @@ class NewProposal extends Component {
   }
 
   async submitHash() {
-    const { currentUser } = this.props.app;
+    const {currentUser} = this.props.app;
     if (!currentUser) {
-      swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
+      swal({title: 'Oops', text: 'Must register/login.', icon: 'error'});
       return;
     }
 
@@ -350,8 +350,8 @@ class NewProposal extends Component {
       const descriptionID = proposal.descriptionID;
 
       if (this.state.hValue) {
-        let updateProposalDetail = { ...this.state.proposalDetail };
-        let updatedUserProposal = { ...this.state.userProposal };
+        let updateProposalDetail = {...this.state.proposalDetail};
+        let updatedUserProposal = {...this.state.userProposal};
 
         updateProposalDetail.hash = this.state.hValue;
         updatedUserProposal.hash = this.state.hValue;
@@ -394,7 +394,7 @@ class NewProposal extends Component {
   }
 
   onChange(e) {
-    const { currentUser } = this.props.app;
+    const {currentUser} = this.props.app;
     if (!currentUser) {
       return;
     }
@@ -408,9 +408,9 @@ class NewProposal extends Component {
     const errorMessage = dataErrArray[dataErrArray.length - 2];
     switch (errorMessage) {
       case 'Invalid name':
-        return { message: errorMessage, step: 0 };
+        return {message: errorMessage, step: 0};
       default:
-        return { message: errorMessage, step: 2 };
+        return {message: errorMessage, step: 2};
     }
   }
 
@@ -456,8 +456,8 @@ class NewProposal extends Component {
   };
 
   createPropObj = async () => {
-    const { app } = this.props;
-    const { currentUser } = app;
+    const {app} = this.props;
+    const {currentUser} = app;
     const {
       proposalName,
       proposalTitle,
@@ -470,7 +470,7 @@ class NewProposal extends Component {
     } = this.state;
 
     if (!currentUser) {
-      swal({ title: 'Oops', text: 'Must register/login.', icon: 'error' });
+      swal({title: 'Oops', text: 'Must register/login.', icon: 'error'});
       return;
     }
 
@@ -483,7 +483,7 @@ class NewProposal extends Component {
       showEditor: true
     }); */
 
-    const proposalDescription = { detail: proposal__detail, hash: '' };
+    const proposalDescription = {detail: proposal__detail, hash: ''};
 
     this.firebase.setProposalDescription(descriptionID, proposalDescription);
 
@@ -571,7 +571,7 @@ class NewProposal extends Component {
 
   handleBack = () => {
     if (this.state.activeStep === 2) {
-      this.setState({ showEditor: true });
+      this.setState({showEditor: true});
     }
     this.setState(
       {
@@ -580,21 +580,21 @@ class NewProposal extends Component {
       },
       () => {
         if (this.state.activeStep === 1 || this.state.activeStep === 0) {
-          this.setState({ showEditor: true });
+          this.setState({showEditor: true});
         }
       }
     );
   };
 
-  /*  //date change function
-  onDateChange(value) {
-    this.setState({
-      proposalStartEpoch: value,
-      proposalEndEpoch: value,
-      paymentQuantity: 1,
-      totalAmount: this.state.amount
-    });
-  } */
+  // //date change function
+  // onDateChange(value) {
+  //   this.setState({
+  //     proposalStartEpoch: value,
+  //     proposalEndEpoch: value,
+  //     paymentQuantity: 1,
+  //     totalAmount: this.state.amount
+  //   });
+  // }
 
   //proposal title function
   proposalTitle(e) {
@@ -664,9 +664,10 @@ class NewProposal extends Component {
       'Create Proposal'
     ];
   }
+
   //all the step contents are coming from return of switch case
   getStepContent(step) {
-    const { deviceType } = this.props;
+    const {deviceType} = this.props;
 
     switch (step) {
       case 0:
@@ -800,7 +801,7 @@ class NewProposal extends Component {
             <Row className="amount-row">
               <Row>
                 <Col span={deviceType === 'mobile' ? 24 : 24}>
-                  <p />
+                  <p/>
                   <h3>Payment Info:</h3>
                   <div className="paymentInfo_Wrapper">
                     <p className="">
@@ -820,10 +821,10 @@ class NewProposal extends Component {
                         })}
                       </div>
                     </div>
-                    <p />
+                    <p/>
                     <p className="">
                       {`Total amount: ${this.state.totalAmount ||
-                        this.state.amount} SYS`}
+                      this.state.amount} SYS`}
                     </p>
                   </div>
                 </Col>
@@ -879,21 +880,21 @@ class NewProposal extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const {classes, deviceType} = this.props;
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
     const modalStyle =
       deviceType === 'mobile' ? classes.mobileModal : classes.modal;
 
     const steps = this.getSteps();
-    const { activeStep } = this.state;
+    const {activeStep} = this.state;
 
     return (
       <div>
         {/* Receipt Modal */}
         <Modal
           title="Proposal"
-          style={{ top: 20 }}
+          style={{top: 20}}
           visible={this.state.visible}
           onCancel={this.handleCancel.bind(this)}
           footer={null}
@@ -907,8 +908,8 @@ class NewProposal extends Component {
               value={this.state.pValue}
             />
             {this.state.pCopied ? (
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ color: 'red', padding: '0px 8px' }}>
+              <div style={{textAlign: 'right'}}>
+                <span style={{color: 'red', padding: '0px 8px'}}>
                   Copied.
                 </span>
               </div>
@@ -919,7 +920,7 @@ class NewProposal extends Component {
                 : 'No Prepare command has been generated.'}
               <CopyToClipboard
                 text={this.state.pValue}
-                onCopy={() => this.setState({ pCopied: true })}
+                onCopy={() => this.setState({pCopied: true})}
               >
                 <Button
                   type="primary"
@@ -937,12 +938,12 @@ class NewProposal extends Component {
                 onChange={e => this.onChange(e)}
                 name="payValue"
               />
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ color: 'red', padding: '0px 8px' }}>
+              <div style={{textAlign: 'right'}}>
+                <span style={{color: 'red', padding: '0px 8px'}}>
                   {this.state.txIdError}
                 </span>
               </div>
-              <br />
+              <br/>
             </div>
             <div className="submit-btn">
               <Button
@@ -950,7 +951,7 @@ class NewProposal extends Component {
                 disabled={this.state.sValue}
                 onClick={() => this.handleReset()}
               >
-                <Icon type="left" />
+                <Icon type="left"/>
                 {`Back & Edit`}
               </Button>
               <Button
@@ -962,17 +963,17 @@ class NewProposal extends Component {
               </Button>
             </div>
           </div>
-          <br />
-          <hr />
-          <br />
+          <br/>
+          <hr/>
+          <br/>
           <TextArea
             rows={this.state.sCopied ? 4 : 5}
             readOnly
             value={this.state.sValue}
           />
           {this.state.sCopied ? (
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ color: 'red', padding: '0px 8px' }}>Copied.</span>
+            <div style={{textAlign: 'right'}}>
+              <span style={{color: 'red', padding: '0px 8px'}}>Copied.</span>
             </div>
           ) : null}
           <div className="receipt-text">
@@ -981,14 +982,14 @@ class NewProposal extends Component {
               : 'No Submit command has been generated.'}
             <CopyToClipboard
               text={this.state.sValue}
-              onCopy={() => this.setState({ sCopied: true })}
+              onCopy={() => this.setState({sCopied: true})}
             >
               <Button type="primary" disabled={!this.state.sValue}>
                 Copy
               </Button>
             </CopyToClipboard>
           </div>
-          <br />
+          <br/>
           <div className="id-input">
             <span>Enter Proposal Hash Here: </span>
             <Input
@@ -997,12 +998,12 @@ class NewProposal extends Component {
               onChange={e => this.onChange(e)}
               name="hValue"
             />
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ color: 'red', padding: '0px 8px' }}>
+            <div style={{textAlign: 'right'}}>
+              <span style={{color: 'red', padding: '0px 8px'}}>
                 {this.state.hashError}
               </span>
             </div>
-            <br />
+            <br/>
           </div>
           <div className="submit-btn">
             <Button
@@ -1043,7 +1044,7 @@ class NewProposal extends Component {
                             <Button
                               className="preview-edit-button"
                               onClick={() => {
-                                this.setState({ showEditor: true });
+                                this.setState({showEditor: true});
                               }}
                             >
                               EDITOR
