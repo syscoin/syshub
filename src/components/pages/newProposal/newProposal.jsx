@@ -53,7 +53,8 @@ const yearDayMonth = (dateInMills, format) => {
 };
 
 const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
-  //console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
+  console.log('nPayments -->',nPayments)
+  console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
   const {
     rewardDateEpoch,
     superblockCycleEpoch,
@@ -251,6 +252,7 @@ class NewProposal extends Component {
   async getGovernanceDate() {
     const nextGovernanceDate = await nextGovernanceRewardInfo();
     Object.assign(nextGovernanceDate);
+    console.log('nextGovernanceDate --->', nextGovernanceDate);
     return nextGovernanceDate;
   }
 
