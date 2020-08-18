@@ -747,7 +747,7 @@ class Firebase {
   };
 
   saveAuthSecret = async (secret, uid) => {
-    const cipher = await this.getCipher();
+    const cipher = await this.getCipher(uid);
     const cryptedSecret = cipher.encrypt(secret);
     const newStatus = await this.setFire2FAMethod(
       uid,
