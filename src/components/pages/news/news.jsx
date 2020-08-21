@@ -31,6 +31,10 @@ class News extends Component {
     this.scrollToBottom();
   }
 
+  componentWillUnmount() {
+    this.props.cancelAllXHR.source.cancel('cancel token');
+  }
+
   scrollToBottom = () => {
     const detailContainer = ReactDOM.findDOMNode(this.detailContainer);
     detailContainer.scrollTop = detailContainer.scrollHeight;
@@ -110,7 +114,8 @@ class News extends Component {
 
 const stateToProps = state => {
   return {
-    posts: state.mediumPosts.posts
+    posts: state.mediumPosts.posts,
+    cancelAllXHR: state.cancelXHR.cancelToken
   };
 };
 

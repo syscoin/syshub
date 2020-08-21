@@ -39,6 +39,10 @@ class DashBoard extends Component {
 
   async componentDidMount() {}
 
+  componentWillUnmount() {
+    this.props.cancelAllXHR.source.cancel('cancel token');
+  }
+
   selectProposalByHash(propHash) {
     const { proposals } = this.props;
     // this.props.setProposalContainer('dashBoard');
@@ -151,7 +155,8 @@ const stateToProps = state => {
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
     selectedProposal: state.app.dashBoard.selectedProposal,
-    appConstants: state.app.globalConst
+    appConstants: state.app.globalConst,
+    cancelAllXHR: state.cancelXHR.cancelToken
   };
 };
 
