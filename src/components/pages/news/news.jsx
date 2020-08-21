@@ -32,7 +32,7 @@ class News extends Component {
   }
 
   componentWillUnmount() {
-    this.props.cancelAllXHR.source.cancel('cancel token');
+    // this.props.cancelAllXHR.source.cancel('cancel token');
   }
 
   scrollToBottom = () => {

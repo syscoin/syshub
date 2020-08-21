@@ -19,6 +19,9 @@ import { ProposalDetail } from '../../containers/proposalDetail/proposalDetail';
 import injectSheet from 'react-jss';
 import dashboardStyle from './dashboard.style';
 
+//import cancel token
+import { cancel } from '../../../redux/helpers/HTTPAsync';
+
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +36,7 @@ class DashBoard extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
+    await cancel('Operation canceled by dashboard');
     await this.props.getProposals();
     this.selectProposalByHash(this.props.selectedProposal);
   }
@@ -40,7 +44,7 @@ class DashBoard extends Component {
   async componentDidMount() {}
 
   componentWillUnmount() {
-    this.props.cancelAllXHR.source.cancel('cancel token');
+    
   }
 
   selectProposalByHash(propHash) {
@@ -155,8 +159,7 @@ const stateToProps = state => {
     currentUser: state.app.currentUser,
     showContainer: state.app.dashBoard.showContainer,
     selectedProposal: state.app.dashBoard.selectedProposal,
-    appConstants: state.app.globalConst,
-    cancelAllXHR: state.cancelXHR.cancelToken
+    appConstants: state.app.globalConst
   };
 };
 
@@ -165,7 +168,8 @@ const dispatchToProps = dispatch => {
     getProposals: () => dispatch(actions.getProposals()),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
-    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash)),
+    cancelAllXHR: () => dispatch(actions.cancelAllXHR)
   };
 };
 export default compose(

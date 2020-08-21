@@ -2,21 +2,29 @@ import axios from "axios";
 
 //cancelToken for the XHR
 const CancelToken = axios.CancelToken;
-let source = CancelToken.source();
+let cancel;
 
 const getRequest = (url, params) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(url, params, { CancelToken: source.token })
+      .get(url, { ...params,
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          cancel = c;
+        })
+      })
       .then(response => {
+        console.log('mardito get')
         resolve(response.data || response);
       })
       .catch(err => {
         if (axios.isCancel(err)) {
           console.log('request canceled', err.message);
+          reject(err || err.message);
         }
         else {
           reject(err || err.message);
+          
         }
       });
   });
@@ -139,8 +147,12 @@ export default {
           throw err;
         });
   },
-  cancelSourceXHR: {
-    source
+  cancelSourceXHR: (actionType) => {
+    return async dispatch => {
+      await cancel();
+      dispatch({actionType});
+    }
   }
   
 };
+export { cancel };
