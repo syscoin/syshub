@@ -737,12 +737,15 @@ class Firebase {
   };
 
   getAuthSecret = async uid => {
-    const {auth, authSecret} = await this.getFire2FAstatus(uid);
+    const { auth, authSecret } = await this.getFire2FAstatus(uid);
+    console.log('auth ->', auth)
+    console.log('authSecret ->', authSecret)
     const cipher = await this.getCipher(uid);
     if (!auth) {
       return false;
     }
     const secret = cipher.decrypt(authSecret);
+    console.log('secret ->',secret)
     return secret;
   };
 

@@ -42,6 +42,7 @@ class MasternodeSetting extends Component {
   firebase = this.props.firebase;
 
   componentDidMount() {
+    this.props.cancelXHR();
     this.refreshMasternodeList();
   }
 

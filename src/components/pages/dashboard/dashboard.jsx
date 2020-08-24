@@ -19,8 +19,6 @@ import { ProposalDetail } from '../../containers/proposalDetail/proposalDetail';
 import injectSheet from 'react-jss';
 import dashboardStyle from './dashboard.style';
 
-//import cancel token
-import { cancel } from '../../../redux/helpers/HTTPAsync';
 
 class DashBoard extends Component {
   constructor(props) {
@@ -36,16 +34,14 @@ class DashBoard extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
-    await cancel('Operation canceled by dashboard');
+    await this.props.cancelXHR();
+
     await this.props.getProposals();
     this.selectProposalByHash(this.props.selectedProposal);
   }
 
   async componentDidMount() {}
 
-  componentWillUnmount() {
-    
-  }
 
   selectProposalByHash(propHash) {
     const { proposals } = this.props;

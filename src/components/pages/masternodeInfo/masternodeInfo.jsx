@@ -17,7 +17,9 @@ const cardDim = {
 
 class MasternodeInfo extends Component {
 
-componentDidMount() { }
+  componentDidMount() {
+    this.props.cancelXHR();
+  }
 
    render() {
     const { classes, deviceType, tilesData } = this.props;

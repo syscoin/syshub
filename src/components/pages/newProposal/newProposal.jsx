@@ -138,6 +138,7 @@ class NewProposal extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
+    await this.props.cancelXHR();
     const {paymentQuantity} = this.state;
     const nextGovernanceDate = await this.getGovernanceDate();
     const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(

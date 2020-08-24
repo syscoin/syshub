@@ -23,17 +23,17 @@ class News extends Component {
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
-  componentWillMount() {
-    this.props.getMediumPosts();
+  async componentWillMount() {
+    await this.props.cancelXHR();
+    if (!(this.props.posts.length > 0)) {
+      await this.props.getMediumPosts();
+    }
   }
 
   componentDidMount() {
     this.scrollToBottom();
   }
 
-  componentWillUnmount() {
-    // this.props.cancelAllXHR.source.cancel('cancel token');
-  }
 
   scrollToBottom = () => {
     const detailContainer = ReactDOM.findDOMNode(this.detailContainer);

@@ -26,6 +26,9 @@ import MAppRSider from '../appRSider/appRSider';
 //Import Styles
 import mAppContentStyle from './mAppContent.style';
 
+import { cancelXHR } from '../../../redux/helpers/HTTPAsync';//Cancel allXHR
+
+
 //import EmailModal from './the-modal';
 
 const { Content } = Layout;
@@ -39,16 +42,16 @@ class AppContent extends Component {
         <Content style={mAppContentStyle.wraper}>
           {
             {
-              home: <Home deviceType={deviceType} />,
-              dashBoard: <DashBoard deviceType={deviceType} />,
-              newProposal: <NewProposal deviceType={deviceType} />,
-              news: <News deviceType={deviceType} />,
-              userAccount: <UserAccount deviceType={deviceType} />,
-              faq: <Faq deviceType={deviceType} />,
-              masterNode: <MasternodeSetting deviceType={deviceType} />,
-              tool: <MasternodeInfo deviceType={deviceType} />,
-              login: <Login deviceType={deviceType} />,
-              register: <Register deviceType={deviceType} />
+              home: <Home deviceType={deviceType} cancelXHR={cancelXHR} />,
+              dashBoard: <DashBoard deviceType={deviceType} cancelXHR={cancelXHR} />,
+              newProposal: <NewProposal deviceType={deviceType} cancelXHR={cancelXHR} />,
+              news: <News deviceType={deviceType} cancelXHR={cancelXHR} />,
+              userAccount: <UserAccount deviceType={deviceType} cancelXHR={cancelXHR} />,
+              faq: <Faq deviceType={deviceType} cancelXHR={cancelXHR} />,
+              masterNode: <MasternodeSetting deviceType={deviceType} cancelXHR={cancelXHR} />,
+              tool: <MasternodeInfo deviceType={deviceType} cancelXHR={cancelXHR} />,
+              login: <Login deviceType={deviceType} cancelXHR={cancelXHR} />,
+              register: <Register deviceType={deviceType} cancelXHR={cancelXHR} />
             }[showPage]
           }
           {this.props.showMenu ? <MAppLSider deviceType={deviceType} /> : null}

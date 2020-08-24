@@ -7,7 +7,6 @@ import proposals from './proposalReducers';
 import mediumPosts from './mediumReducers';
 import mnInfo from './mnInfoReducer';
 import governance from './sysGovernanceReducers';
-import cancelXHR from './cancelXHRReducers';
 
 export default combineReducers({
   app,
@@ -15,6 +14,5 @@ export default combineReducers({
   proposals,
   mediumPosts,
   mnInfo,
-  governance,
-  cancelXHR
+  governance
 });
