@@ -164,8 +164,7 @@ const dispatchToProps = dispatch => {
     getProposals: () => dispatch(actions.getProposals()),
     setProposalContainer: container =>
       dispatch(actions.setProposalContainer(container)),
-    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash)),
-    cancelAllXHR: () => dispatch(actions.cancelAllXHR)
+    setProposalShow: propHash => dispatch(actions.setProposalShow(propHash))
   };
 };
 export default compose(

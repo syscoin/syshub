@@ -114,8 +114,7 @@ class News extends Component {
 
 const stateToProps = state => {
   return {
-    posts: state.mediumPosts.posts,
-    cancelAllXHR: state.cancelXHR.cancelToken
+    posts: state.mediumPosts.posts
   };
 };
 
