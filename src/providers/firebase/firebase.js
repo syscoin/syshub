@@ -46,16 +46,13 @@ class Firebase {
     return snapshot.val();
   }
 
-  async getCipher(uid) {
-    if (uid) {
-      return aes.createCipher(uid);
-    }
+  async getCipher() {
     const user = await this.getCurrentUser();
+
     const userData = await this.getUserData(user.uid);
-    console.log(userData)
-    console.log(userData.encryptionKey)
+
     const pwd = window.localStorage.getItem(user.uid);
-    console.log(pwd)
+
     const encryptionKey = aes.decrypt(pwd, userData.encryptionKey);
 
     return aes.createCipher(encryptionKey);
@@ -631,7 +628,7 @@ class Firebase {
       `${FB_COLLECTION_MASTERNODES}/${uid}`
     );
     masternodesRef.child(masternode.keyId).remove();
-    this.rmvOneDBnMnodes();
+   await this.rmvOneDBnMnodes();
   };
 
   addMasternodes = async (masternodeArray, uid) => {
@@ -737,20 +734,18 @@ class Firebase {
   };
 
   getAuthSecret = async uid => {
-    const { auth, authSecret } = await this.getFire2FAstatus(uid);
-    console.log('auth ->', auth)
-    console.log('authSecret ->', authSecret)
-    const cipher = await this.getCipher(uid);
+    const {auth, authSecret} = await this.getFire2FAstatus(uid);
+    const cipher = await this.getCipher();
     if (!auth) {
       return false;
     }
     const secret = cipher.decrypt(authSecret);
-    console.log('secret ->',secret)
+    console.log('secret ->', secret)
     return secret;
   };
 
   saveAuthSecret = async (secret, uid) => {
-    const cipher = await this.getCipher(uid);
+    const cipher = await this.getCipher();
     const cryptedSecret = cipher.encrypt(secret);
     const newStatus = await this.setFire2FAMethod(
       uid,

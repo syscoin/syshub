@@ -15,7 +15,7 @@
     "comments": {
       ".read": true,
       ".write": "auth !== null",
-      ".indexOn": ["createdAt", "createdBy/uid"]
+
     },
     "dbinfo": {
       ".read": true,

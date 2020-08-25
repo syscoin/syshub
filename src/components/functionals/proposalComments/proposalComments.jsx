@@ -1,15 +1,15 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
 
-import { Row, Col } from 'antd';
-import { Grid, Button, Typography } from '@material-ui/core';
+import {Row, Col} from 'antd';
+import {Grid, Button, Typography} from '@material-ui/core';
 import swal from 'sweetalert';
 
 //Imports providers HOC's
-import { withFirebase } from '../../../providers/firebase';
+import {withFirebase} from '../../../providers/firebase';
 import injectSheet from 'react-jss';
 
 import actions from '../../../redux/actions';
@@ -77,7 +77,7 @@ class ProposalComments extends Component {
       return proposal.Hash === this.props.data.proposalID;
     });
     if (proposal) {
-      this.setState({ proposal });
+      this.setState({proposal});
     }
     this.loadComments();
   }
@@ -94,7 +94,10 @@ class ProposalComments extends Component {
       this.props.data.proposalID,
       false
     );
-    this.setState({ allComments }, () => {
+    allComments.map(item => {
+      delete item.createdBy.uid
+    })
+    this.setState({allComments}, () => {
       this.loadReplies(0);
     });
   }
@@ -103,7 +106,6 @@ class ProposalComments extends Component {
   async loadReplies(index) {
     // Load replies from firebase
     // then set in state
-
     if (this.state.allComments.length > index) {
       let _commentId = this.state.allComments[index]._id;
       let _comments = Object.assign(this.state.allComments);
@@ -149,7 +151,7 @@ class ProposalComments extends Component {
       let _comment = {
         createdBy: {
           name: this.props.user.displayName,
-          uid: this.props.user.uid
+          // uid: this.props.user.uid
         },
         createdAt: date.getTime(),
         updatedAt: date.getTime(),
@@ -239,7 +241,7 @@ class ProposalComments extends Component {
   }
 
   setEditComment(e) {
-    this.setState({ userEditComment: e.target.value });
+    this.setState({userEditComment: e.target.value});
   }
 
   editedComment(id, message) {
@@ -284,7 +286,7 @@ class ProposalComments extends Component {
         }
         return comment;
       });
-      this.setState({ allComments });
+      this.setState({allComments});
     } else {
       this.loginAlert();
     }
@@ -292,7 +294,7 @@ class ProposalComments extends Component {
 
   openCommentBox() {
     if (this.props.user) {
-      this.setState({ showAddComment: true });
+      this.setState({showAddComment: true});
     } else {
       this.loginAlert();
     }
@@ -300,7 +302,7 @@ class ProposalComments extends Component {
 
   openReplyBox(itemId) {
     if (this.props.user) {
-      this.setState({ replyBox: itemId });
+      this.setState({replyBox: itemId});
     } else {
       this.loginAlert();
     }
@@ -329,13 +331,13 @@ class ProposalComments extends Component {
       createdAt: new Date().getTime(),
       createdBy: {
         name: this.props.user.displayName,
-        uid: this.props.user.uid
+        // uid: this.props.user.uid
       },
       child: [],
       isRoot: parentKey ? false : true
     };
     await this.firebase.addProposalCommentsReply(id, _replyObject, parentKey);
-    this.setState({ replyBox: null }, () => this.refreshComments());
+    this.setState({replyBox: null}, () => this.refreshComments());
   }
 
   // Render Child Object
@@ -363,7 +365,7 @@ class ProposalComments extends Component {
                     parent={item._id}
                     comment={comment}
                     add={this.commentReply}
-                    cancel={() => this.setState({ replyBox: '' })}
+                    cancel={() => this.setState({replyBox: ''})}
                   />
                 ) : (
                   <Button
@@ -406,10 +408,10 @@ class ProposalComments extends Component {
             {this.state.replyBox === reply._id ? (
               <CommentForm
                 parent={reply._id}
-                comment={{ _id: commentId }}
+                comment={{_id: commentId}}
                 add={this.commentReply}
                 cancel={() => {
-                  this.setState({ replyBox: '' });
+                  this.setState({replyBox: ''});
                 }}
               />
             ) : (
@@ -429,7 +431,7 @@ class ProposalComments extends Component {
   }
 
   render() {
-    const { classes, deviceType } = this.props;
+    const {classes, deviceType} = this.props;
 
     //Platform style switcher
     const style = deviceType === 'mobile' ? classes.mRoot : classes.root;
@@ -444,7 +446,7 @@ class ProposalComments extends Component {
           </div>
         </Grid>
         <Grid item md={11} className="section-separate">
-          <hr />
+          <hr/>
         </Grid>
         {this.state.showAddComment ? (
           <Grid item container md={8} className="commentSectionslView">
@@ -459,14 +461,14 @@ class ProposalComments extends Component {
                 value={this.state.userComment}
                 onChange={this.setComment}
               />
-              <hr className="proposalDetailsHr" />
+              <hr className="proposalDetailsHr"/>
               <Button type="submit" color="primary" onClick={this.addComment}>
                 Submit
               </Button>
               <Button
                 color="primary"
                 onClick={() => {
-                  this.setState({ showAddComment: false });
+                  this.setState({showAddComment: false});
                 }}
               >
                 Cancel
@@ -484,7 +486,7 @@ class ProposalComments extends Component {
         )}
 
         <Grid item md={9} className="section-separate">
-          <hr className="separate-with-margin" />
+          <hr className="separate-with-margin"/>
         </Grid>
 
         {this.state.allComments.map((comment, key) => {
@@ -540,7 +542,7 @@ class ProposalComments extends Component {
                     <CommentForm
                       comment={comment}
                       add={this.commentReply}
-                      cancel={() => this.setState({ replyBox: '' })}
+                      cancel={() => this.setState({replyBox: ''})}
                     />
                   ) : (
                     <Button

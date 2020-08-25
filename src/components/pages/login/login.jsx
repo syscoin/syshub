@@ -192,7 +192,6 @@ class Login extends Component {
       if (!userData.encryptionKey) {
         const UniqueId = uid(50);
         const encryptedUid = aes.encrypt(password, UniqueId);
-
         await this.firebase.doUpdateProfile({ encryptionKey: encryptedUid });
       }
 
