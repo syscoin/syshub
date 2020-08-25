@@ -87,7 +87,7 @@ export class Governance extends Component {
         } else {
             return(
                 <main className="govPage">
-                    <MetaTags>
+                    <MetaTags> 
                         <title>{t('governance.title')}</title>
                         <meta name="keywords" content={t('governance.keywords')} />
                         <meta name="description" content={t('governance.description')} />
