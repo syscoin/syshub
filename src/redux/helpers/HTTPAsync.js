@@ -155,11 +155,9 @@ export default {
 };
 
 const cancelXHR = (message = 'Request canceled by the user') => {
-  console.log(cancel);
   cancel.map(token => token(message));
 
   cancel = [];
-  console.log(cancel);
 }
 
 export { cancelXHR };
