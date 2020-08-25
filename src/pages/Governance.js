@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from "axios";
 
 import InnerBanner from '../parts/InnerBanner';
-import Investment from './partials/Investment';
+import SuperBlocks from './partials/SuperBlocks';
+import GovList from './partials/GovList';
 import MetaTags from 'react-meta-tags';
 import { withTranslation } from "react-i18next";
 
@@ -81,7 +82,8 @@ export class Governance extends Component {
                         <meta name="description" content={t('governance.description')} />
                     </MetaTags>
                     <InnerBanner heading={t('governance.title')}/>
-                    <Investment investData={this.state.statsData.stats.mn_stats} blockchainData={this.state.statsData.stats.blockchain_stats}/>
+                    <SuperBlocks superBlockData={this.state.statsData.stats.superblock_stats} budgetSum={this.state.budgetSum}/>
+                    <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
                 </main>
             )
         } else {

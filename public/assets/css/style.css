@@ -809,3 +809,25 @@ main {
 ul.social__icon li.list-inline-item {
     margin-right: 0;
 }
+.redIcon {
+    background: red;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.greenIcon {
+    background: green;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.vrRows td,.vrRows th {
+    vertical-align: middle;
+}
+.copybtns {
+    color: white;
+    border: 5px dotted #ccc;
+    outline: none;
+}

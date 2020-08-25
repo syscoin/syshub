@@ -11,6 +11,8 @@ import investment from './partials/investment/index';
 import price from './partials/price/index';
 import priceLineChart from './partials/priceLineChart/index';
 import worldMap from './partials/worldMap/index';
+import govlist from './partials/govlist/index';
+import superblocks from './partials/superblocks';
 
 export default {
   ...home,
@@ -25,5 +27,7 @@ export default {
   ...investment,
   ...price,
   ...priceLineChart,
-  ...worldMap
+  ...worldMap,
+  ...govlist,
+  ...superblocks
 }
