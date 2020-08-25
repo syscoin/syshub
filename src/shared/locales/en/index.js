@@ -2,6 +2,7 @@ import home from './pages/home/index';
 import about from './pages/about/index';
 import setup from './pages/setup/index';
 import check from './pages/check/index';
+import governance from './pages/governance/index';
 import banner from './parts/banner/index';
 import header from './parts/header/index';
 import doughnut from './partials/doughnut/index';
@@ -16,6 +17,7 @@ export default {
   ...about,
   ...setup,
   ...check,
+  ...governance,
   ...banner,
   ...header,
   ...doughnut,
@@ -23,5 +25,5 @@ export default {
   ...investment,
   ...price,
   ...priceLineChart,
-  ...worldMap,
+  ...worldMap
 }

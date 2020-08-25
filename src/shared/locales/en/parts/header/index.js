@@ -6,5 +6,6 @@ export default {
     setup: 'Setup',
     check: 'Check',
     support: 'Support',
+    governance: 'Governance'
   },
 }
