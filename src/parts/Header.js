@@ -21,12 +21,13 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
                             <li className="dropdown animation" data-animation="fadeInDown" data-animation-delay="1.1s">
-                                <Link className="nav-link" activeClassName='active' to="/">{t('header.home')}</Link>
+                                <Link className="nav-link" to="/">{t('header.home')}</Link>
                             </li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" activeClassName='active' to="/about">{t('header.about')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" activeClassName='active' to="/stats">{t('header.stats')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><Link className="nav-link" activeClassName='active' to="/setup">{t('header.setup')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" activeClassName='active' to="/check">{t('header.check')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" to="/about">{t('header.about')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" to="/stats">{t('header.stats')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><Link className="nav-link" to="/setup">{t('header.setup')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/check">{t('header.check')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/governance">{t('header.governance')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a className="nav-link" rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a></li>
                         </ul>
                     </div>

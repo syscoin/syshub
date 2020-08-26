@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
-import {Investment} from "./Investment";
 
 export class Price extends Component {
     constructor(props){
