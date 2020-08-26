@@ -83,7 +83,10 @@ export class GovListRow extends Component {
                     <br />
                     {rowdata.NoCount+" No Votes"}
                 </td>
-                <td>{((rowdata.AbsoluteYesCount/enabled)*100).toFixed(2)+"%"}</td>
+                <td>{((rowdata.AbsoluteYesCount/enabled)*100).toFixed(2)+"%"}
+                    <br />
+                    {rowdata.AbsoluteYesCount+" Abs Yes Votes"}
+                </td>
                 <td>
                     {green_comment}
                     {red_comment}
