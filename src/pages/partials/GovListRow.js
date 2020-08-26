@@ -26,6 +26,13 @@ export class GovListRow extends Component {
         const { t } = this.props;
         if(this.state.dataload===1) {
             var rowdata=this.state.rowData;
+            var final_url="";
+            console.log(rowdata.url);
+            if(rowdata.url!=="" && rowdata.url!=='emptyField') {
+                final_url=rowdata.url;
+            } else {
+                final_url="/404";
+            }
             var enabled=this.comaToNum(this.state.enabled);
             var unixTimestamp = rowdata.CreationTime;
             var milliseconds = unixTimestamp * 1000;
@@ -58,7 +65,7 @@ export class GovListRow extends Component {
                 <td>
                     {rowdata.name}
                     <br/>
-                    <a href={rowdata.url} taget='_blank'><span className="badge badge-success">{t('govlist.table.view_proposal_txt')}</span></a>
+                    <a href={final_url} taget='_blank'><span className="badge badge-success">{t('govlist.table.view_proposal_txt')}</span></a>
                 </td>
                 <td>{humanDateFormat}</td>
                 <td>{parseFloat(rowdata.payment_amount*rowdata.nPayment)} SYS</td>

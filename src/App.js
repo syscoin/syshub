@@ -11,6 +11,7 @@ import Setup from './pages/Setup';
 import Check from './pages/Check';
 import Stats from './pages/Stats';
 import Governance from './pages/Governance';
+import Error from './pages/Error';
 
 class App extends Component {
     render() {
