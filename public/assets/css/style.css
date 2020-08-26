@@ -828,6 +828,7 @@ ul.social__icon li.list-inline-item {
 }
 .copybtns {
     color: white;
-    border: 5px dotted #ccc;
     outline: none;
+    cursor: pointer;
+    width: 100%;
 }

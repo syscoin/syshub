@@ -25,8 +25,8 @@ export class SuperBlocks extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 col-lg-6 animation mb-5 mb-lg-0" data-animation="fadeInUp" data-animation-delay="1s">
-                        <div className="Heading__Bar mb-5">
-                            <h1 className="text-white font-weight-bold text-center">{t('superblocks.nextsuperblockstable.title')}</h1>
+                        <div className="Heading__Bar mb-3">
+                            <h2 className="text-white font-weight-normal text-center">{t('superblocks.nextsuperblockstable.title')}</h2>
                         </div>
                         <div className="table-responsive">
                             <table className="table live__table table-bordered table-dark table-striped">
@@ -68,8 +68,8 @@ export class SuperBlocks extends Component {
                         </div>
                     </div>
                     <div className="col-12 col-lg-6 animation" data-animation="fadeInUp" data-animation-delay="1.1s">
-                        <div className="Heading__Bar mb-5">
-                            <h1 className="text-white font-weight-bold text-center">{t('superblocks.govdetailtable.title')}</h1>
+                        <div className="Heading__Bar mb-3">
+                            <h2 className="text-white font-weight-normal text-center">{t('superblocks.govdetailtable.title')}</h2>
                         </div>
                         <div className="table-responsive">
                             <table className="table live__table table-bordered table-dark table-striped">

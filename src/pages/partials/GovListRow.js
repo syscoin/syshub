@@ -61,11 +61,11 @@ export class GovListRow extends Component {
                     <a href={rowdata.url} taget='_blank'><span className="badge badge-success">{t('govlist.table.view_proposal_txt')}</span></a>
                 </td>
                 <td>{humanDateFormat}</td>
+                <td>{parseFloat(rowdata.payment_amount*rowdata.nPayment)} SYS</td>
                 <td>
-                    <p><i className="fa fa-shield"></i> {parseFloat(rowdata.payment_amount*rowdata.nPayment)} PIV/Month</p>
-                    <p><i className="fa fa-calendar"></i> {rowdata.nPayment} months</p>
+                    <p className="mb-1">{parseFloat(rowdata.payment_amount*rowdata.nPayment)} SYS / Month(s)</p>
+                    <p>{rowdata.nPayment} Month(s)</p>
                 </td>
-                <td><p><i className="fa fa-calendar"></i> {rowdata.nPayment} months</p></td>
                 <td>{(rowdata.YesCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}</td>
                 <td>{(rowdata.NoCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}</td>
                 <td>{((rowdata.AbsoluteYesCount/enabled)*100).toFixed(2)+"%"}</td>

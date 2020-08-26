@@ -13,8 +13,8 @@ export default {
       nextsuperblockstable: {
         title: "Next 5 Superblocks",
         superblock: 'Superblock',
-        budget_amount: 'Budget amount',
-        estimate_time_utc: 'ESTIMATE DATE UTC'
+        budget_amount: 'Budget Amount',
+        estimate_time_utc: 'Estimate Date UTC'
       },
       loading: 'Data is being loaded',
     },

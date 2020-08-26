@@ -81,7 +81,7 @@ export class Governance extends Component {
                         <meta name="keywords" content={t('governance.keywords')} />
                         <meta name="description" content={t('governance.description')} />
                     </MetaTags>
-                    <InnerBanner heading={t('governance.title')}/>
+                    <InnerBanner heading={t('governance.heading')}/>
                     <SuperBlocks superBlockData={this.state.statsData.stats.superblock_stats} budgetSum={this.state.budgetSum}/>
                     <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
                 </main>
@@ -94,7 +94,7 @@ export class Governance extends Component {
                         <meta name="keywords" content={t('governance.keywords')} />
                         <meta name="description" content={t('governance.description')} />
                     </MetaTags>
-                    <InnerBanner heading={t('about.title')}/>
+                    <InnerBanner heading={t('governance.heading')}/>
                 </main>
             )
         }

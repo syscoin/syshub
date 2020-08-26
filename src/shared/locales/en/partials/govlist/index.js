@@ -1,7 +1,7 @@
 export default {
     govlist: {
       table: {
-        title:'Governance List',
+        title:'Current Proposals',
         passing:'Passing',
         name:'Name',
         created:'Created',
