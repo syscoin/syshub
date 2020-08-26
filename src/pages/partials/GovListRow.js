@@ -47,13 +47,13 @@ export class GovListRow extends Component {
                 pass=<i className='fa fa-times redIcon' data-tip={new_text}></i>;
             }
             var green_comment=<p>
-                    <CopyToClipboard text={'gobject votemany '+rowdata.Hash+' yes'}
+                    <CopyToClipboard text={'gobject vote-many '+rowdata.Hash+' funding yes'}
                     onCopy={() => alert('Copied to Clipboard') }>
                     <button type="button" className="copybtns greenIcon">Copy Yes <i className='fa fa-check'></i></button>
                     </CopyToClipboard>
                 </p>;
             var red_comment=<p>
-                <CopyToClipboard text={'gobject votemany '+rowdata.Hash+' no'}
+                <CopyToClipboard text={'gobject vote-many '+rowdata.Hash+' funding no'}
                 onCopy={() => alert('Copied to Clipboard') }>
                 <button type="button" className="copybtns redIcon">Copy No <i className='fa fa-times' ></i></button>
                 </CopyToClipboard>
@@ -67,7 +67,7 @@ export class GovListRow extends Component {
                 <td>
                     {rowdata.name}
                     <br/>
-                    <a href={final_url} target='_blank'><span className="badge badge-success">{t('govlist.table.view_proposal_txt')}</span></a>
+                    <a href={final_url} target='_blank' rel='noopener noreferrer'><span className="badge badge-success">{t('govlist.table.view_proposal_txt')}</span></a>
                 </td>
                 <td>{humanDateFormat}</td>
                 <td>{parseFloat(rowdata.payment_amount*rowdata.nPayment)} SYS</td>
