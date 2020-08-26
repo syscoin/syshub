@@ -27,7 +27,6 @@ export class GovListRow extends Component {
         if(this.state.dataload===1) {
             var rowdata=this.state.rowData;
             var final_url="";
-            console.log(rowdata.url);
             if(rowdata.url!=="" && rowdata.url!=='emptyField') {
                 final_url=rowdata.url;
             } else {
@@ -42,17 +41,20 @@ export class GovListRow extends Component {
             if(((rowdata.YesCount - rowdata.NoCount)/enabled)*100 > 10) {
                 pass=<i className='fa fa-check greenIcon' data-tip={t('govlist.table.green_text')}></i>;
             } else {
-                pass=<i className='fa fa-times redIcon' data-tip={t('govlist.table.red_text')}></i>;
+                var need=parseInt((enabled/10)-rowdata.AbsoluteYesCount);
+                var original_text=t('govlist.table.red_text');
+                var new_text=original_text.replace("[API]",need);
+                pass=<i className='fa fa-times redIcon' data-tip={new_text}></i>;
             }
             var green_comment=<p>
                     <CopyToClipboard text={'gobject votemany '+rowdata.Hash+' yes'}
-                    onCopy={() => this.setState({green_copied: true})}>
+                    onCopy={() => alert('Copied to Clipboard') }>
                     <button type="button" className="copybtns greenIcon">Copy Yes <i className='fa fa-check'></i></button>
                     </CopyToClipboard>
                 </p>;
             var red_comment=<p>
                 <CopyToClipboard text={'gobject votemany '+rowdata.Hash+' no'}
-                onCopy={() => this.setState({red_copied: true})}>
+                onCopy={() => alert('Copied to Clipboard') }>
                 <button type="button" className="copybtns redIcon">Copy No <i className='fa fa-times' ></i></button>
                 </CopyToClipboard>
             </p>;
