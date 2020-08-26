@@ -77,9 +77,12 @@ export class GovListRow extends Component {
                 </td>
                 <td>{(rowdata.YesCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}
                     <br />
-                    {rowdata.YesCount}
+                    {rowdata.YesCount+" Yes Votes"}
                 </td>
-                <td>{(rowdata.NoCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}</td>
+                <td>{(rowdata.NoCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}
+                    <br />
+                    {rowdata.NoCount+" No Votes"}
+                </td>
                 <td>{((rowdata.AbsoluteYesCount/enabled)*100).toFixed(2)+"%"}</td>
                 <td>
                     {green_comment}
