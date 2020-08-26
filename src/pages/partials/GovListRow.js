@@ -75,7 +75,10 @@ export class GovListRow extends Component {
                     <p className="mb-1">{parseFloat(rowdata.payment_amount)} SYS / Month(s)</p>
                     <p>{rowdata.nPayment} Month(s)</p>
                 </td>
-                <td>{(rowdata.YesCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}</td>
+                <td>{(rowdata.YesCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}
+                    <br />
+                    {rowdata.YesCount}
+                </td>
                 <td>{(rowdata.NoCount/(rowdata.YesCount+rowdata.NoCount)*100).toFixed(2)+"%"}</td>
                 <td>{((rowdata.AbsoluteYesCount/enabled)*100).toFixed(2)+"%"}</td>
                 <td>
