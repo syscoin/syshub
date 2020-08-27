@@ -82,8 +82,8 @@ export class Governance extends Component {
                         <meta name="description" content={t('governance.description')} />
                     </MetaTags>
                     <InnerBanner heading={t('governance.heading')}/>
-                    <SuperBlocks superBlockData={this.state.statsData.stats.superblock_stats} budgetSum={this.state.budgetSum}/>
                     <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
+                    <SuperBlocks superBlockData={this.state.statsData.stats.superblock_stats} budgetSum={this.state.budgetSum}/>
                 </main>
             )
         } else {
