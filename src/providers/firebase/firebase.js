@@ -629,7 +629,7 @@ class Firebase {
       `${FB_COLLECTION_MASTERNODES}/${uid}`
     );
     masternodesRef.child(masternode.keyId).remove();
-   await this.rmvOneDBnMnodes();
+    await this.rmvOneDBnMnodes();
   };
 
   addMasternodes = async (masternodeArray, uid) => {
@@ -651,12 +651,13 @@ class Firebase {
         const newMasternodeRef = this.getDocumentRef(
           `${FB_COLLECTION_MASTERNODES}/${uid}`
         );
-       await newMasternodeRef.child(masternode.keyId).set(masternode);
+        await newMasternodeRef.child(masternode.keyId).set(masternode);
       } else {
         addMnError.push(masternode.mnPrivateKey);
       }
     });
     await this.addOneDBnMnodes(null, masternodeArray, addMnError);
+    await this.getMasternodeListByUser(uid);
     return {error: addMnError, success: !addMnError.length};
   };
 
