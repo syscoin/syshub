@@ -72,7 +72,7 @@ export class GovListRow extends Component {
                 <td>{humanDateFormat}</td>
                 <td>{parseFloat(rowdata.payment_amount*rowdata.nPayment)} SYS</td>
                 <td>
-                    {parseFloat(rowdata.payment_amount+" SYS/Month")}
+                    {parseFloat(rowdata.payment_amount)+" SYS/Month"}
                     <br />
                     {rowdata.nPayment+" Month(s)"}
                 </td>
