@@ -811,17 +811,17 @@ ul.social__icon li.list-inline-item {
 }
 .redIcon {
     background: red;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
-    border-radius: 10px;
-    font-size: 18px;
+    border-radius: 5px;
+    font-size: 10px;
 }
 .greenIcon {
     background: green;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
-    border-radius: 10px;
-    font-size: 18px;
+    border-radius: 5px;
+    font-size: 10px;
 }
 .vrRows td,.vrRows th {
     vertical-align: middle;
