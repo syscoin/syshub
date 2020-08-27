@@ -205,7 +205,14 @@ class Register extends Component {
         await this.firebase.addUsername(newUser.uid, username);
         currentUser.updateProfile({ displayName: username });
       }
-      this.props.setPage('home');
+
+      swal({
+        title: 'Account created',
+        text: `Login to access the app`,
+        icon: 'success'
+      });
+      await this.firebase.doLogout();
+      this.props.setPage('login');
     }
   }
 
