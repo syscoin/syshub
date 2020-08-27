@@ -110,9 +110,9 @@ class ProposalComments extends Component {
       let _commentId = this.state.allComments[index]._id;
       let _comments = Object.assign(this.state.allComments);
       let _childReplies = [];
-      const _allReplies = await this.firebase.getProposalCommentsReply(
-        _commentId
-      );
+      // const _allReplies = await this.firebase.getProposalCommentsReply(
+      //   _commentId
+      // );
       _comments[index].replies = [];
       if (index >= 0) {
         for (var key in _allReplies) {
@@ -161,7 +161,7 @@ class ProposalComments extends Component {
         replies: []
       };
 
-      await this.firebase.addProposalComments(this.state.proposalID, _comment);
+      // await this.firebase.addProposalComments(this.state.proposalID, _comment);
 
       this.setState(
         {
@@ -218,11 +218,11 @@ class ProposalComments extends Component {
             _item.votes.push(newVote);
           }
         }
-        await this.firebase.setProposalCommentsVote(
-          this.props.data.proposalID,
-          commentID,
-          _item
-        );
+        // await this.firebase.setProposalCommentsVote(
+        //   this.props.data.proposalID,
+        //   commentID,
+        //   _item
+        // );
         this.refreshComments();
       }
     }
@@ -336,7 +336,7 @@ class ProposalComments extends Component {
       child: [],
       isRoot: parentKey ? false : true
     };
-    await this.firebase.addProposalCommentsReply(id, _replyObject, parentKey);
+    // await this.firebase.addProposalCommentsReply(id, _replyObject, parentKey);
     this.setState({replyBox: null}, () => this.refreshComments());
   }
 

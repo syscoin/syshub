@@ -14,7 +14,7 @@ import {
   ProposalPayment,
   ProposalApprovalStat,
   ProposalDescription,
-  ProposalComments
+  // ProposalComments
 } from "../../functionals";
 
 // Import Material-UI components
@@ -124,10 +124,10 @@ export class ProposalDetail extends Component {
                 moreInfoUrl={this.setMoreInfoUrl(dataString.url)}
                 proposalUrl={this.setProposalUrl(proposal.Hash)}
               />
-              <ProposalComments
-                deviceType={deviceType}
-                data={{ proposalID: proposal.Hash }}
-              />
+              {/*<ProposalComments*/}
+              {/*  deviceType={deviceType}*/}
+              {/*  data={{ proposalID: proposal.Hash }}*/}
+              {/*/>*/}
             </Grid>
           </Grid>
         )}

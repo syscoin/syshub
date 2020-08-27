@@ -100,7 +100,7 @@ class Firebase {
     this.auth.signInWithEmailAndPassword(email, password);
 
   doSignOut = async update => {
-    this.auth.signOut();
+   await this.auth.signOut();
     if (update) {
     }
   };
@@ -346,7 +346,7 @@ class Firebase {
         .child(`${currentUser.displayName}-deleted`)
         .set(currentUser.uid); */
 
-      this.removeFire2FA(currentUser.uid);
+      await this.removeFire2FA(currentUser.uid);
 
       const proposalsRef = await this.getDocumentRef(FB_COLLECTION_PROPOSALS);
       proposalsRef.child(currentUser.uid).remove();
@@ -529,42 +529,43 @@ class Firebase {
     }
   };
 
+  /** functions for the comments of the proposals will not be used **/
   /**
    *
    * @param {string} pid = proposal ID
    */
-  getProposalComments = async (pid, sortAsc) => {
-    const comments = await this.getDocument(`${FB_COLLECTION_COMMENTS}/${pid}`);
-    if (comments) {
-      Object.getOwnPropertyNames(comments).forEach((key, idx, array) => {
-        comments[key]._id = key;
-        comments[key].showAddReply = false;
-      });
-    }
-    const commentsArray = comments ? Object.values(comments) : [];
-    if (sortAsc) {
-      commentsArray.sort(function (a, b) {
-        return a.createdAt - b.createdAt;
-      });
-    } else {
-      commentsArray.sort(function (b, a) {
-        return a.createdAt - b.createdAt;
-      });
-    }
-    return commentsArray;
-  };
+  // getProposalComments = async (pid, sortAsc) => {
+  //   const comments = await this.getDocument(`${FB_COLLECTION_COMMENTS}/${pid}`);
+  //   if (comments) {
+  //     Object.getOwnPropertyNames(comments).forEach((key, idx, array) => {
+  //       comments[key]._id = key;
+  //       comments[key].showAddReply = false;
+  //     });
+  //   }
+  //   const commentsArray = comments ? Object.values(comments) : [];
+  //   if (sortAsc) {
+  //     commentsArray.sort(function (a, b) {
+  //       return a.createdAt - b.createdAt;
+  //     });
+  //   } else {
+  //     commentsArray.sort(function (b, a) {
+  //       return a.createdAt - b.createdAt;
+  //     });
+  //   }
+  //   return commentsArray;
+  // };
 
   /**
    *
    * @param {string} pid = proposal ID
    * @param {string} comment = comment Object to be added
    */
-  addProposalComments = async (pid, comment) => {
-    const commentsRef = await this.getDocumentRef(
-      `${FB_COLLECTION_COMMENTS}/${pid}`
-    );
-    await commentsRef.push(comment);
-  };
+  // addProposalComments = async (pid, comment) => {
+  //   const commentsRef = await this.getDocumentRef(
+  //     `${FB_COLLECTION_COMMENTS}/${pid}`
+  //   );
+  //   await commentsRef.push(comment);
+  // };
 
   /**
    *
@@ -572,20 +573,20 @@ class Firebase {
    * @param {string} cid = comment ID
    * @param {object} item = object with the vote
    */
-  setProposalCommentsVote = async (pid, cid, item) => {
-    const commentsRef = await this.getDocumentRef(
-      `${FB_COLLECTION_COMMENTS}/${pid}/${cid}`
-    );
-    const rawComments = await commentsRef.set(item);
-    return rawComments;
-  };
+  // setProposalCommentsVote = async (pid, cid, item) => {
+  //   const commentsRef = await this.getDocumentRef(
+  //     `${FB_COLLECTION_COMMENTS}/${pid}/${cid}`
+  //   );
+  //   const rawComments = await commentsRef.set(item);
+  //   return rawComments;
+  // };
 
   /**
    *
    * @param {string} cid = comment ID
    */
-  getProposalCommentsReply = async cid =>
-    await this.getDocument(`${FB_COLLECTION_C_REPLIES}/${cid}`);
+  // getProposalCommentsReply = async cid =>
+  //   await this.getDocument(`${FB_COLLECTION_C_REPLIES}/${cid}`);
 
   /**
    *
@@ -593,18 +594,18 @@ class Firebase {
    * @param {string} reply = comment Object to be added
    * @param {string} parentId = parent ID
    */
-  addProposalCommentsReply = async (cid, reply, parentId) => {
-    const replyRef = await this.getDocumentRef(
-      `${FB_COLLECTION_C_REPLIES}/${cid}/`
-    );
-    const uniqueID = await replyRef.push(reply).key;
-    if (parentId) {
-      const parentRef = await this.getDocumentRef(
-        `${FB_COLLECTION_C_REPLIES}/${cid}/${parentId}/child`
-      );
-      await parentRef.push(uniqueID);
-    }
-  };
+  // addProposalCommentsReply = async (cid, reply, parentId) => {
+  //   const replyRef = await this.getDocumentRef(
+  //     `${FB_COLLECTION_C_REPLIES}/${cid}/`
+  //   );
+  //   const uniqueID = await replyRef.push(reply).key;
+  //   if (parentId) {
+  //     const parentRef = await this.getDocumentRef(
+  //       `${FB_COLLECTION_C_REPLIES}/${cid}/${parentId}/child`
+  //     );
+  //     await parentRef.push(uniqueID);
+  //   }
+  // };
 
   haveToHideThisProposal = async phash =>
     !!(await this.getDocument(`${FB_COLLECTION_P_HIDDEN}/${phash}`));
@@ -636,7 +637,7 @@ class Firebase {
     const userPwd = await window.localStorage.getItem(uid);
     const encryptionKey = aes.decrypt(userPwd, encryptedKey);
     let addMnError = [];
-    masternodeArray.forEach(async masternode => {
+    masternodeArray.map(async masternode => {
       const mansternodeExists = await this.checkMasternodeExists(
         masternode.mnPrivateKey,
         uid
@@ -650,7 +651,7 @@ class Firebase {
         const newMasternodeRef = this.getDocumentRef(
           `${FB_COLLECTION_MASTERNODES}/${uid}`
         );
-        newMasternodeRef.child(masternode.keyId).set(masternode);
+       await newMasternodeRef.child(masternode.keyId).set(masternode);
       } else {
         addMnError.push(masternode.mnPrivateKey);
       }
