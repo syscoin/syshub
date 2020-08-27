@@ -729,7 +729,7 @@ ol {
         margin-left: 0;
     }
     .timeline .block::before {
-        left: -9px !important;0
+        left: -9px !important;
     }
     .timeline .block.block-left::after {
         left: -80px;
@@ -814,14 +814,14 @@ ul.social__icon li.list-inline-item {
     padding: 5px;
     text-align: center;
     border-radius: 5px;
-    font-size: 10px;
+    font-size: 12px;
 }
 .greenIcon {
     background: green;
     padding: 5px;
     text-align: center;
     border-radius: 5px;
-    font-size: 10px;
+    font-size: 12px;
 }
 .vrRows td,.vrRows th {
     vertical-align: middle;
