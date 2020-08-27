@@ -18,7 +18,7 @@ const getRequest = (url, params) => {
       })
       .catch(err => {
         if (axios.isCancel(err)) {
-          console.log(err.message);
+          // console.log(err.message);
         }
         else {
           reject(err || err.message);

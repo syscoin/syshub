@@ -50,7 +50,7 @@ export class ProposalDetail extends Component {
   }
 
   async prepareDataString(proposal) {
-    console.log("ACZ proposal -->", proposal);
+    // console.log("ACZ proposal -->", proposal);
     if (proposal) {
       const dataString = proposal.DataString[0][1];
       const descriptionID = dataString.descriptionID;

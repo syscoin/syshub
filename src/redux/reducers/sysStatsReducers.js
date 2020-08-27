@@ -56,7 +56,7 @@ const sysStats = (state = initialState, action) => {
   switch (action.type) {
     case constants.SYS_STATS_PRICE_GET: {
       const sysPrice = smartParse(action.data, []);
-      console.log("ACZ sysPrice -->", sysPrice);
+      // console.log("ACZ sysPrice -->", sysPrice);
       return { ...state, sysPrice };
     }
     case constants.SYS_STATS_TMN_GET: {

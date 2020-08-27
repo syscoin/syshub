@@ -16,8 +16,8 @@ const config = {
 };
 
 const FB_COLLECTION_DBINFO = 'dbinfo';
-const FB_COLLECTION_COMMENTS = 'comments';
-const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
+// const FB_COLLECTION_COMMENTS = 'comments';
+// const FB_COLLECTION_C_REPLIES = 'commentReplies_V2';
 const FB_COLLECTION_USERSINFO = 'usersInfo';
 const FB_COLLECTION_USERLIST = 'usersList';
 const FB_COLLECTION_PROPOSALS = 'proposals';
@@ -741,7 +741,6 @@ class Firebase {
       return false;
     }
     const secret = cipher.decrypt(authSecret);
-    console.log('secret ->', secret)
     return secret;
   };
 

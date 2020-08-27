@@ -36,7 +36,7 @@ const coingeckoFetcher = (url, params, actionType) => {
           price_change_percentage_7d
         } = data.market_data;
 
-        console.log("ACZ data -->", data);
+        // console.log("ACZ data -->", data);
         if (actionType != null) {
           dispatch({
             type: actionType,
