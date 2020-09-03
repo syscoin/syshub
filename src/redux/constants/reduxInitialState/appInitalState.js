@@ -21,15 +21,15 @@ export default {
       showWhen: 'login',
       showPlatform: 'all'
     },
-    {
-      key: 'news',
-      icon: 'png_menu_news',
-      iconSelected: 'png_menu_news_selected',
-      title: 'News and Announcements',
-      pageTitle: 'News',
-      showWhen: 'always',
-      showPlatform: 'all'
-    },
+    // {
+    //   key: 'news',
+    //   icon: 'png_menu_news',
+    //   iconSelected: 'png_menu_news_selected',
+    //   title: 'News and Announcements',
+    //   pageTitle: 'News',
+    //   showWhen: 'always',
+    //   showPlatform: 'all'
+    // },
     {
       key: 'userAccount',
       icon: 'png_menu_account',
@@ -83,16 +83,16 @@ export default {
       pageTitle: 'Logout',
       showWhen: 'login',
       showPlatform: 'mobile'
-    },
-    {
-      key: 'tool',
-      icon: 'png_menu_info',
-      iconSelected: 'png_menu_info_selected',
-      title: 'Masternode resources',
-      pageTitle: 'Masternode resources',
-      showWhen: 'always',
-      showPlatform: 'all'
-    }
+    }//,
+    // {
+    //   key: 'tool',
+    //   icon: 'png_menu_info',
+    //   iconSelected: 'png_menu_info_selected',
+    //   title: 'Masternode resources',
+    //   pageTitle: 'Masternode resources',
+    //   showWhen: 'always',
+    //   showPlatform: 'all'
+    // }
   ],
   currentUser: null,
   showPage: 'home',

@@ -28,7 +28,7 @@ class UserDelete extends Component {
           <Grid className="delete-button-grid">
             <Button
               onClick={this.props.onDeleteProfile}
-              variant= "raised"
+              variant= "contained"
               color="primary"
               className="delete-button"
             >

@@ -3,7 +3,7 @@ import actions from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import swal from 'sweetalert';
-import aes from 'aes256';
+// import aes from 'aes256';
 
 // Import provider HOC's
 import { withFirebase } from '../../../providers/firebase';
@@ -183,7 +183,7 @@ class ProposalCard extends Component {
   }
 
   async vote(masternodes, voteOutcome) {
-    const { proposal, user } = this.props;
+    const { proposal/*, user*/ } = this.props;
     const cipher = await this.firebase.getCipher();
 
     const MN = masternodes;
@@ -445,6 +445,7 @@ class ProposalCard extends Component {
           title="Results"
           visible={this.state.visible}
           onOk={this.handleOk}
+          onCancel={this.handleCancel}
           footer={[
             <Button key="submit" type="primary" onClick={this.handleOk}>
               Ok

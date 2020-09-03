@@ -1,14 +1,29 @@
 import axios from "axios";
 
+//cancelToken for the XHR
+const CancelToken = axios.CancelToken;
+let cancel = [];
+
 const getRequest = (url, params) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(url, params)
+      .get(url, { ...params,
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          cancel.push(c);
+        })
+      })
       .then(response => {
         resolve(response.data || response);
       })
       .catch(err => {
-        reject(err || err.message);
+        if (axios.isCancel(err)) {
+          // console.log(err.message);
+        }
+        else {
+          reject(err || err.message);
+          
+        }
       });
   });
 };
@@ -129,5 +144,19 @@ export default {
         .catch(err => {
           throw err;
         });
+  },
+  cancelSourceXHR: (actionType) => {
+    return async dispatch => {
+      await cancel();
+      dispatch({actionType});
+    }
   }
+  
 };
+
+const cancelXHR = (message = 'Request canceled by the user') => {
+  cancel.map(token => token(message));
+  cancel = [];
+}
+
+export { cancelXHR };

@@ -8,7 +8,10 @@ export default {
     '& .proposalHeading': {
       color: primaryDark,
       margin: 0,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis'
     },
     '& .proposalDetail': {
       color: gray,

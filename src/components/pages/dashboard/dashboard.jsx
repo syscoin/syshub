@@ -19,6 +19,7 @@ import { ProposalDetail } from '../../containers/proposalDetail/proposalDetail';
 import injectSheet from 'react-jss';
 import dashboardStyle from './dashboard.style';
 
+
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -33,11 +34,14 @@ class DashBoard extends Component {
   firebase = this.props.firebase;
 
   async componentWillMount() {
+    await this.props.cancelXHR();
+
     await this.props.getProposals();
     this.selectProposalByHash(this.props.selectedProposal);
   }
 
   async componentDidMount() {}
+
 
   selectProposalByHash(propHash) {
     const { proposals } = this.props;

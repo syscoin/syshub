@@ -13,7 +13,7 @@ class SiderLogo extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div onClick={() => this.props.setPage('home')}>
+        <div onClick={() => this.props.setPage('home')} style={{cursor:'pointer'}}>
           <img
             alt="a"
             src={require('../../../assets/img/png_menu_logo.png')}

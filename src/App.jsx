@@ -41,7 +41,7 @@ class App extends Component {
     await this.tick();
     await this.detectProposalUrl();
     await this.registerHooks();
-    console.log(`sysHub::v${process.env.REACT_APP_VERSION}`);
+    // console.log(`sysHub::v${process.env.REACT_APP_VERSION}`);
   }
 
   async componentDidMount() {

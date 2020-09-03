@@ -24,28 +24,27 @@ import {
 //Import Styles & Animation
 import appContentStyle from './appContent.style';
 import { useTransition, animated } from 'react-spring';
+import { cancelXHR } from '../../../redux/helpers/HTTPAsync';//Cancel allXHR
 
 const { Content } = Layout;
 
 const AppContent = ({ showPage, deviceType }) => {
   const [activePage, setActivePage] = useState();
 
-  useEffect(() => setActivePage(showPage), [showPage]);
+  useEffect(() => { setActivePage(showPage) }, [showPage]);
 
   const showThisPage = page => ({ style }) => (
     <animated.div style={{ ...style }}>
       {
         {
-          home: <Home deviceType={deviceType} />,
-          dashBoard: <DashBoard deviceType={deviceType} />,
-          newProposal: <NewProposal deviceType={deviceType} />,
-          news: <News deviceType={deviceType} />,
-          userAccount: <UserAccount deviceType={deviceType} />,
-          faq: <Faq deviceType={deviceType} />,
-          masterNode: <MasternodeSetting deviceType={deviceType} />,
-          tool: <MasternodeInfo deviceType={deviceType} />,
-          login: <Login deviceType={deviceType} />,
-          register: <Register deviceType={deviceType} />
+          home: <Home deviceType={deviceType} cancelXHR={cancelXHR} />,
+          dashBoard: <DashBoard deviceType={deviceType} cancelXHR={cancelXHR} />,
+          newProposal: <NewProposal deviceType={deviceType} cancelXHR={cancelXHR} />,
+          userAccount: <UserAccount deviceType={deviceType} cancelXHR={cancelXHR} />,
+          faq: <Faq deviceType={deviceType} cancelXHR={cancelXHR} />,
+          masterNode: <MasternodeSetting deviceType={deviceType} cancelXHR={cancelXHR} />,
+          login: <Login deviceType={deviceType} cancelXHR={cancelXHR} />,
+          register: <Register deviceType={deviceType} cancelXHR={cancelXHR} />
         }[page]
       }
     </animated.div>

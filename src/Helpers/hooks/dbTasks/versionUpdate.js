@@ -18,10 +18,10 @@ const dbUpgradeFrom_0_To_1 = async paramObj => {
      * Actions definition's End *
      ****************************/
     firebase.setDbVersion(DB_VERSION_UPDATED);
-    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    // console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
     return;
   }
-  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+  // console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
 const dbUpgradeFrom_1_To_2 = async paramObj => {
@@ -52,10 +52,10 @@ const dbUpgradeFrom_1_To_2 = async paramObj => {
      ****************************/
 
     firebase.setDbVersion(DB_VERSION_UPDATED);
-    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    // console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
     return;
   }
-  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+  // console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
 const dbUpgradeFrom_2_To_3 = async paramObj => {
@@ -83,10 +83,10 @@ const dbUpgradeFrom_2_To_3 = async paramObj => {
      ****************************/
 
     firebase.setDbVersion(DB_VERSION_UPDATED);
-    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    // console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
     return;
   }
-  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+  // console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
 const dbUpgradeFrom_3_To_4 = async paramObj => {
@@ -122,10 +122,10 @@ const dbUpgradeFrom_3_To_4 = async paramObj => {
      ****************************/
 
     firebase.setDbVersion(DB_VERSION_UPDATED);
-    console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
+    // console.log(`DbUpdate::DB updated to version ${DB_VERSION_UPDATED}`);
     return;
   }
-  console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
+  // console.log(`DbUpdate::Already in v${DB_VERSION_UPDATED} or higher`);
 };
 
 /********************

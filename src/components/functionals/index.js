@@ -11,7 +11,7 @@ import ProposalOwner from './proposalOwner/proposalOwner';
 import ProposalPayment from './proposalPayment/proposalPayment';
 import ProposalApprovalStat from './ProposalApprovalStat/proposalApprovalStat';
 import ProposalDescription from './proposalDescription/proposalDescription';
-import ProposalComments from './proposalComments/proposalComments';
+//import ProposalComments from './proposalComments/proposalComments'; import component comments of proposal
 import MasternodeAdd from './masternodeAdd/masternodeAdd';
 import MasternodeBatchAdd from './masternodeBatchAdd/masternodeBatchAdd';
 import MasternodeList from './masternodeList/masternodeList';
@@ -34,7 +34,7 @@ export {
   ProposalPayment,
   ProposalApprovalStat,
   ProposalDescription,
-  ProposalComments,
+  // ProposalComments, Component Comment of proposal
   MasternodeAdd,
   MasternodeBatchAdd,
   MasternodeList,

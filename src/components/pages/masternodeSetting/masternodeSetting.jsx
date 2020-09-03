@@ -42,6 +42,7 @@ class MasternodeSetting extends Component {
   firebase = this.props.firebase;
 
   componentDidMount() {
+    this.props.cancelXHR();
     this.refreshMasternodeList();
   }
 
@@ -66,7 +67,6 @@ class MasternodeSetting extends Component {
       masternodeArray,
       user.uid
     );
-    this.refreshMasternodeList();
     if (!success) {
       swal({
         className: 'sweetalertModal',
@@ -77,6 +77,15 @@ class MasternodeSetting extends Component {
         icon: 'error'
       });
     }
+    else {
+      swal({
+        title: 'Success',
+        text: `Masternode added successfully`,
+        icon: 'success'
+      });
+      
+    }
+    this.refreshMasternodeList();
   }
 
   async deleteNode(masternode) {

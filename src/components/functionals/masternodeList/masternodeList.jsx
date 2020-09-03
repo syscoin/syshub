@@ -84,7 +84,7 @@ class MasterNodeList extends Component {
       this.deleteMasterNode(node);
     };
     confirm({
-      title: 'Are you sure delete this Masternode?',
+      title: 'Are you sure to delete this Masternode?',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',

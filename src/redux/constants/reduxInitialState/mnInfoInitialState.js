@@ -3,7 +3,8 @@ export default {
     {
       key: '1',
       url:'https://syscoin.community/home',
-      img: 'https://syscoin.community/logo.svg',
+      // img: 'https://syscoin.community/logo.svg',
+      img: 'https://syscoin.org/assets/images/svg/logo.svg',
       title: 'Syscoin Community',
       brief: 'Get important info from the community',
     },

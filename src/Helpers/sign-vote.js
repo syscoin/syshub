@@ -59,16 +59,16 @@ export default (obj) => {
   let signal;
 
   // Note: RPC command uses english, signed vote message uses numbers
-  if (voteSignalNum == 0) signal = 'none';
-  if (voteSignalNum == 1) signal = 'funding'; // -- fund this object for it's stated amount
-  if (voteSignalNum == 2) signal = 'valid'; //   -- this object checks out in sentinel engine
-  if (voteSignalNum == 3) signal = 'delete'; //  -- this object should be deleted from memory entirely
-  if (voteSignalNum == 4) signal = 'endorsed'; //   -- officially endorsed by the network somehow (delegation)
+  if (voteSignalNum === 0) signal = 'none';
+  if (voteSignalNum === 1) signal = 'funding'; // -- fund this object for it's stated amount
+  if (voteSignalNum === 2) signal = 'valid'; //   -- this object checks out in sentinel engine
+  if (voteSignalNum === 3) signal = 'delete'; //  -- this object should be deleted from memory entirely
+  if (voteSignalNum === 4) signal = 'endorsed'; //   -- officially endorsed by the network somehow (delegation)
 
-  if (voteOutcomeNum == 0) vote = 'none';
-  if (voteOutcomeNum == 1) vote = 'yes';
-  if (voteOutcomeNum == 2) vote = 'no';
-  if (voteOutcomeNum == 3) vote = 'abstain';
+  if (voteOutcomeNum === 0) vote = 'none';
+  if (voteOutcomeNum === 1) vote = 'yes';
+  if (voteOutcomeNum === 2) vote = 'no';
+  if (voteOutcomeNum === 3) vote = 'abstain';
 
   return {
     txHash: masterNodeTx[0],

@@ -33,6 +33,10 @@ class UserAccount extends Component {
   // add Firebase as global var in component
   firebase = this.props.firebase;
 
+  componentDidMount() {
+    this.props.cancelXHR();
+  }
+
   async updateProfile(user) {
     const [err, { currentUser, error, message }] = await to(
       this.firebase.doUpdateProfile(user)

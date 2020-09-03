@@ -126,19 +126,19 @@ class Stats extends Component {
         {loading && (
           <div className={"govTxtBody"}>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][0]}:</div>
+              <div className="govTxtTitle" title={item.text[1][0]}>{item.text[1][0]}:</div>
               <div className="govTxtData">{payoutDate}</div>
             </div>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][1]}:</div>
+              <div className="govTxtTitle" title={item.text[1][1]}>{item.text[1][1]}:</div>
               <div className="govTxtData">{blockHeight}</div>
             </div>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][2]}:</div>
+              <div className="govTxtTitle" title={item.text[1][2]}>{item.text[1][2]}:</div>
               <div className="govTxtData">{votingDeadline}</div>
             </div>
             <div className="govTxtRow">
-              <div className="govTxtTitle">{item.text[1][3]}:</div>
+              <div className="govTxtTitle" title={item.text[1][3]}>{item.text[1][3]}:</div>
               <div className="govTxtData">
                 {governanceAvailable}
                 <span className="symbol"> SYS</span>
