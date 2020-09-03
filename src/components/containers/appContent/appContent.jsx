@@ -40,11 +40,9 @@ const AppContent = ({ showPage, deviceType }) => {
           home: <Home deviceType={deviceType} cancelXHR={cancelXHR} />,
           dashBoard: <DashBoard deviceType={deviceType} cancelXHR={cancelXHR} />,
           newProposal: <NewProposal deviceType={deviceType} cancelXHR={cancelXHR} />,
-          news: <News deviceType={deviceType} cancelXHR={cancelXHR} />,
           userAccount: <UserAccount deviceType={deviceType} cancelXHR={cancelXHR} />,
           faq: <Faq deviceType={deviceType} cancelXHR={cancelXHR} />,
           masterNode: <MasternodeSetting deviceType={deviceType} cancelXHR={cancelXHR} />,
-          tool: <MasternodeInfo deviceType={deviceType} cancelXHR={cancelXHR} />,
           login: <Login deviceType={deviceType} cancelXHR={cancelXHR} />,
           register: <Register deviceType={deviceType} cancelXHR={cancelXHR} />
         }[page]
