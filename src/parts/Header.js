@@ -28,6 +28,7 @@ class Header extends Component {
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><Link className="nav-link" to="/setup">{t('header.setup')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/check">{t('header.check')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/governance">{t('header.governance')}</Link></li>
+                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/login">{t('header.login')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a className="nav-link" rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a></li>
                         </ul>
                     </div>

@@ -11,6 +11,7 @@ import Setup from './pages/Setup';
 import Check from './pages/Check';
 import Stats from './pages/Stats';
 import Governance from './pages/Governance';
+import Login from './pages/Login';
 import Error from './pages/Error';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path="/check" component={Check} />
             <Route path="/stats" component={Stats} />
             <Route path="/governance" component={Governance} />
+            <Route path="/login" component={Login} />
             <Route component={Error} />
         </Switch>
         <div className="clearfix"></div>
