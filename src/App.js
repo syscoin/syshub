@@ -14,24 +14,26 @@ import Governance from './pages/Governance';
 import Login from './pages/Login';
 import Error from './pages/Error';
 
+
+
 class App extends Component {
     render() {
         return (
-          <div className="app">
-          <Header />
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/about" component={About} />
-            <Route path="/setup" component={Setup} />
-            <Route path="/check" component={Check} />
-            <Route path="/stats" component={Stats} />
-            <Route path="/governance" component={Governance} />
-            <Route path="/login" component={Login} />
-            <Route component={Error} />
-        </Switch>
-        <div className="clearfix"></div>
-        <Footer />
-        </div>
+            <div className="app">
+                <Header />
+                <Switch>
+                    <Route path="/" component={Home} exact />
+                    <Route path="/about" component={About} />
+                    <Route path="/setup" component={Setup} />
+                    <Route path="/check" component={Check} />
+                    <Route path="/stats" component={Stats} />
+                    <Route path="/governance" component={Governance} />
+                    <Route path="/login" component={Login} />
+                    <Route component={Error} />
+                </Switch>
+                <div className="clearfix"></div>
+                <Footer />
+            </div>
         )
     }
 }
