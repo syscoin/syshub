@@ -4,6 +4,7 @@ import setup from './pages/setup/index';
 import check from './pages/check/index';
 import governance from './pages/governance/index';
 import login from './pages/login/index';
+import register from './pages/register/index';
 import error from './pages/error/index';
 import banner from './parts/banner/index';
 import header from './parts/header/index';
@@ -23,6 +24,7 @@ export default {
   ...check,
   ...governance,
   ...login,
+  ...register,
   ...error,
   ...banner,
   ...header,

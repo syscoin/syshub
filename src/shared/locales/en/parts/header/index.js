@@ -7,6 +7,8 @@ export default {
     check: 'Check',
     support: 'Support',
     governance: 'Governance',
-    login: 'Login'
+    login: 'Login',
+    register: 'Sign up',
+    dashboard: 'Dashboard'
   },
 }

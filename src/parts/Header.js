@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from "react-i18next";
+import { isLogin } from '../utils';
+
 
 var publicurl=process.env.PUBLIC_URL;
 class Header extends Component {
@@ -28,8 +30,10 @@ class Header extends Component {
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><Link className="nav-link" to="/setup">{t('header.setup')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/check">{t('header.check')}</Link></li>
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/governance">{t('header.governance')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/login">{t('header.login')}</Link></li>
+                            {isLogin() && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/dashboard">{t('header.dashboard')}</Link></li>}
                             <li className="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a className="nav-link" rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a></li>
+                            {(!isLogin()) && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/login">{t('header.login')}</Link></li>}
+                            {(!isLogin()) && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/register">{t('header.register')}</Link></li>}
                         </ul>
                     </div>
                 </nav>

@@ -1,0 +1,35 @@
+/* ------------------------------------------------------------ *\
+	Header
+\* ------------------------------------------------------------ */
+
+.header { 
+	-webkit-transition: 0.5s; /* Safari */
+  	transition: 0.5s;
+	position: absolute; top: 0; left: 0; right: 0; padding: 41px 0; z-index: 20; }
+.header .header__inner { display: flex; justify-content: space-between; padding: 0 10px; }
+.header .header__content { flex: 0 0 76.5%; max-width: 76.5%; display: flex; justify-content: space-between; }
+
+.header.fixed 
+{
+	position: fixed;
+	padding:11px 0;
+	background:#243066;
+}
+
+@media(min-width: 1180px){
+	.header .header__content { display: flex !important;  }
+}
+
+/* Tablet Portrait */
+
+@media (max-width:$breakpoint-tablet-portrait) {
+	.header .header__content { flex: 0 0 90%; max-width: 90%; }
+
+}
+
+/* Mobile */
+
+@media (max-width:$breakpoint-mobile) {
+	.header { padding: 20px 0; }
+	.header .header__content { display: none; position: absolute; top: 100%; left: 0; width: 100%; max-width: 100%; padding: 20px 10px; z-index: 1000; text-align: center; border: 2px solid rgba(0, 171, 251, 0.08); box-shadow: 0 16px 32px rgba(19, 32, 62, 0.13); border-radius: 5px; background-color: rgba(37, 40, 98, 1); }
+}

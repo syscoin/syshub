@@ -8,7 +8,7 @@ import './shared/i18n';
 
 ReactDOM.render(
   <BrowserRouter>
-        <App />
+    <App />
   </BrowserRouter>,
   document.getElementById('root')
 );
