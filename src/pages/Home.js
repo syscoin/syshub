@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 
+import Background from '../parts/Background';
 import Banner from '../parts/Banner';
 import Doughnut from './partials/Doughnut';
 import Income from './partials/Income';
@@ -41,31 +42,55 @@ export class Home extends Component {
     render() {
         const { t } = this.props;
         if(this.state.dataload===1) {
-            return(
-                <main className="homePage">
-                    <MetaTags>
-                        <title>{t('home.title')}</title>
-                        <meta name="keywords" content={t('home.keywords')} />
-                        <meta name="description" content={t('home.description')} />
-                    </MetaTags>
-                    <Banner />
-                    <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                    <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
-                    <Price priceData={this.state.api_data.stats.price_stats}/>
-                    <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
-                    <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
-                </main>
+            return (
+                <Background>
+                    <div class="main__backgrounds">
+                        <div class="main__gradient"></div>
+                        <div class="main__background main__background--top-right" style={{backgroundImage: "url(assets/images/main-background-top-right.png);"}}></div>
+                        <div class="main__background main__background--oval-top-right-secondary" style={{backgroundImage: "url(assets/images/main-background-oval-top-right-secondary.png);"}}></div>
+                        <div class="main__background main__background--top-left" style={{backgroundImage: "url(assets/images/main-background-top-left.png);"}}></div>
+                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(assets/images/main-background-top.png);"}}></div>
+                        <div class="main__background main__background--half-oval-left" style={{backgroundImage: "url(assets/images/main-background-half-oval-left.png);"}}></div>
+                        <div class="main__background main__background--ornament-top-secondary" style={{backgroundImage: "url(assets/images/main-background-ornament-top-secondary.png);"}}></div>
+                        <div class="main__background main__background--wave-radar-bottom" style={{backgroundImage: "url(assets/images/main-background-wave-radar-bottom.png);"}}></div>
+                    </div>
+                    <main className="homePage">
+                        <MetaTags>
+                            <title>{t('home.title')}</title>
+                            <meta name="keywords" content={t('home.keywords')} />
+                            <meta name="description" content={t('home.description')} />
+                        </MetaTags>
+                        <Banner />
+                        <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
+                        <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                        <Price priceData={this.state.api_data.stats.price_stats}/>
+                        <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
+                        <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                    </main>
+                </Background>
             )
         } else {
-            return(
-                <main className="homePage">
-                    <MetaTags>
-                        <title>{t('home.title')}</title>
-                        <meta name="keywords" content={t('home.keywords')} />
-                        <meta name="description" content={t('home.description')} />
-                      </MetaTags>
-                    <Banner />
-                </main>
+            return (
+                <Background>
+                    <div class="main__backgrounds">
+                        <div class="main__gradient"></div>
+                        <div class="main__background main__background--top-right" style={{backgroundImage: "url(assets/images/main-background-top-right.png)"}}></div>
+                        <div class="main__background main__background--oval-top-right-secondary" style={{backgroundImage: "url(assets/images/main-background-oval-top-right-secondary.png)"}}></div>
+                        <div class="main__background main__background--top-left" style={{backgroundImage: "url(assets/images/main-background-top-left.png)"}}></div>
+                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(assets/images/main-background-top.png)"}}></div>
+                        <div class="main__background main__background--half-oval-left" style={{backgroundImage: "url(assets/images/main-background-half-oval-left.png)"}}></div>
+                        <div class="main__background main__background--ornament-top-secondary" style={{backgroundImage: "url(assets/images/main-background-ornament-top-secondary.png)"}}></div>
+                        <div class="main__background main__background--wave-radar-bottom" style={{backgroundImage: "url(assets/images/main-background-wave-radar-bottom.png)"}}></div>
+                    </div>
+                    <main className="homePage">
+                        <MetaTags>
+                            <title>{t('home.title')}</title>
+                            <meta name="keywords" content={t('home.keywords')} />
+                            <meta name="description" content={t('home.description')} />
+                        </MetaTags>
+                        <Banner />
+                    </main>
+                </Background>
             )
         }
     }

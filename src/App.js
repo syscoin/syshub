@@ -22,37 +22,21 @@ import Error from './pages/Error';
 class App extends Component {
     render() {
         return (
-            <div className="app">
+            <div className="wrapper">
                 <Header />
-                
-                <div class="main main--gradient">
-                    <div class="main__backgrounds">
-                        <div class="main__gradient"></div>
-                        <div class="main__background main__background--top-right" style={{backgroundImage: "url(assets/images/main-background-top-right.png)"}}></div>
-                        <div class="main__background main__background--top-left" style={{backgroundImage: "url(assets/images/main-background-top-left.png)"}}></div>
-                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(assets/images/main-background-top.png)"}}></div>
-                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(images/main-background-top.png)"}}></div>
-                        <div class="main__background main__background--half-oval-left" style={{backgroundImage: "url(images/main-background-half-oval-left.png)"}}></div>
-                        <div class="main__background main__background--ornament-top-secondary" style={{backgroundImage: "url(images/main-background-ornament-top-secondary.png)"}}></div>
-                        <div class="main__background main__background--wave-radar-bottom" style={{backgroundImage: "url(images/main-background-wave-radar-bottom.png)"}}></div>
-                    </div>
-                
-                
-                    <Switch>
-                        <PublicRoute restricted={false} path="/" component={Home} exact />
-                        <PublicRoute restricted={false} path="/about" component={About} />
-                        <PublicRoute restricted={false} path="/setup" component={Setup} />
-                        <PublicRoute restricted={false} path="/check" component={Check} />
-                        <PublicRoute restricted={false} path="/stats" component={Stats} />
-                        <PublicRoute restricted={false} path="/governance" component={Governance} />
-                        <PublicRoute restricted={true} path="/login" component={Login} />
-                        <PublicRoute restricted={true} path="/register" component={Register} />
-                        <PrivateRoute path="/dashboard" component={About} />
-                        <PublicRoute restricted={false} component={Error} />
-                    </Switch>
-                    <div className="clearfix"></div>
-                </div>
-                
+                <Switch>
+                    <PublicRoute restricted={false} path="/" component={Home} exact />
+                    <PublicRoute restricted={false} path="/about" component={About} />
+                    <PublicRoute restricted={false} path="/setup" component={Setup} />
+                    <PublicRoute restricted={false} path="/check" component={Check} />
+                    <PublicRoute restricted={false} path="/stats" component={Stats} />
+                    <PublicRoute restricted={false} path="/governance" component={Governance} />
+                    <PublicRoute restricted={true} path="/login" component={Login} />
+                    <PublicRoute restricted={true} path="/register" component={Register} />
+                    <PrivateRoute path="/dashboard" component={About} />
+                    <PublicRoute restricted={false} component={Error} />
+                </Switch>
+                <div className="clearfix"></div>
                 <Footer />
             </div>
         )

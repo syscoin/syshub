@@ -1,6 +1,63 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 class Footer extends Component {
     render() {
+        return (
+        <footer className="footer">
+            <div className="shell">
+                <div className="footer__inner">
+                    <div className="footer__entry">
+                        <Link to="/">
+                            <div
+                            className="logo"
+                            style={{
+                                backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`,
+                            }}
+                            ></div>
+                        </Link>
+
+                        <nav className="nav">
+                            <ul>
+                                <li>
+                                    <Link to="/about">About</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/stats">Stats</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/setup">Setup</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/governance">Governance</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/check">Masternodes</Link>
+                                </li>
+
+                                <li>
+                                    <a
+                                    rel="noopener noreferrer"
+                                    href="https://support.syscoin.org/"
+                                    target="_blank"
+                                    >
+                                    Support
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        );
+    }
+
+/* render() {
         return(
         <footer className="footer">
             <div className="container">
@@ -26,6 +83,7 @@ class Footer extends Component {
             </div>
         </footer>
         )
-    }
+    } */
 }
+
 export default Footer;
