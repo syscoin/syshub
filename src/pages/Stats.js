@@ -8,6 +8,8 @@ import Price from './partials/Price';
 import Investment from './partials/Investment';
 import WorldMap from './partials/WorldMap';
 import MetaTags from 'react-meta-tags';
+import Background from '../parts/Background';
+import BackgroundInner from '../parts/BackgroundInner';
 
 export class Stats extends Component {
     constructor(props){  
@@ -39,31 +41,49 @@ export class Stats extends Component {
     }
     render() {
         if(this.state.dataload===1) {
-            return(
-                <main className="statsPage">
-                    <MetaTags>
-                        <title>Syscoin Masternodes - Masternode Stats</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
-                    </MetaTags>
-                    <InnerBanner heading="Stats"/>
-                    <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                    <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
-                    <Price priceData={this.state.api_data.stats.price_stats}/>
-                    <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
-                    <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
-                </main>
+            return (
+                <Background>
+                    <BackgroundInner type="B" />
+                    <main className="section statsPage">
+                        <MetaTags>
+                            <title>Syscoin Masternodes - Masternode Stats</title>
+                            <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
+                            <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                        </MetaTags>
+                        <div className="shell-large">
+                        <div className="section__body">
+                            <div className="articles">
+                                <InnerBanner heading="Stats"/>
+                                <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
+                                <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                                <Price priceData={this.state.api_data.stats.price_stats}/>
+                                <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
+                                <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                            </div>
+                        </div>
+                        </div>
+                    </main>
+                </Background>
             )
         } else {
             return(
-                <main className="statsPage">
-                    <MetaTags>
-                        <title>Syscoin Masternodes - Masternode Stats</title>
-                        <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                        <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
-                    </MetaTags>
-                    <InnerBanner heading="Stats"/>
-                </main>
+                <Background>
+                    <BackgroundInner type="B" />
+                    <main className="section statsPage">
+                        <MetaTags>
+                            <title>Syscoin Masternodes - Masternode Stats</title>
+                            <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
+                            <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                        </MetaTags>
+                        <div className="shell-large">
+                        <div className="section__body">
+                            <div className="articles">
+                                <InnerBanner heading="Stats"/>
+                            </div>
+                        </div>
+                        </div>
+                    </main>
+                </Background>
             )
         }
     }

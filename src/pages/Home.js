@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import axios from "axios";
 
+import { withTranslation } from "react-i18next";
+import MetaTags from 'react-meta-tags';
+import { Link } from 'react-router-dom';
+
 import Background from '../parts/Background';
-import Banner from '../parts/Banner';
+import BackgroundInner from '../parts/BackgroundInner';
+import BannerImage from '../parts/BannerImage';
 import Doughnut from './partials/Doughnut';
 import Income from './partials/Income';
 import Price from './partials/Price';
 import Investment from './partials/Investment';
 import WorldMap from './partials/WorldMap';
-import MetaTags from 'react-meta-tags';
-import { withTranslation } from "react-i18next";
 
 export class Home extends Component {
     constructor(props){
@@ -44,51 +47,79 @@ export class Home extends Component {
         if(this.state.dataload===1) {
             return (
                 <Background>
-                    <div class="main__backgrounds">
-                        <div class="main__gradient"></div>
-                        <div class="main__background main__background--top-right" style={{backgroundImage: "url(assets/images/main-background-top-right.png);"}}></div>
-                        <div class="main__background main__background--oval-top-right-secondary" style={{backgroundImage: "url(assets/images/main-background-oval-top-right-secondary.png);"}}></div>
-                        <div class="main__background main__background--top-left" style={{backgroundImage: "url(assets/images/main-background-top-left.png);"}}></div>
-                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(assets/images/main-background-top.png);"}}></div>
-                        <div class="main__background main__background--half-oval-left" style={{backgroundImage: "url(assets/images/main-background-half-oval-left.png);"}}></div>
-                        <div class="main__background main__background--ornament-top-secondary" style={{backgroundImage: "url(assets/images/main-background-ornament-top-secondary.png);"}}></div>
-                        <div class="main__background main__background--wave-radar-bottom" style={{backgroundImage: "url(assets/images/main-background-wave-radar-bottom.png);"}}></div>
-                    </div>
-                    <main className="homePage">
+                    <BackgroundInner type="A" />
+                    <main className="section homePage">
                         <MetaTags>
                             <title>{t('home.title')}</title>
                             <meta name="keywords" content={t('home.keywords')} />
                             <meta name="description" content={t('home.description')} />
                         </MetaTags>
-                        <Banner />
-                        <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                        <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
-                        <Price priceData={this.state.api_data.stats.price_stats}/>
-                        <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
-                        <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                        <div className="shell-large">
+                            <div className="section__body">
+                                <div className="articles">
+                                    <BannerImage heading={t('home.title')} direction="left">
+                                        <div className="article__content-text">
+                                            <p>
+                                                Everything you need to know about Masternodes and Governance.
+                                            </p>
+                                        </div>
+
+                                        <div className="article__actions vertical">
+                                            <Link to="/about" className="btn btn--blue-border">
+                                                Learn More
+                                            </Link>
+                                            <Link to="/setup" className="btn btn--blue-border">
+                                                Setup Masternode
+                                            </Link>
+                                            <Link to="/register" className="btn btn--blue-border">
+                                                Register
+                                            </Link>
+                                        </div>
+                                    </BannerImage>
+                                    <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
+                                    <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                                    <Price priceData={this.state.api_data.stats.price_stats}/>
+                                    <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
+                                    <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                                </div>
+                            </div>
+                        </div>
                     </main>
                 </Background>
             )
         } else {
             return (
                 <Background>
-                    <div class="main__backgrounds">
-                        <div class="main__gradient"></div>
-                        <div class="main__background main__background--top-right" style={{backgroundImage: "url(assets/images/main-background-top-right.png)"}}></div>
-                        <div class="main__background main__background--oval-top-right-secondary" style={{backgroundImage: "url(assets/images/main-background-oval-top-right-secondary.png)"}}></div>
-                        <div class="main__background main__background--top-left" style={{backgroundImage: "url(assets/images/main-background-top-left.png)"}}></div>
-                        <div class="main__background main__background--top-gradient" style={{backgroundImage: "url(assets/images/main-background-top.png)"}}></div>
-                        <div class="main__background main__background--half-oval-left" style={{backgroundImage: "url(assets/images/main-background-half-oval-left.png)"}}></div>
-                        <div class="main__background main__background--ornament-top-secondary" style={{backgroundImage: "url(assets/images/main-background-ornament-top-secondary.png)"}}></div>
-                        <div class="main__background main__background--wave-radar-bottom" style={{backgroundImage: "url(assets/images/main-background-wave-radar-bottom.png)"}}></div>
-                    </div>
-                    <main className="homePage">
+                    <BackgroundInner type="A" />
+                    <main className="section homePage">
                         <MetaTags>
                             <title>{t('home.title')}</title>
                             <meta name="keywords" content={t('home.keywords')} />
                             <meta name="description" content={t('home.description')} />
                         </MetaTags>
-                        <Banner />
+                        <div className="shell-large">
+                            <div className="section__body">
+                                <div className="articles">
+                                    <BannerImage heading={t('home.title')} direction="left">
+                                        <div className="article__content-text">
+                                            <p>Everything you need to know about Masternodes and Governance.</p>
+                                        </div>
+
+                                        <div className="article__actions vertical">
+                                            <Link to="/about" className="btn btn--blue-border">
+                                                Learn More
+                                            </Link>
+                                            <Link to="/setup" className="btn btn--blue-border">
+                                                Setup Masternode
+                                            </Link>
+                                            <Link to="/register" className="btn btn--blue-border">
+                                                Register
+                                            </Link>
+                                        </div>
+                                    </BannerImage>
+                                </div>
+                            </div>
+                        </div>
                     </main>
                 </Background>
             )

@@ -20,7 +20,7 @@ $shell-3xl-max-width        : 1497px;
 $shell-4xl-max-width        : 1650px;
 
 $responsive-xxs             : 374px;
-$responsive-xs              : 960px;
+$responsive-xs              : 980px;
 $responsive-sm              : 1180px;
 $responsive-md              : 1200px;
 $responsive-bd              : 1500px;
@@ -431,7 +431,7 @@ nav ol { list-style: none outside none; }
 .footer .footer__entry { display: flex; align-items: center; }
 .footer .nav { padding-top: 11px; font-family: $font-family-lato; text-transform: capitalize; }
 .footer .nav ul { display: flex; list-style: none; }
-.footer .nav li ~ li { margin-left: 54px; }
+.footer .nav li ~ li { margin-left: 25px; }
 .footer .nav a { text-decoration: none; -webkit-transition: color .4s;-o-transition: color .4s;transition: color .4s; }
 .footer .nav a:hover { color: #359EF6; }
 .footer .footer__content { padding: 16px 47px 0 0; flex: 0 0 40%; max-width: 40%; text-align: right; }

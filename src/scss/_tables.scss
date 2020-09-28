@@ -481,3 +481,33 @@
     }
 
 }
+
+@media (max-width:505px) {
+    .proposals .proposal
+    {
+        .description
+        {
+            width:80%;
+        }
+
+        .actions
+        {
+            width:20%;
+        }
+    }
+}
+
+@media (max-width:380px) {
+    .proposals .proposal
+    {
+        .description
+        {
+            width:75%;
+        }
+
+        .actions
+        {
+            width:25%;
+        }
+    }
+}
