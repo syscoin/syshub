@@ -11,7 +11,7 @@
 \* ------------------------------------------------------------ */
 
 .article {
-	overflow: hidden;
+	// overflow: hidden;
 	padding-top:20px;
     p {
         margin-bottom:20px;
@@ -45,7 +45,7 @@
 .article .article__content { padding-left: 18px; }
 .article .article__content-text { padding-right: 99px; }
 
-.article .article__content--pull-left { margin-left: -18px; }
+// .article .article__content--pull-left { margin-left: -18px; }
 .article .article__content--pull-left-2 { margin-left: -33px; }
 .article .article__content--pull-left-lg { position: relative; margin-left: -42px; top: -40px; }
 

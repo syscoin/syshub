@@ -6,6 +6,8 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import MetaTags from 'react-meta-tags';
 import { withTranslation } from "react-i18next";
+import Background from '../parts/Background';
+import BackgroundInner from '../parts/BackgroundInner';
 
 const getColumns = (t) => {
     return  [
@@ -180,66 +182,84 @@ export class Check extends Component {
         const { t } = this.props;
 
         if(dataload===1) {
-        return(
-            <main className="checkPage">
-                <MetaTags>
-                        <title>{t('check.meta.title')}</title>
-                        <meta name="keywords" content={t('check.meta.keywords')} />
-                        <meta name="description" content={t('check.meta.description')} />
-                </MetaTags>
-                <InnerBanner heading={t('check.title')}/>
-                <section className="section_datatable bg-white">
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 small">
-                        <div className="custom__datatable table-responsive">
-                            <div className="pc-left">
-                                <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>{t('check.table.resetBtn')}</button>
-                            </div>
-                            <div className="pc-right">
-                                <input id="srcVal" type="text" className="form-control" placeholder={t('check.table.ipInput')} onKeyUp={this.searchInTable}/>
+            return (
+                <Background>
+                    <BackgroundInner />
+                    <main className="section checkPage">
+                        <MetaTags>
+                            <title>{t('check.meta.title')}</title>
+                            <meta name="keywords" content={t('check.meta.keywords')} />
+                            <meta name="description" content={t('check.meta.description')} />
+                        </MetaTags>
+                        <div className="shell-large">
+                            <div className="section__body">
+                                <div className="articles">
+                                    <InnerBanner heading={t('check.title')}/>
+                                    <section className="section_datatable bg-white">
+                                        <div className="container-fluid">
+                                            <div className="row">
+                                                <div className="col-lg-12 col-md-12 col-sm-12 small">
+                                                    <div className="custom__datatable table-responsive">
+                                                        <div className="pc-left">
+                                                            <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>{t('check.table.resetBtn')}</button>
+                                                        </div>
+                                                        <div className="pc-right">
+                                                            <input id="srcVal" type="text" className="form-control" placeholder={t('check.table.ipInput')} onKeyUp={this.searchInTable}/>
+                                                        </div>
+                                                    </div>
+
+                                                    <RemotePagination
+                                                        data={ tableData }
+                                                        page={ page }
+                                                        sizePerPage={ sizePerPage }
+                                                        totalSize={ totalRecords }
+                                                        onTableChange={ this.handleTableChange }
+                                                        onSizeChange={ this.onSizeChange }
+                                                        changeFieldOrder={this.changeFieldOrder }
+                                                        t= {t}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </div>
-
-                        <RemotePagination
-                            data={ tableData }
-                            page={ page }
-                            sizePerPage={ sizePerPage }
-                            totalSize={ totalRecords }
-                            onTableChange={ this.handleTableChange }
-                            onSizeChange={ this.onSizeChange }
-                            changeFieldOrder={this.changeFieldOrder }
-                            t= {t}
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
-            </main>
-        )
+                    </main>
+                </Background>
+            )
         } else {
-            return(
-                <main className="checkPage">
-                    <MetaTags>
-                        <title>{t('check.meta.title')}</title>
-                        <meta name="keywords" content={t('check.meta.keywords')} />
-                        <meta name="description" content={t('check.meta.description')} />
-                    </MetaTags>
-                <InnerBanner heading="Masternode Check"/>
-                <section className="section_datatable bg-white">
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12">
-                        <div className="custom__datatable table-responsive">
+            return (
+                <Background>
+                    <BackgroundInner />
+                    <main className="section checkPage">
+                        <MetaTags>
+                            <title>{t('check.meta.title')}</title>
+                            <meta name="keywords" content={t('check.meta.keywords')} />
+                            <meta name="description" content={t('check.meta.description')} />
+                        </MetaTags>
+                        <div className="shell-large">
+                            <div className="section__body">
+                                <div className="articles">
+                                    <InnerBanner heading="Masternode Check"/>
+                                    <section className="section_datatable bg-white">
+                                        <div className="container-fluid">
+                                            <div className="row">
+                                                <div className="col-lg-12 col-md-12 col-sm-12">
+                                                    <div className="custom__datatable table-responsive">
 
+                                                    </div>
+
+                                                    <p>{t('check.loading')}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
                         </div>
-
-                        <p>{t('check.loading')}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-            </main>
+                    </main>
+                </Background>
             )
         }
     }
