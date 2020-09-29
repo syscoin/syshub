@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { MetaTags } from "react-meta-tags";
-import InnerBanner from "../parts/InnerBanner";
 import { withTranslation } from "react-i18next";
-import RegisterForm from "./partials/RegisterForm";
+import { Link } from "react-router-dom";
+
 import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
+import Title from "./partials/Title";
 
 class Register extends Component {
   onRegister = (registerData) => {
@@ -24,14 +25,31 @@ class Register extends Component {
           <div className="shell-large">
             <div className="section__body">
               <div className="articles">
-                <InnerBanner heading="Create an account" />
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 order-2 order-lg-1">
-                      <RegisterForm onRegister={this.onRegister} />
+                <section className="article">
+                  <div className="cols">
+                    <div className="col col--size-12">
+                      <div className="article__content article__content--pull-left text-center">
+                        <Title heading="Register" />
+                        <form className="input-form centered">
+                          <input className="styled-round" type="text" placeholder="Username" />
+                          <input className="styled-round" type="password" placeholder="Password" />
+
+                          <div className="input-cont">
+                            Captcha
+                          </div>
+
+                          <div className="input-cont">
+                            <button className="btn btn--blue">Login</button>
+                          </div>
+
+                          <div class="input-cont">
+                            <Link to="/login">Already have an account?</Link>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </section>
               </div>
             </div>
           </div>

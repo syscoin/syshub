@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import InnerBanner from '../parts/InnerBanner';
 import axios from "axios";
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -8,6 +7,7 @@ import MetaTags from 'react-meta-tags';
 import { withTranslation } from "react-i18next";
 import Background from '../parts/Background';
 import BackgroundInner from '../parts/BackgroundInner';
+import Title from './partials/Title';
 
 const getColumns = (t) => {
     return  [
@@ -194,11 +194,11 @@ export class Check extends Component {
                         <div className="shell-large">
                             <div className="section__body">
                                 <div className="articles">
-                                    <InnerBanner heading={t('check.title')}/>
-                                    <section className="section_datatable bg-white">
-                                        <div className="container-fluid">
-                                            <div className="row">
-                                                <div className="col-lg-12 col-md-12 col-sm-12 small">
+                                    <section className="article">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content article__content--pull-left text-center">
+                                                    <Title heading={t('check.title')} />
                                                     <div className="custom__datatable table-responsive">
                                                         <div className="pc-left">
                                                             <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>{t('check.table.resetBtn')}</button>
@@ -207,7 +207,6 @@ export class Check extends Component {
                                                             <input id="srcVal" type="text" className="form-control" placeholder={t('check.table.ipInput')} onKeyUp={this.searchInTable}/>
                                                         </div>
                                                     </div>
-
                                                     <RemotePagination
                                                         data={ tableData }
                                                         page={ page }
@@ -222,6 +221,7 @@ export class Check extends Component {
                                             </div>
                                         </div>
                                     </section>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -241,15 +241,19 @@ export class Check extends Component {
                         <div className="shell-large">
                             <div className="section__body">
                                 <div className="articles">
-                                    <InnerBanner heading="Masternode Check"/>
-                                    <section className="section_datatable bg-white">
-                                        <div className="container-fluid">
-                                            <div className="row">
-                                                <div className="col-lg-12 col-md-12 col-sm-12">
-                                                    <div className="custom__datatable table-responsive">
-
-                                                    </div>
-
+                                    <section className="article">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content article__content--pull-left text-center">
+                                                    <Title heading={t('check.title')} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section className="article">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content article__content--pull-left text-center">
                                                     <p>{t('check.loading')}</p>
                                                 </div>
                                             </div>

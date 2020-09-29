@@ -146,10 +146,11 @@ class Footer extends Component {
                         </li>
                         <li>
                             <button
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="wechat-qr prevent"
-                            title=""
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="wechat-qr prevent"
+                                title=""
+                                style={{border: 'none', background:'none'}}
                             >
                             <i className="ico-wechat"></i>
                             </button>

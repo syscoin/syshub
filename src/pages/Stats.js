@@ -10,6 +10,7 @@ import WorldMap from './partials/WorldMap';
 import MetaTags from 'react-meta-tags';
 import Background from '../parts/Background';
 import BackgroundInner from '../parts/BackgroundInner';
+import Title from './partials/Title';
 
 export class Stats extends Component {
     constructor(props){  
@@ -53,12 +54,21 @@ export class Stats extends Component {
                         <div className="shell-large">
                         <div className="section__body">
                             <div className="articles">
-                                <InnerBanner heading="Stats"/>
-                                <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                                <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
-                                <Price priceData={this.state.api_data.stats.price_stats}/>
-                                <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
-                                <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content article__content--pull-left text-center">
+                                                <Title heading="Stats" />
+                                                <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
+                                                <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                                                <Price priceData={this.state.api_data.stats.price_stats}/>
+                                                <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
+                                                <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                
                             </div>
                         </div>
                         </div>
@@ -78,7 +88,15 @@ export class Stats extends Component {
                         <div className="shell-large">
                         <div className="section__body">
                             <div className="articles">
-                                <InnerBanner heading="Stats"/>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content article__content--pull-left text-center">
+                                                <Title heading="Stats" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
                         </div>
                         </div>
