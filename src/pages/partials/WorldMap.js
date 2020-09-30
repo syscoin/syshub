@@ -77,7 +77,7 @@ export class WorldMap extends Component {
                             <div className="Heading__Bar mb-5 text-center">
                                 <h1 className="text-white display-4 font-weight-bold">{t('worldMap.title')}</h1>
                             </div>
-                            <div ref="world_map_container" className="world_map"></div>
+                            <div ref="world_map_container" className="world_map" style={{width:'100%',height:'550px'}}></div>
                         </div>
                     </div>
                 </div>
