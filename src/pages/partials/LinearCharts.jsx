@@ -41,7 +41,7 @@ class LinearChart extends Component {
         let totalLocked = this.formatNumber(response.total_locked);
         let remSupply = this.formatNumber(response.current_supply) - this.formatNumber(response.total_locked);
         let coinsPercentLocked = response.coins_percent_locked;
-        let totalCoins = totalLocked + remSupply;
+        let totalCoins = this.formatNumber(response.current_supply);
         let lockedPercent = `${this.round((totalLocked / totalCoins) * 100, 2)}%`;
         let remPercent = `${this.round((remSupply / totalCoins) * 100, 2)}%`;
 
@@ -73,11 +73,11 @@ class LinearChart extends Component {
             return (
             <>
                 <div className="ministats">
-                    <div className="subtitle">Total masternodes ({2122})</div>
+                    <div className="subtitle">Total masternodes ({dataChart1.totalMN})</div>
                     <div className="chart-mini-hor">
-                        <div className="blue" style={{ width: dataChart1.enabledPercent }}></div>
-                        <div className="red" style={{ width: dataChart1.newStartPercent }}></div>
-                        <div className="white" style={{ width: dataChart1.sentPercent }}></div>
+                        <div className="blue" style={{ width: dataChart1.enabledPercent }} title={dataChart1.totalEnabled}></div>
+                        <div className="red" style={{ width: dataChart1.newStartPercent }} title={dataChart1.totalNewStart}></div>
+                        <div className="white" style={{ width: dataChart1.sentPercent }} title={dataChart1.totalSent}></div>
                     </div>
                     <div className="char-mini-legend">
                         <span>
@@ -98,11 +98,11 @@ class LinearChart extends Component {
                 <div className="ministats">
                     <div className="subtitle">Coins collaterized</div>
                     <div className="chart-mini-hor">
-                        <div className="blue" style={{ width: dataChart2.lockedPercent }}></div>
-                        <div className="red" style={{ width: dataChart2.remPercent }}></div>
+                        <div className="blue" style={{ width: dataChart2.lockedPercent }} title={dataChart2.totalLocked}></div>
+                        <div className="red" style={{ width: dataChart2.remPercent }} title={dataChart2.remSupply}></div>
                     </div>
                     <div className="char-mini-legend">
-                        <span>
+                        <span >
                         <span className="blue"></span> Locked{" "}
                         <span className="sb">{dataChart2.lockedPercent}</span>
                         </span>

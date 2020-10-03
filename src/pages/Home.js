@@ -30,17 +30,19 @@ export class Home extends Component {
         let data = await axios
         .get("https://syscoin.dev/mnStats")
         .then(function(result) {
-        return result;
+            return result;
         })
         .catch(function(error) {
             console.log(error);
         });
-        var response=data.data;
-
-        this.setState({
-            dataload: 1,
-            api_data: response
-        });
+        
+        if ((typeof data) !== 'undefined') {
+            var response=data.data;
+            this.setState({ 
+                dataload: 1, 
+                api_data: response
+            });
+        }
     }
     render() {
         const { t } = this.props;
@@ -77,7 +79,11 @@ export class Home extends Component {
                                         </div>
                                     </BannerImage>
                                     <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                                    <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                                    <Income
+                                        incomeData={this.state.api_data.stats.income_stats}
+                                        incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}
+                                        incomeSenTwoYrData={this.state.api_data.stats.income_stats_seniority_two_year}
+                                    />
                                     <Price priceData={this.state.api_data.stats.price_stats}/>
                                     <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
                                     <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>

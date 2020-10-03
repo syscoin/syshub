@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Datamaps from 'datamaps';
 import { withTranslation } from "react-i18next";
+import SubTitle from './SubTitle';
 
-export class WorldMap extends Component {
+class WorldMap extends Component {
     constructor(props){
         super(props);
         window.addEventListener('resize', this.resize);
@@ -50,11 +51,11 @@ export class WorldMap extends Component {
             geographyConfig: {
                 popupTemplate: function(geo, data) {
                     if(data === null){
-                        console.log(geo.properties.name)
+                        // console.log(geo.properties.name)
                         return ['<div class="hoverinfo"><strong>',
                         `${t('worldMap.noMasternodes')} ` + geo.properties.name + '</strong></div>'].join('')
                     }else{
-                        console.log(geo.properties.name,data.masternodes)
+                        // console.log(geo.properties.name,data.masternodes)
                         return ['<div class="hoverinfo"><strong>',
                         geo.properties.name + ': ' + data.masternodes,
                         '</strong></div>'].join('');
@@ -69,19 +70,11 @@ export class WorldMap extends Component {
     }
     render() {
         const { t } = this.props;
-        return(
-            <section className="section__map gradient_box2 pt-0">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-lg-12" data-animation="fadeInUp" data-animation-delay="1s">
-                            <div className="Heading__Bar mb-5 text-center">
-                                <h1 className="text-white display-4 font-weight-bold">{t('worldMap.title')}</h1>
-                            </div>
-                            <div ref="world_map_container" className="world_map" style={{width:'100%',height:'550px'}}></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        return (
+            <>
+                <SubTitle heading={t('worldMap.title')} />
+                <div ref="world_map_container" className="world_map" style={{width:'100%',height:'550px'}}></div>
+            </>
         )
 
     }

@@ -24,55 +24,65 @@ export class Governance extends Component {
     componentDidMount() {
         this.apiLoader();
     }
+    
     async apiLoader() {
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json, text/plain, */*',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+
         let data = await axios
         .get("https://syscoin.dev/mnStats")
         .then(function(result) {
         return result;
         })
         .catch(function(error) {
-            this.setState({
-                dataLoad: 2
-            });
+            console.log(error)
         });
-        var stats_response=data.data;
-
-        let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Accept': 'application/json, text/plain, */*',
-            "Access-Control-Allow-Origin": "*",
-        }
-        };
-
-        let govres=await axios.post('https://syscoin.dev/govlist', [], axiosConfig)
+        
+        let govres = await axios.post('https://syscoin.dev/govlist', [], axiosConfig)
         .then((res) => {
             return res;
         })
         .catch((err) => {
+            console.log(err);
+        });
+
+        
+        if ((typeof data) !== 'undefined' && (typeof govres) !== 'undefined') { 
+            let stats_response;
+            stats_response = data.data;
+
+            let govdata=govres.data;
+            Object.keys(govdata).forEach(function(key) {
+                if(govdata[key].ObectType===2) {
+                    delete govdata[key];
+                }
+            });
+            
+            var budgetSum = govdata.reduce(function(sum, d) {
+                if(d.payment_amount===undefined) {
+                    return sum + 0;
+                } else {
+                    return sum + d.payment_amount;
+                }
+            }, 0);
+
+            this.setState({
+                statsData: stats_response,
+                govData: govdata,
+                budgetSum: budgetSum,
+                dataLoad: 1
+            });
+        }
+        else {
             this.setState({
                 dataLoad: 2
             });
-        });
-        var govdata=govres.data;
-        Object.keys(govdata).forEach(function(key) {
-            if(govdata[key].ObectType===2) {
-                delete govdata[key];
-            }
-        });
-        var budgetSum = govdata.reduce(function(sum, d) {
-            if(d.payment_amount===undefined) {
-                return sum + 0;
-            } else {
-                return sum + d.payment_amount;
-            }
-          }, 0);
-        this.setState({
-            statsData: stats_response,
-            govData: govdata,
-            budgetSum: budgetSum,
-            dataLoad: 1
-        });
+        }
     }
     render() {
         const { t } = this.props;

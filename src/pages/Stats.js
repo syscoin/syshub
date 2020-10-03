@@ -6,13 +6,13 @@ import Background from '../parts/Background';
 import BackgroundInner from '../parts/BackgroundInner';
 
 import Title from './partials/Title';
-import Doughnut from './partials/Doughnut';
 import Income from './partials/Income';
 import Price from './partials/Price';
 import Investment from './partials/Investment';
 import WorldMap from './partials/WorldMap';
 import LinearChart from './partials/LinearCharts';
 import StatsShow from './partials/StatsShow';
+import Blockchain from './partials/Blockchain';
 
 export class Stats extends Component {
     constructor(props){  
@@ -30,21 +30,21 @@ export class Stats extends Component {
         let data = await axios
         .get("https://syscoin.dev/mnStats")
         .then(function(result) {
-        return result;
+            return result;
         })
         .catch(function(error) {
             console.log(error);
         });
-        var response=data.data;
-        
-        this.setState({ 
-            dataload: 1, 
-            api_data: response
-        });
+        if ((typeof data) !== 'undefined') {
+            var response=data.data;
+            this.setState({ 
+                dataload: 1, 
+                api_data: response
+            });
+        }
     }
     render() {
         if (this.state.dataload === 1) {
-            console.log(this.state.api_data);
             return (
                 <Background>
                     <BackgroundInner type="B" />
@@ -61,8 +61,8 @@ export class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
-                                                <Title heading="Stats" />
-                                                <StatsShow />
+                                                <Title heading="Masternode Stats" />
+                                                <StatsShow statsData={this.state.api_data.stats} />
                                                 <LinearChart chartData={this.state.api_data.stats.mn_stats}/>
                                             </div>
                                         </div>
@@ -72,10 +72,46 @@ export class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
-                                                <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                                                <Income incomeData={this.state.api_data.stats.income_stats} incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}/>
+                                                <Income
+                                                    incomeData={this.state.api_data.stats.income_stats}
+                                                    incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}
+                                                    incomeSenTwoYrData={this.state.api_data.stats.income_stats_seniority_two_year}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content">
                                                 <Price priceData={this.state.api_data.stats.price_stats}/>
-                                                <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content">
+                                                <Investment investData={this.state.api_data.stats.mn_stats} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content">
+                                                <Blockchain blockchainData={this.state.api_data.stats.blockchain_stats} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section className="article">
+                                    <div className="cols">
+                                        <div className="col col--size-12">
+                                            <div className="article__content">
                                                 <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
                                             </div>
                                         </div>
@@ -104,7 +140,7 @@ export class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content article__content--pull-left text-center">
-                                                <Title heading="Stats" />
+                                                <Title heading="Masternode Stats" />
                                             </div>
                                         </div>
                                     </div>
