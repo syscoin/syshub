@@ -1,28 +1,25 @@
 import React, { Component } from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
 
-
-class Login extends Component {
-  onLogin = (loginData) => {
-    console.log(loginData)
-  }
-
+class Recover extends Component {
+  onRegister = (registerData) => {
+    console.log(registerData);
+  };
   render() {
     const { t } = this.props;
     return (
       <Background>
         <BackgroundInner />
-        <main className="section loginPage">
+        <main className="section recoverPage">
           <MetaTags>
-            <title> {t("login.meta.title")} </title>
-            <meta name="keywords" content={t("login.meta.keywords")} />
-            <meta name="description" content={t("login.meta.description")} />
+            <title> {t("register.meta.title")} </title>
+            <meta name="keywords" content={t("register.meta.keywords")} />
+            <meta name="description" content={t("register.meta.description")} />
           </MetaTags>
           <div className="shell-large">
             <div className="section__body">
@@ -31,22 +28,16 @@ class Login extends Component {
                   <div className="cols">
                     <div className="col col--size-12">
                       <div className="article__content article__content--pull-left text-center">
-                        <Title heading="Login" />
+                        <Title heading="Recover your password" />
                         <form className="input-form centered">
-                          <input className="styled-round" type="text" placeholder="Username" />
-                          <input className="styled-round" type="password" placeholder="Password" />
+                          <input className="styled-round" type="text" placeholder="Email" />
 
                           <div className="input-cont">
                             Captcha
                           </div>
 
                           <div className="input-cont">
-                            <button className="btn btn--blue">Login</button>
-                          </div>
-
-                          <div className="input-cont">
-                            <Link to="/recover">Forgot your password?</Link> <br />
-                            <Link to="/register">Don't have an account?</Link>
+                            <button className="btn btn--blue">Send</button>
                           </div>
                         </form>
                       </div>
@@ -57,10 +48,9 @@ class Login extends Component {
             </div>
           </div>
         </main>
-
       </Background>
     );
   }
 }
 
-export default withTranslation()(Login);
+export default withTranslation()(Recover);

@@ -19,7 +19,13 @@ class Header extends Component {
     });
     }
 
-    mobileMenu = () => {
+    menuLinks = () => {
+        if (this.state.isMobileMenu) {
+            this.toggleMenu();
+        }
+    }
+
+    toggleMenu = () => {
         this.setState({ isMobileMenu: !this.state.isMobileMenu });
     }
 
@@ -37,27 +43,27 @@ class Header extends Component {
                 <div className={`header__content ${this.state.isMobileMenu ? 'open': ''}`}>
                     <nav className="nav">
                     <ul style={{width: '100%'}}>
-                        <li>
-                            <Link to="/about">{t('header.about')}</Link>
+                        <li onClick={this.menuLinks}>
+                            <Link to="/about"> {t('header.about')}</Link>
                         </li>
 
-                        <li>
+                        <li onClick={this.menuLinks}>
                             <Link to="/stats">{t('header.stats')}</Link>
                         </li>
 
-                        <li>
+                        <li onClick={this.menuLinks}>
                             <Link to="/setup">{t('header.setup')}</Link>
                         </li>
 
-                        <li>
+                        <li onClick={this.menuLinks}>
                             <Link to="/governance">{t('header.governance')}</Link>
                         </li>
 
-                        <li>
-                            <Link to="/check">Masternodes</Link>
+                        <li onClick={this.menuLinks}>
+                            <Link to="/masternodes">Masternodes</Link>
                         </li>
 
-                        <li>
+                        <li onClick={this.menuLinks}>
                             <a rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a>
                         </li>
 
@@ -67,29 +73,29 @@ class Header extends Component {
                             <div className="dropdown">
                             <ul>
                                 {(!isLogin()) && (
-                                    <li>
+                                    <li onClick={this.menuLinks}>
                                         <Link to="/login">{t('header.login')}</Link>
                                     </li>
                                 )}
                                 {(!isLogin()) && (
-                                    <li>
+                                    <li onClick={this.menuLinks}>
                                         <Link to="/register">{t('header.register')}</Link>
                                     </li>
                                 )}
 
                                 {/* <li className="sep"></li> */}
                                 {isLogin() && (
-                                    <li>
+                                    <li onClick={this.menuLinks}>
                                         <Link to="/profile">Profile</Link>
                                     </li>
                                 )}
                                 {isLogin() && (
-                                    <li>
-                                        <Link to="/dashboard">{t('header.dashboard')}</Link>
+                                    <li onClick={this.menuLinks}>
+                                        <Link to="/create-proposal">New proposal</Link>
                                     </li>
                                 )}
                                 {isLogin() && (
-                                    <li>
+                                    <li onClick={this.menuLinks}>
                                         <Link to="/logout">Logout</Link>
                                     </li>
                                 )}
@@ -102,7 +108,7 @@ class Header extends Component {
                 </div>
 
                 {/* TODO:click event open mobile menu add className .open to .header__content */}
-                        <button onClick={this.mobileMenu} className="nav-trigger" style={{border: 'none',background:'none'}}>
+                        <button onClick={this.toggleMenu} className="nav-trigger" style={{border: 'none',background:'none', outline: 'none'}}>
                     <span></span>
                     <span></span>
                     <span></span>

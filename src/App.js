@@ -16,7 +16,10 @@ import Stats from './pages/Stats';
 import Governance from './pages/Governance';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Recover from './pages/Recover';
 import Error from './pages/Error';
+import Profile from './pages/Profile';
+import NewProposal from './pages/NewProposal';
 
 
 class App extends Component {
@@ -28,12 +31,14 @@ class App extends Component {
                     <PublicRoute restricted={false} path="/" component={Home} exact />
                     <PublicRoute restricted={false} path="/about" component={About} />
                     <PublicRoute restricted={false} path="/setup" component={Setup} />
-                    <PublicRoute restricted={false} path="/check" component={Check} />
+                    <PublicRoute restricted={false} path="/masternodes" component={Check} />
                     <PublicRoute restricted={false} path="/stats" component={Stats} />
                     <PublicRoute restricted={false} path="/governance" component={Governance} />
                     <PublicRoute restricted={true} path="/login" component={Login} />
                     <PublicRoute restricted={true} path="/register" component={Register} />
-                    <PrivateRoute path="/dashboard" component={About} />
+                    <PublicRoute restricted={true} path="/recover" component={Recover} />
+                    <PrivateRoute path="/create-proposal" component={NewProposal} />
+                    <PrivateRoute path="/profile" component={Profile} />
                     <PublicRoute restricted={false} component={Error} />
                 </Switch>
                 <div className="clearfix"></div>
