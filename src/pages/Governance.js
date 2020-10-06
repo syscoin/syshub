@@ -7,8 +7,9 @@ import MetaTags from 'react-meta-tags';
 import Background from '../parts/Background';
 import BackgroundInner from '../parts/BackgroundInner';
 import BannerImage from '../parts/BannerImage';
-import SuperBlocks from './partials/SuperBlocks';
+// import SuperBlocks from './partials/SuperBlocks';
 import GovList from './partials/GovList';
+import GovDetails from './partials/GovDetails';
 
 export class Governance extends Component {
     constructor(props){
@@ -107,17 +108,15 @@ export class Governance extends Component {
                                     <section className="article article--revirse">
                                         <div className="cols">
                                             <div className="col col--size12">
-                                                <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
+                                                <div className="article__content">
+                                                    <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
 
                                     <section className="article">
-                                        <div className="cols-top cols">
-                                            <div className="col col--size12">
-                                                <SuperBlocks budgetSum={this.state.budgetSum} superBlockData={this.state.statsData.stats.superblock_stats} />
-                                            </div>
-                                        </div>
+                                        <GovDetails budgetSum={this.state.budgetSum} superBlockData={this.state.statsData.stats.superblock_stats} />
                                     </section>
                                 </div>
                             </div>
