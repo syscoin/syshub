@@ -57,7 +57,7 @@ export class Stats extends Component {
                         <div className="shell-large">
                         <div className="section__body">
                             <div className="articles">
-                                <section className="article">
+                                <section className="article article--revirse article--offsets-bottom">
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
@@ -68,7 +68,7 @@ export class Stats extends Component {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="article">
+                                <section className="article article--revirse article--offsets-bottom">
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
@@ -81,7 +81,7 @@ export class Stats extends Component {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="article">
+                                <section className="article article--revirse article--offsets-bottom">
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
@@ -99,7 +99,7 @@ export class Stats extends Component {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="article">
+                                <section className="article article--revirse article--offsets-bottom">
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
@@ -108,7 +108,7 @@ export class Stats extends Component {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="article">
+                                <section className="article article--revirse article--offsets-bottom">
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">

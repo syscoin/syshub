@@ -73,7 +73,7 @@ class WorldMap extends Component {
         return (
             <>
                 <SubTitle heading={t('worldMap.title')} />
-                <div ref="world_map_container" className="world_map" style={{width:'100%',height:'550px'}}></div>
+                <div ref="world_map_container" className="world_map" style={{width:'100%', height:'550px', position: 'relative'}}></div>
             </>
         )
 

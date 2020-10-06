@@ -8,11 +8,10 @@ import { Link } from 'react-router-dom';
 import Background from '../parts/Background';
 import BackgroundInner from '../parts/BackgroundInner';
 import BannerImage from '../parts/BannerImage';
-import Doughnut from './partials/Doughnut';
-import Income from './partials/Income';
-import Price from './partials/Price';
-import Investment from './partials/Investment';
 import WorldMap from './partials/WorldMap';
+import StatsShow from './partials/StatsShow';
+import LinearCharts from './partials/LinearCharts';
+import SubTitle from './partials/SubTitle';
 
 export class Home extends Component {
     constructor(props){
@@ -78,15 +77,24 @@ export class Home extends Component {
                                             </Link>
                                         </div>
                                     </BannerImage>
-                                    <Doughnut chartData={this.state.api_data.stats.mn_stats}/>
-                                    <Income
-                                        incomeData={this.state.api_data.stats.income_stats}
-                                        incomeSenOneYrData={this.state.api_data.stats.income_stats_seniority_one_year}
-                                        incomeSenTwoYrData={this.state.api_data.stats.income_stats_seniority_two_year}
-                                    />
-                                    <Price priceData={this.state.api_data.stats.price_stats}/>
-                                    <Investment investData={this.state.api_data.stats.mn_stats} blockchainData={this.state.api_data.stats.blockchain_stats}/>
-                                    <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills}/>
+                                    
+                                    {/* GOVERNANCE */}
+
+                                    <section className="article article--revirse article--offsets-bottom">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content">
+                                                    <SubTitle heading="Stats" />
+                                                    <StatsShow statsData={this.state.api_data.stats} />
+                                                    <LinearCharts chartData={this.state.api_data.stats.mn_stats}/>
+                                                    <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills} />
+                                                    <div className="article__actions text-center">
+                                                        <Link to="/stats" className="btn btn--blue-border">More stats</Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
