@@ -87,7 +87,10 @@ export class Governance extends Component {
     }
     render() {
         const { t } = this.props;
-        if(this.state.dataLoad===1) {
+        if (this.state.dataLoad === 1) {
+            console.log(this.state.govData, "govData");
+            console.log(this.state.statsData, "statsData");
+
             return (
                 <Background>
                     <BackgroundInner />
@@ -105,7 +108,7 @@ export class Governance extends Component {
                                         <p>Syscoin have implemented a % decline schedule — starting the first month with 1,500,000 SYS and ending on the 24th month with 196,708 SYS. After that period, the superblock starts with 151,767 SYS a month and will decline 5% every year.</p>
                                     </BannerImage>
 
-                                    <section className="article article--revirse">
+                                    <section className="article article--revirse article--offsets-bottom">
                                         <div className="cols">
                                             <div className="col col--size12">
                                                 <div className="article__content">

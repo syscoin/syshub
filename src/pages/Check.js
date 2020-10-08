@@ -75,7 +75,7 @@ const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize, o
                             <input type="number" value={sizePerPage} onChange={ onSizeChange } className="form-psize"/>
                         </p>
                   </div>
-                  <div className="pull-right">
+                  <div className="pagination">
                         <PaginationListStandalone
                         { ...paginationProps }
                         />
@@ -97,7 +97,7 @@ export class Check extends Component {
             dataload: 0,
             page: 1,
             tableData: [],
-            sizePerPage: 30,
+            sizePerPage: 10,
             totalRecords: 0
         }
         this.searchInTable = this.searchInTable.bind(this);
@@ -199,14 +199,23 @@ export class Check extends Component {
                                             <div className="col col--size-12">
                                                 <div className="article__content article__content--pull-left text-center">
                                                     <Title heading={t('check.title')} />
-                                                    <div className="custom__datatable table-responsive">
-                                                        <div className="pc-left">
-                                                            <button type="button" className="btn-default p-2 mb-2" onClick={this.resetSearch}>{t('check.table.resetBtn')}</button>
-                                                        </div>
-                                                        <div className="pc-right">
-                                                            <input id="srcVal" type="text" className="form-control" placeholder={t('check.table.ipInput')} onKeyUp={this.searchInTable}/>
-                                                        </div>
+                                                    <div class="input-form">
+                                                        <input
+                                                            id="srcVal"
+                                                            type="text"
+                                                            className="ip"
+                                                            placeholder={t('check.table.ipInput')}
+                                                            onKeyUp={this.searchInTable}
+                                                        />
+                                                        
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn--blue"
+                                                            onClick={this.resetSearch}
+                                                            style={{ margin: "20px auto", width: "150px", display: "block" }}
+                                                        >{t('check.table.resetBtn')}</button>
                                                     </div>
+
                                                     <RemotePagination
                                                         data={ tableData }
                                                         page={ page }

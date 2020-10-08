@@ -69,7 +69,11 @@ class Header extends Component {
 
                         <li>
                         <div className="user">
-                            {isLogin() ? `${'User'} ` : "Not logged in "}<i className="icon-user"></i>
+                            {isLogin() 
+                                ? (<span 
+                                    style={{display: 'inline-block', verticalAlign: 'middle', whiteSpace: 'nowrap', maxWidth: '9ch', overflow: 'hidden', textOverflow: 'ellipsis'}}
+                                    >{'username'}</span>) 
+                                : (<span>Not logged in </span>)} <i className="icon-user"></i>
                             <div className="dropdown">
                             <ul>
                                 {(!isLogin()) && (
