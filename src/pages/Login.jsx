@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
 
+import { login } from '../utils/request';
+
 import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
@@ -12,14 +14,18 @@ import { Link } from "react-router-dom";
 class Login extends Component {
 
   state = {
-    submitting: false
+    submitting: false,
+    responseData: null
   }
 
-  onLogin = (loginData) => {
+  onLogin = async (loginData) => {
     console.log(loginData)
     this.setState({ submitting: true });
+    const response = await login(loginData);
+    console.log(response);
 
-    setTimeout(() => this.setState({submitting: false}),5000)
+    this.setState({ submitting: false, responseData: response.data });
+
   }
 
   render() {
@@ -42,6 +48,7 @@ class Login extends Component {
                       <div className="article__content article__content--pull-left text-center">
                         <Title heading="Login" />
                         <LoginForm onLogin={this.onLogin} submitting={this.state.submitting} />
+                        <p></p>
                         <div className="input-cont">
                           <Link to="/recover">Forgot your password?</Link> <br />
                           <Link to="/register">Don't have an account?</Link>

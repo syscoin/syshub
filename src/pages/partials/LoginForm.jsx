@@ -12,7 +12,6 @@ const LoginForm = (props) => {
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema)
   });
-  console.log(errors)
 
 
   return (

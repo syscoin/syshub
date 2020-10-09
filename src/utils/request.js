@@ -231,7 +231,7 @@ export const login = async (data) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    return new Error(err)
   }
 }
 
