@@ -15,14 +15,19 @@ class Login extends Component {
 
   state = {
     submitting: false,
-    responseData: null
+    responseData: null,
+    error: null
   }
 
   onLogin = async (loginData) => {
     this.setState({submitting: true});
     const response = await login(loginData);
     console.log(response)
-    this.setState({submitting: false, responseData: response.data});
+    if (response.error) {
+      this.setState({error: response.error});
+    }
+
+    this.setState({submitting: false});
   }
 
   render() {
@@ -43,7 +48,10 @@ class Login extends Component {
                   <div className="cols">
                     <div className="col col--size-12">
                       <div className="article__content article__content--pull-left text-center">
-                        <Title heading="Login"/>
+                        <Title heading="Login" />
+                        {this.state.error && (
+                          <p>{this.state.error.message}</p>
+                        )}
                         <LoginForm onLogin={this.onLogin} submitting={this.state.submitting}/>
                         <p></p>
                         <div className="input-cont">

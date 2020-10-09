@@ -232,7 +232,7 @@ export const login = async (data) => {
     })
   } catch (err) {
     if (err.response) {
-      return {statusCode: err.response.status, message: err.response.data}
+      return {status: err.response.status, error: err.response.data}
     } else {
       throw err
     }
