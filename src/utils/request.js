@@ -231,7 +231,11 @@ export const login = async (data) => {
       throw err
     })
   } catch (err) {
-    return new Error(err)
+    if (err.response) {
+      return {statusCode: err.response.status, message: err.response.data}
+    } else {
+      throw err
+    }
   }
 }
 
@@ -270,6 +274,6 @@ export const updateUser = async (id, data) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    return new Error(err)
   }
 }
