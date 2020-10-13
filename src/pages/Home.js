@@ -12,6 +12,7 @@ import WorldMap from './partials/WorldMap';
 import StatsShow from './partials/StatsShow';
 import LinearCharts from './partials/LinearCharts';
 import SubTitle from './partials/SubTitle';
+import MasternodeTable from './partials/MasternodeTable';
 
 export class Home extends Component {
     constructor(props){
@@ -77,6 +78,20 @@ export class Home extends Component {
                                             </Link>
                                         </div>
                                     </BannerImage>
+
+                                    <section className="article article--revirse article--offsets-bottom">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content">
+                                                    <SubTitle heading="Check your masternode" />
+                                                    <MasternodeTable simple={true} sizePerPage={5} />
+                                                    <div className="article__actions text-center">
+                                                        <Link to="/masternodes" className="btn btn--blue-border">All masternodes</Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                     
                                     {/* GOVERNANCE */}
 

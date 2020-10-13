@@ -1,10 +1,10 @@
-.table-resp 
+.table-resp, .react-bootstrap-table
 {
     width:100%;
     overflow: hidden;
 }
 
-.check_table
+.check_table, .react-bootstrap-table
 {
     margin: 45px auto 0;
     width: 100%;
@@ -17,8 +17,9 @@
     {
         width: 100%;
         min-width:840px;
+        table-layout: auto !important;
 
-        thead td 
+        thead td, thead th 
         {
             font-weight: 500;
             color:white;
@@ -38,7 +39,7 @@
             color:#798ab7;
         }
 
-        &.mns 
+        &.mns, &.table
         {
             tr:hover 
             {
@@ -62,47 +63,70 @@
     }
 }
 
-.pagination
+.pagination-cont
 {
     margin:20px 0 80px;
+}
 
-    ul 
+ul.pagination
+{
+    list-style: none;
+    margin:0;
+    padding:0;
+    display: table;
+    margin: 0 auto;
+    float: none;
+
+    &.react-bootstrap-table-page-btns-ul
     {
-        list-style: none;
-        margin:0;
-        padding:0;
-        display: table;
-        margin: 0 auto;
+        margin:20px auto 80px;
+    }
 
-        li 
+    li 
+    {
+        float:left;
+        margin:0 5px;
+
+        &.disabled
         {
-            float:left;
-            margin:0 5px;
+            opacity:0.5;
+        }
 
-            a 
+        &.active 
+        {
+            font-weight: 600;
+            color:$color-blue-4;
+        }
+
+        &:hover:not(.disabled)
+        {
+            color:$color-blue-4;
+        }
+
+        a 
+        {
+            padding:0 5px;
+            text-decoration: none;
+
+            &.disabled
             {
-                padding:0 5px;
-                text-decoration: none;
+                opacity:0.5;
+            }
 
-                &.disabled
-                {
-                    opacity:0.5;
-                }
+            &.active 
+            {
+                font-weight: 600;
+                color:$color-blue-4;
+            }
 
-                &.active 
-                {
-                    font-weight: 600;
-                    color:$color-blue-4;
-                }
-
-                &:hover:not(.disabled)
-                {
-                    color:$color-blue-4;
-                }
+            &:hover:not(.disabled)
+            {
+                color:$color-blue-4;
             }
         }
     }
 }
+
 
 .proposal-subtitle
 {
