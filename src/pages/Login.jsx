@@ -1,37 +1,38 @@
-import React, {Component} from "react";
+import React, { useState } from "react";
 import {MetaTags} from "react-meta-tags";
 import {withTranslation} from "react-i18next";
 
-import {login} from '../utils/request';
+import { useUser } from '../context/user-context';
 
 import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
 import LoginForm from "./partials/LoginForm";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 
-class Login extends Component {
+function Login (props) {
+  const history = useHistory();
+  const { loginUser, user } = useUser();
 
-  state = {
-    submitting: false,
-    responseData: null,
-    error: null
-  }
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  onLogin = async (loginData) => {
-    this.setState({submitting: true});
-    const response = await login(loginData);
-    console.log(response)
+  const loginToApp = async (loginData) => {
+    setSubmitting(true);
+    if (!error) setError(null);
+
+    const response = await loginUser(loginData);
     if (response.error) {
-      this.setState({error: response.error});
+      setError(response.error);
+      return setSubmitting(false);
     }
 
-    this.setState({submitting: false});
+    setSubmitting(false);
+    history.push('/governance');
   }
 
-  render() {
-    const {t} = this.props;
+    const {t} = props;
     return (
       <Background>
         <BackgroundInner/>
@@ -48,15 +49,15 @@ class Login extends Component {
                   <div className="cols">
                     <div className="col col--size-12">
                       <div className="article__content article__content--pull-left text-center">
-                        <Title heading="Login" />
-                        {this.state.error && (
-                          <p>{this.state.error.message}</p>
+                        <Title heading={t("login.data.heading")} />
+                        {error && (
+                          <p>{error.message}</p>
                         )}
-                        <LoginForm onLogin={this.onLogin} submitting={this.state.submitting}/>
+                        <LoginForm onLogin={loginToApp} submitting={submitting}/>
                         <p></p>
                         <div className="input-cont">
                           <Link to="/recover">Forgot your password?</Link> <br/>
-                          <Link to="/register">Don't have an account?</Link>
+                          <Link to="/signup">Don't have an account?</Link>
                         </div>
                       </div>
                     </div>
@@ -69,7 +70,6 @@ class Login extends Component {
 
       </Background>
     );
-  }
 }
 
 export default withTranslation()(Login);

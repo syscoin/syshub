@@ -4,11 +4,14 @@ export default {
     about: 'About',
     stats: 'Stats',
     setup: 'Setup',
-    check: 'Check',
+    masternodes: 'Masternodes',
     support: 'Support',
     governance: 'Governance',
-    login: 'Login',
-    register: 'Sign up',
-    dashboard: 'Dashboard'
+    login: 'Log in',
+    signup: 'Sign up',
+    dashboard: 'Dashboard',
+    proposal: 'New proposal',
+    profile: 'Profile',
+    logout: 'Logout'
   },
 }

@@ -771,14 +771,21 @@ nav ol {
 .nav li ~ li {
   margin-left: 60px; }
 
-.nav a, .nav .user {
+.nav a, .nav .user, .nav .nav-btn {
   text-decoration: none;
   transition: color .4s ease;
   line-height: 2.4; }
 
 .nav a:hover,
-.nav .user:hover {
+.nav .user:hover,
+.nav .nav-btn:hover {
   color: #8993b2; }
+
+.nav .nav-btn {
+  border: none;
+  background: none;
+  outline: none;
+  line-height: 2.4; }
 
 .nav .user {
   cursor: pointer;

@@ -1,9 +1,9 @@
 export default {
   check: {
-    title: 'Masternode Check',
+    title: 'Masternodes Check',
     loading: 'Loading...',
     meta: {
-      title: 'Syscoin Masternodes - Masternode Checkch',
+      title: 'Syscoin Masternodes - Masternode Check',
       keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
       description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
     },

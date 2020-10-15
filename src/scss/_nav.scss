@@ -29,9 +29,11 @@
 .nav ul { display: flex; font-size: 16px; }
 .nav li { position: relative; padding-bottom: 6px; }
 .nav li ~ li { margin-left: 60px; }
-.nav a,.nav .user { text-decoration: none; transition: color .4s ease; line-height: 2.4;}
+.nav a,.nav .user,.nav .nav-btn { text-decoration: none; transition: color .4s ease; line-height: 2.4;}
 .nav a:hover,
-.nav .user:hover { color:#8993b2 }
+.nav .user:hover,
+.nav .nav-btn:hover { color:#8993b2 }
+.nav .nav-btn { border: none; background: none; outline: none; line-height: 2.4; }
 
 .nav .user
 {

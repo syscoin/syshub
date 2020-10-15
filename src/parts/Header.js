@@ -1,162 +1,169 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import isLogin from '../utils/login';
 
+import { useUser } from "../context/user-context";
 
-// var publicurl=process.env.PUBLIC_URL;
-class Header extends Component {
-    state = {
-        isNotTop: false,
-        isMobileMenu: false
-    }
-    componentDidMount() {
-    document.addEventListener('scroll', () => {
-        const isNotTop = window.scrollY > 0;
-        if (isNotTop !== this.state.isTop) {
-        this.setState({ isNotTop })
-        }
+function Header(props) {
+  const history = useHistory();
+  const { user, logoutUser } = useUser();
+
+  const [isNotTop, setIsNotTop] = useState(false);
+  const [isMobileMenu, setIsMobileMenu] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      const _isNotTop = window.scrollY > 0;
+      if (_isNotTop !== isNotTop) {
+        setIsNotTop(_isNotTop);
+      }
     });
+  });
+
+  const menuLinks = () => {
+    if (isMobileMenu) {
+      toggleMenu();
     }
+  };
 
-    menuLinks = () => {
-        if (this.state.isMobileMenu) {
-            this.toggleMenu();
-        }
-    }
+  const toggleMenu = () => {
+    setIsMobileMenu(!isMobileMenu);
+  };
 
-    toggleMenu = () => {
-        this.setState({ isMobileMenu: !this.state.isMobileMenu });
-    }
+  const logout = () => {
+    console.log('logout')
+    logoutUser();
+    history.push('/');
+    history.go(0);
+  }
+  const username = (userInfo) => {
+    let username = userInfo.data.email.substring(0, userInfo.data.email.lastIndexOf("@"));
+    
+    return username;
+  }
 
-    render() {
-        const { t } = this.props;
-        return (
-            <header className={`header ${this.state.isNotTop ? 'fixed' : ''}`}>
-            {/* TODO: add className "fixed" to .header when scroll > 0 */}
-            <div className="shell">
-                <div className="header__inner">
-                <Link to="/">
-                    <div className="logo" style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`}}></div>
-                </Link>
-                {/*TODO:to open mobile menu add className .open to .header__content*/}
-                <div className={`header__content ${this.state.isMobileMenu ? 'open': ''}`}>
-                    <nav className="nav">
-                    <ul style={{width: '100%'}}>
-                        <li onClick={this.menuLinks}>
-                            <Link to="/about"> {t('header.about')}</Link>
-                        </li>
+  const { t } = props;
+  return (
+    <header className={`header ${isNotTop ? "fixed" : ""}`}>
+      {/* TODO: add className "fixed" to .header when scroll > 0 */}
+      <div className="shell">
+        <div className="header__inner">
+          <Link to="/" onClick={menuLinks}>
+            <div
+              className="logo"
+              style={{
+                backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`,
+              }}
+            ></div>
+          </Link>
+          {/*TODO:to open mobile menu add className .open to .header__content*/}
+          <div className={`header__content ${isMobileMenu ? "open" : ""}`}>
+            <nav className="nav">
+              <ul style={{ width: "100%" }}>
+                <li onClick={menuLinks}>
+                  <Link to="/about"> {t("header.about")}</Link>
+                </li>
 
-                        <li onClick={this.menuLinks}>
-                            <Link to="/stats">{t('header.stats')}</Link>
-                        </li>
+                <li onClick={menuLinks}>
+                  <Link to="/stats">{t("header.stats")}</Link>
+                </li>
 
-                        <li onClick={this.menuLinks}>
-                            <Link to="/setup">{t('header.setup')}</Link>
-                        </li>
+                <li onClick={menuLinks}>
+                  <Link to="/setup">{t("header.setup")}</Link>
+                </li>
 
-                        <li onClick={this.menuLinks}>
-                            <Link to="/governance">{t('header.governance')}</Link>
-                        </li>
+                <li onClick={menuLinks}>
+                  <Link to="/governance">{t("header.governance")}</Link>
+                </li>
 
-                        <li onClick={this.menuLinks}>
-                            <Link to="/masternodes">Masternodes</Link>
-                        </li>
+                <li onClick={menuLinks}>
+                  <Link to="/masternodes">{t("header.masternodes")}</Link>
+                </li>
 
-                        <li onClick={this.menuLinks}>
-                            <a rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a>
-                        </li>
+                <li onClick={menuLinks}>
+                  <a
+                    rel="noopener noreferrer"
+                    href="https://support.syscoin.org/"
+                    target="_blank"
+                  >
+                    {t("header.support")}
+                  </a>
+                </li>
 
-                        <li>
-                        <div className="user">
-                            {isLogin() 
-                                ? (<span 
-                                    style={{display: 'inline-block', verticalAlign: 'middle', whiteSpace: 'nowrap', maxWidth: '9ch', overflow: 'hidden', textOverflow: 'ellipsis'}}
-                                    >{'username'}</span>) 
-                                : (<span>Not logged in </span>)} <i className="icon-user"></i>
-                            <div className="dropdown">
-                            <ul>
-                                {(!isLogin()) && (
-                                    <li onClick={this.menuLinks}>
-                                        <Link to="/login">{t('header.login')}</Link>
-                                    </li>
-                                )}
-                                {(!isLogin()) && (
-                                    <li onClick={this.menuLinks}>
-                                        <Link to="/register">{t('header.register')}</Link>
-                                    </li>
-                                )}
+                <li>
+                  <div className="user">
+                    {user ? (
+                      <span
+                        style={{
+                          display: "inline-block",
+                          verticalAlign: "middle",
+                          whiteSpace: "nowrap",
+                          maxWidth: "9ch",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {username(user)}
+                      </span>
+                    ) : (
+                      <span>Not logged in </span>
+                    )}
+                    <i className="icon-user"></i>
+                    <div className="dropdown">
+                      <ul>
+                        {!user && (
+                          <li onClick={menuLinks}>
+                            <Link to="/login">{t("header.login")}</Link>
+                          </li>
+                        )}
+                        {!user && (
+                          <li onClick={menuLinks}>
+                            <Link to="/signup">{t("header.signup")}</Link>
+                          </li>
+                        )}
 
-                                {/* <li className="sep"></li> */}
-                                {isLogin() && (
-                                    <li onClick={this.menuLinks}>
-                                        <Link to="/profile">Profile</Link>
-                                    </li>
-                                )}
-                                {isLogin() && (
-                                    <li onClick={this.menuLinks}>
-                                        <Link to="/create-proposal">New proposal</Link>
-                                    </li>
-                                )}
-                                {isLogin() && (
-                                    <li onClick={this.menuLinks}>
-                                        <Link to="/logout">Logout</Link>
-                                    </li>
-                                )}
-                            </ul>
-                            </div>
-                        </div>
-                        </li>
-                    </ul>
-                    </nav>
-                </div>
-
-                {/* TODO:click event open mobile menu add className .open to .header__content */}
-                        <button onClick={this.toggleMenu} className="nav-trigger" style={{border: 'none',background:'none', outline: 'none'}}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                </div>
-            </div>
-            </header>
-        );
-    }
-
-    /* render() {
-        const { t } = this.props;
-        return(
-            <header className="header_wrap fixed-top">
-            <div className="container">
-                <nav className="navbar navbar-expand-lg">
-                    <Link className="navbar-brand page-scroll animation" to="/" data-animation="fadeInDown" data-animation-delay="1s">
-                        <img className="logo_light" src={process.env.PUBLIC_URL+'/assets/images/logo.png'} alt="logo" />
-                    </Link>
-                    <button className="navbar-toggler animation" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-animation="fadeInDown" data-animation-delay="1.1s">
-                        <span className="navbar-toggler-icon"></span>
-                        <span className="navbar-toggler-icon"></span>
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="dropdown animation" data-animation="fadeInDown" data-animation-delay="1.1s">
-                                <Link className="nav-link" to="/">{t('header.home')}</Link>
-                            </li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" to="/about">{t('header.about')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.3s"><Link className="nav-link" to="/stats">{t('header.stats')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><Link className="nav-link" to="/setup">{t('header.setup')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/check">{t('header.check')}</Link></li>
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/governance">{t('header.governance')}</Link></li>
-                            {isLogin() && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/dashboard">{t('header.dashboard')}</Link></li>}
-                            <li className="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a className="nav-link" rel="noopener noreferrer" href="https://support.syscoin.org/" target="_blank">{t('header.support')}</a></li>
-                            {(!isLogin()) && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/login">{t('header.login')}</Link></li>}
-                            {(!isLogin()) && <li className="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><Link className="nav-link" to="/register">{t('header.register')}</Link></li>}
-                        </ul>
+                        {/* <li className="sep"></li> */}
+                        {user && (
+                          <li onClick={menuLinks}>
+                            <Link to="/profile">{t("header.profile")}</Link>
+                          </li>
+                        )}
+                        {user && (
+                          <li onClick={menuLinks}>
+                            <Link to="/create-proposal">{t("header.proposal")}</Link>
+                          </li>
+                        )}
+                        {user && (
+                          <li onClick={menuLinks}>
+                            <button
+                              className='nav-btn'
+                              onClick={logout}
+                            >
+                              {t("header.logout")}
+                            </button>
+                          </li>
+                        )}
+                      </ul>
                     </div>
-                </nav>
-            </div>
-        </header>
-        )
-    } */
+                  </div>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          {/* TODO:click event open mobile menu add className .open to .header__content */}
+          <button
+            onClick={toggleMenu}
+            className="nav-trigger"
+            style={{ border: "none", background: "none", outline: "none" }}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 }
 export default withTranslation()(Header);

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { Switch } from 'react-router-dom';
 
+import { UserProvider } from './context/user-context';
+
 import PrivateRoute from './parts/PrivateRoute';
 import PublicRoute from './parts/PublicRoute';
 
@@ -15,7 +17,7 @@ import Check from './pages/Check';
 import Stats from './pages/Stats';
 import Governance from './pages/Governance';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import Signup from './pages/Signup';
 import Recover from './pages/Recover';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
@@ -23,6 +25,7 @@ import NewProposal from './pages/NewProposal';
 
 
 class App extends Component {
+    
     render() {
         return (
             <div className="wrapper">
@@ -35,7 +38,7 @@ class App extends Component {
                     <PublicRoute restricted={false} path="/stats" component={Stats} />
                     <PublicRoute restricted={false} path="/governance" component={Governance} />
                     <PublicRoute restricted={true} path="/login" component={Login} />
-                    <PublicRoute restricted={true} path="/register" component={Register} />
+                    <PublicRoute restricted={true} path="/signup" component={Signup} />
                     <PublicRoute restricted={true} path="/recover" component={Recover} />
                     <PrivateRoute path="/create-proposal" component={NewProposal} />
                     <PrivateRoute path="/profile" component={Profile} />
@@ -47,5 +50,6 @@ class App extends Component {
         )
     }
 }
-
-export default App;
+export default () => (
+    <UserProvider><App /></UserProvider>
+)

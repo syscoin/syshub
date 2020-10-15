@@ -7,7 +7,7 @@ import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
 
-class Register extends Component {
+class Signup extends Component {
   onRegister = (registerData) => {
     console.log(registerData);
   };
@@ -18,9 +18,9 @@ class Register extends Component {
         <BackgroundInner />
         <main className="section registerPage">
           <MetaTags>
-            <title> {t("register.meta.title")} </title>
-            <meta name="keywords" content={t("register.meta.keywords")} />
-            <meta name="description" content={t("register.meta.description")} />
+            <title> {t("signup.meta.title")} </title>
+            <meta name="keywords" content={t("signup.meta.keywords")} />
+            <meta name="description" content={t("signup.meta.description")} />
           </MetaTags>
           <div className="shell-large">
             <div className="section__body">
@@ -29,7 +29,7 @@ class Register extends Component {
                   <div className="cols">
                     <div className="col col--size-12">
                       <div className="article__content article__content--pull-left text-center">
-                        <Title heading="Register" />
+                        <Title heading={t("signup.data.heading")} />
                         <form className="input-form centered">
                           <input className="styled-round" type="text" placeholder="Username" />
                           <input className="styled-round" type="password" placeholder="Password" />
@@ -59,4 +59,4 @@ class Register extends Component {
   }
 }
 
-export default withTranslation()(Register);
+export default withTranslation()(Signup);
