@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {MetaTags} from "react-meta-tags";
 import {withTranslation} from "react-i18next";
 
@@ -13,7 +13,7 @@ import {Link, useHistory} from "react-router-dom";
 
 function Login (props) {
   const history = useHistory();
-  const { loginUser, user } = useUser();
+  const { loginUser } = useUser();
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -28,9 +28,13 @@ function Login (props) {
       return setSubmitting(false);
     }
 
-    setSubmitting(false);
     history.push('/governance');
   }
+  useEffect(() => {
+    return () => {
+      setSubmitting(false);
+    }
+  }, [])
 
     const {t} = props;
     return (

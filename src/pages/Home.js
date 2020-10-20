@@ -15,17 +15,25 @@ import SubTitle from './partials/SubTitle';
 import MasternodeTable from './partials/MasternodeTable';
 
 export class Home extends Component {
+    _isMounted = false;
     constructor(props){
         super(props);
         this.state = {
             dataload: 0,
             api_data: []
         }
+        
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.getStats();
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     async getStats() {
         let data = await axios
         .get("https://syscoin.dev/mnStats")
@@ -38,12 +46,15 @@ export class Home extends Component {
         
         if ((typeof data) !== 'undefined') {
             var response=data.data;
-            this.setState({ 
-                dataload: 1, 
-                api_data: response
-            });
+            if (this._isMounted) {
+                this.setState({
+                    dataload: 1,
+                    api_data: response
+                });
+            }
         }
     }
+
     render() {
         const { t } = this.props;
         if(this.state.dataload===1) {
@@ -73,8 +84,8 @@ export class Home extends Component {
                                             <Link to="/setup" className="btn btn--blue-border">
                                                 Setup Masternode
                                             </Link>
-                                            <Link to="/register" className="btn btn--blue-border">
-                                                Register
+                                            <Link to="/signup" className="btn btn--blue-border">
+                                                Sign up
                                             </Link>
                                         </div>
                                     </BannerImage>

@@ -12,13 +12,13 @@ export function UserProvider(props) {
 
   useEffect(() => {
     async function loadUser() {
-      if (!getToken()) {
+      const token = getToken();
+      if (!token) {
         setLoadingUser(false);
         return;
       }
 
       try {
-        const token = getToken();
         const decoded = jwtDecode(token);
         
         setUser({ data: decoded, token });
