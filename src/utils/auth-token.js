@@ -10,7 +10,7 @@ export function getToken() {
   if (token) {
     return JSON.parse(decryptAes(token));
   }
-
+  return null;
 }
 
 export function deleteToken() {

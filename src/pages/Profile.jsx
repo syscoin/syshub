@@ -6,9 +6,11 @@ import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
 import UserInfo from "./partials/UserInfo";
+import US from "./partials/UserInfo";
 import UserMasternodes from "./partials/UserMasternodes";
 import { Route, Switch, useRouteMatch } from "react-router";
 import AddMasternodes from "./partials/AddMasternodes";
+import UserPassForm from "./partials/UserPassForm";
 
 function Profile (props) {
   let { path } = useRouteMatch();
@@ -38,6 +40,7 @@ function Profile (props) {
                         </div>
                       </div>
                     </section>
+            
                     <section className="article">
                       <div className="cols">
                         <div className="col col--size-12">
