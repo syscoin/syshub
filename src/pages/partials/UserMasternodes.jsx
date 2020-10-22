@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import { useUser } from '../../context/user-context';
 
@@ -37,6 +37,7 @@ const data = {
 }
 
 function UserMasternodes(props) {
+  const { url } = useRouteMatch();
   const {  user  } = useUser();
   const { nodes: masternodes } = data;
 
@@ -58,7 +59,7 @@ function UserMasternodes(props) {
           <UserMN onEdit={editMN} onRemove={removeMN} masternode={mnode} key={mnode.uid} index={index} />
         ))
       }
-      <Link to="/add-masternodes" className="btn btn--blue-border">
+      <Link to={`${url}/add-masternodes`} className="btn btn--blue-border">
         Add masternodes
       </Link>
     </>

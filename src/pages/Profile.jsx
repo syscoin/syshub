@@ -6,10 +6,14 @@ import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
 import UserInfo from "./partials/UserInfo";
+import US from "./partials/UserInfo";
 import UserMasternodes from "./partials/UserMasternodes";
+import { Route, Switch, useRouteMatch } from "react-router";
+import AddMasternodes from "./partials/AddMasternodes";
+import UserPassForm from "./partials/UserPassForm";
 
 function Profile (props) {
-  
+  let { path } = useRouteMatch();
   
     const { t } = props;
     return (
@@ -21,31 +25,40 @@ function Profile (props) {
             <meta name="keywords" content={t("profile.meta.keywords")} />
             <meta name="description" content={t("profile.meta.description")} />
           </MetaTags>
-          <div className="shell-large">
-            <div className="section__body">
-              <div className="articles">
-                <section className="article">
-                  <div className="cols">
-                    <div className="col col--size-12">
-                      <div className="article__content article__content--pull-left text-center">
-                        <Title heading="User profile" />
-                        <UserInfo />
+          <Switch>
+            <Route exact path={path}>
+              <div className="shell-large">
+                <div className="section__body">
+                  <div className="articles">
+                    <section className="article">
+                      <div className="cols">
+                        <div className="col col--size-12">
+                          <div className="article__content article__content--pull-left text-center">
+                            <Title heading="User profile" />
+                            <UserInfo />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="article">
-                  <div className="cols">
-                    <div className="col col--size-12">
-                      <div className="article__content article__content--pull-left text-center">
-                        <UserMasternodes />
+                    </section>
+            
+                    <section className="article">
+                      <div className="cols">
+                        <div className="col col--size-12">
+                          <div className="article__content article__content--pull-left text-center">
+                            <UserMasternodes />
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </section>
                   </div>
-                </section>
+                </div>
               </div>
-            </div>
-          </div>
+            </Route>
+
+            <Route path={`${path}/add-masternodes`}>
+              <AddMasternodes />
+            </Route>
+          </Switch>
         </main>
       </Background>
     );
