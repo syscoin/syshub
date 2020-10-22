@@ -21,15 +21,18 @@ function Login (props) {
   const loginToApp = async (loginData) => {
     setSubmitting(true);
     if (!error) setError(null);
-
-    const response = await loginUser(loginData);
-    if (response.error) {
-      setError(response.error);
+    try {
+      await loginUser(loginData);
+      
+      history.push('/governance');
+    } catch (error) {
+      setError(error);
       return setSubmitting(false);
+      
     }
 
-    history.push('/governance');
   }
+
   useEffect(() => {
     return () => {
       setSubmitting(false);
@@ -58,7 +61,6 @@ function Login (props) {
                           <p>{error.message}</p>
                         )}
                         <LoginForm onLogin={loginToApp} submitting={submitting}/>
-                        <p></p>
                         <div className="input-cont">
                           <Link to="/recover">Forgot your password?</Link> <br/>
                           <Link to="/signup">Don't have an account?</Link>

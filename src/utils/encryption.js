@@ -2,7 +2,6 @@ const CryptoJS = require('crypto-js');
 
 export const encryptAes = (data) => {
   try {
-    console.log(`${process.env.REACT_APP_ENCRYPT_KEY_DATA}`)
     let encryptedMessage = CryptoJS.AES.encrypt(data.toString('hex'), process.env.REACT_APP_ENCRYPT_KEY_DATA);
     return encryptedMessage.toString();
   } catch (err) {

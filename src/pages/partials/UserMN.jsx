@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 
-
 function UserMN({ onEdit, onRemove, masternode, index }) {
   const [editting, setEditting] = useState(false);
   const [show, setShow] = useState(false);

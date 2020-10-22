@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { useUser } from '../../context/user-context';
@@ -38,9 +38,12 @@ const data = {
 
 function UserMasternodes(props) {
   const { url } = useRouteMatch();
-  const {  user  } = useUser();
-  const { nodes: masternodes } = data;
+  const { user } = useUser();
+  const [masternodes, setMasternodes] = useState([]);
 
+  useEffect(() => {
+    // setMasternodes(data.nodes);
+  }, [])
   const editMN = (uid) =>{
     console.log(uid + ' edit')
   }
@@ -55,9 +58,14 @@ function UserMasternodes(props) {
     <>
       <SubTitle heading="My Masternodes" />
       {
-        masternodes.map((mnode, index) => (
+        masternodes.length > 0 && masternodes.map((mnode, index) => (
           <UserMN onEdit={editMN} onRemove={removeMN} masternode={mnode} key={mnode.uid} index={index} />
         ))
+      }
+      {
+        masternodes.length === 0 && (
+          <p className="indicator">You don't have a masternode, please add one.</p>
+        )
       }
       <Link to={`${url}/add-masternodes`} className="btn btn--blue-border">
         Add masternodes

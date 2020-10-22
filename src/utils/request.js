@@ -242,10 +242,10 @@ export const login = async (data) => {
 export const register = async (data) => {
   try {
     return await axios.post(`${API_URI}/auth/register`, data).catch(err => {
-      throw err
+      throw err;
     })
   } catch (err) {
-    new Error(err)
+    throw err;
   }
 }
 /** User **/

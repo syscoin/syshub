@@ -1,62 +1,79 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import { useUser } from '../context/user-context';
+
 
 import Background from "../parts/Background";
 import BackgroundInner from "../parts/BackgroundInner";
 import Title from "./partials/Title";
+import SignupForm from "./partials/SignupForm";
 
-class Signup extends Component {
-  onRegister = (registerData) => {
-    console.log(registerData);
-  };
-  render() {
-    const { t } = this.props;
-    return (
-      <Background>
-        <BackgroundInner />
-        <main className="section registerPage">
-          <MetaTags>
-            <title> {t("signup.meta.title")} </title>
-            <meta name="keywords" content={t("signup.meta.keywords")} />
-            <meta name="description" content={t("signup.meta.description")} />
-          </MetaTags>
-          <div className="shell-large">
-            <div className="section__body">
-              <div className="articles">
-                <section className="article">
-                  <div className="cols">
-                    <div className="col col--size-12">
-                      <div className="article__content article__content--pull-left text-center">
-                        <Title heading={t("signup.data.heading")} />
-                        <form className="input-form centered">
-                          <input className="styled-round" type="text" placeholder="Username" />
-                          <input className="styled-round" type="password" placeholder="Password" />
+function Signup(props) {
+  const history = useHistory();
+  const { signupUser } = useUser();
 
-                          <div className="input-cont">
-                            Captcha
-                          </div>
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-                          <div className="input-cont">
-                            <button className="btn btn--blue">Login</button>
-                          </div>
+  const registerToApp = async (registerData) => {
+    setSubmitting(true);
+    if (!error) setError(null);
 
-                          <div className="input-cont">
-                            <Link to="/login">Already have an account?</Link>
-                          </div>
-                        </form>
+    const response = await signupUser(registerData);
+    if (response.error) {
+      setError(response.error);
+      return setSubmitting(false);
+    }
+
+    history.push('/profile');
+  }
+
+  useEffect(() => {
+    return () => {
+      setSubmitting(false);
+    }
+  }, [])
+    
+  const { t } = props;
+  return (
+    <Background>
+      <BackgroundInner />
+      <main className="section registerPage">
+        <MetaTags>
+          <title> {t("signup.meta.title")} </title>
+          <meta name="keywords" content={t("signup.meta.keywords")} />
+          <meta name="description" content={t("signup.meta.description")} />
+        </MetaTags>
+        <div className="shell-large">
+          <div className="section__body">
+            <div className="articles">
+              <section className="article">
+                <div className="cols">
+                  <div className="col col--size-12">
+                    <div className="article__content article__content--pull-left text-center">
+                      <Title heading={t("signup.data.heading")} />
+                      {error && (
+                        <p>{error.message}</p>
+                      )}
+                      <SignupForm onSignup={registerToApp} submitting={submitting} />
+
+                      <div className="input-cont">
+                        <Link to="/login">Already have an account?</Link>
                       </div>
                     </div>
                   </div>
-                </section>
-              </div>
+                </div>
+              </section>
             </div>
           </div>
-        </main>
-      </Background>
-    );
-  }
+        </div>
+      </main>
+    </Background>
+  );
+  
 }
 
 export default withTranslation()(Signup);

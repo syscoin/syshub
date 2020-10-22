@@ -2,9 +2,12 @@ import React, { useState, useEffect, useMemo, useContext } from 'react';
 import jwtDecode from 'jwt-decode';
 
 import { getToken, setToken, deleteToken } from '../utils/auth-token';
-import { login, register } from '../utils/request';
+import Firebase from '../utils/firebase';
+import { register } from '../utils/request';
 
 const UserContext = React.createContext();
+const firebase = new Firebase();
+
 
 export function UserProvider(props) {
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
@@ -19,11 +22,19 @@ export function UserProvider(props) {
       }
 
       try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(token.decryptedToken);
+
+        if (false) {//if de las fechas
+          //operacion magica de las fechas
+          const newTokenRefreshed = {};
+          const newDecoded = jwtDecode(newTokenRefreshed);
+          setToken(newTokenRefreshed);
+          setUser({ data: newDecoded, token: newTokenRefreshed });
         
-        setUser({ data: decoded, token });
-        setLoadingUser(false);
-        
+        } else {
+          setUser({ data: decoded, token: token.token });
+          setLoadingUser(false);
+        }
       }
       catch (error) {
         console.log(error);
@@ -38,33 +49,39 @@ export function UserProvider(props) {
   }, [user]);
 
   async function signupUser(registerData) {
-    const response = await register(registerData);
-    
-    if (response.error) {
-      return response;
+    try {
+      const response = await firebase.register(registerData);
+      await register({uid: response.user.uid}).catch(err => {throw err});
+
+      const decoded = jwtDecode(response.user.ya);
+      setToken(response.user.ya);
+      setUser({ data: decoded, token: getToken().token });
+      
+      return {message: 'Ok'};
+    }
+    catch (error) {
+      throw error;
     }
 
-    const decoded = jwtDecode(response.data.idToken);
-    
-    setToken(response.data.idToken);
-    setUser({ data: decoded, token: response.data.idToken });
-    return {message: 'Ok'};
   }
 
   async function loginUser(loginData) {
-    const response = await login(loginData);
-    if (response.error) {
-      return response;
-    }
+    try {
+      const response = await firebase.loginWithEmailAndPassword(loginData);
 
-    const decoded = jwtDecode(response.data.idToken);
-    
-    setToken(response.data.idToken);
-    setUser({ data: decoded, token: response.data.idToken });
-    return {message: 'Ok'};
+      const decoded = jwtDecode(response.user.ya);
+      setToken(response.user.ya);
+      setUser({ data: decoded, token: getToken().token });
+      
+      return {message: 'Ok'};
+    }
+    catch (error) {
+      throw error;
+    }
   }
 
-  function logoutUser() {
+  async function logoutUser() {
+    await firebase.signOut();
     setUser(null);
     deleteToken();
   }
