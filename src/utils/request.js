@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // const API_URI = 'http://localhost:3000'
 const API_URI = 'http://198.211.117.144:3000'
+// const API_URI = process.env.REACT_APP_SYS_API_URI
 
 /** MasterNodes **/
 export const list = async () => {
@@ -59,6 +60,20 @@ export const getOneMasterNode = async (id) => {
     return await axios.get(`${API_URI}/masternode/${id}`, {
       headers: {
         Authorization: `Bearer ${'AQUI EL TOKEN'}`
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    new Error(err)
+  }
+};
+
+export const getUserMasterNodes = async (token) => {
+  try {
+    return await axios.get(`${API_URI}/masternode`, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err

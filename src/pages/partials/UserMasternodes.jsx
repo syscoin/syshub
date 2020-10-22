@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { useUser } from '../../context/user-context';
+import { getUserMasterNodes } from '../../utils/request';
 
 import SubTitle from "./SubTitle";
 import UserMN from './UserMN';
@@ -37,13 +38,32 @@ const data = {
 }
 
 function UserMasternodes(props) {
-  const { url } = useRouteMatch();
   const { user } = useUser();
+  const { url } = useRouteMatch();
   const [masternodes, setMasternodes] = useState([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // setMasternodes(data.nodes);
-  }, [])
+    async function loadMasternodes() {
+      try {
+        const response = await getUserMasterNodes(user.token);
+        console.log(response);
+        if (isMounted) {
+          setMasternodes(response.data.nodes);
+        }
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+
+    setIsMounted(true);
+
+    loadMasternodes();
+
+    return () => setIsMounted(false);
+  }, []);
+
   const editMN = (uid) =>{
     console.log(uid + ' edit')
   }
