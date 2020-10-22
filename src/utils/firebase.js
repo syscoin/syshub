@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import {decryptAes, encryptAes} from "./encryption";
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -18,7 +19,7 @@ export default class Firebase {
     throw err
   });
 
-  register = async ({email, password, username}) => await this.auth.createUserWithEmailAndPassword(email, password).catch(err => {
+  register = async ({email, password}) => await this.auth.createUserWithEmailAndPassword(email, password).catch(err => {
     throw err
   });
 
@@ -69,5 +70,17 @@ export default class Firebase {
           callback(err)
         })
     }
+  }
+  refreshToken = async () => {
+    return new Promise(async (resolve, reject) => {
+      const unsubscribe = this.auth
+        .onIdTokenChanged(async user => {
+          unsubscribe()
+          const refreshedToken = await user
+            .getIdToken(true)
+            .catch(err => console.error(err))
+          resolve(encryptAes(refreshedToken, process.env.REACT_APP_ENCRYPT_KEY_DATA))
+        }, reject)
+    })
   }
 }
