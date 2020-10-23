@@ -1,75 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { useUser } from '../../context/user-context';
-import { getUserMasterNodes } from '../../utils/request';
+import { getUserMasterNodes, updateMasterNode, destroyMasterNode } from '../../utils/request';
 
 import SubTitle from "./SubTitle";
 import UserMN from './UserMN';
 
-const data = {
-  "ok": true,
-  "nodes": [
-      {
-          "uid": "4SC4sUDP1RCJxohvLv37",
-          "name": "198.211.117.144",
-          "txId": "76ab7ed486e32f2200e9479940577117987b1ea5e11682e7dbbc16dceffb6f0f",
-          "privateKey": "5Jz5HbNgk2nR31QszYVEAsfV5WNN91NQzSgo2gpkiNRjrviayrc"
-      },
-      {
-          "uid": "TjOZr5UU0uQcwIUPlTyO",
-          "name": "198.211.117.144",
-          "txId": "76ab7ed486e32f2200e9479940577117987b1ea5e11682e7dbbc16dceffb6f0f",
-          "privateKey": "5Jz5HbNgk2nR31QszYVEAsfV5WNN91NQzSgo2gpkiNRjrviayrc"
-      },
-      {
-          "uid": "i0RtHZmF8xGWmV1V8KBa",
-          "name": "198.211.117.144",
-          "txId": "76ab7ed486e32f2200e9479940577117987b1ea5e11682e7dbbc16dceffb6f0f",
-          "privateKey": "5Jz5HbNgk2nR31QszYVEAsfV5WNN91NQzSgo2gpkiNRjrviayrc"
-      },
-      {
-          "uid": "0JwhQFU9zwP4C55iN0WG",
-          "name": "198.211.117.144",
-          "txId": "76ab7ed486e32f2200e9479940577117987b1ea5e11682e7dbbc16dceffb6f0f",
-          "privateKey": "5Jz5HbNgk2nR31QszYVEAsfV5WNN91NQzSgo2gpkiNRjrviayrc"
-      }
-  ]
-}
 
 function UserMasternodes(props) {
   const { user } = useUser();
   const { url } = useRouteMatch();
   const [masternodes, setMasternodes] = useState([]);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isFetching, setIsFetching] = useState(false)
 
-  useEffect(() => {
-    async function loadMasternodes() {
-      try {
-        const response = await getUserMasterNodes(user.token);
-        console.log(response);
-        if (isMounted) {
-          setMasternodes(response.data.nodes);
-        }
-      }
-      catch (error) {
-        console.log(error)
-      }
+  const loadMasternodes = async () => {
+    try {
+      setIsFetching(true);
+      const response = await getUserMasterNodes(user.token);
+      
+      if (response.data) {
+        setMasternodes(response.data.nodes);
+      }  
+      setIsFetching(false);
     }
+    catch (error) {
+      console.log(error)
+      setIsFetching(false);
+    }
+  }
+  useEffect(() => {
+    
 
-    setIsMounted(true);
+    // loadMasternodes();
 
-    loadMasternodes();
+  }, [loadMasternodes]);
 
-    return () => setIsMounted(false);
-  }, []);
+  
+  const editMN = (uid, data) => {
 
-  const editMN = (uid) =>{
     console.log(uid + ' edit')
+    console.log(data);
   }
 
   const removeMN = (uid) => {
     console.log(uid + ' remove')
+    Swal(
+
+    )
     // const mnToRemove = masternodes.find(mn => mn.uid === uid);
     // console.log(mnToRemove);
   }
@@ -83,8 +62,13 @@ function UserMasternodes(props) {
         ))
       }
       {
-        masternodes.length === 0 && (
+        (masternodes.length === 0 && !isFetching) && (
           <p className="indicator">You don't have a masternode, please add one.</p>
+        )
+      }
+      {
+        isFetching && (
+          <p className="indicator">Loading masternodes...</p>
         )
       }
       <Link to={`${url}/add-masternodes`} className="btn btn--blue-border">

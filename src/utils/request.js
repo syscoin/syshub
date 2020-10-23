@@ -79,7 +79,7 @@ export const getUserMasterNodes = async (token) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err
   }
 };
 
