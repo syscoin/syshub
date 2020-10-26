@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import AddMNForm from './AddMNForm';
 import Title from './Title';
 
@@ -13,6 +15,7 @@ export default function AddMasternodes() {
                 <div className="article__content article__content--pull-left text-center">
                   <Title heading="Add masternodes" />
                   <AddMNForm />
+                  <Link to="/profile" className="btn btn--blue-border">Profile</Link>
                 </div>
               </div>
             </div>

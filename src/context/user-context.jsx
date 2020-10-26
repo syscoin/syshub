@@ -81,9 +81,9 @@ export function UserProvider(props) {
   }
 
   async function logoutUser() {
-    await firebase.signOut();
     setUser(null);
     deleteToken();
+    await firebase.signOut();
   }
 
   const value = useMemo(() => {

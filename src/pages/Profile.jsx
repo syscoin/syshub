@@ -9,6 +9,7 @@ import UserInfo from "./partials/UserInfo";
 import UserMasternodes from "./partials/UserMasternodes";
 import { Route, Switch, useRouteMatch } from "react-router";
 import AddMasternodes from "./partials/AddMasternodes";
+import UserDelete from "./partials/UserDelete";
 
 function Profile (props) {
   let { path } = useRouteMatch();
@@ -32,8 +33,9 @@ function Profile (props) {
                       <div className="cols">
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left text-center">
-                            <Title heading="User profile" />
+                            <Title heading={t("profile.data.heading")} />
                             <UserInfo />
+                            <UserDelete />
                           </div>
                         </div>
                       </div>
@@ -44,6 +46,7 @@ function Profile (props) {
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left text-center">
                             <UserMasternodes />
+                            
                           </div>
                         </div>
                       </div>

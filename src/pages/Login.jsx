@@ -28,7 +28,6 @@ function Login (props) {
     } catch (error) {
       setError(error);
       return setSubmitting(false);
-      
     }
 
   }

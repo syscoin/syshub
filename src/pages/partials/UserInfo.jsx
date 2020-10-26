@@ -15,7 +15,9 @@ export default function UserInfo() {
       </div>
 
       <div className="form-group spacer line"></div>
+      
       <UserPassForm />
+
       <div className="form-group spacer line"></div>
 
       <div className="form-group">
