@@ -11,9 +11,9 @@ import { Route, Switch, useRouteMatch } from "react-router";
 import AddMasternodes from "./partials/AddMasternodes";
 import UserDelete from "./partials/UserDelete";
 
-function Profile (props) {
+function Profile(props) {
   let { path } = useRouteMatch();
-  
+
     const { t } = props;
     return (
       <Background>

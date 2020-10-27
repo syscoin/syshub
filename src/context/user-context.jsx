@@ -4,7 +4,6 @@ import jwtDecode from 'jwt-decode';
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
 import {register} from '../utils/request';
-import {encryptAes} from "../utils/encryption";
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
@@ -13,6 +12,7 @@ const firebase = new Firebase();
 export function UserProvider(props) {
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
+
 
   useEffect(() => {
     async function loadUser() {
@@ -45,6 +45,7 @@ export function UserProvider(props) {
   }, []);
 
   useEffect(() => {
+    console.log(user);
   }, [user]);
 
   async function signupUser(registerData) {
@@ -91,7 +92,8 @@ export function UserProvider(props) {
       loadingUser,
       signupUser,
       loginUser,
-      logoutUser
+      logoutUser,
+      firebase
     })
   }, [user, loadingUser]);
 

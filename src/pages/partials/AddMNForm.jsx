@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 
 
-export default function AddMNForm() {
+export default function AddMNForm({onSingleCreation, onMultipleCreation, submitting}) {
   const { register, handleSubmit, errors } = useForm();
   const { register: register2, handleSubmit: handleSubmit2, errors: errors2 } = useForm();
   const [showSingle, setShowSingle] = useState(true);
@@ -28,7 +28,7 @@ export default function AddMNForm() {
   return (
     <div className="input-form">
       <div className="form-group">
-        <form onSubmit={handleSubmit(submitOne)}>
+        <form onSubmit={handleSubmit(onSingleCreation)}>
           <div className="wizard-head" style={{cursor:'pointer'}} onClick={toggleSingle}><span>&nbsp;</span>One Masternode</div>
           <div className={`wizard-body ${showSingle ? '' : 'collapsed'}`}>
               
@@ -53,7 +53,7 @@ export default function AddMNForm() {
               
           </div>
         </form>
-        <form onSubmit={handleSubmit2(submitMulti)}>
+        <form onSubmit={handleSubmit2(onMultipleCreation)}>
           <div className="wizard-head" style={{cursor:'pointer'}} onClick={toggleMulti}><span>&nbsp;</span>Multiple Masternodes</div>
           <div className={`wizard-body ${showMulti ? '' : 'collapsed'}`}>
             <div className="form-group">
