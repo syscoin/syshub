@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { MetaTags } from "react-meta-tags";
-import { withTranslation } from "react-i18next";
-import { Link, useHistory } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {MetaTags} from "react-meta-tags";
+import {withTranslation} from "react-i18next";
+import {Link, useHistory} from "react-router-dom";
 
-import { useUser } from '../context/user-context';
+import {useUser} from '../context/user-context';
 
 
 import Background from "../parts/Background";
@@ -13,7 +13,7 @@ import SignupForm from "./partials/SignupForm";
 
 function Signup(props) {
   const history = useHistory();
-  const { signupUser } = useUser();
+  const {signupUser, firebase} = useUser();
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -36,16 +36,16 @@ function Signup(props) {
       setSubmitting(false);
     }
   }, [])
-    
-  const { t } = props;
+
+  const {t} = props;
   return (
     <Background>
-      <BackgroundInner />
+      <BackgroundInner/>
       <main className="section registerPage">
         <MetaTags>
           <title> {t("signup.meta.title")} </title>
-          <meta name="keywords" content={t("signup.meta.keywords")} />
-          <meta name="description" content={t("signup.meta.description")} />
+          <meta name="keywords" content={t("signup.meta.keywords")}/>
+          <meta name="description" content={t("signup.meta.description")}/>
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">
@@ -54,11 +54,11 @@ function Signup(props) {
                 <div className="cols">
                   <div className="col col--size-12">
                     <div className="article__content article__content--pull-left text-center">
-                      <Title heading={t("signup.data.heading")} />
+                      <Title heading={t("signup.data.heading")}/>
                       {error && (
                         <p>{error.message}</p>
                       )}
-                      <SignupForm onSignup={registerToApp} submitting={submitting} />
+                      <SignupForm onSignup={registerToApp} submitting={submitting}/>
 
                       <div className="input-cont">
                         <Link to="/login">Already have an account?</Link>
@@ -73,7 +73,7 @@ function Signup(props) {
       </main>
     </Background>
   );
-  
+
 }
 
 export default withTranslation()(Signup);

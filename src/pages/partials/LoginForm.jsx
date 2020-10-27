@@ -1,8 +1,9 @@
-import React from 'react';
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
-import { yupResolver } from '@hookform/resolvers';
+import React, {useEffect} from 'react';
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from '@hookform/error-message';
+import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
+import {useUser} from "../../context/user-context";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -10,30 +11,44 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = (props) => {
-  const { register, handleSubmit, errors } = useForm({
+  const {firebase} = useUser();
+  const {register, handleSubmit, errors} = useForm({
     resolver: yupResolver(schema)
   });
-
+  useEffect(() => {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
+      'callback': (response) => {
+        console.log(response)
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        // ...
+      },
+      'expired-callback': () => {
+        // Response expired. Ask user to solve reCAPTCHA again.
+        // ...
+      }
+    })
+    window.recaptchaVerifier.render();
+  }, [])
 
   return (
     <>
       <form className="input-form centered" onSubmit={handleSubmit(props.onLogin)}>
-        <input className="styled-round" type="text" name="email" placeholder="Email" ref={register} />
+        <input className="styled-round" type="text" name="email" placeholder="Email" ref={register}/>
         <ErrorMessage
           errors={errors}
           name="email"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
 
-        <input className="styled-round" type="password" name="password" placeholder="Password" ref={register} />
+        <input className="styled-round" type="password" name="password" placeholder="Password" ref={register}/>
         <ErrorMessage
           errors={errors}
           name="password"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
-        
+
         <div className="input-cont">
-          Captcha
+          <div id={'recaptcha'} className="recaptcha"/>
         </div>
 
         <div className="input-cont">
@@ -41,9 +56,9 @@ const LoginForm = (props) => {
             className="btn btn--blue"
             type="submit"
             disabled={props.submitting}
-          >Login</button>
+          >Login
+          </button>
         </div>
-
       </form>
     </>
   )
