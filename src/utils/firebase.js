@@ -79,7 +79,7 @@ export default class Firebase {
           const refreshedToken = await user
             .getIdToken(true)
             .catch(err => console.error(err))
-          resolve(encryptAes(refreshedToken, process.env.REACT_APP_ENCRYPT_KEY_DATA))
+          resolve(refreshedToken)
         }, reject)
     })
   }

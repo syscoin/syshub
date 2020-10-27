@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react';
+import React, {useState, useEffect, useMemo, useContext} from 'react';
 import jwtDecode from 'jwt-decode';
 
-import { getToken, setToken, deleteToken } from '../utils/auth-token';
+import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import { register } from '../utils/request';
+import {register} from '../utils/request';
+import {encryptAes} from "../utils/encryption";
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
@@ -22,21 +23,20 @@ export function UserProvider(props) {
       }
 
       try {
+        const dateNow = new Date().getTime();
         const decoded = jwtDecode(token.decryptedToken);
-
-        if (false) {//if de las fechas
-          //operacion magica de las fechas
-          const newTokenRefreshed = {};
+        if (Math.floor(dateNow / 1000) > decoded.exp) {
+          const newTokenRefreshed = await firebase.refreshToken().catch(err => {
+            throw err
+          })
           const newDecoded = jwtDecode(newTokenRefreshed);
           setToken(newTokenRefreshed);
-          setUser({ data: newDecoded, token: newTokenRefreshed });
-        
+          setUser({data: newDecoded, token: getToken().token});
         } else {
-          setUser({ data: decoded, token: token.token });
+          setUser({data: decoded, token: token.token});
           setLoadingUser(false);
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
     }
@@ -45,21 +45,21 @@ export function UserProvider(props) {
   }, []);
 
   useEffect(() => {
-    console.log(user);
   }, [user]);
 
   async function signupUser(registerData) {
     try {
       const response = await firebase.register(registerData);
-      await register({uid: response.user.uid}).catch(err => {throw err});
+      await register({uid: response.user.uid}).catch(err => {
+        throw err
+      });
 
       const decoded = jwtDecode(response.user.ya);
       setToken(response.user.ya);
-      setUser({ data: decoded, token: getToken().token });
-      
+      setUser({data: decoded, token: getToken().token});
+
       return {message: 'Ok'};
-    }
-    catch (error) {
+    } catch (error) {
       throw error;
     }
 
@@ -71,11 +71,10 @@ export function UserProvider(props) {
 
       const decoded = jwtDecode(response.user.ya);
       setToken(response.user.ya);
-      setUser({ data: decoded, token: getToken().token });
-      
+      setUser({data: decoded, token: getToken().token});
+
       return {message: 'Ok'};
-    }
-    catch (error) {
+    } catch (error) {
       throw error;
     }
   }
