@@ -292,3 +292,17 @@ export const updateUser = async (id, data) => {
     return new Error(err)
   }
 }
+
+export const deleteUser = async (token, id) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(`${API_URI}/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
