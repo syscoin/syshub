@@ -31,10 +31,7 @@ function Header(props) {
   };
 
   const logout = () => {
-    console.log('logout')
     logoutUser();
-    history.push('/');
-    history.go(0);
   }
   const username = (userInfo) => {
     let username = userInfo.data.email.substring(0, userInfo.data.email.lastIndexOf("@"));
