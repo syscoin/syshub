@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 
 import { useUser } from '../../context/user-context';
 import { getUserMasterNodes, updateMasterNode, destroyMasterNode } from '../../utils/request';
@@ -15,7 +16,7 @@ function UserMasternodes(props) {
   const [masternodes, setMasternodes] = useState([]);
   const [isFetching, setIsFetching] = useState(false)
 
-  const loadMasternodes = async () => {
+  const loadMasternodes = useCallback(async () => {
     try {
       setIsFetching(true);
       const response = await getUserMasterNodes(user.token);
@@ -29,35 +30,61 @@ function UserMasternodes(props) {
       console.log(error)
       setIsFetching(false);
     }
-  }
+  }, [user]);
+  
   useEffect(() => {
     
 
-    // loadMasternodes();
+    loadMasternodes();
 
   }, [loadMasternodes]);
 
   
-  const editMN = (uid, data) => {
+  const editMN = async (uid, data) => {
 
-    console.log(uid + ' edit')
-    console.log(data);
+    try {
+      const response = await updateMasterNode(user.token, uid, {data: data});
+      console.log(response);
+      console.log(data);
+      if (response.data) {
+        loadMasternodes();
+      }  
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
-  const removeMN = (uid) => {
-    console.log(uid + ' remove')
-    Swal(
+  const removeMN = async (uid) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!'
+    })
+    if (result.isConfirmed) {
+      try {
+        Swal.fire(
+          'Deleted!',
+          'Your masternode has been deleted.',
+          'success'
+        )
+        await destroyMasterNode(user.token, uid);
+        loadMasternodes();
+      } catch (error) {
+        console.log(error);
+      }
 
-    )
-    // const mnToRemove = masternodes.find(mn => mn.uid === uid);
-    // console.log(mnToRemove);
+    }
+    
   }
 
   return (
     <>
       <SubTitle heading="My Masternodes" />
       {
-        masternodes.length > 0 && masternodes.map((mnode, index) => (
+        (masternodes.length > 0 && !isFetching) && masternodes.map((mnode, index) => (
           <UserMN onEdit={editMN} onRemove={removeMN} masternode={mnode} key={mnode.uid} index={index} />
         ))
       }

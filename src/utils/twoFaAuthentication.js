@@ -1,5 +1,5 @@
 import speakeasy from 'speakeasy';
-import qrCode from 'qrcode'
+import qrCode from 'qrcode';
 
 export const getAuthQrCode = email => {
   const secretObj = speakeasy.generateSecret();

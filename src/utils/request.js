@@ -97,11 +97,11 @@ export const createMasterNode = async (data) => {
   }
 };
 
-export const updateMasterNode = async (id, data) => {
+export const updateMasterNode = async (token, id, data) => {
   try {
     return await axios.put(`${API_URI}/masternode/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
@@ -111,11 +111,11 @@ export const updateMasterNode = async (id, data) => {
   }
 };
 
-export const destroyMasterNode = async (id) => {
+export const destroyMasterNode = async (token, id) => {
   try {
     return await axios.delete(`${API_URI}/masternode/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
