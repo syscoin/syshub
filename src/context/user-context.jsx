@@ -4,12 +4,14 @@ import jwtDecode from 'jwt-decode';
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
 import {register} from '../utils/request';
+import { useHistory } from 'react-router';
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
 
 
 export function UserProvider(props) {
+  const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
 
@@ -84,6 +86,18 @@ export function UserProvider(props) {
     setUser(null);
     deleteToken();
     await firebase.signOut();
+    history.push('/login');
+    history.go(0);
+  }
+
+  async function changePassword({oldPassword, newPassword}) {
+    try {
+      await firebase.changePassword(oldPassword, newPassword)
+        .catch(err => { throw err });
+
+    } catch (error) {
+      throw error;
+    }
   }
 
   const value = useMemo(() => {
@@ -93,6 +107,7 @@ export function UserProvider(props) {
       signupUser,
       loginUser,
       logoutUser,
+      changePassword,
       firebase
     })
   }, [user, loadingUser]);

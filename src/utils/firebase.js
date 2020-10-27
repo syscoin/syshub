@@ -50,27 +50,25 @@ export default class Firebase {
 
   verifyPhoneCode = (verificationId, smsCode) => this.firebaseApp.auth.PhoneAuthProvider.credential(verificationId, smsCode);
 
-  changePassword = async (password, callback) => {
+  changePassword = async (oldPwd, password) => {
     const currentUser = this.auth.currentUser;
 
     if (currentUser) {
-      const credentials = this.firebaseApp.auth.EmailAuthProvider.credential(currentUser.email, currentUser.currentPass)
-      currentUser
-        .reauthenticateWithCredential(credentials)
-        .then(async () => {
+      const credentials = this.firebaseApp.auth.EmailAuthProvider.credential(currentUser.email, oldPwd)
+
+      return new Promise(async (resolve, reject) => {
+        currentUser.reauthenticateWithCredential(credentials).then(async () => {
           await currentUser.updatePassword(password).catch(err => {
-            throw err
+            reject(err)
           })
+          resolve('pwd Changed')
+        }).catch(err => {
+          reject(err)
         })
-        .then(async () => {
-          await this.signOut();
-          callback(null, 'success');
-        })
-        .catch(err => {
-          callback(err)
-        })
+      })
     }
   }
+
   refreshToken = async () => {
     return new Promise(async (resolve, reject) => {
       const unsubscribe = this.auth

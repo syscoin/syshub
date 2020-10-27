@@ -33,10 +33,7 @@ function UserMasternodes(props) {
   }, [user]);
   
   useEffect(() => {
-    
-
     loadMasternodes();
-
   }, [loadMasternodes]);
 
   
@@ -44,8 +41,6 @@ function UserMasternodes(props) {
 
     try {
       const response = await updateMasterNode(user.token, uid, {data: data});
-      console.log(response);
-      console.log(data);
       if (response.data) {
         loadMasternodes();
       }  
@@ -65,12 +60,12 @@ function UserMasternodes(props) {
     })
     if (result.isConfirmed) {
       try {
+        await destroyMasterNode(user.token, uid);
         Swal.fire(
           'Deleted!',
           'Your masternode has been deleted.',
           'success'
         )
-        await destroyMasterNode(user.token, uid);
         loadMasternodes();
       } catch (error) {
         console.log(error);

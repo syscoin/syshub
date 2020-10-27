@@ -83,17 +83,17 @@ export const getUserMasterNodes = async (token) => {
   }
 };
 
-export const createMasterNode = async (data) => {
+export const createMasterNode = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/masternode`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err;
   }
 };
 

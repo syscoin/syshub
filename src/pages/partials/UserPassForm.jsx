@@ -1,37 +1,105 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from "yup";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router";
+
 import { useUser } from '../../context/user-context';
-import SubTitle from "./SubTitle";
 
-
-
+const schema = yup.object().shape({
+  oldPassword: yup.string().required(),
+  newPassword: yup.string()
+    .matches(/^(?=.{8,}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?\W).*$/,'Must include lower, upper, number, special characters and a min length of 8')
+    .required(),
+  confirmPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords does not match').required()
+});
 
 export default function UserPassForm() {
-  const { user } = useUser();
-  const { register, handleSubmit, errors } = useForm();
-  const [touched, setTouched] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { changePassword, logoutUser } = useUser();
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
 
-  
-  function passwordChange(data) {
-    console.log(data)
+  const [submitting, setSubmitting] = useState(false);
+
+  async function passwordChange(data) {
+    setSubmitting(true);
+    try {
+      await changePassword({ oldPassword: data.oldPassword, newPassword: data.newPassword });
+      await Swal.fire({
+        title: 'Password changed',
+        text:'Please log in again with your new password',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      await setSubmitting(false);
+
+      await logoutUser();
+    } catch (error) {
+      console.log(error)
+      Swal.fire({ title: error, icon: 'error' });
+      setSubmitting(false);
+    }
+
+
+
   }
 
   return (
     <div className="form-group">
       <label className="big">Password change</label>
-      <form onSubmit={handleSubmit(passwordChange)}>
+      <form onSubmit={handleSubmit(passwordChange)} >
+        <div className="form-group">
+          <label htmlFor="oldPassword">Old password</label>
+          <input
+            className="styled"
+            name="oldPassword"
+            type="password"
+            id="oldPassword"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="oldPassword"
+            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="newPassword">New password</label>
-          <input className="styled" type="password" id="newPassword" aria-describedby="newPasswordHelp" />
-          <small id="newPasswordHelp" className="form-text text-muted">Your password must have minimum 8 characters</small>
+          <input
+            className="styled"
+            name="newPassword"
+            type="password"
+            id="newPassword"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="newPassword"
+            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="passwordVerification">Verify the password</label>
-          <input className="styled" type="password" id="passwordVerification" />
+          <label htmlFor="confirmPassword">Confirm the password</label>
+          <input
+            className="styled"
+            name="confirmPassword"
+            type="password"
+            id="confirmPassword"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="confirmPassword"
+            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+          />
         </div>
         <div className="btn-group">
-          <button className="btn btn--blue" disabled={!touched || !isSubmitting}>Update</button>
+          <button className="btn btn--blue" disabled={submitting} type="submit">Update</button>
         </div>
       </form>
     </div>

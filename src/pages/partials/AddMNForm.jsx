@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from "yup";
 
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  txId: yup.string()
+    .matches(/-0|-1/, 'Tx Id must end with -0 or -1')
+    .required(),
+  privateKey: yup.string().required()
+});
+const schema2 = yup.object().shape({
+  masternodeConf: yup.string().required('Masternode.conf is a required field')
+});
 
 export default function AddMNForm({onSingleCreation, onMultipleCreation, submitting}) {
-  const { register, handleSubmit, errors } = useForm();
-  const { register: register2, handleSubmit: handleSubmit2, errors: errors2 } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(schema)
+  });
+  const { register: register2, handleSubmit: handleSubmit2, errors: errors2 } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(schema2)
+  });
   const [showSingle, setShowSingle] = useState(true);
   const [showMulti, setShowMulti] = useState(false);
 
@@ -17,14 +36,6 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
     setShowSingle(!showSingle);
   }
 
-  function submitOne(data) {
-    console.log(data);
-  }
-  function submitMulti(data) {
-    console.log(data);
-  }
-
-
   return (
     <div className="input-form">
       <div className="form-group">
@@ -33,22 +44,37 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
           <div className={`wizard-body ${showSingle ? '' : 'collapsed'}`}>
               
               <div className="form-group">
-                <label htmlFor="">Name</label>
-                <input type="text" name="name" ref={register} className="styled" id="" required />
+                <label htmlFor="name">Name</label>
+                <input type="text" name="name" ref={register} className="styled" id="name" required />
+                <ErrorMessage
+                  errors={errors}
+                  name="name"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
               </div>
               
               <div className="form-group">
-                <label htmlFor="">Tx id</label>
-                <input type="text" name="txId" ref={register} className="styled" id="" required />
+                <label htmlFor="txId">Tx id</label>
+                <input type="text" name="txId" ref={register} className="styled" id="txId" required />
+                <ErrorMessage
+                  errors={errors}
+                  name="txId"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
               </div>
                 
               <div className="form-group">
-                <label htmlFor="">Private key</label>
-                <input type="text" name="privateKey" ref={register} className="styled" id="" required />
+                <label htmlFor="privateKey">Private key</label>
+                <input type="text" name="privateKey" ref={register} className="styled" id="privateKey" required />
+                <ErrorMessage
+                  errors={errors}
+                  name="privateKey"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
               </div>
 
               <div className="form-actions-spaced">
-                <button className="btn btn--blue" >Save</button>
+                <button className="btn btn--blue" disabled={submitting}>Save</button>
               </div>
               
           </div>
@@ -60,10 +86,15 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
                 <div className="form-group">
                   <label htmlFor="masternodeConf">Masternode.conf</label>
                   <textarea className="styled" ref={register2} rows="5" name="masternodeConf" id="masternodeConf" placeholder="Paste your masternode.conf here"></textarea>
+                  <ErrorMessage
+                    errors={errors2}
+                    name="masternodeConf"
+                    render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                  />
                 </div>
 
                 <div className="form-actions-spaced">
-                  <button className="btn btn--blue" >Save</button>
+                  <button className="btn btn--blue" disabled={submitting}>Save</button>
                 </div>
                 
             </div>

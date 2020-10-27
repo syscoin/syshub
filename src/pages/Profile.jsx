@@ -40,13 +40,12 @@ function Profile(props) {
                         </div>
                       </div>
                     </section>
-            
+
                     <section className="article">
                       <div className="cols">
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left text-center">
                             <UserMasternodes />
-                            
                           </div>
                         </div>
                       </div>
