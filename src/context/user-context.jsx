@@ -3,8 +3,8 @@ import jwtDecode from 'jwt-decode';
 
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import {register} from '../utils/request';
-import { useHistory } from 'react-router';
+import {register, updateUser, updateActionsUser, deleteUser} from '../utils/request';
+import {useHistory} from 'react-router';
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
@@ -34,12 +34,14 @@ export function UserProvider(props) {
           const newDecoded = jwtDecode(newTokenRefreshed);
           setToken(newTokenRefreshed);
           setUser({data: newDecoded, token: getToken().token});
+          setLoadingUser(false);
         } else {
           setUser({data: decoded, token: token.token});
           setLoadingUser(false);
         }
       } catch (error) {
         console.log(error);
+        setLoadingUser(false);
       }
     }
 
@@ -82,6 +84,19 @@ export function UserProvider(props) {
     }
   }
 
+  const loginWithPhoneNumber = (phone, appVerifier) => {
+    console.log(appVerifier)
+    return new Promise((resolve, reject) => {
+      firebase.loginWithPhone(phone, appVerifier)
+        .then(resp => {
+          resolve(resp)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  }
+
   async function logoutUser() {
     setUser(null);
     deleteToken();
@@ -92,11 +107,42 @@ export function UserProvider(props) {
 
   async function changePassword({oldPassword, newPassword}) {
     try {
-      await firebase.changePassword(oldPassword, newPassword)
-        .catch(err => { throw err });
+      await firebase.changePassword(oldPassword, newPassword).catch(err => {
+        throw err
+      });
 
     } catch (error) {
       throw error;
+    }
+  }
+
+  const updateCurrentUser = async (uid, data) => {
+    try {
+      await updateUser(getToken().token, uid, data).catch(err => {
+        throw err
+      })
+    } catch (err) {
+      throw err
+    }
+  }
+
+  const updateCurrentActionsUser = async (uid, data) => {
+    try {
+      await updateActionsUser(getToken().token, uid, data).catch(err => {
+        throw err
+      })
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async function destroyUser(uid) {
+    try {
+      await deleteUser(getToken().token, uid).catch(err => {
+        throw err
+      })
+    } catch (err) {
+      throw err
     }
   }
 
@@ -106,8 +152,12 @@ export function UserProvider(props) {
       loadingUser,
       signupUser,
       loginUser,
+      loginWithPhoneNumber,
       logoutUser,
       changePassword,
+      updateCurrentUser,
+      updateCurrentActionsUser,
+      destroyUser,
       firebase
     })
   }, [user, loadingUser]);

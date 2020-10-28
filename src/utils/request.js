@@ -279,19 +279,34 @@ export const getUserInfo = async (id) => {
   }
 }
 
-export const updateUser = async (id, data) => {
-  try {
-    return await axios.put(`${API_URI}/user/${id}`, data, {
+export const updateUser = async (token, id, data) => {
+  return new Promise((resolve, reject) => {
+    axios.put(`${API_URI}/user/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
+    }).then(resp => {
+      resolve(resp)
     }).catch(err => {
-      throw err
+      reject(err)
     })
-  } catch (err) {
-    return new Error(err)
-  }
+  })
 }
+
+export const updateActionsUser = async (token, id, data) => {
+  return new Promise((resolve, reject) => {
+    axios.put(`${API_URI}/user/extend/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 
 export const deleteUser = async (token, id) => {
   return new Promise((resolve, reject) => {

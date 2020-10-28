@@ -11,24 +11,34 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = (props) => {
-  const {firebase} = useUser();
+  const {firebase, loginWithPhoneNumber} = useUser();
   const {register, handleSubmit, errors} = useForm({
     resolver: yupResolver(schema)
   });
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
-      'callback': (response) => {
-        console.log(response)
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // ...
-      },
-      'expired-callback': () => {
-        // Response expired. Ask user to solve reCAPTCHA again.
-        // ...
-      }
-    })
-    window.recaptchaVerifier.render();
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha')
+    window.recaptchaVerifier.render()
   }, [])
+
+
+  const sendSms = async () => {
+    let a = await firebase.sendSMSToPhone('+584246225558', window.recaptchaVerifier).catch(err => {
+      throw err
+    })
+    console.log(a)
+  }
+
+  const loginPhone = async () => {
+    let r = await loginWithPhoneNumber('+584246225558', window.recaptchaVerifier).catch(err => {
+      throw err
+    })
+    console.log(r)
+    let x = await r.confirm('123456').catch(err => {
+      throw err
+    })
+    /** aqui obtienes los datos para el login **/
+    console.log(x)
+  }
 
   return (
     <>
@@ -60,6 +70,8 @@ const LoginForm = (props) => {
           </button>
         </div>
       </form>
+      <button className="btn btn--blue" type={'button'} onClick={sendSms}> send Sms</button>
+      <button className="btn btn--blue" type={'button'} onClick={loginPhone}> login Phone</button>
     </>
   )
 }
