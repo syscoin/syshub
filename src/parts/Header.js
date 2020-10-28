@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
 import { useUser } from "../context/user-context";
 
 function Header(props) {
-  const history = useHistory();
   const { user, logoutUser } = useUser();
 
   const [isNotTop, setIsNotTop] = useState(false);

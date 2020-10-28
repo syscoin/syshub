@@ -58,7 +58,7 @@ const LoginForm = (props) => {
         />
 
         <div className="input-cont">
-          <div id={'recaptcha'} className="recaptcha"/>
+          <div id={'recaptcha'} className="recaptcha" style={{display:'inline-block'}}/>
         </div>
 
         <div className="input-cont">
