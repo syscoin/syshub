@@ -4,6 +4,8 @@ import {decryptAes, encryptAes} from "./encryption";
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
 export default class Firebase {
@@ -81,4 +83,13 @@ export default class Firebase {
         }, reject)
     })
   }
+
+  /** testing **/
+  generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification({
+    url: 'https://syshub-dev.firebaseapp.com',
+    handleCodeInApp: true
+  }).catch(err => {
+    throw err
+  })
+
 }
