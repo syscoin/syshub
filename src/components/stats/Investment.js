@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
-import SubTitle from './SubTitle';
+import SubTitle from '../global/SubTitle';
 
 class Investment extends Component {
     constructor(props){

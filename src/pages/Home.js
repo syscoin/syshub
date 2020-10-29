@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 import BannerImage from '../components/global/BannerImage';
-import WorldMap from '../components/partials/WorldMap';
-import StatsShow from '../components/partials/StatsShow';
-import LinearCharts from '../components/partials/LinearCharts';
-import SubTitle from '../components/partials/SubTitle';
-import MasternodeTable from '../components/partials/MasternodeTable';
+import SubTitle from '../components/global/SubTitle';
+import WorldMap from '../components/stats/WorldMap';
+import StatsShow from '../components/stats/StatsShow';
+import LinearCharts from '../components/stats/LinearCharts';
+import MasternodeTable from '../components/masternodes/MasternodeTable';
 
 export class Home extends Component {
     _isMounted = false;

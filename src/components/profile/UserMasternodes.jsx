@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useUser } from '../../context/user-context';
 import { getUserMasterNodes, updateMasterNode, destroyMasterNode } from '../../utils/request';
 
-import SubTitle from "./SubTitle";
+import SubTitle from "../global/SubTitle";
 import UserMN from './UserMN';
 
 

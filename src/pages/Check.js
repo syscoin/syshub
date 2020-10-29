@@ -4,8 +4,8 @@ import { withTranslation } from "react-i18next";
 import MetaTags from "react-meta-tags";
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/partials/Title";
-import MasternodeTable from "../components/partials/MasternodeTable";
+import Title from "../components/global/Title";
+import MasternodeTable from "../components/masternodes/MasternodeTable";
 
 
 export class Check extends Component {

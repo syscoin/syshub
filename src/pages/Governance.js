@@ -7,9 +7,9 @@ import MetaTags from 'react-meta-tags';
 import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 import BannerImage from '../components/global/BannerImage';
-// import SuperBlocks from './partials/SuperBlocks';
-import GovList from '../components/partials/GovList';
-import GovDetails from '../components/partials/GovDetails';
+// import SuperBlocks from './governance/SuperBlocks';
+import GovList from '../components/governance/GovList';
+import GovDetails from '../components/governance/GovDetails';
 
 export class Governance extends Component {
     constructor(props){

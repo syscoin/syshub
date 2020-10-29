@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
 import {MetaTags} from "react-meta-tags";
 import {withTranslation} from "react-i18next";
+import swal from "sweetalert2";
+import {useUser} from "../context/user-context";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/partials/Title";
-import swal from "sweetalert2";
-import {useUser} from "../context/user-context";
+import Title from "../components/global/Title";
 
 const Recover = (props) => {
   const {firebase} = useUser();

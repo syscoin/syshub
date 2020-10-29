@@ -1,15 +1,15 @@
 import React from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
+import { Route, Switch, useRouteMatch } from "react-router";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/partials/Title";
-import UserInfo from "../components/partials/UserInfo";
-import UserMasternodes from "../components/partials/UserMasternodes";
-import { Route, Switch, useRouteMatch } from "react-router";
-import AddMasternodes from "../components/partials/AddMasternodes";
-import UserDelete from "../components/partials/UserDelete";
+import Title from "../components/global/Title";
+import UserInfo from "../components/profile/UserInfo";
+import UserMasternodes from "../components/profile/UserMasternodes";
+import AddMasternodes from "../components/profile/AddMasternodes";
+import UserDelete from "../components/profile/UserDelete";
 
 function Profile(props) {
   let { path } = useRouteMatch();

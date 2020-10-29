@@ -5,14 +5,14 @@ import MetaTags from 'react-meta-tags';
 import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 
-import Title from '../components/partials/Title';
-import Income from '../components/partials/Income';
-import Price from '../components/partials/Price';
-import Investment from '../components/partials/Investment';
-import WorldMap from '../components/partials/WorldMap';
-import LinearChart from '../components/partials/LinearCharts';
-import StatsShow from '../components/partials/StatsShow';
-import Blockchain from '../components/partials/Blockchain';
+import Title from '../components/global/Title';
+import Income from '../components/stats/Income';
+import Price from '../components/stats/Price';
+import Investment from '../components/stats/Investment';
+import WorldMap from '../components/stats/WorldMap';
+import LinearChart from '../components/stats/LinearCharts';
+import StatsShow from '../components/stats/StatsShow';
+import Blockchain from '../components/stats/Blockchain';
 
 export class Stats extends Component {
     constructor(props){  

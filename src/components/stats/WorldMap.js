@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Datamaps from 'datamaps';
 import { withTranslation } from "react-i18next";
-import SubTitle from './SubTitle';
+import SubTitle from '../global/SubTitle';
 
 class WorldMap extends Component {
     constructor(props){

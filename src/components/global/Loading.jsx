@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from '../partials/Title';
+import Title from './Title';
 import Background from './Background';
 import BackgroundInner from './BackgroundInner';
 

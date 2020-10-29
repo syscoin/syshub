@@ -5,7 +5,7 @@ import { useUser } from '../../context/user-context';
 import { createMasterNode } from '../../utils/request';
 
 import AddMNForm from './AddMNForm';
-import Title from './Title';
+import Title from '../global/Title';
 
 export default function AddMasternodes() {
   const { user } = useUser(); 

@@ -5,15 +5,14 @@ import {Link, useHistory} from "react-router-dom";
 
 import {useUser} from '../context/user-context';
 
-
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/partials/Title";
-import SignupForm from "../components/partials/SignupForm";
+import Title from "../components/global/Title";
+import SignupForm from "../components/signup/SignupForm";
 
 function Signup(props) {
   const history = useHistory();
-  const {signupUser, firebase} = useUser();
+  const { signupUser } = useUser();
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);

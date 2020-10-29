@@ -4,7 +4,7 @@ import { withTranslation } from "react-i18next";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/partials/Title";
+import Title from "../components/global/Title";
 
 class NewProposal extends Component {
   onRegister = (registerData) => {

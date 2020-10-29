@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MetaTags from "react-meta-tags";
 import { withTranslation } from "react-i18next";
+
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 export class Error extends Component {
