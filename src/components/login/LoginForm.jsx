@@ -22,14 +22,14 @@ const LoginForm = (props) => {
 
 
   const sendSms = async () => {
-    let a = await firebase.sendSMSToPhone('+584246225558', window.recaptchaVerifier).catch(err => {
+    let a = await firebase.sendSMSToPhone('+584146132907', window.recaptchaVerifier).catch(err => {
       throw err
     })
     console.log(a)
   }
 
   const loginPhone = async () => {
-    let r = await loginWithPhoneNumber('+584246225558', window.recaptchaVerifier).catch(err => {
+    let r = await loginWithPhoneNumber('+584146132907', window.recaptchaVerifier).catch(err => {
       throw err
     })
     console.log(r)

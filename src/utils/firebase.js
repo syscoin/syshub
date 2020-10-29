@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-import {decryptAes, encryptAes} from "./encryption";
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,

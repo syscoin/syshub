@@ -1,7 +1,7 @@
 import React from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
-import { Route, Switch, useRouteMatch } from "react-router";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
@@ -55,8 +55,11 @@ function Profile(props) {
               </div>
             </Route>
 
-            <Route path={`${path}/add-masternodes`}>
+            <Route path={`${path}/add-masternodes`} exact>
               <AddMasternodes />
+            </Route>
+            <Route path={path}>
+              <Redirect to={path} />
             </Route>
           </Switch>
         </main>

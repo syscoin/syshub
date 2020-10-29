@@ -3,7 +3,7 @@ import { useUser } from "../../context/user-context";
 import { getUserInfo } from "../../utils/request";
 
 import UserPassForm from "./UserPassForm";
-import UserTwoFA from "./UserTwoFA";
+import UserTwoFA from "./2FA/UserTwoFA";
 
 export default function UserInfo() {
   const { user } = useUser();
@@ -14,7 +14,6 @@ export default function UserInfo() {
       const response = await getUserInfo(user.token, user.data.user_id);
       if (response.data) {
         await setUserInfo(response.data.user);
-        console.log(response.data.user);
       }
     } catch (error) {
       console.log(error);
@@ -28,10 +27,17 @@ export default function UserInfo() {
     };
   }, [loadUserInfo]);
 
+  useEffect(() => {
+    console.log(userInfo)
+  }, [userInfo]);
+
   const emailVerification = () => {
     
   }
   
+  const onTwoFAChange = async () => {
+    await loadUserInfo();
+  }
   
 
   return (
@@ -71,7 +77,8 @@ export default function UserInfo() {
         {
           userInfo ? (
             <UserTwoFA
-              userInfo={userInfo}
+              authData={userInfo.moreData}
+              onTwoFAChange={onTwoFAChange}
             />
           )
           : (
