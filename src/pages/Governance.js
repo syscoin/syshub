@@ -4,12 +4,12 @@ import axios from "axios";
 import { withTranslation } from "react-i18next";
 import MetaTags from 'react-meta-tags';
 
-import Background from '../parts/Background';
-import BackgroundInner from '../parts/BackgroundInner';
-import BannerImage from '../parts/BannerImage';
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
+import BannerImage from '../components/global/BannerImage';
 // import SuperBlocks from './partials/SuperBlocks';
-import GovList from './partials/GovList';
-import GovDetails from './partials/GovDetails';
+import GovList from '../components/partials/GovList';
+import GovDetails from '../components/partials/GovDetails';
 
 export class Governance extends Component {
     constructor(props){

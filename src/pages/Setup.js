@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import InnerBanner from '../parts/InnerBanner';
+import InnerBanner from '../components/global/InnerBanner';
 import MetaTags from 'react-meta-tags';
 import { withTranslation } from "react-i18next";
-import Background from '../parts/Background';
-import BackgroundInner from '../parts/BackgroundInner';
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
 
 var publicurl=process.env.PUBLIC_URL;
 export class Setup extends Component {

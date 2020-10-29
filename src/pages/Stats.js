@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import axios from "axios";
 
 import MetaTags from 'react-meta-tags';
-import Background from '../parts/Background';
-import BackgroundInner from '../parts/BackgroundInner';
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
 
-import Title from './partials/Title';
-import Income from './partials/Income';
-import Price from './partials/Price';
-import Investment from './partials/Investment';
-import WorldMap from './partials/WorldMap';
-import LinearChart from './partials/LinearCharts';
-import StatsShow from './partials/StatsShow';
-import Blockchain from './partials/Blockchain';
+import Title from '../components/partials/Title';
+import Income from '../components/partials/Income';
+import Price from '../components/partials/Price';
+import Investment from '../components/partials/Investment';
+import WorldMap from '../components/partials/WorldMap';
+import LinearChart from '../components/partials/LinearCharts';
+import StatsShow from '../components/partials/StatsShow';
+import Blockchain from '../components/partials/Blockchain';
 
 export class Stats extends Component {
     constructor(props){  

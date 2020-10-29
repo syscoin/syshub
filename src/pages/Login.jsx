@@ -4,10 +4,10 @@ import {withTranslation} from "react-i18next";
 
 import { useUser } from '../context/user-context';
 
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import Title from "./partials/Title";
-import LoginForm from "./partials/LoginForm";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import Title from "../components/partials/Title";
+import LoginForm from "../components/partials/LoginForm";
 import {Link, useHistory} from "react-router-dom";
 
 

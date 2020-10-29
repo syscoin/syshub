@@ -2,9 +2,9 @@ import React, {useEffect} from "react";
 import {MetaTags} from "react-meta-tags";
 import {withTranslation} from "react-i18next";
 
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import Title from "./partials/Title";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import Title from "../components/partials/Title";
 import swal from "sweetalert2";
 import {useUser} from "../context/user-context";
 

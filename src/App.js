@@ -4,11 +4,11 @@ import { Switch } from 'react-router-dom';
 
 import { UserProvider } from './context/user-context';
 
-import PrivateRoute from './parts/PrivateRoute';
-import PublicRoute from './parts/PublicRoute';
+import PrivateRoute from './components/global/PrivateRoute';
+import PublicRoute from './components/global/PublicRoute';
 
-import Header from './parts/Header';
-import Footer from './parts/Footer';
+import Header from './components/global/Header';
+import Footer from './components/global/Footer';
 
 import Home from './pages/Home';
 import About from './pages/About';

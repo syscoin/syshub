@@ -2,14 +2,14 @@ import React from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
 
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import Title from "./partials/Title";
-import UserInfo from "./partials/UserInfo";
-import UserMasternodes from "./partials/UserMasternodes";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import Title from "../components/partials/Title";
+import UserInfo from "../components/partials/UserInfo";
+import UserMasternodes from "../components/partials/UserMasternodes";
 import { Route, Switch, useRouteMatch } from "react-router";
-import AddMasternodes from "./partials/AddMasternodes";
-import UserDelete from "./partials/UserDelete";
+import AddMasternodes from "../components/partials/AddMasternodes";
+import UserDelete from "../components/partials/UserDelete";
 
 function Profile(props) {
   let { path } = useRouteMatch();

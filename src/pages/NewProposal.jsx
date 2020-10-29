@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
 
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import Title from "./partials/Title";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import Title from "../components/partials/Title";
 
 class NewProposal extends Component {
   onRegister = (registerData) => {

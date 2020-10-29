@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
 import MetaTags from "react-meta-tags";
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import InnerBanner from "../parts/InnerBanner";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import InnerBanner from "../components/global/InnerBanner";
 
 var publicurl = process.env.PUBLIC_URL;
 export class About extends Component {

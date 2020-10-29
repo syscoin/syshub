@@ -5,14 +5,14 @@ import { withTranslation } from "react-i18next";
 import MetaTags from 'react-meta-tags';
 import { Link } from 'react-router-dom';
 
-import Background from '../parts/Background';
-import BackgroundInner from '../parts/BackgroundInner';
-import BannerImage from '../parts/BannerImage';
-import WorldMap from './partials/WorldMap';
-import StatsShow from './partials/StatsShow';
-import LinearCharts from './partials/LinearCharts';
-import SubTitle from './partials/SubTitle';
-import MasternodeTable from './partials/MasternodeTable';
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
+import BannerImage from '../components/global/BannerImage';
+import WorldMap from '../components/partials/WorldMap';
+import StatsShow from '../components/partials/StatsShow';
+import LinearCharts from '../components/partials/LinearCharts';
+import SubTitle from '../components/partials/SubTitle';
+import MasternodeTable from '../components/partials/MasternodeTable';
 
 export class Home extends Component {
     _isMounted = false;

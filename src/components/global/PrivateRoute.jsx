@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useUser } from '../context/user-context';
+import { useUser } from '../../context/user-context';
 
 import Loading from './Loading';
 

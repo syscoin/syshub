@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import './shared/i18n';
-import ScrollToTop from './parts/ScrollToTop';
+import ScrollToTop from './components/global/ScrollToTop';
 
 ReactDOM.render(
   <BrowserRouter>

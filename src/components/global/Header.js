@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
-import { useUser } from "../context/user-context";
+import { useUser } from "../../context/user-context";
 
 function Header(props) {
   const { user, logoutUser } = useUser();

@@ -6,10 +6,10 @@ import {Link, useHistory} from "react-router-dom";
 import {useUser} from '../context/user-context';
 
 
-import Background from "../parts/Background";
-import BackgroundInner from "../parts/BackgroundInner";
-import Title from "./partials/Title";
-import SignupForm from "./partials/SignupForm";
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import Title from "../components/partials/Title";
+import SignupForm from "../components/partials/SignupForm";
 
 function Signup(props) {
   const history = useHistory();
