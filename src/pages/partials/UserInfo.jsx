@@ -1,43 +1,90 @@
-import React from "react";
-import { useUser } from '../../context/user-context';
-import UserPassForm from "./UserPassForm";
+import React, { useState, useEffect, useCallback } from "react";
+import { useUser } from "../../context/user-context";
+import { getUserInfo } from "../../utils/request";
 
+import UserPassForm from "./UserPassForm";
+import UserTwoFA from "./UserTwoFA";
 
 export default function UserInfo() {
-  const {  user  } = useUser();
+  const { user } = useUser();
+  const [userInfo, setUserInfo] = useState(null);
+
+  const loadUserInfo = useCallback(async () => {
+    try {
+      const response = await getUserInfo(user.token, user.data.user_id);
+      if (response.data) {
+        await setUserInfo(response.data.user);
+        console.log(response.data.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    loadUserInfo();
+    return () => {
+      // cleanup
+    };
+  }, [loadUserInfo]);
+
+  const emailVerification = () => {
+    
+  }
+  
+  
 
   return (
     <div className="input-form">
       <div className="form-group">
         <label className="big">Email address</label>
-        <br/>
-        <input type="text" className="styled" value={user.data.email} disabled />
+        <br />
+        <input
+          type="text"
+          className="styled"
+          value={user.data.email}
+          disabled
+        />
+        {!userInfo?.emailVerified && (
+          <small>
+            <p>
+              Email is not verified. &nbsp;
+              <span
+                onClick={emailVerification}
+                style={{ textDecoration: "underline", cursor: "pointer" }}
+              >
+                Verify now
+              </span>
+            </p>
+          </small>
+        )}
       </div>
 
       <div className="form-group spacer line"></div>
-      
+
       <UserPassForm />
 
       <div className="form-group spacer line"></div>
-
       <div className="form-group">
-        <div className="form-group half">
-          <label className="big">2FA SMS</label>
-          <div className="indicator">ENABLED</div>
-          <div className="btn-group">
-            <button type="submit" className="btn btn--blue">Enable</button>
-            <button type="submit" className="btn btn--blue-border">Disable</button>
-          </div>
-        </div>
-        <div className="form-group half">
-          <label className="big">Google Authenticator</label>
-          <div className="indicator red">DISABLED</div>
-          <div className="btn-group">
-            <button type="submit" className="btn btn--blue">Enable</button>
-            <button type="submit" className="btn btn--blue-border">Disable</button>
-          </div>
-        </div>
+        <label className="big">Two-Factor-Authorization</label>
+        <br />
+        {
+          userInfo ? (
+            <UserTwoFA
+              userInfo={userInfo}
+            />
+          )
+          : (
+            <p>Loading...</p>
+          )
+        }
         
+
+        <small>
+          <p>
+            Note: Enabling 2FA is REQUIRED to vote on proposals. You can only use one (1) 2FA method. Please choose SMS or Google Authenticator.
+          </p>
+        </small>
       </div>
     </div>
   );

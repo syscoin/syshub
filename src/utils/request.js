@@ -265,11 +265,11 @@ export const register = async (data) => {
 }
 /** User **/
 
-export const getUserInfo = async (id) => {
+export const getUserInfo = async (token, id) => {
   try {
     return await axios.get(`${API_URI}/user/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
