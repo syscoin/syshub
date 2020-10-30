@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import CustomModal from '../../global/CustomModal';
 
 
-
-import { useUser } from "../../../context/user-context";
+import {useUser} from "../../../context/user-context";
 import GAuthForm from './GAuthForm';
 import SMS2FAForm from './SMS2FAForm';
+
 // import { updateUser } from "../../utils/request";
 
 
-function UserTwoFA({ authData, onTwoFAChange }) {
-  const { user } = useUser();
+function UserTwoFA({authData, onTwoFAChange}) {
+  const {user, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
 
-  const enableSMS = (data) => {
-    console.log('enable SMS');
+  const enableSMS = async (data) => {
+    // updateCurrentActionsUser()
   }
 
   const disableSMS = () => {
@@ -28,9 +28,12 @@ function UserTwoFA({ authData, onTwoFAChange }) {
 
   const disableGAuth = () => {
     console.log('disable GAuth')
-  
+
   }
 
+  const removeSecret = () => {
+
+  }
 
   return (
     <>
@@ -39,7 +42,7 @@ function UserTwoFA({ authData, onTwoFAChange }) {
         {
           authData.sms ? (
             <div className="indicator">ENABLED</div>
-          ): (
+          ) : (
             <div className="indicator red">DISABLED</div>
           )
         }
@@ -70,14 +73,14 @@ function UserTwoFA({ authData, onTwoFAChange }) {
         {
           authData.gAuth ? (
             <div className="indicator">ENABLED</div>
-          ): (
+          ) : (
             <div className="indicator red">DISABLED</div>
           )
         }
         {
           !authData.gAuth && (
             <div className="btn-group">
-              <button className="btn btn--blue" onClick={()=> setOpenGAuth(true)}>
+              <button className="btn btn--blue" onClick={() => setOpenGAuth(true)}>
                 Enable
               </button>
             </div>
@@ -86,7 +89,7 @@ function UserTwoFA({ authData, onTwoFAChange }) {
         {
           authData.gAuth && (
             <div className="btn-group">
-              <button className="btn btn--blue-border" >
+              <button className="btn btn--blue-border">
                 Remove secret
               </button>
               <button className="btn btn--blue-border" onClick={disableGAuth}>
@@ -101,13 +104,13 @@ function UserTwoFA({ authData, onTwoFAChange }) {
         open={openSMS}
         onClose={() => setOpenSMS(false)}
       >
-        <SMS2FAForm SMSAuth={enableSMS} />
+        <SMS2FAForm SMSAuth={enableSMS}/>
       </CustomModal>
       <CustomModal
         open={openGAuth}
         onClose={() => setOpenGAuth(false)}
       >
-        <GAuthForm gAuth={enableGAuth} />
+        <GAuthForm gAuth={enableGAuth}/>
       </CustomModal>
     </>
   )

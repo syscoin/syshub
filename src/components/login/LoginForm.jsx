@@ -70,8 +70,8 @@ const LoginForm = (props) => {
           </button>
         </div>
       </form>
-      <button className="btn btn--blue" type={'button'} onClick={sendSms}> send Sms</button>
-      <button className="btn btn--blue" type={'button'} onClick={loginPhone}> login Phone</button>
+      {/*<button className="btn btn--blue" type={'button'} onClick={sendSms}> send Sms</button>*/}
+      {/*<button className="btn btn--blue" type={'button'} onClick={loginPhone}> login Phone</button>*/}
     </>
   )
 }

@@ -45,7 +45,7 @@
     "react-responsive-modal": "^5.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^4.0.0",
     "react-tooltip": "^4.2.8",
     "secp256k1": "^4.0.2",
     "speakeasy": "^2.0.0",

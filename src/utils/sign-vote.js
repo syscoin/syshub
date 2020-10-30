@@ -14,7 +14,7 @@ export default (obj) => {
 
   const masterNodeTx = vinMasternode.split('-');
 
-  const vinMasternodeBuffer = Buffer.from(masterNoFdeTx[0], 'hex');
+  const vinMasternodeBuffer = Buffer.from(masterNodeTx[0], 'hex');
   swapEndiannessInPlace(vinMasternodeBuffer);
 
   const vinMasternodeIndexBuffer = Buffer.allocUnsafe(4);

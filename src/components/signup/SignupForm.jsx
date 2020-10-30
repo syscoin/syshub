@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
@@ -18,9 +18,17 @@ const SignupForm = (props) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
+  const [recaptchaVerified, setRecaptchaVerified] = useState('');
 
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha')
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
+      callback: (resp) => {
+        console.log(resp)
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
     window.recaptchaVerifier.render();
   }, [])
 
@@ -42,7 +50,7 @@ const SignupForm = (props) => {
         />
 
         <div className="input-cont">
-          <div id={'recaptcha'} className="recaptcha" style={{display:'inline-block'}} />
+          <div id={'recaptcha'} className="recaptcha" style={{display: 'inline-block'}}/>
         </div>
 
         <div className="input-cont">

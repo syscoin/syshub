@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useUser } from "../../context/user-context";
-import { getUserInfo } from "../../utils/request";
+import React, {useState, useEffect, useCallback} from "react";
+import {useUser} from "../../context/user-context";
+import {getUserInfo} from "../../utils/request";
 
 import UserPassForm from "./UserPassForm";
 import UserTwoFA from "./2FA/UserTwoFA";
+import swal from 'sweetalert2';
 
 export default function UserInfo() {
-  const { user } = useUser();
+  const {firebase, user} = useUser();
   const [userInfo, setUserInfo] = useState(null);
 
   const loadUserInfo = useCallback(async () => {
@@ -32,19 +33,22 @@ export default function UserInfo() {
   }, [userInfo]);
 
   const emailVerification = () => {
-    
+    firebase.generateLinkVerification().then(() => {
+
+    }).catch(err => {
+      return swal.fire({title: 'Oops...', text: `${err}`, icon: 'error'});
+    })
   }
-  
+
   const onTwoFAChange = async () => {
     await loadUserInfo();
   }
-  
 
   return (
     <div className="input-form">
       <div className="form-group">
         <label className="big">Email address</label>
-        <br />
+        <br/>
         <input
           type="text"
           className="styled"
@@ -57,7 +61,7 @@ export default function UserInfo() {
               Email is not verified. &nbsp;
               <span
                 onClick={emailVerification}
-                style={{ textDecoration: "underline", cursor: "pointer" }}
+                style={{textDecoration: "underline", cursor: "pointer"}}
               >
                 Verify now
               </span>
@@ -68,24 +72,24 @@ export default function UserInfo() {
 
       <div className="form-group spacer line"></div>
 
-      <UserPassForm />
+      <UserPassForm/>
 
       <div className="form-group spacer line"></div>
       <div className="form-group">
         <label className="big">Two-Factor-Authorization</label>
-        <br />
+        <br/>
         {
           userInfo ? (
-            <UserTwoFA
-              authData={userInfo.moreData}
-              onTwoFAChange={onTwoFAChange}
-            />
-          )
-          : (
-            <p>Loading...</p>
-          )
+              <UserTwoFA
+                authData={userInfo.moreData}
+                onTwoFAChange={onTwoFAChange}
+              />
+            )
+            : (
+              <p>Loading...</p>
+            )
         }
-        
+
 
         <small>
           <p>
