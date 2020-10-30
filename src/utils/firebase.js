@@ -27,7 +27,7 @@ export default class Firebase {
   signOut = async () => await this.auth.signOut();
 
   passwordReset = async (email) => await this.auth.sendPasswordResetEmail(email, {
-      url:'https://syshub-dev.firebaseapp.com'
+    url: 'https://syshub-dev.firebaseapp.com'
   }).catch(err => {
     throw err
   });
@@ -41,6 +41,8 @@ export default class Firebase {
   newPhoneAuthProvider = () => new this.firebaseApp.auth.PhoneAuthProvider();
 
   getPhoneAuthProviderID = () => this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID;
+
+  removePhoneNumber = () => this.auth.currentUser.unlink(`${this.getPhoneAuthProviderID}`)
 
   sendSMSToPhone = async (phoneNumber, appVerifier) => {
     const provider = this.newPhoneAuthProvider();
