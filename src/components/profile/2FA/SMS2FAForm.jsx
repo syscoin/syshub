@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
-import {useState} from 'react';
+
 import {useUser} from "../../../context/user-context";
 
 const schema = yup.object().shape({
@@ -15,6 +15,9 @@ const schema2 = yup.object().shape({
 
 export default function SMS2FAForm({SMSAuth}) {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [isoCode, setIsoCode] = useState('');
+  const [codeSent, setCodeSent] = useState(false);
+
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema)
@@ -27,6 +30,7 @@ export default function SMS2FAForm({SMSAuth}) {
   const sendSMS = (data) => {
     console.log('sent');
     setPhoneNumber(data);
+    setCodeSent(true);
   }
 
   const auth = (data) => {
@@ -56,28 +60,31 @@ export default function SMS2FAForm({SMSAuth}) {
           <button className="btn btn--blue btn-center" onClick={handleSubmit(sendSMS)}>Send SMS</button>
         </form>
       </div>
+      {
+        codeSent && (
+          <div className="input-form">
+            <form>
+              <div className="form-group">
+                <label htmlFor="phoneCode">Insert the code sent to your phone</label>
+                <input
+                  className="styled"
+                  name="phoneCode"
+                  type="text"
+                  id="phoneCode"
+                  ref={register2}
+                />
+                <ErrorMessage
+                  errors={errors2}
+                  name="phoneCode"
+                  render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
+                />
+              </div>
 
-      <div className="input-form">
-        <form>
-          <div className="form-group">
-            <label htmlFor="phoneCode">Insert the code sent to your phone</label>
-            <input
-              className="styled"
-              name="phoneCode"
-              type="text"
-              id="phoneCode"
-              ref={register2}
-            />
-            <ErrorMessage
-              errors={errors2}
-              name="phoneCode"
-              render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
-            />
+              <button className="btn btn--blue btn-center" type="submit" onClick={handleSubmit2(auth)}>Verify</button>
+            </form>
           </div>
-
-          <button className="btn btn--blue btn-center" type="submit" onClick={handleSubmit2(auth)}>Verify</button>
-        </form>
-      </div>
+        )
+      }
     </>
   )
 }

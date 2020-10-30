@@ -81,7 +81,7 @@ export default function UserInfo() {
         {
           userInfo ? (
               <UserTwoFA
-                authData={userInfo.moreData}
+                authData={userInfo.authData}
                 onTwoFAChange={onTwoFAChange}
               />
             )

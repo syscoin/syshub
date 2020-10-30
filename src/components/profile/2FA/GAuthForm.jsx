@@ -1,9 +1,15 @@
-import React from 'react'
-import {getAuthQrCode} from '../../../utils/twoFaAuthentication'
+import React from 'react';
 
-export default function GAuthForm({GAuth}) {
+import { getAuthQrCode } from '../../../utils/twoFaAuthentication';
 
-  const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode('thaymerapv@gmail.com');
+import {useUser} from "../../../context/user-context";
+
+
+export default function GAuthForm({ GAuth }) {
+  const { user } = useUser();
+  console.log(user);
+
+  const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode(user.email);
   console.log(secret)
 
   console.log(gAuthSecret)
