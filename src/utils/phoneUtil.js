@@ -1,4 +1,4 @@
-import {PhoneNumberUtil} from 'google-libphonenumber';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import swal from 'sweetalert2'
 
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -19,7 +19,7 @@ export const phoneValidation = (phoneNumber, isoCode) => {
   } catch (err) {
     swal.fire({
       title: 'Oops...',
-      text: `${e}`,
+      text: `${err}`,
       icon: 'error'
     })
     return false;
