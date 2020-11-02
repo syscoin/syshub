@@ -1,12 +1,32 @@
 import React, { useState } from "react";
 
+import { useUser } from '../../context/user-context';
+
 import TitleProposal from './TitleProposal';
 import DescriptionProposal from './DescriptionProposal';
 import PaymentProposal from './PaymentProposal';
 
+/* 
+{
+  type: Number(type),
+  name,
+  title,
+  description,
+  nPayment: Number(nPayment),
+  first_epoch: Number(firstEpoch),
+  start_epoch: Number(startEpoch),
+  end_epoch: Number(endEpoch),
+  payment_address: paymentAddress,
+  payment_amount: Number(paymentAmount),
+  url: (typeof url !== "undefined") ? url : 'empty'
+}
+*/
+
 export default function ProposalForm() {
+  const { user } = useUser()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [payment, setPayment] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
 
   const back = () => {
@@ -24,6 +44,11 @@ export default function ProposalForm() {
   const getDescription = ({ proposalDescription }) => {
     console.log(proposalDescription);
     setDescription(proposalDescription);
+    next();
+  }
+  const getPayment = ({ proposalPayment }) => {
+    console.log(proposalPayment);
+    setPayment(proposalPayment);
     next();
   }
 
@@ -50,11 +75,8 @@ export default function ProposalForm() {
           <span>3</span>Payment details
         </div>
         <div className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}>
-          <PaymentProposal />
-          <div className="form-actions-spaced">
-            <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" onClick={next}>Next</button>
-          </div>
+          <PaymentProposal onNext={getPayment} onBack={back} />
+          
         </div>
 
         <div className="wizard-head">

@@ -5,11 +5,11 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  proposalDescription: yup.string()..required('The proposal description is required.')
+  proposalDescription: yup.string().required('The proposal description is required.')
 });
 
 export default function DescriptionProposal({ onNext, onBack }) {
-  
+
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema),
