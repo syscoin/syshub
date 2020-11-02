@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  proposalDescription: yup.string().max(40, 'The proposal title must be at most 40 characters.').required('The proposal title is required.')
+  proposalDescription: yup.string()..required('The proposal description is required.')
 });
 
 export default function DescriptionProposal({ onNext, onBack }) {
@@ -22,11 +22,11 @@ export default function DescriptionProposal({ onNext, onBack }) {
   return (
     <form className="input-form" onSubmit={handleSubmit(onNext)}>
       <div className="form-group">
-        <label htmlFor="proposalTitle">Proposal title</label>
-        <input type="text" id="proposalTitle" ref={register} name="proposalTitle" className="styled" maxLength="40" />
+        <label htmlFor="proposalDescription">Proposal description</label>
+        <input type="text" id="proposalDescription" ref={register} name="proposalDescription" className="styled" />
         <ErrorMessage
             errors={errors}
-            name="proposalTitle"
+            name="proposalDescription"
             render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
           />
       </div>
