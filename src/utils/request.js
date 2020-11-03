@@ -45,7 +45,7 @@ export const getGovernanceInfo = async () => {
   }
 }
 
-export const getSuperBlockBudget = async (params) => {
+export const getSuperBlockBudget = async () => {
   try {
     return await axios.get(`${API_URI}/masternode/getsuperblockbudget`).catch(err => {
       throw err
@@ -320,4 +320,88 @@ export const deleteUser = async (token, id) => {
       reject(err)
     })
   })
+}
+
+
+export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
+  try {
+    const dates = [];
+    const nowEpoch = Math.round(new Date().getTime() / 1000)
+    let chainInfo = await getInfo().catch(err => {
+      throw err
+    })
+
+    let governanceInfo = await getGovernanceInfo().catch(err => {
+      throw err
+    })
+
+    const {blocks} = chainInfo;
+    const {lastsuperblock, nextsuperblock, superblockcycle} = governanceInfo;
+
+    const superBlocksGapSeconds = superblockcycle * 60;
+    const nextSuperBlockGapSeconds = (nextsuperblock - blocks) * 60;
+    const lastSuperBlockGapSeconds = (blocks - lastsuperblock) * 60;
+    const votingDeadlinesGap = 3 * 24 * 60 * 60;
+    const nextSuperBlockEpoch = nowEpoch + nextSuperBlockGapSeconds;
+    const lastSuperBlockEpoch = nowEpoch - lastSuperBlockGapSeconds;
+
+    dates.unshift(lastsuperblock);
+    while (startEpoch <= dates[0] - votingDeadlinesGap) {
+      const previousSuperBlock = dates[0] - superBlocksGapSeconds;
+      dates.unshift(previousSuperBlock);
+    }
+    dates.shift();
+    if (dates.length === 0) {
+      dates.unshift(nextSuperBlockEpoch);
+    }
+    while (endEpoch >= dates[dates.length - 1]) {
+      const nextSuperBlock = dates[dates.length - 1] + superBlocksGapSeconds;
+      dates.push(nextSuperBlock);
+    }
+    dates.pop();
+
+    return dates;
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const nextGovernanceRewardInfo = async () => {
+  try {
+    const date = new Date();
+    const chainInfo = await getInfo().catch(err => {
+      throw err
+    })
+    const governanceInfo = await getGovernanceInfo().catch(err => {
+      throw err
+    })
+
+    const {nextsuperblock, superblockcycle} = governanceInfo;
+
+    const [lsb, nbs] = await getSuperBlockBudget().catch(err => {
+      throw err
+    })
+    const blockHeight = chainInfo.blocks;
+    const blockGenerationCycle = 60; // Defined by the chain White_paper doc.
+    const votingDeadlineGap = 3;
+    const superblockCycleEpoch = superblockcycle * blockGenerationCycle;
+    const nextRewardInSeconds = blockGenerationCycle * (nextsuperblock - blockHeight);
+    date.setSeconds(nextRewardInSeconds);
+    const rewardDateEpoch = Math.round(date.getTime() / 1000);
+    const rewardDate = date.toDateString();
+    date.setDate(date.getDate() - votingDeadlineGap);
+    const votingDeadLineEpoch = Math.round(date.getTime() / 1000);
+    const votingDeadline = date.toDateString();
+    return {
+      rewardDate,
+      votingDeadline,
+      rewardDateEpoch,
+      votingDeadLineEpoch,
+      superblockCycleEpoch,
+      lastSuperBlockBudget: lsb,
+      nextSuperBlockBudget: nbs
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }

@@ -19,7 +19,7 @@ export const phoneValidation = (phoneNumber, isoCode) => {
   } catch (err) {
     swal.fire({
       title: 'Oops...',
-      text: `${e}`,
+      text: `${err}`,
       icon: 'error'
     })
     return false;
