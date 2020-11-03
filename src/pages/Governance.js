@@ -10,6 +10,7 @@ import BannerImage from '../components/global/BannerImage';
 // import SuperBlocks from './governance/SuperBlocks';
 import GovList from '../components/governance/GovList';
 import GovDetails from '../components/governance/GovDetails';
+import ProposalsList from '../components/governance/ProposalsList';
 
 export class Governance extends Component {
     constructor(props){
@@ -122,7 +123,7 @@ export class Governance extends Component {
                                         <div className="cols">
                                             <div className="col col--size12">
                                                 <div className="article__content">
-                                                    <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
+                                                    <ProposalsList />
                                                 </div>
                                             </div>
                                         </div>
