@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";
@@ -36,6 +38,16 @@ export default function GAuthForm({ GAuth }) {
 
   const verifyCode = (data) => {
     console.log(data);
+  }
+
+  const copyQR = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Copied',
+      text: 'your secret code was succesfully copied',
+      timer: 2000,
+      showConfirmButton: false
+    })
   }
 
   return (
@@ -130,9 +142,14 @@ export default function GAuthForm({ GAuth }) {
                   This is your secret key, copy and keep it safe
                 </div>
                 <div className="indicator text-center">
-                  <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
-                    {QRCode.gAuthSecret}
-                  </p>
+                  <CopyToClipboard
+                    text={QRCode.gAuthSecret}
+                    onCopy={copyQR}
+                  >
+                    <p style={{ lineBreak: "anywhere", lineHeight: "initial", cursor: 'pointer' }}>
+                      {QRCode.gAuthSecret}
+                    </p>
+                  </CopyToClipboard>
                 </div>
               </div>
             </div>

@@ -12,6 +12,7 @@ export class GovList extends Component {
         }
     }
     componentDidMount() {
+        console.log(this.props.statsData)
         this.setState({
             dataload: 1,
             govData: this.props.govData,

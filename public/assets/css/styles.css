@@ -2862,6 +2862,15 @@ ul.pagination {
         .proposals .proposal .vote-count .passed i {
           color: #6fcc8f;
           font-size: 35px; }
+      .proposals .proposal .vote-count .not-passed {
+        line-height: 1;
+        font-size: 20px;
+        font-weight: 500;
+        color: white;
+        text-transform: uppercase; }
+        .proposals .proposal .vote-count .not-passed i {
+          color: #cc6666;
+          font-size: 35px; }
     .proposals .proposal .description {
       float: left;
       width: 70%;
