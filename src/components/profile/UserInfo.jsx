@@ -34,7 +34,7 @@ export default function UserInfo() {
 
   const emailVerification = () => {
     firebase.generateLinkVerification().then(() => {
-      swal.fire({ title: 'Sent!', icon: 'success' });
+      swal.fire({title: `Send email to ${user.data.email}`, icon: 'success'});
     }).catch(err => {
       return swal.fire({title: 'Oops...', text: `${err}`, icon: 'error'});
     })
@@ -55,7 +55,7 @@ export default function UserInfo() {
           value={user.data.email}
           disabled
         />
-        {( userInfo && !userInfo?.emailVerified) && (
+        {(userInfo && !userInfo?.emailVerified) && (
           <small>
             <p>
               Email is not verified. &nbsp;

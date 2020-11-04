@@ -5,12 +5,13 @@ import CustomModal from '../../global/CustomModal';
 import {useUser} from "../../../context/user-context";
 import GAuthForm from './GAuthForm';
 import SMS2FAForm from './SMS2FAForm';
+import swal from 'sweetalert2'
 
 // import { updateUser } from "../../utils/request";
 
 
 function UserTwoFA({authData, onTwoFAChange}) {
-  const {user, updateCurrentActionsUser} = useUser();
+  const {user, firebase, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
   console.log(user)
@@ -26,7 +27,7 @@ function UserTwoFA({authData, onTwoFAChange}) {
   const disableSMS = async () => {
     console.log('disable SMS')
     let currentUserDataUpdate = {
-      gAuth: false
+      sms: false
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
@@ -63,6 +64,23 @@ function UserTwoFA({authData, onTwoFAChange}) {
     })
 
   }
+  const removePhoneNumberProvider = async () => {
+    await firebase.removePhoneNumber().catch(err => {
+      console.log(err)
+      throw err
+    })
+    let currentUserDataUpdate = {
+      sms: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
+    swal.fire({
+      icon: 'success',
+      title: 'remove phoneNumber',
+      timer: 2000
+    })
+  }
 
   return (
     <>
@@ -87,8 +105,11 @@ function UserTwoFA({authData, onTwoFAChange}) {
         {
           authData.sms && (
             <div className="btn-group">
-              <button className="btn btn--blue-border">
+              <button className="btn btn--blue-border" onClick={() => setOpenSMS(true)}>
                 Change phone
+              </button>
+              <button className="btn btn--blue-border" onClick={removePhoneNumberProvider}>
+                Delete phone
               </button>
               <button className="btn btn--blue-border" onClick={disableSMS}>
                 Disable

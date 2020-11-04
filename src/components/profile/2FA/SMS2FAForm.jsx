@@ -9,6 +9,7 @@ import {PhoneNumberFormat, PhoneNumberUtil} from 'google-libphonenumber';
 import {useUser} from "../../../context/user-context";
 import {isoArray} from "../../../utils/isoCodes";
 import {phoneValidation} from "../../../utils/phoneUtil";
+import swal from "sweetalert2";
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -22,7 +23,7 @@ const schema2 = yup.object().shape({
 });
 
 export default function SMS2FAForm({SMSAuth}) {
-  const {firebase} = useUser();
+  const {firebase, logoutUser, updateCurrentActionsUser} = useUser();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isoCode, setIsoCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -77,10 +78,24 @@ export default function SMS2FAForm({SMSAuth}) {
   const auth = async ({phoneCode}) => {
     let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode)
     console.log(credentials)
-    let ve = await firebase.updatePhoneCredentials(credentials).catch(err => {
+    await firebase.updatePhoneCredentials(credentials).then(async () => {
+      let currentUserDataUpdate = {
+        sms: true,
+        twoFa: true
+      }
+      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+        throw err
+      })
+      swal.fire({
+        icon: 'success',
+        title: 'Vefify sms',
+        text: 'your account is verifed',
+        timer: 2000
+      })
+      await logoutUser();
+    }).catch(err => {
       throw err
     })
-    console.log(ve)
     // SMSAuth({phoneNumber, ...data});
   }
 

@@ -4,7 +4,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import swal from 'sweetalert2';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {getAuthQrCode, verifyAuthCode} from "../../../utils/twoFaAuthentication";
 import {useUser} from "../../../context/user-context";
 import {encryptAes} from "../../../utils/encryption";
@@ -18,7 +18,7 @@ const schema = yup.object().shape({
 });
 
 export default function GAuthForm({GAuth}) {
-  const {firebase, user, updateCurrentActionsUser} = useUser();
+  const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
   const {register, handleSubmit, errors} = useForm({
@@ -53,14 +53,20 @@ export default function GAuthForm({GAuth}) {
       await updateCurrentActionsUser(changeUserData).catch(err => {
         throw err
       })
-      swal.fire()
+      swal.fire({
+        icon: 'success',
+        title: 'Vefify',
+        text: 'your account is verifed',
+        timer: 2000
+      })
+      await logoutUser()
     } else {
       console.log('es falso')
     }
   }
 
   const copyQR = () => {
-    Swal.fire({
+    swal.fire({
       icon: 'success',
       title: 'Copied',
       text: 'your secret code was succesfully copied',
@@ -149,29 +155,29 @@ export default function GAuthForm({GAuth}) {
                   </form>
                 </div>
 
-                </div>
               </div>
             </div>
-            <div className="input-form">
-              <div className="form-group">
-                <div className="form-group spacer line"></div>
-                <div className="indicator red text-center">
-                  This is your secret key, copy and keep it safe
-                </div>
-                <div className="indicator text-center">
-                  <CopyToClipboard
-                    text={QRCode.gAuthSecret}
-                    onCopy={copyQR}
-                  >
-                    <p style={{ lineBreak: "anywhere", lineHeight: "initial", cursor: 'pointer' }}>
-                      {QRCode.gAuthSecret}
-                    </p>
-                  </CopyToClipboard>
-                </div>
+          </div>
+          <div className="input-form">
+            <div className="form-group">
+              <div className="form-group spacer line"></div>
+              <div className="indicator red text-center">
+                This is your secret key, copy and keep it safe
+              </div>
+              <div className="indicator text-center">
+                <CopyToClipboard
+                  text={QRCode.gAuthSecret}
+                  onCopy={copyQR}
+                >
+                  <p style={{lineBreak: "anywhere", lineHeight: "initial", cursor: 'pointer'}}>
+                    {QRCode.gAuthSecret}
+                  </p>
+                </CopyToClipboard>
               </div>
             </div>
-          </>
-        )
+          </div>
+        </>
+      )
       }
     </>
   );
