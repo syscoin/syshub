@@ -5,6 +5,7 @@ import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import swal from 'sweetalert2';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import {getAuthQrCode, verifyAuthCode} from "../../../utils/twoFaAuthentication";
 import {useUser} from "../../../context/user-context";
 import {encryptAes} from "../../../utils/encryption";
@@ -59,8 +60,8 @@ export default function GAuthForm({GAuth}) {
     }
   }
 
-  const copyQR = () => {
-    Swal.fire({
+  const copySecret = () => {
+    swal.fire({
       icon: 'success',
       title: 'Copied',
       text: 'your secret code was succesfully copied',
@@ -161,7 +162,7 @@ export default function GAuthForm({GAuth}) {
                 <div className="indicator text-center">
                   <CopyToClipboard
                     text={QRCode.gAuthSecret}
-                    onCopy={copyQR}
+                    onCopy={copySecret}
                   >
                     <p style={{ lineBreak: "anywhere", lineHeight: "initial", cursor: 'pointer' }}>
                       {QRCode.gAuthSecret}
