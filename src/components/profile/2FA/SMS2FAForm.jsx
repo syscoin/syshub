@@ -5,10 +5,9 @@ import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
 
-
-import {useUser} from "../../../context/user-context";
-import {isoArray} from "../../../utils/isoCodes";
-import {phoneValidation} from "../../../utils/phoneUtil";
+import { useUser } from "../../../context/user-context";
+import { isoArray } from "../../../utils/isoCodes";
+import { phoneValidation } from "../../../utils/phoneUtil";
 import swal from "sweetalert2";
 
 const PNF = PhoneNumberFormat;
@@ -22,8 +21,8 @@ const schema2 = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-export default function SMS2FAForm({SMSAuth}) {
-  const {firebase, logoutUser, updateCurrentActionsUser} = useUser();
+export default function SMS2FAForm({ SMSAuth }) {
+  const { firebase, logoutUser, updateCurrentActionsUser } = useUser();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isoCode, setIsoCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -40,7 +39,9 @@ export default function SMS2FAForm({SMSAuth}) {
     mode: "onSubmit",
     resolver: yupResolver(schema2),
   });
-  const isoOrdened = isoArray.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLocaleLowerCase()));
+  const isoOrdened = isoArray.sort((a, b) =>
+    a.name.toLowerCase().localeCompare(b.name.toLocaleLowerCase())
+  );
 
   useEffect(() => {
     window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
@@ -75,27 +76,30 @@ export default function SMS2FAForm({SMSAuth}) {
     }
   };
 
-  const auth = async ({phoneCode}) => {
-    let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode)
-    console.log(credentials)
-    await firebase.updatePhoneCredentials(credentials).then(async () => {
-      let currentUserDataUpdate = {
-        sms: true,
-        twoFa: true
-      }
-      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-        throw err
+  const auth = async ({ phoneCode }) => {
+    let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode);
+    console.log(credentials);
+    await firebase
+      .updatePhoneCredentials(credentials)
+      .then(async () => {
+        let currentUserDataUpdate = {
+          sms: true,
+          twoFa: true,
+        };
+        await updateCurrentActionsUser(currentUserDataUpdate).catch((err) => {
+          throw err;
+        });
+        swal.fire({
+          icon: "success",
+          title: "Vefify sms",
+          text: "your account is verifed",
+          timer: 2000,
+        });
+        await logoutUser();
       })
-      swal.fire({
-        icon: 'success',
-        title: 'Vefify sms',
-        text: 'your account is verifed',
-        timer: 2000
-      })
-      await logoutUser();
-    }).catch(err => {
-      throw err
-    })
+      .catch((err) => {
+        throw err;
+      });
     // SMSAuth({phoneNumber, ...data});
   };
 

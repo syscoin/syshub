@@ -1,90 +1,94 @@
-import React, {useState, useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
-import {yupResolver} from "@hookform/resolvers";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-import swal from 'sweetalert2';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {getAuthQrCode, verifyAuthCode} from "../../../utils/twoFaAuthentication";
-import {useUser} from "../../../context/user-context";
-import {encryptAes} from "../../../utils/encryption";
+import swal from "sweetalert2";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import {
+  getAuthQrCode,
+  verifyAuthCode,
+} from "../../../utils/twoFaAuthentication";
+import { useUser } from "../../../context/user-context";
+import { encryptAes } from "../../../utils/encryption";
 
 const schema = yup.object().shape({
-  verificationCode: yup.string()
+  verificationCode: yup
+    .string()
     .required("The verification code is required")
     .matches(/^[0-9]+$/, "Must be only digits")
-    .min(6, 'Must be 6 digits')
-    .max(6, 'Must be 6 digits')
+    .min(6, "Must be 6 digits")
+    .max(6, "Must be 6 digits"),
 });
 
-export default function GAuthForm({GAuth}) {
-  const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
+export default function GAuthForm({ GAuth }) {
+  const { firebase, user, logoutUser, updateCurrentActionsUser } = useUser();
   const [QRCode, setQRCode] = useState(null);
 
-  const {register, handleSubmit, errors} = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode(user.data.email);
-    setQRCode({secret, gAuthSecret, qrCodeURL});
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
-      size: 'invisible',
+    const { secret, gAuthSecret, qrCodeURL } = getAuthQrCode(user.data.email);
+    setQRCode({ secret, gAuthSecret, qrCodeURL });
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+      size: "invisible",
       callback: (resp) => {
-        console.log(resp)
+        console.log(resp);
       },
       error: (err) => {
-        console.log(err)
-      }
-    })
+        console.log(err);
+      },
+    });
     window.recaptchaVerifier.render();
-  }, [])
+  }, []);
 
-  const verifyCode = async ({verificationCode}) => {
-    let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode)
+  const verifyCode = async ({ verificationCode }) => {
+    let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
-      let gAuthSecretEncrypt = encryptAes(QRCode.gAuthSecret)
+      let gAuthSecretEncrypt = encryptAes(QRCode.gAuthSecret);
       let changeUserData = {
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,
-        twoFa: true
-      }
-      await updateCurrentActionsUser(changeUserData).catch(err => {
-        throw err
-      })
+        twoFa: true,
+      };
+      await updateCurrentActionsUser(changeUserData).catch((err) => {
+        throw err;
+      });
       swal.fire({
-        icon: 'success',
-        title: 'Vefify',
-        text: 'your account is verifed',
-        timer: 2000
-      })
-      await logoutUser()
+        icon: "success",
+        title: "Vefify",
+        text: "your account is verifed",
+        timer: 2000,
+      });
+      await logoutUser();
     } else {
-      console.log('es falso')
+      console.log("es falso");
     }
-  }
+  };
 
   const copySecret = () => {
     swal.fire({
-      icon: 'success',
-      title: 'Copied',
-      text: 'your secret code was succesfully copied',
+      icon: "success",
+      title: "Copied",
+      text: "your secret code was succesfully copied",
       timer: 2000,
-      showConfirmButton: false
-    })
-  }
+      showConfirmButton: false,
+    });
+  };
 
   return (
     <>
       <h3>Google Authenticator</h3>
-      <div id="recaptcha" style={{display: 'inline-block'}}/>
+      <div id="recaptcha" style={{ display: "inline-block" }} />
       {QRCode && (
         <>
           <div className="article">
             <div className="cols-top cols">
               <div className="col col--size6">
-                <img src={QRCode.qrCodeURL} alt=""/>
+                <img src={QRCode.qrCodeURL} alt="" />
               </div>
               <div className="col col--size6">
                 <ol>
@@ -94,7 +98,11 @@ export default function GAuthForm({GAuth}) {
                       href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{marginRight: '10px', marginBottom: '10px', display: 'inline-block'}}
+                      style={{
+                        marginRight: "10px",
+                        marginBottom: "10px",
+                        display: "inline-block",
+                      }}
                     >
                       <img
                         width={113}
@@ -109,7 +117,11 @@ export default function GAuthForm({GAuth}) {
                       href="https://itunes.apple.com/es/app/google-authenticator/id388497605"
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{marginRight: '10px', marginBottom: '10px', display: 'inline-block'}}
+                      style={{
+                        marginRight: "10px",
+                        marginBottom: "10px",
+                        display: "inline-block",
+                      }}
                     >
                       <img
                         width={100}
@@ -137,9 +149,9 @@ export default function GAuthForm({GAuth}) {
                       <ErrorMessage
                         errors={errors}
                         name="verificationCode"
-                        render={({message}) => (
+                        render={({ message }) => (
                           <small>
-                            <p style={{lineHeight: "1.5"}}>{message}</p>
+                            <p style={{ lineHeight: "1.5" }}>{message}</p>
                           </small>
                         )}
                       />
@@ -154,7 +166,6 @@ export default function GAuthForm({GAuth}) {
                     </button>
                   </form>
                 </div>
-
               </div>
             </div>
             <div className="input-form">
@@ -168,7 +179,13 @@ export default function GAuthForm({GAuth}) {
                     text={QRCode.gAuthSecret}
                     onCopy={copySecret}
                   >
-                    <p style={{ lineBreak: "anywhere", lineHeight: "initial", cursor: 'pointer' }}>
+                    <p
+                      style={{
+                        lineBreak: "anywhere",
+                        lineHeight: "initial",
+                        cursor: "pointer",
+                      }}
+                    >
                       {QRCode.gAuthSecret}
                     </p>
                   </CopyToClipboard>
@@ -177,8 +194,7 @@ export default function GAuthForm({GAuth}) {
             </div>
           </div>
         </>
-      )
-      }
+      )}
     </>
   );
 }
