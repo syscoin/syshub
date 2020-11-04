@@ -4,8 +4,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import swal from 'sweetalert2';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {getAuthQrCode, verifyAuthCode} from "../../../utils/twoFaAuthentication";
 import {useUser} from "../../../context/user-context";
 import {encryptAes} from "../../../utils/encryption";
@@ -19,7 +18,7 @@ const schema = yup.object().shape({
 });
 
 export default function GAuthForm({GAuth}) {
-  const {firebase, user, updateCurrentActionsUser} = useUser();
+  const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
   const {register, handleSubmit, errors} = useForm({
@@ -54,7 +53,13 @@ export default function GAuthForm({GAuth}) {
       await updateCurrentActionsUser(changeUserData).catch(err => {
         throw err
       })
-      swal.fire()
+      swal.fire({
+        icon: 'success',
+        title: 'Vefify',
+        text: 'your account is verifed',
+        timer: 2000
+      })
+      await logoutUser()
     } else {
       console.log('es falso')
     }
@@ -150,7 +155,6 @@ export default function GAuthForm({GAuth}) {
                   </form>
                 </div>
 
-                </div>
               </div>
             </div>
             <div className="input-form">
@@ -171,8 +175,9 @@ export default function GAuthForm({GAuth}) {
                 </div>
               </div>
             </div>
-          </>
-        )
+          </div>
+        </>
+      )
       }
     </>
   );

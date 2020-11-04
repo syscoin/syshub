@@ -42,7 +42,8 @@ export default class Firebase {
 
   getPhoneAuthProviderID = () => this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID;
 
-  removePhoneNumber = () => this.auth.currentUser.unlink(`${this.getPhoneAuthProviderID}`)
+  removePhoneNumber = () => this.auth.currentUser.unlink(this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID)
+
 
   sendSMSToPhone = async (phoneNumber, appVerifier) => {
     const provider = this.newPhoneAuthProvider();
