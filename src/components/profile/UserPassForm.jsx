@@ -8,11 +8,11 @@ import Swal from "sweetalert2";
 import { useUser } from '../../context/user-context';
 
 const schema = yup.object().shape({
-  oldPassword: yup.string().required(),
+  oldPassword: yup.string().required('Old password is required'),
   newPassword: yup.string()
     .matches(/^(?=.{8,}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?\W).*$/,'Must include lower, upper, number, special characters and a min length of 8')
     .required(),
-  confirmPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords does not match').required()
+  confirmPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords does not match').required('You have to confirm your password')
 });
 
 export default function UserPassForm() {

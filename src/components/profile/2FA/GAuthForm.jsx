@@ -46,6 +46,13 @@ export default function GAuthForm({ GAuth }) {
   }, []);
 
   const verifyCode = async ({ verificationCode }) => {
+    swal.fire({
+      title: 'Verifying',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
       let gAuthSecretEncrypt = encryptAes(QRCode.gAuthSecret);
@@ -53,19 +60,25 @@ export default function GAuthForm({ GAuth }) {
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,
         twoFa: true,
+        sms: false
       };
       await updateCurrentActionsUser(changeUserData).catch((err) => {
         throw err;
       });
-      swal.fire({
+      await swal.fire({
         icon: "success",
-        title: "Vefify",
-        text: "your account is verifed",
+        title: "Google Authenticator it's activated",
+        text: "Please log in again",
         timer: 2000,
+        showConfirmButton: false
       });
       await logoutUser();
     } else {
       console.log("es falso");
+      swal.fire({
+        icon: "error",
+        title: "Invalid code",
+      });
     }
   };
 
@@ -86,8 +99,8 @@ export default function GAuthForm({ GAuth }) {
       {QRCode && (
         <>
           <div className="article">
-            <div className="cols-top cols">
-              <div className="col col--size6">
+            <div className="input-form cols-top cols">
+              <div className="form-group col col--size6">
                 <img src={QRCode.qrCodeURL} alt="" />
               </div>
               <div className="col col--size6">
@@ -158,7 +171,7 @@ export default function GAuthForm({ GAuth }) {
                     </div>
 
                     <button
-                      className="btn btn--blue"
+                      className="btn btn--blue text-center"
                       type="submit"
                       onClick={handleSubmit(verifyCode)}
                     >
