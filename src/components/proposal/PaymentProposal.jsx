@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
-import { yupResolver } from '@hookform/resolvers';
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from '@hookform/error-message';
+import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
+import ProposalPaymentDates from "./ProposalPaymentDates";
+import {getInfo} from "../../utils/request";
 
 const schema = yup.object().shape({
   paymentNumber: yup.number()
@@ -21,13 +23,26 @@ const schema = yup.object().shape({
     })
 });
 
-export default function PaymentProposal({ onNext, onBack }) {
-
-  const { register, watch, handleSubmit, errors } = useForm({
+const PaymentProposal = ({onNext, onBack}) => {
+  const [chainData, setChainData] = useState({});
+  const {register, watch, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema)
   });
-  const watchedAmount = watch('paymentAmount')
+
+  const watchedAmount = watch('paymentAmount');
+  const watchNPayment = watch('paymentNumber');
+
+  useEffect(() => {
+    const getChainInfoData = async () => {
+      let {data} = await getInfo().catch(err => {
+        throw err
+      })
+      console.log(data)
+      setChainData(data)
+    }
+    getChainInfoData()
+  }, [])
 
   return (
     <form className="input-form" onSubmit={handleSubmit(onNext)}>
@@ -43,7 +58,7 @@ export default function PaymentProposal({ onNext, onBack }) {
         <ErrorMessage
           errors={errors}
           name="paymentNumber"
-          render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+          render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
         />
       </div>
       <div className="form-group">
@@ -55,12 +70,12 @@ export default function PaymentProposal({ onNext, onBack }) {
           name="paymentAmount"
           className="styled"
         />
-        <small><p style={{lineHeight:'1.5'}}>{watchedAmount} SYS</p></small>
+        <small><p style={{lineHeight: '1.5'}}>{watchedAmount} SYS</p></small>
         <ErrorMessage
-            errors={errors}
-            name="paymentAmount"
-            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-          />
+          errors={errors}
+          name="paymentAmount"
+          render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
+        />
       </div>
       <div className="form-group">
         <label htmlFor="paymentAddress">Payment address</label>
@@ -72,11 +87,12 @@ export default function PaymentProposal({ onNext, onBack }) {
           ref={register}
         />
         <ErrorMessage
-            errors={errors}
-            name="paymentAddress"
-            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-          />
+          errors={errors}
+          name="paymentAddress"
+          render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
+        />
       </div>
+      {/*<ProposalPaymentDates nPayment={watchNPayment} start_epoch={chainData.start_epoch}/>*/}
       <div className="form-actions-spaced">
         <button className="btn btn--blue-border" type="button" onClick={onBack}>Back</button>
         <button className="btn btn--blue" type="submit">Next</button>
@@ -84,3 +100,5 @@ export default function PaymentProposal({ onNext, onBack }) {
     </form>
   )
 }
+
+export default PaymentProposal;
