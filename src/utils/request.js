@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URI = 'http://localhost:3000'
-const API_URI = 'http://198.211.117.144:3000'
+const API_URI = 'http://localhost:3000'
+// const API_URI = 'http://198.211.117.144:3000'
 // const API_URI = process.env.REACT_APP_SYS_API_URI
 
 /** MasterNodes **/

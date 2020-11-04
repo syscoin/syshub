@@ -32,6 +32,7 @@
     "int64-buffer": "^1.0.0",
     "jwt-decode": "^3.0.0",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
     "react-bootstrap-table": "^4.3.1",

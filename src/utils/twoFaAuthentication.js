@@ -12,4 +12,4 @@ export const getAuthQrCode = email => {
 }
 export const generateToken = secret => speakeasy.totp({secret: secret, encoding: ['base32']});
 
-export const verifyAuthCode = (secret, token) => speakeasy.totp.verify({secret: secret, encoding: ['base32'], token});
+export const verifyAuthCode = (secret, token) => speakeasy.totp.verify({secret: secret, token});

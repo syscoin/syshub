@@ -55,6 +55,8 @@ export default class Firebase {
 
   verifyPhoneCode = (verificationId, smsCode) => this.firebaseApp.auth.PhoneAuthProvider.credential(verificationId, smsCode);
 
+  updatePhoneCredentials = (credentials) => new Promise(async (resolve, reject) => await this.auth.currentUser.updatePhoneNumber(credentials).then((res => resolve(res))).catch(err => reject(err)));
+
   changePassword = async (oldPwd, password) => {
     const currentUser = this.auth.currentUser;
 

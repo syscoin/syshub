@@ -13,25 +13,54 @@ function UserTwoFA({authData, onTwoFAChange}) {
   const {user, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
-
+  console.log(user)
   const enableSMS = async (data) => {
-    // updateCurrentActionsUser()
+    let currentUserDataUpdate = {
+      gAuth: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
   }
 
-  const disableSMS = () => {
+  const disableSMS = async () => {
     console.log('disable SMS')
+    let currentUserDataUpdate = {
+      gAuth: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
   }
 
-  const enableGAuth = (data) => {
+  const enableGAuth = async (data) => {
     console.log('enable GAuth');
+    let currentUserDataUpdate = {
+      gAuth: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
   }
 
-  const disableGAuth = () => {
+  const disableGAuth = async () => {
     console.log('disable GAuth')
-
+    let currentUserDataUpdate = {
+      gAuth: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
   }
 
-  const removeSecret = () => {
+  const removeSecret = async () => {
+    let currentUserDataUpdate = {
+      gAuthSecret: null,
+      gAuth: false
+    }
+    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+      console.log(err)
+    })
 
   }
 
@@ -89,7 +118,7 @@ function UserTwoFA({authData, onTwoFAChange}) {
         {
           authData.gAuth && (
             <div className="btn-group">
-              <button className="btn btn--blue-border">
+              <button className="btn btn--blue-border" onClick={removeSecret}>
                 Remove secret
               </button>
               <button className="btn btn--blue-border" onClick={disableGAuth}>

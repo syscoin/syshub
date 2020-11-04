@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react';
+import React, {useState, useEffect, useMemo, useContext} from 'react';
 import jwtDecode from 'jwt-decode';
 
-import { getToken, setToken, deleteToken } from '../utils/auth-token';
+import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import { register, updateUser, updateActionsUser, deleteUser } from '../utils/request';
-import { useHistory } from 'react-router';
+import {register, updateUser, updateActionsUser, deleteUser} from '../utils/request';
+import {useHistory} from 'react-router';
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
@@ -126,9 +126,9 @@ export function UserProvider(props) {
     }
   }
 
-  const updateCurrentActionsUser = async (uid, data) => {
+  const updateCurrentActionsUser = async (data) => {
     try {
-      await updateActionsUser(getToken().token, uid, data).catch(err => {
+      return await updateActionsUser(getToken().token, user.data.user_id, {data: data}).catch(err => {
         throw err
       })
     } catch (err) {
