@@ -197,6 +197,21 @@ ul.pagination
                     font-size: 35px;
                 }
             }
+            
+            .not-passed
+            {
+                line-height: 1;
+                font-size:20px;
+                font-weight: 500;
+                color:white;
+                text-transform: uppercase;
+
+                i 
+                {
+                    color:$vote-red;
+                    font-size: 35px;
+                }
+            }
         }
 
         .description
