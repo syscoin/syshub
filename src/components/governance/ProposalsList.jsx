@@ -15,10 +15,13 @@ function ProposalsList(props) {
     try {
       const response = await list();
       if (response.data) {
-        console.log(response.data);
-        const proposalRes = Object.values(response.data);
-
-        setProposals(proposalRes);
+        let govdata = response.data;
+        Object.keys(govdata).forEach(function(key) {
+          if(govdata[key].ObectType===2) {
+              delete govdata[key];
+          }
+        });
+        setProposals(govdata);
       }
     } catch (error) {
       console.log(error);
@@ -39,7 +42,7 @@ function ProposalsList(props) {
       {
         proposals.length > 0 && <div className="proposals">
           {proposals.map(proposal => {
-            return <ProposalCard proposal={proposal} key={proposal} />
+            return <ProposalCard proposal={proposal} key={proposal.Hash} />
           })}
         </div>
       }

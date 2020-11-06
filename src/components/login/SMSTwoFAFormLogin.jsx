@@ -1,30 +1,18 @@
 import React from "react";
-import {ErrorMessage} from "@hookform/error-message";
-import * as yup from "yup";
 import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
-import {useUser} from "../../../context/user-context";
-import {useHistory} from 'react-router';
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-const SMSTwoFAFormLogin = ({userSignInSms}) => {
-  const history = useHistory();
-  const {setUserDataLogin} = useUser();
+const SMSTwoFAFormLogin = ({userSignInSms, closeModal}) => {
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
-
-  const verifyPhone = async ({phoneCode}) => {
-    let {user} = await userSignInSms.confirm(phoneCode).catch(err => {
-      throw err
-    })
-    setUserDataLogin(user)
-    history.push('/governance');
-  }
 
   return (
     <div className="input-form">
@@ -53,7 +41,7 @@ const SMSTwoFAFormLogin = ({userSignInSms}) => {
 
         <button
           className="btn btn--blue btn-center"
-          onClick={handleSubmit(verifyPhone)}>
+          onClick={handleSubmit(userSignInSms)}>
           Verify
         </button>
       </form>

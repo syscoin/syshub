@@ -15,30 +15,11 @@ const LoginForm = (props) => {
   const {register, handleSubmit, errors} = useForm({
     resolver: yupResolver(schema)
   });
+
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha')
-    window.recaptchaVerifier.render()
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha');
+    window.recaptchaVerifier.render();
   }, [])
-
-
-  const sendSms = async () => {
-    let a = await firebase.sendSMSToPhone('+584146132907', window.recaptchaVerifier).catch(err => {
-      throw err
-    })
-    console.log(a)
-  }
-
-  const loginPhone = async () => {
-    let r = await loginWithPhoneNumber('+584146132907', window.recaptchaVerifier).catch(err => {
-      throw err
-    })
-    console.log(r)
-    let x = await r.confirm('123456').catch(err => {
-      throw err
-    })
-    /** aqui obtienes los datos para el login **/
-    console.log(x)
-  }
 
   return (
     <>
@@ -66,12 +47,11 @@ const LoginForm = (props) => {
             className="btn btn--blue"
             type="submit"
             disabled={props.submitting}
-          >Login
+          >
+            Login
           </button>
         </div>
       </form>
-      {/*<button className="btn btn--blue" type={'button'} onClick={sendSms}> send Sms</button>*/}
-      {/*<button className="btn btn--blue" type={'button'} onClick={loginPhone}> login Phone</button>*/}
     </>
   )
 }

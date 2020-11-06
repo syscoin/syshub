@@ -9,25 +9,44 @@ import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import SignupForm from "../components/signup/SignupForm";
+import swal from "sweetalert2";
 
 function Signup(props) {
   const history = useHistory();
   const { signupUser } = useUser();
 
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
 
   const registerToApp = async (registerData) => {
+    swal.fire({
+      title: 'Submitting',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
     setSubmitting(true);
-    if (!error) setError(null);
-
-    const response = await signupUser(registerData);
-    if (response.error) {
-      setError(response.error);
-      return setSubmitting(false);
+    
+    try {
+      await signupUser(registerData).catch(err => {
+        throw err;
+      });
+      swal.fire({
+        icon: "success",
+        title: "Your account was created",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      history.push('/profile');
+    } catch (error) {
+      setSubmitting(false);
+      swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message
+      });
     }
 
-    history.push('/profile');
   }
 
   useEffect(() => {
@@ -54,9 +73,7 @@ function Signup(props) {
                   <div className="col col--size-12">
                     <div className="article__content article__content--pull-left text-center">
                       <Title heading={t("signup.data.heading")}/>
-                      {error && (
-                        <p>{error.message}</p>
-                      )}
+                      
                       <SignupForm onSignup={registerToApp} submitting={submitting}/>
 
                       <div className="input-cont">

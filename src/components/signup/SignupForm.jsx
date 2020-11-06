@@ -6,7 +6,7 @@ import * as yup from "yup";
 import {useUser} from "../../context/user-context";
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  email: yup.string().email().typeError('Must be a valid email').required(),
   password: yup.string()
     .matches(/^(?=.{8,}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?\W).*$/, 'Must include lower, upper, number, special characters and a min length of 8')
     .required()

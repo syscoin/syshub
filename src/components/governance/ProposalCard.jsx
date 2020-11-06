@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 export default function ProposalCard({ proposal }) {
 
   useEffect(() => {
-    console.log(proposal);
+    // console.log(proposal);
     return () => {
       
     }

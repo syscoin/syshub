@@ -9,8 +9,8 @@ import {
   getAuthQrCode,
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
-import {useUser} from "../../../context/user-context";
-import {decryptAes, encryptAes} from "../../../utils/encryption";
+import { useUser } from "../../../context/user-context";
+import { encryptAes } from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
@@ -52,7 +52,7 @@ export default function GAuthForm() {
       willOpen: () => {
         swal.showLoading()
       }
-    })
+    });
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
       let gAuthSecretEncrypt = encryptAes(QRCode.secret);
@@ -100,7 +100,15 @@ export default function GAuthForm() {
           <div className="article">
             <div className="input-form cols-top cols">
               <div className="form-group col col--size6">
-                <img src={QRCode.qrCodeURL} alt=""/>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <img src={QRCode.qrCodeURL} alt="QR Code"/>
+                </div>
               </div>
               <div className="col col--size6">
                 <ol>
@@ -168,14 +176,15 @@ export default function GAuthForm() {
                         )}
                       />
                     </div>
-
-                    <button
-                      className="btn btn--blue text-center"
-                      type="submit"
-                      onClick={handleSubmit(verifyCode)}
-                    >
-                      Verify
-                    </button>
+                    <div className="text-center">
+                      <button
+                        className="btn btn--blue text-center"
+                        type="submit"
+                        onClick={handleSubmit(verifyCode)}
+                      >
+                        Verify
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>

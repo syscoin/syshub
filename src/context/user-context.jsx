@@ -100,15 +100,15 @@ export function UserProvider(props) {
 
       return {message: 'Ok'};
     } catch (err) {
-      new err
+      new Error(err)
     }
   }
 
   async function logoutUser() {
     setUser(null);
     deleteToken();
-    await firebase.signOut();
     history.push('/login');
+    await firebase.signOut();
     history.go(0);
   }
 
