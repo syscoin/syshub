@@ -1,34 +1,87 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-export default function ProposalCard({ proposal }) {
-
+export default function ProposalCard({ proposal, enabled }) {
   useEffect(() => {
     // console.log(proposal);
-    return () => {
-      
+    return () => {};
+  }, []);
+
+  const comaToNum = (str) => {
+    return Number(str.replace(",", ""));
+  }
+
+  function proposalDate(creationTime) {
+    var unixTimestamp = creationTime;
+    var milliseconds = unixTimestamp * 1000;
+    const dateObject = new Date(milliseconds);
+    const humanDateFormat =
+      dateObject.getDate() +
+      "-" +
+      (dateObject.getMonth() + 1) +
+      "-" +
+      dateObject.getFullYear();
+
+    return humanDateFormat;
+  }
+
+  function proposalPassing(yesCount, noCount, enabled) {
+    console.log(enabled)
+    if (((yesCount - noCount) / enabled) * 100 > 10) {
+      return (
+        <div className="passed">
+          <i className="demo-icon icon-ok"></i> Passed
+        </div>
+      )
+    } else {
+      return (
+        <div className="not-passed">
+          <i className="demo-icon icon-cancel-1"></i> Not passed
+        </div>
+      )
     }
-  }, [])
+  }
 
   return (
     <div className="proposal">
       <div className="vote-count">
-        <span className="yes">85</span>
-        <span className="no">23</span>
-        <div className="passed"><i className="demo-icon icon-ok"></i> Passed</div>
+        <span className="yes">{proposal.YesCount}</span>
+        <span className="no">{proposal.NoCount}</span>
+        {proposalPassing(proposal.YesCount, proposal.NoCount, comaToNum(enabled))}
+        
       </div>
       <div className="description">
-        <div className="date">12th May 2020</div>
-        Syscoin Foundation June Proposal<br />
+        <div className="date">{proposalDate(proposal.CreationTime)}</div>
+        {proposal.name}
+        <br />
         <div className="budget">
-          480.000 SYS<br />
-          240.000 SYS /month (2 months)
+          {`${parseFloat(proposal.payment_amount * proposal.nPayment)} SYS`} <br />
+          {`${parseFloat(proposal.payment_amount)} SYS/Month`} <br />
+          {`${proposal.nPayment} Payment(s)`}
         </div>
       </div>
       <div className="actions">
-        <a href="#" className="vote" title="Vote yes"><i className="icon-up-open"></i></a>
-        <a href="#" className="vote" title="More info"><i className="icon-info"></i></a>
-        <a href="#" className="vote" title="Vote no"><i className="icon-down-open"></i></a>
+        <button
+          style={{ border: "none", outline: "none" }}
+          className="vote"
+          title="Vote yes"
+        >
+          <i className="icon-up-open"></i>
+        </button>
+        <button
+          style={{ border: "none", outline: "none" }}
+          className="vote"
+          title="More info"
+        >
+          <i className="icon-info"></i>
+        </button>
+        <button
+          style={{ border: "none", outline: "none" }}
+          className="vote"
+          title="Vote no"
+        >
+          <i className="icon-down-open"></i>
+        </button>
       </div>
     </div>
-  )
+  );
 }

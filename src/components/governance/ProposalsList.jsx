@@ -21,6 +21,7 @@ function ProposalsList(props) {
               delete govdata[key];
           }
         });
+        console.log(govdata)
         setProposals(govdata);
       }
     } catch (error) {
@@ -42,7 +43,7 @@ function ProposalsList(props) {
       {
         proposals.length > 0 && <div className="proposals">
           {proposals.map(proposal => {
-            return <ProposalCard proposal={proposal} key={proposal.Hash} />
+            return <ProposalCard proposal={proposal} key={proposal.Hash} enabled={props.statsData.enabled} />
           })}
         </div>
       }

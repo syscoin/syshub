@@ -123,7 +123,7 @@ export class Governance extends Component {
                                         <div className="cols">
                                             <div className="col col--size12">
                                                 <div className="article__content">
-                                                    <ProposalsList />
+                                                    <ProposalsList statsData={this.state.statsData.stats.mn_stats} />
                                                 </div>
                                             </div>
                                         </div>
