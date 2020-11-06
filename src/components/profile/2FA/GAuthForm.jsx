@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { yupResolver } from "@hookform/resolvers";
+import React, {useState, useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import swal from "sweetalert2";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 import {
   getAuthQrCode,
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
-import { useUser } from "../../../context/user-context";
-import { encryptAes } from "../../../utils/encryption";
+import {useUser} from "../../../context/user-context";
+import {decryptAes, encryptAes} from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
@@ -22,17 +22,17 @@ const schema = yup.object().shape({
 });
 
 export default function GAuthForm() {
-  const { firebase, user, logoutUser, updateCurrentActionsUser } = useUser();
+  const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
-  const { register, handleSubmit, errors } = useForm({
+  const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    const { secret, gAuthSecret, qrCodeURL } = getAuthQrCode(user.data.email);
-    setQRCode({ secret, gAuthSecret, qrCodeURL });
+    const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode(user.data.email);
+    setQRCode({secret, gAuthSecret, qrCodeURL});
     window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
       size: "invisible",
       callback: (resp) => {
@@ -45,7 +45,7 @@ export default function GAuthForm() {
     window.recaptchaVerifier.render();
   }, []);
 
-  const verifyCode = async ({ verificationCode }) => {
+  const verifyCode = async ({verificationCode}) => {
     swal.fire({
       title: 'Verifying',
       showConfirmButton: false,
@@ -55,7 +55,7 @@ export default function GAuthForm() {
     })
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
-      let gAuthSecretEncrypt = encryptAes(QRCode.gAuthSecret);
+      let gAuthSecretEncrypt = encryptAes(QRCode.secret);
       let changeUserData = {
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,
@@ -94,13 +94,13 @@ export default function GAuthForm() {
   return (
     <>
       <h3>Google Authenticator</h3>
-      <div id="recaptcha" style={{ display: "inline-block" }} />
+      <div id="recaptcha" style={{display: "inline-block"}}/>
       {QRCode && (
         <>
           <div className="article">
             <div className="input-form cols-top cols">
               <div className="form-group col col--size6">
-                <img src={QRCode.qrCodeURL} alt="" />
+                <img src={QRCode.qrCodeURL} alt=""/>
               </div>
               <div className="col col--size6">
                 <ol>
@@ -161,9 +161,9 @@ export default function GAuthForm() {
                       <ErrorMessage
                         errors={errors}
                         name="verificationCode"
-                        render={({ message }) => (
+                        render={({message}) => (
                           <small>
-                            <p style={{ lineHeight: "1.5" }}>{message}</p>
+                            <p style={{lineHeight: "1.5"}}>{message}</p>
                           </small>
                         )}
                       />

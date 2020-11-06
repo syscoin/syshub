@@ -13,3 +13,13 @@ export const getAuthQrCode = email => {
 export const generateToken = secret => speakeasy.totp({secret: secret, encoding: ['base32']});
 
 export const verifyAuthCode = (secret, token) => speakeasy.totp.verify({secret: secret, token});
+
+// export const verifyAuthCode = (secret, token) => {
+//
+//   return speakeasy.time.verify({
+//     secret: secret,
+//     token: token,
+//     encoding: ['base32'],
+//     step: 600
+//   })
+// }

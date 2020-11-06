@@ -52,7 +52,7 @@ export function UserProvider(props) {
     console.log(user);
   }, [user]);
 
-  async function signupUser(registerData) {
+  const signupUser = async (registerData) => {
     try {
       const response = await firebase.register(registerData);
       await register({uid: response.user.uid}).catch(err => {
@@ -70,22 +70,17 @@ export function UserProvider(props) {
 
   }
 
-  async function loginUser(loginData) {
-    try {
-      const response = await firebase.loginWithEmailAndPassword(loginData);
-
-      const decoded = jwtDecode(response.user.ya);
-      setToken(response.user.ya);
-      setUser({data: decoded, token: getToken().token});
-
-      return {message: 'Ok'};
-    } catch (error) {
-      throw error;
-    }
+  const loginUser = async (loginData) => {
+    return new Promise((resolve, reject) => {
+      firebase.loginWithEmailAndPassword(loginData).then(({user}) => {
+        resolve(user)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 
   const loginWithPhoneNumber = (phone, appVerifier) => {
-    console.log(appVerifier)
     return new Promise((resolve, reject) => {
       firebase.loginWithPhone(phone, appVerifier)
         .then(resp => {
@@ -95,6 +90,18 @@ export function UserProvider(props) {
           reject(err)
         })
     })
+  }
+
+  const setUserDataLogin = ({ya}) => {
+    try {
+      const decoded = jwtDecode(ya);
+      setToken(ya);
+      setUser({data: decoded, token: getToken().token});
+
+      return {message: 'Ok'};
+    } catch (err) {
+      new err
+    }
   }
 
   async function logoutUser() {
@@ -152,6 +159,7 @@ export function UserProvider(props) {
       loadingUser,
       signupUser,
       loginUser,
+      setUserDataLogin,
       loginWithPhoneNumber,
       logoutUser,
       changePassword,
