@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function ProposalCard() {
+export default function ProposalCard({ proposal }) {
+
+  useEffect(() => {
+    console.log(proposal);
+    return () => {
+      
+    }
+  }, [])
+
   return (
     <div className="proposal">
       <div className="vote-count">

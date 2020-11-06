@@ -21,10 +21,9 @@ const schema2 = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-export default function SMS2FAForm({ SMSAuth, userPhone }) {
+export default function SMS2FAForm() {
   const { firebase, logoutUser, updateCurrentActionsUser } = useUser();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isoCode, setIsoCode] = useState("");
+
   const [codeSent, setCodeSent] = useState(false);
   const [verifyId, setVerifyId] = useState("");
   const { register, handleSubmit, errors } = useForm({
@@ -110,7 +109,8 @@ export default function SMS2FAForm({ SMSAuth, userPhone }) {
           timer: 2000,
           showConfirmButton: false
         });
-        await logoutUser();
+        
+        logoutUser();
       })
       .catch((err) => {
         throw err;
@@ -118,118 +118,112 @@ export default function SMS2FAForm({ SMSAuth, userPhone }) {
     // SMSAuth({phoneNumber, ...data});
   };
 
-  if (typeof userPhone === 'undefined') {
-    return (
-      <>
-        <h3>2FA SMS</h3>
   
-        <div className="input-form">
-          <form>
-            <div className="form-group">
-              <label htmlFor="areaCode">Country Code</label>
-              <select
-                className="styled"
-                name="areaCode"
-                id="areaCode"
-                ref={register}
-                defaultValue=""
-              >
-                <option value="" hidden>
-                  Select your country
+  return (
+    <>
+      <h3>2FA SMS</h3>
+
+      <div className="input-form">
+        <form>
+          <div className="form-group">
+            <label htmlFor="areaCode">Country Code</label>
+            <select
+              className="styled"
+              name="areaCode"
+              id="areaCode"
+              ref={register}
+              defaultValue=""
+            >
+              <option value="" hidden>
+                Select your country
+              </option>
+              {isoOrdened.map((iso, index) => (
+                <option key={index} value={iso.code}>
+                  {iso.name} ({iso.dial_code})
                 </option>
-                {isoOrdened.map((iso, index) => (
-                  <option key={index} value={iso.code}>
-                    {iso.name} ({iso.dial_code})
-                  </option>
-                ))}
-              </select>
-              <ErrorMessage
-                errors={errors}
-                name="areaCode"
-                render={({ message }) => (
-                  <small>
-                    <p style={{ lineHeight: "1.5" }}>{message}</p>
-                  </small>
-                )}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phoneNumber">Phone Number</label>
-              <input
-                className="styled"
-                name="phoneNumber"
-                type="tel"
-                id="phoneNumber"
-                ref={register}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="phoneNumber"
-                render={({ message }) => (
-                  <small>
-                    <p style={{ lineHeight: "1.5" }}>{message}</p>
-                  </small>
-                )}
-              />
-            </div>
-  
-            <div
-              id={"recaptcha"}
-              className="recaptcha"
-              style={{ display: "inline-block" }}
+              ))}
+            </select>
+            <ErrorMessage
+              errors={errors}
+              name="areaCode"
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
             />
-  
-            <button
-              className="btn btn--blue btn-center"
-              onClick={handleSubmit(sendSMS)}
-            >
-              Send SMS
-            </button>
-          </form>
-          <div className="form-group spacer line"></div>
-        </div>
-  
-        <div className="input-form">
-          <form>
-            <div className="form-group">
-              <label htmlFor="phoneCode">
-                Insert the code sent to your phone
-              </label>
-              <input
-                className="styled"
-                name="phoneCode"
-                type="text"
-                id="phoneCode"
-                ref={register2}
-                disabled={!codeSent}
-              />
-              <ErrorMessage
-                errors={errors2}
-                name="phoneCode"
-                render={({ message }) => (
-                  <small>
-                    <p style={{ lineHeight: "1.5" }}>{message}</p>
-                  </small>
-                )}
-              />
-            </div>
-  
-            <button
-              className="btn btn--blue btn-center"
+          </div>
+          <div className="form-group">
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input
+              className="styled"
+              name="phoneNumber"
+              type="tel"
+              id="phoneNumber"
+              ref={register}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="phoneNumber"
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
+            />
+          </div>
+
+          <div
+            id={"recaptcha"}
+            className="recaptcha"
+            style={{ display: "inline-block" }}
+          />
+
+          <button
+            className="btn btn--blue btn-center"
+            onClick={handleSubmit(sendSMS)}
+          >
+            Send SMS
+          </button>
+        </form>
+        <div className="form-group spacer line"></div>
+      </div>
+
+      <div className="input-form">
+        <form>
+          <div className="form-group">
+            <label htmlFor="phoneCode">
+              Insert the code sent to your phone
+            </label>
+            <input
+              className="styled"
+              name="phoneCode"
+              type="text"
+              id="phoneCode"
+              ref={register2}
               disabled={!codeSent}
-              onClick={handleSubmit2(auth)}
-            >
-              Verify
-            </button>
-          </form>
-        </div>
-      </>
-    );
-    
-  }
-  else {
-    return (
-      <p>{userPhone}</p>
-    )
-  }
+            />
+            <ErrorMessage
+              errors={errors2}
+              name="phoneCode"
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
+            />
+          </div>
+
+          <button
+            className="btn btn--blue btn-center"
+            disabled={!codeSent}
+            onClick={handleSubmit2(auth)}
+          >
+            Verify
+          </button>
+        </form>
+      </div>
+    </>
+  );
+  
 }

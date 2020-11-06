@@ -83,7 +83,7 @@ export default function UserInfo() {
             <UserTwoFA
               authData={userInfo.authData}
               onTwoFAChange={onTwoFAChange}
-              userPhone={userInfo.phoneNumber}
+              userPhone={userInfo.phoneNumber || false}
             />
             )
             : (

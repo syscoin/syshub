@@ -6,6 +6,7 @@ import {useUser} from "../../../context/user-context";
 import GAuthForm from './GAuthForm';
 import SMS2FAForm from './SMS2FAForm';
 import swal from 'sweetalert2'
+import PreviousPhoneForm from './PreviousPhoneForm';
 
 // import { updateUser } from "../../utils/request";
 
@@ -13,6 +14,7 @@ import swal from 'sweetalert2'
 function UserTwoFA({authData, onTwoFAChange , userPhone}) {
   const {user, firebase, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
+  const [openPrevPhone, setOpenPrevPhone] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
   console.log(user)
   const enableSMS = async (data) => {
@@ -101,10 +103,19 @@ function UserTwoFA({authData, onTwoFAChange , userPhone}) {
           )
         }
         {
-          !authData.sms && (
+          !authData.sms && !userPhone && (
             <div className="btn-group">
               <button className="btn btn--blue" onClick={() => setOpenSMS(true)}>
                 Enable
+              </button>
+            </div>
+          )
+        }
+        {
+          !authData.sms && userPhone && (
+            <div className="btn-group">
+              <button className="btn btn--blue" onClick={() => setOpenPrevPhone(true)}>
+                Enable phone
               </button>
             </div>
           )
@@ -158,13 +169,21 @@ function UserTwoFA({authData, onTwoFAChange , userPhone}) {
         open={openSMS}
         onClose={() => setOpenSMS(false)}
       >
-        <SMS2FAForm SMSAuth={enableSMS} userPhone={userPhone}  />
+        <SMS2FAForm />
       </CustomModal>
+
+      <CustomModal
+        open={openPrevPhone}
+        onClose={() => setOpenPrevPhone(false)}
+      >
+        <PreviousPhoneForm userPhone={userPhone} />
+      </CustomModal>
+
       <CustomModal
         open={openGAuth}
         onClose={() => setOpenGAuth(false)}
       >
-        <GAuthForm gAuth={enableGAuth}/>
+        <GAuthForm />
       </CustomModal>
     </div>
   )

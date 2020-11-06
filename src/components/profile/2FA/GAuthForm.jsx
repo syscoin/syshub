@@ -21,7 +21,7 @@ const schema = yup.object().shape({
     .max(6, "Must be 6 digits"),
 });
 
-export default function GAuthForm({ GAuth }) {
+export default function GAuthForm() {
   const { firebase, user, logoutUser, updateCurrentActionsUser } = useUser();
   const [QRCode, setQRCode] = useState(null);
 
@@ -72,9 +72,8 @@ export default function GAuthForm({ GAuth }) {
         timer: 2000,
         showConfirmButton: false
       });
-      await logoutUser();
+      logoutUser();
     } else {
-      console.log("es falso");
       swal.fire({
         icon: "error",
         title: "Invalid code",
