@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // const API_URI = 'http://localhost:3000'
-const API_URI = 'http://198.211.117.144:3000'
-// const API_URI = process.env.REACT_APP_SYS_API_URI
+// const API_URI = 'http://198.211.117.144:3000'
+const API_URI = process.env.REACT_APP_SYS_API_URI
 
 /** MasterNodes **/
 export const list = async () => {
@@ -182,7 +182,6 @@ export const voteProposal = async (data) => {
   }
 };
 
-
 export const getOneProposal = async (id) => {
   try {
     return await axios.get(`${API_URI}/proposal/${id}`, {
@@ -279,6 +278,17 @@ export const getUserInfo = async (token, id) => {
   }
 }
 
+export const get2faInfoUser = async (id) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/user/verify2fa/${id}`).then(({data}) => {
+      let {user} = data;
+      resolve(user)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 export const updateUser = async (token, id, data) => {
   return new Promise((resolve, reject) => {
     axios.put(`${API_URI}/user/${id}`, data, {
@@ -306,7 +316,6 @@ export const updateActionsUser = async (token, id, data) => {
     })
   })
 }
-
 
 export const deleteUser = async (token, id) => {
   return new Promise((resolve, reject) => {
