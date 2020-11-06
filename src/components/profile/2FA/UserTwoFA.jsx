@@ -10,7 +10,7 @@ import swal from 'sweetalert2'
 // import { updateUser } from "../../utils/request";
 
 
-function UserTwoFA({authData, onTwoFAChange}) {
+function UserTwoFA({authData, onTwoFAChange , userPhone}) {
   const {user, firebase, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
@@ -32,6 +32,8 @@ function UserTwoFA({authData, onTwoFAChange}) {
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
     })
+    await removePhoneNumberProvider();
+    await onTwoFAChange();
   }
 
   const enableGAuth = async (data) => {
@@ -51,7 +53,10 @@ function UserTwoFA({authData, onTwoFAChange}) {
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
-    })
+    });
+
+    await onTwoFAChange();
+
   }
 
   const removeSecret = async () => {
@@ -62,6 +67,8 @@ function UserTwoFA({authData, onTwoFAChange}) {
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
     })
+
+    await onTwoFAChange();
 
   }
   const removePhoneNumberProvider = async () => {
@@ -77,14 +84,14 @@ function UserTwoFA({authData, onTwoFAChange}) {
     })
     swal.fire({
       icon: 'success',
-      title: 'remove phoneNumber',
+      title: 'Your phone number was removed',
       timer: 2000
     })
   }
 
   return (
-    <>
-      <div className="form-group half">
+    <div className="cols-top cols">
+      <div className="form-group col col--size6">
         <label className="big">2FA SMS</label>
         {
           authData.sms ? (
@@ -108,9 +115,6 @@ function UserTwoFA({authData, onTwoFAChange}) {
               <button className="btn btn--blue-border" onClick={() => setOpenSMS(true)}>
                 Change phone
               </button>
-              <button className="btn btn--blue-border" onClick={removePhoneNumberProvider}>
-                Delete phone
-              </button>
               <button className="btn btn--blue-border" onClick={disableSMS}>
                 Disable
               </button>
@@ -118,7 +122,7 @@ function UserTwoFA({authData, onTwoFAChange}) {
           )
         }
       </div>
-      <div className="form-group half">
+      <div className="form-group col col--size6">
         <label className="big">Google Authenticator</label>
         {
           authData.gAuth ? (
@@ -154,7 +158,7 @@ function UserTwoFA({authData, onTwoFAChange}) {
         open={openSMS}
         onClose={() => setOpenSMS(false)}
       >
-        <SMS2FAForm SMSAuth={enableSMS}/>
+        <SMS2FAForm SMSAuth={enableSMS} userPhone={userPhone}  />
       </CustomModal>
       <CustomModal
         open={openGAuth}
@@ -162,7 +166,7 @@ function UserTwoFA({authData, onTwoFAChange}) {
       >
         <GAuthForm gAuth={enableGAuth}/>
       </CustomModal>
-    </>
+    </div>
   )
 }
 

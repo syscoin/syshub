@@ -80,10 +80,11 @@ export default function UserInfo() {
         <br/>
         {
           userInfo ? (
-              <UserTwoFA
-                authData={userInfo.authData}
-                onTwoFAChange={onTwoFAChange}
-              />
+            <UserTwoFA
+              authData={userInfo.authData}
+              onTwoFAChange={onTwoFAChange}
+              userPhone={userInfo.phoneNumber}
+            />
             )
             : (
               <p>Loading...</p>
