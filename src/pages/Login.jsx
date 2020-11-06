@@ -11,39 +11,41 @@ import LoginForm from "../components/login/LoginForm";
 import {Link, useHistory} from "react-router-dom";
 import {get2faInfoUser} from "../utils/request";
 import CustomModal from "../components/global/CustomModal";
-import SMS2FAForm from "../components/profile/2FA/SMS2FAForm";
-import GAuthForm from "../components/profile/2FA/GAuthForm";
+import SMSTwoFAFormLogin from "../components/profile/2FA/SMSTwoFAFormLogin";
+import {decryptAes} from "../utils/encryption";
+import {verifyAuthCode} from "../utils/twoFaAuthentication";
+import GAuthTwoFAFormLogin from "../components/profile/2FA/GAuthTwoFAFormLogin";
 
 
 function Login(props) {
   const history = useHistory();
-  const {firebase, loginUser} = useUser();
-  const [openSMS, setOpenSMS] = useState(false);
-  const [openGAuth, setOpenGAuth] = useState(false);
+  const {firebase, loginUser, loginWithPhoneNumber,setUserDataLogin} = useUser();
+  const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
+  const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [userSignInSms, setUserSignInSms] = useState({});
+  const [userSignInGAuth, setUserSignInGAuth] = useState("");
 
   const loginToApp = async (loginData) => {
     setSubmitting(true);
     if (!error) setError(null);
     try {
-      let {user} = await firebase.loginWithEmailAndPassword(loginData)
-      // await loginUser(loginData);
-      console.log(user)
+      let user = await loginUser(loginData);
       let user2fa = await get2faInfoUser(user.uid)
-      console.log(user2fa)
-      if (user2fa.twoFa === true) {
-        if (user2fa.sms === true) {
-          setOpenSMS(true)
-        }
-        if (user2fa.gAuth === true) {
-          setOpenGAuth(true)
-        }
+      if (user2fa.twoFa === true && user2fa.sms === true) {
+        let phoneProvider = await loginWithPhoneNumber(user.phoneNumber, window.recaptchaVerifier)
+        setUserSignInSms(phoneProvider)
+        setOpenSMS2Fa(true)
+      } else if (user2fa.twoFa === true && user2fa.gAuth === true) {
+        setUserSignInGAuth({...user, secret: user2fa.gAuthSecret})
+        setOpenGAuth2Fa(true)
       } else {
-        console.log('no 2fa')
+        setUserDataLogin(user)
+        history.push('/governance');
       }
-      // history.push('/governance');
-    } catch (error) {
+    } catch
+      (error) {
       setError(error);
       return setSubmitting(false);
     }
@@ -91,16 +93,14 @@ function Login(props) {
         </div>
       </main>
       <CustomModal
-        open={openSMS}
-        onClose={() => setOpenSMS(false)}
-      >
-        <SMS2FAForm/>
+        open={openSMS2Fa}
+        onClose={() => setOpenSMS2Fa(false)}>
+        <SMSTwoFAFormLogin userSignInSms={userSignInSms}/>
       </CustomModal>
       <CustomModal
-        open={openGAuth}
-        onClose={() => setOpenGAuth(false)}
-      >
-        <GAuthForm/>
+        open={openGAuthFa}
+        onClose={() => setOpenGAuth2Fa(false)}>
+        <GAuthTwoFAFormLogin userSignInGAuth={userSignInGAuth}/>
       </CustomModal>
     </Background>
   );

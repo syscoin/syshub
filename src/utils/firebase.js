@@ -32,10 +32,6 @@ export default class Firebase {
     throw err
   });
 
-  passwordUpdate = async (user, callback) => {
-    const currentUser = await this.auth.currentUser;
-    console.log(currentUser)
-  };
   newRecaptchaVerifier = (container, params, app) => new this.firebaseApp.auth.RecaptchaVerifier(container, params, app);
 
   newPhoneAuthProvider = () => new this.firebaseApp.auth.PhoneAuthProvider();
