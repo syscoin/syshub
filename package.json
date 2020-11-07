@@ -39,6 +39,7 @@
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-bs-datatable": "^2.1.1",
+    "react-collapse": "^5.0.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.2",

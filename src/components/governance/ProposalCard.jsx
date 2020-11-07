@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
+import {Collapse} from 'react-collapse';
 
-export default function ProposalCard({ proposal, enabled }) {
+export default function ProposalCard({proposal, enabled}) {
+  const [useCollapse, setUseCollapse] = useState(false);
   useEffect(() => {
     // console.log(proposal);
-    return () => {};
+    return () => {
+    };
   }, []);
 
   const comaToNum = (str) => {
@@ -41,41 +44,55 @@ export default function ProposalCard({ proposal, enabled }) {
     }
   }
 
+  const voteYes = () => {
+
+  }
+
+  const voteNo = () => {
+
+  }
+
   return (
     <div className="proposal">
       <div className="vote-count">
         <span className="yes">{proposal.YesCount}</span>
         <span className="no">{proposal.NoCount}</span>
         {proposalPassing(proposal.YesCount, proposal.NoCount, comaToNum(enabled))}
-        
+
       </div>
       <div className="description">
         <div className="date">{proposalDate(proposal.CreationTime)}</div>
         {proposal.name}
-        <br />
+        <br/>
         <div className="budget">
-          {`${parseFloat(proposal.payment_amount * proposal.nPayment)} SYS`} <br />
-          {`${parseFloat(proposal.payment_amount)} SYS/Month`} <br />
+          {`${parseFloat(proposal.payment_amount * proposal.nPayment)} SYS`} <br/>
+          {`${parseFloat(proposal.payment_amount)} SYS/Month`} <br/>
           {`${proposal.nPayment} Payment(s)`}
+          <Collapse isOpened={useCollapse} initialStyle={{height: 0, overflow: 'hidden'}}>
+              <div className={"ReactCollapse--collapse"}>
+                In progress..
+              </div>
+          </Collapse>
         </div>
       </div>
       <div className="actions">
         <button
-          style={{ border: "none", outline: "none" }}
+          style={{border: "none", outline: "none"}}
           className="vote"
           title="Vote yes"
         >
           <i className="icon-up-open"></i>
         </button>
         <button
-          style={{ border: "none", outline: "none" }}
+          style={{border: "none", outline: "none"}}
           className="vote"
           title="More info"
+          onClick={() => setUseCollapse(!useCollapse)}
         >
           <i className="icon-info"></i>
         </button>
         <button
-          style={{ border: "none", outline: "none" }}
+          style={{border: "none", outline: "none"}}
           className="vote"
           title="Vote no"
         >

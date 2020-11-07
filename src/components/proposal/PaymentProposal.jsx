@@ -100,9 +100,8 @@ const PaymentProposal = ({onNext, onBack}) => {
     setProposalEndEpoch(endEpoch);
     setProposalPayoutDates(proposalPayoutDates);
     setAmount(watchedAmount);
-    setTotalAmount(amount * watchNPayment)
+    setTotalAmount(watchedAmount * watchNPayment)
     setPaymentQuantity(watchNPayment)
-
   }
 
   useEffect(() => {
@@ -157,6 +156,7 @@ const PaymentProposal = ({onNext, onBack}) => {
           ref={register}
           name="paymentAmount"
           className="styled"
+          onChange={paymentQuantityValue}
         />
         <small><p style={{lineHeight: '1.5'}}>{watchedAmount} SYS</p></small>
         <ErrorMessage
