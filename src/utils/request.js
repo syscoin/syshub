@@ -378,18 +378,36 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
 export const nextGovernanceRewardInfo = async () => {
   try {
     const date = new Date();
-    const chainInfo = await getInfo().catch(err => {
-      throw err
+    const chainInfo = await new Promise((resolve, reject) => {
+      getInfo().then(res => {
+        let {data} = res;
+        return resolve(data)
+      }).catch(err => {
+        return reject(err)
+      })
     })
-    const governanceInfo = await getGovernanceInfo().catch(err => {
-      throw err
+    console.log(chainInfo)
+    const governanceInfo = await new Promise((resolve, reject) => {
+      getGovernanceInfo().then(res => {
+        let {data} = res;
+        return resolve(data)
+      }).catch(err => {
+        return reject(err)
+      })
     })
 
+    console.log(governanceInfo)
     const {nextsuperblock, superblockcycle} = governanceInfo;
 
-    const [lsb, nbs] = await getSuperBlockBudget().catch(err => {
-      throw err
+    const {lsb, nbs} = await new Promise((resolve, reject) => {
+      getSuperBlockBudget().then(res => {
+        let {data} = res;
+        return resolve(data)
+      }).catch(err => {
+        return reject(err)
+      })
     })
+
     const blockHeight = chainInfo.blocks;
     const blockGenerationCycle = 60; // Defined by the chain White_paper doc.
     const votingDeadlineGap = 3;
