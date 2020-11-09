@@ -8,7 +8,7 @@ import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 import BannerImage from '../components/global/BannerImage';
 // import SuperBlocks from './governance/SuperBlocks';
-import GovList from '../components/governance/GovList';
+// import GovList from '../components/governance/GovList';
 import GovDetails from '../components/governance/GovDetails';
 import ProposalsList from '../components/governance/ProposalsList';
 
@@ -108,16 +108,6 @@ export class Governance extends Component {
                                         <p>{t('governance.par1')}</p>
                                         <p>{t('governance.par2')}</p>
                                     </BannerImage>
-
-                                    <section className="article article--revirse article--offsets-bottom">
-                                        <div className="cols">
-                                            <div className="col col--size12">
-                                                <div className="article__content">
-                                                    <GovList govData={this.state.govData} statsData={this.state.statsData.stats.mn_stats}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
 
                                     <section className="article article--revirse article--offsets-bottom">
                                         <div className="cols">

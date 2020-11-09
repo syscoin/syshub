@@ -42,6 +42,12 @@ function UserMasternodes(props) {
     try {
       const response = await updateMasterNode(user.token, uid, {data: data});
       if (response.data) {
+        Swal.fire({
+          icon: "success",
+          title: "The masternode has been updated",
+          timer: 2000,
+          showConfirmButton: false
+        });
         loadMasternodes();
       }  
     } catch (error) {
@@ -61,18 +67,22 @@ function UserMasternodes(props) {
     if (result.isConfirmed) {
       try {
         await destroyMasterNode(user.token, uid);
-        Swal.fire(
-          'Deleted!',
-          'Your masternode has been deleted.',
-          'success'
-        )
+        Swal.fire({
+          icon: "success",
+          title: "The masternode has been deleted",
+          timer: 2000,
+          showConfirmButton: false
+        });
         loadMasternodes();
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "There was an error",
+          text: error
+        });
         console.log(error);
       }
-
     }
-    
   }
 
   return (

@@ -13,6 +13,8 @@ import WorldMap from '../components/stats/WorldMap';
 import StatsShow from '../components/stats/StatsShow';
 import LinearCharts from '../components/stats/LinearCharts';
 import MasternodeTable from '../components/masternodes/MasternodeTable';
+import ProposalsList from '../components/governance/ProposalsList';
+import HomeButtons from '../components/home/HomeButtons';
 
 export class Home extends Component {
     _isMounted = false;
@@ -77,17 +79,7 @@ export class Home extends Component {
                                             </p>
                                         </div>
 
-                                        <div className="article__actions vertical">
-                                            <Link to="/about" className="btn btn--blue-border">
-                                                Learn More
-                                            </Link>
-                                            <Link to="/setup" className="btn btn--blue-border">
-                                                Setup Masternode
-                                            </Link>
-                                            <Link to="/signup" className="btn btn--blue-border">
-                                                Sign up
-                                            </Link>
-                                        </div>
+                                        <HomeButtons />
                                     </BannerImage>
 
                                     <section className="article article--revirse article--offsets-bottom">
@@ -104,7 +96,18 @@ export class Home extends Component {
                                         </div>
                                     </section>
                                     
-                                    {/* GOVERNANCE */}
+                                    <section className="article article--revirse article--offsets-bottom">
+                                        <div className="cols">
+                                            <div className="col col--size-12">
+                                                <div className="article__content">
+                                                    <ProposalsList statsData={this.state.api_data.stats.mn_stats} />
+                                                    <div className="article__actions text-center">
+                                                        <Link to="/governance" className="btn btn--blue-border">More about governance</Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
 
                                     <section className="article article--revirse article--offsets-bottom">
                                         <div className="cols">

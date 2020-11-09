@@ -1,13 +1,27 @@
 import React, {useEffect, useState} from "react";
-import {Collapse} from 'react-collapse';
+import { Collapse } from 'react-collapse';
 
-export default function ProposalCard({proposal, enabled}) {
+import { useUser } from '../../context/user-context';
+import ProposalCardInfo from "./ProposalCardInfo";
+
+export default function ProposalCard({ proposal, enabled }) {
+  const { user } = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
+
   useEffect(() => {
-    // console.log(proposal);
+    console.log(proposal);
     return () => {
+      
     };
   }, []);
+
+  const voteYes = () => {
+
+  }
+
+  const voteNo = () => {
+
+  }
 
   const comaToNum = (str) => {
     return Number(str.replace(",", ""));
@@ -28,7 +42,7 @@ export default function ProposalCard({proposal, enabled}) {
   }
 
   function proposalPassing(yesCount, noCount, enabled) {
-    console.log(enabled)
+
     if (((yesCount - noCount) / enabled) * 100 > 10) {
       return (
         <div className="passed">
@@ -44,13 +58,6 @@ export default function ProposalCard({proposal, enabled}) {
     }
   }
 
-  const voteYes = () => {
-
-  }
-
-  const voteNo = () => {
-
-  }
 
   return (
     <div className="proposal">
@@ -62,43 +69,57 @@ export default function ProposalCard({proposal, enabled}) {
       </div>
       <div className="description">
         <div className="date">{proposalDate(proposal.CreationTime)}</div>
-        {proposal.name}
-        <br/>
+
+        <span title="more info" style={{ cursor: 'pointer' }} onClick={() => setUseCollapse(!useCollapse)}>
+          {proposal.name}
+        </span>
+
+        <br />
+        
         <div className="budget">
           {`${parseFloat(proposal.payment_amount * proposal.nPayment)} SYS`} <br/>
           {`${parseFloat(proposal.payment_amount)} SYS/Month`} <br/>
           {`${proposal.nPayment} Payment(s)`}
-          <Collapse isOpened={useCollapse} initialStyle={{height: 0, overflow: 'hidden'}}>
-              <div className={"ReactCollapse--collapse"}>
-                In progress..
-              </div>
-          </Collapse>
+
+          
         </div>
+        <Collapse
+            isOpened={useCollapse}
+            initialStyle={{ height: 0, overflow: 'hidden' }}
+          >
+            <div className={"ReactCollapse--collapse"}>
+              <ProposalCardInfo proposal={proposal} />
+            </div>
+          </Collapse>
       </div>
-      <div className="actions">
-        <button
-          style={{border: "none", outline: "none"}}
-          className="vote"
-          title="Vote yes"
-        >
-          <i className="icon-up-open"></i>
-        </button>
-        <button
-          style={{border: "none", outline: "none"}}
-          className="vote"
-          title="More info"
-          onClick={() => setUseCollapse(!useCollapse)}
-        >
-          <i className="icon-info"></i>
-        </button>
-        <button
-          style={{border: "none", outline: "none"}}
-          className="vote"
-          title="Vote no"
-        >
-          <i className="icon-down-open"></i>
-        </button>
-      </div>
+      {
+        user && (
+          <div className="actions">
+            <button
+              style={{border: "none", outline: "none"}}
+              className="vote"
+              title="Vote yes"
+            >
+              <i className="icon-up-open"></i>
+            </button>
+            <button
+              style={{border: "none", outline: "none"}}
+              className="vote"
+              title="More info"
+              onClick={() => setUseCollapse(!useCollapse)}
+            >
+              <i className="icon-info"></i>
+            </button>
+            <button
+              style={{border: "none", outline: "none"}}
+              className="vote"
+              title="Vote no"
+            >
+              <i className="icon-down-open"></i>
+            </button>
+          </div>
+        )
+      }
     </div>
   );
 }

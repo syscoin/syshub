@@ -5,11 +5,11 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
+  name: yup.string().required('Name is required'),
   txId: yup.string()
     .matches(/-0|-1/, 'Tx Id must end with -0 or -1')
-    .required(),
-  privateKey: yup.string().required()
+    .required('tx id is required'),
+  privateKey: yup.string().required('private key is required')
 });
 const schema2 = yup.object().shape({
   masternodeConf: yup.string().required('Masternode.conf is a required field')

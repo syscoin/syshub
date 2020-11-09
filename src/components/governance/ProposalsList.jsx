@@ -21,7 +21,6 @@ function ProposalsList(props) {
               delete govdata[key];
           }
         });
-        console.log(govdata)
         setProposals(govdata);
       }
     } catch (error) {
