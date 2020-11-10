@@ -385,7 +385,7 @@ export const nextGovernanceRewardInfo = async () => {
         return reject(err)
       })
     })
-    console.log(chainInfo)
+    // console.log(chainInfo)
     const governanceInfo = await new Promise((resolve, reject) => {
       getGovernanceInfo().then(res => {
         let {data} = res;
@@ -395,7 +395,7 @@ export const nextGovernanceRewardInfo = async () => {
       })
     })
 
-    console.log(governanceInfo)
+    // console.log(governanceInfo)
     const {nextsuperblock, superblockcycle} = governanceInfo;
 
     const {lsb, nbs} = await new Promise((resolve, reject) => {

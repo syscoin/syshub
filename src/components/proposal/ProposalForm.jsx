@@ -26,6 +26,7 @@ export default function ProposalForm() {
   const { user } = useUser()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [url, setUrl] = useState('');
   const [payment, setPayment] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -41,15 +42,35 @@ export default function ProposalForm() {
     setTitle(proposalTitle);
     next();
   }
-  const getDescription = ({ proposalDescription }) => {
+  const getDescription = ({ proposalDescription, proposalUrl }) => {
     console.log(proposalDescription);
+    console.log(proposalUrl);
     setDescription(proposalDescription);
+    setUrl(proposalUrl);
     next();
   }
-  const getPayment = ({ proposalPayment }) => {
+  const getPayment = ( proposalPayment) => {
     console.log(proposalPayment);
     setPayment(proposalPayment);
     next();
+  }
+
+  const prepareProposal = () => {
+    const name = title.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
+    const proposal = {
+      type: 1,
+      title,
+      name,
+      description,
+      url,
+      firstEpoch: payment.proposalStartEpoch,
+      startEpoch: payment.proposalStartEpoch,
+      endEpoch: payment.proposalEndEpoch,
+      nPayment: payment.paymentNumber,
+      paymentAddress: payment.paymentAddress,
+      paymentAmount: payment.paymentAmount
+    }
+    console.log(proposal);
   }
 
   return (
@@ -88,7 +109,7 @@ export default function ProposalForm() {
           </div>
           <div className="form-actions-spaced">
             <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" >Save</button>
+            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Save</button>
           </div>
         </div>
       </div>
