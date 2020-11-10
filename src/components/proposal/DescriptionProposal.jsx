@@ -5,106 +5,156 @@ import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
 //import for text editor
-import {EditorState, convertToRaw, ContentState} from 'draft-js';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import {Editor} from 'react-draft-wysiwyg';
+import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const schema = yup.object().shape({
-  proposalDescription: yup.string().required('The proposal description is required.')
+  proposalUrl: yup.string().url('Must be a valid url')
 });
 
 export default function DescriptionProposal({onNext, onBack}) {
-  // const editorState = EditorState.createEmpty();
   const [showEditor, setShowEditor] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
-  const [proposalDescription, setProposalDescription] = useState('');
-  const {register, watch, handleSubmit, setValue, errors} = useForm({
+  const [proposalDescription, setProposalDescription] = useState(EditorState.createEmpty());
+
+  const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
-    resolver: yupResolver(schema),
-    defaultValues: {
-      proposalDescription: proposalDescription
-    }
+    resolver: yupResolver(schema)
   });
 
   useEffect(() => {
     if (!showEditor) {
       let previewContainer = document.getElementById('preview-html-container');
-      previewContainer.innerHTML = draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
+      // previewContainer.innerHTML = draftToHtml(convertToRaw(proposalDescription.getCurrentContent()));
     }
   }, [showEditor])
 
   const onEditorStageChange = (editorState) => {
-    setShowEditor(true)
-    setProposalDescription(editorState)
+    setShowEditor(true);
+    setProposalDescription(editorState);
   }
 
-  const st = {background: "#fff"}
+  const backEditor = () => {
+    if (showPreview) {
+      setShowPreview(false);
+    }
+    if (!showEditor) {
+      setShowEditor(true);
+    }
+    onBack();
+  }
+  
+  const editorEmpty = (editor) => {
+    const editorRaw = convertToRaw(editor.getCurrentContent());
+    if (editorRaw.blocks[0].text.trim().length === 0){
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
+  const nextEditor = (data) => {    
+    const descriptionRaw = draftToHtml(convertToRaw(proposalDescription.getCurrentContent()));
+
+    onNext({ proposalDescription: descriptionRaw, ...data });
+  }
+
   return (
-    <form className="input-form" onSubmit={handleSubmit(onNext)}>
+    <form className="input-form" onSubmit={handleSubmit(nextEditor)}>
       <div className="form-group">
-
-        {showEditor ? (
-          <>
-            <button
-              className="btn btn--blue-border"
-              onClick={() => {
-                console.log('entro aqui')
-                setShowPreview(true);
-                setShowEditor(false);
-              }}>
-              Preview
-            </button>
-            <Editor
-              editorState={proposalDescription}
-              onEditorStateChange={onEditorStageChange}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="proposalEditor-wrapper"
-              editorClassName="proposal-editor"
-              toolbar={{
-                options: ['inline', 'list'],
-                inline: {
-                  options: ['bold', 'italic', 'underline', 'monospace'],
-                  list: {
-                    options: ['unordered', 'ordered']
+        {
+          showEditor && (
+            <>
+              <Editor
+                editorState={proposalDescription}
+                onEditorStateChange={onEditorStageChange}
+                wrapperClassName="proposalEditor-wrapper article"
+                editorClassName="proposal-editor styled"
+                toolbar={{
+                  options: ['inline', 'list'],
+                  inline: {
+                    options: ['bold', 'italic', 'underline', 'monospace'],
+                    list: {
+                      options: ['unordered', 'ordered']
+                    }
                   }
-                }
-              }}
-            />
-          </>
-        ) : null}
+                }}
+                toolbarClassName="toolbarClassName"
+                toolbarStyle={{ borderRadius: '3px' }}
+                editorStyle={{ paddingTop: 0, paddingBottom: 0 }}
+              />
+              {
+                editorEmpty(proposalDescription) && <small>
+                  <p style={{ lineHeight: '1.5' }}>The description is required</p>
+                </small>
+              }
+            </>
+          )
+        }
 
-        {showPreview ? (
-          <>
-            <button
-              className="btn btn--blue-border"
-              onClick={() => {
-                setShowPreview(false);
-                setShowEditor(true);
-
-              }}>
-              Editor
-            </button>
+        {
+          showPreview && (
             <div
               className="proposalContent-div"
               id="preview-html-container"
-            />
-          </>
-        ) : null}
-
-
-        {/*<label htmlFor="proposalDescription">Proposal description</label>*/}
-        {/*<input type="text" id="proposalDescription" ref={register} name="proposalDescription" className="styled"/>*/}
-        {/*<ErrorMessage*/}
-        {/*  errors={errors}*/}
-        {/*  name="proposalDescription"*/}
-        {/*  render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}*/}
-        {/*/>*/}
+              dangerouslySetInnerHTML={{
+                __html: draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
+              }}
+            ></div>
+          ) 
+        }
       </div>
+
+      <div className="form-group">
+        <label htmlFor="proposalUrl">URL</label>
+        <input
+          type="url"
+          placeholder="Keep it blank to proposal refers itself"
+          className="styled"
+          name="proposalUrl"
+          id="proposalUrl"
+          ref={register}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="proposalUrl"
+          render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+        />
+      </div>
+
       <div className="form-actions-spaced">
-        <button className="btn btn--blue-border" type="button" onClick={onBack}>Back</button>
-        <button className="btn btn--blue" type="submit">Next</button>
+        <button className="btn btn--blue-border" type="button" onClick={backEditor}>Back</button>
+
+        {
+          showEditor && <button
+            className="btn btn--blue-border"
+            onClick={() => {
+              console.log('entro aqui')
+              setShowPreview(true);
+              setShowEditor(false);
+            }}
+          >
+            Preview
+          </button>
+        }
+        {
+          showPreview && <button
+            className="btn btn--blue-border"
+            onClick={() => {
+              setShowPreview(false);
+              setShowEditor(true);
+            }}
+          >
+            Editor
+          </button>
+        }
+        
+        <button className="btn btn--blue" type="submit" disabled={editorEmpty(proposalDescription)}>Next</button>
+        
       </div>
     </form>
   )

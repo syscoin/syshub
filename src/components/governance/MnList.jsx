@@ -60,15 +60,16 @@ const MnList = ({proposal}) => {
           {
             masterNodes.map((item) => {
               return (
-                <>
-                  <li key={item.uid} onClick={() => {
+                <li
+                  key={item.uid}
+                  onClick={() => {
                     addMnVote(item)
-                  }}>
-                    <span>
+                  }}
+                >
+                  <span>
                     {item.name}
                   </span>
-                  </li>
-                </>
+                </li>
               )
             })
           }

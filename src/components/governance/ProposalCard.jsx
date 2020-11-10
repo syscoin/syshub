@@ -91,7 +91,7 @@ export default function ProposalCard({proposal, enabled}) {
         <div className="date">{proposalDate(proposal.CreationTime)}</div>
 
         <span title="more info" style={{cursor: 'pointer'}} onClick={() => setUseCollapse(!useCollapse)}>
-          {proposal.name}
+          {proposal.title || proposal.name}
         </span>
 
         <br/>

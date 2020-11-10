@@ -4,15 +4,19 @@ import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
+
 import ProposalPaymentDates from "./ProposalPaymentDates";
 import {getInfo, nextGovernanceRewardInfo} from "../../utils/request";
 
 const schema = yup.object().shape({
   paymentNumber: yup.number()
+    .transform(value => (isNaN(value) ? undefined : value))
     .required('The number of payments is required')
+    .integer('Must be an integer number')
     .typeError('Must be a number')
     .positive('Must be a positive number'),
   paymentAmount: yup.number()
+    .transform(value => (isNaN(value) ? undefined : value))
     .required('The amount is required')
     .typeError('Must be a number')
     .positive('Must be a positive number'),
@@ -58,8 +62,8 @@ const PaymentProposal = ({onNext, onBack}) => {
   };
 
   const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
-    console.log('nPayments -->', nPayments)
-    console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
+    // console.log('nPayments -->', nPayments)
+    // console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
     const {
       rewardDateEpoch,
       superblockCycleEpoch,
@@ -85,9 +89,9 @@ const PaymentProposal = ({onNext, onBack}) => {
   const getGovernanceDate = async () => {
     const nextGovernanceDate = await nextGovernanceRewardInfo();
     // console.log(nextGovernanceDate)
-    console.log('nextGovernanceDateaaaaaaaaaa --->', nextGovernanceDate);
+    // console.log('nextGovernanceDateaaaaaaaaaa --->', nextGovernanceDate);
     Object.assign(nextGovernanceDate);
-    console.log('nextGovernanceDate --->', nextGovernanceDate);
+    // console.log('nextGovernanceDate --->', nextGovernanceDate);
     return nextGovernanceDate;
   }
 
@@ -109,13 +113,13 @@ const PaymentProposal = ({onNext, onBack}) => {
       let {data} = await getInfo().catch(err => {
         throw err
       })
-      console.log(data)
+      // console.log(data)
       setChainData(data)
     }
     getChainInfoData()
-    const x = async () => {
+    const calculatePaymentDates = async () => {
       const nextGovernanceDate = await getGovernanceDate();
-      console.log(nextGovernanceDate)
+      // console.log(nextGovernanceDate)
       const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
         paymentQuantity,
         nextGovernanceDate
@@ -126,12 +130,16 @@ const PaymentProposal = ({onNext, onBack}) => {
       setProposalEndEpoch(endEpoch);
       setProposalPayoutDates(proposalPayoutDates);
     }
-    x()
+    calculatePaymentDates()
   }, [])
+
+  const nextPayment = (data) => {
+    onNext({ proposalStartEpoch, proposalEndEpoch, ...data });
+  }
 
 
   return (
-    <form className="input-form" onSubmit={handleSubmit(onNext)}>
+    <form className="input-form" onSubmit={handleSubmit(nextPayment)}>
       <div className="form-group">
         <label htmlFor="paymentNumber">Number of payments</label>
         <input
@@ -184,7 +192,7 @@ const PaymentProposal = ({onNext, onBack}) => {
       <h3>Payment Info:</h3>
       <div className="">
         <p className="">
-          {`This proposal will result in ${paymentQuantity} payments of ${amount} sys`}
+          {`This proposal will result in ${paymentQuantity} payments of ${amount} SYS`}
         </p>
         <div className="">
           <div className="">{`Payout dates approximately:`}</div>
