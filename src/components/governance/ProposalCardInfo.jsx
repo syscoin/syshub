@@ -1,17 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import swal from 'sweetalert2';
 
 
-export default function ProposalCardInfo({proposal}) {
+export default function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_type}) {
 
-
-  const prepareData = () => {
-
-  }
 
   useEffect(() => {
-    console.log(proposal)
+
   }, [])
 
   function proposalUrl(url) {
@@ -33,7 +29,15 @@ export default function ProposalCardInfo({proposal}) {
         {proposal.ColHash}
       </a>
       </p>
-      <p>Voting Deadline: 14 days remaining (23/11/2020)</p>
+      {days_remaining < 30 ? (
+        <span>{`(${days_remaining} Day${
+          days_remaining > 1 ? 's' : ''
+        } Remaining)`}</span>
+      ) : (
+        <span>{`(${month_remaining} Month${
+          month_remaining > 1 ? 's' : ''
+        } Remaining)`}</span>
+      )}
       <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>
         Voting string: {`gobject vote-many ${proposal.Hash} funding yes`}
       </p>

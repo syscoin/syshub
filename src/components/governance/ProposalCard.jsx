@@ -10,13 +10,30 @@ export default function ProposalCard({proposal, enabled}) {
   const {user} = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
+  const [days_remaining, setDays_remaining] = useState(0);
+  const [month_remaining, setMonth_remaining] = useState(0);
+  const [payment_type, setPayment_type] = useState('');
+  const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
-    console.log(proposal);
+    let {end_epoch, nPayment} = proposal
+    const today = new Date();
+    setEndDate(new Date(end_epoch * 1000))
+    if (endDate > today) {
+      console.log('entro aqui')
+      const timeDiff = endDate.getTime() - today.getTime();
+      const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+      const payment_type = nPayment > 1 ? 'per month' : 'one-time payment';
+      setDays_remaining(days_remaining)
+      setMonth_remaining(month_remaining)
+      setPayment_type(payment_type)
+      setEndDate(endDate.getDate() + '/' + (parseInt(endDate.getMonth(), 10) + 1) + '/' + endDate.getFullYear())
+    }
     // return () => {
     //
     // };
-  }, []);
+  }, [days_remaining, month_remaining, payment_type]);
 
   const voteYes = () => {
 
@@ -91,7 +108,7 @@ export default function ProposalCard({proposal, enabled}) {
           initialStyle={{height: 0, overflow: 'hidden'}}
         >
           <div className={"ReactCollapse--collapse"}>
-            <ProposalCardInfo proposal={proposal}/>
+            <ProposalCardInfo proposal={proposal} days_remaining={days_remaining} month_remaining={month_remaining} payment_type={payment_type}/>
           </div>
         </Collapse>
       </div>

@@ -32,7 +32,7 @@
     "i18next": "^19.6.3",
     "i18next-browser-languagedetector": "^5.0.1",
     "i18next-http-backend": "^1.0.21",
-    "int64-buffer": "^1.0.0",
+    "int64-buffer": "^0.99.1007",
     "jwt-decode": "^3.0.0",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
