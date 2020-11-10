@@ -18,15 +18,15 @@ const SignupForm = (props) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
-  const [recaptchaVerified, setRecaptchaVerified] = useState('');
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
     window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
-      callback: (resp) => {
-        console.log(resp)
+      callback: () => {
+        setRecaptchaVerified(true)
       },
       error: (err) => {
-        console.log(err)
+        setRecaptchaVerified(false)
       }
     })
     window.recaptchaVerifier.render();
@@ -57,7 +57,7 @@ const SignupForm = (props) => {
           <button
             className="btn btn--blue"
             type="submit"
-            disabled={props.submitting}
+            disabled={props.submitting || !recaptchaVerified}
           >Sign up
           </button>
         </div>
