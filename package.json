@@ -17,7 +17,7 @@
     "@testing-library/user-event": "^7.2.1",
     "anychart-react": "^1.4.1",
     "axios": "^0.19.2",
-    "bitcoinjs-lib": "^5.2.0",
+    "bitcoinjs-lib": "^4.0.2",
     "bootstrap-sass": "^3.4.1",
     "buffer-math": "^0.3.0",
     "crypto-js": "^4.0.0",
@@ -55,7 +55,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
     "react-tooltip": "^4.2.8",
-    "secp256k1": "^4.0.2",
+    "secp256k1": "^3.8.0",
     "speakeasy": "^2.0.0",
     "sweetalert2": "^10.8.1",
     "yup": "^0.29.3"

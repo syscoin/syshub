@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from "react";
-import { Collapse } from 'react-collapse';
+import {Collapse} from 'react-collapse';
 
-import { useUser } from '../../context/user-context';
+import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
+import CustomModal from "../global/CustomModal";
+import MnList from "./MnList";
 
-export default function ProposalCard({ proposal, enabled }) {
-  const { user } = useUser();
+export default function ProposalCard({proposal, enabled}) {
+  const {user} = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
+  const [openMnList, setOpenMnList] = useState(false);
 
   useEffect(() => {
     console.log(proposal);
-    return () => {
-      
-    };
+    // return () => {
+    //
+    // };
   }, []);
 
   const voteYes = () => {
@@ -70,27 +73,27 @@ export default function ProposalCard({ proposal, enabled }) {
       <div className="description">
         <div className="date">{proposalDate(proposal.CreationTime)}</div>
 
-        <span title="more info" style={{ cursor: 'pointer' }} onClick={() => setUseCollapse(!useCollapse)}>
+        <span title="more info" style={{cursor: 'pointer'}} onClick={() => setUseCollapse(!useCollapse)}>
           {proposal.name}
         </span>
 
-        <br />
-        
+        <br/>
+
         <div className="budget">
           {`${parseFloat(proposal.payment_amount * proposal.nPayment)} SYS`} <br/>
           {`${parseFloat(proposal.payment_amount)} SYS/Month`} <br/>
           {`${proposal.nPayment} Payment(s)`}
 
-          
+
         </div>
         <Collapse
-            isOpened={useCollapse}
-            initialStyle={{ height: 0, overflow: 'hidden' }}
-          >
-            <div className={"ReactCollapse--collapse"}>
-              <ProposalCardInfo proposal={proposal} />
-            </div>
-          </Collapse>
+          isOpened={useCollapse}
+          initialStyle={{height: 0, overflow: 'hidden'}}
+        >
+          <div className={"ReactCollapse--collapse"}>
+            <ProposalCardInfo proposal={proposal}/>
+          </div>
+        </Collapse>
       </div>
       {
         user && (
@@ -99,6 +102,7 @@ export default function ProposalCard({ proposal, enabled }) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote yes"
+              onClick={() => setOpenMnList(true)}
             >
               <i className="icon-up-open"></i>
             </button>
@@ -114,12 +118,18 @@ export default function ProposalCard({ proposal, enabled }) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote no"
+              onClick={() => setOpenMnList(true)}
             >
               <i className="icon-down-open"></i>
             </button>
           </div>
         )
       }
+      <CustomModal
+        open={openMnList}
+        onClose={() => setOpenMnList(false)}>
+        <MnList proposal={proposal}/>
+      </CustomModal>
     </div>
   );
 }

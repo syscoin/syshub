@@ -331,7 +331,6 @@ export const deleteUser = async (token, id) => {
   })
 }
 
-
 export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
   try {
     const dates = [];

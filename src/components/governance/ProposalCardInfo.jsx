@@ -1,13 +1,22 @@
-import React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import React, {useEffect} from 'react';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import swal from 'sweetalert2';
 
 
-export default function ProposalCardInfo({ proposal }) {
+export default function ProposalCardInfo({proposal}) {
+
+
+  const prepareData = () => {
+
+  }
+
+  useEffect(() => {
+    console.log(proposal)
+  }, [])
 
   function proposalUrl(url) {
-    if(url!=="" && url!=='emptyField') {
-        return url;
+    if (url !== "" && url !== 'emptyField') {
+      return url;
     } else {
       return "/404";
     }
@@ -17,12 +26,12 @@ export default function ProposalCardInfo({ proposal }) {
     <div className="budget">
       <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>
         Collateral hash: <a
-          href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {proposal.ColHash}
-        </a>
+        href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {proposal.ColHash}
+      </a>
       </p>
       <p>Voting Deadline: 14 days remaining (23/11/2020)</p>
       <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>

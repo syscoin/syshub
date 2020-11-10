@@ -39,8 +39,12 @@ export default (obj) => {
     timeBuffer
   ]);
 
+  console.log(message)
   const hash = crypto.hash256(message);
-  const keyPair = ECPair.fromWIF(mnPrivateKey);
+  console.log(hash)
+
+  console.log(mnPrivateKey)
+  const keyPair = ECPair.fromWIF(`${mnPrivateKey}`)
   const sigObj = secp256k1.sign(hash, keyPair.privateKey);
 
   const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
