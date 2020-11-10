@@ -6,9 +6,11 @@ import * as yup from "yup";
 
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  txId: yup.string().required(),
-  privateKey: yup.string().required()
+  name: yup.string().required('Name is required'),
+  txId: yup.string()
+    .matches(/-0|-1/, 'Tx Id must end with -0 or -1')
+    .required('tx id is required'),
+  privateKey: yup.string().required('private key is required')
 });
 
 function UserMN({ onEdit, onRemove, masternode, index }) {
