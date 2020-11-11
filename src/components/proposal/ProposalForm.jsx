@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import swal from "sweetalert2";
+import { Collapse } from 'react-collapse';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
@@ -27,6 +28,7 @@ import PaymentProposal from './PaymentProposal';
   url: (typeof url !== "undefined") ? url : 'empty'
 }
 */
+const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt elit elementum, egestas nibh id, ultricies magna. Praesent eget eleifend leo, et euismod est. Quisque viverra est elit, eu posuere ante suscipit eu. Phasellus maximus non elit vel imperdiet. Nunc molestie quis lorem nec posuere. Maecenas condimentum, dui vitae bibendum fringilla, erat enim iaculis erat, vulputate dapibus nisi magna vitae lorem. Praesent ornare eros pulvinar molestie luctus. Aliquam vitae malesuada augue, placerat vehicula ligula. Aliquam erat volutpat. Curabitur cursus eleifend ex, at facilisis magna. Nullam laoreet libero at lectus facilisis ornare."
 
 const schema = yup.object().shape({
   proposalHash: yup.string()
@@ -39,7 +41,7 @@ export default function ProposalForm() {
   const [url, setUrl] = useState('');
   const [payment, setPayment] = useState(null);
   const [prepareCommand, setPrepareCommand] = useState('');
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
@@ -65,7 +67,7 @@ export default function ProposalForm() {
     setUrl(proposalUrl);
     next();
   }
-  const getPaymentAndCheck = ( proposalPayment) => {
+  const getPayment = ( proposalPayment) => {
     console.log(proposalPayment);
     setPayment(proposalPayment);
     next();
@@ -87,6 +89,8 @@ export default function ProposalForm() {
       paymentAmount: payment.paymentAmount
     }
     console.log(proposal);
+    //REALIZAR EL REQUEST DEL PREPARE 
+    next();
   }
   const copyButton = () => {
     swal.fire({
@@ -120,12 +124,12 @@ export default function ProposalForm() {
           <span>3</span>Payment details
         </div>
         <div className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}>
-          <PaymentProposal onNext={getPaymentAndCheck} onBack={back} />
+          {/* <PaymentProposal onNext={getPayment} onBack={back} /> */}
           
         </div>
 
         <div className="wizard-head">
-          <span>4</span>Create proposal
+          <span>4</span>Preview proposal
         </div>
         <div className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}>
           <div className="proposals article">
@@ -149,17 +153,34 @@ export default function ProposalForm() {
           </div>
 
 
-          <div className="form-group">
+          
+          <div className="form-actions-spaced">
+            <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
+            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Prepare</button>
+          </div>
+        </div>
+      
+        <div className="wizard-head">
+        <span>4</span>Create proposal
+        </div>
+        <div className={`wizard-body ${currentStep === 4 ? "" : "collapsed"}`}>
+          <div className="form-group article">
             <textarea
               className="styled"
               name="prepareCommand"
               id="prepareCommand"
-              cols="30"
-              rows="10"
+              rows="4"
               disabled
               value={prepareCommand}
             ></textarea>
+            <small>
+              <p style={{ lineHeight: "1.5" }}>
+                Prepare command is ready to be copied. Please copy and paste it into Syscoin Q.T console for payment txid.
+              </p>
+            </small>
+          </div>
 
+          <div className="form-actions-spaced text-center">
             <CopyToClipboard
               text={prepareCommand}
               onCopy={copyButton}
@@ -167,13 +188,10 @@ export default function ProposalForm() {
               <button className="btn btn--blue-border" type="button">Copy</button>
             </CopyToClipboard>
           </div>
+          
           <form action="">
 
           </form>
-          <div className="form-actions-spaced">
-            <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Create</button>
-          </div>
         </div>
       </div>
     </div>
