@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import {CopyToClipboard} from "react-copy-to-clipboard";
+import swal from "sweetalert2";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from '@hookform/error-message';
+import {yupResolver} from '@hookform/resolvers';
+import * as yup from "yup";
 
 import { useUser } from '../../context/user-context';
 
@@ -22,13 +28,23 @@ import PaymentProposal from './PaymentProposal';
 }
 */
 
+const schema = yup.object().shape({
+  proposalHash: yup.string()
+});
+
 export default function ProposalForm() {
   const { user } = useUser()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
-  const [payment, setPayment] = useState('');
+  const [payment, setPayment] = useState(null);
+  const [prepareCommand, setPrepareCommand] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
+
+  const {register, handleSubmit, errors} = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(schema)
+  });
 
   const back = () => {
     setCurrentStep(currentStep - 1);
@@ -49,7 +65,7 @@ export default function ProposalForm() {
     setUrl(proposalUrl);
     next();
   }
-  const getPayment = ( proposalPayment) => {
+  const getPaymentAndCheck = ( proposalPayment) => {
     console.log(proposalPayment);
     setPayment(proposalPayment);
     next();
@@ -71,6 +87,14 @@ export default function ProposalForm() {
       paymentAmount: payment.paymentAmount
     }
     console.log(proposal);
+  }
+  const copyButton = () => {
+    swal.fire({
+      icon: "success",
+      title: "Copied",
+      timer: 2000,
+      showConfirmButton: false,
+    });
   }
 
   return (
@@ -96,7 +120,7 @@ export default function ProposalForm() {
           <span>3</span>Payment details
         </div>
         <div className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}>
-          <PaymentProposal onNext={getPayment} onBack={back} />
+          <PaymentProposal onNext={getPaymentAndCheck} onBack={back} />
           
         </div>
 
@@ -104,12 +128,51 @@ export default function ProposalForm() {
           <span>4</span>Create proposal
         </div>
         <div className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}>
-          <div>
-            FINAL
+          <div className="proposals article">
+            <div className="proposal">
+              <label style={{fontSize: '24px'}}>{title}</label>
+              <div dangerouslySetInnerHTML={{ __html: description }} style={{margin:'0 10px'}}></div>
+              <label>{url || 'No URL was given'}</label>
+              {
+                payment && (
+                  <>
+                    <div>
+                      <label>{payment.paymentAmount} SYS in {payment.paymentNumber} payment(s)</label>
+                    </div>
+                    <div>
+                      <label>Address: {payment.paymentAddress}</label>
+                    </div>
+                  </>
+                )
+              }
+            </div>
           </div>
+
+
+          <div className="form-group">
+            <textarea
+              className="styled"
+              name="prepareCommand"
+              id="prepareCommand"
+              cols="30"
+              rows="10"
+              disabled
+              value={prepareCommand}
+            ></textarea>
+
+            <CopyToClipboard
+              text={prepareCommand}
+              onCopy={copyButton}
+            >
+              <button className="btn btn--blue-border" type="button">Copy</button>
+            </CopyToClipboard>
+          </div>
+          <form action="">
+
+          </form>
           <div className="form-actions-spaced">
             <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Save</button>
+            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Create</button>
           </div>
         </div>
       </div>

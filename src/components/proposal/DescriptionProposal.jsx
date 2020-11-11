@@ -98,13 +98,16 @@ export default function DescriptionProposal({onNext, onBack}) {
 
         {
           showPreview && (
-            <div
-              className="proposalContent-div"
-              id="preview-html-container"
-              dangerouslySetInnerHTML={{
-                __html: draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
-              }}
-            ></div>
+            <div className="proposals">
+              <div
+                className="proposalContent-div proposal"
+                id="preview-html-container"
+                dangerouslySetInnerHTML={{
+                  __html: draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
+                }}
+                style={{margin:'0 10px'}}
+              ></div>
+            </div>
           ) 
         }
       </div>
