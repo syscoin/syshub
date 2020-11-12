@@ -26,10 +26,10 @@ export default function TitleProposal({ onNext }) {
         <input type="text" id="proposalTitle" ref={register} name="proposalTitle" className="styled" maxLength="40" />
         <small><p style={{lineHeight:'1.5'}}>{40 - watchedTitle.length} characters left.</p></small>
         <ErrorMessage
-            errors={errors}
-            name="proposalTitle"
-            render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-          />
+          errors={errors}
+          name="proposalTitle"
+          render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+        />
       </div>
       <div className="form-actions-spaced">
         <button className="btn btn--blue" type="submit">Next</button>

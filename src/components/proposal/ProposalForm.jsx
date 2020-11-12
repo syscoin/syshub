@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import swal from "sweetalert2";
+import { Collapse } from 'react-collapse';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
 import { useUser } from '../../context/user-context';
+import { checkProposal, prepareProposal } from "../../utils/request";
 
 import TitleProposal from './TitleProposal';
 import DescriptionProposal from './DescriptionProposal';
 import PaymentProposal from './PaymentProposal';
+import ProposalPreview from "./ProposalPreview";
 
 /* 
 {
@@ -29,7 +32,10 @@ import PaymentProposal from './PaymentProposal';
 */
 
 const schema = yup.object().shape({
-  proposalHash: yup.string()
+  paymentTxId: yup.string().required('Payment txid is required')
+});
+const schema2 = yup.object().shape({
+  proposalHash: yup.string().required('proposal hash is required')
 });
 
 export default function ProposalForm() {
@@ -39,11 +45,18 @@ export default function ProposalForm() {
   const [url, setUrl] = useState('');
   const [payment, setPayment] = useState(null);
   const [prepareCommand, setPrepareCommand] = useState('');
+  const [submitCommand, setSubmitCommand] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
+  const [collapse, setCollapse] = useState(true);
+  const [useCollapse, setUseCollapse] = useState(false);
 
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema)
+  });
+  const {register: register2, handleSubmit: handleSubmit2, errors: errors2} = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(schema2)
   });
 
   const back = () => {
@@ -53,32 +66,37 @@ export default function ProposalForm() {
     setCurrentStep(currentStep + 1);
   };
 
+  const copyButton = () => {
+    swal.fire({
+      icon: "success",
+      title: "Copied",
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
+
   const getTitle = ({ proposalTitle }) => {
-    console.log(proposalTitle);
     setTitle(proposalTitle);
     next();
   }
   const getDescription = ({ proposalDescription, proposalUrl }) => {
-    console.log(proposalDescription);
-    console.log(proposalUrl);
     setDescription(proposalDescription);
     setUrl(proposalUrl);
     next();
   }
-  const getPaymentAndCheck = ( proposalPayment) => {
-    console.log(proposalPayment);
+  const getPayment = (proposalPayment) => {
     setPayment(proposalPayment);
     next();
   }
 
-  const prepareProposal = () => {
+  const checkProposalAndPrepare = async () => {
     const name = title.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
     const proposal = {
       type: 1,
       title,
       name,
       description,
-      url,
+      url: url || 'emptyField',
       firstEpoch: payment.proposalStartEpoch,
       startEpoch: payment.proposalStartEpoch,
       endEpoch: payment.proposalEndEpoch,
@@ -87,14 +105,34 @@ export default function ProposalForm() {
       paymentAmount: payment.paymentAmount
     }
     console.log(proposal);
+    try {
+      await checkProposal(user.token, proposal).catch(err => { throw err });
+      
+      const prepare = await prepareProposal(user.token, proposal).catch(err => { throw err });
+      console.log(prepare);
+      
+      setPrepareCommand(prepare.data.command);
+
+      next();
+    } catch (error) {
+      console.log(error);
+      swal.fire({
+        icon: "error",
+        title: "there was an error",
+        text: error.message
+      });
+    }
+
   }
-  const copyButton = () => {
-    swal.fire({
-      icon: "success",
-      title: "Copied",
-      timer: 2000,
-      showConfirmButton: false,
-    });
+
+  const enterPaymentTxId = (data) => {
+    console.log(data);
+    setUseCollapse(true);
+    setCollapse(false);
+  }
+  
+  const enterProposalHash = (data) => {
+    console.log(data)
   }
 
   return (
@@ -120,60 +158,119 @@ export default function ProposalForm() {
           <span>3</span>Payment details
         </div>
         <div className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}>
-          <PaymentProposal onNext={getPaymentAndCheck} onBack={back} />
+          <PaymentProposal onNext={getPayment} onBack={back} />
           
         </div>
 
         <div className="wizard-head">
-          <span>4</span>Create proposal
+          <span>4</span>Preview proposal
         </div>
         <div className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}>
           <div className="proposals article">
-            <div className="proposal">
-              <label style={{fontSize: '24px'}}>{title}</label>
-              <div dangerouslySetInnerHTML={{ __html: description }} style={{margin:'0 10px'}}></div>
-              <label>{url || 'No URL was given'}</label>
-              {
-                payment && (
-                  <>
-                    <div>
-                      <label>{payment.paymentAmount} SYS in {payment.paymentNumber} payment(s)</label>
-                    </div>
-                    <div>
-                      <label>Address: {payment.paymentAddress}</label>
-                    </div>
-                  </>
-                )
-              }
-            </div>
+            <ProposalPreview title={title} description={description} url={url} payment={payment} />
           </div>
-
-
-          <div className="form-group">
-            <textarea
-              className="styled"
-              name="prepareCommand"
-              id="prepareCommand"
-              cols="30"
-              rows="10"
-              disabled
-              value={prepareCommand}
-            ></textarea>
-
-            <CopyToClipboard
-              text={prepareCommand}
-              onCopy={copyButton}
-            >
-              <button className="btn btn--blue-border" type="button">Copy</button>
-            </CopyToClipboard>
-          </div>
-          <form action="">
-
-          </form>
+          
           <div className="form-actions-spaced">
             <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" onClick={prepareProposal}>Create</button>
+            <button className="btn btn--blue" type="button" onClick={checkProposalAndPrepare}>Prepare</button>
           </div>
+        </div>
+      
+        <div className="wizard-head">
+        <span>5</span>Create proposal
+        </div>
+        <div className={`wizard-body ${currentStep === 4 ? "" : "collapsed"}`}>
+          <Collapse
+            isOpened={collapse}
+            initialStyle={{height: 0, overflow: 'hidden'}}
+          >
+            <div className="form-group article">
+              <textarea
+                className="styled"
+                name="prepareCommand"
+                id="prepareCommand"
+                rows="5"
+                disabled
+                value={prepareCommand}
+              ></textarea>
+              <small>
+                <p style={{ lineHeight: "1.5" }}>
+                  Prepare command is ready to be copied. Please copy and paste it into Syscoin Q.T console for payment txid.
+                </p>
+              </small>
+            </div>
+
+            <div className="form-actions-spaced">
+              <CopyToClipboard
+                text={prepareCommand}
+                onCopy={copyButton}
+              >
+                <button className="btn btn--blue-border" type="button">Copy</button>
+              </CopyToClipboard>
+            </div>
+            
+            <form className="input-form" onSubmit={handleSubmit(enterPaymentTxId)}>
+              <div className="form-group">
+                <label htmlFor="paymentTxId">Payment txid</label>
+                <input type="text" id="paymentTxId" ref={register} name="paymentTxId" className="styled" maxLength="40" />
+                <ErrorMessage
+                  errors={errors}
+                  name="paymentTxId"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
+              </div>
+              <div className="form-actions-spaced">
+                <button className="btn btn--blue" type="submit">Next</button>
+              </div>
+            </form>
+            
+          </Collapse>
+          
+
+          <Collapse
+            isOpened={useCollapse}
+            initialStyle={{height: 0, overflow: 'hidden'}}
+          >
+            <div className="form-group article">
+              <textarea
+                className="styled"
+                name="submitCommand"
+                id="submitCommand"
+                rows="5"
+                disabled
+                value={submitCommand}
+              ></textarea>
+              <small>
+                <p style={{ lineHeight: "1.5" }}>
+                Submit command is ready to be copied. Please copy and paste it into Syscoin Q.T console to submit your proposal. This could take a couple minutes.
+                </p>
+              </small>
+            </div>
+
+            <div className="form-actions-spaced">
+              <CopyToClipboard
+                text={submitCommand}
+                onCopy={copyButton}
+              >
+                <button className="btn btn--blue-border" type="button">Copy</button>
+              </CopyToClipboard>
+            </div>
+            
+            <form className="input-form" onSubmit={handleSubmit2(enterProposalHash)}>
+              <div className="form-group">
+                <label htmlFor="proposalHash">Proposal hash</label>
+                <input type="text" id="proposalHash" ref={register2} name="proposalHash" className="styled" maxLength="40" />
+                <ErrorMessage
+                  errors={errors2}
+                  name="proposalHash"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
+              </div>
+              <div className="form-actions-spaced">
+                <button className="btn btn--blue" type="submit">Submit</button>
+              </div>
+            </form>
+          </Collapse>
         </div>
       </div>
     </div>

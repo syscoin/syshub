@@ -57,7 +57,13 @@ export default function DescriptionProposal({onNext, onBack}) {
     }
   }
 
-  const nextEditor = (data) => {    
+  const nextEditor = (data) => {   
+    if (showPreview) {
+      setShowPreview(false);
+    }
+    if (!showEditor) {
+      setShowEditor(true);
+    }
     const descriptionRaw = draftToHtml(convertToRaw(proposalDescription.getCurrentContent()));
 
     onNext({ proposalDescription: descriptionRaw, ...data });
@@ -99,14 +105,16 @@ export default function DescriptionProposal({onNext, onBack}) {
         {
           showPreview && (
             <div className="proposals">
-              <div
-                className="proposalContent-div proposal"
-                id="preview-html-container"
-                dangerouslySetInnerHTML={{
-                  __html: draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
-                }}
-                style={{margin:'0 10px'}}
-              ></div>
+              <div className="proposal">
+                <div
+                  className="proposalContent-div"
+                  id="preview-html-container"
+                  dangerouslySetInnerHTML={{
+                    __html: draftToHtml(convertToRaw(proposalDescription.getCurrentContent()))
+                  }}
+                  style={{margin:'0 10px'}}
+                ></div>
+              </div>
             </div>
           ) 
         }
@@ -136,7 +144,6 @@ export default function DescriptionProposal({onNext, onBack}) {
           showEditor && <button
             className="btn btn--blue-border"
             onClick={() => {
-              console.log('entro aqui')
               setShowPreview(true);
               setShowEditor(false);
             }}

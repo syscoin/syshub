@@ -126,39 +126,39 @@ export const destroyMasterNode = async (token, id) => {
 };
 
 /** Proposal **/
-export const checkProposal = async (data) => {
+export const checkProposal = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/proposal/check`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err
   }
 };
 
-export const prepareProposal = async (data) => {
+export const prepareProposal = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/proposal/prepare`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err
   }
 };
 
-export const submitProposal = async (data) => {
+export const submitProposal = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/proposal/submit`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
