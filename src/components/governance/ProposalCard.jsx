@@ -5,26 +5,21 @@ import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
+import { voteProposal } from "../../utils/request";
 
 export default function ProposalCard({proposal, enabled}) {
   const {user} = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
+  const [vote, setVote] = useState('');
 
   useEffect(() => {
     console.log(proposal);
     // return () => {
     //
     // };
-  }, []);
+  }, [proposal]);
 
-  const voteYes = () => {
-
-  }
-
-  const voteNo = () => {
-
-  }
 
   const comaToNum = (str) => {
     return Number(str.replace(",", ""));
@@ -59,6 +54,15 @@ export default function ProposalCard({proposal, enabled}) {
         </div>
       )
     }
+  }
+
+  function openMnVote(vote){
+    setVote(vote);
+    setOpenMnList(true);
+  }
+
+  function afterVote() {
+    //recargar proposals y cerrar modal
   }
 
 
@@ -102,7 +106,7 @@ export default function ProposalCard({proposal, enabled}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote yes"
-              onClick={() => setOpenMnList(true)}
+              onClick={() => openMnVote(1)}
             >
               <i className="icon-up-open"></i>
             </button>
@@ -118,7 +122,7 @@ export default function ProposalCard({proposal, enabled}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote no"
-              onClick={() => setOpenMnList(true)}
+              onClick={() => openMnVote(2)}
             >
               <i className="icon-down-open"></i>
             </button>
@@ -128,7 +132,7 @@ export default function ProposalCard({proposal, enabled}) {
       <CustomModal
         open={openMnList}
         onClose={() => setOpenMnList(false)}>
-        <MnList proposal={proposal}/>
+        <MnList proposal={proposal} vote={vote} onAfterVote={afterVote} />
       </CustomModal>
     </div>
   );
