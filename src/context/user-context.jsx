@@ -11,11 +11,22 @@ import {map, shareReplay} from 'rxjs/operators';
 const UserContext = React.createContext();
 const firebase = new Firebase();
 
+let clock = timer(0, 400000).pipe(map(t => new Date()), shareReplay(1));
 
 export function UserProvider(props) {
   const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
+
+  const refresh = async () => {
+    const newTokenRefreshed = await firebase.refreshToken().catch(err => {
+      throw err
+    })
+    const newDecoded = jwtDecode(newTokenRefreshed);
+    setToken(newTokenRefreshed);
+    setUser({data: newDecoded, token: getToken().token});
+    setLoadingUser(false);
+  }
 
   useEffect(() => {
     async function loadUser() {
@@ -27,17 +38,11 @@ export function UserProvider(props) {
 
       try {
         const decoded = jwtDecode(token.decryptedToken);
-        let clock = timer(0, 40000).pipe(map(t => new Date()), shareReplay(1));
-        clock.subscribe(async () => {
+        clock.subscribe(async (f) => {
+          console.log(f)
           const dateNow = new Date().getTime();
           if (Math.floor(dateNow / 1000) > decoded.exp) {
-            const newTokenRefreshed = await firebase.refreshToken().catch(err => {
-              throw err
-            })
-            const newDecoded = jwtDecode(newTokenRefreshed);
-            setToken(newTokenRefreshed);
-            setUser({data: newDecoded, token: getToken().token});
-            setLoadingUser(false);
+            await refresh()
           } else {
             setUser({data: decoded, token: token.token});
             setLoadingUser(false);
