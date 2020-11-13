@@ -11,12 +11,12 @@ import PreviousPhoneForm from './PreviousPhoneForm';
 // import { updateUser } from "../../utils/request";
 
 
-function UserTwoFA({authData, onTwoFAChange , userPhone}) {
+function UserTwoFA({authData, onTwoFAChange, userPhone}) {
   const {user, firebase, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openPrevPhone, setOpenPrevPhone] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
-  console.log(user)
+
   const enableSMS = async (data) => {
     let currentUserDataUpdate = {
       gAuth: false
@@ -81,14 +81,22 @@ function UserTwoFA({authData, onTwoFAChange , userPhone}) {
     let currentUserDataUpdate = {
       sms: false
     }
-    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+    await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
       console.log(err)
     })
     swal.fire({
+      title: 'Verifying',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
+    await swal.fire({
       icon: 'success',
       title: 'Your phone number was removed',
       timer: 2000
     })
+
   }
 
   return (
@@ -169,21 +177,21 @@ function UserTwoFA({authData, onTwoFAChange , userPhone}) {
         open={openSMS}
         onClose={() => setOpenSMS(false)}
       >
-        <SMS2FAForm />
+        <SMS2FAForm/>
       </CustomModal>
 
       <CustomModal
         open={openPrevPhone}
         onClose={() => setOpenPrevPhone(false)}
       >
-        <PreviousPhoneForm userPhone={userPhone} />
+        <PreviousPhoneForm userPhone={userPhone}/>
       </CustomModal>
 
       <CustomModal
         open={openGAuth}
         onClose={() => setOpenGAuth(false)}
       >
-        <GAuthForm />
+        <GAuthForm/>
       </CustomModal>
     </div>
   )

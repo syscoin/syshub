@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { yupResolver } from "@hookform/resolvers";
+import React, {useState, useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
-import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
+import {PhoneNumberFormat, PhoneNumberUtil} from "google-libphonenumber";
 
-import { useUser } from "../../../context/user-context";
-import { isoArray } from "../../../utils/isoCodes";
-import { phoneValidation } from "../../../utils/phoneUtil";
+import {useUser} from "../../../context/user-context";
+import {isoArray} from "../../../utils/isoCodes";
+import {phoneValidation} from "../../../utils/phoneUtil";
 import swal from "sweetalert2";
 
 const PNF = PhoneNumberFormat;
@@ -22,11 +22,11 @@ const schema2 = yup.object().shape({
 });
 
 export default function SMS2FAForm() {
-  const { firebase, logoutUser, updateCurrentActionsUser } = useUser();
+  const {firebase, logoutUser, updateCurrentActionsUser} = useUser();
 
   const [codeSent, setCodeSent] = useState(false);
   const [verifyId, setVerifyId] = useState("");
-  const { register, handleSubmit, errors } = useForm({
+  const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
@@ -56,7 +56,7 @@ export default function SMS2FAForm() {
     //eslint-disable-next-line
   }, []);
 
-  const sendSMS = async ({ areaCode, phoneNumber }) => {
+  const sendSMS = async ({areaCode, phoneNumber}) => {
     const userPhone = phoneValidation(phoneNumber, areaCode);
     if (userPhone) {
       swal.fire({
@@ -66,11 +66,8 @@ export default function SMS2FAForm() {
           swal.showLoading()
         }
       })
-      console.log(userPhone);
 
       const appVerifier = window.recaptchaVerifier;
-      console.log(appVerifier);
-      console.log(phoneUtil.format(userPhone, PNF.E164));
       const verificationId = await firebase.sendSMSToPhone(
         phoneUtil.format(userPhone, PNF.E164),
         appVerifier
@@ -80,17 +77,14 @@ export default function SMS2FAForm() {
         timer: 1500,
         icon: 'success'
       });
-      console.log(verificationId);
-      console.log(codeSent);
       setVerifyId(verificationId);
       setCodeSent(true);
     }
 
   };
 
-  const auth = async ({ phoneCode }) => {
+  const auth = async ({phoneCode}) => {
     let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode);
-    console.log(credentials);
     await firebase
       .updatePhoneCredentials(credentials)
       .then(async () => {
@@ -99,18 +93,27 @@ export default function SMS2FAForm() {
           twoFa: true,
           gAuth: false
         };
-        await updateCurrentActionsUser(currentUserDataUpdate).catch((err) => {
+        await updateCurrentActionsUser(currentUserDataUpdate).then(async () => {
+           swal.fire({
+            title: 'Verifying',
+            showConfirmButton: false,
+            willOpen: () => {
+              swal.showLoading()
+            }
+          })
+          await swal.fire({
+            icon: "success",
+            title: "Your phone number was verified",
+            text: "Please log in again",
+            timer: 2000,
+            showConfirmButton: false
+          }).then(async () => {
+            await logoutUser();
+          })
+
+        }).catch((err) => {
           throw err;
         });
-        await swal.fire({
-          icon: "success",
-          title: "Your phone number was verified",
-          text: "Please log in again",
-          timer: 2000,
-          showConfirmButton: false
-        });
-        
-        logoutUser();
       })
       .catch((err) => {
         throw err;
@@ -118,7 +121,7 @@ export default function SMS2FAForm() {
     // SMSAuth({phoneNumber, ...data});
   };
 
-  
+
   return (
     <>
       <h3>2FA SMS</h3>
@@ -146,9 +149,9 @@ export default function SMS2FAForm() {
             <ErrorMessage
               errors={errors}
               name="areaCode"
-              render={({ message }) => (
+              render={({message}) => (
                 <small>
-                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                  <p style={{lineHeight: "1.5"}}>{message}</p>
                 </small>
               )}
             />
@@ -165,9 +168,9 @@ export default function SMS2FAForm() {
             <ErrorMessage
               errors={errors}
               name="phoneNumber"
-              render={({ message }) => (
+              render={({message}) => (
                 <small>
-                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                  <p style={{lineHeight: "1.5"}}>{message}</p>
                 </small>
               )}
             />
@@ -176,7 +179,7 @@ export default function SMS2FAForm() {
           <div
             id={"recaptcha"}
             className="recaptcha"
-            style={{ display: "inline-block" }}
+            style={{display: "inline-block"}}
           />
 
           <button
@@ -206,9 +209,9 @@ export default function SMS2FAForm() {
             <ErrorMessage
               errors={errors2}
               name="phoneCode"
-              render={({ message }) => (
+              render={({message}) => (
                 <small>
-                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                  <p style={{lineHeight: "1.5"}}>{message}</p>
                 </small>
               )}
             />
@@ -225,5 +228,5 @@ export default function SMS2FAForm() {
       </div>
     </>
   );
-  
+
 }

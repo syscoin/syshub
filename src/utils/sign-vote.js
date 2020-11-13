@@ -4,7 +4,7 @@ import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
 import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
 
-export default (obj) => {
+const signVote = (obj) => {
   const {mnPrivateKey, vinMasternode, gObjectHash, voteOutcome} = obj
 
   const time = Math.floor(Date.now() / 1000);
@@ -76,3 +76,5 @@ export default (obj) => {
     signature
   }
 }
+
+export default signVote;

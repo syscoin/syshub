@@ -5,6 +5,8 @@ import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
 import {register, updateUser, updateActionsUser, deleteUser} from '../utils/request';
 import {useHistory} from 'react-router';
+import {timer} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 const UserContext = React.createContext();
 const firebase = new Firebase();
@@ -15,7 +17,6 @@ export function UserProvider(props) {
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
 
-
   useEffect(() => {
     async function loadUser() {
       const token = getToken();
@@ -25,20 +26,23 @@ export function UserProvider(props) {
       }
 
       try {
-        const dateNow = new Date().getTime();
         const decoded = jwtDecode(token.decryptedToken);
-        if (Math.floor(dateNow / 1000) > decoded.exp) {
-          const newTokenRefreshed = await firebase.refreshToken().catch(err => {
-            throw err
-          })
-          const newDecoded = jwtDecode(newTokenRefreshed);
-          setToken(newTokenRefreshed);
-          setUser({data: newDecoded, token: getToken().token});
-          setLoadingUser(false);
-        } else {
-          setUser({data: decoded, token: token.token});
-          setLoadingUser(false);
-        }
+        let clock = timer(0, 40000).pipe(map(t => new Date()), shareReplay(1));
+        clock.subscribe(async () => {
+          const dateNow = new Date().getTime();
+          if (Math.floor(dateNow / 1000) > decoded.exp) {
+            const newTokenRefreshed = await firebase.refreshToken().catch(err => {
+              throw err
+            })
+            const newDecoded = jwtDecode(newTokenRefreshed);
+            setToken(newTokenRefreshed);
+            setUser({data: newDecoded, token: getToken().token});
+            setLoadingUser(false);
+          } else {
+            setUser({data: decoded, token: token.token});
+            setLoadingUser(false);
+          }
+        })
       } catch (error) {
         console.log(error);
         setLoadingUser(false);
@@ -107,7 +111,7 @@ export function UserProvider(props) {
   async function logoutUser() {
     setUser(null);
     deleteToken();
-    history.push('/login');
+    await history.go('/login');
     await firebase.signOut();
     history.go(0);
   }

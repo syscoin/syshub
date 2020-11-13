@@ -5,6 +5,7 @@ import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
+import { voteProposal } from "../../utils/request";
 
 export default function ProposalCard({proposal, enabled}) {
   const {user} = useUser();
@@ -14,6 +15,7 @@ export default function ProposalCard({proposal, enabled}) {
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
   const [endDate, setEndDate] = useState(new Date());
+  const [vote, setVote] = useState('');
 
   useEffect(() => {
     let {end_epoch, nPayment} = proposal
@@ -33,13 +35,9 @@ export default function ProposalCard({proposal, enabled}) {
     // return () => {
     //
     // };
-  }, [days_remaining, month_remaining, payment_type]);
+  }, [proposal, days_remaining, month_remaining, payment_type]);
 
   const voteYes = () => {
-
-  }
-
-  const voteNo = () => {
 
   }
 
@@ -76,6 +74,15 @@ export default function ProposalCard({proposal, enabled}) {
         </div>
       )
     }
+  }
+
+  function openMnVote(vote) {
+    setVote(vote);
+    setOpenMnList(true);
+  }
+
+  function afterVote() {
+    //recargar proposals y cerrar modal
   }
 
 
@@ -119,7 +126,7 @@ export default function ProposalCard({proposal, enabled}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote yes"
-              onClick={() => setOpenMnList(true)}
+              onClick={() => openMnVote(1)}
             >
               <i className="icon-up-open"></i>
             </button>
@@ -135,7 +142,7 @@ export default function ProposalCard({proposal, enabled}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote no"
-              onClick={() => setOpenMnList(true)}
+              onClick={() => openMnVote(2)}
             >
               <i className="icon-down-open"></i>
             </button>
@@ -145,7 +152,7 @@ export default function ProposalCard({proposal, enabled}) {
       <CustomModal
         open={openMnList}
         onClose={() => setOpenMnList(false)}>
-        <MnList proposal={proposal}/>
+        <MnList proposal={proposal} vote={vote} onAfterVote={afterVote}/>
       </CustomModal>
     </div>
   );

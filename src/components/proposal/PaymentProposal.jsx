@@ -5,7 +5,7 @@ import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
-import ProposalPaymentDates from "./ProposalPaymentDates";
+
 import {getInfo, nextGovernanceRewardInfo} from "../../utils/request";
 
 const schema = yup.object().shape({

@@ -24,7 +24,7 @@ function Login(props) {
   const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
   const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [userSignInSms, setUserSignInSms] = useState({});
   const [userSignInGAuth, setUserSignInGAuth] = useState("");
 

@@ -154,9 +154,9 @@ export const prepareProposal = async (token, data) => {
   }
 };
 
-export const submitProposal = async (token, data) => {
+export const submitProposal = async (token, id, data) => {
   try {
-    return await axios.post(`${API_URI}/proposal/submit`, data, {
+    return await axios.put(`${API_URI}/proposal/submit/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -210,11 +210,11 @@ export const createProposal = async (data) => {
   }
 }
 
-export const updateProposal = async (id, data) => {
+export const updateProposal = async (token, id, data) => {
   try {
-    return await axios.put(`${API_URI}/proposal/${id}`, data, {
+    return await axios.put(`${API_URI}/proposal/${id}`, {data: data}, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err

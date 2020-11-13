@@ -9,8 +9,8 @@ import {
   getAuthQrCode,
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
-import { useUser } from "../../../context/user-context";
-import { encryptAes } from "../../../utils/encryption";
+import {useUser} from "../../../context/user-context";
+import {encryptAes} from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
@@ -62,17 +62,27 @@ export default function GAuthForm() {
         twoFa: true,
         sms: false
       };
-      await updateCurrentActionsUser(changeUserData).catch((err) => {
+      await updateCurrentActionsUser(changeUserData).then(async () => {
+         swal.fire({
+          title: 'Verifying',
+          showConfirmButton: false,
+          willOpen: () => {
+            swal.showLoading()
+          }
+        })
+        await swal.fire({
+          icon: "success",
+          title: "Google Authenticator it's activated",
+          text: "Please log in again",
+          timer: 2000,
+          showConfirmButton: false
+        }).then(async () => {
+          await logoutUser();
+        })
+      }).catch((err) => {
         throw err;
       });
-      await swal.fire({
-        icon: "success",
-        title: "Google Authenticator it's activated",
-        text: "Please log in again",
-        timer: 2000,
-        showConfirmButton: false
-      });
-      logoutUser();
+
     } else {
       swal.fire({
         icon: "error",
