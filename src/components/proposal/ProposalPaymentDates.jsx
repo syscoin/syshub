@@ -47,7 +47,8 @@ const ProposalPaymentDates = ({nPayment, start_epoch, end_epoch, funded}) => {
       setPayoutDates(dates)
     }
     getPaymentDates()
-  }, [nPayment, start_epoch, end_epoch])
+  }, [nPayment, start_epoch, end_epoch]);
+  
   return (
     <div className="">
       <div className="">

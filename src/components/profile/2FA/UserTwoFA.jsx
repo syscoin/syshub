@@ -27,15 +27,43 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
   }
 
   const disableSMS = async () => {
-    console.log('disable SMS')
-    let currentUserDataUpdate = {
-      sms: false
-    }
-    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-      console.log(err)
-    })
     await removePhoneNumberProvider();
-    await onTwoFAChange();
+  }
+  const removePhoneNumberProvider = async () => {
+    const result = await swal.fire({
+      icon: 'warning',
+      title: "You will disable SMS 2FA",
+      text: 'Your phone number will also be removed',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it'
+    })
+    if (result.isConfirmed) { 
+      swal.fire({
+        title: 'Removing please wait',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      });
+      await firebase.removePhoneNumber().catch(err => {
+        console.log(err)
+        throw err
+      });
+      let currentUserDataUpdate = {
+        sms: false
+      }
+      await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
+        console.log(err)
+      });
+      
+      swal.fire({
+        icon: 'success',
+        title: 'Your phone number was removed',
+        timer: 2000
+      });
+
+      await onTwoFAChange();
+    }
   }
 
   const enableGAuth = async (data) => {
@@ -62,42 +90,40 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
   }
 
   const removeSecret = async () => {
-    let currentUserDataUpdate = {
-      gAuthSecret: null,
-      gAuth: false
-    }
-    await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-      console.log(err)
+    const result = await swal.fire({
+      title: 'Your google auth secret will be removed',
+      text: "You will also disable Google Authenticator 2FA",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it',
     })
-
-    await onTwoFAChange();
-
-  }
-  const removePhoneNumberProvider = async () => {
-    await firebase.removePhoneNumber().catch(err => {
-      console.log(err)
-      throw err
-    })
-    let currentUserDataUpdate = {
-      sms: false
-    }
-    await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
-      console.log(err)
-    })
-    swal.fire({
-      title: 'Verifying',
-      showConfirmButton: false,
-      willOpen: () => {
-        swal.showLoading()
+    if (result.isConfirmed) {
+      swal.fire({
+        title: 'Removing please wait',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      });
+      let currentUserDataUpdate = {
+        gAuthSecret: null,
+        gAuth: false
       }
-    })
-    await swal.fire({
-      icon: 'success',
-      title: 'Your phone number was removed',
-      timer: 2000
-    })
+      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+        console.log(err)
+      });
+
+      swal.fire({
+        icon: 'success',
+        title: 'Your secret was removed and google authenticator is disabled',
+        timer: 2000
+      });
+  
+      await onTwoFAChange();
+    }
 
   }
+  
 
   return (
     <div className="cols-top cols">
@@ -163,11 +189,9 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
           authData.gAuth && (
             <div className="btn-group">
               <button className="btn btn--blue-border" onClick={removeSecret}>
-                Remove secret
+                Remove secret and disable
               </button>
-              <button className="btn btn--blue-border" onClick={disableGAuth}>
-                Disable
-              </button>
+
             </div>
           )
         }

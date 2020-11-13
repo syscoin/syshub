@@ -50,6 +50,7 @@ export default function ProposalForm() {
   const [collapse, setCollapse] = useState(true);
   const [useCollapse, setUseCollapse] = useState(false);
   const [txId, setTxId] = useState('')
+  const [preparing, setPreparing] = useState(false);
   const [proposalUid, setProposalUid] = useState('');
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
@@ -91,6 +92,8 @@ export default function ProposalForm() {
   }
 
   const checkProposalAndPrepare = async () => {
+    setPreparing(true);
+
     const name = title.trim().toLowerCase().replace(/[^A-Za-z0-9]/g, '');
     const proposal = {
       type: 1,
@@ -118,6 +121,7 @@ export default function ProposalForm() {
       setProposalUid(prepare.data.uid)
       setPrepareCommand(prepare.data.command);
 
+      setPreparing(false);
       await next();
     } catch (error) {
       console.log(error);
@@ -190,12 +194,19 @@ export default function ProposalForm() {
         <div className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}>
           <div className="proposals article">
             <ProposalPreview title={title} description={description} url={url} payment={payment}/>
+          
+            <div className="form-actions-spaced">
+              <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
+              <button
+                className="btn btn--blue"
+                type="button"
+                onClick={checkProposalAndPrepare}
+                disabled={preparing}
+              >Prepare</button>
+            </div>
+          
           </div>
 
-          <div className="form-actions-spaced">
-            <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
-            <button className="btn btn--blue" type="button" onClick={checkProposalAndPrepare}>Prepare</button>
-          </div>
         </div>
 
         <div className="wizard-head">
