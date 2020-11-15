@@ -39,7 +39,10 @@ const PaymentProposal = ({onNext, onBack}) => {
 
   const {register, watch, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      paymentNumber: 1
+    }
   });
 
   const watchedAmount = watch('paymentAmount');

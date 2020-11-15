@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProposalPreview({ title, description, url, payment}) {
   return (
-    <div className="proposal">
+    <div className="proposal" style={{float: 'none'}}>
       <label style={{fontSize: '24px'}}>{title}</label>
       <div dangerouslySetInnerHTML={{ __html: description }} style={{margin:'0 10px'}}></div>
       <label>{url || 'No URL was given'}</label>

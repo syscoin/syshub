@@ -94,7 +94,7 @@ export default function SMS2FAForm() {
           gAuth: false
         };
         await updateCurrentActionsUser(currentUserDataUpdate).then(async () => {
-           swal.fire({
+          swal.fire({
             title: 'Verifying',
             showConfirmButton: false,
             willOpen: () => {

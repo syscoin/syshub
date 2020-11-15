@@ -63,7 +63,7 @@ export default function GAuthForm() {
         sms: false
       };
       await updateCurrentActionsUser(changeUserData).then(async () => {
-         swal.fire({
+        swal.fire({
           title: 'Verifying',
           showConfirmButton: false,
           willOpen: () => {
@@ -80,7 +80,11 @@ export default function GAuthForm() {
           await logoutUser();
         })
       }).catch((err) => {
-        throw err;
+        swal.fire({
+          icon: "error",
+          title: "There was an error",
+          text: err.message
+        });
       });
 
     } else {

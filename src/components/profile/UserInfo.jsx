@@ -30,7 +30,7 @@ export default function UserInfo() {
 
   useEffect(() => {
     console.log(userInfo)
-  }, [userInfo]);
+  }, []);
 
   const emailVerification = () => {
     firebase.generateLinkVerification().then(() => {
