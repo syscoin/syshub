@@ -40,12 +40,16 @@ export function UserProvider(props) {
         const decoded = jwtDecode(token.decryptedToken);
         clock.subscribe(async (f) => {
           console.log(f)
-          const dateNow = new Date().getTime();
-          if (Math.floor(dateNow / 1000) > decoded.exp) {
-            await refresh()
+          if (navigator.onLine) {
+            const dateNow = new Date().getTime();
+            if (Math.floor(dateNow / 1000) > decoded.exp) {
+              await refresh()
+            } else {
+              setUser({data: decoded, token: token.token});
+              setLoadingUser(false);
+            }
           } else {
-            setUser({data: decoded, token: token.token});
-            setLoadingUser(false);
+            console.log('sin internet')
           }
         })
       } catch (error) {
