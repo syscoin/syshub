@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     .required("The verification code is required")
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(6, "Must be 6 digits")
-    .max(6, "Must be 6 digits"),
+    .max(6, "Must be 6 digits")
 });
 
 export default function GAuthForm() {

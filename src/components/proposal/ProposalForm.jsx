@@ -32,10 +32,14 @@ import ProposalPreview from "./ProposalPreview";
 */
 
 const schema = yup.object().shape({
-  paymentTxId: yup.string().required('Payment txid is required')
+  paymentTxId: yup.string()
+    // .test('len', 'Must be exactly 64 characters', val => val.length === 64)
+    .required('Payment txid is required')
 });
 const schema2 = yup.object().shape({
-  proposalHash: yup.string().required('proposal hash is required')
+  proposalHash: yup.string()
+    // .test('len', 'Must be exactly 64 characters', val => val.length === 64)
+    .required('proposal hash is required')
 });
 
 export default function ProposalForm() {
@@ -135,19 +139,44 @@ export default function ProposalForm() {
   }
 
   const enterPaymentTxId = async (data) => {
+    swal.fire({
+      title: 'Creating submit command',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     console.log(data);
     let {paymentTxId} = data;
     await updateProposal(user.token, proposalUid, {txId: paymentTxId}).then(async resp => {
       let {data: {proposal: {prepareObjectProposal}}} = resp;
-      let {data: {commandSubmit}} = await submitProposal(user.token, proposalUid, {...prepareObjectProposal, txId: paymentTxId}).catch(err => {
-        console.log(err)
-      })
-      console.log(commandSubmit)
-      setSubmitCommand(commandSubmit)
+      let { data: { commandSubmit } } = await submitProposal(user.token, proposalUid, { ...prepareObjectProposal, txId: paymentTxId })
+        .catch(err => {
+          swal.fire({
+            icon: 'error',
+            title: 'There was an error',
+            text: err.message        
+          });
+          console.log(err)
+        })
+      console.log(commandSubmit);
+      setSubmitCommand(commandSubmit);
+      await swal.fire({
+        icon: 'success',
+        title: 'Submit command created',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
       setUseCollapse(true);
       setCollapse(false);
       console.log(data)
     }).catch(err => {
+      swal.fire({
+        icon: 'error',
+        title: 'There was an error',
+        text: err.message        
+      });
       console.log(err)
     })
   }

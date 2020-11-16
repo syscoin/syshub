@@ -24,7 +24,7 @@ import Profile from './pages/Profile';
 import NewProposal from './pages/NewProposal';
 
 
-class App extends Component {
+class AppComponent extends Component {
     
     render() {
         return (
@@ -50,6 +50,9 @@ class App extends Component {
         )
     }
 }
-export default () => (
-    <UserProvider><App /></UserProvider>
+
+const App = () => (
+    <UserProvider><AppComponent /></UserProvider>
 )
+
+export default App;

@@ -70,14 +70,14 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
       {masterNodes.length > 0 ? (
         <>
           <div className="form-group">
-            <ul style={{ listStyle: "none" }}>
+            <ul className="selector">
               {masterNodes.map(mn => (
                 <MnItem key={mn.uid} mn={mn} onAddMN={addMnVote} onRemoveMN={removeMnVote} /> 
               ))}
             </ul>
             
           </div>
-          <div className="form-actions-spaced text-center">
+          <div className="form-actions-spaced text-center" style={{ marginTop:'10px'}}>
             <button
               className="btn btn--blue"
               onClick={voting}
