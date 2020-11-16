@@ -17,7 +17,9 @@ export default function CustomModal(props) {
         closeButton: { fill: '#D3DFFF' }
       }}
     >
-      {props.children}
+      <div className="article">
+        {props.children}
+      </div>
     </Modal>
   );
 }

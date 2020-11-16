@@ -63,7 +63,7 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
 
 
   return (
-    <div className="article">
+    <>
       <h3>{proposal.title || proposal.name}</h3>
       <p>Select the masternodes to vote with</p>
       {masterNodes.length > 0 ? (
@@ -94,7 +94,7 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
           }
         </>
       )}
-    </div>
+    </>
   );
 };
 

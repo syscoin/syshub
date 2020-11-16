@@ -210,11 +210,11 @@ export const notCompletedProposal = async (token) => {
   })
 }
 
-export const createProposal = async (data) => {
+export const createProposal = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/proposal`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err

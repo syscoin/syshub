@@ -17,7 +17,7 @@ const GAuthTwoFAFormLogin = ({userSignInGAuth, verifyGAuth}) => {
 
   
   return (
-    <div className="input-form article">
+    <div className="input-form">
       <form>
         <div className="form-group">
           <label htmlFor="gAuthCode">

@@ -31,7 +31,7 @@ const SMSTwoFAFormLogin = ({userSignInSms, closeModal}) => {
   }, []);
 
   return (
-    <div className="input-form article">
+    <div className="input-form">
       <form>
         <div className="form-group">
           <label htmlFor="phoneCode">

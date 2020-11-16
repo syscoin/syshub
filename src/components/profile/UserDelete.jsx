@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import swal from "sweetalert2";
 
 import {useUser} from '../../context/user-context';
