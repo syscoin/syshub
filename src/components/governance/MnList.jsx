@@ -10,7 +10,6 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
   let { user } = useUser();
   const [loadingMN, setLoadingMN] = useState(false);
   const [masterNodes, setMasterNodes] = useState([]);
-  const [masterNodesSelected, setMasterNodesSelected] = useState([]);
   const [masterNodesForVote, setMasterNodesForVote] = useState([]);
 
 
@@ -19,11 +18,11 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
     console.log(vote);
     const getMnByUser = async () => {
       setLoadingMN(true);
-      let { data } = await getUserMasterNodes(user.token).catch((err) => {
+      let {data} = await getUserMasterNodes(user.token).catch((err) => {
         throw err;
       });
       setLoadingMN(false);
-      setMasterNodes(data.nodes);
+      setMasterNodes(data.nodes || []);
     };
     getMnByUser();
   }, []);

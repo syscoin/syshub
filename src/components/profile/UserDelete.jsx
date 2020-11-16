@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import Swal from "sweetalert2";
+import swal from "sweetalert2";
+
 import {useUser} from '../../context/user-context';
 import {deleteUser, get2faInfoUser} from '../../utils/request';
 import CustomModal from "../global/CustomModal";
 import SMSTwoFAFormLogin from "../login/SMSTwoFAFormLogin";
 import GAuthTwoFAFormLogin from "../login/GAuthTwoFAFormLogin";
-import Background from "../global/Background";
-import swal from "sweetalert2";
 import {decryptAes} from "../../utils/encryption";
 import {verifyAuthCode} from "../../utils/twoFaAuthentication";
 
@@ -18,7 +17,7 @@ export default function UserDelete() {
   const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
 
   const deleteAccount = async () => {
-    const result = await Swal.fire({
+    const result = await swal.fire({
       title: 'Your account will be deleted.',
       text: "This action cannot be undone.",
       icon: 'warning',
@@ -35,7 +34,7 @@ export default function UserDelete() {
           setOpenGAuth2Fa(true)
         } else {
           await deleteUser(user.token, user.data.user_id).then(async () => {
-            await Swal.fire({
+            await swal.fire({
               title: 'Deleted',
               text: "Your account has been deleted",
               icon: 'success',
@@ -48,7 +47,7 @@ export default function UserDelete() {
         }
 
       } catch (error) {
-        Swal.fire({
+        swal.fire({
           title: 'There was an error',
           text: error,
           icon: 'error',
@@ -66,7 +65,7 @@ export default function UserDelete() {
     let x = firebase.verifyPhoneCode(verifier, phoneCode)
     console.log(x)
     // await deleteUser(user.token, user.data.user_id);
-    // await Swal.fire({
+    // await swal.fire({
     //   title: 'Deleted',
     //   text: "Your account has been deleted",
     //   icon: 'success',
@@ -96,7 +95,7 @@ export default function UserDelete() {
         showConfirmButton: false
       }).then(async () => {
         await deleteUser(user.token, user.data.user_id).then(async () => {
-          await Swal.fire({
+          await swal.fire({
             title: 'Deleted',
             text: "Your account has been deleted",
             icon: 'success',
