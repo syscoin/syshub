@@ -167,6 +167,30 @@ dl:last-child,
 table:last-child,
 blockquote:last-child { margin-bottom: 0; }
 
+ul.selector
+{
+	list-style:none;
+
+	li 
+	{
+		padding: 8px 20px;
+		margin:2px 0;
+    line-height: 24px;
+
+		&.active
+		{
+			background: #1d1e3c;
+			color:$vote-green;
+			
+		}
+		&:hover
+		{
+			cursor:pointer;
+			background: #1d1e3c;
+		}
+	}
+}
+
 .wrapper { position: relative; min-height: 100vh; overflow: hidden; }
 
 

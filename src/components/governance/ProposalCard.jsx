@@ -133,10 +133,10 @@ export default function ProposalCard({proposal, enabled}) {
             <button
               style={{border: "none", outline: "none"}}
               className="vote"
-              title="More info"
-              onClick={() => setUseCollapse(!useCollapse)}
+              title="Abstain"
+              onClick={() => openMnVote(3)}
             >
-              <i className="icon-info"></i>
+              <i className="icon-minus-outline"></i>
             </button>
             <button
               style={{border: "none", outline: "none"}}
