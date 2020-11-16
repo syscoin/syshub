@@ -196,6 +196,20 @@ export const getOneProposal = async (id) => {
   }
 }
 
+export const notCompletedProposal = async (token) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/proposal/pending/recover`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 export const createProposal = async (data) => {
   try {
     return await axios.post(`${API_URI}/proposal`, data, {
