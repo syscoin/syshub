@@ -224,11 +224,11 @@ export const updateProposal = async (token, id, data) => {
   }
 }
 
-export const destroyProposal = async (id) => {
+export const destroyProposal = async (token, id) => {
   try {
     return await axios.delete(`${API_URI}/proposal/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err
