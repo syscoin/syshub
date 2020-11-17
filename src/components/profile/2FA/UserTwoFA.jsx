@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import CustomModal from '../../global/CustomModal';
 
 
@@ -12,19 +12,19 @@ import PreviousPhoneForm from './PreviousPhoneForm';
 
 
 function UserTwoFA({authData, onTwoFAChange, userPhone}) {
-  const {user, firebase, updateCurrentActionsUser} = useUser();
+  const { firebase, updateCurrentActionsUser} = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openPrevPhone, setOpenPrevPhone] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
 
-  const enableSMS = async (data) => {
+  /* const enableSMS = async (data) => {
     let currentUserDataUpdate = {
       gAuth: false
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
     })
-  }
+  } */
 
   const disableSMS = async () => {
     await removePhoneNumberProvider();
@@ -66,7 +66,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
     }
   }
 
-  const enableGAuth = async (data) => {
+  /* const enableGAuth = async (data) => {
     console.log('enable GAuth');
     let currentUserDataUpdate = {
       gAuth: false
@@ -74,9 +74,9 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
       console.log(err)
     })
-  }
+  } */
 
-  const disableGAuth = async () => {
+  /* const disableGAuth = async () => {
     console.log('disable GAuth')
     let currentUserDataUpdate = {
       gAuth: false
@@ -87,7 +87,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
     await onTwoFAChange();
 
-  }
+  } */
 
   const removeSecret = async () => {
     const result = await swal.fire({

@@ -25,6 +25,7 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
       setMasterNodes(data.nodes || []);
     };
     getMnByUser();
+    // eslint-disable-next-line
   }, []);
 
   const addMnVote = (mn) => {

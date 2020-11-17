@@ -248,7 +248,7 @@ export const destroyProposal = async (token, id) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err
   }
 }
 
@@ -365,6 +365,7 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
     const lastSuperBlockGapSeconds = (blocks - lastsuperblock) * 60;
     const votingDeadlinesGap = 3 * 24 * 60 * 60;
     const nextSuperBlockEpoch = nowEpoch + nextSuperBlockGapSeconds;
+    // eslint-disable-next-line
     const lastSuperBlockEpoch = nowEpoch - lastSuperBlockGapSeconds;
 
     dates.unshift(lastsuperblock);

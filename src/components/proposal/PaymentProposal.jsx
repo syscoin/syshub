@@ -6,7 +6,7 @@ import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
 
-import {getInfo, nextGovernanceRewardInfo} from "../../utils/request";
+import {nextGovernanceRewardInfo} from "../../utils/request";
 
 const schema = yup.object().shape({
   paymentNumber: yup.number()
@@ -28,7 +28,6 @@ const schema = yup.object().shape({
 });
 
 const PaymentProposal = ({onNext, onBack}) => {
-  const [chainData, setChainData] = useState({});
   const [paymentQuantity, setPaymentQuantity] = useState(1);
   const [nextGovernanceDate, setNextGovernanceDate] = useState();
   const [proposalStartEpoch, setProposalStartEpoch] = useState();
@@ -112,14 +111,6 @@ const PaymentProposal = ({onNext, onBack}) => {
   }
 
   useEffect(() => {
-    const getChainInfoData = async () => {
-      let {data} = await getInfo().catch(err => {
-        throw err
-      })
-      // console.log(data)
-      setChainData(data)
-    }
-    getChainInfoData()
     const calculatePaymentDates = async () => {
       const nextGovernanceDate = await getGovernanceDate();
       // console.log(nextGovernanceDate)
@@ -133,7 +124,8 @@ const PaymentProposal = ({onNext, onBack}) => {
       setProposalEndEpoch(endEpoch);
       setProposalPayoutDates(proposalPayoutDates);
     }
-    calculatePaymentDates()
+    calculatePaymentDates();
+    // eslint-disable-next-line
   }, [])
 
   const nextPayment = (data) => {

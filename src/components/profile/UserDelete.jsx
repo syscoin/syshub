@@ -11,7 +11,6 @@ import {verifyAuthCode} from "../../utils/twoFaAuthentication";
 
 export default function UserDelete() {
   const {user, logoutUser, firebase} = useUser();
-  const [userSignInSms, setUserSignInSms] = useState({});
   const [userSignInGAuth, setUserSignInGAuth] = useState("");
   const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
   const [openGAuthFa, setOpenGAuth2Fa] = useState(false);

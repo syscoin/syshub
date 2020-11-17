@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import swal from "sweetalert2";
 import {Collapse} from 'react-collapse';
+import { useHistory } from "react-router";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
 import {useUser} from '../../context/user-context';
-import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal} from "../../utils/request";
+import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal, destroyProposal} from "../../utils/request";
 
 import CustomModal from '../global/CustomModal';
 import TitleProposal from './TitleProposal';
@@ -34,32 +35,34 @@ import ProposalPreview from "./ProposalPreview";
 
 const schema = yup.object().shape({
   paymentTxId: yup.string()
-    // .test('len', 'Must be exactly 64 characters', val => val.length === 64)
+    .test('len', 'Must be exactly 64 characters', val => val.length === 64)
     .required('Payment txid is required')
 });
 const schema2 = yup.object().shape({
   proposalHash: yup.string()
-    // .test('len', 'Must be exactly 64 characters', val => val.length === 64)
+    .test('len', 'Must be exactly 64 characters', val => val.length === 64)
     .required('proposal hash is required')
 });
 
 export default function ProposalForm() {
   const { user } = useUser();
-  const [loadingProposal, setLoadingProposal] = useState(false);
+  //COMPONENT STATES
+  const [currentStep, setCurrentStep] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+  const [collapse, setCollapse] = useState(true);
+  const [useCollapse, setUseCollapse] = useState(false);
+  
+  //PROPOSAL STATES
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
   const [payment, setPayment] = useState(null);
   const [prepareCommand, setPrepareCommand] = useState('');
+  const [proposalCompleted, setProposalCompleted] = useState(false);
   const [submitCommand, setSubmitCommand] = useState('');
-  const [currentStep, setCurrentStep] = useState(0);
-  const [collapse, setCollapse] = useState(true);
-  const [useCollapse, setUseCollapse] = useState(false);
   const [preparing, setPreparing] = useState(false);
   const [proposalUid, setProposalUid] = useState('');
 
-  const mountedRef = useRef(true);
 
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
@@ -72,24 +75,82 @@ export default function ProposalForm() {
 
   useEffect(() => {
     const getSavedProposal = async () => {
-      setLoadingProposal(true);
       try {
         let {data} = await notCompletedProposal(user.token).catch((err) => {
           throw err;
         });
         console.log(data);
+        if (data.proposal) {
+          showSavedProposal(data.proposal);
+        }
       } catch (error) {
         console.log(error)
       }
-      
-      setLoadingProposal(false);
     };
-    if (mountedRef.current) {
-      getSavedProposal();
-    }
     
-    return () => {mountedRef.current = false}
+    getSavedProposal();
   }, []);
+
+  const showSavedProposal = (proposal) => {
+    console.log(proposal);
+    setTitle(proposal.title);
+    setDescription(proposal.description);
+    if (proposal.url !== 'emptyField') setUrl(proposal.url);
+    const payment = {
+      paymentNumber: proposal.nPayment,
+      paymentAmount: proposal.payment_amount,
+      paymentAddress: proposal.payment_address,
+      proposalStartEpoch: proposal.start_epoch,
+      proposalEndEpoch: proposal.end_epoch
+    }
+    setPayment(payment);
+    setProposalUid(proposal.uid);
+    setPrepareCommand(proposal.prepareCommand);
+    setProposalCompleted(proposal.complete);
+    setSubmitCommand(proposal.submitCommand || '');
+
+    setOpenModal(true);
+  }
+
+  const cancelLoadProposal = async () => {
+    setOpenModal(false);
+    setCurrentStep(0);
+    try {
+      await destroyProposal(user.token, proposalUid).catch((err) => {
+        throw err;
+      });
+
+      
+    } catch (error) {
+      await swal.fire({
+        icon: 'error',
+        title: 'Please reload the page',
+        text: error.message,
+        timer: 2000
+      });
+    }
+
+    setTitle('');
+    setDescription('');
+    setUrl('');
+    setPayment(null);
+    setProposalUid('');
+    setPrepareCommand('');
+    setProposalCompleted('');
+    setSubmitCommand('');
+
+    //cancelar el proposal y empezar de cero
+  }
+  const continueProposal = () => {
+    setCurrentStep(4);
+    if (proposalCompleted) {
+      setUseCollapse(true);
+      setCollapse(false);
+    }
+    setOpenModal(false);
+
+
+  }
 
   const back = () => {
     setCurrentStep(currentStep - 1);
@@ -248,7 +309,7 @@ export default function ProposalForm() {
             <span>4</span>Preview proposal
           </div>
           <div className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}>
-            <div className="proposals article">
+            <div className="article">
               <ProposalPreview title={title} description={description} url={url} payment={payment}/>
             
               <div className="form-actions-spaced">
@@ -366,10 +427,27 @@ export default function ProposalForm() {
       
       <CustomModal
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={cancelLoadProposal}
       >
-        <h2>Your current proposal</h2>
-        <ProposalPreview title={title} description={description} url={url} payment={payment}/>
+        <h3>You were creating a proposal</h3>
+        <small>
+          <p style={{ lineHeight: "1.5" }}>
+            Save and continue with the previous proposal info, or cancel it to create a new one
+          </p>
+        </small>
+        <ProposalPreview title={title} description={description} url={url} payment={payment} />
+
+        <button
+          className="btn btn--blue-border"
+          style={{marginBottom:'10px',marginLeft:'10px'}}
+          onClick={cancelLoadProposal}
+        >Cancel</button>
+        <button
+          className="btn btn--blue" 
+          style={{ marginBottom: '10px', marginLeft: '10px' }}
+          onClick={continueProposal}
+        >Continue</button>
+
       </CustomModal>
     </>
   );

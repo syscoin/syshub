@@ -5,6 +5,7 @@ import secp256k1 from 'secp256k1'
 import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
 
 const signVote = (obj) => {
+  // eslint-disable-next-line
   const {mnPrivateKey, vinMasternode, gObjectHash, voteOutcome} = obj
 
   const time = Math.floor(Date.now() / 1000);

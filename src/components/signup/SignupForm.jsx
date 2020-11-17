@@ -30,6 +30,7 @@ const SignupForm = (props) => {
       }
     })
     window.recaptchaVerifier.render();
+    // eslint-disable-next-line
   }, [])
 
   return (

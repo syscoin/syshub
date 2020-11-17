@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import swal from 'sweetalert2';
+import React from 'react';
+
 
 
 export default function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_type}) {
-
-
-  useEffect(() => {
-
-  }, [])
 
   function proposalUrl(url) {
     if (url !== "" && url !== 'emptyField') {

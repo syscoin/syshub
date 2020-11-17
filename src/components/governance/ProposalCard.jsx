@@ -5,12 +5,12 @@ import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
-import { voteProposal } from "../../utils/request";
 
 export default function ProposalCard({proposal, enabled}) {
   const {user} = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
+
   const [days_remaining, setDays_remaining] = useState(0);
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
@@ -22,7 +22,6 @@ export default function ProposalCard({proposal, enabled}) {
     const today = new Date();
     setEndDate(new Date(end_epoch * 1000))
     if (endDate > today) {
-      console.log('entro aqui')
       const timeDiff = endDate.getTime() - today.getTime();
       const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
       const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
@@ -32,14 +31,9 @@ export default function ProposalCard({proposal, enabled}) {
       setPayment_type(payment_type)
       setEndDate(endDate.getDate() + '/' + (parseInt(endDate.getMonth(), 10) + 1) + '/' + endDate.getFullYear())
     }
-    // return () => {
-    //
-    // };
-  }, [proposal, days_remaining, month_remaining, payment_type]);
 
-  const voteYes = () => {
+  }, [proposal, days_remaining, month_remaining, payment_type, endDate]);
 
-  }
 
   const comaToNum = (str) => {
     return Number(str.replace(",", ""));

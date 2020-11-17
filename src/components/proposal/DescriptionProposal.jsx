@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
 //import for text editor
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+// import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -25,12 +25,6 @@ export default function DescriptionProposal({onNext, onBack}) {
     resolver: yupResolver(schema)
   });
 
-  useEffect(() => {
-    if (!showEditor) {
-      let previewContainer = document.getElementById('preview-html-container');
-      // previewContainer.innerHTML = draftToHtml(convertToRaw(proposalDescription.getCurrentContent()));
-    }
-  }, [showEditor])
 
   const onEditorStageChange = (editorState) => {
     setShowEditor(true);

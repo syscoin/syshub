@@ -17,6 +17,7 @@ const FormRecover = () => {
       }
     })
     window.recaptchaVerifier.render();
+    // eslint-disable-next-line
   }, [])
 
   const submitForm = async (e) => {

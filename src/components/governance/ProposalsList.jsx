@@ -33,6 +33,7 @@ function ProposalsList(props) {
     return () => {
       setProposals([]);
     }
+    // eslint-disable-next-line
   }, []);
 
 

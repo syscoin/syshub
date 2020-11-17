@@ -11,7 +11,7 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = (props) => {
-  const {firebase, loginWithPhoneNumber} = useUser();
+  const {firebase} = useUser();
   const {register, handleSubmit, errors} = useForm({
     resolver: yupResolver(schema)
   });
@@ -26,6 +26,7 @@ const LoginForm = (props) => {
       }
     })
     window.recaptchaVerifier.render();
+    // eslint-disable-next-line
   }, [])
 
   return (

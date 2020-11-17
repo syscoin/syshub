@@ -43,6 +43,7 @@ export default function GAuthForm() {
       },
     });
     window.recaptchaVerifier.render();
+    // eslint-disable-next-line
   }, []);
 
   const verifyCode = async ({verificationCode}) => {
