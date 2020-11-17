@@ -2753,7 +2753,7 @@ nav ol {
     .input-form .wizard-body.collapsed {
       height: 0;
       overflow: hidden;
-      padding: 10px 20px; }
+      padding: 0; }
 
 @media (max-width: 980px) {
   .form-group.half {

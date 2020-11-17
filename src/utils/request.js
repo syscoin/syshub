@@ -234,7 +234,7 @@ export const updateProposal = async (token, id, data) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err;
   }
 }
 

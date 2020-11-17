@@ -58,9 +58,9 @@ function UserMasternodes(props) {
 
   const removeMN = async (uid) => {
     const result = await Swal.fire({
+      icon: 'warning',
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!'
     })

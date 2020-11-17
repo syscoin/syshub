@@ -185,16 +185,24 @@ const PaymentProposal = ({onNext, onBack}) => {
       </div>
       <p/>
       <h3>Payment Info:</h3>
-      <div className="">
-        <p className="">
+      <div>
+        <p>
           {`This proposal will result in ${paymentQuantity} payments of ${amount} SYS`}
         </p>
-        <div className="">
-          <div className="">{`Payout dates approximately:`}</div>
-          <div className="">
+        <div >
+          <div >{`Payout dates approximately:`}</div>
+          <div
+            className="payment-dates"
+            style={{
+              height: '200px',
+              overflowY: 'auto',
+              display: 'flex',
+              flexFlow: 'row wrap'
+            }}
+          >
             {proposalPayoutDates.map((epoch, index) => {
               return (
-                <div key={index}>
+                <div key={index} style={{width: '50%'}}>
                   {yearDayMonth(epoch * 1000, 'usa')}
                 </div>
               );

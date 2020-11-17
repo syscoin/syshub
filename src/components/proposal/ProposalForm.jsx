@@ -46,6 +46,7 @@ const schema2 = yup.object().shape({
 
 export default function ProposalForm() {
   const { user } = useUser();
+  const history = useHistory();
   //COMPONENT STATES
   const [currentStep, setCurrentStep] = useState(0);
   const [openModal, setOpenModal] = useState(false);
@@ -113,7 +114,7 @@ export default function ProposalForm() {
   }
 
   const cancelCurrentProposal = async () => {
-    setOpenModal(false);
+    if(openModal) setOpenModal(false);
     setCurrentStep(0);
     try {
       await destroyProposal(user.token, proposalUid).catch((err) => {
@@ -141,6 +142,7 @@ export default function ProposalForm() {
 
     //cancelar el proposal y empezar de cero
   }
+
   const continueProposal = () => {
     setCurrentStep(4);
     if (submitCommand !== "") {
@@ -148,6 +150,19 @@ export default function ProposalForm() {
       setCollapse(false);
     }
     setOpenModal(false);
+  }
+
+  const cancelProposalBtn = async () => {
+    const swalConfirm = await swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You will delete the info of the proposal and create a new one",
+      showCancelButton: true,
+      confirmButtonText: 'Delete'
+    })
+    if (swalConfirm.isConfirmed) { 
+      cancelCurrentProposal();
+    }
   }
 
   const back = () => {
@@ -267,12 +282,35 @@ export default function ProposalForm() {
   }
 
   const enterProposalHash = async (data) => {
+    swal.fire({
+      title: 'Creating the proposal',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     let {proposalHash} = data;
+    try {
+      await updateProposal(user.token, proposalUid, {hash: proposalHash}).catch(err => {
+        throw err
+      })
+      
+      await swal.fire({
+        icon: 'success',
+        title: 'The proposal was created',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      history.push('/governance');
 
-    await updateProposal(user.token, proposalUid, {hash: proposalHash}).catch(err => {
-      throw err
-    })
-    swal.fire('aqui termina el proceso del proposal :)', '', 'info')
+    } catch (error) {
+      await swal.fire({
+        icon: 'error',
+        title: 'There was an error please try again',
+        text: error.message
+      });
+    }
+
   }
 
   return (
@@ -368,6 +406,7 @@ export default function ProposalForm() {
                   />
                 </div>
                 <div className="form-actions-spaced">
+                  <button className="btn btn--blue-border" type="button" onClick={cancelProposalBtn}>Cancel</button>
                   <button className="btn btn--blue" type="submit">Next</button>
                 </div>
               </form>
@@ -415,6 +454,7 @@ export default function ProposalForm() {
                   />
                 </div>
                 <div className="form-actions-spaced">
+                  <button className="btn btn--blue-border" type="button" onClick={cancelProposalBtn}>Cancel</button>
                   <button className="btn btn--blue" type="submit">Submit</button>
                 </div>
               </form>
