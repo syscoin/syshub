@@ -107,12 +107,12 @@ export default function ProposalForm() {
     setProposalUid(proposal.uid);
     setPrepareCommand(proposal.prepareCommand);
     setProposalCompleted(proposal.complete);
-    setSubmitCommand(proposal.submitCommand || '');
+    setSubmitCommand(proposal.commandSubmit || '');
 
     setOpenModal(true);
   }
 
-  const cancelLoadProposal = async () => {
+  const cancelCurrentProposal = async () => {
     setOpenModal(false);
     setCurrentStep(0);
     try {
@@ -143,13 +143,11 @@ export default function ProposalForm() {
   }
   const continueProposal = () => {
     setCurrentStep(4);
-    if (proposalCompleted) {
+    if (submitCommand !== "") {
       setUseCollapse(true);
       setCollapse(false);
     }
     setOpenModal(false);
-
-
   }
 
   const back = () => {
@@ -427,7 +425,7 @@ export default function ProposalForm() {
       
       <CustomModal
         open={openModal}
-        onClose={cancelLoadProposal}
+        onClose={cancelCurrentProposal}
       >
         <h3>You were creating a proposal</h3>
         <small>
@@ -440,7 +438,7 @@ export default function ProposalForm() {
         <button
           className="btn btn--blue-border"
           style={{marginBottom:'10px',marginLeft:'10px'}}
-          onClick={cancelLoadProposal}
+          onClick={cancelCurrentProposal}
         >Cancel</button>
         <button
           className="btn btn--blue" 

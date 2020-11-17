@@ -10,7 +10,6 @@ export default function ProposalCard({proposal, enabled}) {
   const {user} = useUser();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
-
   const [days_remaining, setDays_remaining] = useState(0);
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
@@ -31,8 +30,11 @@ export default function ProposalCard({proposal, enabled}) {
       setPayment_type(payment_type)
       setEndDate(endDate.getDate() + '/' + (parseInt(endDate.getMonth(), 10) + 1) + '/' + endDate.getFullYear())
     }
+    // return () => {
+    //
+    // };
+  }, [proposal, days_remaining, month_remaining, payment_type]);
 
-  }, [proposal, days_remaining, month_remaining, payment_type, endDate]);
 
 
   const comaToNum = (str) => {
