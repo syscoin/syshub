@@ -301,7 +301,7 @@ export default function ProposalForm() {
               <form className="input-form" onSubmit={handleSubmit(enterPaymentTxId)}>
                 <div className="form-group">
                   <label htmlFor="paymentTxId">Payment txid</label>
-                  <input type="text" id="paymentTxId" ref={register} name="paymentTxId" className="styled" maxLength="40"/>
+                  <input type="text" id="paymentTxId" ref={register} name="paymentTxId" className="styled" maxLength="64"/>
                   <ErrorMessage
                     errors={errors}
                     name="paymentTxId"
@@ -348,7 +348,7 @@ export default function ProposalForm() {
               <form className="input-form" onSubmit={handleSubmit2(enterProposalHash)}>
                 <div className="form-group">
                   <label htmlFor="proposalHash">Proposal hash</label>
-                  <input type="text" id="proposalHash" ref={register2} name="proposalHash" className="styled" maxLength="40"/>
+                  <input type="text" id="proposalHash" ref={register2} name="proposalHash" className="styled" maxLength="64"/>
                   <ErrorMessage
                     errors={errors2}
                     name="proposalHash"
