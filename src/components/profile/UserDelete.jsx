@@ -25,7 +25,9 @@ export default function UserDelete() {
     })
     if (result.isConfirmed) {
       try {
-        let user2fa = await get2faInfoUser(user.data.user_id)
+        let user2fa = await get2faInfoUser(user.data.user_id);
+
+        //ABRIR EL 2fa MODAL
         if (user2fa.twoFa === true && user2fa.sms === true) {
           setOpenSMS2Fa(true)
         } else if (user2fa.twoFa === true && user2fa.gAuth === true) {
@@ -106,7 +108,6 @@ export default function UserDelete() {
         })
       })
     } else {
-      setOpenGAuth2Fa(false);
       await swal.fire({
         icon: "error",
         title: "Code invalid",

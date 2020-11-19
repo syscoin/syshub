@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-const SMSTwoFAFormLogin = ({userSignInSms, closeModal}) => {
+const SMSTwoFAFormLogin = ({userSignInSms}) => {
   const {firebase} = useUser();
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
