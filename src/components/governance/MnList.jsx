@@ -5,6 +5,7 @@ import { getUserMasterNodes } from "../../utils/request";
 import signVote from "../../utils/sign-vote";
 import { voteProposal } from "../../utils/request";
 import MnItem from "./MnItem";
+import swal from 'sweetalert2'
 
 const MnList = ({ proposal, vote, onAfterVote }) => {
   let { user } = useUser();
@@ -14,8 +15,6 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
 
 
   useEffect(() => {
-    console.log(proposal);
-    console.log(vote);
     const getMnByUser = async () => {
       setLoadingMN(true);
       let {data} = await getUserMasterNodes(user.token).catch((err) => {
@@ -40,26 +39,27 @@ const MnList = ({ proposal, vote, onAfterVote }) => {
   };
 
   const voting = async (voteOutcome = 1) => {
-    console.log(masterNodesForVote);
-    let r = await Promise.all(
-      masterNodesForVote.map(async (mn) => {
-        const proposalVoteNo = {
-          mnPrivateKey: mn.privateKey,
-          vinMasternode: mn.txId,
-          gObjectHash: proposal.Hash,
-          voteOutcome,
-        };
-        const voteData = signVote(proposalVoteNo);
-        await voteProposal(voteData)
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-    );
-    console.log(r);
+    swal.fire('Sorry','solving error','info')
+    // let r = await Promise.all(
+    //   masterNodesForVote.map(async (mn) => {
+    //     const proposalVoteNo = {
+    //       mnPrivateKey: mn.privateKey,
+    //       vinMasternode: mn.txId,
+    //       gObjectHash: proposal.Hash,
+    //       voteOutcome,
+    //     };
+    //     const voteData = signVote(proposalVoteNo);
+        // await voteProposal(voteData)
+        //   .then((data) => {
+        //     console.log(data);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+      // })
+    // );
+    // console.log(r);
+
   };
 
 
