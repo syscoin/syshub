@@ -21,7 +21,7 @@ const schema = yup.object().shape({
     .max(6, "Must be 6 digits")
 });
 
-export default function GAuthForm() {
+export default function GAuthForm({ onClose }) {
   const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
@@ -64,21 +64,14 @@ export default function GAuthForm() {
         sms: false
       };
       await updateCurrentActionsUser(changeUserData).then(async () => {
-        swal.fire({
-          title: 'Verifying',
-          showConfirmButton: false,
-          willOpen: () => {
-            swal.showLoading()
-          }
-        })
         await swal.fire({
           icon: "success",
           title: "Google Authenticator it's activated",
           text: "Please log in again",
-          timer: 2000,
+          timer: 1500,
           showConfirmButton: false
-        }).then(async () => {
-          await logoutUser();
+        }).then(() => {
+          onClose()
         })
       }).catch((err) => {
         swal.fire({

@@ -21,7 +21,7 @@ const schema2 = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-export default function SMS2FAForm() {
+export default function SMS2FAForm({ onClose }) {
   const {firebase, logoutUser, updateCurrentActionsUser} = useUser();
 
   const [codeSent, setCodeSent] = useState(false);
@@ -83,7 +83,14 @@ export default function SMS2FAForm() {
 
   };
 
-  const auth = async ({phoneCode}) => {
+  const auth = async ({ phoneCode }) => {
+    swal.fire({
+      title: 'Verifying',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
     let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode);
     await firebase
       .updatePhoneCredentials(credentials)
@@ -94,21 +101,14 @@ export default function SMS2FAForm() {
           gAuth: false
         };
         await updateCurrentActionsUser(currentUserDataUpdate).then(async () => {
-          swal.fire({
-            title: 'Verifying',
-            showConfirmButton: false,
-            willOpen: () => {
-              swal.showLoading()
-            }
-          })
           await swal.fire({
             icon: "success",
             title: "Your phone number was verified",
             text: "Please log in again",
-            timer: 2000,
+            timer: 1500,
             showConfirmButton: false
           }).then(async () => {
-            await logoutUser();
+            onClose();
           })
 
         }).catch((err) => {
