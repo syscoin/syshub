@@ -80,7 +80,7 @@ export default function ProposalForm() {
         let {data} = await notCompletedProposal(user.token).catch((err) => {
           throw err;
         });
-        console.log(data);
+        // console.log(data);
         if (data.proposal) {
           showSavedProposal(data.proposal);
         }
