@@ -31,6 +31,7 @@ export function UserProvider(props) {
   useEffect(() => {
     async function loadUser() {
       const token = getToken();
+      console.log(token)
       if (!token) {
         setLoadingUser(false);
         return;
@@ -48,7 +49,7 @@ export function UserProvider(props) {
               setLoadingUser(false);
             }
           } else {
-            console.log('sin internet')
+            setLoadingUser(false);
           }
         })
       } catch (error) {
@@ -60,9 +61,9 @@ export function UserProvider(props) {
     loadUser();
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   const signupUser = async (registerData) => {
     try {

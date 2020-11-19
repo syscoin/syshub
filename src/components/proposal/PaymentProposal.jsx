@@ -22,9 +22,8 @@ const schema = yup.object().shape({
     .positive('Must be a positive number'),
   paymentAddress: yup.string()
     .required('The payment address is required')
-    .test('test-sys-address', 'Must be a valid Syscoin address', function (value) {
-      return WAValidator.validate(value, 'sys');
-    })
+    .test('test-sys-address', 'Must be a valid Syscoin address', async (value) => await WAValidator.validate(value, 'sys')
+    )
 });
 
 const PaymentProposal = ({onNext, onBack}) => {
@@ -35,7 +34,7 @@ const PaymentProposal = ({onNext, onBack}) => {
   const [proposalPayoutDates, setProposalPayoutDates] = useState([]);
   const [amount, setAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
-
+  const [theDatesWereLoaded, setTheDatesWereLoaded] = useState(false);
   const {register, watch, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema),
@@ -64,8 +63,6 @@ const PaymentProposal = ({onNext, onBack}) => {
   };
 
   const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
-    // console.log('nPayments -->', nPayments)
-    // console.log('ACZ nextGovernanceDate -->', nextGovernanceDate);
     const {
       rewardDateEpoch,
       superblockCycleEpoch,
@@ -89,47 +86,61 @@ const PaymentProposal = ({onNext, onBack}) => {
   };
 
   const getGovernanceDate = async () => {
-    const nextGovernanceDate = await nextGovernanceRewardInfo();
-    // console.log(nextGovernanceDate)
-    // console.log('nextGovernanceDateaaaaaaaaaa --->', nextGovernanceDate);
-    Object.assign(nextGovernanceDate);
-    // console.log('nextGovernanceDate --->', nextGovernanceDate);
-    return nextGovernanceDate;
+    const nextGovernanceDate = await nextGovernanceRewardInfo()
+    if (typeof nextGovernanceDate === "undefined") {
+      return null
+    } else {
+      Object.assign(nextGovernanceDate);
+      return nextGovernanceDate;
+    }
   }
 
   const paymentQuantityValue = () => {
-    const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
-      watchNPayment,
-      nextGovernanceDate
-    );
+    if (typeof nextGovernanceDate !== "undefined") {
+      const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
+        watchNPayment,
+        nextGovernanceDate
+      );
 
-    setProposalEndEpoch(endEpoch);
-    setProposalPayoutDates(proposalPayoutDates);
-    setAmount(watchedAmount);
-    setTotalAmount(watchedAmount * watchNPayment)
-    setPaymentQuantity(watchNPayment)
+      setProposalEndEpoch(endEpoch);
+      setProposalPayoutDates(proposalPayoutDates);
+      setAmount(watchedAmount);
+      setTotalAmount(watchedAmount * watchNPayment)
+      setPaymentQuantity(watchNPayment)
+    } else {
+      setProposalEndEpoch(0)
+      setProposalPayoutDates([]);
+      setAmount(watchedAmount);
+      setTotalAmount(watchedAmount * watchNPayment)
+      setPaymentQuantity(watchNPayment)
+    }
+
   }
 
   useEffect(() => {
     const calculatePaymentDates = async () => {
       const nextGovernanceDate = await getGovernanceDate();
-      // console.log(nextGovernanceDate)
-      const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
-        paymentQuantity,
-        nextGovernanceDate
-      );
-      const proposalStartEpoch = proposalPayoutDates[0];
-      setProposalStartEpoch(proposalStartEpoch);
-      setNextGovernanceDate(nextGovernanceDate);
-      setProposalEndEpoch(endEpoch);
-      setProposalPayoutDates(proposalPayoutDates);
+      if (nextGovernanceDate !== null) {
+        const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
+          paymentQuantity,
+          nextGovernanceDate
+        );
+        const proposalStartEpoch = proposalPayoutDates[0];
+        setProposalStartEpoch(proposalStartEpoch);
+        setNextGovernanceDate(nextGovernanceDate);
+        setProposalEndEpoch(endEpoch);
+        setProposalPayoutDates(proposalPayoutDates);
+        setTheDatesWereLoaded(true)
+      } else {
+        setTheDatesWereLoaded(false)
+      }
     }
     calculatePaymentDates();
     // eslint-disable-next-line
   }, [])
 
   const nextPayment = (data) => {
-    onNext({ proposalStartEpoch, proposalEndEpoch, ...data });
+    onNext({proposalStartEpoch, proposalEndEpoch, ...data});
   }
 
 
@@ -189,8 +200,8 @@ const PaymentProposal = ({onNext, onBack}) => {
         <p>
           {`This proposal will result in ${paymentQuantity} payments of ${amount} SYS`}
         </p>
-        <div >
-          <div >{`Payout dates approximately:`}</div>
+        <div>
+          <div>{`Payout dates approximately:`}</div>
           <div
             className="payment-dates"
             style={{
@@ -200,13 +211,18 @@ const PaymentProposal = ({onNext, onBack}) => {
               flexFlow: 'row wrap'
             }}
           >
-            {proposalPayoutDates.map((epoch, index) => {
-              return (
-                <div key={index} style={{width: '50%'}}>
-                  {yearDayMonth(epoch * 1000, 'usa')}
-                </div>
-              );
-            })}
+            {theDatesWereLoaded === true ?
+              proposalPayoutDates.map((epoch, index) => {
+                return (
+                  <div key={index} style={{width: '50%'}}>
+                    {yearDayMonth(epoch * 1000, 'usa')}
+                  </div>
+                );
+              })
+              : <>
+                <p>There has been a problem loading the payment dates, please check your internet connection and reload the page!</p>
+              </>
+            }
           </div>
         </div>
         <p/>
@@ -216,7 +232,7 @@ const PaymentProposal = ({onNext, onBack}) => {
       </div>
       <div className="form-actions-spaced">
         <button className="btn btn--blue-border" type="button" onClick={onBack}>Back</button>
-        <button className="btn btn--blue" type="submit">Next</button>
+        <button className="btn btn--blue" type="submit" disabled={!theDatesWereLoaded}>Next</button>
       </div>
     </form>
   )
