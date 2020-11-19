@@ -12,7 +12,7 @@ import PreviousPhoneForm from './PreviousPhoneForm';
 
 
 function UserTwoFA({authData, onTwoFAChange, userPhone}) {
-  const { firebase, updateCurrentActionsUser} = useUser();
+  const { firebase, updateCurrentActionsUser, logoutUser } = useUser();
   const [openSMS, setOpenSMS] = useState(false);
   const [openPrevPhone, setOpenPrevPhone] = useState(false);
   const [openGAuth, setOpenGAuth] = useState(false);
@@ -124,6 +124,24 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
   }
   
+  const closeGauthAndLogout = async () => {
+    setOpenGAuth(false);
+    await setTimeout(() => {
+      logoutUser();
+    }, 500);
+  }
+  const closeSMSAndLogout = async () => {
+    setOpenSMS(false);
+    await setTimeout(() => {
+      logoutUser();
+    }, 500);
+  }
+  const closePreviousPhoneAndLogout = async () => {
+    setOpenPrevPhone(false);
+    await setTimeout(() => {
+      logoutUser();
+    }, 500);
+  }
 
   return (
     <div className="cols-top cols">
@@ -201,21 +219,25 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         open={openSMS}
         onClose={() => setOpenSMS(false)}
       >
-        <SMS2FAForm/>
+        <SMS2FAForm onClose={closeSMSAndLogout} />
       </CustomModal>
 
       <CustomModal
         open={openPrevPhone}
         onClose={() => setOpenPrevPhone(false)}
       >
-        <PreviousPhoneForm userPhone={userPhone}/>
+        <PreviousPhoneForm
+          userPhone={userPhone}
+          openChangePhone={() => setOpenSMS(true)}
+          onClose={closePreviousPhoneAndLogout}
+        />
       </CustomModal>
 
       <CustomModal
         open={openGAuth}
         onClose={() => setOpenGAuth(false)}
       >
-        <GAuthForm/>
+        <GAuthForm onClose={closeGauthAndLogout} />
       </CustomModal>
     </div>
   )

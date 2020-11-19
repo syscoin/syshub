@@ -3,19 +3,11 @@ import React, { useState } from "react";
 import swal from "sweetalert2";
 
 import { useUser } from "../../../context/user-context";
-import CustomModal from "../../global/CustomModal";
-import SMS2FAForm from "./SMS2FAForm";
 
 
-
-export default function PreviousPhoneForm({ userPhone }) {
+export default function PreviousPhoneForm({ userPhone, openChangePhone, onClose }) {
   const { logoutUser, updateCurrentActionsUser } = useUser();
 
-  const [openSMS, setOpenSMS] = useState(false);
-
-  
-
-  
   const enablePhone = async () => {
     try {
       let currentUserDataUpdate = {
@@ -30,11 +22,11 @@ export default function PreviousPhoneForm({ userPhone }) {
         icon: "success",
         title: "Your phone number was enabled",
         text: "Please log in again",
-        timer: 2000,
+        timer: 1500,
         showConfirmButton: false
       });
 
-      logoutUser();
+      onClose();
       
     } catch (error) {
       swal.fire({
@@ -65,7 +57,7 @@ export default function PreviousPhoneForm({ userPhone }) {
       <p>Or you might want to change your phone number</p>
       <button
         className="btn btn--blue btn-center"
-        onClick={() => setOpenSMS(true)}
+        onClick={openChangePhone}
       >
         Change Phone
       </button>
@@ -75,12 +67,7 @@ export default function PreviousPhoneForm({ userPhone }) {
         className="recaptcha"
         style={{ display: "inline-block" }}
       />
-      <CustomModal
-        open={openSMS}
-        onClose={() => setOpenSMS(false)}
-      >
-        <SMS2FAForm />
-      </CustomModal>
+      
     </>
   );
   
