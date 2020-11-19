@@ -74,21 +74,26 @@ export default class Firebase {
 
   refreshToken = async () => {
     return new Promise(async (resolve, reject) => {
-      const unsubscribe = this.auth
-        .onIdTokenChanged(async user => {
-          unsubscribe()
-          const refreshedToken = await user
-            .getIdToken(true)
-            .catch(err => console.error(err))
-          resolve(refreshedToken)
-        }, reject)
-    })
+        if (this.auth.currentUser !== null) {
+          const unsubscribe = this.auth
+            .onIdTokenChanged(async user => {
+              unsubscribe()
+              const refreshedToken = await user
+                .getIdToken(true)
+                .catch(err => console.error(err))
+              resolve(refreshedToken)
+            }, reject)
+        }
+      }
+    )
   }
 
-  generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification({
-    // url: 'http://198.211.117.144/',
-    handleCodeInApp: true
-  }).catch(err => {
+  generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification(
+    //   {
+    //   url: 'https://firebase.google.com/docs/web/setup',
+    //   handleCodeInApp: true
+    //   }
+  ).catch(err => {
     throw err
   })
 

@@ -279,17 +279,14 @@ export const register = async (data) => {
 /** User **/
 
 export const getUserInfo = async (token, id) => {
-  try {
-    return await axios.get(`${API_URI}/user/${id}`, {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    new Error(err)
-  }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
 }
 
 export const get2faInfoUser = async (id) => {

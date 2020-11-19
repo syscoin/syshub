@@ -39,7 +39,6 @@ export function UserProvider(props) {
       try {
         const decoded = jwtDecode(token.decryptedToken);
         clock.subscribe(async (f) => {
-          console.log(f)
           if (navigator.onLine) {
             const dateNow = new Date().getTime();
             if (Math.floor(dateNow / 1000) > decoded.exp) {
