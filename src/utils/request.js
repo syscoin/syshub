@@ -168,11 +168,11 @@ export const submitProposal = async (token, id, data) => {
   }
 };
 
-export const voteProposal = async (data) => {
+export const voteProposal = async (token, data) => {
   try {
     return await axios.post(`${API_URI}/proposal/vote`, data, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${token}`
       }
     }).catch(err => {
       throw err

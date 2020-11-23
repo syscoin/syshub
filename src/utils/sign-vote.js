@@ -11,7 +11,7 @@ const signVote = (obj) => {
   const time = Math.floor(Date.now() / 1000);
   const gObjectHashBuffer = Buffer.from(gObjectHash, 'hex');
   const voteSignalNum = 1; // 'funding'
-  const voteOutcomeNum = 1; // 1 for yes. 2 for no. 0 for abstain
+  const voteOutcomeNum = voteOutcome; // 1 for yes. 2 for no. 0 for abstain
 
   const masterNodeTx = vinMasternode.split('-');
 
@@ -49,7 +49,6 @@ const signVote = (obj) => {
   const recIdBuffer = Buffer.allocUnsafe(1);
   recIdBuffer.writeInt8(recId);
   const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
-  console.log(rawSignature)
   const signature = rawSignature.toString('base64');
 
   let vote;
