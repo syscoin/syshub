@@ -118,7 +118,7 @@ export default function DescriptionProposal({onNext, onBack}) {
         <label htmlFor="proposalUrl">URL</label>
         <input
           type="url"
-          placeholder="Keep it blank to proposal refers itself"
+          placeholder="https://support.syscoin.org/example-proposal"
           className="styled"
           name="proposalUrl"
           id="proposalUrl"
