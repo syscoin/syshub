@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
 
 class Footer extends Component {
     render() {
@@ -146,14 +147,21 @@ class Footer extends Component {
                         </li>
                         <li>
                             <button
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 className="wechat-qr prevent"
                                 title=""
                                 style={{border: 'none', background:'none'}}
+                                data-tip data-for="wechat-qr-code"
                             >
                             <i className="ico-wechat"></i>
                             </button>
+                            <ReactTooltip
+                                id="wechat-qr-code"
+                                aria-haspopup="true"
+                                className="tooltipSysClass"
+                                backgroundColor="#242652"
+                            >
+                                <img src="/assets/images/wechat-qr.png" alt="wechat qr code" />
+                            </ReactTooltip>
                         </li>
                         <li>
                             <a

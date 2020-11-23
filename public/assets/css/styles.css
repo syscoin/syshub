@@ -3152,6 +3152,10 @@ ul.pagination {
       .backdrop .modal .modal-footer .modal__actions .btn {
         margin-bottom: 20px; }
 
+.tooltipSysClass {
+  background: #242652;
+  border-radius: 5px; }
+
 .ico-facebook {
   background-image: url(../images/sprite.png);
   background-position: 66.36085626911316% 62.94642857142857%;
