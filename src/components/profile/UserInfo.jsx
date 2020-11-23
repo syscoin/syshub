@@ -91,7 +91,7 @@ export default function UserInfo() {
 
         <small>
           <p>
-            Note: Enabling 2FA is REQUIRED to vote on proposals. You can only use one (1) 2FA method. Please choose SMS or Google Authenticator.
+            Note: Enabling 2FA is REQUIRED to vote on proposals. You can only use one (1) 2FA method. Although we recommend using Google Authenticator you can also choose SMS verification.
           </p>
         </small>
       </div>

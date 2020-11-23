@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import {Collapse} from 'react-collapse';
 
 import {useUser} from '../../context/user-context';
@@ -7,7 +8,8 @@ import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
 
 export default function ProposalCard({proposal, enabled}) {
-  const {user} = useUser();
+  const { user } = useUser();
+  const { t } = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
   const [days_remaining, setDays_remaining] = useState(0);
@@ -55,17 +57,20 @@ export default function ProposalCard({proposal, enabled}) {
     return humanDateFormat;
   }
 
-  function proposalPassing(yesCount, noCount, enabled) {
+  function proposalPassing(yesCount, noCount, enabled, absoluteYesCount) {
 
     if (((yesCount - noCount) / enabled) * 100 > 10) {
       return (
-        <div className="passed">
+        <div className="passed" title={t('govlist.table.green_text')}>
           <i className="demo-icon icon-ok"></i> Passed
         </div>
       )
     } else {
+      let need = parseInt((enabled / 10) - absoluteYesCount);
+      let originalText = t('govlist.table.red_text');
+      let newText = originalText.replace("[API]", need);
       return (
-        <div className="not-passed">
+        <div className="not-passed" title={newText}>
           <i className="demo-icon icon-cancel-1"></i> Not passed
         </div>
       )
@@ -87,7 +92,7 @@ export default function ProposalCard({proposal, enabled}) {
       <div className="vote-count">
         <span className="yes">{proposal.YesCount}</span>
         <span className="no">{proposal.NoCount}</span>
-        {proposalPassing(proposal.YesCount, proposal.NoCount, comaToNum(enabled))}
+        {proposalPassing(proposal.YesCount, proposal.NoCount, comaToNum(enabled), proposal.AbsoluteYesCount)}
 
       </div>
       <div className="description">

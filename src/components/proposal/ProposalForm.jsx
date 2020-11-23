@@ -59,7 +59,6 @@ export default function ProposalForm() {
   const [url, setUrl] = useState('');
   const [payment, setPayment] = useState(null);
   const [prepareCommand, setPrepareCommand] = useState('');
-  const [proposalCompleted, setProposalCompleted] = useState(false);
   const [submitCommand, setSubmitCommand] = useState('');
   const [preparing, setPreparing] = useState(false);
   const [proposalUid, setProposalUid] = useState('');
@@ -107,7 +106,6 @@ export default function ProposalForm() {
     setPayment(payment);
     setProposalUid(proposal.uid);
     setPrepareCommand(proposal.prepareCommand);
-    setProposalCompleted(proposal.complete);
     setSubmitCommand(proposal.commandSubmit || '');
 
     setOpenModal(true);
@@ -137,7 +135,6 @@ export default function ProposalForm() {
     setPayment(null);
     setProposalUid('');
     setPrepareCommand('');
-    setProposalCompleted('');
     setSubmitCommand('');
 
     //cancelar el proposal y empezar de cero

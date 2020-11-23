@@ -1,20 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import swal from "sweetalert2";
-import {decryptAes} from "../../utils/encryption";
-import {verifyAuthCode} from "../../utils/twoFaAuthentication";
+
+import {decryptAes} from "../../../utils/encryption";
+import {verifyAuthCode} from "../../../utils/twoFaAuthentication";
+import { useUser } from '../../../context/user-context';
+
 import SMSTwoFAFormLogin from '../../login/SMSTwoFAFormLogin';
 import GAuthTwoFAFormLogin from '../../login/GAuthTwoFAFormLogin';
-import { useUser } from '../../../context/user-context';
 
 export default function Modal2FA({ user2fa, userSignInGAuth, onGAuth, onPhoneSMS }) {
   const { firebase } = useUser();
+  const [phoneProvider, setPhoneProvider] = useState(null);
+
+  useEffect(() => {
+    const createPhoneProvider = async () => {
+      let phone = await firebase.getPhoneAuthProviderID();
+      let verifier = await firebase.sendSMSToPhone(phone, window.recaptchaVerifier);
+      setPhoneProvider(verifier);
+    }
+
+    if (typeof window.recaptchaVerifier === 'undefined') {
+      window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+        size: "invisible",
+        callback: (resp) => {
+          console.log(resp);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+      window.recaptchaVerifier.render();
+    }
+    createPhoneProvider();
+
+  }, []);
 
   const verifyPhone = async ({phoneCode}) => {
-    console.log(phoneCode)
-    let phone = await firebase.getPhoneAuthProviderID()
-    let verifier = await firebase.sendSMSToPhone(phone, window.recaptchaVerifier)
-    let x = firebase.verifyPhoneCode(verifier, phoneCode)
+    let x = firebase.verifyPhoneCode(phoneProvider, phoneCode)
     console.log(x)
+
+    onPhoneSMS();
     //trycatch de si esta o no verificado con sus swal
     // ejecutar el callback onPhoneSMS() en el try al finalizar
   }
@@ -39,7 +64,7 @@ export default function Modal2FA({ user2fa, userSignInGAuth, onGAuth, onPhoneSMS
         showConfirmButton: false
       });
       
-      //callback onGAuth()
+      onGAuth()
     } else {
       await swal.fire({
         icon: "error",

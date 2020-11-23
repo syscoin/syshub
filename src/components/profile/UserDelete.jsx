@@ -8,12 +8,15 @@ import SMSTwoFAFormLogin from "../login/SMSTwoFAFormLogin";
 import GAuthTwoFAFormLogin from "../login/GAuthTwoFAFormLogin";
 import {decryptAes} from "../../utils/encryption";
 import {verifyAuthCode} from "../../utils/twoFaAuthentication";
+import Modal2FA from "./2FA/Modal2FA";
 
 export default function UserDelete() {
   const {user, logoutUser, firebase} = useUser();
   const [userSignInGAuth, setUserSignInGAuth] = useState("");
+  const [user2FA, setUser2FA] = useState(null);
   const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
   const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
+  const [open2FAModal, setOpen2FAModal] = useState(false);
 
   const deleteAccount = async () => {
     const result = await swal.fire({
@@ -117,6 +120,44 @@ export default function UserDelete() {
     }
   }
 
+  const test2fa = async () => {
+    const result = await swal.fire({
+      title: 'Your account will be deleted.',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete my account',
+    })
+    if (result.isConfirmed) {
+      try {
+        let user2fa = await get2faInfoUser(user.data.user_id);
+
+        if (user2fa.twoFa === true) {
+          setUser2FA(user2fa);
+          if (user2fa.gAuth === true) {
+            setUserSignInGAuth({secret: user2fa.gAuthSecret});
+          }
+          setOpen2FAModal(true);
+        }
+
+      }
+      catch (error) {
+        swal.fire({
+          title: 'There was an error',
+          text: error,
+          icon: 'error',
+        });
+        console.log(error);
+      }
+    }
+  }
+  const phoneVerification = async () => {
+    console.log('phone verified');
+  }
+  const gAuthVerification = async () => {
+    console.log('gauth verified');
+  }
+
   return (
     <div className="input-form">
       <div className="form-group spacer line"></div>
@@ -126,6 +167,11 @@ export default function UserDelete() {
         <div className="indicator red">Your account will be deleted. This action cannot be undone.</div>
         <div className="description">We'll never share your email with anyone else.</div>
         <button className="btn btn--blue" onClick={deleteAccount}>Delete account</button>
+      </div>
+
+      <div className="form-group">
+        <h3>2fa test</h3>
+        <button className="btn btn--blue" onClick={test2fa}>test 2fa</button>
       </div>
 
       <CustomModal
@@ -138,6 +184,18 @@ export default function UserDelete() {
         onClose={() => setOpenGAuth2Fa(false)}>
         <GAuthTwoFAFormLogin userSignInGAuth={verifyGAuth}/>
       </CustomModal>
+
+      <CustomModal
+        open={open2FAModal}
+        onClose={() => setOpen2FAModal(false)}>
+        {user2FA && <Modal2FA
+          user2fa={user2FA}
+          userSignInGAuth={userSignInGAuth}
+          onGAuth={gAuthVerification}
+          onPhoneSMS={phoneVerification}
+        />}
+      </CustomModal>
+
     </div>
   );
 }
