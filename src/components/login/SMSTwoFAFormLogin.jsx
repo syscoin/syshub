@@ -4,6 +4,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import {useUser} from "../../context/user-context";
+import { window } from "rxjs/operators";
 
 const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
@@ -17,16 +18,18 @@ const SMSTwoFAFormLogin = ({userSignInSms}) => {
   });
 
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
-      size: "invisible",
-      callback: (resp) => {
-        console.log(resp);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-    window.recaptchaVerifier.render();
+    if (typeof window.recaptchaVerifier === 'undefined') {
+      window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+        size: "invisible",
+        callback: (resp) => {
+          console.log(resp);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+      window.recaptchaVerifier.render();
+    }
     //eslint-disable-next-line
   }, []);
 

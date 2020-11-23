@@ -16,6 +16,7 @@ export default function CustomModal(props) {
         },
         closeButton: { fill: '#D3DFFF' }
       }}
+      blockScroll={false}
     >
       <div className="article">
         {props.children}

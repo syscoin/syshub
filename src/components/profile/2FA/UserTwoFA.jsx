@@ -128,19 +128,19 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
     setOpenGAuth(false);
     await setTimeout(() => {
       logoutUser();
-    }, 500);
+    }, 1000);
   }
   const closeSMSAndLogout = async () => {
     setOpenSMS(false);
     await setTimeout(() => {
       logoutUser();
-    }, 500);
+    }, 1000);
   }
   const closePreviousPhoneAndLogout = async () => {
     setOpenPrevPhone(false);
     await setTimeout(() => {
       logoutUser();
-    }, 500);
+    }, 1000);
   }
 
   return (

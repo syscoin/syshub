@@ -31,23 +31,48 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
       });
       window.recaptchaVerifier.render();
     }
-    createPhoneProvider();
+    if (user2fa.twoFa === true && user2fa.sms === true) {
+      createPhoneProvider();
+      
+    }
 
-  }, []);
+  }, [user2fa]);
 
-  const verifyPhone = async ({phoneCode}) => {
-    let credential = firebase.verifyPhoneCode(phoneProvider, phoneCode)
-    let isValidCredential = await firebase.loginWithCredentials(credential);
-    console.log(isValidCredential)
+  const verifyPhone = async ({ phoneCode }) => {
+    swal.fire({
+      title: 'Verifying code',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
+    try {
+      let credential = firebase.verifyPhoneCode(phoneProvider, phoneCode);
+      await firebase.loginWithCredentials(credential).catch(err => {
+        throw err
+      });
+      // console.log(isValidCredential)
+      await swal.fire({
+        icon: "success",
+        title: "Code verified",
+        timer: 1200,
+        showConfirmButton: false
+      });
 
-    onPhoneSMS();
-    //trycatch de si esta o no verificado con sus swal
-    // ejecutar el callback onPhoneSMS() en el try al finalizar
+      onPhoneSMS();
+    } catch (error) {
+      console.log(error)
+      swal.fire({
+        icon: "error",
+        title: "Invalid code",
+        text: "Error on the code verification try again"
+      });
+    }
+
   }
   const verifyGAuth = async ({gAuthCode}) => {
-
     swal.fire({
-      title: 'Verifying',
+      title: 'Verifying code',
       showConfirmButton: false,
       willOpen: () => {
         swal.showLoading()
@@ -61,7 +86,7 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
       await swal.fire({
         icon: "success",
         title: "Code verified",
-        timer: 2000,
+        timer: 1200,
         showConfirmButton: false
       });
 
@@ -69,8 +94,7 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
     } else {
       await swal.fire({
         icon: "error",
-        title: "Code invalid",
-        timer: 2000
+        title: "Invalid code"
       });
     }
   }
