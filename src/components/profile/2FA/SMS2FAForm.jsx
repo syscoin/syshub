@@ -22,7 +22,7 @@ const schema2 = yup.object().shape({
 });
 
 export default function SMS2FAForm({ onClose }) {
-  const {firebase, logoutUser, updateCurrentActionsUser} = useUser();
+  const {firebase, updateCurrentActionsUser} = useUser();
 
   const [codeSent, setCodeSent] = useState(false);
   const [verifyId, setVerifyId] = useState("");

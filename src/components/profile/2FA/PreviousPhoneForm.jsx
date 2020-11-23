@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import swal from "sweetalert2";
 
@@ -6,7 +6,7 @@ import { useUser } from "../../../context/user-context";
 
 
 export default function PreviousPhoneForm({ userPhone, openChangePhone, onClose }) {
-  const { logoutUser, updateCurrentActionsUser } = useUser();
+  const { updateCurrentActionsUser } = useUser();
 
   const enablePhone = async () => {
     try {
