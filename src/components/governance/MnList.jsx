@@ -43,24 +43,29 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   const voting = async () => {
 
     // swal.fire('Sorry','solving error','info')
-    await Promise.all(
-      masterNodesForVote.map(async (mn, index) => {
-        const proposalVoteNo = {
-          mnPrivateKey: mn.privateKey,
-          vinMasternode: mn.txId,
-          gObjectHash: proposal.Hash,
-          voteOutcome: vote,
-        };
-        const voteData = signVote(proposalVoteNo);
-        await voteProposal(user.token, voteData)
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-    )
+    for await (const mn of masterNodesForVote) {
+      const proposalVoteNo = {
+        mnPrivateKey: mn.privateKey,
+        vinMasternode: mn.txId,
+        gObjectHash: proposal.Hash,
+        voteOutcome: vote,
+      };
+      const voteData = signVote(proposalVoteNo);
+      await voteProposal(user.token, voteData)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    /** no uses a menos que no vayas al momento final ver que mn no votaron en todas las promesas **/
+    // await Promise.all(
+    //   masterNodesForVote.map(async (mn, index) => {
+    //
+    //   })
+    // )
 
   };
 

@@ -1,43 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from "react";
+import {useTranslation} from 'react-i18next';
 import {Collapse} from 'react-collapse';
 
 import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
+import {calculatePaymentDates} from "../../utils/request";
 
 export default function ProposalCard({proposal, enabled}) {
-  const { user } = useUser();
-  const { t } = useTranslation();
+  const {user} = useUser();
+  const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openMnList, setOpenMnList] = useState(false);
   const [days_remaining, setDays_remaining] = useState(0);
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
-  const [endDate, setEndDate] = useState(new Date());
+  // const [endDate, setEndDate] = useState();
   const [vote, setVote] = useState('');
+
 
   useEffect(() => {
     let {end_epoch, nPayment} = proposal
     const today = new Date();
-    setEndDate(new Date(end_epoch * 1000))
-    if (endDate > today) {
-      const timeDiff = endDate.getTime() - today.getTime();
-      const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
-      const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
-      const payment_type = nPayment > 1 ? 'per month' : 'one-time payment';
-      setDays_remaining(days_remaining)
-      setMonth_remaining(month_remaining)
-      setPayment_type(payment_type)
-      setEndDate(endDate.getDate() + '/' + (parseInt(endDate.getMonth(), 10) + 1) + '/' + endDate.getFullYear())
+
+    const calculateDaysRemaining = () => {
+      let endDate = new Date(end_epoch * 1000)
+      if (endDate > today) {
+        const timeDiff = endDate.getTime() - today.getTime();
+        const days_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24);
+        const month_remaining = Math.round(timeDiff / 1000 / 60 / 60 / 24 / 30);
+        const payment_type = nPayment > 1 ? 'per month' : 'one-time payment';
+        setDays_remaining(days_remaining)
+        setMonth_remaining(month_remaining)
+        setPayment_type(payment_type)
+        endDate = endDate.getDate() + '/' + (parseInt(endDate.getMonth(), 10) + 1) + '/' + endDate.getFullYear()
+      }
     }
-    // return () => {
-    //
-    // };
-  }, [proposal, days_remaining, month_remaining, payment_type]);
 
+    calculateDaysRemaining()
 
+    return () => {
+      calculateDaysRemaining()
+    };
+  }, [proposal]);
 
   const comaToNum = (str) => {
     return Number(str.replace(",", ""));

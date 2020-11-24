@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, {useEffect} from 'react';
 
 
 export default function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_type}) {
@@ -15,7 +14,7 @@ export default function ProposalCardInfo({proposal, days_remaining, month_remain
   return (
     <div className="budget">
       {
-        (proposal.description !== '') &&<>
+        (proposal.description !== '') && <>
           <span>Description:</span>
           <div
             className="description-proposal"
@@ -27,10 +26,10 @@ export default function ProposalCardInfo({proposal, days_remaining, month_remain
       }
       <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>
         Collateral hash: <a
-          href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >{proposal.ColHash}</a>
+        href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >{proposal.ColHash}</a>
       </p>
       <p>
         {days_remaining < 30 ? (
@@ -48,7 +47,7 @@ export default function ProposalCardInfo({proposal, days_remaining, month_remain
       </span>
       <div className="input-form">
         <div className="form-group">
-            
+
           <input
             type="text"
             className="styled"
