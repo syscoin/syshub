@@ -26,7 +26,7 @@ export default function AddMasternodes() {
       setSubmitting(false);
       history.push('/profile');
     } catch (error) {
-      Swal.fire({ title: error, icon: 'error' });
+      Swal.fire({ title: 'There was an error', text: error.response?.data?.message || 'Verify the data and try again', icon: 'error' });
       setSubmitting(false);
     }
 

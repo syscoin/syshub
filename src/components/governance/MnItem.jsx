@@ -15,7 +15,7 @@ export default function MnItem({ mn, onAddMN, onRemoveMN }) {
   }
   return (
     <li onClick={toggle} className={`masternodes-list ${selected ? 'active': ''}`}>
-      <label style={{textTransform: 'capitalize'}}>
+      <label style={{textTransform: 'capitalize', cursor: 'pointer'}}>
         {mn.name}
       </label>
     </li>
