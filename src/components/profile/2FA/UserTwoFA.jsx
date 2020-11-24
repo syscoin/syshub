@@ -50,7 +50,8 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         throw err
       });
       let currentUserDataUpdate = {
-        sms: false
+        sms: false,
+        twoFa: false
       }
       await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
         console.log(err)
@@ -107,7 +108,8 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
       });
       let currentUserDataUpdate = {
         gAuthSecret: null,
-        gAuth: false
+        gAuth: false,
+        twoFa: false
       }
       await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
         console.log(err)
@@ -115,7 +117,8 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
       swal.fire({
         icon: 'success',
-        title: 'Your secret was removed and google authenticator is disabled',
+        title: 'Your secret was removed',
+        text: 'Google authenticator is disabled',
         timer: 2000
       });
   

@@ -71,7 +71,7 @@ function UserMasternodes(props) {
       confirmButtonText: 'Yes, delete it!'
     })
     if (result.isConfirmed) {
-      setMasternodeToDelete(uid);
+      await setMasternodeToDelete(uid);
       try {
         let user2fa = await get2faInfoUser(user.data.user_id);
         if (user2fa.twoFa === true) {
@@ -82,7 +82,7 @@ function UserMasternodes(props) {
           setOpen2FAModal(true);
         }
         else {
-          deleteMasternodeAfterVerification();
+          deleteMasternodeAfterVerification(uid);
         }
       }
       catch (error) {
@@ -96,10 +96,14 @@ function UserMasternodes(props) {
     }
   }
 
-  const deleteMasternodeAfterVerification = async () => {
+  const deleteMasternodeAfterVerification = async (uid = null) => {
     setOpen2FAModal(false);
+    const masternodeToRemove = uid || masternodeToDelete;
     try {
-      await destroyMasterNode(user.token, masternodeToDelete);
+      await destroyMasterNode(user.token, masternodeToRemove).catch(err => {
+        throw err
+      });
+      
       swal.fire({
         icon: "success",
         title: "The masternode has been deleted",

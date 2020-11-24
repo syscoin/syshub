@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   gAuthCode: yup.string().required("The verification code is required"),
 });
 
-const GAuthTwoFAFormLogin = ({userSignInGAuth}) => {
+const GAuthTwoFAFormLogin = ({userSignInGAuth, recaptchaVerified}) => {
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),

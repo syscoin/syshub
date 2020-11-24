@@ -5,35 +5,34 @@ import {decryptAes} from "../../../utils/encryption";
 import {verifyAuthCode} from "../../../utils/twoFaAuthentication";
 import {useUser} from '../../../context/user-context';
 
-import SMSTwoFAFormLogin from '../../login/SMSTwoFAFormLogin';
-import GAuthTwoFAFormLogin from '../../login/GAuthTwoFAFormLogin';
+import SMS2FA from './SMS2FA';
+import GAuth from './GAuth';
 
 export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
   const {firebase} = useUser();
   const [phoneProvider, setPhoneProvider] = useState(null);
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+      size: "invisible",
+      callback: () => {
+        setRecaptchaVerified(true)
+      },
+      error: (err) => {
+        setRecaptchaVerified(false)
+      },
+    });
+    window.recaptchaVerifier.render();
+
     const createPhoneProvider = async () => {
       let phone = await firebase.getPhoneAuthProviderID();
       let verifier = await firebase.sendSMSToPhone(phone, window.recaptchaVerifier);
       setPhoneProvider(verifier);
     }
-
-    if (typeof window.recaptchaVerifier === 'undefined') {
-      window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
-        size: "invisible",
-        callback: (resp) => {
-          console.log(resp);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-      window.recaptchaVerifier.render();
-    }
+    
     if (user2fa.twoFa === true && user2fa.sms === true) {
       createPhoneProvider();
-      
     }
 
   }, [user2fa]);
@@ -99,13 +98,24 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
     }
   }
 
-  if (user2fa.twoFa === true && user2fa.sms === true) {
-    return (
-      <SMSTwoFAFormLogin userSignInSms={verifyPhone}/>
-    )
-  } else if (user2fa.twoFa === true && user2fa.gAuth === true) {
-    return (
-      <GAuthTwoFAFormLogin userSignInGAuth={verifyGAuth}/>
-    )
-  }
+  return (
+    <>
+      {
+        (user2fa.twoFa === true && user2fa.sms === true) && (
+          <SMS2FA userSignInSms={verifyPhone} recaptchaVerified={recaptchaVerified} />
+        )
+      }
+      {
+        (user2fa.twoFa === true && user2fa.gAuth === true) && (
+          <GAuth userSignInGAuth={verifyGAuth} />
+        )
+      }
+      <div
+        id={"recaptcha"}
+        className="recaptcha"
+        style={{display: "inline-block"}}
+      ></div>
+    </>
+  )
+
 }

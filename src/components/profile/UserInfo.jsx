@@ -31,7 +31,7 @@ export default function UserInfo() {
 
   const emailVerification = () => {
     firebase.generateLinkVerification().then(() => {
-      swal.fire({title: `Send email to ${user.data.email}`, icon: 'success'});
+      swal.fire({title: `Sent email to ${user.data.email}`, icon: 'success'});
     }).catch(err => {
       return swal.fire({title: 'Oops...', text: `${err}`, icon: 'error'});
     })

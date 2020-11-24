@@ -121,7 +121,7 @@ export const destroyMasterNode = async (token, id) => {
       throw err
     })
   } catch (err) {
-    new Error(err)
+    throw err;
   }
 };
 

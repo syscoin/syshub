@@ -38,7 +38,7 @@ export default function UserDelete() {
         swal.fire({
           title: 'There was an error',
           icon: 'error',
-          text: error.message,
+          text: 'please try again'
         });
         console.log(error);
       }

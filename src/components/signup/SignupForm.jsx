@@ -6,10 +6,13 @@ import * as yup from "yup";
 import {useUser} from "../../context/user-context";
 
 const schema = yup.object().shape({
-  email: yup.string().email().typeError('Must be a valid email').required(),
+  email: yup.string().email().typeError('Must be a valid email').required('Email is required'),
   password: yup.string()
     .matches(/^(?=.{8,}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?\W).*$/, 'Must include lower, upper, number, special characters and a min length of 8')
-    .required()
+    .required('Password is required'),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords does not match')
+    .required('You have to confirm your password')
 });
 
 const SignupForm = (props) => {
@@ -36,19 +39,53 @@ const SignupForm = (props) => {
   return (
     <>
       <form className="input-form centered" onSubmit={handleSubmit(props.onSignup)}>
-        <input className="styled-round" type="text" name="email" placeholder="Email" ref={register}/>
-        <ErrorMessage
-          errors={errors}
-          name="email"
-          render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
-        />
+        <div className="form-group">
+          <input
+            className="styled-round"
+            style={{marginBottom: '0'}}
+            type="email"
+            name="email"
+            placeholder="Email"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({message}) => <small><p style={{lineHeight: '1.5', textAlign: 'center'}}>{message}</p></small>}
+          />
+        </div>
 
-        <input className="styled-round" type="password" name="password" placeholder="Password" ref={register}/>
-        <ErrorMessage
-          errors={errors}
-          name="password"
-          render={({message}) => <small><p style={{lineHeight: '1.5'}}>{message}</p></small>}
-        />
+        <div className="form-group">
+          <input
+            className="styled-round"
+            style={{marginBottom: '0'}}
+            type="password"
+            name="password"
+            placeholder="Password"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({message}) => <small><p style={{lineHeight: '1.5', textAlign: 'center'}}>{message}</p></small>}
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            className="styled-round"
+            style={{marginBottom: '0'}}
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            ref={register}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="confirmPassword"
+            render={({message}) => <small><p style={{lineHeight: '1.5', textAlign: 'center'}}>{message}</p></small>}
+          />
+        </div>
 
         <div className="input-cont">
           <div id={'recaptcha'} className="recaptcha" style={{display: 'inline-block'}}/>
