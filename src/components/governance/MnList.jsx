@@ -41,32 +41,72 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   };
 
   const voting = async () => {
-
     // swal.fire('Sorry','solving error','info')
-    for await (const mn of masterNodesForVote) {
-      const proposalVoteNo = {
-        mnPrivateKey: mn.privateKey,
-        vinMasternode: mn.txId,
-        gObjectHash: proposal.Hash,
-        voteOutcome: vote,
-      };
-      const voteData = signVote(proposalVoteNo);
-      await voteProposal(user.token, voteData)
-        .then((data) => {
-          console.log(data);
+    await Promise.all(
+      masterNodesForVote.map(async mn => {
+        const proposalVoteNo = {
+          mnPrivateKey: mn.privateKey,
+          vinMasternode: mn.txId,
+          gObjectHash: proposal.Hash,
+          voteOutcome: vote,
+        };
+        const voteData = signVote(proposalVoteNo);
+        return new Promise((resolve, reject) => {
+          voteProposal(user.token, voteData)
+            .then((data) => {
+              console.log(data)
+              if (RegExp(/\s-32603\s/).test(data)) {
+                if (RegExp(/Failure to find masternode in list/).test(data)) {
+                  resolve({
+                    hash: proposal.Hash,
+                    votingOption: vote,
+                    message: 'Failure to find masternode in list',
+                    mn: mn.name
+                  })
+                }
+                if (RegExp(/Error voting/).test(data)) {
+                  resolve({
+                    hash: proposal.Hash,
+                    votingOption: vote,
+                    message: `Invalid proposal hash. Please check: ${proposal.Hash}`,
+                    mn: mn.name
+                  })
+
+                }
+              }
+
+              if (RegExp(/\s-8\s/).test(data)) {
+                if (RegExp(/mn tx hash must be hexadecimal string/).test(data)) {
+                  resolve({
+                    hash: proposal.Hash,
+                    votingOption: vote,
+                    message: `Invalid txid. Please check: ${mn.txId}`,
+                    mn: mn.name
+                  })
+                }
+              }
+
+              if (data.data === 'Voted successfully') {
+                resolve({
+                  hash: proposal.Hash,
+                  votingOption: vote,
+                  message: data.data,
+                  mn: mn.name
+                })
+              }
+            })
+            .catch((err) => {
+              reject({
+                mn: mn.name,
+                err: err.message
+              })
+            });
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    /** no uses a menos que no vayas al momento final ver que mn no votaron en todas las promesas **/
-    // await Promise.all(
-    //   masterNodesForVote.map(async (mn, index) => {
-    //
-    //   })
-    // )
-
+      })).then(resp => {
+      console.log(resp)
+    }).catch(err => {
+      console.log(err)
+    })
   };
 
 
