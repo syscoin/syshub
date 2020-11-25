@@ -84,7 +84,7 @@ export default function ProposalCard({proposal, enabled, userInfo}) {
   }
 
   function openMnVote(vote) {
-    if (userInfo.emailVerified) {
+    if (userInfo?.emailVerified) {
       setVote(vote);
       setOpenMnList(true);
     }
@@ -143,6 +143,7 @@ export default function ProposalCard({proposal, enabled, userInfo}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote yes"
+              disabled={userInfo ? false : true}
               onClick={() => openMnVote(1)}
             >
               <i className="icon-up-open"></i>
@@ -151,6 +152,7 @@ export default function ProposalCard({proposal, enabled, userInfo}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Abstain"
+              disabled={userInfo ? false : true}
               onClick={() => openMnVote(3)}
             >
               <i className="icon-minus-outline"></i>
@@ -159,6 +161,7 @@ export default function ProposalCard({proposal, enabled, userInfo}) {
               style={{border: "none", outline: "none"}}
               className="vote"
               title="Vote no"
+              disabled={userInfo ? false : true}
               onClick={() => openMnVote(2)}
             >
               <i className="icon-down-open"></i>
