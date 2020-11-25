@@ -125,6 +125,21 @@ export const destroyMasterNode = async (token, id) => {
   }
 };
 
+export const voteIn = async (token, id, data) => {
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/masternode/voteIn/${id}`
+      , data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 /** Proposal **/
 export const checkProposal = async (token, data) => {
   try {
@@ -169,17 +184,17 @@ export const submitProposal = async (token, id, data) => {
 };
 
 export const voteProposal = async (token, data) => {
-  try {
-    return await axios.post(`${API_URI}/proposal/vote`, data, {
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/proposal/vote`, data, {
       headers: {
         Authorization: `Bearer ${token}`
       }
+    }).then(resp => {
+      resolve(resp)
     }).catch(err => {
-      throw err
+      reject(err)
     })
-  } catch (err) {
-    new Error(err)
-  }
+  })
 };
 
 export const getOneProposal = async (id) => {
@@ -276,6 +291,7 @@ export const register = async (data) => {
     throw err;
   }
 }
+
 /** User **/
 
 export const getUserInfo = async (token, id) => {
