@@ -38,6 +38,13 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   };
 
   const voting = async () => {
+    swal.fire({
+      title: 'Processing votes',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
     let masterNodesVote = []
     let masterNodesErrorVote = []
     for await (const mn of masterNodesForVote) {
