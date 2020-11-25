@@ -1,4 +1,6 @@
 import firebase from 'firebase'
+import jwtDecode from "jwt-decode";
+import {getToken, setToken} from "./auth-token";
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -99,4 +101,18 @@ export default class Firebase {
     throw err
   })
 
+  refreshInRequest = async () => {
+    console.log('entro aqui')
+    const token = getToken();
+    console.log(token)
+    const decoded = jwtDecode(token.decryptedToken);
+    const dateNow = new Date().getTime();
+    if (Math.floor(dateNow / 1000) > decoded.exp) {
+      console.log('entro en la condicional')
+      const newTokenRefreshed = await this.refreshToken().catch(err => {
+        throw err
+      })
+      setToken(newTokenRefreshed);
+    }
+  }
 }
