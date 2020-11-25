@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from 'react-i18next';
 import {Collapse} from 'react-collapse';
+import swal from "sweetalert2";
 
 import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
-import {calculatePaymentDates} from "../../utils/request";
+import { string } from "yup";
 
-export default function ProposalCard({proposal, enabled}) {
+export default function ProposalCard({proposal, enabled, userInfo}) {
   const {user} = useUser();
   const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
@@ -16,7 +17,6 @@ export default function ProposalCard({proposal, enabled}) {
   const [days_remaining, setDays_remaining] = useState(0);
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
-  // const [endDate, setEndDate] = useState();
   const [vote, setVote] = useState('');
 
 
@@ -84,8 +84,18 @@ export default function ProposalCard({proposal, enabled}) {
   }
 
   function openMnVote(vote) {
-    setVote(vote);
-    setOpenMnList(true);
+    if (userInfo.emailVerified) {
+      setVote(vote);
+      setOpenMnList(true);
+    }
+    else {
+      swal.fire({
+        icon: 'info',
+        title: 'Verify your email',
+        text: 'You cannot vote if you haven´t verified your email address'
+      });
+      
+    }
   }
 
   function afterVote() {

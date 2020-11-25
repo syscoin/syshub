@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { withTranslation } from "react-i18next";
+import { useUser } from '../../context/user-context';
 
-import { list } from '../../utils/request';
+import { list, getUserInfo } from '../../utils/request';
 
 import SubTitle from '../global/SubTitle';
 import ProposalCard from './ProposalCard';
 
 function ProposalsList(props) {
-  
   const { t } = props;
+  const { user } = useUser();
+  const [userInfo, setUserInfo] = useState(null);
   const [proposals, setProposals] = useState([]);
 
   const loadProposals = useCallback(async () => {
@@ -28,10 +30,25 @@ function ProposalsList(props) {
     }
   }, []);
 
+  const loadUserInfo = useCallback(async () => {
+    if (user) {
+      try {
+        const response = await getUserInfo(user.token, user.data.user_id);
+        if (response.data) {
+          await setUserInfo(response.data.user);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [user]);
+
   useEffect(() => {
     loadProposals();
+    loadUserInfo();
     return () => {
       setProposals([]);
+      setUserInfo(null);
     }
     // eslint-disable-next-line
   }, []);
@@ -43,7 +60,7 @@ function ProposalsList(props) {
       {
         proposals.length > 0 && <div className="proposals">
           {proposals.map(proposal => {
-            return <ProposalCard proposal={proposal} key={proposal.Hash} enabled={props.statsData.enabled} />
+            return <ProposalCard proposal={proposal} key={proposal.Hash} enabled={props.statsData.enabled} userInfo={userInfo} />
           })}
         </div>
       }

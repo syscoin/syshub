@@ -71,8 +71,26 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           })
         });
     }
-    swal.fire('finished process', `<p>Votos success:${JSON.stringify(masterNodesVote)}</p><br><p>Votos no success:${JSON.stringify(masterNodesErrorVote)}</p>`, 'info')
+    let stringOfMnYes = masterNodesVote.map(mn => {
+      return `<li>${mn.mn}</li>`;
+    }).join('');
+    let stringOfMnNo = masterNodesErrorVote.map(mn => {
+      return `<li>${mn.mn}. Cause: ${mn.err}</li>`;
+    }).join('');
+
+    swal.fire({
+      title: 'Voting results',
+      html: `
+      <p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>
+      <ul style="text-align: start">${stringOfMnYes}</ul>
+      <br/>
+      <p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>
+      <ul style="text-align: start">${stringOfMnNo}</ul>
+      `
+    }
+    )
   };
+  // `<p>Votos success:${JSON.stringify(masterNodesVote)}</p><br><p>Votos no success:${JSON.stringify(masterNodesErrorVote)}</p>`,
 
 
   return (

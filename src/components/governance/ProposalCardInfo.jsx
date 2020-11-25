@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-
+import React from 'react';
 
 export default function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_type}) {
 
@@ -42,15 +41,16 @@ export default function ProposalCardInfo({proposal, days_remaining, month_remain
           } Remaining)`}</span>
         )}
       </p>
-      <span style={{lineHeight: "initial"}}>
+      <span style={{lineHeight: "1.5"}}>
         Voting string: 
       </span>
       <div className="input-form">
         <div className="form-group">
 
-          <input
+          <textarea
             type="text"
             className="styled"
+            style={{resize: 'none'}}
             value={`gobject vote-many ${proposal.Hash} funding yes`}
             disabled={true}
           />
