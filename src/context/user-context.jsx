@@ -11,7 +11,8 @@ import {map, shareReplay} from 'rxjs/operators';
 const UserContext = React.createContext();
 const firebase = new Firebase();
 
-let clock = timer(0, 400000).pipe(map(t => new Date()), shareReplay(1));
+let clock = timer(0, 300000).pipe(map(t => new Date()), shareReplay(1));
+// let clock = timer(0, 1000).pipe(map(t => new Date()), shareReplay(1));
 
 export function UserProvider(props) {
   const history = useHistory();
@@ -42,13 +43,17 @@ export function UserProvider(props) {
         clock.subscribe(async (f) => {
           if (navigator.onLine) {
             const dateNow = new Date().getTime();
-            if (Math.floor(dateNow / 1000) > decoded.exp) {
-              await refresh()
+            if (Math.floor(f.getTime() / 1000 > decoded.exp)) {
+              await refresh().catch(err => {
+                setUser(null)
+                setLoadingUser(false);
+              })
             } else {
               setUser({data: decoded, token: token.token});
               setLoadingUser(false);
             }
           } else {
+            setUser(null)
             setLoadingUser(false);
           }
         })
