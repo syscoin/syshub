@@ -78,7 +78,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   return (
     <>
       <h3>{proposal.title || proposal.name}</h3>
-      <p>Select the masternodes to vote with</p>
+      <p>Select the masternodes to vote in the proposal</p>
       {masterNodes.length > 0 ? (
         <>
           <div className="form-group">
