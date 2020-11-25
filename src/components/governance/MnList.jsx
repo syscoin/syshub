@@ -1,17 +1,23 @@
 import React, {useEffect, useState} from "react";
+import swal from 'sweetalert2'
 
 import {useUser} from "../../context/user-context";
-import {getUserMasterNodes, voteIn} from "../../utils/request";
+import {getUserMasterNodes, voteIn, get2faInfoUser} from "../../utils/request";
 import signVote from "../../utils/sign-vote";
 import {voteProposal} from "../../utils/request";
 import MnItem from "./MnItem";
-import swal from 'sweetalert2'
+
+import CustomModal from "../global/CustomModal";
+import Modal2FA from "../profile/2FA/Modal2FA";
 
 const MnList = ({proposal, vote, onAfterVote}) => {
-  let {user} = useUser();
+  let { user } = useUser();
   const [loadingMN, setLoadingMN] = useState(false);
   const [masterNodes, setMasterNodes] = useState([]);
   const [masterNodesForVote, setMasterNodesForVote] = useState([]);
+  const [userSignInGAuth, setUserSignInGAuth] = useState(null);
+  const [user2FA, setUser2FA] = useState(null);
+  const [open2FAModal, setOpen2FAModal] = useState(false);
 
   useEffect(() => {
     const getMnByUser = async () => {
@@ -19,6 +25,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       let {data} = await getUserMasterNodes(user.token).catch((err) => {
         throw err;
       });
+      console.log(data);
       setLoadingMN(false);
       setMasterNodes(data.nodes || []);
     };
@@ -37,7 +44,36 @@ const MnList = ({proposal, vote, onAfterVote}) => {
 
   };
 
+  const prepareVoting = async () => {
+    try {
+      let user2fa = await get2faInfoUser(user.data.user_id);
+      if (user2fa.twoFa === true) {
+        setUser2FA(user2fa);
+        if (user2fa.gAuth === true) {
+          setUserSignInGAuth({secret: user2fa.gAuthSecret});
+        }
+        setOpen2FAModal(true);
+      }
+      else {
+        swal.fire({
+          icon: 'warning',
+          title: 'Two-Factor Authentication is disabled',
+          text: 'To vote you must activate a 2FA method'
+        });
+      }
+    }
+    catch (error) {
+      swal.fire({
+        title: 'There was an error',
+        icon: 'error',
+        text: error.message,
+      });
+      console.log(error);
+    }
+  }
+
   const voting = async () => {
+    setOpen2FAModal(false);
     swal.fire({
       title: 'Processing votes',
       showConfirmButton: false,
@@ -97,7 +133,6 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     }
     )
   };
-  // `<p>Votos success:${JSON.stringify(masterNodesVote)}</p><br><p>Votos no success:${JSON.stringify(masterNodesErrorVote)}</p>`,
 
 
   return (
@@ -109,7 +144,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           <div className="form-group">
             <ul className="selector">
               {masterNodes.map(mn => (
-                <MnItem key={mn.uid} mn={mn} onAddMN={addMnVote} onRemoveMN={removeMnVote}/>
+                <MnItem key={mn.uid} vote={vote} hash={proposal.Hash} mn={mn} onAddMN={addMnVote} onRemoveMN={removeMnVote}/>
               ))}
             </ul>
 
@@ -117,7 +152,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           <div className="form-actions-spaced text-center" style={{marginTop: '10px'}}>
             <button
               className="btn btn--blue"
-              onClick={voting}
+              onClick={prepareVoting}
               disabled={masterNodesForVote.length === 0}
             >Vote
             </button>
@@ -133,6 +168,17 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           }
         </>
       )}
+      <CustomModal
+        open={open2FAModal}
+        onClose={() => setOpen2FAModal(false)}
+      >
+        {user2FA && <Modal2FA
+          user2fa={user2FA}
+          userSignInGAuth={userSignInGAuth}
+          onGAuth={voting}
+          onPhoneSMS={voting}
+        />}
+      </CustomModal>
     </>
   );
 };
