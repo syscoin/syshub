@@ -8,12 +8,20 @@ export default function HomeButtons() {
 
   return (
     <div className="article__actions vertical">
-      <Link to="/about" className="btn btn--blue-border">
+      <a href="https://syscoin.org/masternodes"
+        className="btn btn--blue-border"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         Learn More
-      </Link>
-      <Link to="/setup" className="btn btn--blue-border">
+      </a>
+      <a href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+        className="btn btn--blue-border"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         Setup Masternode
-      </Link>
+      </a>
       {!user && (<Link to="/signup" className="btn btn--blue-border">
         Sign up
       </Link>)}

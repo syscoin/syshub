@@ -57,7 +57,13 @@ function Header(props) {
             <nav className="nav">
               <ul style={{ width: "100%" }}>
                 <li onClick={menuLinks}>
-                  <Link to="/about"> {t("header.about")}</Link>
+                  <a
+                    href="https://syscoin.org/masternodes"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {t("header.about")}
+                  </a>
                 </li>
 
                 <li onClick={menuLinks}>
@@ -65,7 +71,13 @@ function Header(props) {
                 </li>
 
                 <li onClick={menuLinks}>
-                  <Link to="/setup">{t("header.setup")}</Link>
+                  <a
+                    href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {t("header.setup")}
+                  </a>
                 </li>
 
                 <li onClick={menuLinks}>

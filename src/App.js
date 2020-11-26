@@ -11,8 +11,8 @@ import Header from './components/global/Header';
 import Footer from './components/global/Footer';
 
 import Home from './pages/Home';
-import About from './pages/About';
-import Setup from './pages/Setup';
+// import About from './pages/About';
+// import Setup from './pages/Setup';
 import Masternodes from './pages/Masternodes';
 import Stats from './pages/Stats';
 import Governance from './pages/Governance';
@@ -32,8 +32,8 @@ class AppComponent extends Component {
                 <Header />
                 <Switch>
                     <PublicRoute restricted={false} path="/" component={Home} exact />
-                    <PublicRoute restricted={false} path="/about" component={About} />
-                    <PublicRoute restricted={false} path="/setup" component={Setup} />
+                    {/* <PublicRoute restricted={false} path="/about" component={About} /> */}
+                    {/* <PublicRoute restricted={false} path="/setup" component={Setup} /> */}
                     <PublicRoute restricted={false} path="/masternodes" component={Masternodes} />
                     <PublicRoute restricted={false} path="/stats" component={Stats} />
                     <PublicRoute restricted={false} path="/governance" component={Governance} />
