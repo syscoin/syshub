@@ -141,7 +141,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       {masterNodes.length > 0 ? (
         <>
           <div className="form-group">
-            <ul className="selector">
+            <ul className="selector" style={{maxHeight: '180px', overflow: 'auto'}}>
               {masterNodes.map(mn => (
                 <MnItem key={mn.uid} vote={vote} hash={proposal.Hash} mn={mn} onAddMN={addMnVote} onRemoveMN={removeMnVote}/>
               ))}
