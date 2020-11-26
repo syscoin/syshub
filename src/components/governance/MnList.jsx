@@ -22,10 +22,9 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   useEffect(() => {
     const getMnByUser = async () => {
       setLoadingMN(true);
-      let {data} = await getUserMasterNodes().catch((err) => {
+      let {data} = await getUserMasterNodes(proposal.Hash).catch((err) => {
         throw err;
       });
-      console.log(data);
       setLoadingMN(false);
       setMasterNodes(data.nodes || []);
     };
@@ -92,18 +91,19 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
-          await voteIn(mn.uid, {
+          masterNodesVote.push({
             hash: proposal.Hash,
-            txId:mn.txId,
-            votingOption: String(vote)
-          }).then(() => {
-            masterNodesVote.push({
-              hash: proposal.Hash,
-              votingOption: vote,
-              message: data.data,
-              mn: mn.name
-            })
+            votingOption: vote,
+            message: data.data,
+            mn: mn.name
           })
+          // await voteIn(mn.uid, {
+          //   hash: proposal.Hash,
+          //   txId:mn.txId,
+          //   votingOption: String(vote)
+          // }).then(() => {
+          //
+          // })
         })
         .catch(err => {
           masterNodesErrorVote.push({

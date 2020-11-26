@@ -9,7 +9,7 @@ const API_URI = process.env.REACT_APP_SYS_API_URI
 /** MasterNodes **/
 export const list = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/list`,{
+    return await axios.get(`${API_URI}/masternode/list`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -23,7 +23,7 @@ export const list = async () => {
 
 export const getInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getinfo`,{
+    return await axios.get(`${API_URI}/masternode/getinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -37,7 +37,7 @@ export const getInfo = async () => {
 
 export const getMiningInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getmininginfo`,{
+    return await axios.get(`${API_URI}/masternode/getmininginfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -51,7 +51,7 @@ export const getMiningInfo = async () => {
 
 export const getGovernanceInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getgovernanceinfo`,{
+    return await axios.get(`${API_URI}/masternode/getgovernanceinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -65,7 +65,7 @@ export const getGovernanceInfo = async () => {
 
 export const getSuperBlockBudget = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getsuperblockbudget`,{
+    return await axios.get(`${API_URI}/masternode/getsuperblockbudget`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -92,16 +92,19 @@ export const getOneMasterNode = async (id) => {
   }
 };
 
-export const getUserMasterNodes = async () => {
+export const getUserMasterNodes = async (hash) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.get(`${API_URI}/masternode`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
+    return await axios.get(typeof hash !== "undefined" ?
+      `${API_URI}/masternode?hash=${hash}` :
+      `${API_URI}/masternode`
+      , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'appclient': process.env.REACT_APP_CLIENT
+        }
+      }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -335,7 +338,7 @@ export const destroyProposal = async (id) => {
 /** Auth **/
 export const login = async (data) => {
   try {
-    return await axios.post(`${API_URI}/auth/login`, data,{
+    return await axios.post(`${API_URI}/auth/login`, data, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -353,7 +356,7 @@ export const login = async (data) => {
 
 export const register = async (data) => {
   try {
-    return await axios.post(`${API_URI}/auth/register`, data,{
+    return await axios.post(`${API_URI}/auth/register`, data, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -383,7 +386,7 @@ export const getUserInfo = async (id) => {
 
 export const get2faInfoUser = async (id) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/user/verify2fa/${id}`,{
+    axios.get(`${API_URI}/user/verify2fa/${id}`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }

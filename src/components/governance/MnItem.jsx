@@ -9,7 +9,7 @@ export default function MnItem({ mn, onAddMN, onRemoveMN, hash, vote }) {
       if (mn.proposalVotes) {
         const alreadyVoted = mn.proposalVotes.find(mnVote => {
           if (mnVote.hash === hash) {
-            if (mnVote.votingOption === String(vote)) return true;
+            if (mnVote.vote === String(vote)) return true;
             return false;
           }
           return false;
