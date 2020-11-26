@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import swal from "sweetalert2";
 
 import {useUser} from '../../context/user-context';
@@ -7,7 +7,7 @@ import CustomModal from "../global/CustomModal";
 import Modal2FA from "./2FA/Modal2FA";
 
 export default function UserDelete() {
-  const { user, logoutUser } = useUser();
+  const {user, logoutUser} = useUser();
   const [userSignInGAuth, setUserSignInGAuth] = useState(null);
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
@@ -29,25 +29,22 @@ export default function UserDelete() {
             setUserSignInGAuth({secret: user2fa.gAuthSecret});
           }
           setOpen2FAModal(true);
-        }
-        else {
+        } else {
           deleteAccountAfter2FA();
         }
-      }
-      catch (error) {
+      } catch (error) {
         swal.fire({
           title: 'There was an error',
           icon: 'error',
           text: 'please try again'
         });
-        console.log(error);
       }
     }
   }
-  
+
   const deleteAccountAfter2FA = async () => {
     setOpen2FAModal(false);
-    await deleteUser(user.token, user.data.user_id).then(async () => {
+    await deleteUser(user.data.user_id).then(async () => {
       await swal.fire({
         title: 'Deleted',
         text: "Your account has been deleted",

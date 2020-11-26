@@ -25,15 +25,14 @@ function UserMasternodes(props) {
   const loadMasternodes = useCallback(async () => {
     try {
       setIsFetching(true);
-      const response = await getUserMasterNodes(user.token);
-      
+      const response = await getUserMasterNodes();
+
       if (response.data) {
         setMasternodes(response.data.nodes);
-      }  
+      }
       setIsFetching(false);
     }
     catch (error) {
-      console.log(error)
       setIsFetching(false);
     }
   }, [user]);
@@ -46,7 +45,7 @@ function UserMasternodes(props) {
   const editMN = async (uid, data) => {
 
     try {
-      const response = await updateMasterNode(user.token, uid, {data: data});
+      const response = await updateMasterNode( uid, {data: data});
       if (response.data) {
         swal.fire({
           icon: "success",
@@ -91,7 +90,6 @@ function UserMasternodes(props) {
           icon: 'error',
           text: error.message,
         });
-        console.log(error);
       }
     }
   }
@@ -100,7 +98,7 @@ function UserMasternodes(props) {
     setOpen2FAModal(false);
     const masternodeToRemove = uid || masternodeToDelete;
     try {
-      await destroyMasterNode(user.token, masternodeToRemove).catch(err => {
+      await destroyMasterNode(masternodeToRemove).catch(err => {
         throw err
       });
       
@@ -117,7 +115,6 @@ function UserMasternodes(props) {
         title: "There was an error",
         text: error.message
       });
-      console.log(error);
     }
   }
 

@@ -76,7 +76,7 @@ export default function ProposalForm() {
   useEffect(() => {
     const getSavedProposal = async () => {
       try {
-        let {data} = await notCompletedProposal(user.token).catch((err) => {
+        let {data} = await notCompletedProposal().catch((err) => {
           throw err;
         });
         // console.log(data);
@@ -115,7 +115,7 @@ export default function ProposalForm() {
     if (openModal) setOpenModal(false);
     setCurrentStep(0);
     try {
-      await destroyProposal(user.token, proposalUid).catch((err) => {
+      await destroyProposal(proposalUid).catch((err) => {
         throw err;
       });
 
@@ -209,23 +209,21 @@ export default function ProposalForm() {
       paymentAddress: payment.paymentAddress,
       paymentAmount: payment.paymentAmount
     }
-    console.log(proposal);
+
     try {
-      await checkProposal(user.token, proposal).catch(err => {
+      await checkProposal(proposal).catch(err => {
         throw err
       });
 
-      const prepare = await prepareProposal(user.token, proposal).catch(err => {
+      const prepare = await prepareProposal(proposal).catch(err => {
         throw err
       });
-      console.log(prepare);
       setProposalUid(prepare.data.uid)
       setPrepareCommand(prepare.data.command);
 
       setPreparing(false);
       await next();
     } catch (error) {
-      console.log(error);
       return swal.fire({
         icon: "error",
         title: "there was an error",
@@ -243,11 +241,10 @@ export default function ProposalForm() {
         swal.showLoading()
       }
     });
-    console.log(data);
     let {paymentTxId} = data;
-    await updateProposal(user.token, proposalUid, {txId: paymentTxId}).then(async resp => {
+    await updateProposal(proposalUid, {txId: paymentTxId}).then(async resp => {
       let {data: {proposal: {prepareObjectProposal}}} = resp;
-      let {data: {commandSubmit}} = await submitProposal(user.token, proposalUid, {...prepareObjectProposal, txId: paymentTxId})
+      let {data: {commandSubmit}} = await submitProposal(proposalUid, {...prepareObjectProposal, txId: paymentTxId})
         .catch(err => {
           swal.fire({
             icon: 'error',
@@ -256,7 +253,6 @@ export default function ProposalForm() {
           });
           console.log(err)
         })
-      console.log(commandSubmit);
       setSubmitCommand(commandSubmit);
       await swal.fire({
         icon: 'success',
@@ -267,14 +263,12 @@ export default function ProposalForm() {
 
       setUseCollapse(true);
       setCollapse(false);
-      console.log(data)
     }).catch(err => {
       swal.fire({
         icon: 'error',
         title: 'There was an error',
         text: err.message
       });
-      console.log(err)
     })
   }
 
@@ -288,10 +282,9 @@ export default function ProposalForm() {
     });
     let {proposalHash} = data;
     try {
-      await updateProposal(user.token, proposalUid, {hash: proposalHash, complete: true}).catch(err => {
+      await updateProposal(proposalUid, {hash: proposalHash, complete: true}).catch(err => {
         throw err
       })
-
       await swal.fire({
         icon: 'success',
         title: 'The proposal was created',

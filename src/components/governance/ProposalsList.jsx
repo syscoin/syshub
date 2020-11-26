@@ -33,7 +33,7 @@ function ProposalsList(props) {
   const loadUserInfo = useCallback(async () => {
     if (user) {
       try {
-        const response = await getUserInfo(user.token, user.data.user_id);
+        const response = await getUserInfo(user.data.user_id);
         if (response.data) {
           await setUserInfo(response.data.user);
         }

@@ -16,7 +16,7 @@ export default function AddMasternodes() {
   const singleCreation = async (data) => {
     setSubmitting(true);
     try {
-      await createMasterNode(user.token, data).catch(err => { throw err });
+      await createMasterNode(data).catch(err => { throw err });
       await Swal.fire({
         title: 'masternode created',
         icon: 'success',
@@ -35,7 +35,7 @@ export default function AddMasternodes() {
   const multipleCreation = async ({ masternodeConf }) => {
     setSubmitting(true);
     try {
-      await createMasterNode(user.token, {listMN: masternodeConf}).catch(err => { throw err });
+      await createMasterNode( {listMN: masternodeConf}).catch(err => { throw err });
       await Swal.fire({
         title: 'masternode created',
         icon: 'success',

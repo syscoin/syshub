@@ -11,7 +11,7 @@ import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
 
 const MnList = ({proposal, vote, onAfterVote}) => {
-  let { user } = useUser();
+  let {user} = useUser();
   const [loadingMN, setLoadingMN] = useState(false);
   const [masterNodes, setMasterNodes] = useState([]);
   const [masterNodesForVote, setMasterNodesForVote] = useState([]);
@@ -22,7 +22,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   useEffect(() => {
     const getMnByUser = async () => {
       setLoadingMN(true);
-      let {data} = await getUserMasterNodes(user.token).catch((err) => {
+      let {data} = await getUserMasterNodes().catch((err) => {
         throw err;
       });
       console.log(data);
@@ -53,22 +53,19 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           setUserSignInGAuth({secret: user2fa.gAuthSecret});
         }
         setOpen2FAModal(true);
-      }
-      else {
+      } else {
         swal.fire({
           icon: 'warning',
           title: 'Two-Factor Authentication is disabled',
           text: 'To vote you must activate a 2FA method'
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       swal.fire({
         title: 'There was an error',
         icon: 'error',
         text: error.message,
       });
-      console.log(error);
     }
   }
 
@@ -90,11 +87,14 @@ const MnList = ({proposal, vote, onAfterVote}) => {
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-      const voteData = signVote(proposalVoteNo);
-      await voteProposal(user.token, voteData)
+
+
+      const voteData = signVote(proposalVoteNo)
+      await voteProposal(voteData)
         .then(async data => {
-          await voteIn(user.token, mn.uid, {
+          await voteIn(mn.uid, {
             hash: proposal.Hash,
+            txId:mn.txId,
             votingOption: String(vote)
           }).then(() => {
             masterNodesVote.push({
@@ -103,14 +103,12 @@ const MnList = ({proposal, vote, onAfterVote}) => {
               message: data.data,
               mn: mn.name
             })
-          }).catch(err => {
-            console.log(err)
           })
         })
         .catch(err => {
           masterNodesErrorVote.push({
             mn: mn.name,
-            err: err.response.data.message
+            err: voteData === 'Invalid network version'?'Invalid network version':err.response.data.message
           })
         });
     }
@@ -122,15 +120,15 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     }).join('');
 
     swal.fire({
-      title: 'Voting results',
-      html: `
+        title: 'Voting results',
+        html: `
       <p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>
       <ul style="text-align: start">${stringOfMnYes}</ul>
       <br/>
       <p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>
       <ul style="text-align: start">${stringOfMnNo}</ul>
       `
-    }
+      }
     )
   };
 

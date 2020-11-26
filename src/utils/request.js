@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {firebase} from "../context/user-context";
+import {getToken} from "./auth-token";
 
 // const API_URI = 'http://localhost:3000'
 // const API_URI = 'http://198.211.117.144:3000'
@@ -7,7 +9,11 @@ const API_URI = process.env.REACT_APP_SYS_API_URI
 /** MasterNodes **/
 export const list = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/list`).catch(err => {
+    return await axios.get(`${API_URI}/masternode/list`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -17,7 +23,11 @@ export const list = async () => {
 
 export const getInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getinfo`).catch(err => {
+    return await axios.get(`${API_URI}/masternode/getinfo`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -27,7 +37,11 @@ export const getInfo = async () => {
 
 export const getMiningInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getmininginfo`).catch(err => {
+    return await axios.get(`${API_URI}/masternode/getmininginfo`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -37,7 +51,11 @@ export const getMiningInfo = async () => {
 
 export const getGovernanceInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getgovernanceinfo`).catch(err => {
+    return await axios.get(`${API_URI}/masternode/getgovernanceinfo`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -47,7 +65,11 @@ export const getGovernanceInfo = async () => {
 
 export const getSuperBlockBudget = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getsuperblockbudget`).catch(err => {
+    return await axios.get(`${API_URI}/masternode/getsuperblockbudget`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -59,7 +81,8 @@ export const getOneMasterNode = async (id) => {
   try {
     return await axios.get(`${API_URI}/masternode/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${'AQUI EL TOKEN'}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -69,11 +92,14 @@ export const getOneMasterNode = async (id) => {
   }
 };
 
-export const getUserMasterNodes = async (token) => {
+export const getUserMasterNodes = async () => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.get(`${API_URI}/masternode`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -83,11 +109,14 @@ export const getUserMasterNodes = async (token) => {
   }
 };
 
-export const createMasterNode = async (token, data) => {
+export const createMasterNode = async (data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.post(`${API_URI}/masternode`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -97,11 +126,14 @@ export const createMasterNode = async (token, data) => {
   }
 };
 
-export const updateMasterNode = async (token, id, data) => {
+export const updateMasterNode = async (id, data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.put(`${API_URI}/masternode/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -111,11 +143,14 @@ export const updateMasterNode = async (token, id, data) => {
   }
 };
 
-export const destroyMasterNode = async (token, id) => {
+export const destroyMasterNode = async (id) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.delete(`${API_URI}/masternode/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -125,14 +160,17 @@ export const destroyMasterNode = async (token, id) => {
   }
 };
 
-export const voteIn = async (token, id, data) => {
+export const voteIn = async (id, data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.post(`${API_URI}/masternode/voteIn/${id}`
       , data, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(resp => {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'appclient': process.env.REACT_APP_CLIENT
+        }
+      }).then(resp => {
       resolve(resp)
     }).catch(err => {
       reject(err)
@@ -141,11 +179,14 @@ export const voteIn = async (token, id, data) => {
 }
 
 /** Proposal **/
-export const checkProposal = async (token, data) => {
+export const checkProposal = async (data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.post(`${API_URI}/proposal/check`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -155,11 +196,14 @@ export const checkProposal = async (token, data) => {
   }
 };
 
-export const prepareProposal = async (token, data) => {
+export const prepareProposal = async (data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.post(`${API_URI}/proposal/prepare`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -169,11 +213,14 @@ export const prepareProposal = async (token, data) => {
   }
 };
 
-export const submitProposal = async (token, id, data) => {
+export const submitProposal = async (id, data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.put(`${API_URI}/proposal/submit/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -183,11 +230,14 @@ export const submitProposal = async (token, id, data) => {
   }
 };
 
-export const voteProposal = async (token, data) => {
+export const voteProposal = async (data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.post(`${API_URI}/proposal/vote`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => {
       resolve(resp)
@@ -199,9 +249,12 @@ export const voteProposal = async (token, data) => {
 
 export const getOneProposal = async (id) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.get(`${API_URI}/proposal/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`
+        Authorization: `Bearer ${'AQUI EL TOKEN'}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -211,11 +264,14 @@ export const getOneProposal = async (id) => {
   }
 }
 
-export const notCompletedProposal = async (token) => {
+export const notCompletedProposal = async () => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/proposal/pending/recover`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => {
       resolve(resp)
@@ -225,11 +281,14 @@ export const notCompletedProposal = async (token) => {
   })
 }
 
-export const createProposal = async (token, data) => {
+export const createProposal = async (data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.post(`${API_URI}/proposal`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -239,11 +298,14 @@ export const createProposal = async (token, data) => {
   }
 }
 
-export const updateProposal = async (token, id, data) => {
+export const updateProposal = async (id, data) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.put(`${API_URI}/proposal/${id}`, {data: data}, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -253,11 +315,14 @@ export const updateProposal = async (token, id, data) => {
   }
 }
 
-export const destroyProposal = async (token, id) => {
+export const destroyProposal = async (id) => {
   try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
     return await axios.delete(`${API_URI}/proposal/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
       throw err
@@ -270,7 +335,11 @@ export const destroyProposal = async (token, id) => {
 /** Auth **/
 export const login = async (data) => {
   try {
-    return await axios.post(`${API_URI}/auth/login`, data).catch(err => {
+    return await axios.post(`${API_URI}/auth/login`, data,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err
     })
   } catch (err) {
@@ -284,7 +353,11 @@ export const login = async (data) => {
 
 export const register = async (data) => {
   try {
-    return await axios.post(`${API_URI}/auth/register`, data).catch(err => {
+    return await axios.post(`${API_URI}/auth/register`, data,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
       throw err;
     })
   } catch (err) {
@@ -294,11 +367,14 @@ export const register = async (data) => {
 
 /** User **/
 
-export const getUserInfo = async (token, id) => {
+export const getUserInfo = async (id) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/user/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => resolve(resp))
       .catch(err => reject(err))
@@ -307,7 +383,11 @@ export const getUserInfo = async (token, id) => {
 
 export const get2faInfoUser = async (id) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/user/verify2fa/${id}`).then(({data}) => {
+    axios.get(`${API_URI}/user/verify2fa/${id}`,{
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(({data}) => {
       let {user} = data;
       resolve(user)
     }).catch(err => {
@@ -316,11 +396,14 @@ export const get2faInfoUser = async (id) => {
   })
 }
 
-export const updateUser = async (token, id, data) => {
+export const updateUser = async (id, data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.put(`${API_URI}/user/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => {
       resolve(resp)
@@ -330,11 +413,14 @@ export const updateUser = async (token, id, data) => {
   })
 }
 
-export const updateActionsUser = async (token, id, data) => {
+export const updateActionsUser = async (id, data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.put(`${API_URI}/user/extend/${id}`, data, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => {
       resolve(resp)
@@ -344,11 +430,14 @@ export const updateActionsUser = async (token, id, data) => {
   })
 }
 
-export const deleteUser = async (token, id) => {
+export const deleteUser = async (id) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
   return new Promise((resolve, reject) => {
     axios.delete(`${API_URI}/user/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(resp => {
       resolve(resp)

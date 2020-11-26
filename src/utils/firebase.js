@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import firebase from 'firebase/firebase'
 import jwtDecode from "jwt-decode";
 import {getToken, setToken} from "./auth-token";
 
@@ -102,17 +102,19 @@ export default class Firebase {
   })
 
   refreshInRequest = async () => {
-    console.log('entro aqui')
     const token = getToken();
-    console.log(token)
-    const decoded = jwtDecode(token.decryptedToken);
-    const dateNow = new Date().getTime();
-    if (Math.floor(dateNow / 1000) > decoded.exp) {
-      console.log('entro en la condicional')
-      const newTokenRefreshed = await this.refreshToken().catch(err => {
-        throw err
-      })
-      setToken(newTokenRefreshed);
+    if (!token) {
+      return null
+    } else {
+      const decoded = jwtDecode(token.decryptedToken);
+      const dateNow = new Date().getTime();
+      if (Math.floor(dateNow / 1000) > decoded.exp) {
+        console.log('token refrescado')
+        const newTokenRefreshed = await this.refreshToken().catch(err => {
+          throw err
+        })
+        setToken(newTokenRefreshed);
+      }
     }
   }
 }

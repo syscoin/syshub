@@ -5,70 +5,29 @@ import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
 import {register, updateUser, updateActionsUser, deleteUser} from '../utils/request';
 import {useHistory} from 'react-router';
-import {timer} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
-
 const UserContext = React.createContext();
-const firebase = new Firebase();
+export const firebase = new Firebase();
 
-let clock = timer(0, 300000).pipe(map(t => new Date()), shareReplay(1));
-// let clock = timer(0, 1000).pipe(map(t => new Date()), shareReplay(1));
 
 export function UserProvider(props) {
   const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
 
-  const refresh = async () => {
-    const newTokenRefreshed = await firebase.refreshToken().catch(err => {
-      throw err
-    })
-    const newDecoded = jwtDecode(newTokenRefreshed);
-    setToken(newTokenRefreshed);
-    setUser({data: newDecoded, token: getToken().token});
-    setLoadingUser(false);
-  }
-
   useEffect(() => {
     async function loadUser() {
       const token = getToken();
-      console.log(token)
       if (!token) {
         setLoadingUser(false);
         return;
       }
-
-      try {
-        const decoded = jwtDecode(token.decryptedToken);
-        clock.subscribe(async (f) => {
-          if (navigator.onLine) {
-            const dateNow = new Date().getTime();
-            if (Math.floor(f.getTime() / 1000 > decoded.exp)) {
-              await refresh().catch(err => {
-                setUser(null)
-                setLoadingUser(false);
-              })
-            } else {
-              setUser({data: decoded, token: token.token});
-              setLoadingUser(false);
-            }
-          } else {
-            setUser(null)
-            setLoadingUser(false);
-          }
-        })
-      } catch (error) {
-        console.log(error);
-        setLoadingUser(false);
-      }
+      const decoded = jwtDecode(token.decryptedToken);
+      setUser({data: decoded, token: token.token});
+      setLoadingUser(false);
     }
 
     loadUser();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
 
   const signupUser = async (registerData) => {
     try {
@@ -143,7 +102,7 @@ export function UserProvider(props) {
 
   const updateCurrentUser = async (uid, data) => {
     try {
-      await updateUser(getToken().token, uid, data).catch(err => {
+      await updateUser(uid, data).catch(err => {
         throw err
       })
     } catch (err) {
@@ -153,7 +112,7 @@ export function UserProvider(props) {
 
   const updateCurrentActionsUser = async (data) => {
     try {
-      return await updateActionsUser(getToken().token, user.data.user_id, {data: data}).catch(err => {
+      return await updateActionsUser(user.data.user_id, {data: data}).catch(err => {
         throw err
       })
     } catch (err) {
@@ -163,7 +122,7 @@ export function UserProvider(props) {
 
   async function destroyUser(uid) {
     try {
-      await deleteUser(getToken().token, uid).catch(err => {
+      await deleteUser(uid).catch(err => {
         throw err
       })
     } catch (err) {
