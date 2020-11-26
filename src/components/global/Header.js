@@ -58,8 +58,8 @@ function Header(props) {
               <ul style={{ width: "100%" }}>
                 <li onClick={menuLinks}>
                   <a
-                    rel="noopener noreferrer"
                     href="https://syscoin.org/masternodes"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     {t("header.about")}
@@ -72,8 +72,8 @@ function Header(props) {
 
                 <li onClick={menuLinks}>
                   <a
-                    rel="noopener noreferrer"
                     href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     {t("header.setup")}
