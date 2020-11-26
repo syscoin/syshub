@@ -253,7 +253,7 @@ export const getOneProposal = async (id) => {
     let {token} = getToken()
     return await axios.get(`${API_URI}/proposal/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`,
+        Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {

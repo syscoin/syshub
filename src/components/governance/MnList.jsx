@@ -119,7 +119,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       return `<li>${mn.mn}. Cause: ${mn.err}</li>`;
     }).join('');
 
-    swal.fire({
+    await swal.fire({
         title: 'Voting results',
         html: `
       <p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>
@@ -129,7 +129,8 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       <ul style="text-align: start">${stringOfMnNo}</ul>
       `
       }
-    )
+    );
+    onAfterVote();
   };
 
 

@@ -9,7 +9,7 @@ import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
 import { string } from "yup";
 
-export default function ProposalCard({proposal, enabled, userInfo}) {
+export default function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   const {user} = useUser();
   const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
@@ -98,8 +98,9 @@ export default function ProposalCard({proposal, enabled, userInfo}) {
     }
   }
 
-  function afterVote() {
-    //recargar proposals y cerrar modal
+  const afterVote = async () => {
+    setOpenMnList(false);
+    await onLoadProposals();
   }
 
 

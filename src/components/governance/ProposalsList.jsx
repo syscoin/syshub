@@ -60,7 +60,13 @@ function ProposalsList(props) {
       {
         proposals.length > 0 && <div className="proposals">
           {proposals.map(proposal => {
-            return <ProposalCard proposal={proposal} key={proposal.Hash} enabled={props.statsData.enabled} userInfo={userInfo} />
+            return <ProposalCard
+              key={proposal.Hash}
+              proposal={proposal}
+              onLoadProposals={loadProposals}
+              enabled={props.statsData.enabled}
+              userInfo={userInfo}
+            />
           })}
         </div>
       }
