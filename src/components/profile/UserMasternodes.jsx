@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import axios from 'axios';
 import { Link, useRouteMatch } from 'react-router-dom';
 import swal from 'sweetalert2';
 
@@ -21,25 +22,30 @@ function UserMasternodes(props) {
   const [userSignInGAuth, setUserSignInGAuth] = useState(null);
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+
 
   const loadMasternodes = useCallback(async () => {
     try {
       setIsFetching(true);
-      const response = await getUserMasterNodes();
+      const {data} = await getUserMasterNodes({cancelToken: cancelSource.token});
 
-      if (response.data) {
-        setMasternodes(response.data.nodes);
+      if (data) {
+        setMasternodes(data.nodes);
+        setIsFetching(false);
       }
-      setIsFetching(false);
     }
     catch (error) {
       setIsFetching(false);
     }
-  }, [user]);
+  }, [cancelSource]);
   
   useEffect(() => {
     loadMasternodes();
-  }, [loadMasternodes]);
+    return () => {
+      cancelSource.cancel('The request has been canceled')
+    }
+  }, [loadMasternodes, cancelSource]);
 
   
   const editMN = async (uid, data) => {

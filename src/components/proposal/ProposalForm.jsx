@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useMemo, useRef} from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import swal from "sweetalert2";
 import {Collapse} from 'react-collapse';
@@ -8,7 +8,6 @@ import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
-import {useUser} from '../../context/user-context';
 import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal, destroyProposal} from "../../utils/request";
 
 import CustomModal from '../global/CustomModal';
@@ -16,22 +15,8 @@ import TitleProposal from './TitleProposal';
 import DescriptionProposal from './DescriptionProposal';
 import PaymentProposal from './PaymentProposal';
 import ProposalPreview from "./ProposalPreview";
+import axios from 'axios';
 
-/* 
-{
-  type: Number(type),
-  name,
-  title,
-  description,
-  nPayment: Number(nPayment),
-  first_epoch: Number(firstEpoch),
-  start_epoch: Number(startEpoch),
-  end_epoch: Number(endEpoch),
-  payment_address: paymentAddress,
-  payment_amount: Number(paymentAmount),
-  url: (typeof url !== "undefined") ? url : 'empty'
-}
-*/
 
 const schema = yup.object().shape({
   paymentTxId: yup.string()
@@ -45,8 +30,8 @@ const schema2 = yup.object().shape({
 });
 
 export default function ProposalForm() {
-  const {user} = useUser();
   const history = useHistory();
+  const isMounted = useRef(false);
   //COMPONENT STATES
   const [currentStep, setCurrentStep] = useState(0);
   const [openModal, setOpenModal] = useState(false);
@@ -63,6 +48,7 @@ export default function ProposalForm() {
   const [preparing, setPreparing] = useState(false);
   const [proposalUid, setProposalUid] = useState('');
 
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
@@ -76,7 +62,7 @@ export default function ProposalForm() {
   useEffect(() => {
     const getSavedProposal = async () => {
       try {
-        let {data} = await notCompletedProposal().catch((err) => {
+        let {data} = await notCompletedProposal(cancelSource.token).catch((err) => {
           throw err;
         });
         // console.log(data);
@@ -87,9 +73,14 @@ export default function ProposalForm() {
         console.log(error)
       }
     };
-
+    isMounted.current = true;
     getSavedProposal();
-  }, []);
+
+    return () => {
+      cancelSource.cancel('The request has been canceled');
+      isMounted.current = false;
+    };
+  }, [cancelSource]);
 
   const showSavedProposal = (proposal) => {
     console.log(proposal);
@@ -129,13 +120,15 @@ export default function ProposalForm() {
       });
     }
 
-    setTitle('');
-    setDescription('');
-    setUrl('');
-    setPayment(null);
-    setProposalUid('');
-    setPrepareCommand('');
-    setSubmitCommand('');
+    if (isMounted.current) {
+      setTitle('');
+      setDescription('');
+      setUrl('');
+      setPayment(null);
+      setProposalUid('');
+      setPrepareCommand('');
+      setSubmitCommand('');
+    }
 
     //cancelar el proposal y empezar de cero
   }

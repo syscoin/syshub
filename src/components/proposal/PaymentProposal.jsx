@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
+import axios from 'axios';
 
 
 import {nextGovernanceRewardInfo} from "../../utils/request";
@@ -35,6 +36,9 @@ const PaymentProposal = ({onNext, onBack}) => {
   const [amount, setAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [theDatesWereLoaded, setTheDatesWereLoaded] = useState(false);
+
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+
   const {register, watch, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema),
@@ -86,7 +90,7 @@ const PaymentProposal = ({onNext, onBack}) => {
   };
 
   const getGovernanceDate = async () => {
-    const nextGovernanceDate = await nextGovernanceRewardInfo()
+    const nextGovernanceDate = await nextGovernanceRewardInfo(cancelSource.token)
     if (typeof nextGovernanceDate === "undefined") {
       return null
     } else {
@@ -136,8 +140,11 @@ const PaymentProposal = ({onNext, onBack}) => {
       }
     }
     calculatePaymentDates();
+    return () => {
+      cancelSource.cancel('The request has been canceled')
+    };
     // eslint-disable-next-line
-  }, [])
+  }, [cancelSource])
 
   const nextPayment = (data) => {
     onNext({proposalStartEpoch, proposalEndEpoch, ...data});
@@ -205,7 +212,7 @@ const PaymentProposal = ({onNext, onBack}) => {
           <div
             className="payment-dates"
             style={{
-              height: '200px',
+              maxHeight: '200px',
               overflowY: 'auto',
               display: 'flex',
               flexFlow: 'row wrap'

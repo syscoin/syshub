@@ -12,7 +12,7 @@ export default function UserDelete() {
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
 
-  const VerificateDelete = async () => {
+  const verificateDelete = async () => {
     const result = await swal.fire({
       title: 'Your account will be deleted.',
       text: "This action cannot be undone.",
@@ -71,7 +71,7 @@ export default function UserDelete() {
         <br/>
         <div className="indicator red">Your account will be deleted. This action cannot be undone.</div>
         <div className="description">We'll never share your email with anyone else.</div>
-        <button className="btn btn--blue" onClick={VerificateDelete}>Delete account</button>
+        <button className="btn btn--blue" onClick={verificateDelete}>Delete account</button>
       </div>
 
       <CustomModal

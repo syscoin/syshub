@@ -22,9 +22,11 @@ class MasternodeTable extends Component {
     this.changeFieldOrder = this.changeFieldOrder.bind(this);
   }
   componentDidMount() {
+    this._isMounted = true;
     this.loadData();
   }
   componentWillUnmount() {
+    this._isMounted = false;
     this.source.cancel('Request has been canceled')
   }
   searchInTable(e) {
@@ -86,16 +88,21 @@ class MasternodeTable extends Component {
     await axios
       .post("https://syscoin.dev/mnSearch", postData, axiosConfig)
       .then((res) => {
-        this.setState({
-          dataload: 1,
-          tableData: res.data.returnArr,
-          totalRecords: res.data.mnNumb,
-        });
+        if (this._isMounted) {
+          this.setState({
+            dataload: 1,
+            tableData: res.data.returnArr,
+            totalRecords: res.data.mnNumb,
+          });
+        }
       })
       .catch((err) => {
-        this.setState({
-          dataload: 2,
-        });
+        if (this._isMounted) { 
+          this.setState({
+            dataload: 2,
+          });
+        }
+
       });
   }
 

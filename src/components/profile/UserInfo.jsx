@@ -1,32 +1,34 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback, useMemo} from "react";
 import {useUser} from "../../context/user-context";
 import {getUserInfo} from "../../utils/request";
 
 import UserPassForm from "./UserPassForm";
 import UserTwoFA from "./2FA/UserTwoFA";
 import swal from 'sweetalert2';
+import axios from "axios";
 
 export default function UserInfo() {
   const {firebase, user} = useUser();
   const [userInfo, setUserInfo] = useState(null);
-
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+  
   const loadUserInfo = useCallback(async () => {
     try {
-      const response = await getUserInfo(user.data.user_id);
+      const response = await getUserInfo(user.data.user_id, cancelSource.token);
       if (response.data) {
         await setUserInfo(response.data.user);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [user]);
+  }, [user, cancelSource]);
 
   useEffect(() => {
     loadUserInfo();
     return () => {
-      // cleanup
+      cancelSource.cancel('The request has been canceled')
     };
-  }, [loadUserInfo]);
+  }, [loadUserInfo, cancelSource]);
 
 
   const emailVerification = () => {

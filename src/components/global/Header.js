@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
@@ -6,17 +6,22 @@ import { useUser } from "../../context/user-context";
 
 function Header(props) {
   const { user, logoutUser } = useUser();
+  const isMounted = useRef(false);
 
   const [isNotTop, setIsNotTop] = useState(false);
   const [isMobileMenu, setIsMobileMenu] = useState(false);
 
   useEffect(() => {
+    isMounted.current = true;
     document.addEventListener("scroll", () => {
       const _isNotTop = window.scrollY > 0;
       if (_isNotTop !== isNotTop) {
-        setIsNotTop(_isNotTop);
+        if (isMounted.current) setIsNotTop(_isNotTop);
       }
     });
+    return () => {
+      isMounted.current = false;
+    }
   });
 
   const menuLinks = () => {

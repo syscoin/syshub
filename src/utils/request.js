@@ -7,12 +7,13 @@ import {getToken} from "./auth-token";
 const API_URI = process.env.REACT_APP_SYS_API_URI
 
 /** MasterNodes **/
-export const list = async () => {
+export const list = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/list`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).catch(err => {
       throw err
     })
@@ -21,12 +22,13 @@ export const list = async () => {
   }
 }
 
-export const getInfo = async () => {
+export const getInfo = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).catch(err => {
       throw err
     })
@@ -49,12 +51,13 @@ export const getMiningInfo = async () => {
   }
 }
 
-export const getGovernanceInfo = async () => {
+export const getGovernanceInfo = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getgovernanceinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).catch(err => {
       throw err
     })
@@ -63,12 +66,13 @@ export const getGovernanceInfo = async () => {
   }
 }
 
-export const getSuperBlockBudget = async () => {
+export const getSuperBlockBudget = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getsuperblockbudget`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).catch(err => {
       throw err
     })
@@ -92,7 +96,7 @@ export const getOneMasterNode = async (id) => {
   }
 };
 
-export const getUserMasterNodes = async (hash) => {
+export const getUserMasterNodes = async ({hash, cancelToken}) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
@@ -103,7 +107,8 @@ export const getUserMasterNodes = async (hash) => {
         headers: {
           Authorization: `Bearer ${token}`,
           'appclient': process.env.REACT_APP_CLIENT
-        }
+        },
+        cancelToken: cancelToken
       }).catch(err => {
       throw err
     })
@@ -267,7 +272,7 @@ export const getOneProposal = async (id) => {
   }
 }
 
-export const notCompletedProposal = async () => {
+export const notCompletedProposal = async (cancelToken) => {
   await firebase.refreshInRequest()
   let {token} = getToken()
   return new Promise((resolve, reject) => {
@@ -275,7 +280,8 @@ export const notCompletedProposal = async () => {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).then(resp => {
       resolve(resp)
     }).catch(err => {
@@ -370,7 +376,7 @@ export const register = async (data) => {
 
 /** User **/
 
-export const getUserInfo = async (id) => {
+export const getUserInfo = async (id, cancelToken) => {
   await firebase.refreshInRequest()
   let {token} = getToken()
   return new Promise((resolve, reject) => {
@@ -378,7 +384,8 @@ export const getUserInfo = async (id) => {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
-      }
+      },
+      cancelToken: cancelToken
     }).then(resp => resolve(resp))
       .catch(err => reject(err))
   })
@@ -494,11 +501,11 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
   }
 };
 
-export const nextGovernanceRewardInfo = async () => {
+export const nextGovernanceRewardInfo = async (cancelToken) => {
   try {
     const date = new Date();
     const chainInfo = await new Promise((resolve, reject) => {
-      getInfo().then(res => {
+      getInfo(cancelToken).then(res => {
         let {data} = res;
         return resolve(data)
       }).catch(err => {
@@ -507,7 +514,7 @@ export const nextGovernanceRewardInfo = async () => {
     })
     // console.log(chainInfo)
     const governanceInfo = await new Promise((resolve, reject) => {
-      getGovernanceInfo().then(res => {
+      getGovernanceInfo(cancelToken).then(res => {
         let {data} = res;
         return resolve(data)
       }).catch(err => {
@@ -519,7 +526,7 @@ export const nextGovernanceRewardInfo = async () => {
     const {nextsuperblock, superblockcycle} = governanceInfo;
 
     const {lsb, nbs} = await new Promise((resolve, reject) => {
-      getSuperBlockBudget().then(res => {
+      getSuperBlockBudget(cancelToken).then(res => {
         let {data} = res;
         return resolve(data)
       }).catch(err => {

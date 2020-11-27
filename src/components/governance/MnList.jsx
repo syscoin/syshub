@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
+import axios from 'axios';
 import swal from 'sweetalert2'
 
 import {useUser} from "../../context/user-context";
-import {getUserMasterNodes, voteIn, get2faInfoUser} from "../../utils/request";
+import {getUserMasterNodes, get2faInfoUser} from "../../utils/request";
 import signVote from "../../utils/sign-vote";
 import {voteProposal} from "../../utils/request";
 import MnItem from "./MnItem";
@@ -18,19 +19,39 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   const [userSignInGAuth, setUserSignInGAuth] = useState(null);
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
+  const isMounted = useRef(false);
+
+
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+
 
   useEffect(() => {
     const getMnByUser = async () => {
       setLoadingMN(true);
-      let {data} = await getUserMasterNodes(proposal.Hash).catch((err) => {
-        throw err;
-      });
-      setLoadingMN(false);
-      setMasterNodes(data.nodes || []);
+      try {
+        let { data } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        .catch((err) => {
+          throw err;
+        });
+        if (data) {
+          setLoadingMN(false);
+          setMasterNodes(data.nodes || []);
+        }
+      } catch (error) {
+        console.log(error);
+        if (isMounted.current) {
+          setLoadingMN(false);
+        }
+      }
     };
+    isMounted.current = true;
     getMnByUser();
-    // eslint-disable-next-line
-  }, []);
+
+    return () => {
+      isMounted.current = false;
+      cancelSource.cancel('The request has been canceled');
+    }
+  }, [cancelSource, proposal.Hash]);
 
   const addMnVote = (mn) => {
     setMasterNodesForVote([...masterNodesForVote, mn]);

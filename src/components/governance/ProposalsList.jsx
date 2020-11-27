@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import axios from 'axios';
 import { withTranslation } from "react-i18next";
 import { useUser } from '../../context/user-context';
 
@@ -12,10 +13,11 @@ function ProposalsList(props) {
   const { user } = useUser();
   const [userInfo, setUserInfo] = useState(null);
   const [proposals, setProposals] = useState([]);
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   const loadProposals = useCallback(async () => {
     try {
-      const response = await list();
+      const response = await list(cancelSource.token);
       if (response.data) {
         let govdata = response.data;
         Object.keys(govdata).forEach(function(key) {
@@ -28,12 +30,12 @@ function ProposalsList(props) {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [cancelSource]);
 
   const loadUserInfo = useCallback(async () => {
     if (user) {
       try {
-        const response = await getUserInfo(user.data.user_id);
+        const response = await getUserInfo(user.data.user_id, cancelSource.token);
         if (response.data) {
           await setUserInfo(response.data.user);
         }
@@ -41,17 +43,15 @@ function ProposalsList(props) {
         console.log(error);
       }
     }
-  }, [user]);
+  }, [user, cancelSource]);
 
   useEffect(() => {
     loadProposals();
     loadUserInfo();
     return () => {
-      setProposals([]);
-      setUserInfo(null);
+      cancelSource.cancel('The request has been canceled');
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [cancelSource, loadProposals, loadUserInfo]);
 
 
   return (
@@ -71,7 +71,7 @@ function ProposalsList(props) {
         </div>
       }
       {
-        proposals.length === 0 && <p>Loading...</p>
+        proposals.length === 0 && <p className="text-center">Loading...</p>
       }
     </>
   )
