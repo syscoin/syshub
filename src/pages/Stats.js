@@ -23,26 +23,41 @@ export class Stats extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getStats();
-    }
     async getStats() {
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
         let data = await axios
-        .get("https://syscoin.dev/mnStats")
+            .get("https://syscoin.dev/mnStats", {
+            cancelToken: this.source.token
+        })
         .then(function(result) {
             return result;
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log(error);
         });
         if ((typeof data) !== 'undefined') {
-            var response=data.data;
-            this.setState({ 
-                dataload: 1, 
-                api_data: response
-            });
+            if (this._isMounted) {
+                var response=data.data;
+                this.setState({ 
+                    dataload: 1, 
+                    api_data: response
+                });
+            }
         }
     }
+
+    componentDidMount() {
+        this._isMounted = true;
+        this.getStats();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+        this.source.cancel('Request has been canceled');
+    }
+    
+
     render() {
         if (this.state.dataload === 1) {
             return (

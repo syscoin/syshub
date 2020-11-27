@@ -26,18 +26,26 @@ export class Governance extends Component {
     componentDidMount() {
         this.apiLoader();
     }
+    componentWillUnmount() {
+        this.source.cancel('Request has been canceled');
+    }
     
     async apiLoader() {
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 'Accept': 'application/json, text/plain, */*',
                 "Access-Control-Allow-Origin": "*",
-            }
+            },
+            cancelToken: this.source.token
         };
 
         let data = await axios
-        .get("https://syscoin.dev/mnStats")
+        .get("https://syscoin.dev/mnStats", {
+            cancelToken: this.source.token
+        })
         .then(function(result) {
         return result;
         })
@@ -53,7 +61,6 @@ export class Governance extends Component {
             console.log(err);
         });
 
-        
         if ((typeof data) !== 'undefined' && (typeof govres) !== 'undefined') { 
             let stats_response;
             stats_response = data.data;
@@ -85,7 +92,9 @@ export class Governance extends Component {
                 dataLoad: 2
             });
         }
+
     }
+
     render() {
         const { t } = this.props;
         if (this.state.dataLoad === 1) {

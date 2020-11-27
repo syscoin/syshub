@@ -34,11 +34,16 @@ export class Home extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+        this.source.cancel('Request has been canceled');
     }
 
     async getStats() {
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
         let data = await axios
-        .get("https://syscoin.dev/mnStats")
+        .get("https://syscoin.dev/mnStats", {
+            cancelToken: this.source.token
+        })
         .then(function(result) {
             return result;
         })

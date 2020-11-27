@@ -24,6 +24,9 @@ class MasternodeTable extends Component {
   componentDidMount() {
     this.loadData();
   }
+  componentWillUnmount() {
+    this.source.cancel('Request has been canceled')
+  }
   searchInTable(e) {
     this.loadData(e.target.value);
   }
@@ -69,12 +72,15 @@ class MasternodeTable extends Component {
       postData.search = srcData;
     }
     // console.log(postData);
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
         Accept: "application/json, text/plain, */*",
         "Access-Control-Allow-Origin": "*",
       },
+      cancelToken: this.source.token
     };
 
     await axios
@@ -92,6 +98,7 @@ class MasternodeTable extends Component {
         });
       });
   }
+
   render() {
     const { dataload, page, tableData, sizePerPage, totalRecords } = this.state;
     const { t } = this.props;
