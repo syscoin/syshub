@@ -1,4 +1,4 @@
-export default {
+const error = {
     error: {
       meta: {
         title: 'Page not found',
@@ -8,3 +8,5 @@ export default {
       title: 'Oops! The page you are looking for cannot be found.'
     }
 }
+
+export default error;

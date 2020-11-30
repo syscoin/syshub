@@ -51,6 +51,16 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
                   name="name"
                   render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
                 />
+            </div>
+            
+            <div className="form-group">
+                <label htmlFor="privateKey">Private key</label>
+                <input type="text" name="privateKey" ref={register} className="styled" id="privateKey" required />
+                <ErrorMessage
+                  errors={errors}
+                  name="privateKey"
+                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                />
               </div>
               
               <div className="form-group">
@@ -63,15 +73,7 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
                 />
               </div>
                 
-              <div className="form-group">
-                <label htmlFor="privateKey">Private key</label>
-                <input type="text" name="privateKey" ref={register} className="styled" id="privateKey" required />
-                <ErrorMessage
-                  errors={errors}
-                  name="privateKey"
-                  render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-                />
-              </div>
+              
 
               <div className="form-actions-spaced">
                 <button className="btn btn--blue" disabled={submitting}>Save</button>

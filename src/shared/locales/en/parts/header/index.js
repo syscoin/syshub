@@ -1,4 +1,4 @@
-export default {
+const header = {
   header: {
     home: 'Home',
     about: 'About',
@@ -15,3 +15,4 @@ export default {
     logout: 'Logout'
   },
 }
+export default header

@@ -1,4 +1,4 @@
-export default {
+const about = {
   about: {
     meta: {
       title: 'Syscoin Masternodes - About Syscoin Masternodes',
@@ -92,3 +92,4 @@ export default {
     },
   },
 }
+export default about;

@@ -65,15 +65,6 @@ function UserMN({ onEdit, onRemove, masternode, index }) {
             </div>
           )}
           <div className="description">
-            <label htmlFor={`txid-${index}`}>Tx id</label>
-            <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
-            <ErrorMessage
-              errors={errors}
-              name="txId"
-              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-            />
-          </div>
-          <div className="description">
             <label htmlFor={`privkey-${index}`}>Private key</label>
             <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
             <ErrorMessage
@@ -83,6 +74,16 @@ function UserMN({ onEdit, onRemove, masternode, index }) {
             />
           </div>
 
+          <div className="description">
+            <label htmlFor={`txid-${index}`}>Tx id</label>
+            <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
+            <ErrorMessage
+              errors={errors}
+              name="txId"
+              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+            />
+          </div>
+        
           {editting && (
             <div className="form-actions-spaced">
               <button className="btn btn--blue" type="button" onClick={handleSubmit(formSubmit)}>Save</button>

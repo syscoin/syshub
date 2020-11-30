@@ -19,7 +19,7 @@ import worldMap from './partials/worldMap/index';
 import govlist from './partials/govlist/index';
 import superblocks from './partials/superblocks';
 
-export default {
+const index = {
   ...home,
   ...about,
   ...setup,
@@ -41,3 +41,5 @@ export default {
   ...govlist,
   ...superblocks
 }
+
+export default index;

@@ -1,4 +1,4 @@
-export default {
+const doughnut = {
   doughnut: {
     charts: {
       masterNodes: {
@@ -16,3 +16,4 @@ export default {
     loading: 'Data is being loaded',
   },
 }
+export default doughnut;

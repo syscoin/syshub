@@ -1,4 +1,4 @@
-export default {
+const superblocks = {
     superblocks: {
       govdetailtable: {
         title: 'Governance Details',
@@ -19,4 +19,4 @@ export default {
       loading: 'Data is being loaded',
     },
   }
-  
+export default superblocks;

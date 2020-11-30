@@ -35,7 +35,7 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
       createPhoneProvider();
     }
 
-  }, [user2fa]);
+  }, [user2fa, firebase]);
 
   const verifyPhone = async ({ phoneCode }) => {
     swal.fire({

@@ -1,4 +1,4 @@
-export default {
+const investment = {
   investment: {
     investmentTable: {
       title: 'Investment Stats',
@@ -25,3 +25,4 @@ export default {
     loading: 'Data is being loaded',
   },
 }
+export default investment;

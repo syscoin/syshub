@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useUser } from '../../context/user-context';
 import { createMasterNode } from '../../utils/request';
 
 import AddMNForm from './AddMNForm';
 import Title from '../global/Title';
 
 export default function AddMasternodes() {
-  const { user } = useUser(); 
   const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);

@@ -1,4 +1,4 @@
-export default {
+const proposal =  {
   proposal: {
     meta: {
       title: 'Syscoin Masternodes - Create a proposal',
@@ -10,3 +10,4 @@ export default {
     }
   }
 }
+export default proposal;

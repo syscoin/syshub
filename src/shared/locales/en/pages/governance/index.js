@@ -1,4 +1,4 @@
-export default {
+const governance = {
     governance: {
       heading: 'Syscoin Governance',
       title: 'Syscoin Masternodes - Governance',
@@ -8,4 +8,4 @@ export default {
       par2: 'Syscoin have implemented a % decline schedule — starting the first month with 1,500,000 SYS and ending on the 24th month with 196,708 SYS. After that period, the superblock starts with 151,767 SYS a month and will decline 5% every year.',
     },
   }
-  
+export default governance;

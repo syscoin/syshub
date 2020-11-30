@@ -19,12 +19,13 @@ class WorldMap extends Component {
     }
 
     //this will remove the map from the dom when the react component is unmounted
-    componentWillReceiveProps() {
-        this.clear();
-    }
+    // componentWillReceiveProps() {
+    // }
 
     //this will update the map with the latest props
     componentDidUpdate() {
+        this.clear();
+
         this.drawMap();
     }
 

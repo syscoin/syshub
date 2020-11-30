@@ -1,4 +1,4 @@
-export default {
+const signup = {
   signup: {
     meta: {
       title: 'Syscoin Masternodes - Create an account',
@@ -10,3 +10,4 @@ export default {
     }
   }
 }
+export default signup;

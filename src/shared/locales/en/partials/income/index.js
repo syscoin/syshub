@@ -1,4 +1,4 @@
-export default {
+const income = {
   income: {
     title: 'Income Stats',
     tabs: {
@@ -14,3 +14,4 @@ export default {
     loading: 'Data is being loaded',
   },
 }
+export default income;

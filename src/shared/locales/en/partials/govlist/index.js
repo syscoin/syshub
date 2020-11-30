@@ -1,4 +1,4 @@
-export default {
+const govList = {
     govlist: {
       table: {
         title:'Current Proposals',
@@ -18,4 +18,4 @@ export default {
       loading: 'Data is being loaded',
     },
   }
-  
+export default govList;

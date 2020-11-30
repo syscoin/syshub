@@ -1,4 +1,4 @@
-export default {
+const profile = {
   profile: {
     meta: {
       title: 'Syscoin Masternodes - Profile',
@@ -11,3 +11,4 @@ export default {
     }
   }
 }
+export default profile;

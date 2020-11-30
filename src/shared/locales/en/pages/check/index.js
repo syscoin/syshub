@@ -1,4 +1,4 @@
-export default {
+const check = {
   check: {
     title: 'Masternodes Check',
     loading: 'Loading...',
@@ -26,3 +26,4 @@ export default {
     }
   },
 }
+export default check;

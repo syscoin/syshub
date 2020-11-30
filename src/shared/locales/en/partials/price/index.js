@@ -1,4 +1,4 @@
-export default {
+const price = {
   price: {
     title: 'Price Stats',
     priceTable: {
@@ -10,3 +10,4 @@ export default {
     loading: 'Data is being loaded',
   },
 }
+export default price;

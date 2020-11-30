@@ -7,7 +7,6 @@ import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
-import { string } from "yup";
 
 export default function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   const {user} = useUser();

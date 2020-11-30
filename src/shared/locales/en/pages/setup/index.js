@@ -1,4 +1,4 @@
-export default {
+const setup = {
   setup: {
     meta: {
       title: 'Syscoin Masternodes - Masternode Setup',
@@ -234,3 +234,4 @@ export default {
     },
   },
 }
+export default setup;

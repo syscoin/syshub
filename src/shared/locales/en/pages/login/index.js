@@ -1,4 +1,4 @@
-export default {
+const login = {
   login: {
     meta: {
       title: 'Syscoin Masternodes - Login',
@@ -11,3 +11,4 @@ export default {
     }
   }
 }
+export default login;

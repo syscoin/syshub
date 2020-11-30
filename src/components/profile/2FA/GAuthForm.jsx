@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 });
 
 export default function GAuthForm({ onClose }) {
-  const {firebase, user, logoutUser, updateCurrentActionsUser} = useUser();
+  const {firebase, user, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
   const {register, handleSubmit, errors} = useForm({
