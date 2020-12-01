@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Governance.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Governance.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import axios from "axios";
+
+import { withTranslation } from "react-i18next";
+import MetaTags from 'react-meta-tags';
+
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
+import BannerImage from '../components/global/BannerImage';
+import GovDetails from '../components/governance/GovDetails';
+import ProposalsList from '../components/governance/ProposalsList';
+
+/**
+ * Governance page that shows at /governance
+ * @component
+ */
+class Governance extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props 
+     */
+    constructor(props){
+        super(props);
+        this.state = {
+            dataLoad: 0,
+            statsData: [],
+            govData: [],
+            budgetSum: 0
+        }
+    }
+
+    /**
+     * We start apiLoader()
+     * @function 
+     */
+    componentDidMount() {
+        this.apiLoader();
+    }
+
+    /**
+     * Cancel all requests
+     * @function
+     */
+    componentWillUnmount() {
+        this.source.cancel('Request has been canceled');
+    }
+    
+    /**
+     * Fetch the governance and stats data from the API to modify the state and show the component 
+     * @function
+     */
+    async apiLoader() {
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json, text/plain, */*',
+                "Access-Control-Allow-Origin": "*",
+            },
+            cancelToken: this.source.token
+        };
+
+        let data = await axios
+        .get("https://syscoin.dev/mnStats", {
+            cancelToken: this.source.token
+        })
+        .then(function(result) {
+        return result;
+        })
+        .catch(function(error) {
+            console.log(error)
+        });
+        
+        let govres = await axios.post('https://syscoin.dev/govlist', [], axiosConfig)
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        if ((typeof data) !== 'undefined' &amp;&amp; (typeof govres) !== 'undefined') { 
+            let stats_response;
+            stats_response = data.data;
+
+            let govdata=govres.data;
+            Object.keys(govdata).forEach(function(key) {
+                if(govdata[key].ObectType===2) {
+                    delete govdata[key];
+                }
+            });
+            
+            var budgetSum = govdata.reduce(function(sum, d) {
+                if(d.payment_amount===undefined) {
+                    return sum + 0;
+                } else {
+                    return sum + d.payment_amount;
+                }
+            }, 0);
+
+            this.setState({
+                statsData: stats_response,
+                govData: govdata,
+                budgetSum: budgetSum,
+                dataLoad: 1
+            });
+        }
+        else {
+            this.setState({
+                dataLoad: 2
+            });
+        }
+
+    }
+
+    render() {
+        const { t } = this.props;
+        if (this.state.dataLoad === 1) {
+
+            return (
+                &lt;Background>
+                    &lt;BackgroundInner />
+                    &lt;main className="section govPage">
+                        &lt;MetaTags>
+                            &lt;title>{t('governance.title')}&lt;/title>
+                            &lt;meta name="keywords" content={t('governance.keywords')} />
+                            &lt;meta name="description" content={t('governance.description')} />
+                        &lt;/MetaTags>
+                        &lt;div className="shell-large">
+                            &lt;div className="section__body">
+                                &lt;div className="articles">
+                                    &lt;BannerImage heading={t('governance.heading')} direction="top-right">
+                                        &lt;p>{t('governance.par1')}&lt;/p>
+                                        &lt;p>{t('governance.par2')}&lt;/p>
+                                    &lt;/BannerImage>
+
+                                    &lt;section className="article article--revirse article--offsets-bottom">
+                                        &lt;div className="cols">
+                                            &lt;div className="col col--size12">
+                                                &lt;div className="article__content">
+                                                    &lt;ProposalsList statsData={this.state.statsData.stats.mn_stats} />
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/section>
+
+                                    &lt;section className="article">
+                                        &lt;GovDetails budgetSum={this.state.budgetSum} superBlockData={this.state.statsData.stats.superblock_stats} />
+                                    &lt;/section>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/main>
+                &lt;/Background>
+            )
+        } else {
+            return (
+                &lt;Background>
+                    &lt;BackgroundInner />
+                    &lt;main className="section govPage">
+                        &lt;MetaTags> 
+                            &lt;title>{t('governance.title')}&lt;/title>
+                            &lt;meta name="keywords" content={t('governance.keywords')} />
+                            &lt;meta name="description" content={t('governance.description')} />
+                        &lt;/MetaTags>
+                        &lt;div className="shell-large">
+                            &lt;div className="section__body">
+                                &lt;div className="articles">
+                                    &lt;BannerImage heading={t('governance.heading')} direction="top-right">
+                                        &lt;p>{t('governance.par1')}&lt;/p>
+                                        &lt;p>{t('governance.par2')}&lt;/p>
+                                    &lt;/BannerImage>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/main>
+                &lt;/Background>
+            )
+        }
+    }
+}
+
+export default withTranslation()(Governance);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Error.html">Error</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Header.html">Header</a></li><li><a href="Home.html">Home</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 01 2020 12:45:08 GMT-0400 (hora de Venezuela)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

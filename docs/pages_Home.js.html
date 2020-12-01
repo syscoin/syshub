@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Home.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Home.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import axios from "axios";
+
+import { withTranslation } from "react-i18next";
+import MetaTags from 'react-meta-tags';
+import { Link } from 'react-router-dom';
+
+import Background from '../components/global/Background';
+import BackgroundInner from '../components/global/BackgroundInner';
+import BannerImage from '../components/global/BannerImage';
+import SubTitle from '../components/global/SubTitle';
+import WorldMap from '../components/stats/WorldMap';
+import StatsShow from '../components/stats/StatsShow';
+import LinearCharts from '../components/stats/LinearCharts';
+import MasternodeTable from '../components/masternodes/MasternodeTable';
+import ProposalsList from '../components/governance/ProposalsList';
+import HomeButtons from '../components/home/HomeButtons';
+
+/**
+ * Home page that shows at /
+ * @component
+ */
+class Home extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props 
+     */
+    constructor(props){
+        super(props);
+        this.state = {
+            dataload: 0,
+            api_data: []
+        }
+        
+    }
+    /**
+     * Initialize the isMounted property in false
+     * @property {boolean} _isMounted used to mount/dismount 
+     */
+    _isMounted = false;
+
+    /**
+     * We start getStats()
+     * @function 
+     */
+    componentDidMount() {
+        this._isMounted = true;
+        this.getStats();
+    }
+
+    /**
+     * Cancel all requests
+     * @function
+     */
+    componentWillUnmount() {
+        this._isMounted = false;
+        this.source.cancel('Request has been canceled');
+    }
+
+    /**
+     * Fetch the stats data from the API to modify the state and show the component 
+     * @function
+     */
+    async getStats() {
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
+        let data = await axios
+        .get("https://syscoin.dev/mnStats", {
+            cancelToken: this.source.token
+        })
+        .then(function(result) {
+            return result;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        
+        if ((typeof data) !== 'undefined') {
+            var response=data.data;
+            if (this._isMounted) {
+                this.setState({
+                    dataload: 1,
+                    api_data: response
+                });
+            }
+        }
+    }
+
+    render() {
+        const { t } = this.props;
+        if(this.state.dataload===1) {
+            return (
+                &lt;Background>
+                    &lt;BackgroundInner type="A" />
+                    &lt;main className="section homePage">
+                        &lt;MetaTags>
+                            &lt;title>{t('home.title')}&lt;/title>
+                            &lt;meta name="keywords" content={t('home.keywords')} />
+                            &lt;meta name="description" content={t('home.description')} />
+                        &lt;/MetaTags>
+                        &lt;div className="shell-large">
+                            &lt;div className="section__body">
+                                &lt;div className="articles">
+                                    &lt;BannerImage heading={t('home.title')} direction="left">
+                                        &lt;div className="article__content-text">
+                                            &lt;p>
+                                                Everything you need to know about Masternodes and Governance.
+                                            &lt;/p>
+                                        &lt;/div>
+
+                                        &lt;HomeButtons />
+                                    &lt;/BannerImage>
+
+                                    &lt;section className="article article--revirse article--offsets-bottom">
+                                        &lt;div className="cols">
+                                            &lt;div className="col col--size-12">
+                                                &lt;div className="article__content">
+                                                    &lt;SubTitle heading="Check your masternode" />
+                                                    &lt;MasternodeTable simple={true} sizePerPage={5} />
+                                                    &lt;div className="article__actions text-center">
+                                                        &lt;Link to="/masternodes" className="btn btn--blue-border">All masternodes&lt;/Link>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/section>
+                                    
+                                    &lt;section className="article article--revirse article--offsets-bottom">
+                                        &lt;div className="cols">
+                                            &lt;div className="col col--size-12">
+                                                &lt;div className="article__content">
+                                                    &lt;ProposalsList statsData={this.state.api_data.stats.mn_stats} />
+                                                    &lt;div className="article__actions text-center">
+                                                        &lt;Link to="/governance" className="btn btn--blue-border">More about governance&lt;/Link>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/section>
+
+                                    &lt;section className="article article--revirse article--offsets-bottom">
+                                        &lt;div className="cols">
+                                            &lt;div className="col col--size-12">
+                                                &lt;div className="article__content">
+                                                    &lt;SubTitle heading="Stats" />
+                                                    &lt;StatsShow statsData={this.state.api_data.stats} />
+                                                    &lt;LinearCharts chartData={this.state.api_data.stats.mn_stats}/>
+                                                    &lt;WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills} />
+                                                    &lt;div className="article__actions text-center">
+                                                        &lt;Link to="/stats" className="btn btn--blue-border">More stats&lt;/Link>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/section>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/main>
+                &lt;/Background>
+            )
+        } else {
+            return (
+                &lt;Background>
+                    &lt;BackgroundInner type="A" />
+                    &lt;main className="section homePage">
+                        &lt;MetaTags>
+                            &lt;title>{t('home.title')}&lt;/title>
+                            &lt;meta name="keywords" content={t('home.keywords')} />
+                            &lt;meta name="description" content={t('home.description')} />
+                        &lt;/MetaTags>
+                        &lt;div className="shell-large">
+                            &lt;div className="section__body">
+                                &lt;div className="articles">
+                                    &lt;BannerImage heading={t('home.title')} direction="left">
+                                        &lt;div className="article__content-text">
+                                            &lt;p>Everything you need to know about Masternodes and Governance.&lt;/p>
+                                        &lt;/div>
+
+                                        &lt;div className="article__actions vertical">
+                                            &lt;Link to="/about" className="btn btn--blue-border">
+                                                Learn More
+                                            &lt;/Link>
+                                            &lt;Link to="/setup" className="btn btn--blue-border">
+                                                Setup Masternode
+                                            &lt;/Link>
+                                            &lt;Link to="/register" className="btn btn--blue-border">
+                                                Register
+                                            &lt;/Link>
+                                        &lt;/div>
+                                    &lt;/BannerImage>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/main>
+                &lt;/Background>
+            )
+        }
+    }
+}
+
+export default withTranslation()(Home);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Error.html">Error</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Header.html">Header</a></li><li><a href="Home.html">Home</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 01 2020 12:45:08 GMT-0400 (hora de Venezuela)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
