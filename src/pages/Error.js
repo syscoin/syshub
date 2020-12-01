@@ -4,7 +4,12 @@ import { withTranslation } from "react-i18next";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-export class Error extends Component {
+
+/**
+ * Error page that shows when page not found
+ * @component
+ */
+class Error extends Component {
   render() {
     const { t } = this.props;
     return (

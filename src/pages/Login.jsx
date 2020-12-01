@@ -17,14 +17,17 @@ import {decryptAes} from "../utils/encryption";
 import {verifyAuthCode} from "../utils/twoFaAuthentication";
 import swal from "sweetalert2";
 
-
-function Login(props) {
+/**
+ * Login page showed at /login
+ * @component
+ * @param {*} t t prop received from withTranslation
+ */
+function Login({ t }) {
   const history = useHistory();
   const { loginUser, loginWithPhoneNumber, setUserDataLogin } = useUser();
   const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
   const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  // const [error, setError] = useState(null);
   const [userSignInSms, setUserSignInSms] = useState({});
   const [userSignInGAuth, setUserSignInGAuth] = useState("");
 
@@ -36,6 +39,10 @@ function Login(props) {
     }
   }, [])
 
+  /**
+   * Function that verifies the user2fa and proceeds to open the 2faModal; in case 2fa isn't active, it signs in the user 
+   * @param {{email:string, password: string}} loginData Login data received from LoginForm it has email and password
+   */
   const loginToApp = async (loginData) => {
     setSubmitting(true);
     try {
@@ -64,6 +71,10 @@ function Login(props) {
     }
   }
 
+  /**
+   * Function that verifies the GAuth verification code and proceeds to login 
+   * @param {string} gAuthCode gAuthcode submitted by the user in the 2fa modal
+   */
   const verifyGAuth = async ({ gAuthCode }) => {
     swal.fire({
       title: 'Verifying',
@@ -95,6 +106,10 @@ function Login(props) {
     }
   }
 
+  /**
+   * Function that verifies the SMS verification code and proceeds to login 
+   * @param {string} phoneCode phoneCode submitted by the user in the 2fa modal
+   */
   const verifyPhone = async ({ phoneCode }) => {
     swal.fire({
       title: 'Verifying',
@@ -127,8 +142,6 @@ function Login(props) {
     }
   }
   
-
-  const {t} = props;
   return (
     <Background>
       <BackgroundInner/>

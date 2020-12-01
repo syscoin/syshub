@@ -11,12 +11,27 @@ import Title from "../components/global/Title";
 import SignupForm from "../components/signup/SignupForm";
 import swal from "sweetalert2";
 
-function Signup(props) {
+/**
+ * Signup page showed at /signup
+ * @component
+ * @param {*} t t prop received from withTranslation
+ */
+function Signup({ t }) {
   const history = useHistory();
   const { signupUser } = useUser();
 
   const [submitting, setSubmitting] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      setSubmitting(false);
+    }
+  }, []);
+
+  /**
+   * Function that proceeds to create the user and signups
+   * @param {{email: string, password: string}} registerData register data received from SignupForm it has email and password
+   */
   const registerToApp = async (registerData) => {
     swal.fire({
       title: 'Submitting',
@@ -49,13 +64,8 @@ function Signup(props) {
 
   }
 
-  useEffect(() => {
-    return () => {
-      setSubmitting(false);
-    }
-  }, [])
+  
 
-  const {t} = props;
   return (
     <Background>
       <BackgroundInner/>

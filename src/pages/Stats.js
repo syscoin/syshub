@@ -14,7 +14,16 @@ import LinearChart from '../components/stats/LinearCharts';
 import StatsShow from '../components/stats/StatsShow';
 import Blockchain from '../components/stats/Blockchain';
 
-export class Stats extends Component {
+/**
+ * Stats page that shows at /stats
+ * @component
+ */
+class Stats extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props 
+     */
     constructor(props){  
         super(props);  
         this.state = {  
@@ -23,6 +32,28 @@ export class Stats extends Component {
         }
     }
 
+    /**
+     * We start getStats()
+     * @function 
+     */
+    componentDidMount() {
+        this._isMounted = true;
+        this.getStats();
+    }
+
+    /**
+     * Cancel all requests
+     * @function
+     */
+    componentWillUnmount() {
+        this._isMounted = false;
+        this.source.cancel('Request has been canceled');
+    }
+
+    /**
+     * Fetch the stats data from the API to modify the state and show the component 
+     * @function
+     */
     async getStats() {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();
@@ -46,17 +77,6 @@ export class Stats extends Component {
             }
         }
     }
-
-    componentDidMount() {
-        this._isMounted = true;
-        this.getStats();
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-        this.source.cancel('Request has been canceled');
-    }
-    
 
     render() {
         if (this.state.dataload === 1) {

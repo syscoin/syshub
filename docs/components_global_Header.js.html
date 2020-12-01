@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/global/Header.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/global/Header.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
+
+import { useUser } from "../../context/user-context";
+
+/**
+ * Component that shows the Header alongside with the navbar
+ * @component
+ * @param {*} props the T prop comes from withTranslation to use react-i18next
+ */
+function Header({t}) {
+  const { user, logoutUser } = useUser();
+  const isMounted = useRef(false);
+
+  const [isNotTop, setIsNotTop] = useState(false);
+  const [isMobileMenu, setIsMobileMenu] = useState(false);
+
+  /**
+   * UseEffect used to add the scroll event so the navbar gets fixed
+   * @function
+   */
+  useEffect(() => {
+    isMounted.current = true;
+    document.addEventListener("scroll", () => {
+      const _isNotTop = window.scrollY > 0;
+      if (_isNotTop !== isNotTop) {
+        if (isMounted.current) setIsNotTop(_isNotTop);
+      }
+    });
+    return () => {
+      isMounted.current = false;
+    }
+  });
+
+  /**
+  * Function that handles the activation of the responsive menu 
+  * @function
+  */
+  const menuLinks = () => {
+    if (isMobileMenu) {
+      toggleMenu();
+    }
+  };
+
+  /**
+  * Function that toggles the state of isMobileMenu
+  * @function
+  */
+  const toggleMenu = () => {
+    setIsMobileMenu(!isMobileMenu);
+  };
+
+  /**
+   * Function that triggers the logoutUser of the context
+   * @function
+   */
+  const logout = () => {
+    logoutUser();
+  }
+
+  /**
+   * Returns a showable username
+   * @function
+   * @param {Object} userInfo Using the email of the user to create a showable username on the header
+   * @return {string}         Username of the user
+   */
+  const username = (userInfo) => {
+    let username = userInfo.data.email.substring(0, userInfo.data.email.lastIndexOf("@"));
+    
+    return username;
+  }
+
+  
+  return (
+    &lt;header className={`header ${isNotTop ? "fixed" : ""}`}>
+      {/* TODO: add className "fixed" to .header when scroll > 0 */}
+      &lt;div className="shell">
+        &lt;div className="header__inner">
+          &lt;Link to="/" onClick={menuLinks}>
+            &lt;div
+              className="logo"
+              style={{
+                backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`,
+              }}
+            >&lt;/div>
+          &lt;/Link>
+          {/*TODO:to open mobile menu add className .open to .header__content*/}
+          &lt;div className={`header__content ${isMobileMenu ? "open" : ""}`}>
+            &lt;nav className="nav">
+              &lt;ul style={{ width: "100%" }}>
+                &lt;li onClick={menuLinks}>
+                  &lt;a
+                    href="https://syscoin.org/masternodes"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {t("header.about")}
+                  &lt;/a>
+                &lt;/li>
+
+                &lt;li onClick={menuLinks}>
+                  &lt;Link to="/stats">{t("header.stats")}&lt;/Link>
+                &lt;/li>
+
+                &lt;li onClick={menuLinks}>
+                  &lt;a
+                    href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {t("header.setup")}
+                  &lt;/a>
+                &lt;/li>
+
+                &lt;li onClick={menuLinks}>
+                  &lt;Link to="/governance">{t("header.governance")}&lt;/Link>
+                &lt;/li>
+
+                &lt;li onClick={menuLinks}>
+                  &lt;Link to="/masternodes">{t("header.masternodes")}&lt;/Link>
+                &lt;/li>
+
+                &lt;li onClick={menuLinks}>
+                  &lt;a
+                    rel="noopener noreferrer"
+                    href="https://support.syscoin.org/"
+                    target="_blank"
+                  >
+                    {t("header.support")}
+                  &lt;/a>
+                &lt;/li>
+
+                &lt;li>
+                  &lt;div className="user">
+                    {user ? (
+                      &lt;span
+                        style={{
+                          display: "inline-block",
+                          verticalAlign: "middle",
+                          whiteSpace: "nowrap",
+                          maxWidth: "9ch",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {username(user)}
+                      &lt;/span>
+                    ) : (
+                      &lt;span>Not logged in &lt;/span>
+                    )}
+                    &lt;i className="icon-user">&lt;/i>
+                    &lt;div className="dropdown">
+                      &lt;ul>
+                        {!user &amp;&amp; (
+                          &lt;li onClick={menuLinks}>
+                            &lt;Link to="/login">{t("header.login")}&lt;/Link>
+                          &lt;/li>
+                        )}
+                        {!user &amp;&amp; (
+                          &lt;li onClick={menuLinks}>
+                            &lt;Link to="/signup">{t("header.signup")}&lt;/Link>
+                          &lt;/li>
+                        )}
+
+                        {/* &lt;li className="sep">&lt;/li> */}
+                        {user &amp;&amp; (
+                          &lt;li onClick={menuLinks}>
+                            &lt;Link to="/profile">{t("header.profile")}&lt;/Link>
+                          &lt;/li>
+                        )}
+                        {user &amp;&amp; (
+                          &lt;li onClick={menuLinks}>
+                            &lt;Link to="/create-proposal">{t("header.proposal")}&lt;/Link>
+                          &lt;/li>
+                        )}
+                        {user &amp;&amp; (
+                          &lt;li onClick={menuLinks}>
+                            &lt;button
+                              className='nav-btn'
+                              onClick={logout}
+                            >
+                              {t("header.logout")}
+                            &lt;/button>
+                          &lt;/li>
+                        )}
+                      &lt;/ul>
+                    &lt;/div>
+                  &lt;/div>
+                &lt;/li>
+              &lt;/ul>
+            &lt;/nav>
+          &lt;/div>
+
+          {/* TODO:click event open mobile menu add className .open to .header__content */}
+          &lt;button
+            onClick={toggleMenu}
+            className="nav-trigger"
+            style={{ border: "none", background: "none", outline: "none" }}
+          >
+            &lt;span>&lt;/span>
+            &lt;span>&lt;/span>
+            &lt;span>&lt;/span>
+          &lt;/button>
+        &lt;/div>
+      &lt;/div>
+    &lt;/header>
+  );
+}
+export default withTranslation()(Header);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Error.html">Error</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Header.html">Header</a></li><li><a href="Home.html">Home</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 01 2020 12:45:08 GMT-0400 (hora de Venezuela)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -2,6 +2,12 @@ import React from 'react';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 
+/**
+ * Component that customizes the Modal from react-responsive-modal
+ * @component
+ * @param {*} props props to close and open the Modal, and the children
+ */
+
 export default function CustomModal(props) {
   return (
     <Modal

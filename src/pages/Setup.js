@@ -8,7 +8,12 @@ import BackgroundInner from '../components/global/BackgroundInner';
 import InnerBanner from '../components/global/InnerBanner';
 
 var publicurl=process.env.PUBLIC_URL;
-export class Setup extends Component {
+
+/**
+ * Old setup page 
+ * @component
+ */
+class Setup extends Component {
     render() {
         const { t } = this.props;
         return (

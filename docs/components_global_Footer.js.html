@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/global/Footer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/global/Footer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
+
+/**
+ * Component of the Footer of sysnode it has all the icons of the syscoin social media
+ * @component
+ */
+class Footer extends Component {
+    render() {
+        return (
+            &lt;footer className="footer">
+                &lt;div className="shell">
+                &lt;div className="footer__inner">
+                    &lt;div className="footer__entry">
+                    &lt;Link to="/">
+                        &lt;div
+                        className="logo"
+                        style={{
+                            backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`,
+                        }}
+                        >&lt;/div>
+                    &lt;/Link>
+
+                    &lt;nav className="nav">
+                        &lt;ul>
+                        &lt;li>
+                            &lt;Link to="/about">About&lt;/Link>
+                        &lt;/li>
+
+                        &lt;li>
+                            &lt;Link to="/stats">Stats&lt;/Link>
+                        &lt;/li>
+
+                        &lt;li>
+                            &lt;Link to="/setup">Setup&lt;/Link>
+                        &lt;/li>
+
+                        &lt;li>
+                            &lt;Link to="/governance">Governance&lt;/Link>
+                        &lt;/li>
+
+                        &lt;li>
+                            &lt;Link to="/check">Masternodes&lt;/Link>
+                        &lt;/li>
+
+                        &lt;li>
+                            &lt;a
+                            rel="noopener noreferrer"
+                            href="https://support.syscoin.org/"
+                            target="_blank"
+                            >
+                            Support
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;/ul>
+                    &lt;/nav>
+                    &lt;/div>
+                    &lt;div className="footer__content">
+                    &lt;div className="socials">
+                        &lt;ul>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.facebook.com/Syscoin/"
+                            >
+                            &lt;i className="ico-facebook">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://twitter.com/syscoin"
+                            >
+                            &lt;i className="ico-twitter">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.instagram.com/syscoin_org/"
+                            >
+                            &lt;i className="ico-instagram">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://bitcointalk.org/index.php?topic=1466445.0"
+                            >
+                            &lt;i className="ico-bitcoin">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://discord.gg/RkK2AXD"
+                            >
+                            &lt;i className="ico-discord">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://t.me/Syscoin_Official"
+                            >
+                            &lt;i className="ico-send">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://github.com/syscoin"
+                            >
+                            &lt;i className="ico-github">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.reddit.com/r/SysCoin/"
+                            >
+                            &lt;i className="ico-reddit">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://bitcoinwisdom.io/markets/binance/sysbtc"
+                            >
+                            &lt;i className="ico-wisdom">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.linkedin.com/company/syscoin/"
+                            >
+                            &lt;i className="ico-linkedin">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;button
+                                className="wechat-qr prevent"
+                                title=""
+                                style={{border: 'none', background:'none'}}
+                                data-tip data-for="wechat-qr-code"
+                            >
+                            &lt;i className="ico-wechat">&lt;/i>
+                            &lt;/button>
+                            &lt;ReactTooltip
+                                id="wechat-qr-code"
+                                aria-haspopup="true"
+                                className="tooltipSysClass"
+                                backgroundColor="#242652"
+                            >
+                                &lt;img src="/assets/images/wechat-qr.png" alt="wechat qr code" />
+                            &lt;/ReactTooltip>
+                        &lt;/li>
+                        &lt;li>
+                            &lt;a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.youtube.com/channel/UCTx546WgFKfKQg0_814FfMA"
+                            >
+                            &lt;i className="ico-youtube">&lt;/i>
+                            &lt;/a>
+                        &lt;/li>
+                        &lt;/ul>
+                    &lt;/div>
+                    &lt;div className="copyright">
+                        &lt;p>© 2020 Syscoin. All rights reserved&lt;/p>
+                    &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;/div>
+            &lt;/footer>
+        );
+    }
+
+}
+
+export default Footer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Error.html">Error</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Header.html">Header</a></li><li><a href="Home.html">Home</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 01 2020 12:45:08 GMT-0400 (hora de Venezuela)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

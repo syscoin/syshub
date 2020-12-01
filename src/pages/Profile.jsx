@@ -11,10 +11,14 @@ import UserMasternodes from "../components/profile/UserMasternodes";
 import AddMasternodes from "../components/profile/AddMasternodes";
 import UserDelete from "../components/profile/UserDelete";
 
-function Profile(props) {
+/**
+ * Profile page that shows at /profile
+ * @component
+ * @param {*} t t prop received from withTranslation
+ */
+function Profile({ t }) {
   let { path } = useRouteMatch();
 
-    const { t } = props;
     return (
       <Background>
         <BackgroundInner />

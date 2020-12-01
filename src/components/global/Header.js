@@ -4,13 +4,22 @@ import { withTranslation } from "react-i18next";
 
 import { useUser } from "../../context/user-context";
 
-function Header(props) {
+/**
+ * Component that shows the Header alongside with the navbar
+ * @component
+ * @param {*} props the T prop comes from withTranslation to use react-i18next
+ */
+function Header({t}) {
   const { user, logoutUser } = useUser();
   const isMounted = useRef(false);
 
   const [isNotTop, setIsNotTop] = useState(false);
   const [isMobileMenu, setIsMobileMenu] = useState(false);
 
+  /**
+   * UseEffect used to add the scroll event so the navbar gets fixed
+   * @function
+   */
   useEffect(() => {
     isMounted.current = true;
     document.addEventListener("scroll", () => {
@@ -24,26 +33,45 @@ function Header(props) {
     }
   });
 
+  /**
+  * Function that handles the activation of the responsive menu 
+  * @function
+  */
   const menuLinks = () => {
     if (isMobileMenu) {
       toggleMenu();
     }
   };
 
+  /**
+  * Function that toggles the state of isMobileMenu
+  * @function
+  */
   const toggleMenu = () => {
     setIsMobileMenu(!isMobileMenu);
   };
 
+  /**
+   * Function that triggers the logoutUser of the context
+   * @function
+   */
   const logout = () => {
     logoutUser();
   }
+
+  /**
+   * Returns a showable username
+   * @function
+   * @param {Object} userInfo Using the email of the user to create a showable username on the header
+   * @return {string}         Username of the user
+   */
   const username = (userInfo) => {
     let username = userInfo.data.email.substring(0, userInfo.data.email.lastIndexOf("@"));
     
     return username;
   }
 
-  const { t } = props;
+  
   return (
     <header className={`header ${isNotTop ? "fixed" : ""}`}>
       {/* TODO: add className "fixed" to .header when scroll > 0 */}

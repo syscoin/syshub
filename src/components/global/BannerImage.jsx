@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * Component to show the new banner of sysnode
+ * @component
+ * @param {*} props Direction to choose the image direction, heading is the title
+ */
+
 export default function BannerImage(props) {
     const checkImageDirection = () => {
         if (props.direction === 'left') return 'article__image--pull-left';

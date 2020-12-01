@@ -1,5 +1,5 @@
 {
-  "name": "Sysnode",
+  "name": "sysnode",
   "homepage": ".",
   "version": "0.1.0",
   "private": true,
@@ -10,11 +10,7 @@
   "dependencies": {
     "@hookform/error-message": "0.0.4",
     "@hookform/resolvers": "^0.1.1",
-    "@sweetalert2/theme-dark": "^4.0.0",
     "@swyftx/api-crypto-address-validator": "^1.13.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "anychart-react": "^1.4.1",
     "axios": "^0.19.2",
     "bitcoinjs-lib": "^4.0.2",
@@ -66,7 +62,8 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docs": "jsdoc -c jsdoc.conf.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -82,5 +79,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "better-docs": "^2.3.2",
+    "jsdoc": "^3.6.6",
+    "react-test-render": "^1.1.2"
   }
 }

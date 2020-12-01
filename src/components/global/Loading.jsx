@@ -3,6 +3,10 @@ import Title from './Title';
 import Background from './Background';
 import BackgroundInner from './BackgroundInner';
 
+/**
+ * Component that shows a loading screen
+ * @component
+ */
 const Loading = () => {
     return (
       <Background>

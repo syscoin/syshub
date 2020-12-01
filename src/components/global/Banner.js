@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 
 var publicurl=process.env.PUBLIC_URL;
 
+/**
+ * Component that shows the old banner of sysnode
+ * @component
+ */
 class Banner extends Component {
     render() {
         const { t } = this.props;

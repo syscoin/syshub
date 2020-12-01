@@ -7,12 +7,19 @@ import MetaTags from 'react-meta-tags';
 import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 import BannerImage from '../components/global/BannerImage';
-// import SuperBlocks from './governance/SuperBlocks';
-// import GovList from '../components/governance/GovList';
 import GovDetails from '../components/governance/GovDetails';
 import ProposalsList from '../components/governance/ProposalsList';
 
-export class Governance extends Component {
+/**
+ * Governance page that shows at /governance
+ * @component
+ */
+class Governance extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props 
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -23,13 +30,26 @@ export class Governance extends Component {
         }
     }
 
+    /**
+     * We start apiLoader()
+     * @function 
+     */
     componentDidMount() {
         this.apiLoader();
     }
+
+    /**
+     * Cancel all requests
+     * @function
+     */
     componentWillUnmount() {
         this.source.cancel('Request has been canceled');
     }
     
+    /**
+     * Fetch the governance and stats data from the API to modify the state and show the component 
+     * @function
+     */
     async apiLoader() {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();
@@ -98,8 +118,6 @@ export class Governance extends Component {
     render() {
         const { t } = this.props;
         if (this.state.dataLoad === 1) {
-            // console.log(this.state.govData, "govData");
-            // console.log(this.state.statsData, "statsData");
 
             return (
                 <Background>

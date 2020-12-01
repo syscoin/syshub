@@ -7,7 +7,12 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import InnerBanner from "../components/global/InnerBanner";
 
 var publicurl = process.env.PUBLIC_URL;
-export class About extends Component {
+
+/**
+ * Old About page
+ * @component
+ */
+class About extends Component {
     render() {
     const { t } = this.props;
         return (

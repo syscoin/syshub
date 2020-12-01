@@ -7,8 +7,11 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import MasternodeTable from "../components/masternodes/MasternodeTable";
 
-
-export class Check extends Component {
+/**
+ * Masternodes page that shows at /masternodes
+ * @component
+ */
+class Masternodes extends Component {
   
   render() {
     const { t } = this.props;
@@ -45,4 +48,4 @@ export class Check extends Component {
   }
 }
 
-export default withTranslation()(Check);
+export default withTranslation()(Masternodes);

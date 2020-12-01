@@ -16,8 +16,16 @@ import MasternodeTable from '../components/masternodes/MasternodeTable';
 import ProposalsList from '../components/governance/ProposalsList';
 import HomeButtons from '../components/home/HomeButtons';
 
-export class Home extends Component {
-    _isMounted = false;
+/**
+ * Home page that shows at /
+ * @component
+ */
+class Home extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props 
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -26,17 +34,34 @@ export class Home extends Component {
         }
         
     }
+    /**
+     * Initialize the isMounted property in false
+     * @property {boolean} _isMounted used to mount/dismount 
+     */
+    _isMounted = false;
 
+    /**
+     * We start getStats()
+     * @function 
+     */
     componentDidMount() {
         this._isMounted = true;
         this.getStats();
     }
 
+    /**
+     * Cancel all requests
+     * @function
+     */
     componentWillUnmount() {
         this._isMounted = false;
         this.source.cancel('Request has been canceled');
     }
 
+    /**
+     * Fetch the stats data from the API to modify the state and show the component 
+     * @function
+     */
     async getStats() {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();

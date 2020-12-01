@@ -7,7 +7,11 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import ProposalForm from "../components/proposal/ProposalForm";
 
-
+/**
+ * Proposal page that shows at /create-proposal
+ * @component
+ * @param {*} props the T prop comes from withTranslation to use react-i18next
+ */
 function NewProposal({ t }) {
 
   return (

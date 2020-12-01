@@ -1,5 +1,11 @@
 import React from 'react';
 
+
+/**
+ * Component for showing the Inner Backgrounds
+ * @component
+ * @param {string} type Type of the background wanted (A, B, or default)
+ */
 const BackgroundInner = ({type}) => {
   if (type === 'A') {
     return (

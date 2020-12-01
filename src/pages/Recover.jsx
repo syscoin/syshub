@@ -7,8 +7,12 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import FormRecover from "../components/recover/formRecover";
 
-const Recover = (props) => {
-  const {t} = props;
+/**
+ * Recover Password page that shows at /recover
+ * @component
+ * @param {*} t t prop received from withTranslation
+ */
+const Recover = ({ t }) => {
   return (
     <Background>
       <BackgroundInner/>
@@ -25,8 +29,8 @@ const Recover = (props) => {
                 <div className="cols">
                   <div className="col col--size-12">
                     <div className="article__content article__content--pull-left text-center">
-                      <Title heading="Recover your password"/>
-                      <FormRecover/>
+                      <Title heading="Recover your password" />
+                      <FormRecover />
                     </div>
                   </div>
                 </div>
