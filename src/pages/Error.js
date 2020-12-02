@@ -8,6 +8,7 @@ import BackgroundInner from "../components/global/BackgroundInner";
 /**
  * Error page that shows when page not found
  * @component
+ * @category Pages
  */
 class Error extends Component {
   render() {

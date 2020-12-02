@@ -2,7 +2,22 @@ import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 import SubTitle from '../global/SubTitle';
 
+/**
+ * Component to show the investment data on stats
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and investData from stats
+ * @example
+ * const investData = {}
+ * return (
+ *  <Investment investData={investData} />
+ * )
+ */
 class Investment extends Component {
+    /**
+     * To initialize the state
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -10,6 +25,10 @@ class Investment extends Component {
             investData: []
         }
     }
+    /**
+     * DidMount to set the state
+     * @function
+     */
     componentDidMount() {
         this.setState({
             dataload: 1,

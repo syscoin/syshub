@@ -8,7 +8,18 @@ const schema = yup.object().shape({
   proposalTitle: yup.string().max(40, 'The proposal title must be at most 40 characters.').required('The proposal title is required.')
 });
 
-export default function TitleProposal({ onNext }) {
+/**
+ * Component to show the Proposal title form
+ * @component
+ * @subcategory Proposal
+ * @param {*} onNext function that gets executed after the form is submitted
+ * @example
+ * const onNext = () => {}
+ * return (
+ *  <TitleProposal onNext={onNext} />
+ * )
+ */
+function TitleProposal({ onNext }) {
   
   const { register, watch, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
@@ -37,3 +48,5 @@ export default function TitleProposal({ onNext }) {
     </form>
   )
 }
+
+export default TitleProposal;

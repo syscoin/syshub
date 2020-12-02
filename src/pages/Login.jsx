@@ -20,6 +20,7 @@ import swal from "sweetalert2";
 /**
  * Login page showed at /login
  * @component
+ * @category Pages
  * @param {*} t t prop received from withTranslation
  */
 function Login({ t }) {

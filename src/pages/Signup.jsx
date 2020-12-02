@@ -14,6 +14,7 @@ import swal from "sweetalert2";
 /**
  * Signup page showed at /signup
  * @component
+ * @category Pages
  * @param {*} t t prop received from withTranslation
  */
 function Signup({ t }) {

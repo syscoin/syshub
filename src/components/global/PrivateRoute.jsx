@@ -6,6 +6,8 @@ import Loading from './Loading';
 
 /**
  * Component that handles the Private routes and their loading page
+ * @component
+ * @subcategory Global
  * @param {*} component this component that the Route will render
  */
 const PrivateRoute = ({ component: Component, ...rest }) => {

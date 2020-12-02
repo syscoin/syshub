@@ -5,6 +5,7 @@ import ReactTooltip from 'react-tooltip';
 /**
  * Component of the Footer of sysnode it has all the icons of the syscoin social media
  * @component
+ * @subcategory Global
  */
 class Footer extends Component {
     render() {

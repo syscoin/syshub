@@ -11,6 +11,7 @@ var publicurl = process.env.PUBLIC_URL;
 /**
  * Old About page
  * @component
+ * @category Pages
  */
 class About extends Component {
     render() {

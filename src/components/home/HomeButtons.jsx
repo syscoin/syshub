@@ -3,7 +3,16 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/user-context";
 
 
-export default function HomeButtons() {
+/**
+ * Buttons showed on the home image banner
+ * @component
+ * @subcategory Home
+ * @example 
+ * return (
+ *  <HomeButtons />
+ * )
+ */
+function HomeButtons() {
   const { user } = useUser();
 
   return (
@@ -28,3 +37,4 @@ export default function HomeButtons() {
     </div>
   );
 }
+export default HomeButtons;

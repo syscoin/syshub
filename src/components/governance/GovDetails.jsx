@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 
+/**
+ * Governance Details component
+ * @component
+ * @subcategory Governance
+ * @example
+ * const budgetSum = {}
+ * const superBlockData = {}
+ * return (
+ *  <Govdetails superBlockData={superBlockData} budgetSum={budgetSum} />
+ * )
+ */
 class Govdetails extends Component {
+    /**
+     * initialize the state
+     * @constructor 
+     * @param {*} props Needs superBlockData and budgetSum to work properly
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -10,6 +26,11 @@ class Govdetails extends Component {
             budgetSum: 0
         }
     }
+
+    /**
+     * Set the state of the data passed in props
+     * @function 
+     */
     componentDidMount() {
         this.setState({
             dataload: 1,
@@ -17,6 +38,7 @@ class Govdetails extends Component {
             budgetSum: this.props.budgetSum
         });
     }
+
     render() {
         const { t } = this.props;
         if(this.state.dataload===1) {

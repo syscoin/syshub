@@ -15,7 +15,20 @@ const schema = yup.object().shape({
   proposalUrl: yup.string().url('Must be a valid url')
 });
 
-export default function DescriptionProposal({onNext, onBack}) {
+/**
+ * Component to show the Proposal description form
+ * @component
+ * @subcategory Proposal
+ * @param {*} onNext function that gets executed after the form is submitted
+ * @param {*} onBack function that gets executed to go back
+ * @example
+ * const onNext = () => {}
+ * const onBack = () => {}
+ * return (
+ *  <DescriptionProposal onNext={onNext} onBack={onBack} />
+ * )
+ */
+function DescriptionProposal({onNext, onBack}) {
   const [showEditor, setShowEditor] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
   const [proposalDescription, setProposalDescription] = useState(EditorState.createEmpty());
@@ -26,11 +39,20 @@ export default function DescriptionProposal({onNext, onBack}) {
   });
 
 
+  /**
+   * shows the description editor
+   * @function
+   * @param {*} editorState the editor state
+   */
   const onEditorStageChange = (editorState) => {
     setShowEditor(true);
     setProposalDescription(editorState);
   }
 
+  /**
+   * goes back on the step of proposal creation but first hides the preview and shows the editor
+   * @function
+   */
   const backEditor = () => {
     if (showPreview) {
       setShowPreview(false);
@@ -41,6 +63,12 @@ export default function DescriptionProposal({onNext, onBack}) {
     onBack();
   }
   
+  /**
+   * checks if the editor is empty
+   * @function
+   * @param {*} editor the editor received to check if it's empty
+   * @returns {boolean}
+   */
   const editorEmpty = (editor) => {
     const editorRaw = convertToRaw(editor.getCurrentContent());
     if (editorRaw.blocks[0].text.trim().length === 0){
@@ -51,6 +79,11 @@ export default function DescriptionProposal({onNext, onBack}) {
     }
   }
 
+  /**
+   * goes next on the step of proposal creation but first hides the preview and shows the editor
+   * @function
+   * @param {{url: string}} data the data from the url input
+   */
   const nextEditor = (data) => {   
     if (showPreview) {
       setShowPreview(false);
@@ -163,3 +196,5 @@ export default function DescriptionProposal({onNext, onBack}) {
     </form>
   )
 }
+
+export default DescriptionProposal;

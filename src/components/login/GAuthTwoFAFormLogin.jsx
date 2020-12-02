@@ -9,6 +9,17 @@ const schema = yup.object().shape({
   gAuthCode: yup.string().required("The verification code is required"),
 });
 
+/**
+ * Component that renders the form to submit the Gauth code to be verified
+ * @component
+ * @subcategory login
+ * @param {*} userSignInGAuth function executed after submitting the code
+ * @example
+ * const userSignInGAuth = () => {}
+ * return (
+ *  <GAuthTwoFAFormLogin userSignInGAuth={userSignInGAuth} />
+ * )
+ */
 const GAuthTwoFAFormLogin = ({userSignInGAuth}) => {
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",

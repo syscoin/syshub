@@ -8,7 +8,24 @@ import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
 import MnList from "./MnList";
 
-export default function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
+/**
+ * Component to show a proposal card with the info of a single proposal
+ * @component
+ * @subcategory Governance
+ * @param {Object} proposal the single proposal passed from the father
+ * @param {number} enabled the number of enabled masternodes
+ * @param {Object} userInfo the info of the user currently logged in
+ * @param {*} onLoadProposals loads the proposals list again after update a proposal
+ * @example
+ * const proposal = {}
+ * const enabled = 1
+ * const userInfo = {}
+ * const onLoadProposals = () => {}
+ * return (
+ *  <ProposalCard proposal={proposal} enabled={enabled} userInfo={userInfo} onLoadProposals={onLoadProposals} />
+ * )
+ */
+function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   const {user} = useUser();
   const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
@@ -18,11 +35,18 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
   const [payment_type, setPayment_type] = useState('');
   const [vote, setVote] = useState('');
 
-
+  /**
+   * UseEffect that calculates the approx payment dates of the current proposal
+   * @function
+   */
   useEffect(() => {
     let {end_epoch, nPayment} = proposal
     const today = new Date();
 
+    /**
+     * Function that calculates the days remaining of the proposal
+     * @function
+     */
     const calculateDaysRemaining = () => {
       let endDate = new Date(end_epoch * 1000)
       if (endDate > today) {
@@ -44,10 +68,20 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
     };
   }, [proposal]);
 
+  /**
+   * Function that receives a string of a number with , as separator and returns it without it
+   * @function
+   * @param {string} str string of a number
+   */
   const comaToNum = (str) => {
     return Number(str.replace(",", ""));
   }
 
+  /**
+   * Function that returns a date in human format using the unix timestamps
+   * @function
+   * @param {number} creationTime number with a unix timestamp
+   */
   function proposalDate(creationTime) {
     var unixTimestamp = creationTime;
     var milliseconds = unixTimestamp * 1000;
@@ -62,8 +96,15 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
     return humanDateFormat;
   }
 
+  /**
+   * Function that returns html if the proposal is passing or not
+   * @function
+   * @param {number} yesCount
+   * @param {number} noCount 
+   * @param {number} enabled 
+   * @param {number} absoluteYesCount 
+   */
   function proposalPassing(yesCount, noCount, enabled, absoluteYesCount) {
-
     if (((yesCount - noCount) / enabled) * 100 > 10) {
       return (
         <div className="passed" title={t('govlist.table.green_text')}>
@@ -82,6 +123,11 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
     }
   }
 
+  /**
+   * Function that verify the user and opens the masternodes list modal to vote
+   * @function
+   * @param {number} vote type of the vote received from the button
+   */
   function openMnVote(vote) {
     if (userInfo?.emailVerified) {
       setVote(vote);
@@ -97,6 +143,10 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
     }
   }
 
+  /**
+   * Function used after vote that closes the masternodes list modal and refresh the proposals list
+   * @function
+   */
   const afterVote = async () => {
     setOpenMnList(false);
     await onLoadProposals();
@@ -177,3 +227,4 @@ export default function ProposalCard({proposal, enabled, userInfo, onLoadProposa
     </div>
   );
 }
+export default ProposalCard;

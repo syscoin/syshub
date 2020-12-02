@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
+/**
+ * Component to show the masternodes and coins data on charts
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and chartData from stats
+ * @example
+ * const chartData = {}
+
+ * return (
+ *  <LinearChart chartData={chartData} />
+ * )
+ */
 class LinearChart extends Component {
+    /**
+     * To initialize the state of dataChart1 and dataChart2
+     * @constructor
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -15,19 +31,39 @@ class LinearChart extends Component {
         };
     }
 
+    /**
+     * DidMount to load the data of the charts
+     * @function
+     */
     componentDidMount() {
         this.loadCharts(this.props.chartData);
     }
 
+    /**
+     * a function that replaces , as separation with blank spaces
+     * @function
+     * @param {number} number a number to give format
+     */
     formatNumber = (number) => {
         return Number(number.toString().replace(/,/g, ""));
     }
 
+    /**
+     * A function that rounds a value given a precision
+     * @function
+     * @param {number} value the value to be rounded
+     * @param {number} precision the precision used to round
+     */
     round(value, precision) {
         let multiplier = Math.pow(10, precision || 0);
         return Math.round(value * multiplier) / multiplier;
     }
 
+    /**
+     * A function to call all the neccesary dependencies to load the data in the state of the charts
+     * @function
+     * @param {Object} response the data to load in the charts
+     */
     loadCharts(response) {
         let totalEnabled = this.formatNumber(response.enabled);
         let totalNewStart = this.formatNumber(response.new_start_required);

@@ -2,7 +2,24 @@ import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 import SubTitle from '../global/SubTitle';
 
-export class Income extends Component {
+/**
+ * Component to show the income data on stats
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and incomeData, incomeSenOneYrData, incomeSenTwoYrData from stats
+ * @example
+ * const incomeData = {}
+ * const incomeSenOneYrData = {}
+ * const incomeSenTwoYrData = {}
+ * return (
+ *  <Income incomeData={incomeData} incomeSenOneYrData={incomeSenOneYrData} incomeSenTwoYrData={incomeSenTwoYrData} />
+ * )
+ */
+class Income extends Component {
+    /**
+     * To initialize the empty state
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -12,6 +29,11 @@ export class Income extends Component {
             incomeSenTwoYrData: []
         }
     }
+
+    /**
+     * DidMount to set the state with the props
+     * @function
+     */
     componentDidMount() {
         this.setState({
             dataload: 1,
@@ -36,7 +58,6 @@ export class Income extends Component {
                             <td>Weekly</td>
                             <td>Monthly</td>
                             <td>Yearly</td>
-                            {/* <td>ROI</td> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -70,7 +91,6 @@ export class Income extends Component {
                                 <br />
                                 <span className="sb">{this.state.incomeData.sys.yearly}</span>
                             </td>
-                            {/* <td>6.7%</td> */}
                             </tr>
                             <tr>
                             <td>1+ Year</td>
@@ -102,7 +122,6 @@ export class Income extends Component {
                                 <br />
                                 <span className="sb">{this.state.incomeSenOneYrData.sys.yearly}</span>
                             </td>
-                            {/* <td>6.7%</td> */}
                             </tr>
                             <tr>
                             <td>2.5+ Years</td>
@@ -134,7 +153,6 @@ export class Income extends Component {
                                 <br />
                                 <span className="sb">{this.state.incomeSenTwoYrData.sys.yearly}</span>
                             </td>
-                            {/* <td>6.7%</td> */}
                             </tr>
                         </tbody>
                         </table>

@@ -4,6 +4,8 @@ import { useUser } from '../../context/user-context';
 
 /**
  * Component that handles the Public or restricted routes
+ * @component
+ * @subcategory Global
  * @param {*} component this component that the Route will render
  * @param {boolean} restricted restricted to show if it's a restricted or public route
  */

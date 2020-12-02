@@ -19,6 +19,7 @@ import HomeButtons from '../components/home/HomeButtons';
 /**
  * Home page that shows at /
  * @component
+ * @category Pages
  */
 class Home extends Component {
     /**

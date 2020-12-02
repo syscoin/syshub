@@ -27,6 +27,19 @@ const schema = yup.object().shape({
     )
 });
 
+/**
+ * Component to show the Proposal payment form
+ * @component
+ * @subcategory Proposal
+ * @param {*} onNext function that gets executed after the form is submitted
+ * @param {*} onBack function that gets executed to go back
+ * @example
+ * const onNext = () => {}
+ * const onBack = () => {}
+ * return (
+ *  <PaymentProposal onNext={onNext} onBack={onBack} />
+ * )
+ */
 const PaymentProposal = ({onNext, onBack}) => {
   const [paymentQuantity, setPaymentQuantity] = useState(1);
   const [nextGovernanceDate, setNextGovernanceDate] = useState();
@@ -50,7 +63,13 @@ const PaymentProposal = ({onNext, onBack}) => {
   const watchedAmount = watch('paymentAmount');
   const watchNPayment = watch('paymentNumber');
 
-
+  /**
+   * Formats the date to have the correct format in usa, eu or default
+   * @function
+   * @param {*} dateInMills date
+   * @param {string} format type of format receives
+   * @returns {string}
+   */
   const yearDayMonth = (dateInMills, format) => {
     const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
     const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) + 1}`.slice(-2);
@@ -66,6 +85,13 @@ const PaymentProposal = ({onNext, onBack}) => {
     }
   };
 
+  /**
+   * Calculates the last payment
+   * @function
+   * @param {*} nPayments number of payments
+   * @param {*} nextGovernanceDate the next governance date of syscoin
+   * @returns {Object}
+   */
   const lastPaymentCalculator = (nPayments, nextGovernanceDate) => {
     const {
       rewardDateEpoch,
@@ -89,6 +115,11 @@ const PaymentProposal = ({onNext, onBack}) => {
     return paymentInfo;
   };
 
+  /**
+   * Function that fetch the governance reward info from the API
+   * @function
+   * @returns {Object}
+   */
   const getGovernanceDate = async () => {
     const nextGovernanceDate = await nextGovernanceRewardInfo(cancelSource.token)
     if (typeof nextGovernanceDate === "undefined") {
@@ -99,6 +130,10 @@ const PaymentProposal = ({onNext, onBack}) => {
     }
   }
 
+  /**
+   * Gets the payment quantity and their values and sets them in the state
+   * @function
+   */
   const paymentQuantityValue = () => {
     if (typeof nextGovernanceDate !== "undefined") {
       const {endEpoch, proposalPayoutDates} = lastPaymentCalculator(
@@ -118,10 +153,26 @@ const PaymentProposal = ({onNext, onBack}) => {
       setTotalAmount(watchedAmount * watchNPayment)
       setPaymentQuantity(watchNPayment)
     }
-
   }
 
+  /**
+   * Function that passes the onNext function with the data of payments
+   * @function
+   * @param {*} data payment data from the payment inputs 
+   */
+  const nextPayment = (data) => {
+    onNext({proposalStartEpoch, proposalEndEpoch, ...data});
+  }
+
+  /**
+   * useEffect to calculate the paymentDates
+   * @function
+   */
   useEffect(() => {
+    /**
+     * Function that calculate the paymentDates and gets the governanceDates from the API
+     * @function
+     */
     const calculatePaymentDates = async () => {
       const nextGovernanceDate = await getGovernanceDate();
       if (nextGovernanceDate !== null) {
@@ -145,11 +196,6 @@ const PaymentProposal = ({onNext, onBack}) => {
     };
     // eslint-disable-next-line
   }, [cancelSource])
-
-  const nextPayment = (data) => {
-    onNext({proposalStartEpoch, proposalEndEpoch, ...data});
-  }
-
 
   return (
     <form className="input-form" onSubmit={handleSubmit(nextPayment)}>

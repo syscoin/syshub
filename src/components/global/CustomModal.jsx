@@ -5,6 +5,7 @@ import { Modal } from 'react-responsive-modal';
 /**
  * Component that customizes the Modal from react-responsive-modal
  * @component
+ * @subcategory Global
  * @param {*} props props to close and open the Modal, and the children
  */
 

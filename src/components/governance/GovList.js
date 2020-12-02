@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import GovListRow from './GovListRow';
 import { withTranslation } from "react-i18next";
 
-export class GovList extends Component {
+/**
+ * Old Governance Table of Proposals, currently not in use
+ * @component
+ * @subcategory Governance
+ * @example
+ * const govData = []
+ * const statsData = {}
+ * return (
+ *  <GovList statsData={statsData} govData={govData} />
+ * )
+ */
+class GovList extends Component {
     constructor(props){
         super(props);
         this.state = {

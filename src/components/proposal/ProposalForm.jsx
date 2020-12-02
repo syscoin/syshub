@@ -29,7 +29,16 @@ const schema2 = yup.object().shape({
     .required('proposal hash is required')
 });
 
-export default function ProposalForm() {
+/**
+ * Component to show the create Proposal form
+ * @component
+ * @subcategory Proposal
+ * @example
+ * return (
+ *  <ProposalForm />
+ * )
+ */
+function ProposalForm() {
   const history = useHistory();
   const isMounted = useRef(false);
   //COMPONENT STATES
@@ -59,7 +68,15 @@ export default function ProposalForm() {
     resolver: yupResolver(schema2)
   });
 
+  /**
+   * UseEffect at mounting to get saved proposal
+   * @function
+   */
   useEffect(() => {
+    /**
+     * function to get saved proposal from the API
+     * @function
+     */
     const getSavedProposal = async () => {
       try {
         let {data} = await notCompletedProposal(cancelSource.token).catch((err) => {
@@ -82,6 +99,11 @@ export default function ProposalForm() {
     };
   }, [cancelSource]);
 
+  /**
+   * Function that opens a modal with the preview of the saved proposal
+   * @function
+   * @param {Object} proposal the saved proposal to show from the API
+   */
   const showSavedProposal = (proposal) => {
     console.log(proposal);
     setTitle(proposal.title);
@@ -102,6 +124,10 @@ export default function ProposalForm() {
     setOpenModal(true);
   }
 
+  /**
+   * Function that erase from the API the saved proposal and sets the proposal in blank to create a new one
+   * @function
+   */
   const cancelCurrentProposal = async () => {
     if (openModal) setOpenModal(false);
     setCurrentStep(0);
@@ -133,6 +159,10 @@ export default function ProposalForm() {
     //cancelar el proposal y empezar de cero
   }
 
+  /**
+   * Function to continue with the saved proposal and proceed to submit or prepare the creation
+   * @function
+   */
   const continueProposal = () => {
     setCurrentStep(4);
     if (submitCommand !== "") {
@@ -142,6 +172,10 @@ export default function ProposalForm() {
     setOpenModal(false);
   }
 
+  /**
+   * Function to confirm the delete of the saved proposal
+   * @function
+   */
   const cancelProposalBtn = async () => {
     const swalConfirm = await swal.fire({
       icon: 'warning',
@@ -155,13 +189,26 @@ export default function ProposalForm() {
     }
   }
 
+  /**
+   * function to set back the step of the proposal form
+   * @function 
+   */
   const back = () => {
     setCurrentStep(currentStep - 1);
   };
+
+  /**
+   * function to set next step of the proposal form
+   * @function 
+   */
   const next = () => {
     setCurrentStep(currentStep + 1);
   };
 
+  /**
+   * function that triggers sweet alert to show the copy is successful
+   * @function
+   */
   const copyButton = () => {
     swal.fire({
       icon: "success",
@@ -171,20 +218,40 @@ export default function ProposalForm() {
     });
   }
 
+  /**
+   * function that sets in the state the title from the input
+   * @function
+   * @param {{proposalTitle: string}} proposalTitle the proposal title from the title input form
+   */
   const getTitle = ({proposalTitle}) => {
     setTitle(proposalTitle);
     next();
   }
+
+  /**
+   * function that sets in the state the description and url from the input
+   * @function
+   * @param {{proposalDescription: string, proposalUrl: string}} proposalDescription the proposal description and url from the description input form
+   */
   const getDescription = ({proposalDescription, proposalUrl}) => {
     setDescription(proposalDescription);
     setUrl(proposalUrl);
     next();
   }
+  /**
+   * function that sets in the state the payment information from the input
+   * @function
+   * @param {Object} proposalPayment the proposal payment from the description input form
+   */
   const getPayment = (proposalPayment) => {
     setPayment(proposalPayment);
     next();
   }
 
+  /**
+   * Function that checks the proposal and fetch the prepare command from the API
+   * @function
+   */
   const checkProposalAndPrepare = async () => {
     setPreparing(true);
 
@@ -226,6 +293,11 @@ export default function ProposalForm() {
 
   }
 
+  /**
+   * Function that gets the payment txid and fetch a submit command of the proposal
+   * @function
+   * @param {{paymentTxId: string}} data payment txid from the input
+   */
   const enterPaymentTxId = async (data) => {
     swal.fire({
       title: 'Creating submit command',
@@ -265,6 +337,11 @@ export default function ProposalForm() {
     })
   }
 
+  /**
+   * Function that gets the proposal hash and creates the new proposal
+   * @function
+   * @param {{proposalHash: string}} data proposalHash from the input
+   */
   const enterProposalHash = async (data) => {
     swal.fire({
       title: 'Creating the proposal',
@@ -476,3 +553,5 @@ export default function ProposalForm() {
     </>
   );
 }
+
+export default ProposalForm;

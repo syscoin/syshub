@@ -3,7 +3,18 @@ import { withTranslation } from "react-i18next";
 import ReactTooltip from 'react-tooltip';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-export class GovListRow extends Component {
+/**
+ * Old Governance Table Row of a Proposal, currently not in use
+ * @component
+ * @subcategory Governance
+ * @example
+ * const govRowData = {}
+ * const enableVal = 1
+ * return (
+ *  <GovListRow govRowData={govRowData} enableVal={enableVal} />
+ * )
+ */
+class GovListRow extends Component {
     constructor(props){
         super(props);
         this.state = {

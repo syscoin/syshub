@@ -2,6 +2,15 @@ import React, {useState, useEffect} from 'react';
 import {useUser} from "../../context/user-context";
 import swal from 'sweetalert2'
 
+/**
+ * Component that renders the recover password form
+ * @component
+ * @subcategory recover
+ * @example
+ * return(
+ *  <FormRecover />
+ * )
+ */
 const FormRecover = () => {
   const {firebase} = useUser();
   const [email, setEmail] = useState('');
@@ -20,6 +29,11 @@ const FormRecover = () => {
     // eslint-disable-next-line
   }, [])
 
+  /**
+   * Function to submit the recover password form
+   * @function
+   * @param {*} e 
+   */
   const submitForm = async (e) => {
     e.preventDefault()
     firebase.passwordReset(email).then(() => {

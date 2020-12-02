@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 
-export class SuperBlocks extends Component {
+/**
+ * Old SuperBlocks info, currently not in use
+ * @component
+ * @subcategory Governance
+ * @example
+ * const budgetSum = {}
+ * const superBlockData = {}
+ * return (
+ *  <SuperBlocks superBlockData={superBlockData} budgetSum={budgetSum} />
+ * )
+ */
+class SuperBlocks extends Component {
     constructor(props){
         super(props);
         this.state = {

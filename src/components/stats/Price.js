@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 import SubTitle from '../global/SubTitle';
 
-export class Price extends Component {
+/**
+ * Component to show the price data
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and priceData
+ * @example
+ * const priceData = {}
+ * return (
+ *  <Price priceData={priceData} />
+ * )
+ */
+class Price extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -10,24 +21,43 @@ export class Price extends Component {
             priceData: []
         }
     }
+
+    /**
+     * DidMount to set the state with the props
+     * @function
+     */
     componentDidMount() {
         this.setState({
             dataload: 1,
             priceData: this.props.priceData
         });
     }
+
+    /**
+     * a function that replaces , as separation with blank spaces
+     * @function
+     * @param {number} number a number to give format
+     */
     formatNumber = (number) => {
         return Number(number.toString().replace(/,/g, ''));
     }
+
+    /**
+     * function that returns a string of price with an icon
+     * @function
+     * @param {*} price the price used to know if the value is positive or negative
+     * @returns {string}
+     */
     priceWizard = (price) => {
-        var html=price;
-        if(parseFloat(price)>0) {
-            html=price+" ▲";
-        } else if(parseFloat(price)<0) {
-            html=price+" ▼";
+        var html = price;
+        if(parseFloat(price) > 0) {
+            html = price + " ▲";
+        } else if(parseFloat(price) < 0) {
+            html = price + " ▼";
         }
         return html;
     }
+
     render() {
         const { t } = this.props;
         if(this.state.dataload===1) {

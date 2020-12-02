@@ -24,6 +24,7 @@ import NewProposal from './pages/NewProposal';
 /**
  * App component that handles the use of the Header and Footer components, alongside with the Routing
  * @component
+ * @category App
 */
 class AppComponent extends Component {
     
@@ -54,6 +55,7 @@ class AppComponent extends Component {
 /**
  * App component to use the User Provider
  * @component
+ * @category App
 */
 
 const App = () => (

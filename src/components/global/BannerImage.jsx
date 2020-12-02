@@ -3,6 +3,7 @@ import React from "react";
 /**
  * Component to show the new banner of sysnode
  * @component
+ * @subcategory Global
  * @param {*} props Direction to choose the image direction, heading is the title
  */
 

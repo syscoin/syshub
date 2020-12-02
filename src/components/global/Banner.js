@@ -6,6 +6,7 @@ var publicurl=process.env.PUBLIC_URL;
 
 /**
  * Component that shows the old banner of sysnode
+ * @subcategory Global
  * @component
  */
 class Banner extends Component {

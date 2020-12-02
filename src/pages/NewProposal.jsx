@@ -10,6 +10,7 @@ import ProposalForm from "../components/proposal/ProposalForm";
 /**
  * Proposal page that shows at /create-proposal
  * @component
+ * @category Pages
  * @param {*} props the T prop comes from withTranslation to use react-i18next
  */
 function NewProposal({ t }) {

@@ -10,6 +10,18 @@ const schema = yup.object().shape({
   password: yup.string().required()
 });
 
+/**
+ * Component that renders the form to login in the app
+ * @component
+ * @subcategory login
+ * @param {*} props onLogin, submitting
+ * @example
+ * const onLogin = () => {}
+ * const submitting = false
+ * return (
+ *  <LoginForm onLogin={onLogin} submitting={submitting} />
+ * )
+ */
 const LoginForm = (props) => {
   const {firebase} = useUser();
   const {register, handleSubmit, errors} = useForm({

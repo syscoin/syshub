@@ -13,6 +13,7 @@ import ProposalsList from '../components/governance/ProposalsList';
 /**
  * Governance page that shows at /governance
  * @component
+ * @category Pages
  */
 class Governance extends Component {
     /**

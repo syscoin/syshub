@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import AnyChart from 'anychart-react';
 import { withTranslation } from "react-i18next";
 
-export class Doughnut extends Component {
+/**
+ * Old component of the dougnut chart, currently not in use
+ * @component
+ * @subcategory Stats
+ */
+class Doughnut extends Component {
     constructor(props){
         super(props);
         this.state = {

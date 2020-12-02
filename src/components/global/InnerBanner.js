@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 /**
  * Component that shows the old inner banner of sysnode
  * @component
+ * @subcategory Global
  */
 class InnerBanner extends Component {
     render() {

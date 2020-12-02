@@ -11,6 +11,21 @@ import MnItem from "./MnItem";
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
 
+/**
+ * Component to show the masternodes list of the user
+ * @component
+ * @subcategory Governance
+ * @param {Object} proposal the single proposal passed from the father
+ * @param {number} vote the number of enabled masternodes
+ * @param {*} onAfterVote function used after the user has voted
+ * @example
+ * const proposal = {}
+ * const vote = 1
+ * const onAfterVote = () => {}
+ * return (
+ *  <MnList proposal={proposal} vote={vote} onAfterVote={onAfterVote} />
+ * )
+ */
 const MnList = ({proposal, vote, onAfterVote}) => {
   let {user} = useUser();
   const [loadingMN, setLoadingMN] = useState(false);
@@ -21,11 +36,17 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   const [open2FAModal, setOpen2FAModal] = useState(false);
   const isMounted = useRef(false);
 
-
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-
+  /**
+   * useEffect that fetch the masternodes list of the API
+   * @function
+   */
   useEffect(() => {
+    /**
+     * Function that fetch the masternodes list of the API
+     * @function
+     */
     const getMnByUser = async () => {
       setLoadingMN(true);
       try {
@@ -53,17 +74,30 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     }
   }, [cancelSource, proposal.Hash]);
 
+  /**
+   * Function that adds a masternode to the state of selected masternodes
+   * @function
+   * @param {Object} mn The masternode recently selected 
+   */
   const addMnVote = (mn) => {
     setMasterNodesForVote([...masterNodesForVote, mn]);
   };
 
+  /**
+   * Function that removes a masternode of the state of selected masternodes
+   * @function
+   * @param {string} uid The masternode uid to remove
+   */
   const removeMnVote = (uid) => {
     let filteredMN = masterNodesForVote.filter((mn) => mn.uid !== uid);
 
     setMasterNodesForVote(filteredMN);
-
   };
 
+  /**
+   * Function that prepares the vote on the proposal and verifies if the user has 2fa and proceeds to open the 2fa modal
+   * @function
+   */
   const prepareVoting = async () => {
     try {
       let user2fa = await get2faInfoUser(user.data.user_id);
@@ -89,6 +123,10 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     }
   }
 
+  /**
+   * Function that is executed after the 2fa verification, it proceeds to take the selected masternodes and vote with them through the API
+   * @function
+   */
   const voting = async () => {
     setOpen2FAModal(false);
     swal.fire({
@@ -107,7 +145,6 @@ const MnList = ({proposal, vote, onAfterVote}) => {
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-
 
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)

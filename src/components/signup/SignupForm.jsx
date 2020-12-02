@@ -15,6 +15,12 @@ const schema = yup.object().shape({
     .required('You have to confirm your password')
 });
 
+/**
+ * Component that renders the signup form
+ * @component
+ * @subcategory signup
+ * @param {*} props props onSignup and submitting
+ */
 const SignupForm = (props) => {
   const {firebase} = useUser();
   const {register, handleSubmit, errors} = useForm({

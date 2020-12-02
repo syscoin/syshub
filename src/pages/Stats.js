@@ -6,17 +6,18 @@ import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 
 import Title from '../components/global/Title';
+import StatsShow from '../components/stats/StatsShow';
+import LinearChart from '../components/stats/LinearCharts';
 import Income from '../components/stats/Income';
 import Price from '../components/stats/Price';
 import Investment from '../components/stats/Investment';
-import WorldMap from '../components/stats/WorldMap';
-import LinearChart from '../components/stats/LinearCharts';
-import StatsShow from '../components/stats/StatsShow';
 import Blockchain from '../components/stats/Blockchain';
+import WorldMap from '../components/stats/WorldMap';
 
 /**
  * Stats page that shows at /stats
  * @component
+ * @category Pages
  */
 class Stats extends Component {
     /**

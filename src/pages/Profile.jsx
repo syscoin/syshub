@@ -14,6 +14,7 @@ import UserDelete from "../components/profile/UserDelete";
 /**
  * Profile page that shows at /profile
  * @component
+ * @category Pages
  * @param {*} t t prop received from withTranslation
  */
 function Profile({ t }) {

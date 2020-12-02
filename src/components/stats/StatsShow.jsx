@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
+/**
+ * Component to show the stats data
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and statsData
+ * @example
+ * const statsData = {}
+ * return (
+ *  <StatsShow statsData={statsData} />
+ * )
+ */
 class StatsShow extends Component {
+  /**
+   * initialize the state
+   * @property {Object}
+   */
   state = {
     dataload: 0,
     statsData: []
   };
 
+  /**
+   * DidMount to set the state
+   * @function
+   */
   componentDidMount() {
     this.setState({
       dataload: 1,

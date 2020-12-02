@@ -10,6 +10,7 @@ import FormRecover from "../components/recover/formRecover";
 /**
  * Recover Password page that shows at /recover
  * @component
+ * @category Pages
  * @param {*} t t prop received from withTranslation
  */
 const Recover = ({ t }) => {

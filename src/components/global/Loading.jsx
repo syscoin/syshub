@@ -6,6 +6,7 @@ import BackgroundInner from './BackgroundInner';
 /**
  * Component that shows a loading screen
  * @component
+ * @subcategory Global
  */
 const Loading = () => {
     return (

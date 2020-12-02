@@ -8,6 +8,17 @@ import { list, getUserInfo } from '../../utils/request';
 import SubTitle from '../global/SubTitle';
 import ProposalCard from './ProposalCard';
 
+/**
+ * Component to show the proposal list of governance
+ * @component
+ * @subcategory Governance
+ * @param {*} props t from withTranslation and statsData from governance
+ * @example
+ * const statsData = {}
+ * return (
+ *  <ProposalsList statsData={statsData} />
+ * )
+ */
 function ProposalsList(props) {
   const { t } = props;
   const { user } = useUser();
@@ -15,6 +26,10 @@ function ProposalsList(props) {
   const [proposals, setProposals] = useState([]);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
+  /**
+   * Function to fetch the proposals from the API
+   * @function 
+   */
   const loadProposals = useCallback(async () => {
     try {
       const response = await list(cancelSource.token);
@@ -32,6 +47,10 @@ function ProposalsList(props) {
     }
   }, [cancelSource]);
 
+  /**
+   * Function to fetch the userInfo from the API
+   * @function
+   */
   const loadUserInfo = useCallback(async () => {
     if (user) {
       try {
@@ -45,6 +64,10 @@ function ProposalsList(props) {
     }
   }, [user, cancelSource]);
 
+  /**
+   * UseEffect that triggers the loadProposals and loadUserInfo functions, at the component's dismount cancel all the requests
+   * @function
+   */
   useEffect(() => {
     loadProposals();
     loadUserInfo();

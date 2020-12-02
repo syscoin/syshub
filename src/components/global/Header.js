@@ -7,6 +7,7 @@ import { useUser } from "../../context/user-context";
 /**
  * Component that shows the Header alongside with the navbar
  * @component
+ * @subcategory Global
  * @param {*} props the T prop comes from withTranslation to use react-i18next
  */
 function Header({t}) {

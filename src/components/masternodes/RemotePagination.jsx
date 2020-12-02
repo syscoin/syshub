@@ -40,6 +40,17 @@ const getColumns = (t) => {
   ];
 };
 
+/**
+ * Component that renders the pagination of masternodes table
+ * @component
+ * @subcategory masternodes
+ * @param {*} props the props sent by masternodeTable
+ * @example
+ * return (
+ *  <RemotePagination  />
+ * )
+ */
+
 const RemotePagination = ({
   data,
   page,

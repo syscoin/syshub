@@ -2,7 +2,23 @@ import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 import SubTitle from '../global/SubTitle';
 
+/**
+ * Component to show the blockchain stats
+ * @component
+ * @subcategory Stats
+ * @param {*} props t from withTranslation and blockchainData from Stats
+ * @example
+ * const blockchainData = {}
+ * return (
+ *  <Blockchain blockchainData={blockchainData} />
+ * )
+ */
 class Blockchain extends Component {
+    /**
+     * To initialize the state
+     * @constructor
+     * @param {*} props 
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -10,6 +26,11 @@ class Blockchain extends Component {
             blockchainData: []
         }
     }
+
+    /**
+     * DidMount to set the state
+     * @function
+     */
     componentDidMount() {
         this.setState({
             dataload: 1,

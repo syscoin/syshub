@@ -10,6 +10,7 @@ import MasternodeTable from "../components/masternodes/MasternodeTable";
 /**
  * Masternodes page that shows at /masternodes
  * @component
+ * @category Pages
  */
 class Masternodes extends Component {
   

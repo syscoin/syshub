@@ -12,6 +12,7 @@ var publicurl=process.env.PUBLIC_URL;
 /**
  * Old setup page 
  * @component
+ * @category Pages
  */
 class Setup extends Component {
     render() {

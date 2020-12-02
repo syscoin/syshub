@@ -2,11 +2,24 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
 
-
 import RemotePagination from "./RemotePagination";
 
-
+/**
+ * Component that renders the masternodes table
+ * @component
+ * @subcategory masternodes
+ * @param {*} props sizePerPage
+ * @example
+ * return (
+ *  <MasternodeTable  />
+ * )
+ */
 class MasternodeTable extends Component {
+  /**
+   * Constructor to initialize the state of the component
+   * @constructor
+   * @param {*} props props received
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,21 +34,39 @@ class MasternodeTable extends Component {
     this.onSizeChange = this.onSizeChange.bind(this);
     this.changeFieldOrder = this.changeFieldOrder.bind(this);
   }
+
+  /**
+   * Didmount to loadData
+   * @function
+   */
   componentDidMount() {
     this._isMounted = true;
     this.loadData();
   }
+  /**
+   * Unmount to cancel all requests
+   * @function
+   */
   componentWillUnmount() {
     this._isMounted = false;
     this.source.cancel('Request has been canceled')
   }
+  /**
+   * Function that takes the value of the searh input and refetch LoadData
+   * @param {*} e search input
+   */
   searchInTable(e) {
     this.loadData(e.target.value);
   }
+
+  /**
+   * Function that resets the value of the input and refetch loadData
+   */
   resetSearch() {
     document.getElementById("srcVal").value = "";
     this.loadData();
   }
+  
   handleTableChange = (type, { page, sizePerPage }) => {
     this.setState({
       dataload: 0,
@@ -43,13 +74,23 @@ class MasternodeTable extends Component {
     var src = document.getElementById("srcVal").value;
     this.loadData(src, page, sizePerPage);
   };
-  changeFieldOrder(field, order) {}
+
+  changeFieldOrder(field, order) { }
+  
   onSizeChange(e) {
     var size = e.target.value;
     var pagenum = this.state.page;
     var src = document.getElementById("srcVal").value;
     this.loadData(src, pagenum, size);
   }
+
+  /**
+   * Function that fetch the masternodes data from the API
+   * @function
+   * @param {*} srcData 
+   * @param {*} page 
+   * @param {*} sizePerPage 
+   */
   async loadData(srcData, page, sizePerPage) {
     var postData = {
       page: this.state.page,

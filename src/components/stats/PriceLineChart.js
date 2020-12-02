@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { withTranslation } from "react-i18next";
 
-export class PriceLineChart extends Component {
+/**
+ * Old price line chart component, currently not in use
+ * @subcategory Stats
+ * @component
+ * 
+ */
+class PriceLineChart extends Component {
     render() {
         const { t } = this.props;
         return(

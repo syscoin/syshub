@@ -10,6 +10,17 @@ const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
+/**
+ * Component that renders the form to submit the SMS code to be verified
+ * @component
+ * @subcategory login
+ * @param {*} userSignInSms function executed after submitting the code
+ * @example 
+ * const userSignInSms = () => {}
+ * return (
+ *  <SMSTwoFAFormLogin userSignInSms={userSignInSms} />
+ * )
+ */
 const SMSTwoFAFormLogin = ({userSignInSms}) => {
   const {firebase} = useUser();
   const {register, handleSubmit, errors} = useForm({
