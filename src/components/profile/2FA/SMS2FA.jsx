@@ -4,12 +4,24 @@ import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 
-
 const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-const SMSTwoFAFormLogin = ({userSignInSms, recaptchaVerified}) => {
+/**
+ * Component to show in the 2faModal component to verificate 2fa
+ * @component
+ * @subcategory Profile
+ * @param {*} userSignInSms callback to verificate the code
+ * @param {boolean} recaptchaVerified flag of recaptcha is verified
+ * @example
+ * const userSignInSms = () => {}
+ * const recaptchaVerified = true
+ * return (
+ *  <SMSTwoFA userSignInSms={userSignInSms} recaptchaVerified={recaptchaVerified} />
+ * )
+ */
+const SMSTwoFA = ({userSignInSms, recaptchaVerified}) => {
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -55,4 +67,4 @@ const SMSTwoFAFormLogin = ({userSignInSms, recaptchaVerified}) => {
   )
 }
 
-export default SMSTwoFAFormLogin;
+export default SMSTwoFA;

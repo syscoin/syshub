@@ -13,6 +13,23 @@ const schema = yup.object().shape({
   privateKey: yup.string().required('private key is required')
 });
 
+/**
+ * Component to show a single masternode form
+ * @component
+ * @subcategory Profile
+ * @param {*} onEdit callback to edit the masternode 
+ * @param {*} onRemove callback to remove the masternode 
+ * @param {Object} masternode masternode info to show
+ * @param {number} index index of the mn on the array
+ * @example
+ * const onEdit = () => {}
+ * const onRemove = () => {}
+ * const masternode = {}
+ * const index = 0
+ * return (
+ *  <UserMN onEdit={onEdit} onRemove={onRemove} masternode={masternode} index={index} />
+ * )
+ */
 function UserMN({ onEdit, onRemove, masternode, index }) {
   const [editting, setEditting] = useState(false);
   const [show, setShow] = useState(false);
@@ -26,24 +43,46 @@ function UserMN({ onEdit, onRemove, masternode, index }) {
     resolver: yupResolver(schema)
   });
 
+  /**
+   * function to submit the form data
+   * @function
+   * @param {Object} data data from the input to edit the masternode
+   */
   function formSubmit(data) {
     onEdit(masternode.uid, data);
     toggleEdition();
   }
+
+  /**
+   * function to cancel the edition of the masternode
+   * @function
+   */
   function cancelEdition() {
     toggleEdition();
     resetForm();
   }
 
+  /**
+   * function to toggle the edition
+   * @function
+   */
   function toggleEdition() {
     setEditting(!editting);
     if (!show) toggleShow();
   }
   
+  /**
+   * function to toggle the show inputs
+   * @function
+   */
   function toggleShow() {
     setShow(!show);
   }
 
+  /**
+   * function to remove the masternode
+   * @function
+   */
   function removeMN() {
     onRemove(masternode.uid);
   }
@@ -105,4 +144,4 @@ function UserMN({ onEdit, onRemove, masternode, index }) {
   )
 }
 
-export default UserMN
+export default UserMN;

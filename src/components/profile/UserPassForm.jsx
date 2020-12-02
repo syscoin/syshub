@@ -15,7 +15,16 @@ const schema = yup.object().shape({
   confirmPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords does not match').required('You have to confirm your password')
 });
 
-export default function UserPassForm() {
+/**
+ * Component to change the password of the user at profile
+ * @component
+ * @subcategory Profile
+ * @example
+ * return (
+ *  <UserPassForm />
+ * )
+ */
+function UserPassForm() {
   const { changePassword, logoutUser } = useUser();
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
@@ -24,6 +33,11 @@ export default function UserPassForm() {
 
   const [submitting, setSubmitting] = useState(false);
 
+  /**
+   * function to change the password using the API
+   * @function
+   * @param {Object} data data from the change password form
+   */
   async function passwordChange(data) {
     setSubmitting(true);
     try {
@@ -43,9 +57,6 @@ export default function UserPassForm() {
       Swal.fire({ title: error, icon: 'error' });
       setSubmitting(false);
     }
-
-
-
   }
 
   return (
@@ -104,3 +115,5 @@ export default function UserPassForm() {
     </div>
   );
 }
+
+export default UserPassForm;

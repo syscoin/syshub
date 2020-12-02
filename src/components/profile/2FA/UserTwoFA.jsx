@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import CustomModal from '../../global/CustomModal';
 
-
 import {useUser} from "../../../context/user-context";
 import GAuthForm from './GAuthForm';
 import SMS2FAForm from './SMS2FAForm';
@@ -10,7 +9,19 @@ import PreviousPhoneForm from './PreviousPhoneForm';
 
 // import { updateUser } from "../../utils/request";
 
-
+/**
+ * Component to show the TwoFA info at profile
+ * @component
+ * @subcategory Profile
+ * @param {Object} props authData, onTwoFAChange, userPhone
+ * @example
+ * const authData = {}
+ * const onTwoFAChange = () => {}
+ * const userPhone = ''
+ * return (
+ *  <UserMasternodes authData={authData} onTwoFAChange={onTwoFAChange} userPhone={userPhone} />
+ * )
+ */
 function UserTwoFA({authData, onTwoFAChange, userPhone}) {
   const { firebase, updateCurrentActionsUser, logoutUser } = useUser();
   const [openSMS, setOpenSMS] = useState(false);
@@ -26,9 +37,18 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
     })
   } */
 
+  /**
+   * to disable the sms verification
+   * @function
+   */
   const disableSMS = async () => {
     await removePhoneNumberProvider();
   }
+
+  /**
+   * to remove the phone number provider from firebase
+   * @function
+   */
   const removePhoneNumberProvider = async () => {
     const result = await swal.fire({
       icon: 'warning',
@@ -90,6 +110,10 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
   } */
 
+  /**
+   * to remove the secret of google authenticator
+   * @function
+   */
   const removeSecret = async () => {
     const result = await swal.fire({
       title: 'Your google auth secret will be removed',
@@ -127,18 +151,32 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
   }
   
+  /**
+   * to close the 2fa modal and logout
+   * @function
+   */
   const closeGauthAndLogout = async () => {
     setOpenGAuth(false);
     await setTimeout(() => {
       logoutUser();
     }, 1000);
   }
+
+  /**
+   * to close the 2fa modal and logout
+   * @function
+   */
   const closeSMSAndLogout = async () => {
     setOpenSMS(false);
     await setTimeout(() => {
       logoutUser();
     }, 1000);
   }
+
+  /**
+   * to close the 2fa modal and logout
+   * @function
+   */
   const closePreviousPhoneAndLogout = async () => {
     setOpenPrevPhone(false);
     await setTimeout(() => {

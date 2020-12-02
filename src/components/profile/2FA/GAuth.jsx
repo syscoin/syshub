@@ -9,7 +9,19 @@ const schema = yup.object().shape({
   gAuthCode: yup.string().required("The verification code is required"),
 });
 
-const GAuthTwoFAFormLogin = ({userSignInGAuth, recaptchaVerified}) => {
+/**
+ * Component to show in the 2faModal component to verificate 2fa
+ * @component
+ * @subcategory Profile
+ * @param {*} userSignInGAuth callback to verificate the code
+ * @param {boolean} [recaptchaVerified] flag of recaptcha is verified
+ * @example
+ * const userSignInGAuth = () => {}
+ * return (
+ *  <GAuthTwoFA userSignInGAuth={userSignInGAuth} />
+ * )
+ */
+const GAuthTwoFA = ({userSignInGAuth, recaptchaVerified}) => {
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
@@ -52,4 +64,4 @@ const GAuthTwoFAFormLogin = ({userSignInGAuth, recaptchaVerified}) => {
   )
 }
 
-export default GAuthTwoFAFormLogin;
+export default GAuthTwoFA;

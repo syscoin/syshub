@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
-import {yupResolver} from "@hookform/resolvers";
-import * as yup from "yup";
 import swal from "sweetalert2";
-import {CopyToClipboard} from "react-copy-to-clipboard";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
+
 import {
   getAuthQrCode,
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
-import {useUser} from "../../../context/user-context";
-import {encryptAes} from "../../../utils/encryption";
+import { useUser } from "../../../context/user-context";
+import { encryptAes } from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
@@ -21,7 +22,18 @@ const schema = yup.object().shape({
     .max(6, "Must be 6 digits")
 });
 
-export default function GAuthForm({ onClose }) {
+/**
+ * Component to show inside 2fa modal to activate gauth
+ * @component
+ * @subcategory Profile
+ * @param {*} onClose function to close after the verification 
+ * @example
+ * const onClose = () => {}
+ * return (
+ *  <GAuthForm onClose={onClose} />
+ * )
+ */
+function GAuthForm({ onClose }) {
   const {firebase, user, updateCurrentActionsUser} = useUser();
   const [QRCode, setQRCode] = useState(null);
 
@@ -30,6 +42,10 @@ export default function GAuthForm({ onClose }) {
     resolver: yupResolver(schema),
   });
 
+  /**
+   * UseEffect to set the qrcode and secret and to show it at mount
+   * @function
+   */
   useEffect(() => {
     const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode(user.data.email);
     setQRCode({secret, gAuthSecret, qrCodeURL});
@@ -46,6 +62,11 @@ export default function GAuthForm({ onClose }) {
     // eslint-disable-next-line
   }, []);
 
+  /**
+   * function to verificate the code from google authenticator
+   * @function
+   * @param {{verificationCode: string}} verificationCode code from the input to verificate google authenticator
+   */
   const verifyCode = async ({verificationCode}) => {
     swal.fire({
       title: 'Verifying',
@@ -89,6 +110,10 @@ export default function GAuthForm({ onClose }) {
     }
   };
 
+  /**
+   * function to copy the secret of gauth
+   * @function
+   */
   const copySecret = () => {
     swal.fire({
       icon: "success",
@@ -227,3 +252,5 @@ export default function GAuthForm({ onClose }) {
     </>
   );
 }
+
+export default GAuthForm;

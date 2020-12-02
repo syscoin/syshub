@@ -1,13 +1,31 @@
 import React from "react";
-
 import swal from "sweetalert2";
 
 import { useUser } from "../../../context/user-context";
 
-
-export default function PreviousPhoneForm({ userPhone, openChangePhone, onClose }) {
+/**
+ * Component to show inside the 2fa modal to activate previous phone number
+ * @component
+ * @subcategory Profile
+ * @param {string} userPhone user phone
+ * @param {*} openChangePhone function to open the change phone modal
+ * @param {*} onClose function to close the modal after verification
+ * 
+ * @example
+ * const userPhone = ''
+ * const openChangePhone = () => {}
+ * const onClose = () => {}
+ * return (
+ *  <PreviousPhoneForm userPhone={userPhone} openChangePhone={openChangePhone} onClose={onClose} />
+ * )
+ */
+function PreviousPhoneForm({ userPhone, openChangePhone, onClose }) {
   const { updateCurrentActionsUser } = useUser();
 
+  /**
+   * function to enable the previous phone number using the apí
+   * @function
+   */
   const enablePhone = async () => {
     try {
       let currentUserDataUpdate = {
@@ -72,3 +90,5 @@ export default function PreviousPhoneForm({ userPhone, openChangePhone, onClose 
   );
   
 }
+
+export default PreviousPhoneForm;

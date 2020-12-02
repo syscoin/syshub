@@ -3,12 +3,12 @@ import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
+import swal from "sweetalert2";
 import {PhoneNumberFormat, PhoneNumberUtil} from "google-libphonenumber";
 
 import {useUser} from "../../../context/user-context";
 import {isoArray} from "../../../utils/isoCodes";
 import {phoneValidation} from "../../../utils/phoneUtil";
-import swal from "sweetalert2";
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -21,15 +21,28 @@ const schema2 = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
 });
 
-export default function SMS2FAForm({ onClose }) {
+/**
+ * Component to show inside 2fa modal to activate sms verification
+ * @component
+ * @subcategory Profile
+ * @param {*} onClose function to close after the verification 
+ * @example
+ * const onClose = () => {}
+ * return (
+ *  <SMS2FAForm onClose={onClose} />
+ * )
+ */
+function SMS2FAForm({ onClose }) {
   const {firebase, updateCurrentActionsUser} = useUser();
 
   const [codeSent, setCodeSent] = useState(false);
   const [verifyId, setVerifyId] = useState("");
+
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
+
   const {
     register: register2,
     handleSubmit: handleSubmit2,
@@ -38,10 +51,15 @@ export default function SMS2FAForm({ onClose }) {
     mode: "onSubmit",
     resolver: yupResolver(schema2),
   });
+
   const isoOrdened = isoArray.sort((a, b) =>
     a.name.toLowerCase().localeCompare(b.name.toLocaleLowerCase())
   );
 
+  /**
+   * useEffect to render the invisible recaptcha at mount
+   * @function
+   */
   useEffect(() => {
     window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
       size: "invisible",
@@ -56,6 +74,11 @@ export default function SMS2FAForm({ onClose }) {
     //eslint-disable-next-line
   }, []);
 
+  /**
+   * function to send the sms
+   * @function
+   * @param {{areaCode: string, phoneNumber: string}} data data received from the phone number form
+   */
   const sendSMS = async ({areaCode, phoneNumber}) => {
     const userPhone = phoneValidation(phoneNumber, areaCode);
     if (userPhone) {
@@ -80,9 +103,13 @@ export default function SMS2FAForm({ onClose }) {
       setVerifyId(verificationId);
       setCodeSent(true);
     }
-
   };
 
+  /**
+   * function to verificate the code sent via sms
+   * @function
+   * @param {{phoneCode: string}} data phone code received from the phone code input form 
+   */
   const auth = async ({ phoneCode }) => {
     swal.fire({
       title: 'Verifying',
@@ -230,3 +257,5 @@ export default function SMS2FAForm({ onClose }) {
   );
 
 }
+
+export default SMS2FAForm;

@@ -12,8 +12,16 @@ import UserMN from './UserMN';
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "./2FA/Modal2FA";
 
-
-function UserMasternodes(props) {
+/**
+ * Component to show the user masternodes at profile
+ * @component
+ * @subcategory Profile
+ * @example
+ * return (
+ *  <UserMasternodes />
+ * )
+ */
+function UserMasternodes() {
   const { user } = useUser();
   const { url } = useRouteMatch();
   const [masternodes, setMasternodes] = useState([]);
@@ -24,13 +32,17 @@ function UserMasternodes(props) {
   const [open2FAModal, setOpen2FAModal] = useState(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-
+  /**
+   * function that loads the user masternodes from the API
+   * @function
+   */
   const loadMasternodes = useCallback(async () => {
     try {
       setIsFetching(true);
       const {data} = await getUserMasterNodes({cancelToken: cancelSource.token});
 
       if (data) {
+        console.log(data)
         setMasternodes(data.nodes);
         setIsFetching(false);
       }
@@ -40,6 +52,10 @@ function UserMasternodes(props) {
     }
   }, [cancelSource]);
   
+  /**
+   * useEffect that loads the masternodes at mounting and cancel the request at unmounting
+   * @function
+   */
   useEffect(() => {
     loadMasternodes();
     return () => {
@@ -47,9 +63,13 @@ function UserMasternodes(props) {
     }
   }, [loadMasternodes, cancelSource]);
 
-  
+  /**
+   * function that edits the user masternodes and updates it in the api
+   * @function
+   * @param {string} uid uid of the masternode to edit
+   * @param {Object} data from the edit mn input
+   */
   const editMN = async (uid, data) => {
-
     try {
       const response = await updateMasterNode( uid, {data: data});
       if (response.data) {
@@ -62,11 +82,20 @@ function UserMasternodes(props) {
         loadMasternodes();
       }  
     } catch (error) {
+      swal.fire({
+        icon: "error",
+        title: "The masternode couldn't update, please try again",
+        text: error.message
+      });
       console.log(error);
     }
-
   }
 
+  /**
+   * function that checks if there is 2fa to remove an masternode and proceeds to open the 2fa modal
+   * @function
+   * @param {string} uid uid of the masternode to remove
+   */
   const removeMN = async (uid) => {
     const result = await swal.fire({
       icon: 'warning',
@@ -92,16 +121,28 @@ function UserMasternodes(props) {
       }
       catch (error) {
         swal.fire({
-          title: 'There was an error',
           icon: 'error',
+          title: 'There was an error',
           text: error.message,
         });
       }
     }
   }
 
+  /**
+   * function to remove the masternode from the user masternodes list
+   * @function
+   * @param {string} [uid] uid of the masternode to remove (optional)
+   */
   const deleteMasternodeAfterVerification = async (uid = null) => {
     setOpen2FAModal(false);
+    swal.fire({
+      title: 'Deleting masternode',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     const masternodeToRemove = uid || masternodeToDelete;
     try {
       await destroyMasterNode(masternodeToRemove).catch(err => {

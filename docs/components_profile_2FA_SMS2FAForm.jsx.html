@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/profile/2FA/SMS2FAForm.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Sysnode Doc</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components / Profile</h3><ul><li><a href="AddMasternodes.html">AddMasternodes</a></li><li><a href="AddMNForm.html">AddMNForm</a></li><li><a href="GAuthForm.html">GAuthForm</a></li><li><a href="GAuthTwoFA.html">GAuthTwoFA</a></li><li><a href="Modal2FA.html">Modal2FA</a></li><li><a href="PreviousPhoneForm.html">PreviousPhoneForm</a></li><li><a href="SMS2FAForm.html">SMS2FAForm</a></li><li><a href="SMSTwoFA.html">SMSTwoFA</a></li><li><a href="UserDelete.html">UserDelete</a></li><li><a href="UserInfo.html">UserInfo</a></li><li><a href="UserMasternodes.html">UserMasternodes</a></li><li><a href="UserMN.html">UserMN</a></li><li><a href="UserPassForm.html">UserPassForm</a></li><li><a href="UserTwoFA.html">UserTwoFA</a></li></ul><h3>Components / Global</h3><ul><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Header.html">Header</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="module.exports.html">exports</a></li><li><a href="PrivateRoute.html">PrivateRoute</a></li><li><a href="PublicRoute.html">PublicRoute</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li></ul><h3>Components / Stats</h3><ul><li><a href="Blockchain.html">Blockchain</a></li><li><a href="Doughnut.html">Doughnut</a></li><li><a href="Income.html">Income</a></li><li><a href="Investment.html">Investment</a></li><li><a href="LinearChart.html">LinearChart</a></li><li><a href="Price.html">Price</a></li><li><a href="PriceLineChart.html">PriceLineChart</a></li><li><a href="StatsShow.html">StatsShow</a></li><li><a href="WorldMap.html">WorldMap</a></li></ul><h3>Components / Proposal</h3><ul><li><a href="DescriptionProposal.html">DescriptionProposal</a></li><li><a href="PaymentProposal.html">PaymentProposal</a></li><li><a href="ProposalForm.html">ProposalForm</a></li><li><a href="ProposalPreview.html">ProposalPreview</a></li><li><a href="TitleProposal.html">TitleProposal</a></li></ul><h3>Components / recover</h3><ul><li><a href="FormRecover.html">FormRecover</a></li></ul><h3>Components / login</h3><ul><li><a href="GAuthTwoFAFormLogin.html">GAuthTwoFAFormLogin</a></li><li><a href="LoginForm.html">LoginForm</a></li><li><a href="SMSTwoFAFormLogin.html">SMSTwoFAFormLogin</a></li></ul><h3>Components / Governance</h3><ul><li><a href="Govdetails.html">Govdetails</a></li><li><a href="GovList.html">GovList</a></li><li><a href="GovListRow.html">GovListRow</a></li><li><a href="MnItem.html">MnItem</a></li><li><a href="MnList.html">MnList</a></li><li><a href="ProposalCard.html">ProposalCard</a></li><li><a href="ProposalCardInfo.html">ProposalCardInfo</a></li><li><a href="ProposalsList.html">ProposalsList</a></li><li><a href="SuperBlocks.html">SuperBlocks</a></li></ul><h3>Components / Home</h3><ul><li><a href="HomeButtons.html">HomeButtons</a></li></ul><h3>Components / masternodes</h3><ul><li><a href="MasternodeTable.html">MasternodeTable</a></li><li><a href="RemotePagination.html">RemotePagination</a></li></ul><h3>Components / signup</h3><ul><li><a href="SignupForm.html">SignupForm</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li></ul></div><div class="category"><h2>App</h2><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li></ul></div><div class="category"><h2>Pages</h2><h3>Components</h3><ul><li><a href="About.html">About</a></li><li><a href="Error.html">Error</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Home.html">Home</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/profile/2FA/SMS2FAForm.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState, useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {yupResolver} from "@hookform/resolvers";
+import * as yup from "yup";
+import swal from "sweetalert2";
+import {PhoneNumberFormat, PhoneNumberUtil} from "google-libphonenumber";
+
+import {useUser} from "../../../context/user-context";
+import {isoArray} from "../../../utils/isoCodes";
+import {phoneValidation} from "../../../utils/phoneUtil";
+
+const PNF = PhoneNumberFormat;
+const phoneUtil = PhoneNumberUtil.getInstance();
+
+const schema = yup.object().shape({
+  phoneNumber: yup.string().required("Phone number is required"),
+  areaCode: yup.string().required("Country Code is required"),
+});
+const schema2 = yup.object().shape({
+  phoneCode: yup.string().required("The verification code is required"),
+});
+
+/**
+ * Component to show inside 2fa modal to activate sms verification
+ * @component
+ * @subcategory Profile
+ * @param {*} onClose function to close after the verification 
+ * @example
+ * const onClose = () => {}
+ * return (
+ *  &lt;SMS2FAForm onClose={onClose} />
+ * )
+ */
+function SMS2FAForm({ onClose }) {
+  const {firebase, updateCurrentActionsUser} = useUser();
+
+  const [codeSent, setCodeSent] = useState(false);
+  const [verifyId, setVerifyId] = useState("");
+
+  const {register, handleSubmit, errors} = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(schema),
+  });
+
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    errors: errors2,
+  } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(schema2),
+  });
+
+  const isoOrdened = isoArray.sort((a, b) =>
+    a.name.toLowerCase().localeCompare(b.name.toLocaleLowerCase())
+  );
+
+  /**
+   * useEffect to render the invisible recaptcha at mount
+   * @function
+   */
+  useEffect(() => {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+      size: "invisible",
+      callback: (resp) => {
+        console.log(resp);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    window.recaptchaVerifier.render();
+    //eslint-disable-next-line
+  }, []);
+
+  /**
+   * function to send the sms
+   * @function
+   * @param {{areaCode: string, phoneNumber: string}} data data received from the phone number form
+   */
+  const sendSMS = async ({areaCode, phoneNumber}) => {
+    const userPhone = phoneValidation(phoneNumber, areaCode);
+    if (userPhone) {
+      swal.fire({
+        title: 'Sending SMS',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      })
+
+      const appVerifier = window.recaptchaVerifier;
+      const verificationId = await firebase.sendSMSToPhone(
+        phoneUtil.format(userPhone, PNF.E164),
+        appVerifier
+      );
+      swal.fire({
+        title: 'SMS sent!',
+        timer: 1500,
+        icon: 'success'
+      });
+      setVerifyId(verificationId);
+      setCodeSent(true);
+    }
+  };
+
+  /**
+   * function to verificate the code sent via sms
+   * @function
+   * @param {{phoneCode: string}} data phone code received from the phone code input form 
+   */
+  const auth = async ({ phoneCode }) => {
+    swal.fire({
+      title: 'Verifying',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    })
+    let credentials = await firebase.verifyPhoneCode(verifyId, phoneCode);
+    await firebase
+      .updatePhoneCredentials(credentials)
+      .then(async () => {
+        let currentUserDataUpdate = {
+          sms: true,
+          twoFa: true,
+          gAuth: false
+        };
+        await updateCurrentActionsUser(currentUserDataUpdate).then(async () => {
+          await swal.fire({
+            icon: "success",
+            title: "Your phone number was verified",
+            text: "Please log in again",
+            timer: 1500,
+            showConfirmButton: false
+          }).then(async () => {
+            onClose();
+          })
+
+        }).catch((err) => {
+          throw err;
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
+    // SMSAuth({phoneNumber, ...data});
+  };
+
+
+  return (
+    &lt;>
+      &lt;h3>2FA SMS&lt;/h3>
+
+      &lt;div className="input-form">
+        &lt;form>
+          &lt;div className="form-group">
+            &lt;label htmlFor="areaCode">Country Code&lt;/label>
+            &lt;select
+              className="styled"
+              name="areaCode"
+              id="areaCode"
+              ref={register}
+              defaultValue=""
+            >
+              &lt;option value="" hidden>
+                Select your country
+              &lt;/option>
+              {isoOrdened.map((iso, index) => (
+                &lt;option key={index} value={iso.code}>
+                  {iso.name} ({iso.dial_code})
+                &lt;/option>
+              ))}
+            &lt;/select>
+            &lt;ErrorMessage
+              errors={errors}
+              name="areaCode"
+              render={({message}) => (
+                &lt;small>
+                  &lt;p style={{lineHeight: "1.5"}}>{message}&lt;/p>
+                &lt;/small>
+              )}
+            />
+          &lt;/div>
+          &lt;div className="form-group">
+            &lt;label htmlFor="phoneNumber">Phone Number&lt;/label>
+            &lt;input
+              className="styled"
+              name="phoneNumber"
+              type="tel"
+              id="phoneNumber"
+              ref={register}
+            />
+            &lt;ErrorMessage
+              errors={errors}
+              name="phoneNumber"
+              render={({message}) => (
+                &lt;small>
+                  &lt;p style={{lineHeight: "1.5"}}>{message}&lt;/p>
+                &lt;/small>
+              )}
+            />
+          &lt;/div>
+
+          &lt;div
+            id={"recaptcha"}
+            className="recaptcha"
+            style={{display: "inline-block"}}
+          />
+
+          &lt;button
+            className="btn btn--blue btn-center"
+            onClick={handleSubmit(sendSMS)}
+          >
+            Send SMS
+          &lt;/button>
+        &lt;/form>
+        &lt;div className="form-group spacer line">&lt;/div>
+      &lt;/div>
+
+      &lt;div className="input-form">
+        &lt;form>
+          &lt;div className="form-group">
+            &lt;label htmlFor="phoneCode">
+              Insert the code sent to your phone
+            &lt;/label>
+            &lt;input
+              className="styled"
+              name="phoneCode"
+              type="text"
+              id="phoneCode"
+              ref={register2}
+              disabled={!codeSent}
+            />
+            &lt;ErrorMessage
+              errors={errors2}
+              name="phoneCode"
+              render={({message}) => (
+                &lt;small>
+                  &lt;p style={{lineHeight: "1.5"}}>{message}&lt;/p>
+                &lt;/small>
+              )}
+            />
+          &lt;/div>
+
+          &lt;button
+            className="btn btn--blue btn-center"
+            disabled={!codeSent}
+            onClick={handleSubmit2(auth)}
+          >
+            Verify
+          &lt;/button>
+        &lt;/form>
+      &lt;/div>
+    &lt;/>
+  );
+
+}
+
+export default SMS2FAForm;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

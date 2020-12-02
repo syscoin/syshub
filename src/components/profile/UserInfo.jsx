@@ -1,17 +1,31 @@
 import React, {useState, useEffect, useCallback, useMemo} from "react";
+import swal from 'sweetalert2';
+import axios from "axios";
+
 import {useUser} from "../../context/user-context";
 import {getUserInfo} from "../../utils/request";
 
 import UserPassForm from "./UserPassForm";
 import UserTwoFA from "./2FA/UserTwoFA";
-import swal from 'sweetalert2';
-import axios from "axios";
 
-export default function UserInfo() {
+/**
+ * Component that shows the user information at profile
+ * @component
+ * @subcategory Profile
+ * @example
+ * return (
+ *  <UserInfo />
+ * )
+ */
+function UserInfo() {
   const {firebase, user} = useUser();
   const [userInfo, setUserInfo] = useState(null);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
   
+  /**
+   * function that loads the user info from the api and set it on the state
+   * @function
+   */
   const loadUserInfo = useCallback(async () => {
     try {
       const response = await getUserInfo(user.data.user_id, cancelSource.token);
@@ -23,6 +37,10 @@ export default function UserInfo() {
     }
   }, [user, cancelSource]);
 
+  /**
+   * useEffect that loads the data on mounting and cancel the request when unmounted
+   * @function
+   */
   useEffect(() => {
     loadUserInfo();
     return () => {
@@ -31,6 +49,10 @@ export default function UserInfo() {
   }, [loadUserInfo, cancelSource]);
 
 
+  /**
+   * function to send the verification email
+   * @function
+   */
   const emailVerification = () => {
     firebase.generateLinkVerification().then(() => {
       swal.fire({title: `Sent email to ${user.data.email}`, icon: 'success'});
@@ -39,6 +61,10 @@ export default function UserInfo() {
     })
   }
 
+  /**
+   * function that loads the userinfo after a change
+   * @function
+   */
   const onTwoFAChange = async () => {
     await loadUserInfo();
   }
@@ -84,13 +110,11 @@ export default function UserInfo() {
               onTwoFAChange={onTwoFAChange}
               userPhone={userInfo.phoneNumber || false}
             />
-            )
-            : (
-              <p>Loading...</p>
-            )
+          )
+          : (
+            <p>Loading...</p>
+          )
         }
-
-
         <small>
           <p>
             Note: Enabling 2FA is REQUIRED to vote on proposals. You can only use one (1) 2FA method. Although we recommend using Google Authenticator you can also choose SMS verification.
@@ -100,3 +124,5 @@ export default function UserInfo() {
     </div>
   );
 }
+
+export default UserInfo;

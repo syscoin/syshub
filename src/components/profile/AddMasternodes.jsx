@@ -6,14 +6,34 @@ import { createMasterNode } from '../../utils/request';
 import AddMNForm from './AddMNForm';
 import Title from '../global/Title';
 
-export default function AddMasternodes() {
+/**
+ * Component to show at the profile add masternodes route
+ * @component
+ * @subcategory Profile
+ * @example
+ * return (
+ *  <AddMasternodes />
+ * )
+ */
+function AddMasternodes() {
   const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
 
+  /**
+   * function that handles the single masternode creation
+   * @param {Object} data the data from the single add form
+   */
   const singleCreation = async (data) => {
     setSubmitting(true);
     try {
+      Swal.fire({
+        title: 'Adding masternode',
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading()
+        }
+      });
       await createMasterNode(data).catch(err => { throw err });
       await Swal.fire({
         title: 'masternode created',
@@ -30,9 +50,20 @@ export default function AddMasternodes() {
 
   }
 
+  /**
+   * function that handles the multiple masternode creation
+   * @param {Object} data the data from the multiple add form
+   */
   const multipleCreation = async ({ masternodeConf }) => {
     setSubmitting(true);
     try {
+      Swal.fire({
+        title: 'Adding masternode',
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading()
+        }
+      });
       await createMasterNode( {listMN: masternodeConf}).catch(err => { throw err });
       await Swal.fire({
         title: 'masternode created',
@@ -72,3 +103,5 @@ export default function AddMasternodes() {
     </div>
   )
 }
+
+export default AddMasternodes;

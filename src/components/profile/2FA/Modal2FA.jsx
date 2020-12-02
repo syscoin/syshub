@@ -8,11 +8,32 @@ import {useUser} from '../../../context/user-context';
 import SMS2FA from './SMS2FA';
 import GAuth from './GAuth';
 
-export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
+/**
+ * The modal content when using 2FA
+ * @component
+ * @subcategory Profile
+ * @param {Object} user2fa user's 2fa info
+ * @param {Object} userSignInGAuth secret of gauth
+ * @param {*} onGAuth callback to the gauth verification
+ * @param {*} onPhoneSMS callback to the sms verification
+ * @example
+ * const user2fa = {}
+ * const userSignInGAuth = {}
+ * const onGAuth = () => {}
+ * const onPhoneSMS = () => {}
+ * return (
+ *  <Modal2FA user2fa={user2fa} userSignInGAuth={userSignInGAuth} onGAuth={onGAuth} onPhoneSMS={onPhoneSMS} />
+ * )
+ */
+function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
   const {firebase} = useUser();
   const [phoneProvider, setPhoneProvider] = useState(null);
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
+  /**
+   * useEffect to render the recaptcha when mounts
+   * @function
+   */
   useEffect(() => {
     window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
       size: "invisible",
@@ -37,6 +58,11 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
 
   }, [user2fa, firebase]);
 
+  /**
+   * function used to verify the code sent via sms
+   * @function
+   * @param {string} phoneCode code sent to the phone number in sms verification
+   */
   const verifyPhone = async ({ phoneCode }) => {
     swal.fire({
       title: 'Verifying code',
@@ -69,6 +95,12 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
     }
 
   }
+
+  /**
+   * function used to verify the code from google authenticator
+   * @function
+   * @param {string} gAuthCode code sent via google authenticator
+   */
   const verifyGAuth = async ({gAuthCode}) => {
     swal.fire({
       title: 'Verifying code',
@@ -119,3 +151,5 @@ export default function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}
   )
 
 }
+
+export default Modal2FA;

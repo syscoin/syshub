@@ -15,7 +15,22 @@ const schema2 = yup.object().shape({
   masternodeConf: yup.string().required('Masternode.conf is a required field')
 });
 
-export default function AddMNForm({onSingleCreation, onMultipleCreation, submitting}) {
+/**
+ * Component to show the add masternodes form
+ * @component
+ * @subcategory Profile
+ * @param {*} onSingleCreation function executed when single creation of mn
+ * @param {*} onMultipleCreation function executed when multiple creation of mn
+ * @param {boolean} submitting flag if the data is submitting
+ * @example
+ * const onSingleCreation = () => {}
+ * const onMultipleCreation = () => {}
+ * const submitting = false
+ * return (
+ *  <AddMNForm onSingleCreation={onSingleCreation} onMultipleCreation={onMultipleCreation} submitting={submitting} />
+ * )
+ */
+function AddMNForm({onSingleCreation, onMultipleCreation, submitting}) {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(schema)
@@ -27,10 +42,19 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
   const [showSingle, setShowSingle] = useState(true);
   const [showMulti, setShowMulti] = useState(false);
 
+  /**
+   * function that toggles the multiple add masternodes
+   * @function
+   */
   function toggleMulti() {
     if (showSingle) toggleSingle();
     setShowMulti(!showMulti);
   }
+
+  /**
+   * function that toggles the single add masternodes
+   * @function
+   */
   function toggleSingle() {
     if (showMulti) toggleMulti();
     setShowSingle(!showSingle);
@@ -106,3 +130,5 @@ export default function AddMNForm({onSingleCreation, onMultipleCreation, submitt
     </div>
   )
 }
+
+export default AddMNForm;

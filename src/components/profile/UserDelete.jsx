@@ -6,12 +6,25 @@ import {deleteUser, get2faInfoUser} from '../../utils/request';
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "./2FA/Modal2FA";
 
-export default function UserDelete() {
+/**
+ * Component used to delete the account of the user
+ * @component
+ * @subcategory Profile
+ * @example
+ * return (
+ *  <UserDelete />
+ * )
+ */
+function UserDelete() {
   const {user, logoutUser} = useUser();
   const [userSignInGAuth, setUserSignInGAuth] = useState(null);
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
 
+  /**
+   * function to confirm the deletion of the account and check the 2fa auth to open the modal
+   * @function
+   */
   const verificateDelete = async () => {
     const result = await swal.fire({
       title: 'Your account will be deleted.',
@@ -42,6 +55,10 @@ export default function UserDelete() {
     }
   }
 
+  /**
+   * function to delete the account after the verification
+   * @function
+   */
   const deleteAccountAfter2FA = async () => {
     setOpen2FAModal(false);
     await deleteUser(user.data.user_id).then(async () => {
@@ -87,3 +104,5 @@ export default function UserDelete() {
     </div>
   );
 }
+
+export default UserDelete;
