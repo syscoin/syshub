@@ -15,7 +15,7 @@ const govList = {
         red_text:'This Proposal needs [API] more YES Votes',
         view_proposal_txt:'VIew Proposal'
       },
-      loading: 'Data is being loaded',
+      loading: 'Loading...'
     },
   }
 export default govList;

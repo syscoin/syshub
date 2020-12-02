@@ -94,7 +94,7 @@ function ProposalsList(props) {
         </div>
       }
       {
-        proposals.length === 0 && <p className="text-center">Loading...</p>
+        proposals.length === 0 && <p className="text-center">{t('govlist.loading')}</p>
       }
     </>
   )

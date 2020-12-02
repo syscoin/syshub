@@ -192,7 +192,7 @@ class MasternodeTable extends Component {
       );
     } else {
       return (
-        <p>{t("check.loading")}</p>
+        <p className="text-center">{t("check.loading")}</p>
       );
     }
   }
