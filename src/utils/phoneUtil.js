@@ -3,6 +3,13 @@ import swal from 'sweetalert2'
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
+/**
+ * function to validate the phone number and return a valid google phone number with its isocode
+ * @function
+ * @param {*} phoneNumber the phone number of the user
+ * @param {*} isoCode the iso code of the country
+ * @returns {*} phoneNumber verified or false if is and incorrect phone number
+ */
 export const phoneValidation = (phoneNumber, isoCode) => {
   let userNumber = null;
   if (!phoneNumber || !isoCode) {

@@ -1,3 +1,6 @@
+/**
+ * Array of iso data that has the name of the country, with its codes
+ */
 const isoArray = [
   {
     name: 'Afghanistan',

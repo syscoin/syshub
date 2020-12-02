@@ -235,8 +235,14 @@ reactComponents['UserMN'] = Component69;
 import Component70 from '../src/components/profile/UserPassForm.jsx';
 reactComponents['UserPassForm'] = Component70;
 
-import Component71 from '../src/components/profile/2FA/UserTwoFA.jsx';
-reactComponents['UserTwoFA'] = Component71;
+import Component71 from '../src/context/user-context.jsx';
+reactComponents['UserProvider'] = Component71;
 
-import Component72 from '../src/components/stats/WorldMap.js';
-reactComponents['WorldMap'] = Component72;
+import Component72 from '../src/components/profile/2FA/UserTwoFA.jsx';
+reactComponents['UserTwoFA'] = Component72;
+
+import Component73 from '../src/context/user-context.jsx';
+reactComponents['UserProvider'] = Component73;
+
+import Component74 from '../src/components/stats/WorldMap.js';
+reactComponents['WorldMap'] = Component74;

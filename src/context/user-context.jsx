@@ -8,12 +8,21 @@ import {useHistory} from 'react-router';
 const UserContext = React.createContext();
 export const firebase = new Firebase();
 
-
+/**
+ * The provider of the user context
+ * @component
+ * @category context
+ * @param {*} props props received from the father
+ */
 export function UserProvider(props) {
   const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
 
+  /**
+   * UseEffect to set the user when the provider mounts
+   * @function
+   */
   useEffect(() => {
     async function loadUser() {
       const token = getToken();
@@ -29,6 +38,11 @@ export function UserProvider(props) {
     loadUser();
   }, []);
 
+  /**
+   * function used to signup the user in the app
+   * @function
+   * @param {Object} registerData data used to signup the user
+   */
   const signupUser = async (registerData) => {
     try {
       const response = await firebase.register(registerData);
@@ -47,6 +61,11 @@ export function UserProvider(props) {
 
   }
 
+  /**
+   * function used to login in the app
+   * @function
+   * @param {Object} loginData data received to login in the app
+   */
   const loginUser = async (loginData) => {
     return new Promise((resolve, reject) => {
       firebase.loginWithEmailAndPassword(loginData).then(({user}) => {
@@ -57,6 +76,11 @@ export function UserProvider(props) {
     })
   }
 
+  /**
+   * function used to login the phone number and verify the 2fa sms
+   * @param {string} phone phone number
+   * @param {*} appVerifier the recaptcha to verify with firebase
+   */
   const loginWithPhoneNumber = (phone, appVerifier) => {
     return new Promise((resolve, reject) => {
       firebase.loginWithPhone(phone, appVerifier)
@@ -69,6 +93,11 @@ export function UserProvider(props) {
     })
   }
 
+  /**
+   * To set the user data in the provider at login
+   * @function
+   * @param {*} ya token of the user
+   */
   const setUserDataLogin = ({ya}) => {
     try {
       const decoded = jwtDecode(ya);
@@ -81,6 +110,10 @@ export function UserProvider(props) {
     }
   }
 
+  /**
+   * Function to logout the user from the app
+   * @function
+   */
   async function logoutUser() {
     setUser(null);
     deleteToken();
@@ -89,6 +122,11 @@ export function UserProvider(props) {
     history.go(0);
   }
 
+  /**
+   * function to change the password with firebase
+   * @function
+   * @param {{oldPassword: string, newPassword: string}} data  data to change the password
+   */
   async function changePassword({oldPassword, newPassword}) {
     try {
       await firebase.changePassword(oldPassword, newPassword).catch(err => {
@@ -100,6 +138,12 @@ export function UserProvider(props) {
     }
   }
 
+  /**
+   * function to update the user data and credentials from firebase
+   * @function
+   * @param {string} uid uid of the user to update
+   * @param {Object} data 2fa data to update 
+   */
   const updateCurrentUser = async (uid, data) => {
     try {
       await updateUser(uid, data).catch(err => {
@@ -110,6 +154,11 @@ export function UserProvider(props) {
     }
   }
 
+  /**
+   * function to update the 2fa data from firebase
+   * @function
+   * @param {*} data data of the user
+   */
   const updateCurrentActionsUser = async (data) => {
     try {
       return await updateActionsUser(user.data.user_id, {data: data}).catch(err => {
@@ -120,6 +169,11 @@ export function UserProvider(props) {
     }
   }
 
+  /**
+   * function to remove the user from the database and delete his account
+   * @function
+   * @param {string} uid the user uid to destroy
+   */
   async function destroyUser(uid) {
     try {
       await deleteUser(uid).catch(err => {
@@ -151,6 +205,12 @@ export function UserProvider(props) {
   return <UserContext.Provider value={value} {...props} />
 }
 
+/**
+ * Custom hook to use the user context
+ * @component
+ * @category context
+ * @returns {Object} returns the user context as an object
+ */
 export function useUser() {
   const context = useContext(UserContext);
 

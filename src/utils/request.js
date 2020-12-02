@@ -6,7 +6,13 @@ import {getToken} from "./auth-token";
 // const API_URI = 'http://198.211.117.144:3000'
 const API_URI = process.env.REACT_APP_SYS_API_URI
 
-/** MasterNodes **/
+/* MasterNodes */
+
+/**
+ * get the list of masternodes
+ * @function
+ * @param {*} cancelToken the token used to cancel the request
+ */
 export const list = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/list`, {
@@ -22,6 +28,11 @@ export const list = async (cancelToken) => {
   }
 }
 
+/**
+ * provides information about the current state of the block chain.
+ * @function
+ * @param {*} cancelToken the token used to cancel the request
+ */
 export const getInfo = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getinfo`, {
@@ -37,6 +48,10 @@ export const getInfo = async (cancelToken) => {
   }
 }
 
+/**
+ * provides mining-related information.
+ * @function
+ */
 export const getMiningInfo = async () => {
   try {
     return await axios.get(`${API_URI}/masternode/getmininginfo`, {
@@ -51,6 +66,11 @@ export const getMiningInfo = async () => {
   }
 }
 
+/**
+ * returns an object containing governance parameters.
+ * @function
+ * @param {*} cancelToken the token used to cancel the request
+ */
 export const getGovernanceInfo = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getgovernanceinfo`, {
@@ -66,6 +86,11 @@ export const getGovernanceInfo = async (cancelToken) => {
   }
 }
 
+/**
+ * gets information about superblocks budget
+ * @function
+ * @param {*} cancelToken the token used to cancel the request
+ */
 export const getSuperBlockBudget = async (cancelToken) => {
   try {
     return await axios.get(`${API_URI}/masternode/getsuperblockbudget`, {
@@ -81,11 +106,17 @@ export const getSuperBlockBudget = async (cancelToken) => {
   }
 }
 
+/**
+ * gets one masternode information
+ * @function
+ * @param {*} id the id of the masternode
+ */
 export const getOneMasterNode = async (id) => {
   try {
+    let {token} = getToken()
     return await axios.get(`${API_URI}/masternode/${id}`, {
       headers: {
-        Authorization: `Bearer ${'AQUI EL TOKEN'}`,
+        Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
       }
     }).catch(err => {
@@ -96,6 +127,12 @@ export const getOneMasterNode = async (id) => {
   }
 };
 
+/**
+ * returns a list of the masternodes or one masternode of the user
+ * @function
+ * @param {string} [hash] the hash of the masternode in case of a single search
+ * @param {*} cancelToken the token used to cancel the request
+ */
 export const getUserMasterNodes = async ({hash, cancelToken}) => {
   try {
     await firebase.refreshInRequest()
@@ -117,6 +154,11 @@ export const getUserMasterNodes = async ({hash, cancelToken}) => {
   }
 };
 
+/**
+ * To add a masternode to the user masternodes list
+ * @function
+ * @param {*} data data of the masternode to add
+ */
 export const createMasterNode = async (data) => {
   try {
     await firebase.refreshInRequest()
@@ -134,6 +176,12 @@ export const createMasterNode = async (data) => {
   }
 };
 
+/**
+ * To update a masternode of the user masternodes list
+ * @function
+ * @param {*} id id of the masternode to update
+ * @param {*} data data of the masternode to update
+ */
 export const updateMasterNode = async (id, data) => {
   try {
     await firebase.refreshInRequest()
@@ -151,6 +199,11 @@ export const updateMasterNode = async (id, data) => {
   }
 };
 
+/**
+ * To remove a masternode of the user masternodes list
+ * @function
+ * @param {*} id id of the masternode to remove
+ */
 export const destroyMasterNode = async (id) => {
   try {
     await firebase.refreshInRequest()
@@ -168,6 +221,11 @@ export const destroyMasterNode = async (id) => {
   }
 };
 
+/**
+ * Not used
+ * @param {*} id 
+ * @param {*} data 
+ */
 export const voteIn = async (id, data) => {
   await firebase.refreshInRequest()
   let {token} = getToken()
@@ -186,7 +244,7 @@ export const voteIn = async (id, data) => {
   })
 }
 
-/** Proposal **/
+/* Proposal */
 export const checkProposal = async (data) => {
   try {
     await firebase.refreshInRequest()
@@ -341,7 +399,9 @@ export const destroyProposal = async (id) => {
   }
 }
 
-/** Auth **/
+/* Auth */
+
+
 export const login = async (data) => {
   try {
     return await axios.post(`${API_URI}/auth/login`, data, {
@@ -374,7 +434,7 @@ export const register = async (data) => {
   }
 }
 
-/** User **/
+/* User */
 
 export const getUserInfo = async (id, cancelToken) => {
   await firebase.refreshInRequest()
