@@ -61,7 +61,7 @@ export default class Firebase {
    * @param {string} email email of the user
    */
   passwordReset = async (email) => await this.auth.sendPasswordResetEmail(email, {
-    // url: 'http://198.211.117.144/'
+    url: 'https://syshub-dev.web.app/'
   }).catch(err => {
     throw err
   });
@@ -185,10 +185,10 @@ export default class Firebase {
    * @function
    */
   generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification(
-    //   {
-    //   url: 'https://firebase.google.com/docs/web/setup',
-    //   handleCodeInApp: true
-    //   }
+      {
+      url: 'https://syshub-dev.web.app/',
+      handleCodeInApp: true
+      }
   ).catch(err => {
     throw err
   })

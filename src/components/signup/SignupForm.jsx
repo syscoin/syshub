@@ -32,7 +32,7 @@ const SignupForm = (props) => {
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha-sign-up', {
       callback: () => {
         if (isMounted.current) setRecaptchaVerified(true);
       },
@@ -100,7 +100,7 @@ const SignupForm = (props) => {
         </div>
 
         <div className="input-cont">
-          <div id={'recaptcha'} className="recaptcha" style={{display: 'inline-block'}}/>
+          <div id={'recaptcha-sign-up'} className="recaptcha" style={{display: 'inline-block'}}/>
         </div>
 
         <div className="input-cont">

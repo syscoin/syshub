@@ -30,7 +30,7 @@ const LoginForm = (props) => {
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha-login', {
       callback: () => {
         setRecaptchaVerified(true)
       }, error: (err) => {
@@ -59,7 +59,7 @@ const LoginForm = (props) => {
         />
 
         <div className="input-cont">
-          <div id={'recaptcha'} className="recaptcha" style={{display: 'inline-block'}}></div>
+          <div id={'recaptcha-login'} className="recaptcha" style={{display: 'inline-block'}}></div>
         </div>
 
         <div className="input-cont">

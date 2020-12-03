@@ -17,7 +17,7 @@ const FormRecover = () => {
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha-recover', {
       callback: response => {
         setRecaptchaVerified(true)
       },
@@ -55,7 +55,7 @@ const FormRecover = () => {
       }}/>
 
       <div className="input-cont">
-        <div id={'recaptcha'} style={{display: 'inline-block'}}/>
+        <div id={'recaptcha-recover'} style={{display: 'inline-block'}}/>
       </div>
 
       <div className="input-cont">
