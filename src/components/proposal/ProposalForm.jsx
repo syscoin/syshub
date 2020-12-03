@@ -105,7 +105,7 @@ function ProposalForm() {
    * @param {Object} proposal the saved proposal to show from the API
    */
   const showSavedProposal = (proposal) => {
-    console.log(proposal);
+    // console.log(proposal);
     setTitle(proposal.title);
     setDescription(proposal.description);
     if (proposal.url !== 'emptyField') setUrl(proposal.url);

@@ -50,13 +50,26 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     const getMnByUser = async () => {
       setLoadingMN(true);
       try {
-        let { data } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        let { data, status } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
         .catch((err) => {
           throw err;
         });
         if (data) {
-          setLoadingMN(false);
-          setMasterNodes(data.nodes || []);
+          if (isMounted.current) {
+            setLoadingMN(false);
+            setMasterNodes(data.nodes || []);
+
+          }
+        }
+        else if (status === 204) {
+          if (isMounted.current) { 
+            setLoadingMN(false);
+          }
+        }
+        else {
+          if (isMounted.current) {
+            setLoadingMN(false);
+          }
         }
       } catch (error) {
         console.log(error);
