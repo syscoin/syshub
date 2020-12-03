@@ -186,18 +186,19 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     let stringOfMnYes = masterNodesVote.map(mn => {
       return `<li>${mn.mn}</li>`;
     }).join('');
+    console.log(stringOfMnYes)
     let stringOfMnNo = masterNodesErrorVote.map(mn => {
       return `<li>${mn.mn}. Cause: ${mn.err}</li>`;
     }).join('');
-
+    console.log(stringOfMnNo)
     await swal.fire({
         title: 'Voting results',
-        html: `
-      <p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>
-      <ul style="text-align: start">${stringOfMnYes}</ul>
-      <br/>
-      <p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>
-      <ul style="text-align: start">${stringOfMnNo}</ul>
+      html: `
+        ${stringOfMnYes ? '<p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>' : ''}
+        <ul style="text-align: start">${stringOfMnYes}</ul>
+        <br/>
+        ${stringOfMnNo ? '<p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>' : ''}
+        <ul style="text-align: start">${stringOfMnNo}</ul>
       `
       }
     );
