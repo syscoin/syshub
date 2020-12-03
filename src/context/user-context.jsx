@@ -142,7 +142,7 @@ export function UserProvider(props) {
    * function to update the user data and credentials from firebase
    * @function
    * @param {string} uid uid of the user to update
-   * @param {Object} data 2fa data to update 
+   * @param {Object} data data to update 
    */
   const updateCurrentUser = async (uid, data) => {
     try {

@@ -4,6 +4,11 @@ import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
 import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
 
+/**
+ * function used to sign the vote so it has the data correctly to use in the api
+ * @function
+ * @param {Object} obj data of the voting
+ */
 const signVote = (obj) => {
   // eslint-disable-next-line
   try {

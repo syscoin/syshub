@@ -6,7 +6,7 @@ import {getToken} from "./auth-token";
 // const API_URI = 'http://198.211.117.144:3000'
 const API_URI = process.env.REACT_APP_SYS_API_URI
 
-/* MasterNodes */
+/* MasterNodes and Governance */
 
 /**
  * get the list of masternodes
@@ -244,279 +244,14 @@ export const voteIn = async (id, data) => {
   })
 }
 
-/* Proposal */
-export const checkProposal = async (data) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.post(`${API_URI}/proposal/check`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    throw err
-  }
-};
-
-export const prepareProposal = async (data) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.post(`${API_URI}/proposal/prepare`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    throw err
-  }
-};
-
-export const submitProposal = async (id, data) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.put(`${API_URI}/proposal/submit/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    new Error(err)
-  }
-};
-
-export const voteProposal = async (data) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.post(`${API_URI}/proposal/vote`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).then(resp => {
-      resolve(resp)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-};
-
-export const getOneProposal = async (id) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.get(`${API_URI}/proposal/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    new Error(err)
-  }
-}
-
-export const notCompletedProposal = async (cancelToken) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/proposal/pending/recover`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      },
-      cancelToken: cancelToken
-    }).then(resp => {
-      resolve(resp)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
-export const createProposal = async (data) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.post(`${API_URI}/proposal`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    new Error(err)
-  }
-}
-
-export const updateProposal = async (id, data) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.put(`${API_URI}/proposal/${id}`, {data: data}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    throw err;
-  }
-}
-
-export const destroyProposal = async (id) => {
-  try {
-    await firebase.refreshInRequest()
-    let {token} = getToken()
-    return await axios.delete(`${API_URI}/proposal/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    throw err
-  }
-}
-
-/* Auth */
-
-
-export const login = async (data) => {
-  try {
-    return await axios.post(`${API_URI}/auth/login`, data, {
-      headers: {
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err
-    })
-  } catch (err) {
-    if (err.response) {
-      return {status: err.response.status, error: err.response.data}
-    } else {
-      throw err
-    }
-  }
-}
-
-export const register = async (data) => {
-  try {
-    return await axios.post(`${API_URI}/auth/register`, data, {
-      headers: {
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).catch(err => {
-      throw err;
-    })
-  } catch (err) {
-    throw err;
-  }
-}
-
-/* User */
-
-export const getUserInfo = async (id, cancelToken) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/user/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      },
-      cancelToken: cancelToken
-    }).then(resp => resolve(resp))
-      .catch(err => reject(err))
-  })
-}
-
-export const get2faInfoUser = async (id) => {
-  return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/user/verify2fa/${id}`, {
-      headers: {
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).then(({data}) => {
-      let {user} = data;
-      resolve(user)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
-export const updateUser = async (id, data) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.put(`${API_URI}/user/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).then(resp => {
-      resolve(resp)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
-export const updateActionsUser = async (id, data) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.put(`${API_URI}/user/extend/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).then(resp => {
-      resolve(resp)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
-export const deleteUser = async (id) => {
-  await firebase.refreshInRequest()
-  let {token} = getToken()
-  return new Promise((resolve, reject) => {
-    axios.delete(`${API_URI}/user/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'appclient': process.env.REACT_APP_CLIENT
-      }
-    }).then(resp => {
-      resolve(resp)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
+/**
+ * function to calculate the payment dates of the syscoin governance
+ * @function
+ * @param {*} [nPayment] number of payments
+ * @param {*} startEpoch the epoch of start of the proposal
+ * @param {*} endEpoch the epoch of end of the proposal
+ * @returns {Array} the array of calculated dates
+ */
 export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
   try {
     const dates = [];
@@ -561,6 +296,12 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
   }
 };
 
+/**
+ * function to get the info about next governance reward
+ * @function
+ * @param {*} cancelToken the token to cancel the request
+ * @returns {Object} the next governance reward info
+ */
 export const nextGovernanceRewardInfo = async (cancelToken) => {
   try {
     const date = new Date();
@@ -617,4 +358,362 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
   } catch (err) {
     console.log(err)
   }
+}
+
+/* Proposal */
+
+/**
+ * function that checks if the proposal has all the valid data previous its preparation
+ * @function
+ * @param {Object} data data of the proposal to check in the api
+ */
+export const checkProposal = async (data) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.post(`${API_URI}/proposal/check`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    throw err
+  }
+};
+
+/**
+ * function to request the creation of the prepare command of the proposal
+ * @function
+ * @param {Object} data the proposal previously checked and valid
+ */
+export const prepareProposal = async (data) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.post(`${API_URI}/proposal/prepare`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    throw err
+  }
+};
+
+/**
+ * function to submit the proposal
+ * @function
+ * @param {string} id id of the proposal
+ * @param {Object} data data of the proposal
+ */
+export const submitProposal = async (id, data) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.put(`${API_URI}/proposal/submit/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    new Error(err)
+  }
+};
+
+/**
+ * function to vote in a proposal
+ * @function
+ * @param {*} data 
+ */
+export const voteProposal = async (data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/proposal/vote`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+};
+
+/**
+ * function to obtain a single proposal from the api
+ * @function
+ * @param {string} id id of the single proposal
+ */
+export const getOneProposal = async (id) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.get(`${API_URI}/proposal/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    new Error(err)
+  }
+}
+
+/**
+ * function to check if the user has a not completed proposal in the database
+ * @function
+ * @param {*} cancelToken cancel token of the request
+ */
+export const notCompletedProposal = async (cancelToken) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/proposal/pending/recover`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * function to create a proposal
+ * @function
+ * @param {Object} data data of the proposal
+ */
+export const createProposal = async (data) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.post(`${API_URI}/proposal`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    new Error(err)
+  }
+}
+
+/**
+ * function to update a proposal with new data
+ * @function
+ * @param {string} id id of the proposal
+ * @param {Object} data data of the proposal 
+ */
+export const updateProposal = async (id, data) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.put(`${API_URI}/proposal/${id}`, {data: data}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * function to delete a proposal from the database
+ * @function
+ * @param {string} id id of the proposal
+ */
+export const destroyProposal = async (id) => {
+  try {
+    await firebase.refreshInRequest()
+    let {token} = getToken()
+    return await axios.delete(`${API_URI}/proposal/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
+/* Auth */
+
+/**
+ * function to login in the app
+ * @function
+ * @param {Object} data data of the user to log in
+ */
+export const login = async (data) => {
+  try {
+    return await axios.post(`${API_URI}/auth/login`, data, {
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    if (err.response) {
+      return {status: err.response.status, error: err.response.data}
+    } else {
+      throw err
+    }
+  }
+}
+
+/**
+ * function to sign up a new user
+ * @function
+ * @param {Object} data data of the new user to sign up
+ */
+export const register = async (data) => {
+  try {
+    return await axios.post(`${API_URI}/auth/register`, data, {
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).catch(err => {
+      throw err;
+    })
+  } catch (err) {
+    throw err;
+  }
+}
+
+/* User */
+
+/**
+ * function that request the user info from the api
+ * @function
+ * @param {string} id id of the user
+ * @param {*} cancelToken the cancelation token
+ */
+export const getUserInfo = async (id, cancelToken) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+/**
+ * function that gets the two factor authorization info of the user from the api
+ * @function
+ * @param {string} id id of the user
+ */
+export const get2faInfoUser = async (id) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/user/verify2fa/${id}`, {
+      headers: {
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(({data}) => {
+      let {user} = data;
+      resolve(user)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * request to update the user data and credentials
+ * @function
+ * @param {string} uid uid of the user to update
+ * @param {Object} data data to update 
+ */
+export const updateUser = async (id, data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.put(`${API_URI}/user/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * request to update the two factor authorization data
+ * @function
+ * @param {string} id id of the user
+ * @param {*} data data of the user
+ */
+export const updateActionsUser = async (id, data) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.put(`${API_URI}/user/extend/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * function to remove the user from the database and delete his account
+ * @function
+ * @param {string} uid the user uid to delete
+ */
+export const deleteUser = async (id) => {
+  await firebase.refreshInRequest()
+  let {token} = getToken()
+  return new Promise((resolve, reject) => {
+    axios.delete(`${API_URI}/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => {
+      resolve(resp)
+    }).catch(err => {
+      reject(err)
+    })
+  })
 }
