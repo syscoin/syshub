@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import axios from 'axios';
 import { Link, useRouteMatch } from 'react-router-dom';
 import swal from 'sweetalert2';
@@ -31,7 +31,8 @@ function UserMasternodes() {
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
-
+  const isMounted = useRef(false);
+  
   /**
    * function that loads the user masternodes from the API
    * @function
@@ -39,16 +40,27 @@ function UserMasternodes() {
   const loadMasternodes = useCallback(async () => {
     try {
       setIsFetching(true);
-      const {data} = await getUserMasterNodes({cancelToken: cancelSource.token});
-
-      if (data) {
-        console.log(data)
-        setMasternodes(data.nodes);
-        setIsFetching(false);
+      const {data, status} = await getUserMasterNodes({cancelToken: cancelSource.token});
+      if (data && status === 200) {
+        if (isMounted.current) {
+          setMasternodes(data.nodes);
+          setIsFetching(false);
+        }
+      }
+      else if (status === 204) {
+        if (isMounted.current) {
+          setMasternodes([]);
+          setIsFetching(false);
+        }
+      }
+      else {
+        if (isMounted.current) {
+          setIsFetching(false);
+        }
       }
     }
     catch (error) {
-      setIsFetching(false);
+      if (isMounted.current) setIsFetching(false);
     }
   }, [cancelSource]);
   
@@ -57,9 +69,11 @@ function UserMasternodes() {
    * @function
    */
   useEffect(() => {
+    isMounted.current = true;
     loadMasternodes();
     return () => {
-      cancelSource.cancel('The request has been canceled')
+      isMounted.current = false;
+      cancelSource.cancel('The request has been canceled');
     }
   }, [loadMasternodes, cancelSource]);
 

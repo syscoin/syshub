@@ -48,7 +48,7 @@ function Login({ t }) {
     setSubmitting(true);
     try {
       let user = await loginUser(loginData);
-      let user2fa = await get2faInfoUser(user.uid)
+      let user2fa = await get2faInfoUser(user.uid);
       if (user2fa.twoFa === true && user2fa.sms === true) {
         let phoneProvider = await loginWithPhoneNumber(user.phoneNumber, window.recaptchaVerifier);
         setUserSignInSms(phoneProvider);
