@@ -5,6 +5,7 @@ import check from './pages/check/index';
 import governance from './pages/governance/index';
 import login from './pages/login/index';
 import signup from './pages/signup/index';
+import recover from './pages/recover/index';
 import profile from './pages/profile/index';
 import proposal from './pages/proposal/index';
 import error from './pages/error/index';
@@ -27,6 +28,7 @@ const index = {
   ...governance,
   ...login,
   ...signup,
+  ...recover,
   ...profile,
   ...proposal,
   ...error,

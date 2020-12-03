@@ -19,9 +19,9 @@ const Recover = ({ t }) => {
       <BackgroundInner/>
       <main className="section recoverPage">
         <MetaTags>
-          <title> {t("register.meta.title")} </title>
-          <meta name="keywords" content={t("register.meta.keywords")}/>
-          <meta name="description" content={t("register.meta.description")}/>
+          <title> {t("recover.meta.title")} </title>
+          <meta name="keywords" content={t("recover.meta.keywords")}/>
+          <meta name="description" content={t("recover.meta.description")}/>
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">
@@ -30,7 +30,7 @@ const Recover = ({ t }) => {
                 <div className="cols">
                   <div className="col col--size-12">
                     <div className="article__content article__content--pull-left text-center">
-                      <Title heading="Recover your password" />
+                      <Title heading={t("recover.data.heading")} />
                       <FormRecover />
                     </div>
                   </div>
