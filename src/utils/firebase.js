@@ -1,4 +1,4 @@
-import firebase from 'firebase/firebase'
+import firebase from 'firebase';
 import jwtDecode from "jwt-decode";
 import {getToken, setToken} from "./auth-token";
 
