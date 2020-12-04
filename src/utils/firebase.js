@@ -12,6 +12,7 @@ const config = {
 /**
  * Class that manages firebase
  * @class
+ * @name Firebase
  */
 export default class Firebase {
 
@@ -28,12 +29,14 @@ export default class Firebase {
   /**
    * function to use the device language
    * @function
+   * @name useDeviceLanguage
    */
   useDeviceLanguage = () => this.auth.useDeviceLanguage();
 
   /**
    * function to login the user with email and password
    * @function
+   * @name loginWithEmailAndPassword
    * @param {Object} userData the email and password of the user to login 
    */
   loginWithEmailAndPassword = async ({email, password}) => await this.auth.signInWithEmailAndPassword(email, password).catch(err => {
@@ -43,6 +46,7 @@ export default class Firebase {
   /**
    * function to create a new user with email and password
    * @function
+   * @name register
    * @param {Object} userData the email and password of the user to signup 
    */
   register = async ({email, password}) => await this.auth.createUserWithEmailAndPassword(email, password).catch(err => {
@@ -52,12 +56,14 @@ export default class Firebase {
   /**
    * function to logout / signout a user from firebase
    * @function
+   * @name signOut
    */
   signOut = async () => await this.auth.signOut();
 
   /**
    * function to send an email to reset the password
    * @function
+   * @name passwordReset
    * @param {string} email email of the user
    */
   passwordReset = async (email) => await this.auth.sendPasswordResetEmail(email, {
@@ -69,6 +75,7 @@ export default class Firebase {
   /**
    * function to create a new recaptcha verifier
    * @function
+   * @name newRecaptchaVerifier
    * @param {string} container id of the html container for the recaptcha (must be empty)
    * @param {*} params params of the recaptcha
    * @param {*} app firebase app
@@ -78,24 +85,29 @@ export default class Firebase {
   /**
    * function that creates a new phone provider
    * @function
+   * @name newPhoneAuthProvider
    */
   newPhoneAuthProvider = () => new this.firebaseApp.auth.PhoneAuthProvider();
 
   /**
    * function that returns the phone number of the current user
    * @function
+   * @name getPhoneAuthProviderID
+   * @return {number} phoneNumber
    */
   getPhoneAuthProviderID = () => this.auth.currentUser.phoneNumber;
 
   /**
    * function that removes the phone number of the current user
    * @function
+   * @name removePhoneNumber
    */
   removePhoneNumber = () => this.auth.currentUser.unlink(this.firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID)
 
   /**
    * function to send an sms to verificate
    * @function
+   * @name sendSMSToPhone
    * @param {string} phoneNumber the phone number to send the sms
    * @param {*} appVerifier the recaptcha verifier
    */
@@ -109,6 +121,7 @@ export default class Firebase {
   /**
    * function to login using the phone number
    * @function
+   * @name loginWithPhone
    * @param {string} phoneNumber the phone number of the user
    * @param {*} appVerifier the recaptcha verifier
    */
@@ -116,13 +129,16 @@ export default class Firebase {
 
   /**
    * function to login with the user credentials
-   * @function 
+   * @function
+   * @name loginWithCredentials
    * @param {*} credentials the credentials of the user
    */
   loginWithCredentials = async (credentials) => await firebase.auth().signInWithCredential(credentials)
 
   /**
    * function to verify the phone code sent to the phone number
+   * @function
+   * @name verifyPhoneCode
    * @param {*} verificationId 
    * @param {string} smsCode the code sent to the user via sms
    */
@@ -131,13 +147,15 @@ export default class Firebase {
   /**
    * function to update the phone number
    * @function
+   * @name updatePhoneCredentials
    * @param {*} credentials the new data used to update the phone number
    */
   updatePhoneCredentials = (credentials) => new Promise(async (resolve, reject) => await this.auth.currentUser.updatePhoneNumber(credentials).then((res => resolve(res))).catch(err => reject(err)));
 
   /**
    * function to update the password of the user
-   * @function  
+   * @function
+   * @name changePassword
    * @param {string} oldPwd old password of the user
    * @param {string} password new password of the user
    */
@@ -163,6 +181,7 @@ export default class Firebase {
   /**
    * function to refresh the authorization token of the user
    * @function
+   * @name refreshToken
    */
   refreshToken = async () => {
     return new Promise(async (resolve, reject) => {
@@ -183,6 +202,7 @@ export default class Firebase {
   /**
    * function that generates a link to verificate the email
    * @function
+   * @name generateLinkVerification
    */
   generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification(
       {
@@ -196,6 +216,7 @@ export default class Firebase {
   /**
    * function used to verificate the time of the auth token and refresh it if neccesary
    * @function
+   * @name refreshInRequest
    */
   refreshInRequest = async () => {
     const token = getToken();

@@ -5,8 +5,9 @@ import secp256k1 from 'secp256k1'
 import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
 
 /**
- * function used to sign the vote so it has the data correctly to use in the api
+ * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
  * @function
+ * @name signVote
  * @param {Object} obj data of the voting
  */
 const signVote = (obj) => {
