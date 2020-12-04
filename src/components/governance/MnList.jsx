@@ -72,7 +72,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           }
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (isMounted.current) {
           setLoadingMN(false);
         }
@@ -186,11 +186,9 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     let stringOfMnYes = masterNodesVote.map(mn => {
       return `<li>${mn.mn}</li>`;
     }).join('');
-    console.log(stringOfMnYes)
     let stringOfMnNo = masterNodesErrorVote.map(mn => {
       return `<li>${mn.mn}. Cause: ${mn.err}</li>`;
     }).join('');
-    console.log(stringOfMnNo)
     await swal.fire({
         title: 'Voting results',
       html: `

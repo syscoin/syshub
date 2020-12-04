@@ -292,7 +292,7 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
 
     return dates;
   } catch (err) {
-    console.log(err)
+    // console.log(err)
   }
 };
 
@@ -356,7 +356,7 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
       nextSuperBlockBudget: nbs
     }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
   }
 }
 

@@ -33,7 +33,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
       gAuth: false
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-      console.log(err)
+      // console.log(err)
     })
   } */
 
@@ -66,7 +66,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         }
       });
       await firebase.removePhoneNumber().catch(err => {
-        console.log(err)
+        // console.log(err)
         throw err
       });
       let currentUserDataUpdate = {
@@ -74,7 +74,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         twoFa: false
       }
       await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
-        console.log(err)
+        // console.log(err)
       });
       
       swal.fire({
@@ -88,22 +88,22 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
   }
 
   /* const enableGAuth = async (data) => {
-    console.log('enable GAuth');
+    // console.log('enable GAuth');
     let currentUserDataUpdate = {
       gAuth: false
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-      console.log(err)
+      // console.log(err)
     })
   } */
 
   /* const disableGAuth = async () => {
-    console.log('disable GAuth')
+    // console.log('disable GAuth')
     let currentUserDataUpdate = {
       gAuth: false
     }
     await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-      console.log(err)
+      // console.log(err)
     });
 
     await onTwoFAChange();
@@ -130,23 +130,32 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
           swal.showLoading()
         }
       });
-      let currentUserDataUpdate = {
-        gAuthSecret: null,
-        gAuth: false,
-        twoFa: false
-      }
-      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-        console.log(err)
-      });
-
-      swal.fire({
-        icon: 'success',
-        title: 'Your secret was removed',
-        text: 'Google authenticator is disabled',
-        timer: 2000
-      });
+      try {
+        let currentUserDataUpdate = {
+          gAuthSecret: null,
+          gAuth: false,
+          twoFa: false
+        }
+        await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+          throw err;
+        });
   
-      await onTwoFAChange();
+        swal.fire({
+          icon: 'success',
+          title: 'Your secret was removed',
+          text: 'Google authenticator is disabled',
+          timer: 2000
+        });
+    
+        await onTwoFAChange();
+        
+      } catch (error) {
+        swal.fire({
+          icon: 'error',
+          title: 'There was an error',
+          text: error.message
+        });
+      }
     }
 
   }

@@ -36,6 +36,7 @@ class Governance extends Component {
      * @function 
      */
     componentDidMount() {
+        this._isMounted = true;
         this.apiLoader();
     }
 
@@ -44,6 +45,7 @@ class Governance extends Component {
      * @function
      */
     componentWillUnmount() {
+        this._isMounted = false;
         this.source.cancel('Request has been canceled');
     }
     
@@ -71,7 +73,7 @@ class Governance extends Component {
         return result;
         })
         .catch(function(error) {
-            console.log(error)
+            // console.log(error)
         });
         
         let govres = await axios.post('https://syscoin.dev/govlist', [], axiosConfig)
@@ -79,7 +81,7 @@ class Governance extends Component {
             return res;
         })
         .catch((err) => {
-            console.log(err);
+            // console.log(err);
         });
 
         if ((typeof data) !== 'undefined' && (typeof govres) !== 'undefined') { 
@@ -101,17 +103,21 @@ class Governance extends Component {
                 }
             }, 0);
 
-            this.setState({
-                statsData: stats_response,
-                govData: govdata,
-                budgetSum: budgetSum,
-                dataLoad: 1
-            });
+            if (this._isMounted) {
+                this.setState({
+                    statsData: stats_response,
+                    govData: govdata,
+                    budgetSum: budgetSum,
+                    dataLoad: 1
+                });
+            }
         }
         else {
-            this.setState({
-                dataLoad: 2
-            });
+            if (this._isMounted) {
+                this.setState({
+                    dataLoad: 2
+                });
+            }
         }
 
     }

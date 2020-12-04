@@ -134,7 +134,7 @@ function Login({ t }) {
       history.push('/governance');
       
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       swal.fire({
         icon: "error",
         title: "Error",

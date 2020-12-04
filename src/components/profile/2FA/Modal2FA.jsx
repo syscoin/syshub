@@ -86,7 +86,7 @@ function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
 
       onPhoneSMS();
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       swal.fire({
         icon: "error",
         title: "Invalid code",

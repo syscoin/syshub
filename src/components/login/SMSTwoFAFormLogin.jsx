@@ -33,10 +33,10 @@ const SMSTwoFAFormLogin = ({userSignInSms}) => {
       window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
         size: "invisible",
         callback: (resp) => {
-          console.log(resp);
+          // console.log(resp);
         },
         error: (err) => {
-          console.log(err);
+          // console.log(err);
         },
       });
       window.recaptchaVerifier.render();

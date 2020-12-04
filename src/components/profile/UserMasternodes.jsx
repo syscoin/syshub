@@ -101,7 +101,7 @@ function UserMasternodes() {
         title: "The masternode couldn't update, please try again",
         text: error.message
       });
-      console.log(error);
+      // console.log(error);
     }
   }
 
