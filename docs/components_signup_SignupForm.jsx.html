@@ -89,7 +89,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, {useEffect, useState} from 'react';
+            <pre class="prettyprint source linenums"><code>import React, {useEffect, useState, useRef} from 'react';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
@@ -113,7 +113,9 @@ const schema = yup.object().shape({
  * @param {*} props props onSignup and submitting
  */
 const SignupForm = (props) => {
-  const {firebase} = useUser();
+  const { firebase } = useUser();
+  const isMounted = useRef(false);
+
   const {register, handleSubmit, errors} = useForm({
     mode: 'onChange',
     resolver: yupResolver(schema)
@@ -123,15 +125,19 @@ const SignupForm = (props) => {
   useEffect(() => {
     window.recaptchaVerifier = firebase.newRecaptchaVerifier('recaptcha', {
       callback: () => {
-        setRecaptchaVerified(true)
+        if (isMounted.current) setRecaptchaVerified(true);
       },
       error: (err) => {
-        setRecaptchaVerified(false)
+        if (isMounted.current) setRecaptchaVerified(false);
       }
     })
+    isMounted.current = true;
     window.recaptchaVerifier.render();
-    // eslint-disable-next-line
-  }, [])
+    
+    return () => {
+      isMounted.current = false;
+    }
+  }, [firebase]);
 
   return (
     &lt;>

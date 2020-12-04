@@ -23,11 +23,6 @@ function Signup({ t }) {
 
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      setSubmitting(false);
-    }
-  }, []);
 
   /**
    * Function that proceeds to create the user and signups
@@ -40,7 +35,7 @@ function Signup({ t }) {
       willOpen: () => {
         swal.showLoading()
       }
-    })
+    });
     setSubmitting(true);
     
     try {
@@ -64,8 +59,6 @@ function Signup({ t }) {
     }
 
   }
-
-  
 
   return (
     <Background>

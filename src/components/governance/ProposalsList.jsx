@@ -43,7 +43,7 @@ function ProposalsList(props) {
         setProposals(govdata);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, [cancelSource]);
 
@@ -59,7 +59,7 @@ function ProposalsList(props) {
           await setUserInfo(response.data.user);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   }, [user, cancelSource]);

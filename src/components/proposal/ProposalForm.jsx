@@ -87,7 +87,7 @@ function ProposalForm() {
           showSavedProposal(data.proposal);
         }
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     };
     isMounted.current = true;
@@ -316,7 +316,7 @@ function ProposalForm() {
             title: 'There was an error',
             text: err.message
           });
-          console.log(err)
+          // console.log(err)
         })
       setSubmitCommand(commandSubmit);
       await swal.fire({

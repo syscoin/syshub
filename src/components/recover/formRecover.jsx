@@ -35,15 +35,26 @@ const FormRecover = () => {
    * @param {*} e 
    */
   const submitForm = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    swal.fire({
+      title: 'Submitting',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     firebase.passwordReset(email).then(() => {
       swal.fire({
-        title: 'Success',
-        text: 'An email has been sent.',
-        icon: 'success'
+        icon: 'success',
+        title: 'Email sent',
+        text: 'We have sent you an email with the steps to recover your password'
       })
     }).catch(err => {
-      return swal.fire({title: 'Oops...', text: `${err}`, icon: 'error'});
+      return swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${err}`
+      });
     })
     e.target.reset()
   }

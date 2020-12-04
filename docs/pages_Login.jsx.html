@@ -139,7 +139,7 @@ function Login({ t }) {
     setSubmitting(true);
     try {
       let user = await loginUser(loginData);
-      let user2fa = await get2faInfoUser(user.uid)
+      let user2fa = await get2faInfoUser(user.uid);
       if (user2fa.twoFa === true &amp;&amp; user2fa.sms === true) {
         let phoneProvider = await loginWithPhoneNumber(user.phoneNumber, window.recaptchaVerifier);
         setUserSignInSms(phoneProvider);
@@ -225,7 +225,7 @@ function Login({ t }) {
       history.push('/governance');
       
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       swal.fire({
         icon: "error",
         title: "Error",

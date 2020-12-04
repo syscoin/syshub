@@ -66,7 +66,7 @@ class Stats extends Component {
             return result;
         })
         .catch(function (error) {
-            console.log(error);
+            // console.log(error);
         });
         if ((typeof data) !== 'undefined') {
             if (this._isMounted) {

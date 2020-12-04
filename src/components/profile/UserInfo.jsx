@@ -33,7 +33,7 @@ function UserInfo() {
         await setUserInfo(response.data.user);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, [user, cancelSource]);
 

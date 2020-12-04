@@ -141,16 +141,29 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     const getMnByUser = async () => {
       setLoadingMN(true);
       try {
-        let { data } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        let { data, status } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
         .catch((err) => {
           throw err;
         });
         if (data) {
-          setLoadingMN(false);
-          setMasterNodes(data.nodes || []);
+          if (isMounted.current) {
+            setLoadingMN(false);
+            setMasterNodes(data.nodes || []);
+
+          }
+        }
+        else if (status === 204) {
+          if (isMounted.current) { 
+            setLoadingMN(false);
+          }
+        }
+        else {
+          if (isMounted.current) {
+            setLoadingMN(false);
+          }
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (isMounted.current) {
           setLoadingMN(false);
         }
@@ -267,15 +280,14 @@ const MnList = ({proposal, vote, onAfterVote}) => {
     let stringOfMnNo = masterNodesErrorVote.map(mn => {
       return `&lt;li>${mn.mn}. Cause: ${mn.err}&lt;/li>`;
     }).join('');
-
     await swal.fire({
         title: 'Voting results',
-        html: `
-      &lt;p style="text-align: start; color:green; font-weight: bold">Successful votes:&lt;/p>
-      &lt;ul style="text-align: start">${stringOfMnYes}&lt;/ul>
-      &lt;br/>
-      &lt;p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:&lt;/p>
-      &lt;ul style="text-align: start">${stringOfMnNo}&lt;/ul>
+      html: `
+        ${stringOfMnYes ? '&lt;p style="text-align: start; color:green; font-weight: bold">Successful votes:&lt;/p>' : ''}
+        &lt;ul style="text-align: start">${stringOfMnYes}&lt;/ul>
+        &lt;br/>
+        ${stringOfMnNo ? '&lt;p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:&lt;/p>' : ''}
+        &lt;ul style="text-align: start">${stringOfMnNo}&lt;/ul>
       `
       }
     );

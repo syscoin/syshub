@@ -178,7 +178,7 @@ function ProposalForm() {
           showSavedProposal(data.proposal);
         }
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     };
     isMounted.current = true;
@@ -196,7 +196,7 @@ function ProposalForm() {
    * @param {Object} proposal the saved proposal to show from the API
    */
   const showSavedProposal = (proposal) => {
-    console.log(proposal);
+    // console.log(proposal);
     setTitle(proposal.title);
     setDescription(proposal.description);
     if (proposal.url !== 'emptyField') setUrl(proposal.url);
@@ -407,7 +407,7 @@ function ProposalForm() {
             title: 'There was an error',
             text: err.message
           });
-          console.log(err)
+          // console.log(err)
         })
       setSubmitCommand(commandSubmit);
       await swal.fire({
