@@ -26,7 +26,11 @@ class Footer extends Component {
                     <nav className="nav">
                         <ul>
                         <li>
-                            <Link to="/about">About</Link>
+                            <a
+                                href="https://syscoin.org/masternodes"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >About</a>
                         </li>
 
                         <li>
@@ -34,7 +38,11 @@ class Footer extends Component {
                         </li>
 
                         <li>
-                            <Link to="/setup">Setup</Link>
+                            <a
+                                href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >Setup</a>
                         </li>
 
                         <li>
@@ -42,17 +50,15 @@ class Footer extends Component {
                         </li>
 
                         <li>
-                            <Link to="/check">Masternodes</Link>
+                            <Link to="/masternodes">Masternodes</Link>
                         </li>
 
                         <li>
                             <a
-                            rel="noopener noreferrer"
-                            href="https://support.syscoin.org/"
-                            target="_blank"
-                            >
-                            Support
-                            </a>
+                                href="https://support.syscoin.org/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >Support</a>
                         </li>
                         </ul>
                     </nav>
