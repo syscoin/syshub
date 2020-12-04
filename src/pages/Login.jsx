@@ -45,20 +45,35 @@ function Login({ t }) {
    * @param {{email:string, password: string}} loginData Login data received from LoginForm it has email and password
    */
   const loginToApp = async (loginData) => {
+    swal.fire({
+      title: 'Submitting',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     setSubmitting(true);
     try {
       let user = await loginUser(loginData);
       let user2fa = await get2faInfoUser(user.uid);
       if (user2fa.twoFa === true && user2fa.sms === true) {
+        swal.close();
         let phoneProvider = await loginWithPhoneNumber(user.phoneNumber, window.recaptchaVerifier);
         setUserSignInSms(phoneProvider);
         setOpenSMS2Fa(true);
         setSubmitting(false);
       } else if (user2fa.twoFa === true && user2fa.gAuth === true) {
+        swal.close();
         setUserSignInGAuth({ ...user, secret: user2fa.gAuthSecret });
         setOpenGAuth2Fa(true);
         setSubmitting(false);
       } else {
+        await swal.fire({
+          icon: "success",
+          title: "Logged in",
+          timer: 2000,
+          showConfirmButton: false
+        });
         setUserDataLogin(user)
         history.push('/governance');
       }
@@ -92,7 +107,8 @@ function Login({ t }) {
       setOpenGAuth2Fa(false);
       await swal.fire({
         icon: "success",
-        title: "Code verified",
+        title: "Logged in",
+        text: "Code verified",
         timer: 2000,
         showConfirmButton: false
       });
@@ -126,7 +142,8 @@ function Login({ t }) {
       setOpenSMS2Fa(false);
       await swal.fire({
         icon: "success",
-        title: "Code verified",
+        title: "Logged in",
+        text: "Code verified",
         timer: 2000,
         showConfirmButton: false
       });

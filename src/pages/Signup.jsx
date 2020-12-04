@@ -35,7 +35,7 @@ function Signup({ t }) {
       willOpen: () => {
         swal.showLoading()
       }
-    })
+    });
     setSubmitting(true);
     
     try {
