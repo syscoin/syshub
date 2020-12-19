@@ -1,0 +1,552 @@
+.table-resp, .react-bootstrap-table
+{
+    width:100%;
+    overflow: hidden;
+}
+
+.check_table, .react-bootstrap-table
+{
+    margin: 45px auto 0;
+    width: 100%;
+    background: #ffffff1f;
+    padding: 20px;
+    @include border-radius(3px);
+    overflow-x:auto;
+
+    table 
+    {
+        width: 100%;
+        min-width:840px;
+        table-layout: auto !important;
+
+        thead td, thead th 
+        {
+            font-weight: 500;
+            color:white;
+            line-height: 20px;
+            padding: 10px 5px;
+        }
+        tbody td 
+        {
+            font-size:16px;
+            line-height: 20px;
+            padding: 10px 5px;
+        }
+
+        i:hover
+        {
+            cursor:pointer;
+            color:#798ab7;
+        }
+
+        &.mns, &.table
+        {
+            tr:hover 
+            {
+                background: #ffffff1f;
+            }
+        }
+
+        &.seniority
+        {
+            tbody tr:hover 
+            {
+                background: #ffffff1f;
+            }
+
+            td
+            {
+                line-height: 1.4;
+                padding:10px;
+            }
+        }
+    }
+}
+
+.pagination-cont
+{
+    margin:20px 0 80px;
+}
+
+ul.pagination
+{
+    list-style: none;
+    margin:0;
+    padding:0;
+    display: table;
+    margin: 0 auto;
+    float: none;
+
+    &.react-bootstrap-table-page-btns-ul
+    {
+        margin:20px auto 80px;
+    }
+
+    li 
+    {
+        float:left;
+        margin:0 5px;
+
+        &.disabled
+        {
+            opacity:0.5;
+        }
+
+        &.active 
+        {
+            font-weight: 600;
+            color:$color-blue-4;
+        }
+
+        &:hover:not(.disabled)
+        {
+            color:$color-blue-4;
+        }
+
+        a 
+        {
+            padding:0 5px;
+            text-decoration: none;
+
+            &.disabled
+            {
+                opacity:0.5;
+            }
+
+            &.active 
+            {
+                font-weight: 600;
+                color:$color-blue-4;
+            }
+
+            &:hover:not(.disabled)
+            {
+                color:$color-blue-4;
+            }
+        }
+    }
+}
+
+
+.proposal-subtitle
+{
+    line-height: 1.2;
+    text-align: center;
+    padding:0 30px 30px;
+}
+.proposals
+{
+    overflow:hidden;
+
+    &.overflow
+    {
+        max-height:600px;
+        overflow-y: scroll;
+        padding-right:10px;
+    }
+
+    .proposal
+    {
+        width:100%;
+        float:left;
+        background: #ffffff1f;
+        padding:20px;
+        @include border-radius(3px);
+        margin-bottom:10px;
+
+        .vote-count
+        {
+            width:20%;
+            float:left;
+
+            .yes 
+            {
+                color:$vote-green;
+                font-size: 34px;
+                font-weight: 600;
+                line-height: 1;
+
+                &::after 
+                {
+                    content:'/';
+                    color:gray;
+                    font-weight: 300;
+                    padding:0 5px;
+                }
+            }
+
+            .no 
+            {
+                color:$vote-red;
+                font-size: 34px;
+                font-weight: 600;
+                line-height: 1;
+            }
+
+            .passed
+            {
+                line-height: 1;
+                font-size:20px;
+                font-weight: 500;
+                color:white;
+                text-transform: uppercase;
+
+                i 
+                {
+                    color:$vote-green;
+                    font-size: 35px;
+                }
+            }
+            
+            .not-passed
+            {
+                line-height: 1;
+                font-size:20px;
+                font-weight: 500;
+                color:white;
+                text-transform: uppercase;
+
+                i 
+                {
+                    color:$vote-red;
+                    font-size: 35px;
+                }
+            }
+        }
+
+        .description
+        {
+            float:left;
+            width:70%;
+            line-height: 1.2;
+            font-size:24px;
+            color:white;
+
+            .date 
+            {
+                color:$off-white;
+                font-style: italic;
+                line-height: 1;
+                font-size:16px;
+                margin-bottom:10px;
+            }
+
+            .budget 
+            {
+                color:$off-white;
+                margin-top:10px;
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            
+        }
+
+        .actions 
+        {
+            width:10%;
+            float:left;
+
+            .vote 
+            {
+                background:#1e255f29;
+                line-height: 40px;
+                text-align: center;
+                width:70px;
+                height:40px;
+                float:right;
+                clear:right;
+                @include transition(all, .3s);
+
+                &:hover
+                {
+                    color:$color-blue-main;
+                }
+
+                &:nth-child(1)
+                {
+                    @include border-radii(35px,35px,0,0);
+                    &:hover 
+                    {
+                        background:$vote-green;
+                    }
+                }
+
+                &:nth-child(2)
+                {
+                    &:hover 
+                    {
+                        background:$off-white;
+                    } 
+                }
+
+                &:nth-child(3)
+                {
+                    @include border-radii(0,0,35px,35px);
+                    &:hover 
+                    {
+                        background:$vote-red;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ministats, .world-dist
+{
+    .subtitle 
+    {
+        font-weight: 500;
+        font-size:24px;
+        text-align: center;
+    }
+}
+
+.subtitle-in-between
+{
+    font-weight: 500;
+    font-size:24px;
+    text-align: center;
+    color:white;
+}
+
+.ministats
+{
+    &.mndata 
+    {
+        width:75%;
+        margin:60px auto 90px;
+    }
+
+    &.mndata-expanded
+    {
+        width:75%;
+        margin:30px auto 20px;
+
+        .stat
+        {
+            font-size: 18px;
+            text-transform: uppercase;
+
+            .stat-data 
+            {
+                font-size:15px;
+                text-transform: none;
+            }
+        }
+    }
+
+    &.mndata-governance
+    {
+        width:75%;
+        margin:30px auto 20px;
+
+        .stat
+        {
+            width:100%;
+            text-align: left;
+            font-size: 18px;
+
+            .stat-data 
+            {
+                font-size:15px;
+                text-transform: none;
+            }
+        }
+    }
+
+    overflow:hidden;
+    margin:40px 0 90px;
+
+    .stat
+    {
+        width:25%;
+        float:left;
+        text-align: center;
+        font-weight: 600;
+        color:$off-white;
+        line-height: 1.4;
+        margin-bottom:20px;
+
+        .stat-data 
+        {
+            font-weight: 400;
+            color:white;
+
+            span 
+            {
+                border-bottom: 1px dotted $color-blue-2;
+                cursor: help;
+            }
+        }
+    }
+
+    &.thirds .stat 
+    {
+        width:33%;
+    }
+
+    .chart-mini-hor
+    {
+        width:100%;
+        overflow: hidden;
+        height:40px;
+        @include border-radius(3px);
+
+        div 
+        {
+            float:left;
+        }
+
+        .blue 
+        {
+            height:40px;
+            background-color: $color-blue-9;
+        }
+
+        .red 
+        {
+            height:40px;
+            background-color: $color-red2;
+        }
+
+        .white 
+        {
+            height:40px;
+            background-color: $off-white;
+        }
+    }
+
+    .char-mini-legend
+    {
+        text-align: center;
+
+        > span
+        {
+            margin-right:30px;
+            white-space: nowrap; 
+            span.red
+            {
+                background-color: $color-red2; 
+                width:13px;
+                height:13px;
+                @include border-radius(5px);
+                display:inline-block;
+            }
+            span.blue
+            {
+                background-color: $color-blue-9; 
+                width:13px;
+                height:13px;
+                @include border-radius(5px);
+                display:inline-block;
+            }
+            span.white
+            {
+                background-color: $off-white; 
+                width:13px;
+                height:13px;
+                @include border-radius(5px);
+                display:inline-block;
+            }
+        }
+    }
+}
+
+.sb 
+{
+    font-weight: 600 !important;
+}
+
+@media (max-width:$breakpoint-mobile) {
+
+    .article--offsets-bottom
+    {
+        margin-bottom:100px;
+    }
+
+
+    .ministats .stat
+    {
+        width:50%;
+
+        &:nth-child(odd)
+        {
+            clear:left;
+        }
+    }
+
+    .proposals .proposal
+    {
+        .vote-count
+        {
+            width:100%;
+            text-align: center;
+
+            .yes,.no 
+            {
+                font-size:22px;
+            }
+
+            .passed
+            {
+                font-size:14px;
+
+                i 
+                {
+                    font-size: 18px;
+                }
+            }
+
+        margin-bottom:15px;
+        }
+
+        .description
+        {
+            width:85%;
+            font-size:20px;
+
+            .date,.budget
+            {
+                font-size:14px;
+            }
+        }
+
+        .actions
+        {
+            width:15%;
+        }
+    }
+
+}
+
+@media (max-width:505px) {
+    .proposals .proposal
+    {
+        .description
+        {
+            width:80%;
+        }
+
+        .actions
+        {
+            width:20%;
+        }
+    }
+}
+
+@media (max-width:380px) {
+    .proposals .proposal
+    {
+        .description
+        {
+            width:75%;
+        }
+
+        .actions
+        {
+            width:25%;
+        }
+    }
+}

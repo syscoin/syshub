@@ -1,0 +1,61 @@
+/* ------------------------------------------------------------ *\
+	Button
+\* ------------------------------------------------------------ */
+
+.btn { position: relative; display: inline-block; vertical-align: middle; height: 48px; line-height: 48px; border-radius: 24px; min-width: 184px; padding: 0 24px; color: $white; font-size: 14px; text-align: center; cursor: pointer; text-decoration: none; appearance: none; transition: background .3s, color .3s, border-color .3s; }
+
+.btn:disabled { cursor: not-allowed; }
+
+.btn i { position: absolute; right: 23px; top: 51%; transform: translateY(-50%); }
+
+.btn.btn-center 
+{
+	display: block;
+	margin:0 auto;
+}
+/*  Button Block  */
+
+.btn--block { display: block; padding-left: 0; padding-right: 0; }
+
+/*  Btn blue  */
+.btn--blue { border:0; background: linear-gradient(to right, #4a9bf7 0%,#4694f6 8%,#4590f5 11%,#3d84f0 21%,#3273e7 34%,#2e6ae6 43%,#2e6ce7 59%,#3374ea 66%,#357bea 75%,#3b84ed 79%,#438ef4 87%,#4594f3 92%,#4795f7 93%,#4899f5 96%,#4b9cf8 100%); background-size: 200% 100%; color: $white; box-shadow: 0 14px 32px 0 rgba(2,92, 221, .3), 0 16px 32px 0 rgba(0,0,0, .12);-webkit-transition: box-shadow .4s, background .2s linear;-o-transition: box-shadow .4s, background .2s linear;transition: box-shadow .4s, background .2s linear; transition-timing-function: ease; }
+
+.btn--blue:hover { box-shadow:none; background-position: -100%; }
+
+/*  btn--blue-border  */
+
+.btn--blue-border { background:transparent; border: 2px solid $blue; line-height: 44px; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12); }
+
+.btn--blue-border:hover { background: $blue; }
+
+.btn--small { min-width: 152px; }
+.btn--md { min-width: 236px; }
+.btn--md-2 { min-width: 224px; }
+.btn--large { min-width: 242px; }
+
+/*  Btn play  */
+.btn--play { width: 88px; min-width: 0; height: 88px; border-radius: 50%; text-align: center; line-height: 88px; background: linear-gradient(215.61deg, #269CFF 0%, #6863FF 100%); }
+.btn--play img { transition: transform .3s; }
+.btn--play:hover img { transform: scale(1.1); }
+
+/*  Btn Shadow Dark  */
+.btn--shadow-dark { box-shadow: 0 16px 32px 0 rgba(0,0,0, .12) }
+
+/*  Btn Shadow Clear  */
+.btn--shadow-clear { box-shadow: none; }
+
+/*  Btn Gradient  */
+.btn--gradient { position: relative; height: 44px; line-height: 44px; padding: 0; }
+
+.btn--gradient span { position: relative; z-index: 5; display: inline-block; width: 100%; height: 100%; padding: 0 24px; border-radius: 24px; background-image: linear-gradient(to top, rgba(53, 158, 246, 1), rgba(2, 92, 221, 1)); }
+
+.btn--gradient:before,
+.btn--gradient:after { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 24px; }
+
+.btn--gradient:before { background-image: linear-gradient(to top, rgba(53, 158, 246,1), rgba(2, 92, 221, 1)); opacity: 1; }
+
+.btn--gradient:after { z-index: 2; background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, .14)); opacity: 1; }
+
+.btn--gradient:hover span,
+.btn--gradient:hover:before,
+.btn--gradient:hover:after { background: $color-blue-8; }
