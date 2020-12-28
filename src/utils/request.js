@@ -305,7 +305,7 @@ export const calculatePaymentDates = async (nPayment, startEpoch, endEpoch) => {
 export const nextGovernanceRewardInfo = async (cancelToken) => {
   try {
     const date = new Date();
-    const chainInfo = await new Promise((resolve, reject) => {
+    const {BlockChainInfo} = await new Promise((resolve, reject) => {
       getInfo(cancelToken).then(res => {
         let {data} = res;
         return resolve(data)
@@ -326,7 +326,7 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
     // console.log(governanceInfo)
     const {nextsuperblock, superblockcycle} = governanceInfo;
 
-    const {lsb, nbs} = await new Promise((resolve, reject) => {
+    const {lbs, nbs} = await new Promise((resolve, reject) => {
       getSuperBlockBudget(cancelToken).then(res => {
         let {data} = res;
         return resolve(data)
@@ -335,7 +335,7 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
       })
     })
 
-    const blockHeight = chainInfo.blocks;
+    const blockHeight = BlockChainInfo.blocks;
     const blockGenerationCycle = 60; // Defined by the chain White_paper doc.
     const votingDeadlineGap = 3;
     const superblockCycleEpoch = superblockcycle * blockGenerationCycle;
@@ -352,7 +352,7 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
       rewardDateEpoch,
       votingDeadLineEpoch,
       superblockCycleEpoch,
-      lastSuperBlockBudget: lsb,
+      lastSuperBlockBudget: lbs,
       nextSuperBlockBudget: nbs
     }
   } catch (err) {
