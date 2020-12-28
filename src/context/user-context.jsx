@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import {register, updateUser, updateActionsUser, deleteUser} from '../utils/request';
+import {register, updateUser, updateActionsUser, deleteUser, getUserInfo} from '../utils/request';
 import {useHistory} from 'react-router';
 const UserContext = React.createContext();
 export const firebase = new Firebase();
@@ -18,6 +18,8 @@ export function UserProvider(props) {
   const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
   const [loadingUser, setLoadingUser] = useState(true);
+  const [userAdmin, setUserAdmin] = useState(null);
+  const [loadingAdmin, setLoadingAdmin] = useState(true);
 
   /**
    * UseEffect to set the user when the provider mounts
@@ -37,6 +39,30 @@ export function UserProvider(props) {
 
     loadUser();
   }, []);
+
+  useEffect(() => {
+    async function loadAdminInfo() {
+      if (user) {
+        try {
+          const response = await getUserInfo(user.data.user_id);
+          if (response.data) {
+            const userIsAdmin = response.data.user.roles.find(role => role === 'admin');
+            console.log(userIsAdmin);
+            await setUserAdmin(userIsAdmin || null);
+            setLoadingAdmin(false);
+          }
+          else {
+            setLoadingAdmin(false);
+          }
+        } catch (error) {
+          setLoadingAdmin(false);
+          // console.log(error);
+        }
+      }
+    }
+
+    loadAdminInfo();
+  }, [user])
 
   /**
    * function used to signup the user in the app
@@ -197,10 +223,12 @@ export function UserProvider(props) {
       updateCurrentUser,
       updateCurrentActionsUser,
       destroyUser,
+      userAdmin,
+      loadingAdmin,
       firebase
     })
     // eslint-disable-next-line
-  }, [user, loadingUser]);
+  }, [user, loadingUser, userAdmin, loadingAdmin]);
 
   return <UserContext.Provider value={value} {...props} />
 }

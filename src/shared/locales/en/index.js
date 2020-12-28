@@ -7,6 +7,7 @@ import login from './pages/login/index';
 import signup from './pages/signup/index';
 import recover from './pages/recover/index';
 import profile from './pages/profile/index';
+import admin from './pages/admin/index';
 import proposal from './pages/proposal/index';
 import error from './pages/error/index';
 import banner from './parts/banner/index';
@@ -30,6 +31,7 @@ const index = {
   ...signup,
   ...recover,
   ...profile,
+  ...admin,
   ...proposal,
   ...error,
   ...banner,

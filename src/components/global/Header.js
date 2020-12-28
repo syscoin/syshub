@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
+
 import { useUser } from "../../context/user-context";
+
 
 /**
  * Component that shows the Header alongside with the navbar
@@ -11,7 +13,8 @@ import { useUser } from "../../context/user-context";
  * @param {*} props the T prop comes from withTranslation to use react-i18next
  */
 function Header({t}) {
-  const { user, logoutUser } = useUser();
+  const { user, userAdmin, logoutUser } = useUser();
+  
   const isMounted = useRef(false);
 
   const [isNotTop, setIsNotTop] = useState(false);
@@ -154,37 +157,43 @@ function Header({t}) {
                     <div className="dropdown">
                       <ul>
                         {!user && (
-                          <li onClick={menuLinks}>
-                            <Link to="/login">{t("header.login")}</Link>
-                          </li>
-                        )}
-                        {!user && (
-                          <li onClick={menuLinks}>
-                            <Link to="/signup">{t("header.signup")}</Link>
-                          </li>
+                          <>
+                            <li onClick={menuLinks}>
+                              <Link to="/login">{t("header.login")}</Link>
+                            </li>
+                            <li onClick={menuLinks}>
+                              <Link to="/signup">{t("header.signup")}</Link>
+                            </li>
+                          </>
                         )}
 
                         {/* <li className="sep"></li> */}
                         {user && (
-                          <li onClick={menuLinks}>
-                            <Link to="/profile">{t("header.profile")}</Link>
-                          </li>
+                          <>
+                            <li onClick={menuLinks}>
+                              <Link to="/profile">{t("header.profile")}</Link>
+                            </li>
+                            <li onClick={menuLinks}>
+                              <Link to="/create-proposal">{t("header.proposal")}</Link>
+                            </li>
+                            {
+                              userAdmin === "admin" && (
+                                <li onClick={menuLinks}>
+                                  <Link to="/admin">{t("header.admin")}</Link>
+                                </li>
+                              )
+                            }
+                            <li onClick={menuLinks}>
+                              <button
+                                className='nav-btn'
+                                onClick={logout}
+                              >
+                                {t("header.logout")}
+                              </button>
+                            </li>
+                          </>
                         )}
-                        {user && (
-                          <li onClick={menuLinks}>
-                            <Link to="/create-proposal">{t("header.proposal")}</Link>
-                          </li>
-                        )}
-                        {user && (
-                          <li onClick={menuLinks}>
-                            <button
-                              className='nav-btn'
-                              onClick={logout}
-                            >
-                              {t("header.logout")}
-                            </button>
-                          </li>
-                        )}
+
                       </ul>
                     </div>
                   </div>

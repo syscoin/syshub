@@ -12,6 +12,7 @@ const header = {
     dashboard: 'Dashboard',
     proposal: 'New proposal',
     profile: 'Profile',
+    admin: 'Admin panel',
     logout: 'Logout'
   },
 }

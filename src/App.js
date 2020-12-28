@@ -20,6 +20,7 @@ import Recover from './pages/Recover';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
 import NewProposal from './pages/NewProposal';
+import Admin from './pages/Admin';
 
 /**
  * App component that handles the use of the Header and Footer components, alongside with the Routing
@@ -42,6 +43,7 @@ class AppComponent extends Component {
                     <PublicRoute restricted={true} path="/recover" component={Recover} />
                     <PrivateRoute path="/create-proposal" component={NewProposal} />
                     <PrivateRoute path="/profile" component={Profile} />
+                    <PrivateRoute path="/admin" component={Admin} />
                     <PublicRoute restricted={false} component={Error} />
                 </Switch>
                 <div className="clearfix"></div>
