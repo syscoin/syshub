@@ -1,14 +1,17 @@
 import React from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
-import { Redirect, Route, Switch, useRouteMatch } from "react-router";
+import { Redirect } from "react-router";
 
 import { useUser } from "../context/user-context";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
+import SubTitle from "../components/global/SubTitle";
 import Loading from "../components/global/Loading";
+import UsersTable from "../components/admin/UsersTable";
+
 
 /**
  * Admin page that shows at /admin
@@ -17,7 +20,6 @@ import Loading from "../components/global/Loading";
  * @param {*} t t prop received from withTranslation
  */
 const Admin = ({ t }) => {
-  let { path } = useRouteMatch();
   const { userAdmin, loadingAdmin } = useUser();
 
   return (
@@ -35,44 +37,31 @@ const Admin = ({ t }) => {
                   content={t("admin.meta.description")}
                 />
               </MetaTags>
-              <Switch>
-                <Route path={path}>
-                  <div className="shell-large">
-                    <div className="section__body">
-                      <div className="articles">
-                        <section className="article">
-                          <div className="cols">
-                            <div className="col col--size-12">
-                              <div className="article__content article__content--pull-left text-center">
-                                <Title heading="Admin panel" />
-                              </div>
-                            </div>
+              <div className="shell-large">
+                <div className="section__body">
+                  <div className="articles">
+                    <section className="article">
+                      <div className="cols">
+                        <div className="col col--size-12">
+                          <div className="article__content article__content--pull-left">
+                            <Title heading={t('admin.heading')} />
+                            <UsersTable />
                           </div>
-                        </section>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Route>
-                <Route exact path={`${path}/users-administration`}>
-                  <div className="shell-large">
-                    <div className="section__body">
-                      <div className="articles">
-                        <section className="article">
-                          <div className="cols">
-                            <div className="col col--size-12">
-                              <div className="article__content article__content--pull-left text-center">
-                                <Title heading={t("profile.data.heading")} />
-                              </div>
-                            </div>
+                    </section>
+                    <section className="article">
+                      <div className="cols">
+                        <div className="col col--size-12">
+                          <div className="article__content article__content--pull-left">
+                            <SubTitle heading={t('admin.proposals.heading')} />
                           </div>
-                        </section>
+                        </div>
                       </div>
-                    </div>
+                    </section>
                   </div>
-                </Route>
-
-                <Route exact path={`${path}/proposals-administration`}></Route>
-              </Switch>
+                </div>
+              </div>
             </main>
           </Background>
         ) : (
