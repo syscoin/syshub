@@ -36,28 +36,78 @@ const UserPagination = ({
         dataField: "email",
       },
       {
-        text: t("admin.users.table.name"),
-        dataField: "name",
-      },
-      {
         text: t("admin.users.table.admin"),
         dataField: "admin",
+        align: 'center',
+        formatter: adminFormatter
       },
       {
         text: t("admin.users.table.actions"),
         dataField: "actions",
         isDummyField: true,
-        formatter: actionFormatter
+        align: 'center',
+        formatter: actionsFormatter
       }
     ];
   };
 
-  const actionFormatter = (cell, userRow) => {
-    return <button onClick={() => makeUserAdmin(userRow)}>make admin</button>
+  const adminFormatter = (cell, userRow) => {
+    const isAdmin = userRow.role.find(role => role === 'admin');
+
+    if (isAdmin === 'admin') {
+      return 'Admin'
+    }
+    else {
+      return 'Not admin'
+    }
+    
+  }
+
+  const actionsFormatter = (cell, userRow) => {
+    const isAdmin = userRow.role.find(role => role === 'admin');
+
+    if (isAdmin === 'admin') {
+      return (
+        <button
+          className=""
+          style={{
+            background: '#1e255f29',
+            lineHeight: '40px',
+            textAlign: 'center',
+            border: '0',
+            padding: '0 5px'
+          }}
+          onClick={() => removeUserAdmin(userRow)}
+        >
+          Remove admin
+        </button>
+      )
+    }
+    else {
+      return (
+        <button
+          className=""
+          style={{
+            background: '#1e255f29',
+            lineHeight: '40px',
+            textAlign: 'center',
+            border: '0',
+            padding: '0 5px'
+          }}
+          onClick={() => makeUserAdmin(userRow)}
+        >
+          Add admin
+        </button>
+      )
+    }
+  }
+
+  const removeUserAdmin = (user) => {
+
   }
 
   const makeUserAdmin = (user) => {
-    console.log({ user });
+    console.log(user);
   }
 
   return (

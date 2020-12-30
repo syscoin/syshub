@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import axios from "axios";
 import { withTranslation } from "react-i18next";
+
+import { getAllUsers } from "../../utils/request";
+
 import UserPagination from "./UserPagination";
 
 const userArray = [
@@ -9,19 +13,44 @@ const userArray = [
 ];
 
 const UsersTable = ({t}) => {
-  const [dataload, setDataload] = useState(false);
+  const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState(userArray);
   const [page, setPage] = useState(0);
   const [sizePerPage, setSizePerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
 
+  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+
+  const loadUsers = useCallback(async () => {
+    try {
+      const response = await getAllUsers(cancelSource.token);
+      console.log(response)
+      if (response.data) {
+        console.log(response.data)
+        await setDataTable(response.data.users);
+        setTotalRecords(response.data.users.length);
+        setDataload(1);
+      }
+    } catch (error) {
+      setDataload(2);
+      // console.log(error);
+    }
+  }, [cancelSource]);
+
+  useEffect(() => {
+    loadUsers()
+    return () => {
+      cancelSource.cancel('The request has been canceled')
+      
+    }
+  }, [loadUsers, cancelSource]);
 
   const handleTableChange = () => {
 
   }
 
 
-  if (!dataload) {
+  if (dataload === 1) {
     return (
       <>
         <form className="input-form">
@@ -63,8 +92,11 @@ const UsersTable = ({t}) => {
         />
       </>
     );
-  } else {
+  } else if(dataload === 0){
     return <p>Loading...</p>;
+  }
+  else {
+    return <p>The data couldn't be fetched</p>
   }
 };
 

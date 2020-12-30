@@ -717,3 +717,20 @@ export const deleteUser = async (id) => {
     })
   })
 }
+
+/* ADMIN */
+
+export const getAllUsers = async (cancelToken) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
