@@ -24,8 +24,6 @@ const UserPagination = ({
   sizePerPage,
   onTableChange,
   totalSize,
-  onSizeChange,
-  changeFieldOrder,
   t
 }) => {
 

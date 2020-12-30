@@ -14,28 +14,32 @@ const userArray = [
 
 const UsersTable = ({t}) => {
   const [dataload, setDataload] = useState(0);
-  const [dataTable, setDataTable] = useState(userArray);
-  const [page, setPage] = useState(0);
-  const [sizePerPage, setSizePerPage] = useState(10);
+  const [dataTable, setDataTable] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sizePerPage, setSizePerPage] = useState(5);
   const [totalRecords, setTotalRecords] = useState(0);
 
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
+  
+  
   const loadUsers = useCallback(async () => {
     try {
       const response = await getAllUsers(cancelSource.token);
       console.log(response)
       if (response.data) {
-        console.log(response.data)
+        console.log(response.data.users)
         await setDataTable(response.data.users);
         setTotalRecords(response.data.users.length);
+        setCurrentData(response.data.users.slice(0, sizePerPage));
         setDataload(1);
       }
     } catch (error) {
       setDataload(2);
       // console.log(error);
     }
-  }, [cancelSource]);
+  }, [cancelSource, sizePerPage]);
 
   useEffect(() => {
     loadUsers()
@@ -45,8 +49,12 @@ const UsersTable = ({t}) => {
     }
   }, [loadUsers, cancelSource]);
 
-  const handleTableChange = () => {
+  
 
+  const handleTableChange = (type, { page }) => {
+    const index = (page - 1) * sizePerPage;
+    setCurrentPage(page);
+    setCurrentData(dataTable.slice(index, sizePerPage * page));
   }
 
 
@@ -81,13 +89,11 @@ const UsersTable = ({t}) => {
         
 
         <UserPagination
-          data={dataTable}
-          page={page}
+          data={currentData}
+          page={currentPage}
           sizePerPage={sizePerPage}
           totalSize={totalRecords}
           onTableChange={handleTableChange}
-          // onSizeChange={this.onSizeChange}
-          // changeFieldOrder={this.changeFieldOrder}
           t={t}
         />
       </>
