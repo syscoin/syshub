@@ -27,7 +27,7 @@
     "aes256": "^1.0.4",
     "antd": "^3.10.8",
     "antd-mobile": "^2.2.5",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "bitcoinjs-lib": "4.0.2",
     "buffer": "^5.6.0",
     "buffer-math": "^0.3.0",
