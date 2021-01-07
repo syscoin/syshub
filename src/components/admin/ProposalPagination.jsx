@@ -8,17 +8,17 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 
 /**
- * Component that renders the pagination of the users table
+ * Component that renders the pagination of the proposals table
  * @component
  * @subcategory masternodes
  * @param {*} props the props sent by its father
  * @example
  * return (
- *  <UserPagination  />
+ *  <ProposalPagination  />
  * )
  */
 
-const UserPagination = ({
+const ProposalPagination = ({
   data,
   page,
   sizePerPage,
@@ -136,4 +136,4 @@ const UserPagination = ({
     </div>
   );
 }
-export default UserPagination;
+export default ProposalPagination;

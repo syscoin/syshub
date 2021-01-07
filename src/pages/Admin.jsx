@@ -11,6 +11,7 @@ import Title from "../components/global/Title";
 import SubTitle from "../components/global/SubTitle";
 import Loading from "../components/global/Loading";
 import UsersTable from "../components/admin/UsersTable";
+import ProposalsTable from "../components/admin/ProposalsTable";
 
 
 /**
@@ -55,6 +56,7 @@ const Admin = ({ t }) => {
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left">
                             <SubTitle heading={t('admin.proposals.heading')} />
+                            <ProposalsTable />
                           </div>
                         </div>
                       </div>

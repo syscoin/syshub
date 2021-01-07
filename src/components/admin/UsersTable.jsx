@@ -1,16 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
+import {useForm} from "react-hook-form";
 
 import { getAllUsers } from "../../utils/request";
-
 import UserPagination from "./UserPagination";
 
-const userArray = [
-  {name: 'asd', email: 'example1@example.com', admin: 'no'},
-  {name: 'asd', email: 'example2@example.com', admin: 'no'},
-  {name: 'asd', email: 'example3@example.com', admin: 'no'}
-];
 
 const UsersTable = ({t}) => {
   const [dataload, setDataload] = useState(0);
@@ -22,7 +17,7 @@ const UsersTable = ({t}) => {
 
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  
+  const {register, handleSubmit, reset} = useForm();
   
   const loadUsers = useCallback(async () => {
     try {
@@ -57,33 +52,48 @@ const UsersTable = ({t}) => {
     setCurrentData(dataTable.slice(index, sizePerPage * page));
   }
 
+  const doSearch = ({searchValue}) => {
+    // console.log(searchValue);
+    setCurrentPage(1);
+    let filteredArray = dataTable.filter(element => element.email.includes(searchValue.toLowerCase()));
+    console.log(filteredArray)
+    setCurrentData(filteredArray)
+  }
+
+  const doReset = () => {
+    reset({ searchValue: '' });
+    setCurrentPage(1);
+    setCurrentData(dataTable.slice(0, sizePerPage));
+  }
 
   if (dataload === 1) {
     return (
       <>
-        <form className="input-form">
+        <form className="input-form" onSubmit={handleSubmit(doSearch)}>
           <div className="form-group">
             <label>{t('admin.users.label')}</label>
             <br/>
             <input
-              id="srcVal"
+              id="searchValue"
               type="text"
+              name="searchValue"
+              ref={register}
               className="styled"
               placeholder={t('admin.users.placeholder')}
-              // onKeyUp={this.searchInTable}
             />
 
-            <button
-              type="button"
-              className="btn btn--blue"
-              style={{
-                margin: "20px auto",
-                width: "150px",
-                display: "block",
-              }}
-            >
-              Search
-            </button>
+            <div className="btn-group text-center" style={{marginTop: '20px'}}>
+              <button type="submit" className="btn btn--blue">
+                Search
+              </button>
+              <button
+                type="reset"
+                className="btn btn--blue-border"
+                onClick={doReset}
+              >
+                Clear
+              </button>
+            </div>
           </div>
         </form>
         
@@ -99,10 +109,10 @@ const UsersTable = ({t}) => {
       </>
     );
   } else if(dataload === 0){
-    return <p>Loading...</p>;
+    return <p className="text-center">Loading...</p>;
   }
   else {
-    return <p>The data couldn't be fetched</p>
+    return <p className="text-center">The data couldn't be fetched</p>
   }
 };
 
