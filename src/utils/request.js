@@ -720,11 +720,55 @@ export const deleteUser = async (id) => {
 
 /* ADMIN */
 
-export const getAllUsers = async (cancelToken) => {
+export const getAllUsers = async (page, email = '', cancelToken) => {
   await firebase.refreshInRequest();
   let { token } = getToken();
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URI}/user`, {
+    axios.get(`${API_URI}/user/?page=${page}&email=${email}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const makeAdmin = async (uid, data) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/admin/`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const deleteAdmin = async (uid) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.delete(`${API_URI}/admin/${uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+
+export const getAllHiddenProposals = async (page, cancelToken) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/proposal/hiddenproposal/all/?page=${page}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT

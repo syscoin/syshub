@@ -30,17 +30,17 @@ const ProposalPagination = ({
   const getColumns = (t) => {
     return [
       {
-        text: t("admin.users.table.email"),
-        dataField: "email",
+        text: t("admin.proposals.table.hash"),
+        dataField: "hash",
       },
       {
-        text: t("admin.users.table.admin"),
-        dataField: "admin",
+        text: t("admin.proposals.table.creation"),
+        dataField: "createTime",
         align: 'center',
-        formatter: adminFormatter
+        formatter: proposalDateFormatter
       },
       {
-        text: t("admin.users.table.actions"),
+        text: t("admin.proposals.table.actions"),
         dataField: "actions",
         isDummyField: true,
         align: 'center',
@@ -49,64 +49,49 @@ const ProposalPagination = ({
     ];
   };
 
-  const adminFormatter = (cell, userRow) => {
-    const isAdmin = userRow.role.find(role => role === 'admin');
 
-    if (isAdmin === 'admin') {
-      return 'Admin'
-    }
-    else {
-      return 'Not admin'
-    }
-    
+
+  const actionsFormatter = (cell, proposalRow) => {
+    return (
+      <button
+        className=""
+        style={{
+          background: '#1e255f29',
+          lineHeight: '40px',
+          textAlign: 'center',
+          border: '0',
+          padding: '0 5px'
+        }}
+        onClick={() => showProposal(proposalRow)}
+      >
+        Show proposal
+      </button>
+    )
   }
 
-  const actionsFormatter = (cell, userRow) => {
-    const isAdmin = userRow.role.find(role => role === 'admin');
-
-    if (isAdmin === 'admin') {
-      return (
-        <button
-          className=""
-          style={{
-            background: '#1e255f29',
-            lineHeight: '40px',
-            textAlign: 'center',
-            border: '0',
-            padding: '0 5px'
-          }}
-          onClick={() => removeUserAdmin(userRow)}
-        >
-          Remove admin
-        </button>
-      )
-    }
-    else {
-      return (
-        <button
-          className=""
-          style={{
-            background: '#1e255f29',
-            lineHeight: '40px',
-            textAlign: 'center',
-            border: '0',
-            padding: '0 5px'
-          }}
-          onClick={() => makeUserAdmin(userRow)}
-        >
-          Add admin
-        </button>
-      )
-    }
+  const showProposal = (proposalRow) => {
+    console.log(proposalRow);
   }
 
-  const removeUserAdmin = (user) => {
-
+  /**
+   * Function that returns a date in human format using the unix timestamps
+   * @function
+   * @param {number} creationTime number with a unix timestamp
+   */
+  function proposalDateFormatter(creationTime) {
+    let unixTimestamp = creationTime;
+    let milliseconds = unixTimestamp * 1000;
+    const dateObject = new Date(milliseconds);
+    const humanDateFormat = (
+      dateObject.getDate() +
+      "-" +
+      (dateObject.getMonth() + 1) +
+      "-" +
+      dateObject.getFullYear()
+    );
+    return humanDateFormat;
   }
 
-  const makeUserAdmin = (user) => {
-    console.log(user);
-  }
 
   return (
     <div>
@@ -122,7 +107,7 @@ const ProposalPagination = ({
           <div>
             <BootstrapTable
               remote
-              keyField="email"
+              keyField="uid"
               data={data}
               columns={getColumns(t)}
               onTableChange={onTableChange}

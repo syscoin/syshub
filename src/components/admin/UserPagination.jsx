@@ -24,6 +24,8 @@ const UserPagination = ({
   sizePerPage,
   onTableChange,
   totalSize,
+  onAddAdmin,
+  onRemoveAdmin,
   t
 }) => {
 
@@ -75,7 +77,7 @@ const UserPagination = ({
             border: '0',
             padding: '0 5px'
           }}
-          onClick={() => removeUserAdmin(userRow)}
+          onClick={() => onRemoveAdmin(userRow)}
         >
           Remove admin
         </button>
@@ -92,20 +94,12 @@ const UserPagination = ({
             border: '0',
             padding: '0 5px'
           }}
-          onClick={() => makeUserAdmin(userRow)}
+          onClick={() => onAddAdmin(userRow)}
         >
           Add admin
         </button>
       )
     }
-  }
-
-  const removeUserAdmin = (user) => {
-
-  }
-
-  const makeUserAdmin = (user) => {
-    console.log(user);
   }
 
   return (

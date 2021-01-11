@@ -14,10 +14,15 @@ const admin = {
         name: 'Name',
         admin: 'Admin',
         actions: 'Actions'
+      },
+      modal: {
+        title: "Add new admin user"
       }
     },
     proposals: {
       heading: 'Hidden proposals',
+      label: 'Hide a proposal',
+      placeholder: 'Proposal hash',
       table: {
         name: 'Name',
         hash: 'Proposal hash',

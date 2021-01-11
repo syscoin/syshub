@@ -1,119 +1,166 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { getAllUsers } from "../../utils/request";
+import { deleteAdmin, getAllUsers, makeAdmin } from "../../utils/request";
 import UserPagination from "./UserPagination";
+import CustomModal from '../global/CustomModal';
+import UsersAddModal from "./UsersAddModal";
+import Title from "../global/Title";
 
 
-const UsersTable = ({t}) => {
+const UsersTable = ({ t }) => {
   const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState([]);
-  const [currentData, setCurrentData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sizePerPage, setSizePerPage] = useState(5);
+  const [sizePerPage, setSizePerPage] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [search, setSearch] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
+  const scrollRef = useRef(null);
+  const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  const {register, handleSubmit, reset} = useForm();
-  
+  const { register, handleSubmit, reset } = useForm();
+
   const loadUsers = useCallback(async () => {
+    setDataload(0);
     try {
-      const response = await getAllUsers(cancelSource.token);
-      console.log(response)
+      const response = await getAllUsers(
+        currentPage,
+        search,
+        cancelSource.token
+      );
+      console.log(response);
       if (response.data) {
-        console.log(response.data.users)
-        await setDataTable(response.data.users);
-        setTotalRecords(response.data.users.length);
-        setCurrentData(response.data.users.slice(0, sizePerPage));
-        setDataload(1);
+        console.log(response.data.users);
+        if (isMounted.current) {
+          setDataTable(response.data.users);
+          setSizePerPage(response.data.pageSize);
+          (response.data.users.length === 0) && setTotalRecords(0);
+          (response.data.users.length > 0) && setTotalRecords(response.data.totalRecords);
+  
+          setDataload(1);
+        }
       }
     } catch (error) {
-      setDataload(2);
-      // console.log(error);
+      isMounted.current && setDataload(2);
+      console.log(error);
     }
-  }, [cancelSource, sizePerPage]);
+  }, [currentPage, search, cancelSource]);
 
   useEffect(() => {
-    loadUsers()
-    return () => {
-      cancelSource.cancel('The request has been canceled')
-      
-    }
-  }, [loadUsers, cancelSource]);
+    loadUsers();
+  }, [loadUsers]);
 
-  
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+      cancelSource.cancel("The request has been canceled");
+    };
+  }, [cancelSource]);
 
   const handleTableChange = (type, { page }) => {
-    const index = (page - 1) * sizePerPage;
     setCurrentPage(page);
-    setCurrentData(dataTable.slice(index, sizePerPage * page));
-  }
+  };
 
-  const doSearch = ({searchValue}) => {
-    // console.log(searchValue);
+  const doSearch = ({ searchValue }) => {
     setCurrentPage(1);
-    let filteredArray = dataTable.filter(element => element.email.includes(searchValue.toLowerCase()));
-    console.log(filteredArray)
-    setCurrentData(filteredArray)
-  }
+    setSearch(searchValue);
+  };
 
   const doReset = () => {
-    reset({ searchValue: '' });
+    reset({ searchValue: "" });
     setCurrentPage(1);
-    setCurrentData(dataTable.slice(0, sizePerPage));
+    setSearch('');
+  };
+
+  const doAddAdmin = async (user) => {
+    console.log('add', user);
+    await makeAdmin(user.uid, { uid: user.uid, email: user.email });
+    loadUsers();
+
   }
 
-  if (dataload === 1) {
-    return (
-      <>
-        <form className="input-form" onSubmit={handleSubmit(doSearch)}>
-          <div className="form-group">
-            <label>{t('admin.users.label')}</label>
-            <br/>
-            <input
-              id="searchValue"
-              type="text"
-              name="searchValue"
-              ref={register}
-              className="styled"
-              placeholder={t('admin.users.placeholder')}
-            />
+  const doRemoveAdmin = async (user) => {
+    console.log('remove admin', user);
+    await deleteAdmin(user.uid);
+    loadUsers();
+  }
 
-            <div className="btn-group text-center" style={{marginTop: '20px'}}>
-              <button type="submit" className="btn btn--blue">
-                Search
-              </button>
-              <button
-                type="reset"
-                className="btn btn--blue-border"
-                onClick={doReset}
-              >
-                Clear
-              </button>
-            </div>
+  const doAddNewAdmin = () => {
+
+  }
+
+  return (
+    <>
+      <Title heading={t('admin.heading')} />
+      
+      <form className="input-form" onSubmit={handleSubmit(doSearch)}>
+        <div className="form-group">
+          <label>{t("admin.users.label")}</label>
+          <br />
+          <input
+            id="searchValue"
+            type="text"
+            name="searchValue"
+            ref={register}
+            className="styled"
+            placeholder={t("admin.users.placeholder")}
+          />
+
+          <div className="btn-group text-center" style={{ marginTop: "20px" }}>
+            <button
+              type="reset"
+              className="btn btn--blue-border"
+              onClick={doReset}
+            >
+              Clear
+            </button>
+            <button type="submit" className="btn btn--blue">
+              Search
+            </button>
+            <button type="button" className="btn btn--blue" onClick={() => setOpenModal(true)}>
+              Add new user
+            </button>
           </div>
-        </form>
-        
+        </div>
+      </form>
 
+      {dataload === 1 ? (
         <UserPagination
-          data={currentData}
+          data={dataTable}
           page={currentPage}
           sizePerPage={sizePerPage}
           totalSize={totalRecords}
           onTableChange={handleTableChange}
+          onAddAdmin={doAddAdmin}
+          onRemoveAdmin={doRemoveAdmin}
           t={t}
         />
-      </>
-    );
-  } else if(dataload === 0){
-    return <p className="text-center">Loading...</p>;
-  }
-  else {
-    return <p className="text-center">The data couldn't be fetched</p>
-  }
+      ) : dataload === 0 ? (
+        <p className="text-center">Loading users...</p>
+      ) : (
+        <p className="text-center">The data couldn't be fetched</p>
+      )}
+      
+      <CustomModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      >
+        <UsersAddModal onAddAdmin={doAddNewAdmin} />
+      </CustomModal>
+    </>
+  );
 };
 
 export default withTranslation()(UsersTable);

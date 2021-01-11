@@ -45,7 +45,6 @@ const Admin = ({ t }) => {
                       <div className="cols">
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left">
-                            <Title heading={t('admin.heading')} />
                             <UsersTable />
                           </div>
                         </div>
@@ -55,7 +54,6 @@ const Admin = ({ t }) => {
                       <div className="cols">
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left">
-                            <SubTitle heading={t('admin.proposals.heading')} />
                             <ProposalsTable />
                           </div>
                         </div>

@@ -1,119 +1,110 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { getAllUsers } from "../../utils/request";
+import { getAllHiddenProposals } from "../../utils/request";
 import ProposalPagination from "./ProposalPagination";
+import SubTitle from "../global/SubTitle";
 
-
-const ProposalsTable = ({t}) => {
+const ProposalsTable = ({ t }) => {
   const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState([]);
-  const [currentData, setCurrentData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sizePerPage, setSizePerPage] = useState(5);
+  const [sizePerPage, setSizePerPage] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
 
+  const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  const {register, handleSubmit, reset} = useForm();
-  
-  const loadUsers = useCallback(async () => {
+  const { register, handleSubmit } = useForm();
+
+  const loadProposals = useCallback(async () => {
+    setDataload(0);
     try {
-      const response = await getAllUsers(cancelSource.token);
-      console.log(response)
-      if (response.data) {
-        console.log(response.data.users)
-        await setDataTable(response.data.users);
-        setTotalRecords(response.data.users.length);
-        setCurrentData(response.data.users.slice(0, sizePerPage));
-        setDataload(1);
+      const response = await getAllHiddenProposals(
+        currentPage,
+        cancelSource.token
+      );
+      console.log(response);
+      if (response.data.proposalHash) {
+        isMounted.current && setDataTable(response.data.proposalHash);
+        isMounted.current && setSizePerPage(response.data.pageSize);
+        isMounted.current && setTotalRecords(response.data.totalRecords);
+
+        isMounted.current && setDataload(1);
       }
     } catch (error) {
-      setDataload(2);
-      // console.log(error);
+      isMounted.current && setDataload(2);
+      console.log(error);
     }
-  }, [cancelSource, sizePerPage]);
+  }, [currentPage, cancelSource]);
 
   useEffect(() => {
-    loadUsers()
-    return () => {
-      cancelSource.cancel('The request has been canceled')
-      
-    }
-  }, [loadUsers, cancelSource]);
+    loadProposals();
+  }, [loadProposals]);
 
-  
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+      cancelSource.cancel("The request has been canceled");
+    };
+  }, [cancelSource]);
 
   const handleTableChange = (type, { page }) => {
-    const index = (page - 1) * sizePerPage;
     setCurrentPage(page);
-    setCurrentData(dataTable.slice(index, sizePerPage * page));
-  }
+  };
 
-  const doSearch = ({searchValue}) => {
-    // console.log(searchValue);
-    setCurrentPage(1);
-    let filteredArray = dataTable.filter(element => element.email.includes(searchValue.toLowerCase()));
-    console.log(filteredArray)
-    setCurrentData(filteredArray)
-  }
+  const doAddProposal = (data) => {};
 
-  const doReset = () => {
-    reset({ searchValue: '' });
-    setCurrentPage(1);
-    setCurrentData(dataTable.slice(0, sizePerPage));
-  }
+  return (
+    <>
+      <SubTitle heading={t('admin.proposals.heading')} />
+      
+      <form className="input-form" onSubmit={handleSubmit(doAddProposal)}>
+        <div className="form-group">
+          <label>{t("admin.proposals.label")}</label>
+          <br />
+          <input
+            id="searchValue"
+            type="text"
+            name="searchValue"
+            ref={register}
+            className="styled"
+            placeholder={t("admin.proposals.placeholder")}
+          />
 
-  if (dataload === 1) {
-    return (
-      <>
-        <form className="input-form" onSubmit={handleSubmit(doSearch)}>
-          <div className="form-group">
-            <label>{t('admin.users.label')}</label>
-            <br/>
-            <input
-              id="searchValue"
-              type="text"
-              name="searchValue"
-              ref={register}
-              className="styled"
-              placeholder={t('admin.users.placeholder')}
-            />
-
-            <div className="btn-group text-center" style={{marginTop: '20px'}}>
-              <button type="submit" className="btn btn--blue">
-                Search
-              </button>
-              <button
-                type="reset"
-                className="btn btn--blue-border"
-                onClick={doReset}
-              >
-                Clear
-              </button>
-            </div>
+          <div className="btn-group text-center" style={{ marginTop: "20px" }}>
+            <button type="submit" className="btn btn--blue">
+              Add
+            </button>
           </div>
-        </form>
-        
+        </div>
+      </form>
 
+      {dataload === 1 ? (
         <ProposalPagination
-          data={currentData}
+          data={dataTable}
           page={currentPage}
           sizePerPage={sizePerPage}
           totalSize={totalRecords}
           onTableChange={handleTableChange}
           t={t}
         />
-      </>
-    );
-  } else if(dataload === 0){
-    return <p className="text-center">Loading...</p>;
-  }
-  else {
-    return <p className="text-center">The data couldn't be fetched</p>
-  }
+      ) : dataload === 0 ? (
+        <p className="text-center">Loading hidden proposals...</p>
+      ) : (
+        <p className="text-center">The data couldn't be fetched</p>
+      )}
+    </>
+  );
 };
 
 export default withTranslation()(ProposalsTable);
