@@ -735,7 +735,7 @@ export const getAllUsers = async (page, email = '', cancelToken) => {
   })
 }
 
-export const makeAdmin = async (uid, data) => {
+export const makeAdmin = async (data) => {
   await firebase.refreshInRequest();
   let { token } = getToken();
   return new Promise((resolve, reject) => {

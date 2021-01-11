@@ -7,8 +7,6 @@ import { useUser } from "../context/user-context";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
-import Title from "../components/global/Title";
-import SubTitle from "../components/global/SubTitle";
 import Loading from "../components/global/Loading";
 import UsersTable from "../components/admin/UsersTable";
 import ProposalsTable from "../components/admin/ProposalsTable";

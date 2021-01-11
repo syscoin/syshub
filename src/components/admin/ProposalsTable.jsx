@@ -20,10 +20,13 @@ const ProposalsTable = ({ t }) => {
   const [sizePerPage, setSizePerPage] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
 
+  const scrollRef = useRef(null);
   const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   const { register, handleSubmit } = useForm();
+
+  const executeScroll = () => scrollRef.current.scrollIntoView() 
 
   const loadProposals = useCallback(async () => {
     setDataload(0);
@@ -60,13 +63,14 @@ const ProposalsTable = ({ t }) => {
 
   const handleTableChange = (type, { page }) => {
     setCurrentPage(page);
+    executeScroll();
   };
 
   const doAddProposal = (data) => {};
 
   return (
     <>
-      <SubTitle heading={t('admin.proposals.heading')} />
+      <SubTitle propsRef={scrollRef} heading={t('admin.proposals.heading')} />
       
       <form className="input-form" onSubmit={handleSubmit(doAddProposal)}>
         <div className="form-group">

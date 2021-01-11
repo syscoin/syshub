@@ -6,9 +6,9 @@ import React from 'react';
  * @subcategory Global
  * @param {string} heading The content of the Title 
  */
-export default function Title({heading}) {
+export default function Title({heading, propsRef}) {
   return (
-    <h1 className="article__title text-center title-border title-border--blue">
+    <h1 ref={propsRef} className="article__title text-center title-border title-border--blue">
       {heading}
     </h1>
   )

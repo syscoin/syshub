@@ -6,9 +6,9 @@ import React from 'react'
  * @subcategory Global
  * @param {string} heading The content of the subtitle 
  */
-export default function SubTitle({heading}) {
+export default function SubTitle({heading, propsRef}) {
   return (
-    <h2 className="article__title text-center title-border title-border--blue">
+    <h2 ref={propsRef} className="article__title text-center title-border title-border--blue">
       {heading}
     </h2>
   )

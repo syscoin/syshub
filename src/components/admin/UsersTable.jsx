@@ -10,10 +10,10 @@ import { withTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 
 import { deleteAdmin, getAllUsers, makeAdmin } from "../../utils/request";
+import Title from "../global/Title";
 import UserPagination from "./UserPagination";
 import CustomModal from '../global/CustomModal';
 import UsersAddModal from "./UsersAddModal";
-import Title from "../global/Title";
 
 
 const UsersTable = ({ t }) => {
@@ -30,6 +30,8 @@ const UsersTable = ({ t }) => {
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   const { register, handleSubmit, reset } = useForm();
+
+  const executeScroll = () => scrollRef.current.scrollIntoView() 
 
   const loadUsers = useCallback(async () => {
     setDataload(0);
@@ -71,6 +73,7 @@ const UsersTable = ({ t }) => {
 
   const handleTableChange = (type, { page }) => {
     setCurrentPage(page);
+    executeScroll();
   };
 
   const doSearch = ({ searchValue }) => {
@@ -86,24 +89,34 @@ const UsersTable = ({ t }) => {
 
   const doAddAdmin = async (user) => {
     console.log('add', user);
-    await makeAdmin(user.uid, { uid: user.uid, email: user.email });
+    await makeAdmin({ uid: user.uid, email: user.email });
     loadUsers();
-
+    executeScroll();
   }
 
   const doRemoveAdmin = async (user) => {
     console.log('remove admin', user);
     await deleteAdmin(user.uid);
     loadUsers();
+    executeScroll();
+
   }
 
-  const doAddNewAdmin = () => {
-
+  const doAddNewAdmin = async (userData) => {
+    console.log('add new admin', userData);
+    await makeAdmin({
+      email: userData.email,
+      name: userData.name,
+      pwd: userData.password
+    });
+    loadUsers();
+    executeScroll();
+    setOpenModal(false);
   }
 
   return (
     <>
-      <Title heading={t('admin.heading')} />
+      <Title propsRef={scrollRef} heading={t('admin.heading')} />
       
       <form className="input-form" onSubmit={handleSubmit(doSearch)}>
         <div className="form-group">
