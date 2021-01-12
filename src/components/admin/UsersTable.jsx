@@ -8,6 +8,7 @@ import React, {
 import axios from "axios";
 import { withTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
+import swal from 'sweetalert2'
 
 import { deleteAdmin, getAllUsers, makeAdmin } from "../../utils/request";
 import Title from "../global/Title";
@@ -43,7 +44,6 @@ const UsersTable = ({ t }) => {
       );
       console.log(response);
       if (response.data) {
-        console.log(response.data.users);
         if (isMounted.current) {
           setDataTable(response.data.users);
           setSizePerPage(response.data.pageSize);
@@ -88,30 +88,106 @@ const UsersTable = ({ t }) => {
   };
 
   const doAddAdmin = async (user) => {
-    console.log('add', user);
-    await makeAdmin({ uid: user.uid, email: user.email });
-    loadUsers();
-    executeScroll();
+    const result = await swal.fire({
+      title: `Give admin privileges to ${user.email}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+    });
+    if (result.isConfirmed) {
+      swal.fire({
+        title: 'Giving privileges, please wait',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      });
+      try {
+        await makeAdmin({ uid: user.uid, email: user.email });
+        swal.fire({
+          icon: 'success',
+          title: `${user.email} is now an admin`,
+          timer: 2500
+        });
+        loadUsers();
+        executeScroll();
+      } catch (error) {
+        swal.fire({
+          icon: 'error',
+          title: 'There was an error',
+          text: error.message
+        });
+      }
+    }
+    
   }
 
   const doRemoveAdmin = async (user) => {
-    console.log('remove admin', user);
-    await deleteAdmin(user.uid);
-    loadUsers();
-    executeScroll();
-
+    const result = await swal.fire({
+      title: `Remove admin privileges of ${user.email}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it',
+    });
+    if (result.isConfirmed) {
+      swal.fire({
+        title: 'Removing please wait',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      });
+      try {
+        await deleteAdmin(user.uid);
+        swal.fire({
+          icon: 'success',
+          title: 'The admin was removed',
+          text: 'The user does not have admin privileges anymore',
+          timer: 2500
+        });
+        loadUsers();
+        executeScroll();
+      } catch (error) {
+        swal.fire({
+          icon: 'error',
+          title: 'There was an error',
+          text: error.message
+        });
+      }
+    }
   }
 
   const doAddNewAdmin = async (userData) => {
-    console.log('add new admin', userData);
-    await makeAdmin({
-      email: userData.email,
-      name: userData.name,
-      pwd: userData.password
+    swal.fire({
+      title: 'Creating user, please wait',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
     });
-    loadUsers();
-    executeScroll();
-    setOpenModal(false);
+    try {
+      await makeAdmin({
+        email: userData.email,
+        name: userData.name,
+        pwd: userData.password
+      });
+      swal.fire({
+        icon: 'success',
+        title: 'The user was created',
+        text: `${userData.email} is an admin`,
+        timer: 2500
+      });
+      
+      loadUsers();
+      executeScroll();
+      setOpenModal(false);
+    } catch (error) {
+      swal.fire({
+        icon: 'error',
+        title: 'There was an error',
+        text: error.message
+      });
+    }
   }
 
   return (
@@ -120,7 +196,7 @@ const UsersTable = ({ t }) => {
       
       <form className="input-form" onSubmit={handleSubmit(doSearch)}>
         <div className="form-group">
-          <label>{t("admin.users.label")}</label>
+          <label htmlFor="searchValue">{t("admin.users.label")}</label>
           <br />
           <input
             id="searchValue"

@@ -778,3 +778,31 @@ export const getAllHiddenProposals = async (page, cancelToken) => {
       .catch(err => reject(err))
   })
 }
+
+export const createHiddenProposal = async (data) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/proposal/hiddenproposal`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const deleteHiddenProposal = async (hash) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.delete(`${API_URI}/proposal/hiddenproposal/${hash}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}

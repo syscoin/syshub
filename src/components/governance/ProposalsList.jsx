@@ -24,6 +24,7 @@ function ProposalsList(props) {
   const { user } = useUser();
   const [userInfo, setUserInfo] = useState(null);
   const [proposals, setProposals] = useState([]);
+  const [dataload, setDataload] = useState(0);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   /**
@@ -41,9 +42,11 @@ function ProposalsList(props) {
           }
         });
         setProposals(govdata);
+        setDataload(1);
       }
     } catch (error) {
       // console.log(error);
+      setDataload(2);
     }
   }, [cancelSource]);
 
@@ -81,7 +84,10 @@ function ProposalsList(props) {
     <>
       <SubTitle heading={t('govlist.table.title')} />
       {
-        proposals.length > 0 && <div className="proposals">
+        (dataload === 0) && <p className="text-center">{t('govlist.loading')}</p>
+      }
+      {
+        (dataload === 1 && proposals.length > 0) && <div className="proposals">
           {proposals.map(proposal => {
             return <ProposalCard
               key={proposal.Hash}
@@ -94,7 +100,10 @@ function ProposalsList(props) {
         </div>
       }
       {
-        proposals.length === 0 && <p className="text-center">{t('govlist.loading')}</p>
+        (dataload === 1 && proposals.length === 0) && <p className="text-center">There are no proposals</p>
+      }
+      {
+        (dataload === 2) && <p className="text-center">The data couldn't be fetched</p>
       }
     </>
   )

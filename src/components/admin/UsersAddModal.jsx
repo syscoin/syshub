@@ -1,5 +1,4 @@
 import React from "react";
-import swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";

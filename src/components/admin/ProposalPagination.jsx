@@ -24,6 +24,7 @@ const ProposalPagination = ({
   sizePerPage,
   onTableChange,
   totalSize,
+  onShowProposal,
   t
 }) => {
 
@@ -62,16 +63,13 @@ const ProposalPagination = ({
           border: '0',
           padding: '0 5px'
         }}
-        onClick={() => showProposal(proposalRow)}
+        onClick={() => onShowProposal(proposalRow)}
       >
         Show proposal
       </button>
     )
   }
 
-  const showProposal = (proposalRow) => {
-    console.log(proposalRow);
-  }
 
   /**
    * Function that returns a date in human format using the unix timestamps

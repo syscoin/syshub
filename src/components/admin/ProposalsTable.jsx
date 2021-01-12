@@ -7,11 +7,21 @@ import React, {
 } from "react";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
+import swal from 'sweetalert2';
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
 
-import { getAllHiddenProposals } from "../../utils/request";
+import { createHiddenProposal, deleteHiddenProposal, getAllHiddenProposals } from "../../utils/request";
 import ProposalPagination from "./ProposalPagination";
 import SubTitle from "../global/SubTitle";
+
+const schema = yup.object().shape({
+  proposalHash: yup.string()
+    .test('len', 'Proposal hash has to be 64 characters', val => val.length === 64)
+    .required("Proposal hash is required")
+});
 
 const ProposalsTable = ({ t }) => {
   const [dataload, setDataload] = useState(0);
@@ -24,9 +34,12 @@ const ProposalsTable = ({ t }) => {
   const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(schema),
+  });
 
-  const executeScroll = () => scrollRef.current.scrollIntoView() 
+  const executeScroll = () => scrollRef.current.scrollIntoView();
 
   const loadProposals = useCallback(async () => {
     setDataload(0);
@@ -37,11 +50,13 @@ const ProposalsTable = ({ t }) => {
       );
       console.log(response);
       if (response.data.proposalHash) {
-        isMounted.current && setDataTable(response.data.proposalHash);
-        isMounted.current && setSizePerPage(response.data.pageSize);
-        isMounted.current && setTotalRecords(response.data.totalRecords);
+        if (isMounted.current) {
+          setDataTable(response.data.proposalHash);
+          setSizePerPage(response.data.pageSize);
+          setTotalRecords(response.data.totalRecords);
 
-        isMounted.current && setDataload(1);
+          setDataload(1);
+        }
       }
     } catch (error) {
       isMounted.current && setDataload(2);
@@ -66,30 +81,100 @@ const ProposalsTable = ({ t }) => {
     executeScroll();
   };
 
-  const doAddProposal = (data) => {};
+  const doHideProposal = async (data) => {
+    console.log(data);
+    swal.fire({
+      title: 'Hiding proposal, please wait',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
+    try {
+      await createHiddenProposal({hash: data.proposalHash});
+      swal.fire({
+        icon: 'success',
+        title: 'The proposal is hidden',
+        timer: 2500
+      });
+      loadProposals();
+      executeScroll();
+    } catch (error) {
+      swal.fire({
+        icon: 'error',
+        title: 'There was an error',
+        text: error.message
+      });
+    }
+  };
+
+  const doShowProposal = async (proposal) => {
+    console.log(proposal);
+    const result = await swal.fire({
+      title: `You will show this proposal on the app again`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, show it',
+    });
+    if (result.isConfirmed) {
+      swal.fire({
+        title: 'Showing proposal please wait',
+        showConfirmButton: false,
+        willOpen: () => {
+          swal.showLoading()
+        }
+      });
+      try {
+        await deleteHiddenProposal(proposal.hash);
+        swal.fire({
+          icon: 'success',
+          title: 'The proposal is now showing',
+          timer: 2500
+        });
+        loadProposals();
+        executeScroll();
+      } catch (error) {
+        swal.fire({
+          icon: 'error',
+          title: 'There was an error',
+          text: error.message
+        });
+      }
+    }
+  };
+
 
   return (
     <>
-      <SubTitle propsRef={scrollRef} heading={t('admin.proposals.heading')} />
-      
-      <form className="input-form" onSubmit={handleSubmit(doAddProposal)}>
+      <SubTitle propsRef={scrollRef} heading={t("admin.proposals.heading")} />
+
+      <form className="input-form" onSubmit={handleSubmit(doHideProposal)}>
         <div className="form-group">
-          <label>{t("admin.proposals.label")}</label>
+          <label htmlFor="proposalHash">{t("admin.proposals.label")}</label>
           <br />
+
           <input
-            id="searchValue"
+            id="proposalHash"
             type="text"
-            name="searchValue"
+            name="proposalHash"
             ref={register}
             className="styled"
             placeholder={t("admin.proposals.placeholder")}
           />
-
-          <div className="btn-group text-center" style={{ marginTop: "20px" }}>
-            <button type="submit" className="btn btn--blue">
-              Add
-            </button>
-          </div>
+          <ErrorMessage
+            errors={errors}
+            name="proposalHash"
+            render={({ message }) => (
+              <small>
+                <p style={{ lineHeight: "1.5" }}>{message}</p>
+              </small>
+            )}
+          />
+        </div>
+        <div className="btn-group text-center" style={{ marginTop: "20px" }}>
+          <button type="submit" className="btn btn--blue">
+            Hide
+          </button>
         </div>
       </form>
 
@@ -100,6 +185,7 @@ const ProposalsTable = ({ t }) => {
           sizePerPage={sizePerPage}
           totalSize={totalRecords}
           onTableChange={handleTableChange}
+          onShowProposal={doShowProposal}
           t={t}
         />
       ) : dataload === 0 ? (
