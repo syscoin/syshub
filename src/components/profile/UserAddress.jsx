@@ -4,7 +4,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import swal from 'sweetalert2';
 import { useTranslation } from 'react-i18next/';
 
-
 import { useUser } from '../../context/user-context';
 import { getUserMasterNodes, updateMasterNode, destroyMasterNode, get2faInfoUser } from '../../utils/request';
 
@@ -14,15 +13,15 @@ import CustomModal from "../global/CustomModal";
 import Modal2FA from "./2FA/Modal2FA";
 
 /**
- * Component to show the user masternodes at profile
+ * Component to show the user address at profile
  * @component
  * @subcategory Profile
  * @example
  * return (
- *  <UserMasternodes />
+ *  <UserAddress />
  * )
  */
-function UserMasternodes() {
+function UserAddress() {
   const { user } = useUser();
   const { url } = useRouteMatch();
   const [masternodes, setMasternodes] = useState([]);
@@ -33,7 +32,6 @@ function UserMasternodes() {
   const [open2FAModal, setOpen2FAModal] = useState(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
   const isMounted = useRef(false);
-
   const { t } = useTranslation();
   
   /**
@@ -219,4 +217,4 @@ function UserMasternodes() {
 }
 
 
-export default UserMasternodes;
+export default UserAddress;

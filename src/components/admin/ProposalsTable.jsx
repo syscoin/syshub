@@ -82,7 +82,6 @@ const ProposalsTable = ({ t }) => {
   };
 
   const doHideProposal = async (data) => {
-    console.log(data);
     swal.fire({
       title: 'Hiding proposal, please wait',
       showConfirmButton: false,
@@ -91,14 +90,23 @@ const ProposalsTable = ({ t }) => {
       }
     });
     try {
-      await createHiddenProposal({hash: data.proposalHash});
-      swal.fire({
-        icon: 'success',
-        title: 'The proposal is hidden',
-        timer: 2500
-      });
-      loadProposals();
-      executeScroll();
+      const response = await createHiddenProposal({ hash: data.proposalHash });
+      if (response.data.ok) {
+        swal.fire({
+          icon: 'success',
+          title: 'The proposal is hidden',
+          timer: 2500
+        });
+        loadProposals();
+        executeScroll();
+      }
+      else {
+        swal.fire({
+          icon: 'info',
+          title: response.data.message,
+          timer: 2500
+        });
+      }
     } catch (error) {
       swal.fire({
         icon: 'error',
@@ -109,7 +117,6 @@ const ProposalsTable = ({ t }) => {
   };
 
   const doShowProposal = async (proposal) => {
-    console.log(proposal);
     const result = await swal.fire({
       title: `You will show this proposal on the app again`,
       icon: 'warning',

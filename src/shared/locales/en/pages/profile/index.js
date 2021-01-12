@@ -7,7 +7,7 @@ const profile = {
     },
     data: {
       heading: 'User Profile',
-      mnTitle: 'My Masternodes'
+      address: 'My Voting Address'
     }
   }
 }

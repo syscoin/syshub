@@ -44,6 +44,9 @@ function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_ty
         </>
       }
       <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>
+        Hash: {proposal.Hash}
+      </p>
+      <p style={{lineBreak: "anywhere", lineHeight: "initial"}}>
         Collateral hash: <a
         href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
         target="_blank"
