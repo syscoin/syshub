@@ -213,7 +213,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
           <div className="form-group">
             <ul className="selector" style={{maxHeight: '180px', overflow: 'auto'}}>
               {addressList.map(address => (
-                <AddressItem key={address.uid} vote={vote} hash={proposal.Hash} address={address} onAddMN={addAddressVote} onRemoveMN={removeAddressVote}/>
+                <AddressItem key={address.uid} vote={vote} hash={proposal.Hash} address={address} onAddAddress={addAddressVote} onRemoveAddress={removeAddressVote}/>
               ))}
             </ul>
 
