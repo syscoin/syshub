@@ -6,31 +6,31 @@ import {useUser} from "../../context/user-context";
 import {getUserMasterNodes, get2faInfoUser} from "../../utils/request";
 import signVote from "../../utils/sign-vote";
 import {voteProposal} from "../../utils/request";
-import MnItem from "./MnItem";
+import AddressItem from "./AddressItem";
 
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
 
 /**
- * Component to show the masternodes list of the user
+ * Component to show the voting address list of the user
  * @component
  * @subcategory Governance
  * @param {Object} proposal the single proposal passed from the father
- * @param {number} vote the number of enabled masternodes
+ * @param {number} vote the type of vote
  * @param {*} onAfterVote function used after the user has voted
  * @example
  * const proposal = {}
  * const vote = 1
  * const onAfterVote = () => {}
  * return (
- *  <MnList proposal={proposal} vote={vote} onAfterVote={onAfterVote} />
+ *  <AddressList proposal={proposal} vote={vote} onAfterVote={onAfterVote} />
  * )
  */
-const MnList = ({proposal, vote, onAfterVote}) => {
+const AddressList = ({proposal, vote, onAfterVote}) => {
   let {user} = useUser();
-  const [loadingMN, setLoadingMN] = useState(false);
-  const [masterNodes, setMasterNodes] = useState([]);
-  const [masterNodesForVote, setMasterNodesForVote] = useState([]);
+  const [loadingAddress, setLoadingAddress] = useState(false);
+  const [addressList, setAddressList] = useState([]);
+  const [addressToVote, setAddressToVote] = useState([]);
   const [userSignInGAuth, setUserSignInGAuth] = useState(null);
   const [user2FA, setUser2FA] = useState(null);
   const [open2FAModal, setOpen2FAModal] = useState(false);
@@ -39,16 +39,16 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   /**
-   * useEffect that fetch the masternodes list of the API
+   * useEffect that fetch the address list of the API
    * @function
    */
   useEffect(() => {
     /**
-     * Function that fetch the masternodes list of the API
+     * Function that fetch the address list of the API
      * @function
      */
-    const getMnByUser = async () => {
-      setLoadingMN(true);
+    const getAddressOfUser = async () => {
+      setLoadingAddress(true);
       try {
         let { data, status } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
         .catch((err) => {
@@ -56,30 +56,30 @@ const MnList = ({proposal, vote, onAfterVote}) => {
         });
         if (data) {
           if (isMounted.current) {
-            setLoadingMN(false);
-            setMasterNodes(data.nodes || []);
+            setLoadingAddress(false);
+            setAddressList(data.nodes || []);
 
           }
         }
         else if (status === 204) {
           if (isMounted.current) { 
-            setLoadingMN(false);
+            setLoadingAddress(false);
           }
         }
         else {
           if (isMounted.current) {
-            setLoadingMN(false);
+            setLoadingAddress(false);
           }
         }
       } catch (error) {
         // console.log(error);
         if (isMounted.current) {
-          setLoadingMN(false);
+          setLoadingAddress(false);
         }
       }
     };
     isMounted.current = true;
-    getMnByUser();
+    getAddressOfUser();
 
     return () => {
       isMounted.current = false;
@@ -88,23 +88,23 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   }, [cancelSource, proposal.Hash]);
 
   /**
-   * Function that adds a masternode to the state of selected masternodes
+   * Function that adds an address to the state of selected addresses
    * @function
-   * @param {Object} mn The masternode recently selected 
+   * @param {Object} address The address recently selected 
    */
-  const addMnVote = (mn) => {
-    setMasterNodesForVote([...masterNodesForVote, mn]);
+  const addAddressVote = (address) => {
+    setAddressToVote([...addressToVote, address]);
   };
 
   /**
-   * Function that removes a masternode of the state of selected masternodes
+   * Function that removes a address of the state of selected addresses
    * @function
-   * @param {string} uid The masternode uid to remove
+   * @param {string} uid The address uid to remove
    */
-  const removeMnVote = (uid) => {
-    let filteredMN = masterNodesForVote.filter((mn) => mn.uid !== uid);
+  const removeAddressVote = (uid) => {
+    let filteredAddress = addressToVote.filter((address) => address.uid !== uid);
 
-    setMasterNodesForVote(filteredMN);
+    setAddressToVote(filteredAddress);
   };
 
   /**
@@ -137,7 +137,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   }
 
   /**
-   * Function that is executed after the 2fa verification, it proceeds to take the selected masternodes and vote with them through the API
+   * Function that is executed after the 2fa verification, it proceeds to take the selected addresses and vote with them through the API
    * @function
    */
   const voting = async () => {
@@ -149,12 +149,12 @@ const MnList = ({proposal, vote, onAfterVote}) => {
         swal.showLoading()
       }
     })
-    let masterNodesVote = []
-    let masterNodesErrorVote = []
-    for await (const mn of masterNodesForVote) {
+    let addressVoted = []
+    let addressErrorVote = []
+    for await (const address of addressToVote) {
       const proposalVoteNo = {
-        mnPrivateKey: mn.privateKey,
-        vinMasternode: mn.txId,
+        mnPrivateKey: address.privateKey,
+        vinMasternode: address.txId,
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
@@ -162,11 +162,11 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
-          masterNodesVote.push({
+          addressVoted.push({
             hash: proposal.Hash,
             votingOption: vote,
             message: data.data,
-            mn: mn.name
+            name: address.name
           })
           // await voteIn(mn.uid, {
           //   hash: proposal.Hash,
@@ -177,26 +177,26 @@ const MnList = ({proposal, vote, onAfterVote}) => {
           // })
         })
         .catch(err => {
-          masterNodesErrorVote.push({
-            mn: mn.name,
-            err: voteData === 'Invalid network version'?'Invalid network version':err.response.data.message
+          addressErrorVote.push({
+            name: address.name,
+            err: (voteData === 'Invalid network version') ? 'Invalid network version' : err.response.data.message
           })
         });
     }
-    let stringOfMnYes = masterNodesVote.map(mn => {
-      return `<li>${mn.mn}</li>`;
+    let stringOfAddressYes = addressVoted.map(address => {
+      return `<li>${address.name}</li>`;
     }).join('');
-    let stringOfMnNo = masterNodesErrorVote.map(mn => {
-      return `<li>${mn.mn}. Cause: ${mn.err}</li>`;
+    let stringOfAddressNo = addressErrorVote.map(address => {
+      return `<li>${address.name}. Cause: ${address.err}</li>`;
     }).join('');
     await swal.fire({
         title: 'Voting results',
       html: `
-        ${stringOfMnYes ? '<p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>' : ''}
-        <ul style="text-align: start">${stringOfMnYes}</ul>
+        ${stringOfAddressYes ? '<p style="text-align: start; color:green; font-weight: bold">Successful votes:</p>' : ''}
+        <ul style="text-align: start">${stringOfAddressYes}</ul>
         <br/>
-        ${stringOfMnNo ? '<p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>' : ''}
-        <ul style="text-align: start">${stringOfMnNo}</ul>
+        ${stringOfAddressNo ? '<p style="text-align: start; color: red; font-weight: bold">Unsuccessful votes:</p>' : ''}
+        <ul style="text-align: start">${stringOfAddressNo}</ul>
       `
       }
     );
@@ -207,13 +207,13 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   return (
     <>
       <h3>{proposal.title || proposal.name}</h3>
-      <p>Select the masternodes to vote in the proposal</p>
-      {masterNodes.length > 0 ? (
+      <p>Select the voting addresses to vote in the proposal</p>
+      {addressList.length > 0 ? (
         <>
           <div className="form-group">
             <ul className="selector" style={{maxHeight: '180px', overflow: 'auto'}}>
-              {masterNodes.map(mn => (
-                <MnItem key={mn.uid} vote={vote} hash={proposal.Hash} mn={mn} onAddMN={addMnVote} onRemoveMN={removeMnVote}/>
+              {addressList.map(address => (
+                <AddressItem key={address.uid} vote={vote} hash={proposal.Hash} address={address} onAddMN={addAddressVote} onRemoveMN={removeAddressVote}/>
               ))}
             </ul>
 
@@ -222,7 +222,7 @@ const MnList = ({proposal, vote, onAfterVote}) => {
             <button
               className="btn btn--blue"
               onClick={prepareVoting}
-              disabled={masterNodesForVote.length === 0}
+              disabled={addressToVote.length === 0}
             >Vote
             </button>
           </div>
@@ -230,10 +230,10 @@ const MnList = ({proposal, vote, onAfterVote}) => {
       ) : (
         <>
           {
-            loadingMN && <p>Loading...</p>
+            loadingAddress && <p>Loading...</p>
           }
           {
-            (!loadingMN && masterNodes.length === 0) && <p>You don't have masternodes to vote please add one</p>
+            (!loadingAddress && addressList.length === 0) && <p>You don't have a voting address please add one</p>
           }
         </>
       )}
@@ -252,4 +252,4 @@ const MnList = ({proposal, vote, onAfterVote}) => {
   );
 };
 
-export default MnList;
+export default AddressList;

@@ -6,7 +6,7 @@ import swal from "sweetalert2";
 import {useUser} from '../../context/user-context';
 import ProposalCardInfo from "./ProposalCardInfo";
 import CustomModal from "../global/CustomModal";
-import MnList from "./MnList";
+import AddressList from "./AddressList";
 
 /**
  * Component to show a proposal card with the info of a single proposal
@@ -222,7 +222,7 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
       <CustomModal
         open={openMnList}
         onClose={() => setOpenMnList(false)}>
-        <MnList proposal={proposal} vote={vote} onAfterVote={afterVote}/>
+        <AddressList proposal={proposal} vote={vote} onAfterVote={afterVote}/>
       </CustomModal>
     </div>
   );

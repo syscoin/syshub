@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import axios from 'axios';
 import { withTranslation } from "react-i18next";
 import { useUser } from '../../context/user-context';
@@ -25,6 +25,7 @@ function ProposalsList(props) {
   const [userInfo, setUserInfo] = useState(null);
   const [proposals, setProposals] = useState([]);
   const [dataload, setDataload] = useState(0);
+  const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   /**
@@ -41,12 +42,14 @@ function ProposalsList(props) {
               delete govdata[key];
           }
         });
-        setProposals(govdata);
-        setDataload(1);
+        if (isMounted.current) {
+          setProposals(govdata);
+          setDataload(1);
+        }
       }
     } catch (error) {
       // console.log(error);
-      setDataload(2);
+      isMounted.current && setDataload(2);
     }
   }, [cancelSource]);
 
@@ -72,9 +75,11 @@ function ProposalsList(props) {
    * @function
    */
   useEffect(() => {
+    isMounted.current = true;
     loadProposals();
     loadUserInfo();
     return () => {
+      isMounted.current = false;
       cancelSource.cancel('The request has been canceled');
     }
   }, [cancelSource, loadProposals, loadUserInfo]);
