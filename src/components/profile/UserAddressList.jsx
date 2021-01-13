@@ -45,7 +45,6 @@ function UserAddressList() {
       if (data && status === 200) {
         if (isMounted.current) {
           setVotingAddress(data.nodes);
-          console.log(data.nodes);
           setIsFetching(false);
         }
       }
