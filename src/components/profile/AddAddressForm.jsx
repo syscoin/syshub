@@ -41,7 +41,7 @@ const schema2 = yup.object().shape({
  * )
  */
 function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
@@ -74,10 +74,15 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
     setShowSingle(!showSingle);
   }
 
+  const singleAdd = async (data) => {
+    const isAdded = await onSingleCreation(data);
+    if (isAdded) reset();
+  }
+
   return (
     <div className="input-form">
       <div className="form-group">
-        <form onSubmit={handleSubmit(onSingleCreation)}>
+        <form onSubmit={handleSubmit(singleAdd)}>
           <div
             className="wizard-head"
             // style={{ cursor: "pointer" }}

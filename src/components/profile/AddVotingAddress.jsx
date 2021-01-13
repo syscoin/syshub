@@ -45,14 +45,16 @@ function AddVotingAddress() {
         timer: 1500
       });
       setSubmitting(false);
+      return true;
       // history.push('/profile');
     } catch (error) {
       Swal.fire({
         title: 'There was an error',
-        text: error.response?.data?.message || 'Verify the data and try again',
+        text: error.message || error.response?.data?.message || 'Verify the data and try again',
         icon: 'error'
       });
       setSubmitting(false);
+      return false;
     }
 
   }
