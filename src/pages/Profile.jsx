@@ -7,9 +7,9 @@ import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import UserInfo from "../components/profile/UserInfo";
-import UserMasternodes from "../components/profile/UserMasternodes";
-import AddMasternodes from "../components/profile/AddMasternodes";
+import AddVotingAddress from "../components/profile/AddVotingAddress";
 import UserDelete from "../components/profile/UserDelete";
+import UserAddress from "../components/profile/UserAddressList";
 
 /**
  * Profile page that shows at /profile
@@ -27,7 +27,7 @@ function Profile({ t }) {
           <MetaTags>
             <title> {t("profile.meta.title")} </title>
             <meta name="keywords" content={t("profile.meta.keywords")} />
-            <meta name="description" content={t("profile.meta.description")} />
+            {/* <meta name="description" content={t("profile.meta.description")} /> */}
           </MetaTags>
           <Switch>
             <Route exact path={path}>
@@ -50,7 +50,8 @@ function Profile({ t }) {
                       <div className="cols">
                         <div className="col col--size-12">
                           <div className="article__content article__content--pull-left text-center">
-                            <UserMasternodes />
+                            {/* <UserMasternodes /> */}
+                            <UserAddress />
                           </div>
                         </div>
                       </div>
@@ -60,8 +61,8 @@ function Profile({ t }) {
               </div>
             </Route>
 
-            <Route path={`${path}/add-masternodes`} exact>
-              <AddMasternodes />
+            <Route path={`${path}/add-voting-address`} exact>
+              <AddVotingAddress />
             </Route>
             <Route path={path}>
               <Redirect to={path} />

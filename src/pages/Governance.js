@@ -133,7 +133,7 @@ class Governance extends Component {
                         <MetaTags>
                             <title>{t('governance.title')}</title>
                             <meta name="keywords" content={t('governance.keywords')} />
-                            <meta name="description" content={t('governance.description')} />
+                            {/* <meta name="description" content={t('governance.description')} /> */}
                         </MetaTags>
                         <div className="shell-large">
                             <div className="section__body">

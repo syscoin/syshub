@@ -22,7 +22,7 @@ function NewProposal({ t }) {
         <MetaTags>
           <title> {t("proposal.meta.title")} </title>
           <meta name="keywords" content={t("proposal.meta.keywords")} />
-          <meta name="description" content={t("proposal.meta.description")} />
+          {/* <meta name="description" content={t("proposal.meta.description")} /> */}
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">

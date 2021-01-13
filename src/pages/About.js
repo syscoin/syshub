@@ -23,7 +23,7 @@ class About extends Component {
                     <MetaTags>
                         <title>{t("about.meta.title")}</title>
                         <meta name="keywords" content={t("about.meta.keywords")} />
-                        <meta name="description" content={t("about.meta.description")} />
+                        {/* <meta name="description" content={t("about.meta.description")} /> */}
                     </MetaTags>
                     <div className="shell-large">
                         <div className="section__body">

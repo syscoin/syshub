@@ -24,7 +24,7 @@ class Setup extends Component {
                     <MetaTags>
                         <title>{t('setup.meta.title')}</title>
                         <meta name="keywords" content={t('setup.meta.keywords')} />
-                        <meta name="description" content={t('setup.meta.description')} />
+                        {/* <meta name="description" content={t('setup.meta.description')} /> */}
                     </MetaTags>
                     <div className="shell-large">
                         <div className="section__body">

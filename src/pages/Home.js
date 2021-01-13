@@ -98,7 +98,7 @@ class Home extends Component {
                         <MetaTags>
                             <title>{t('home.title')}</title>
                             <meta name="keywords" content={t('home.keywords')} />
-                            <meta name="description" content={t('home.description')} />
+                            {/* <meta name="description" content={t('home.description')} /> */}
                         </MetaTags>
                         <div className="shell-large">
                             <div className="section__body">

@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next/';
 import { createMasterNode } from '../../utils/request';
 
-import AddMNForm from './AddMNForm';
+import AddAddressForm from './AddAddressForm';
 import Title from '../global/Title';
 
 /**
- * Component to show at the profile add masternodes route
+ * Component to show at the profile add voting address route
  * @component
  * @subcategory Profile
  * @example
  * return (
- *  <AddMasternodes />
+ *  <AddVotingAddress />
  * )
  */
-function AddMasternodes() {
+function AddVotingAddress() {
   const history = useHistory();
+  const { t } = useTranslation();
+
 
   const [submitting, setSubmitting] = useState(false);
 
   /**
-   * function that handles the single masternode creation
+   * function that handles the single voting address add
    * @param {Object} data the data from the single add form
    */
-  const singleCreation = async (data) => {
+  const addAddress = async (data) => {
     setSubmitting(true);
     try {
       Swal.fire({
-        title: 'Adding masternode',
+        title: 'Adding voting address',
         showConfirmButton: false,
         willOpen: () => {
           Swal.showLoading()
@@ -36,29 +39,33 @@ function AddMasternodes() {
       });
       await createMasterNode(data).catch(err => { throw err });
       await Swal.fire({
-        title: 'masternode created',
+        title: 'Voting address added',
         icon: 'success',
         showConfirmButton: false,
         timer: 1500
       });
       setSubmitting(false);
-      history.push('/profile');
+      // history.push('/profile');
     } catch (error) {
-      Swal.fire({ title: 'There was an error', text: error.response?.data?.message || 'Verify the data and try again', icon: 'error' });
+      Swal.fire({
+        title: 'There was an error',
+        text: error.response?.data?.message || 'Verify the data and try again',
+        icon: 'error'
+      });
       setSubmitting(false);
     }
 
   }
 
   /**
-   * function that handles the multiple masternode creation
+   * function that handles the many voting address creation
    * @param {Object} data the data from the multiple add form
    */
-  const multipleCreation = async ({ masternodeConf }) => {
+  const addManyAddress = async ({ masternodeConf }) => {
     setSubmitting(true);
     try {
       Swal.fire({
-        title: 'Adding masternode',
+        title: 'Adding voting address',
         showConfirmButton: false,
         willOpen: () => {
           Swal.showLoading()
@@ -66,15 +73,19 @@ function AddMasternodes() {
       });
       await createMasterNode( {listMN: masternodeConf}).catch(err => { throw err });
       await Swal.fire({
-        title: 'masternode created',
         icon: 'success',
+        title: 'Voting address added',
         showConfirmButton: false,
         timer: 1500
       });
       setSubmitting(false);
-      history.push('/profile');
+      // history.push('/profile');
     } catch (error) {
-      Swal.fire({ title: 'There was an error', text: 'Please verify the data and try again', icon: 'error' });
+      Swal.fire({
+        title: 'There was an error',
+        text: 'Please verify the data and try again',
+        icon: 'error'
+      });
       setSubmitting(false);
     }
   }
@@ -87,10 +98,10 @@ function AddMasternodes() {
             <div className="cols">
               <div className="col col--size-12">
                 <div className="article__content article__content--pull-left text-center">
-                  <Title heading="Add masternodes" />
-                  <AddMNForm
-                    onSingleCreation={singleCreation}
-                    onMultipleCreation={multipleCreation}
+                  <Title heading={t('profile.data.address.addAddress')} />
+                  <AddAddressForm
+                    onSingleCreation={addAddress}
+                    onMultipleCreation={addManyAddress}
                     submitting={submitting}
                   />
                   <Link to="/profile" className="btn btn--blue-border">Profile</Link>
@@ -104,4 +115,4 @@ function AddMasternodes() {
   )
 }
 
-export default AddMasternodes;
+export default AddVotingAddress;

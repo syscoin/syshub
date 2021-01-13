@@ -7,7 +7,12 @@ const profile = {
     },
     data: {
       heading: 'User Profile',
-      address: 'My Voting Address'
+      address: {
+        heading: 'My voting address',
+        noAddress: "You don't have a voting address, please add one.",
+        loading: 'Loading voting address...',
+        addAddress: 'Add voting address'
+      }
     }
   }
 }
