@@ -74,7 +74,7 @@ function ProposalCardInfo({proposal, days_remaining, month_remaining, payment_ty
             type="text"
             className="styled"
             style={{resize: 'none'}}
-            value={`gobject vote-many ${proposal.Hash} funding yes`}
+            value={`gobject_vote_many ${proposal.Hash} funding yes`}
             disabled={true}
           />
         </div>
