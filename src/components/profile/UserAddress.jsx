@@ -1,220 +1,165 @@
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import axios from 'axios';
-import { Link, useRouteMatch } from 'react-router-dom';
-import swal from 'sweetalert2';
-import { useTranslation } from 'react-i18next/';
+import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from "yup";
+import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
 
-import { useUser } from '../../context/user-context';
-import { getUserMasterNodes, updateMasterNode, destroyMasterNode, get2faInfoUser } from '../../utils/request';
 
-import SubTitle from "../global/SubTitle";
-import UserMN from './UserMN';
-import CustomModal from "../global/CustomModal";
-import Modal2FA from "./2FA/Modal2FA";
+const schema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  address: yup.string()
+    .test(
+      'test-sys-address',
+      'Must be a valid Syscoin address',
+      async (value) => await WAValidator.validate(value, 'sys')
+    )
+    .required('Voting address is required'),
+  txId: yup.string()
+    .matches(/-0|-1/, 'Tx Id must end with -0 or -1')
+    .required('tx id is required'),
+  privateKey: yup.string().required('private key is required')
+});
 
 /**
- * Component to show the user address at profile
+ * Component to show a the data of a single address inside a form
  * @component
  * @subcategory Profile
+ * @param {*} onEdit callback to edit the address 
+ * @param {*} onRemove callback to remove the address 
+ * @param {Object} address address info to show
+ * @param {number} index index of the mn on the array
  * @example
+ * const onEdit = () => {}
+ * const onRemove = () => {}
+ * const address = {}
+ * const index = 0
  * return (
- *  <UserAddress />
+ *  <UserAddress onEdit={onEdit} onRemove={onRemove} address={address} index={index} />
  * )
  */
-function UserAddress() {
-  const { user } = useUser();
-  const { url } = useRouteMatch();
-  const [masternodes, setMasternodes] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
-  const [masternodeToDelete, setMasternodeToDelete] = useState('');
-  const [userSignInGAuth, setUserSignInGAuth] = useState(null);
-  const [user2FA, setUser2FA] = useState(null);
-  const [open2FAModal, setOpen2FAModal] = useState(false);
-  const cancelSource = useMemo(() => axios.CancelToken.source(), []);
-  const isMounted = useRef(false);
-  const { t } = useTranslation();
-  
-  /**
-   * function that loads the user masternodes from the API
-   * @function
-   */
-  const loadMasternodes = useCallback(async () => {
-    try {
-      setIsFetching(true);
-      const {data, status} = await getUserMasterNodes({cancelToken: cancelSource.token});
-      if (data && status === 200) {
-        if (isMounted.current) {
-          setMasternodes(data.nodes);
-          setIsFetching(false);
-        }
-      }
-      else if (status === 204) {
-        if (isMounted.current) {
-          setMasternodes([]);
-          setIsFetching(false);
-        }
-      }
-      else {
-        if (isMounted.current) {
-          setIsFetching(false);
-        }
-      }
-    }
-    catch (error) {
-      if (isMounted.current) setIsFetching(false);
-    }
-  }, [cancelSource]);
-  
-  /**
-   * useEffect that loads the masternodes at mounting and cancel the request at unmounting
-   * @function
-   */
-  useEffect(() => {
-    isMounted.current = true;
-    loadMasternodes();
-    return () => {
-      isMounted.current = false;
-      cancelSource.cancel('The request has been canceled');
-    }
-  }, [loadMasternodes, cancelSource]);
+function UserAddress({ onEdit, onRemove, address, index }) {
+  const [editting, setEditting] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const { register, handleSubmit, errors, reset: resetForm } = useForm({
+    defaultValues: {
+      name: address.name,
+      address: address.address,
+      txId: address.txId,
+      privateKey: address.privateKey
+    },
+    resolver: yupResolver(schema)
+  });
 
   /**
-   * function that edits the user masternodes and updates it in the api
+   * function to submit the form data
    * @function
-   * @param {string} uid uid of the masternode to edit
-   * @param {Object} data from the edit mn input
+   * @param {Object} data data from the input to edit the address
    */
-  const editMN = async (uid, data) => {
-    try {
-      const response = await updateMasterNode( uid, {data: data});
-      if (response.data) {
-        swal.fire({
-          icon: "success",
-          title: "The masternode has been updated",
-          timer: 2000,
-          showConfirmButton: false
-        });
-        loadMasternodes();
-      }  
-    } catch (error) {
-      swal.fire({
-        icon: "error",
-        title: "The masternode couldn't update, please try again",
-        text: error.message
-      });
-      // console.log(error);
-    }
+  function formSubmit(data) {
+    onEdit(address.uid, data);
+    toggleEdition();
   }
 
   /**
-   * function that checks if there is 2fa to remove an masternode and proceeds to open the 2fa modal
+   * function to cancel the edition of the address
    * @function
-   * @param {string} uid uid of the masternode to remove
    */
-  const removeMN = async (uid) => {
-    const result = await swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!'
-    })
-    if (result.isConfirmed) {
-      await setMasternodeToDelete(uid);
-      try {
-        let user2fa = await get2faInfoUser(user.data.user_id);
-        if (user2fa.twoFa === true) {
-          setUser2FA(user2fa);
-          if (user2fa.gAuth === true) {
-            setUserSignInGAuth({secret: user2fa.gAuthSecret});
-          }
-          setOpen2FAModal(true);
-        }
-        else {
-          deleteMasternodeAfterVerification(uid);
-        }
-      }
-      catch (error) {
-        swal.fire({
-          icon: 'error',
-          title: 'There was an error',
-          text: error.message,
-        });
-      }
-    }
+  function cancelEdition() {
+    toggleEdition();
+    resetForm();
   }
 
   /**
-   * function to remove the masternode from the user masternodes list
+   * function to toggle the edition
    * @function
-   * @param {string} [uid] uid of the masternode to remove (optional)
    */
-  const deleteMasternodeAfterVerification = async (uid = null) => {
-    setOpen2FAModal(false);
-    swal.fire({
-      title: 'Deleting masternode',
-      showConfirmButton: false,
-      willOpen: () => {
-        swal.showLoading()
-      }
-    });
-    const masternodeToRemove = uid || masternodeToDelete;
-    try {
-      await destroyMasterNode(masternodeToRemove).catch(err => {
-        throw err
-      });
-      
-      swal.fire({
-        icon: "success",
-        title: "The masternode has been deleted",
-        timer: 2000,
-        showConfirmButton: false
-      });
-      loadMasternodes();
-    } catch (error) {
-      swal.fire({
-        icon: "error",
-        title: "There was an error",
-        text: error.message
-      });
-    }
+  function toggleEdition() {
+    setEditting(!editting);
+    if (!show) toggleShow();
+  }
+  
+  /**
+   * function to toggle the show inputs
+   * @function
+   */
+  function toggleShow() {
+    setShow(!show);
+  }
+
+  /**
+   * function to remove the address
+   * @function
+   */
+  function removeMN() {
+    onRemove(address.uid);
   }
 
   return (
-    <>
-      <SubTitle heading={t('profile.data.address')} />
-      {
-        (masternodes.length > 0 && !isFetching) && masternodes.map((mnode, index) => (
-          <UserMN onEdit={editMN} onRemove={removeMN} masternode={mnode} key={mnode.uid} index={index} />
-        ))
-      }
-      {
-        (masternodes.length === 0 && !isFetching) && (
-          <p className="indicator">You don't have a masternode, please add one.</p>
-        )
-      }
-      {
-        isFetching && (
-          <p className="indicator">Loading masternodes...</p>
-        )
-      }
-      <Link to={`${url}/add-masternodes`} className="btn btn--blue-border">
-        Add masternodes
-      </Link>
-      <CustomModal
-        open={open2FAModal}
-        onClose={() => setOpen2FAModal(false)}
-      >
-        {user2FA && <Modal2FA
-          user2fa={user2FA}
-          userSignInGAuth={userSignInGAuth}
-          onGAuth={deleteMasternodeAfterVerification}
-          onPhoneSMS={deleteMasternodeAfterVerification}
-        />}
-      </CustomModal>
-    </>
+    <div className="address input-form" >
+      <div className="form-group">
+        { !editting && <div className="indicator">{address.name}</div> }
+        <form>
+          {editting && (
+            <div className="description">
+              <label htmlFor={`name-${index}`}>Name</label>
+              <input type={'text'} name="name" ref={register} className="styled" id={`name-${index}`} required />
+              <ErrorMessage
+                errors={errors}
+                name="name"
+                render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+              />
+            </div>
+          )}
+          <div className="description">
+            <label htmlFor={`address-${index}`}>Voting address</label>
+            <input type="text" name="address" ref={register} className="styled" id={`address-${index}`} required disabled={!editting} />
+            <ErrorMessage
+              errors={errors}
+              name="address"
+              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+            />
+          </div>
+          <div className="description">
+            <label htmlFor={`privkey-${index}`}>Private key</label>
+            <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
+            <ErrorMessage
+              errors={errors}
+              name="privateKey"
+              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+            />
+          </div>
+
+          <div className="description">
+            <label htmlFor={`txid-${index}`}>Tx id</label>
+            <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
+            <ErrorMessage
+              errors={errors}
+              name="txId"
+              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+            />
+          </div>
+        
+          {editting && (
+            <div className="form-actions-spaced">
+              <button className="btn btn--blue" type="button" onClick={handleSubmit(formSubmit)}>Save</button>
+              <button className="btn btn--blue-border" type="button" onClick={cancelEdition}>Cancel</button>
+            </div>
+          )}
+        </form>
+
+        {!editting && (
+          <div className="form-actions-spaced">
+            <button className="btn btn--blue" type="button" onClick={toggleShow}>{show ? 'Hide' : 'Show'}</button>
+            <button className="btn btn--blue" type="button" onClick={toggleEdition}>Edit</button>
+            <button className="btn btn--blue-border" type="button" onClick={removeMN}>Remove</button>
+          </div>
+        )}
+        <div className="form-group spacer line"></div>
+      </div>
+    </div>
   )
 }
-
 
 export default UserAddress;

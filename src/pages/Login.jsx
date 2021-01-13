@@ -167,7 +167,7 @@ function Login({ t }) {
         <MetaTags>
           <title> {t("login.meta.title")} </title>
           <meta name="keywords" content={t("login.meta.keywords")}/>
-          <meta name="description" content={t("login.meta.description")}/>
+          {/* <meta name="description" content={t("login.meta.description")}/> */}
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">

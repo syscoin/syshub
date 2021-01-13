@@ -21,7 +21,7 @@ const Recover = ({ t }) => {
         <MetaTags>
           <title> {t("recover.meta.title")} </title>
           <meta name="keywords" content={t("recover.meta.keywords")}/>
-          <meta name="description" content={t("recover.meta.description")}/>
+          {/* <meta name="description" content={t("recover.meta.description")}/> */}
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">

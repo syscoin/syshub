@@ -88,7 +88,7 @@ class Stats extends Component {
                         <MetaTags>
                             <title>Syscoin Masternodes - Masternode Stats</title>
                             <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                            <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                            {/* <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" /> */}
                         </MetaTags>
                         <div className="shell-large">
                         <div className="section__body">

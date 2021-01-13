@@ -31,10 +31,10 @@ const Admin = ({ t }) => {
               <MetaTags>
                 <title> {t("admin.meta.title")} </title>
                 <meta name="keywords" content={t("admin.meta.keywords")} />
-                <meta
+                {/* <meta
                   name="description"
                   content={t("admin.meta.description")}
-                />
+                /> */}
               </MetaTags>
               <div className="shell-large">
                 <div className="section__body">

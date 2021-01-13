@@ -67,7 +67,7 @@ function Signup({ t }) {
         <MetaTags>
           <title> {t("signup.meta.title")} </title>
           <meta name="keywords" content={t("signup.meta.keywords")}/>
-          <meta name="description" content={t("signup.meta.description")}/>
+          {/* <meta name="description" content={t("signup.meta.description")}/> */}
         </MetaTags>
         <div className="shell-large">
           <div className="section__body">

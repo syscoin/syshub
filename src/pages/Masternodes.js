@@ -24,7 +24,7 @@ class Masternodes extends Component {
           <MetaTags>
             <title>{t("check.meta.title")}</title>
             <meta name="keywords" content={t("check.meta.keywords")} />
-            <meta name="description" content={t("check.meta.description")} />
+            {/* <meta name="description" content={t("check.meta.description")} /> */}
           </MetaTags>
           <div className="shell-large">
             <div className="section__body">

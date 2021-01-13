@@ -20,7 +20,7 @@ class Error extends Component {
           <MetaTags>
             <title>{t("error.meta.title")}</title>
             <meta name="keywords" content={t("error.meta.keywords")} />
-            <meta name="description" content={t("error.meta.description")} />
+            {/* <meta name="description" content={t("error.meta.description")} /> */}
           </MetaTags>
           <div className="shell-large">
             <div className="section__body">
