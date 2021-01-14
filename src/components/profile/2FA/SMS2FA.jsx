@@ -42,6 +42,7 @@ const SMSTwoFA = ({userSignInSms, recaptchaVerified}) => {
             type="text"
             id="phoneCode"
             ref={register}
+            style={{textAlign: 'center'}}
           />
           <ErrorMessage
             errors={errors}

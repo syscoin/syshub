@@ -5,6 +5,7 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import { useUser } from "../../context/user-context";
 
 
 /**
@@ -28,6 +29,7 @@ const UserPagination = ({
   onRemoveAdmin,
   t
 }) => {
+  const { user } = useUser();
 
   const getColumns = (t) => {
     return [
@@ -66,7 +68,12 @@ const UserPagination = ({
   const actionsFormatter = (cell, userRow) => {
     const isAdmin = userRow.role.find(role => role === 'admin');
 
-    if (isAdmin === 'admin') {
+    if (user.data.email === userRow.email) {
+      return (
+        <span></span>
+      )
+    }
+    else if (isAdmin === 'admin') {
       return (
         <button
           className=""

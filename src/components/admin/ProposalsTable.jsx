@@ -34,7 +34,7 @@ const ProposalsTable = ({ t }) => {
   const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
@@ -97,6 +97,7 @@ const ProposalsTable = ({ t }) => {
           title: 'The proposal is hidden',
           timer: 2500
         });
+        reset({ proposalHash: '' });
         loadProposals();
         executeScroll();
       }

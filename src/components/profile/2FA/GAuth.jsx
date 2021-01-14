@@ -42,6 +42,7 @@ const GAuthTwoFA = ({userSignInGAuth, recaptchaVerified}) => {
             type="text"
             id="gAuthCode"
             ref={register}
+            style={{textAlign: 'center'}}
           />
           <ErrorMessage
             errors={errors}
