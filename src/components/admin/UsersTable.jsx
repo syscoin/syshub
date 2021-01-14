@@ -100,7 +100,7 @@ const UsersTable = ({ t }) => {
    * function that handles the table changes and sets the current page
    * @function
    * @param {*} type 
-   * @param {page: number} page current page in the table
+   * @param {{number}} page current page in the table
    */
   const handleTableChange = (type, { page }) => {
     setCurrentPage(page);
