@@ -23,8 +23,11 @@ const schema = yup.object().shape({
     .positive('Must be a positive number'),
   paymentAddress: yup.string()
     .required('The payment address is required')
-    .test('test-sys-address', 'Must be a valid Syscoin address', async (value) => await WAValidator.validate(value, 'sys')
-    )
+    // .test(
+    //   'test-sys-address',
+    //   'Must be a valid Syscoin address',
+    //   async (value) => await WAValidator.validate(value, 'sys')
+    // )
 });
 
 /**

@@ -9,11 +9,11 @@ const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   address: yup
     .string()
-    .test(
-      "test-sys-address",
-      "Must be a valid Syscoin address",
-      async (value) => await WAValidator.validate(value, "sys")
-    )
+    // .test(
+    //   "test-sys-address",
+    //   "Must be a valid Syscoin address",
+    //   async (value) => await WAValidator.validate(value, "sys")
+    // )
     .required("Voting address is required"),
   txId: yup
     .string()
