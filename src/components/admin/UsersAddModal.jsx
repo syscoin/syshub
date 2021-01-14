@@ -24,11 +24,24 @@ const schema = yup.object().shape({
     .required("You have to confirm your password"),
 });
 
+/**
+ * Component that shows the inside of the add admin modal
+ * @component
+ * @subcategory Admin
+ * @param {*} t t prop received from withTranslation
+ * @param {*} onAddAdmin function to add a new admin
+ * @example
+ * const onAddAdmin = () => {}
+ * return (
+ *  <UsersAddModal onAddAdmin={onAddAdmin} />
+ * )
+ */
 const UsersAddModal = ({ t, onAddAdmin }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
+  
   return (
     <>
       <h3>{t("admin.users.modal.title")}</h3>

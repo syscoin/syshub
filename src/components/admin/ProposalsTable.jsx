@@ -23,6 +23,16 @@ const schema = yup.object().shape({
     .required("Proposal hash is required")
 });
 
+/**
+ * Component that shows the hidden proposals info and table inside admin section
+ * @component
+ * @subcategory Admin
+ * @param {*} t t prop received from withTranslation
+ * @example
+ * return (
+ *  <ProposalsTable />
+ * )
+ */
 const ProposalsTable = ({ t }) => {
   const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState([]);
@@ -39,8 +49,16 @@ const ProposalsTable = ({ t }) => {
     resolver: yupResolver(schema),
   });
 
+  /**
+   * function that executes and change the position to scroll into the ref
+   * @function
+   */
   const executeScroll = () => scrollRef.current.scrollIntoView();
 
+  /**
+   * function that load all the hidden proposals from the API
+   * @function
+   */
   const loadProposals = useCallback(async () => {
     setDataload(0);
     try {
@@ -64,10 +82,18 @@ const ProposalsTable = ({ t }) => {
     }
   }, [currentPage, cancelSource]);
 
+  /**
+   * UseEffect that loads the hidden proposals
+   * @function
+   */
   useEffect(() => {
     loadProposals();
   }, [loadProposals]);
 
+  /**
+   * UseEffect that handles the mounting and unmounting and cancels requests
+   * @function
+   */
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -76,12 +102,22 @@ const ProposalsTable = ({ t }) => {
     };
   }, [cancelSource]);
 
+  /**
+   * function that handles the table changes and sets the current page
+   * @function
+   * @param {*} type 
+   * @param {{page: number}} page current page in the table
+   */
   const handleTableChange = (type, { page }) => {
     setCurrentPage(page);
     executeScroll();
   };
 
-  const doHideProposal = async (data) => {
+  /**
+   * function to hide a proposal
+   * @param {string} proposalHash the hash of the proposal to hide
+   */
+  const doHideProposal = async ({proposalHash}) => {
     swal.fire({
       title: 'Hiding proposal, please wait',
       showConfirmButton: false,
@@ -90,7 +126,7 @@ const ProposalsTable = ({ t }) => {
       }
     });
     try {
-      const response = await createHiddenProposal({ hash: data.proposalHash });
+      const response = await createHiddenProposal({ hash: proposalHash });
       if (response.data.ok) {
         swal.fire({
           icon: 'success',
@@ -117,6 +153,10 @@ const ProposalsTable = ({ t }) => {
     }
   };
 
+  /**
+   * function to show a proposal
+   * @param {object} proposal the data of the proposal to show
+   */
   const doShowProposal = async (proposal) => {
     const result = await swal.fire({
       title: `You will show this proposal on the app again`,
@@ -150,7 +190,6 @@ const ProposalsTable = ({ t }) => {
       }
     }
   };
-
 
   return (
     <>

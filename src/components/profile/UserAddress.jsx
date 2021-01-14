@@ -28,7 +28,7 @@ const schema = yup.object().shape({
  * @param {*} onEdit callback to edit the address 
  * @param {*} onRemove callback to remove the address 
  * @param {Object} address address info to show
- * @param {number} index index of the mn on the array
+ * @param {number} index index of the address on the array
  * @example
  * const onEdit = () => {}
  * const onRemove = () => {}

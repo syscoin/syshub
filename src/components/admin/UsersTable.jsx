@@ -16,7 +16,16 @@ import UserPagination from "./UserPagination";
 import CustomModal from '../global/CustomModal';
 import UsersAddModal from "./UsersAddModal";
 
-
+/**
+ * Component that shows the Users info and table inside admin section
+ * @component
+ * @subcategory Admin
+ * @param {*} t t prop received from withTranslation
+ * @example
+ * return (
+ *  <UsersTable />
+ * )
+ */
 const UsersTable = ({ t }) => {
   const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState([]);
@@ -32,8 +41,16 @@ const UsersTable = ({ t }) => {
 
   const { register, handleSubmit, reset } = useForm();
 
+  /**
+   * function that executes and change the position to scroll into the ref
+   * @function
+   */
   const executeScroll = () => scrollRef.current.scrollIntoView() 
 
+  /**
+   * function that load all the users from the API
+   * @function
+   */
   const loadUsers = useCallback(async () => {
     setDataload(0);
     try {
@@ -59,10 +76,18 @@ const UsersTable = ({ t }) => {
     }
   }, [currentPage, search, cancelSource]);
 
+  /**
+   * UseEffect that loads the users
+   * @function
+   */
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
 
+  /**
+   * UseEffect that handles the mounting and unmounting and cancels requests
+   * @function
+   */
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -71,22 +96,41 @@ const UsersTable = ({ t }) => {
     };
   }, [cancelSource]);
 
+  /**
+   * function that handles the table changes and sets the current page
+   * @function
+   * @param {*} type 
+   * @param {page: number} page current page in the table
+   */
   const handleTableChange = (type, { page }) => {
     setCurrentPage(page);
     executeScroll();
   };
 
+  /**
+   * function that handles the user search
+   * @param {{string}} searchValue value that is being searched
+   */
   const doSearch = ({ searchValue }) => {
     setCurrentPage(1);
     setSearch(searchValue);
   };
 
+  /**
+   * function that handles the reset of the form 
+   * @function
+   */
   const doReset = () => {
     reset({ searchValue: "" });
     setCurrentPage(1);
     setSearch('');
   };
 
+  /**
+   * function that handles the action of giving admin privileges to an existing user
+   * @function
+   * @param {*} user data of the user that is going to be given privileges
+   */
   const doAddAdmin = async (user) => {
     const result = await swal.fire({
       title: `Give admin privileges to ${user.email}?`,
@@ -122,6 +166,11 @@ const UsersTable = ({ t }) => {
     
   }
 
+  /**
+   * function that handles the action of removing admin privileges to an existing user
+   * @function
+   * @param {*} user data of the user that is going to be removed privileges
+   */
   const doRemoveAdmin = async (user) => {
     const result = await swal.fire({
       title: `Remove admin privileges of ${user.email}?`,
@@ -157,6 +206,11 @@ const UsersTable = ({ t }) => {
     }
   }
 
+  /**
+   * function that handles the action of creating a new user with admin privileges
+   * @function
+   * @param {*} userData data of the user that is going to be created
+   */
   const doAddNewAdmin = async (userData) => {
     swal.fire({
       title: 'Creating user, please wait',

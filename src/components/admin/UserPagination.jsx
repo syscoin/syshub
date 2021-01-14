@@ -11,7 +11,7 @@ import { useUser } from "../../context/user-context";
 /**
  * Component that renders the pagination of the users table
  * @component
- * @subcategory masternodes
+ * @subcategory admin
  * @param {*} props the props sent by its father
  * @example
  * return (

@@ -29,7 +29,7 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   const {user} = useUser();
   const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
-  const [openMnList, setOpenMnList] = useState(false);
+  const [openAddressList, setOpenAddressList] = useState(false);
   const [days_remaining, setDays_remaining] = useState(0);
   const [month_remaining, setMonth_remaining] = useState(0);
   const [payment_type, setPayment_type] = useState('');
@@ -124,14 +124,14 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   }
 
   /**
-   * Function that verify the user and opens the masternodes list modal to vote
+   * Function that verify the user and opens the addresses list modal to vote
    * @function
    * @param {number} vote type of the vote received from the button
    */
   function openMnVote(vote) {
     if (userInfo?.emailVerified) {
       setVote(vote);
-      setOpenMnList(true);
+      setOpenAddressList(true);
     }
     else {
       swal.fire({
@@ -144,11 +144,11 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   }
 
   /**
-   * Function used after vote that closes the masternodes list modal and refresh the proposals list
+   * Function used after vote that closes the addresses list modal and refresh the proposals list
    * @function
    */
   const afterVote = async () => {
-    setOpenMnList(false);
+    setOpenAddressList(false);
     await onLoadProposals();
   }
 
@@ -220,8 +220,8 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
         )
       }
       <CustomModal
-        open={openMnList}
-        onClose={() => setOpenMnList(false)}>
+        open={openAddressList}
+        onClose={() => setOpenAddressList(false)}>
         <AddressList proposal={proposal} vote={vote} onAfterVote={afterVote}/>
       </CustomModal>
     </div>
