@@ -1,4 +1,4 @@
-import {crypto, ECPair} from 'bitcoinjs-lib'
+import {crypto, ECPair,networks} from 'bitcoinjs-lib'
 import {Buffer} from 'buffer'
 import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
@@ -14,7 +14,7 @@ const signVote = (obj) => {
   // eslint-disable-next-line
   try {
     const {mnPrivateKey, vinMasternode, gObjectHash, voteOutcome} = obj
-
+    const network= process.env.REACT_APP_CHAIN_NETWORK !== 'main'?networks.testnet:networks.bitcoin;
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, 'hex');
     const voteSignalNum = 1; // 'funding'
@@ -48,7 +48,7 @@ const signVote = (obj) => {
     ]);
 
     const hash = crypto.hash256(message);
-    const keyPair = ECPair.fromWIF(`${mnPrivateKey}`)
+    const keyPair = ECPair.fromWIF(`${mnPrivateKey}`,network)
     const sigObj = secp256k1.sign(hash, keyPair.privateKey);
 
     const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
