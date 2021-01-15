@@ -59,7 +59,8 @@ const PaymentProposal = ({onNext, onBack}) => {
     mode: 'onSubmit',
     resolver: yupResolver(schema),
     defaultValues: {
-      paymentNumber: 1
+      paymentNumber: paymentQuantity,
+      paymentAmount: amount
     }
   });
 
