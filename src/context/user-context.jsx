@@ -43,21 +43,21 @@ export function UserProvider(props) {
   useEffect(() => {
     async function loadAdminInfo() {
       if (user) {
-        // try {
+        try {
           const response = await getUserInfo(user.data.user_id);
           if (response.data) {
             const userIsAdmin = response.data.user.roles.find(role => role === 'admin');
             console.log(userIsAdmin);
-            await setUserAdmin(userIsAdmin || null);
+            setUserAdmin(userIsAdmin || null);
             setLoadingAdmin(false);
           }
           else {
             setLoadingAdmin(false);
           }
-        // } catch (error) {
-        //   setLoadingAdmin(false);
-        //   // console.log(error);
-        // }
+        } catch (error) {
+          setLoadingAdmin(false);
+          // console.log(error);
+        }
       }
     }
 

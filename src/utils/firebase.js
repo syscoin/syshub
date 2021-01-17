@@ -14,7 +14,7 @@ const config = {
  * @class
  * @name Firebase
  */
-export default class Firebase {
+class Firebase {
 
   /**
    * To initialize the firebase app and the self authentication
@@ -37,9 +37,12 @@ export default class Firebase {
    * function to login the user with email and password
    * @function
    * @name loginWithEmailAndPassword
-   * @param {Object} userData the email and password of the user to login 
+   * @param {Object} userData the email and password of the user to login
    */
-  loginWithEmailAndPassword = async ({email, password}) => await this.auth.signInWithEmailAndPassword(email, password).catch(err => {
+  loginWithEmailAndPassword = async ({
+                                       email,
+                                       password
+                                     }) => await this.auth.signInWithEmailAndPassword(email, password).catch(err => {
     throw err
   });
 
@@ -47,7 +50,7 @@ export default class Firebase {
    * function to create a new user with email and password
    * @function
    * @name register
-   * @param {Object} userData the email and password of the user to signup 
+   * @param {Object} userData the email and password of the user to signup
    */
   register = async ({email, password}) => await this.auth.createUserWithEmailAndPassword(email, password).catch(err => {
     throw err
@@ -139,7 +142,7 @@ export default class Firebase {
    * function to verify the phone code sent to the phone number
    * @function
    * @name verifyPhoneCode
-   * @param {*} verificationId 
+   * @param {*} verificationId
    * @param {string} smsCode the code sent to the user via sms
    */
   verifyPhoneCode = (verificationId, smsCode) => this.firebaseApp.auth.PhoneAuthProvider.credential(verificationId, smsCode);
@@ -183,18 +186,20 @@ export default class Firebase {
    * @function
    * @name refreshToken
    */
-  refreshToken = async () => {
-    return new Promise(async (resolve, reject) => {
-        if (this.auth.currentUser !== null) {
+
+  //
+  refreshToken = () => {
+    return new Promise((resolve, reject) => {
+        // if (this.auth.currentUser !== null) {
           const unsubscribe = this.auth
             .onIdTokenChanged(async user => {
-              unsubscribe()
+              // unsubscribe()
               const refreshedToken = await user
                 .getIdToken(true)
-                .catch(err => console.error(err))
+                .catch(err => reject(err))
               resolve(refreshedToken)
-            }, reject)
-        }
+            }, (err) => reject(err))
+        // }
       }
     )
   }
@@ -205,10 +210,10 @@ export default class Firebase {
    * @name generateLinkVerification
    */
   generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification(
-      {
+    {
       url: 'https://syshub-dev.web.app/',
       handleCodeInApp: true
-      }
+    }
   ).catch(err => {
     throw err
   })
@@ -226,12 +231,14 @@ export default class Firebase {
       const decoded = jwtDecode(token.decryptedToken);
       const dateNow = new Date().getTime();
       if (Math.floor(dateNow / 1000) > decoded.exp) {
-        // console.log('token refrescado')
+        console.log('token refrescado')
         const newTokenRefreshed = await this.refreshToken().catch(err => {
           throw err
         })
         setToken(newTokenRefreshed);
-      }
+        }
     }
   }
 }
+
+export default Firebase;
