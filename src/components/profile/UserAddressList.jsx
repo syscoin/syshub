@@ -5,7 +5,7 @@ import swal from 'sweetalert2';
 import { useTranslation } from 'react-i18next/';
 
 import { useUser } from '../../context/user-context';
-import { getUserMasterNodes, updateMasterNode, destroyMasterNode, get2faInfoUser } from '../../utils/request';
+import { getUserVotingAddress, updateVotingAddress, destroyVotingAddress, get2faInfoUser } from '../../utils/request';
 
 import SubTitle from "../global/SubTitle";
 import UserMN from './UserAddress';
@@ -41,7 +41,7 @@ function UserAddressList() {
   const loadVotingAddress = useCallback(async () => {
     try {
       setIsFetching(true);
-      const {data, status} = await getUserMasterNodes({cancelToken: cancelSource.token});
+      const {data, status} = await getUserVotingAddress({cancelToken: cancelSource.token});
       if (data && status === 200) {
         if (isMounted.current) {
           setVotingAddress(data.nodes);
@@ -93,7 +93,7 @@ function UserAddressList() {
       }
     });
     try {
-      const response = await updateMasterNode( uid, {data: data});
+      const response = await updateVotingAddress( uid, {data: data});
       if (response.data) {
         swal.fire({
           icon: "success",
@@ -166,7 +166,7 @@ function UserAddressList() {
     });
     const addressToRemove = uid || voteAddressToDelete;
     try {
-      await destroyMasterNode(addressToRemove).catch(err => {
+      await destroyVotingAddress(addressToRemove).catch(err => {
         throw err
       });
       

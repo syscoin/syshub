@@ -133,7 +133,7 @@ export const getOneMasterNode = async (id) => {
  * @param {string} [hash] the hash of the masternode in case of a single search
  * @param {*} cancelToken the token used to cancel the request
  */
-export const getUserMasterNodes = async ({hash, cancelToken}) => {
+export const getUserVotingAddress = async ({hash, cancelToken}) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
@@ -159,7 +159,7 @@ export const getUserMasterNodes = async ({hash, cancelToken}) => {
  * @function
  * @param {*} data data of the masternode to add
  */
-export const createMasterNode = async (data) => {
+export const createVotingAddress = async (data) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
@@ -182,7 +182,7 @@ export const createMasterNode = async (data) => {
  * @param {*} id id of the masternode to update
  * @param {*} data data of the masternode to update
  */
-export const updateMasterNode = async (id, data) => {
+export const updateVotingAddress = async (id, data) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
@@ -204,7 +204,7 @@ export const updateMasterNode = async (id, data) => {
  * @function
  * @param {*} id id of the masternode to remove
  */
-export const destroyMasterNode = async (id) => {
+export const destroyVotingAddress = async (id) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()

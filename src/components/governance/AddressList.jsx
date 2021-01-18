@@ -3,7 +3,7 @@ import axios from 'axios';
 import swal from 'sweetalert2'
 
 import {useUser} from "../../context/user-context";
-import {getUserMasterNodes, get2faInfoUser} from "../../utils/request";
+import {getUserVotingAddress, get2faInfoUser} from "../../utils/request";
 import signVote from "../../utils/sign-vote";
 import {voteProposal} from "../../utils/request";
 import AddressItem from "./AddressItem";
@@ -50,7 +50,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
     const getAddressOfUser = async () => {
       setLoadingAddress(true);
       try {
-        let { data, status } = await getUserMasterNodes({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        let { data, status } = await getUserVotingAddress({ hash: proposal.Hash, cancelToken: cancelSource.token })
         .catch((err) => {
           throw err;
         });

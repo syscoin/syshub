@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useTranslation } from 'react-i18next/';
-import { createMasterNode } from '../../utils/request';
+import { createVotingAddress } from '../../utils/request';
 
 import AddAddressForm from './AddAddressForm';
 import Title from '../global/Title';
@@ -37,7 +37,7 @@ function AddVotingAddress() {
           Swal.showLoading()
         }
       });
-      await createMasterNode(data).catch(err => { throw err });
+      await createVotingAddress(data).catch(err => { throw err });
       await Swal.fire({
         title: 'Voting address added',
         icon: 'success',
@@ -73,7 +73,7 @@ function AddVotingAddress() {
           Swal.showLoading()
         }
       });
-      await createMasterNode( {listMN: masternodeConf}).catch(err => { throw err });
+      await createVotingAddress( {listMN: masternodeConf}).catch(err => { throw err });
       await Swal.fire({
         icon: 'success',
         title: 'Voting address added',
