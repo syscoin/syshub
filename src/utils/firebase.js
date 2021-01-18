@@ -191,14 +191,13 @@ class Firebase {
   refreshToken = () => {
     return new Promise((resolve, reject) => {
         // if (this.auth.currentUser !== null) {
-          const unsubscribe = this.auth
-            .onIdTokenChanged(async user => {
-              // unsubscribe()
-              const refreshedToken = await user
-                .getIdToken(true)
-                .catch(err => reject(err))
-              resolve(refreshedToken)
-            }, (err) => reject(err))
+          this.auth.onIdTokenChanged(async user => {
+            // unsubscribe()
+            const refreshedToken = await user
+              .getIdToken(true)
+              .catch(err => reject(err))
+            resolve(refreshedToken)
+          }, (err) => reject(err))
         // }
       }
     )
