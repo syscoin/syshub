@@ -226,19 +226,23 @@ const ProposalsTable = ({ t }) => {
       </form>
 
       {dataload === 1 ? (
-        <ProposalPagination
-          data={dataTable}
-          page={currentPage}
-          sizePerPage={sizePerPage}
-          totalSize={totalRecords}
-          onTableChange={handleTableChange}
-          onShowProposal={doShowProposal}
-          t={t}
-        />
+        dataTable.length === 0 ? (
+          <p className="text-center">There are no hidden proposals.</p>
+        ) : (
+          <ProposalPagination
+            data={dataTable}
+            page={currentPage}
+            sizePerPage={sizePerPage}
+            totalSize={totalRecords}
+            onTableChange={handleTableChange}
+            onShowProposal={doShowProposal}
+            t={t}
+          />
+        )
       ) : dataload === 0 ? (
         <p className="text-center">Loading hidden proposals...</p>
       ) : (
-        <p className="text-center">The data couldn't be fetched</p>
+        <p className="text-center">The data couldn't be fetched.</p>
       )}
     </>
   );

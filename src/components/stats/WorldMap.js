@@ -23,6 +23,7 @@ class WorldMap extends Component {
     constructor(props){
         super(props);
         window.addEventListener('resize', this.resize);
+        this.worldMapRef = React.createRef();
     }
 
     /**
@@ -40,16 +41,16 @@ class WorldMap extends Component {
      * @function
      */
     componentDidMount() {
-        this.drawMap(this.props.mapData,this.props.mapFills);
+        this.drawMap(this.props.mapData, this.props.mapFills);
     }
 
     /**
      * DidUpdate that will update the map with the latest props
      * @function
      */
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.clear();
-        this.drawMap();
+        this.drawMap(this.props.mapData, this.props.mapFills);
     }
 
     /**
@@ -66,8 +67,7 @@ class WorldMap extends Component {
      * @function
      */
     clear = () => {
-        const container = this.refs.world_map_container;
-
+        const container = this.worldMapRef.current;
         for (const child of Array.from(container.childNodes)) {
             container.removeChild(child);
         }
@@ -79,10 +79,11 @@ class WorldMap extends Component {
      */
     drawMap = (mapdata, mapfill) => {
         const { t } = this.props;
+
         var map = new Datamaps(Object.assign({}, {
             ...this.props
         }, {
-            element: this.refs.world_map_container, // this is the place where the react dom and the Datamaps dom will be wired
+            element: this.worldMapRef.current, // this is the ref of the dom element where the react dom and the Datamaps dom will be mounted
             projection: 'mercator', // this is hardcoded here as we want the projection to be constant
             fills: mapfill,
             data: mapdata,
@@ -109,7 +110,7 @@ class WorldMap extends Component {
         return (
             <>
                 <SubTitle heading={t('worldMap.title')} />
-                <div ref="world_map_container" className="world_map" style={{width:'100%', height:'550px', position: 'relative'}}></div>
+                <div ref={this.worldMapRef} className="world_map" style={{width:'100%', height:'550px', position: 'relative'}}></div>
             </>
         )
     }

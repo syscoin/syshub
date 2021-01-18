@@ -72,8 +72,8 @@ class Stats extends Component {
             if (this._isMounted) {
                 var response=data.data;
                 this.setState({ 
-                    dataload: 1, 
-                    api_data: response
+                    api_data: response,
+                    dataload: 1
                 });
             }
         }
