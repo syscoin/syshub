@@ -147,15 +147,15 @@ const PaymentProposal = ({onNext, onBack}) => {
 
       setProposalEndEpoch(endEpoch);
       setProposalPayoutDates(proposalPayoutDates);
-      setAmount(watchedAmount);
-      setTotalAmount(watchedAmount * watchNPayment)
-      setPaymentQuantity(watchNPayment)
+      setAmount(parseInt(watchedAmount));
+      setTotalAmount(parseInt(watchedAmount) * parseInt(watchNPayment))
+      setPaymentQuantity(parseInt(watchNPayment))
     } else {
       setProposalEndEpoch(0)
       setProposalPayoutDates([]);
-      setAmount(watchedAmount);
-      setTotalAmount(watchedAmount * watchNPayment)
-      setPaymentQuantity(watchNPayment)
+      setAmount(parseInt(watchedAmount));
+      setTotalAmount(parseInt(watchedAmount) * parseInt(watchNPayment))
+      setPaymentQuantity(parseInt(watchNPayment))
     }
   }
 
