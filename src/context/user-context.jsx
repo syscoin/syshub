@@ -47,7 +47,7 @@ export function UserProvider(props) {
           const response = await getUserInfo(user.data.user_id);
           if (response.data) {
             const userIsAdmin = response.data.user.roles.find(role => role === 'admin');
-            console.log(userIsAdmin);
+            // console.log(userIsAdmin);
             setUserAdmin(userIsAdmin || null);
             setLoadingAdmin(false);
           }

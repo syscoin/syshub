@@ -59,7 +59,7 @@ const UsersTable = ({ t }) => {
         search,
         cancelSource.token
       );
-      console.log(response);
+      // console.log(response);
       if (response.data) {
         if (isMounted.current) {
           setDataTable(response.data.users);
@@ -72,7 +72,7 @@ const UsersTable = ({ t }) => {
       }
     } catch (error) {
       isMounted.current && setDataload(2);
-      console.log(error);
+      // console.log(error);
     }
   }, [currentPage, search, cancelSource]);
 

@@ -66,7 +66,7 @@ const ProposalsTable = ({ t }) => {
         currentPage,
         cancelSource.token
       );
-      console.log(response);
+      // console.log(response);
       if (response.data.proposalHash) {
         if (isMounted.current) {
           setDataTable(response.data.proposalHash);
@@ -78,7 +78,7 @@ const ProposalsTable = ({ t }) => {
       }
     } catch (error) {
       isMounted.current && setDataload(2);
-      console.log(error);
+      // console.log(error);
     }
   }, [currentPage, cancelSource]);
 
