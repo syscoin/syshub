@@ -4,6 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from "yup";
 import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
+import IconInput from '../global/IconInput';
 
 
 const schema = yup.object().shape({
@@ -103,7 +104,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
         <form>
           {editting && (
             <div className="description">
-              <label htmlFor={`name-${index}`}>Name</label>
+              <label htmlFor={`name-${index}`}>Label</label>
               <input type={'text'} name="name" ref={register} className="styled" id={`name-${index}`} required />
               <ErrorMessage
                 errors={errors}
@@ -114,7 +115,12 @@ function UserAddress({ onEdit, onRemove, address, index }) {
           )}
           <div className="description">
             <label htmlFor={`address-${index}`}>Voting address</label>
-            <input type="text" name="address" ref={register} className="styled" id={`address-${index}`} required disabled={!editting} />
+            <div style={{position: 'relative'}}>
+              <input type="text" name="address" ref={register} className="styled" id={`address-${index}`} required disabled={!editting} />
+              <IconInput dataId="address">
+                <p>The voting address used to vote in the proposals</p>
+              </IconInput>
+            </div>
             <ErrorMessage
               errors={errors}
               name="address"
@@ -122,7 +128,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
             />
           </div>
           <div className="description">
-            <label htmlFor={`privkey-${index}`}>Private key</label>
+            <label htmlFor={`privkey-${index}`}>Voting key</label>
             <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
             <ErrorMessage
               errors={errors}

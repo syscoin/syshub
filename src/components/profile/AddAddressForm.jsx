@@ -92,7 +92,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
           </div>
           <div className={`wizard-body ${showSingle ? "" : "collapsed"}`}>
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">Label</label>
               <input
                 type="text"
                 name="name"
@@ -134,7 +134,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
             </div>
             
             <div className="form-group">
-              <label htmlFor="privateKey">Private key</label>
+              <label htmlFor="privateKey">Voting key</label>
               <input
                 type="text"
                 name="privateKey"
