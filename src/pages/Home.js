@@ -15,6 +15,7 @@ import LinearCharts from '../components/stats/LinearCharts';
 import MasternodeTable from '../components/masternodes/MasternodeTable';
 import ProposalsList from '../components/governance/ProposalsList';
 import HomeButtons from '../components/home/HomeButtons';
+const API_URI = process.env.REACT_APP_SYS_API_URI
 
 /**
  * Home page that shows at /
@@ -67,7 +68,10 @@ class Home extends Component {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();
         let data = await axios
-        .get("https://syscoin.dev/mnStats", {
+        .get(`${API_URI}/statsInfo/mnStats`, {
+            headers: {
+                'appclient': process.env.REACT_APP_CLIENT
+            },
             cancelToken: this.source.token
         })
         .then(function(result) {

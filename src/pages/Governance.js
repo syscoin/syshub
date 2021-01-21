@@ -9,7 +9,7 @@ import BackgroundInner from '../components/global/BackgroundInner';
 import BannerImage from '../components/global/BannerImage';
 import GovDetails from '../components/governance/GovDetails';
 import ProposalsList from '../components/governance/ProposalsList';
-
+const API_URI = process.env.REACT_APP_SYS_API_URI;
 /**
  * Governance page that shows at /governance
  * @component
@@ -66,7 +66,10 @@ class Governance extends Component {
         };
 
         let data = await axios
-        .get("https://syscoin.dev/mnStats", {
+        .get(`${API_URI}/statsInfo/mnStats`, {
+            headers: {
+                'appclient': process.env.REACT_APP_CLIENT
+            },
             cancelToken: this.source.token
         })
         .then(function(result) {

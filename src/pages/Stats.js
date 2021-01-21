@@ -13,7 +13,7 @@ import Price from '../components/stats/Price';
 import Investment from '../components/stats/Investment';
 import Blockchain from '../components/stats/Blockchain';
 import WorldMap from '../components/stats/WorldMap';
-
+const API_URI = process.env.REACT_APP_SYS_API_URI
 /**
  * Stats page that shows at /stats
  * @component
@@ -59,7 +59,10 @@ class Stats extends Component {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();
         let data = await axios
-            .get("https://syscoin.dev/mnStats", {
+            .get(`${API_URI}/statsInfo/mnStats`, {
+                headers: {
+                    'appclient': process.env.REACT_APP_CLIENT
+                },
             cancelToken: this.source.token
         })
         .then(function(result) {

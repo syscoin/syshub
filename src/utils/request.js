@@ -15,7 +15,7 @@ const API_URI = process.env.REACT_APP_SYS_API_URI
  */
 export const list = async (cancelToken) => {
   try {
-    return await axios.get(`${API_URI}/masternode/list`, {
+    return await axios.get(`${API_URI}/statsInfo/list`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       },
@@ -35,7 +35,7 @@ export const list = async (cancelToken) => {
  */
 export const getInfo = async (cancelToken) => {
   try {
-    return await axios.get(`${API_URI}/masternode/getinfo`, {
+    return await axios.get(`${API_URI}/statsInfo/getinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       },
@@ -54,7 +54,7 @@ export const getInfo = async (cancelToken) => {
  */
 export const getMiningInfo = async () => {
   try {
-    return await axios.get(`${API_URI}/masternode/getmininginfo`, {
+    return await axios.get(`${API_URI}/statsInfo/getmininginfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       }
@@ -73,7 +73,7 @@ export const getMiningInfo = async () => {
  */
 export const getGovernanceInfo = async (cancelToken) => {
   try {
-    return await axios.get(`${API_URI}/masternode/getgovernanceinfo`, {
+    return await axios.get(`${API_URI}/statsInfo/getgovernanceinfo`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       },
@@ -93,7 +93,7 @@ export const getGovernanceInfo = async (cancelToken) => {
  */
 export const getSuperBlockBudget = async (cancelToken) => {
   try {
-    return await axios.get(`${API_URI}/masternode/getsuperblockbudget`, {
+    return await axios.get(`${API_URI}/statsInfo/getsuperblockbudget`, {
       headers: {
         'appclient': process.env.REACT_APP_CLIENT
       },
@@ -114,7 +114,7 @@ export const getSuperBlockBudget = async (cancelToken) => {
 export const getOneMasterNode = async (id) => {
   try {
     let {token} = getToken()
-    return await axios.get(`${API_URI}/masternode/${id}`, {
+    return await axios.get(`${API_URI}/address/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
@@ -138,8 +138,8 @@ export const getUserVotingAddress = async ({hash, cancelToken}) => {
     await firebase.refreshInRequest()
     let {token} = getToken()
     return await axios.get(typeof hash !== "undefined" ?
-      `${API_URI}/masternode?hash=${hash}` :
-      `${API_URI}/masternode`
+      `${API_URI}/address?hash=${hash}` :
+      `${API_URI}/address`
       , {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -163,7 +163,7 @@ export const createVotingAddress = async (data) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.post(`${API_URI}/masternode`, data, {
+    return await axios.post(`${API_URI}/address`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
@@ -186,7 +186,7 @@ export const updateVotingAddress = async (id, data) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.put(`${API_URI}/masternode/${id}`, data, {
+    return await axios.put(`${API_URI}/address/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
@@ -208,7 +208,7 @@ export const destroyVotingAddress = async (id) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.delete(`${API_URI}/masternode/${id}`, {
+    return await axios.delete(`${API_URI}/address/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT

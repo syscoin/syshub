@@ -12,7 +12,7 @@
     "@hookform/resolvers": "^0.1.1",
     "@swyftx/api-crypto-address-validator": "^1.13.1",
     "anychart-react": "^1.4.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bitcoinjs-lib": "^4.0.2",
     "bootstrap-sass": "^3.4.1",
     "buffer-math": "^0.3.0",
