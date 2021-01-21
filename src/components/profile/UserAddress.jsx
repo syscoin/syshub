@@ -8,7 +8,7 @@ import IconInput from '../global/IconInput';
 
 
 const schema = yup.object().shape({
-  name: yup.string().required('Name is required'),
+  name: yup.string().required('Label is required'),
   address: yup.string()
     .test(
       'test-sys-address',

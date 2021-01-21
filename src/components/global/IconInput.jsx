@@ -3,7 +3,7 @@ import ReactTooltip from "react-tooltip";
 
 const iconStyle = {
   position: "absolute",
-  bottom: "14.5px",
+  top: "14px",
   right: "0",
   cursor: "pointer",
   padding: "1px",
@@ -11,7 +11,7 @@ const iconStyle = {
 const IconInput = ({ dataId, children: content }) => {
   return (
     <i
-      class="icon-info"
+      className="icon-info"
       style={iconStyle}
       data-tip data-for={`${dataId}-info-icon`}
     >

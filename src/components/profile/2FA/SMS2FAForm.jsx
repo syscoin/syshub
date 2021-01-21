@@ -9,6 +9,7 @@ import {PhoneNumberFormat, PhoneNumberUtil} from "google-libphonenumber";
 import {useUser} from "../../../context/user-context";
 import {isoArray} from "../../../utils/isoCodes";
 import {phoneValidation} from "../../../utils/phoneUtil";
+import Timer from "../../global/Timer";
 
 const PNF = PhoneNumberFormat;
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -37,6 +38,7 @@ function SMS2FAForm({ onClose }) {
 
   const [codeSent, setCodeSent] = useState(false);
   const [verifyId, setVerifyId] = useState("");
+  const [timerIsActive, setTimerIsActive] = useState(false);
 
   const {register, handleSubmit, errors} = useForm({
     mode: "onSubmit",
@@ -102,6 +104,7 @@ function SMS2FAForm({ onClose }) {
       });
       setVerifyId(verificationId);
       setCodeSent(true);
+      setTimerIsActive(true);
     }
   };
 
@@ -212,9 +215,17 @@ function SMS2FAForm({ onClose }) {
           <button
             className="btn btn--blue btn-center"
             onClick={handleSubmit(sendSMS)}
+            disabled={timerIsActive}
           >
             Send SMS
           </button>
+          {
+            timerIsActive && (
+              <p className="text-center" style={{fontSize: '14px', margin: 0}}>
+                You can send another SMS when the timer expires <Timer timing={2} onFinish={() => setTimerIsActive(false)} />
+              </p>
+            )
+          }
         </form>
         <div className="form-group spacer line"></div>
       </div>

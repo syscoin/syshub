@@ -6,7 +6,7 @@ import * as yup from "yup";
 import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
+  name: yup.string().required("Label is required"),
   address: yup
     .string()
     // .test(
