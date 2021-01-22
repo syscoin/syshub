@@ -11,6 +11,7 @@ const header = {
     signup: 'Sign up',
     dashboard: 'Dashboard',
     proposal: 'New proposal',
+    faq: 'F.A.Q.',
     profile: 'Profile',
     admin: 'Admin panel',
     logout: 'Logout'

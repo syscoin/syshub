@@ -164,6 +164,9 @@ function Header({t}) {
                             <li onClick={menuLinks}>
                               <Link to="/signup">{t("header.signup")}</Link>
                             </li>
+                            <li onClick={menuLinks}>
+                              <Link to="/faq">{t("header.faq")}</Link>
+                            </li>
                           </>
                         )}
 
@@ -183,6 +186,9 @@ function Header({t}) {
                                 </li>
                               )
                             }
+                            <li onClick={menuLinks}>
+                              <Link to="/faq">{t("header.faq")}</Link>
+                            </li>
                             <li onClick={menuLinks}>
                               <button
                                 className='nav-btn'

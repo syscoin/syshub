@@ -21,6 +21,7 @@ import Error from './pages/Error';
 import Profile from './pages/Profile';
 import NewProposal from './pages/NewProposal';
 import Admin from './pages/Admin';
+import FAQ from './pages/FAQ';
 
 /**
  * App component that handles the use of the Header and Footer components, alongside with the Routing
@@ -41,6 +42,7 @@ class AppComponent extends Component {
                     <PublicRoute restricted={true} path="/login" component={Login} />
                     <PublicRoute restricted={true} path="/signup" component={Signup} />
                     <PublicRoute restricted={true} path="/recover" component={Recover} />
+                    <PublicRoute restricted={false} path="/faq" component={FAQ} />
                     <PrivateRoute path="/create-proposal" component={NewProposal} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/admin" component={Admin} />
