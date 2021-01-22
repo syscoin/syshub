@@ -1,12 +1,13 @@
 const check = {
   check: {
     title: 'Masternodes Check',
-    loading: 'Loading...',
     meta: {
       title: 'Syscoin Masternodes - Masternode Check',
       keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
       description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
     },
+    loading: 'Loading...',
+    noData: "The data couldn't be fetched",
     table: {
       address: 'Address',
       protocol: 'Protocol',

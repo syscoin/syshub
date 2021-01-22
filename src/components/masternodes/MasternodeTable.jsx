@@ -192,9 +192,14 @@ class MasternodeTable extends Component {
           />
         </>
       );
-    } else {
+    } else if(dataload === 0) {
       return (
         <p className="text-center">{t("check.loading")}</p>
+      );
+    }
+    else {
+      return (
+        <p className="text-center">{t("check.noData")}</p>
       );
     }
   }

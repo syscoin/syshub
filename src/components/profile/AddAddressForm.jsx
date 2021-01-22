@@ -77,7 +77,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
   const singleAdd = async (data) => {
     const isAdded = await onSingleCreation(data);
     if (isAdded) reset();
-  }
+  };
 
   return (
     <div className="input-form">
@@ -85,8 +85,8 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
         <form onSubmit={handleSubmit(singleAdd)}>
           <div
             className="wizard-head"
-            // style={{ cursor: "pointer" }}
-            // onClick={toggleSingle}
+            style={{ cursor: "pointer" }}
+            onClick={toggleSingle}
           >
             <span>&nbsp;</span>Single voting address
           </div>
@@ -99,7 +99,6 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                 ref={register}
                 className="styled"
                 id="name"
-                
               />
               <ErrorMessage
                 errors={errors}
@@ -120,7 +119,6 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                 ref={register}
                 className="styled"
                 id="address"
-                
               />
               <ErrorMessage
                 errors={errors}
@@ -132,7 +130,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                 )}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="privateKey">Voting key</label>
               <input
@@ -141,7 +139,6 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                 ref={register}
                 className="styled"
                 id="privateKey"
-                
               />
               <ErrorMessage
                 errors={errors}
@@ -162,7 +159,6 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                 ref={register}
                 className="styled"
                 id="txId"
-                
               />
               <ErrorMessage
                 errors={errors}
@@ -177,32 +173,50 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
 
             <div className="form-actions-spaced">
               <button className="btn btn--blue" disabled={submitting}>
-                Save
+                Add
               </button>
             </div>
           </div>
         </form>
-        {/* <form onSubmit={handleSubmit2(onMultipleCreation)}>
-          <div className="wizard-head" style={{cursor:'pointer'}} onClick={toggleMulti}><span>&nbsp;</span>Many voting addresses</div>
-          <div className={`wizard-body ${showMulti ? '' : 'collapsed'}`}>
+        <form onSubmit={handleSubmit2(onMultipleCreation)}>
+          <div
+            className="wizard-head"
+            style={{ cursor: "pointer" }}
+            onClick={toggleMulti}
+          >
+            <span>&nbsp;</span>Many voting addresses
+          </div>
+          <div className={`wizard-body ${showMulti ? "" : "collapsed"}`}>
             <div className="form-group">
-                <div className="form-group">
-                  <label htmlFor="masternodeConf">Masternode.conf</label>
-                  <textarea className="styled" ref={register2} rows="5" name="masternodeConf" id="masternodeConf" placeholder="Paste your masternode.conf here"></textarea>
-                  <ErrorMessage
-                    errors={errors2}
-                    name="masternodeConf"
-                    render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
-                  />
-                </div>
+              <div className="form-group">
+                <label htmlFor="masternodeConf">Masternode.conf</label>
+                <textarea
+                  className="styled"
+                  ref={register2}
+                  rows="5"
+                  name="masternodeConf"
+                  id="masternodeConf"
+                  placeholder="Paste your masternode.conf here"
+                ></textarea>
+                <ErrorMessage
+                  errors={errors2}
+                  name="masternodeConf"
+                  render={({ message }) => (
+                    <small>
+                      <p style={{ lineHeight: "1.5" }}>{message}</p>
+                    </small>
+                  )}
+                />
+              </div>
 
-                <div className="form-actions-spaced">
-                  <button className="btn btn--blue" disabled={submitting}>Save</button>
-                </div>
-                
+              <div className="form-actions-spaced">
+                <button className="btn btn--blue" disabled={submitting}>
+                  Add
+                </button>
+              </div>
             </div>
           </div>
-        </form> */}
+        </form>
       </div>
     </div>
   );
