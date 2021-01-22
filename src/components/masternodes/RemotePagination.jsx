@@ -29,14 +29,14 @@ const getColumns = (t) => {
       text: t("check.table.lastpaidtime"),
       dataField: "lastpaidtime",
     },
-    {
-      text: t("check.table.activeseconds"),
-      dataField: "activeseconds",
-    },
-    {
-      text: t("check.table.lastseen"),
-      dataField: "lastseen",
-    },
+    // {
+    //   text: t("check.table.activeseconds"),
+    //   dataField: "activeseconds",
+    // },
+    // {
+    //   text: t("check.table.lastseen"),
+    //   dataField: "lastseen",
+    // },
   ];
 };
 

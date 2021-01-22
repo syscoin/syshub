@@ -3,7 +3,7 @@ import axios from "axios";
 import { withTranslation } from "react-i18next";
 
 import RemotePagination from "./RemotePagination";
-
+const API_URI = process.env.REACT_APP_SYS_API_URI;
 /**
  * Component that renders the masternodes table
  * @component
@@ -118,16 +118,18 @@ class MasternodeTable extends Component {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     let axiosConfig = {
+      params:postData,
       headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Accept: "application/json, text/plain, */*",
-        "Access-Control-Allow-Origin": "*",
+        // "Content-Type": "application/json;charset=UTF-8",
+        // Accept: "application/json, text/plain, */*",
+        // "Access-Control-Allow-Origin": "*",
+        'appclient': process.env.REACT_APP_CLIENT
       },
       cancelToken: this.source.token
     };
 
     await axios
-      .post("https://syscoin.dev/mnSearch", postData, axiosConfig)
+      .get(`${API_URI}/statsInfo/masternodes`,  axiosConfig)
       .then((res) => {
         if (this._isMounted) {
           this.setState({
