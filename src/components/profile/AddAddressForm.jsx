@@ -4,6 +4,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
+import IconInput from "../global/IconInput";
 
 const schema = yup.object().shape({
   name: yup.string().required("Label is required"),
@@ -93,13 +94,18 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
           <div className={`wizard-body ${showSingle ? "" : "collapsed"}`}>
             <div className="form-group">
               <label htmlFor="name">Label</label>
-              <input
-                type="text"
-                name="name"
-                ref={register}
-                className="styled"
-                id="name"
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  name="name"
+                  ref={register}
+                  className="styled"
+                  id="name"
+                />
+                <IconInput dataId="name">
+                  <p>Label to differentiate from other voting address at the moment of vote</p>
+                </IconInput>
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="name"
@@ -113,13 +119,18 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
 
             <div className="form-group">
               <label htmlFor="address">Voting address</label>
-              <input
-                type="text"
-                name="address"
-                ref={register}
-                className="styled"
-                id="address"
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  name="address"
+                  ref={register}
+                  className="styled"
+                  id="address"
+                />
+                <IconInput dataId="address">
+                  <p>The same voting address that you used in your protx_register</p>
+                </IconInput>
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="address"
@@ -133,13 +144,18 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
 
             <div className="form-group">
               <label htmlFor="privateKey">Voting key</label>
-              <input
-                type="text"
-                name="privateKey"
-                ref={register}
-                className="styled"
-                id="privateKey"
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  name="privateKey"
+                  ref={register}
+                  className="styled"
+                  id="privateKey"
+                />
+                <IconInput dataId="privateKey">
+                  <p>The private key of the voting address</p>
+                </IconInput>
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="privateKey"
@@ -153,13 +169,18 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
 
             <div className="form-group">
               <label htmlFor="txId">Tx id</label>
-              <input
-                type="text"
-                name="txId"
-                ref={register}
-                className="styled"
-                id="txId"
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  name="txId"
+                  ref={register}
+                  className="styled"
+                  id="txId"
+                />
+                <IconInput dataId="txId">
+                  <p>The collateral hash and collateral index of your masternode</p>
+                </IconInput>
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="txId"
@@ -189,15 +210,22 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
           <div className={`wizard-body ${showMulti ? "" : "collapsed"}`}>
             <div className="form-group">
               <div className="form-group">
-                <label htmlFor="masternodeConf">Masternode.conf</label>
-                <textarea
-                  className="styled"
-                  ref={register2}
-                  rows="5"
-                  name="masternodeConf"
-                  id="masternodeConf"
-                  placeholder="Paste your masternode.conf here"
-                ></textarea>
+                <label htmlFor="masternodeConf">Voting addresses</label>
+                <div style={{ position: 'relative' }}>
+                  <textarea
+                    className="styled"
+                    style={{resize: 'vertical'}}
+                    ref={register2}
+                    rows="5"
+                    name="masternodeConf"
+                    id="masternodeConf"
+                    placeholder="Paste your addresses here"
+                  ></textarea>
+                  <IconInput dataId="masternodeConf" marginRight={true}>
+                    <p>lalalala</p>
+                  </IconInput>
+                </div>
+                
                 <ErrorMessage
                   errors={errors2}
                   name="masternodeConf"

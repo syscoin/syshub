@@ -105,7 +105,12 @@ function UserAddress({ onEdit, onRemove, address, index }) {
           {editting && (
             <div className="description">
               <label htmlFor={`name-${index}`}>Label</label>
-              <input type={'text'} name="name" ref={register} className="styled" id={`name-${index}`} required />
+              <div style={{ position: 'relative' }}>
+                <input type="text" name="name" ref={register} className="styled" id={`name-${index}`} required />
+                <IconInput dataId="name">
+                  <p>Label to differentiate from other voting address at the moment of vote</p>
+                </IconInput>
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="name"
@@ -118,7 +123,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
             <div style={{position: 'relative'}}>
               <input type="text" name="address" ref={register} className="styled" id={`address-${index}`} required disabled={!editting} />
               <IconInput dataId="address">
-                <p>The voting address used to vote in the proposals</p>
+                <p>The same voting address that you used in your protx_register</p>
               </IconInput>
             </div>
             <ErrorMessage
@@ -129,7 +134,12 @@ function UserAddress({ onEdit, onRemove, address, index }) {
           </div>
           <div className="description">
             <label htmlFor={`privkey-${index}`}>Voting key</label>
-            <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
+            <div style={{ position: 'relative' }}>
+              <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
+              <IconInput dataId="privateKey">
+                <p>The private key of the voting address</p>
+              </IconInput>
+            </div>
             <ErrorMessage
               errors={errors}
               name="privateKey"
@@ -139,7 +149,12 @@ function UserAddress({ onEdit, onRemove, address, index }) {
 
           <div className="description">
             <label htmlFor={`txid-${index}`}>Tx id</label>
-            <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
+            <div style={{ position: 'relative' }}>
+              <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
+              <IconInput dataId="txId">
+                <p>The collateral hash and collateral index of your masternode</p>
+              </IconInput>
+            </div>
             <ErrorMessage
               errors={errors}
               name="txId"
