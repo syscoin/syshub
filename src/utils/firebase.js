@@ -208,15 +208,15 @@ class Firebase {
    * @function
    * @name generateLinkVerification
    */
-  generateLinkVerification = async () => await this.auth.currentUser.sendEmailVerification(
-    {
-      url: 'https://syshub-dev.web.app/',
-      handleCodeInApp: true
-    }
-  ).catch(err => {
-    throw err
-  })
-
+  generateLinkVerification = async () => {
+    await this.auth.currentUser.sendEmailVerification(
+      {
+        url: 'https://syshub-dev.web.app/',
+        handleCodeInApp: true
+      }).catch(err => {
+      throw err
+    })
+  }
   /**
    * function used to verificate the time of the auth token and refresh it if neccesary
    * @function

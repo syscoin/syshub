@@ -75,7 +75,7 @@ export function UserProvider(props) {
       await register({uid: response.user.uid}).catch(err => {
         throw err
       });
-
+     await firebase.generateLinkVerification().catch(err=>{throw err})
       const decoded = jwtDecode(response.user.ya);
       setToken(response.user.ya);
       setUser({data: decoded, token: getToken().token});
