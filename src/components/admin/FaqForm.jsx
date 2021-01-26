@@ -203,7 +203,10 @@ const FaqForm = () => {
       });
     }
   }
-
+// `
+// color: #0f1f1f
+// background-color: rgba(138, 196, 247, 0.322);
+// `
   return (
     <>
       {id ? (
@@ -239,8 +242,8 @@ const FaqForm = () => {
               <Editor
                 editorState={proposalDescription}
                 onEditorStateChange={onEditorStageChange}
-                wrapperClassName="proposalEditor-wrapper article"
-                editorClassName="proposal-editor styled"
+                wrapperClassName="faq-editor-wrapper article"
+                editorClassName="editor faq-editor styled"
                 toolbar={{
                   options: ["inline", "list"],
                   inline: {
