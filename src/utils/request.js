@@ -717,6 +717,92 @@ export const deleteUser = async (id) => {
     })
   })
 }
+/* F.A.Q. */
+export const getPublicFaqs = async (page, email = '', cancelToken) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/faq/forall`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const getAllFaqs = async (page, cancelToken) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/faq/?page=${page}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+export const getSingleFaq = async (uid, cancelToken) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URI}/faq/${uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      },
+      cancelToken: cancelToken
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const createFaq = async (data) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URI}/faq`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const updateFaq = async (uid, data) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.put(`${API_URI}/faq/${uid}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
+
+export const deleteFaq = async (uid) => {
+  await firebase.refreshInRequest();
+  let { token } = getToken();
+  return new Promise((resolve, reject) => {
+    axios.delete(`${API_URI}/faq/${uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'appclient': process.env.REACT_APP_CLIENT
+      }
+    }).then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+}
 
 /* ADMIN */
 

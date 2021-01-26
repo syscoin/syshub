@@ -29,6 +29,22 @@ const admin = {
         creation: 'Creation date',
         actions: 'Actions'
       }
+    },
+    faqs: {
+      heading: 'F.A.Q. list',
+      loading: 'Loading questions...',
+      table: {
+        title: 'Title',
+        creation: 'Creation date',
+        update: 'Update date',
+        actions: 'Actions'
+      },
+      newFaq: {
+        title: 'Add new F.A.Q.'
+      },
+      updateFaq: {
+        title: 'Update F.A.Q.'
+      }
     }
   }
 }

@@ -100,7 +100,7 @@ class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
-                                                <Title heading="Masternode Stats" />
+                                                <Title heading="Masternodes Stats" />
                                                 <StatsShow statsData={this.state.api_data.stats} />
                                                 <LinearChart chartData={this.state.api_data.stats.mn_stats}/>
                                             </div>
@@ -179,7 +179,8 @@ class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content article__content--pull-left text-center">
-                                                <Title heading="Masternode Stats" />
+                                                <Title heading="Masternodes Stats" />
+                                                <p>Loading...</p>
                                             </div>
                                         </div>
                                     </div>

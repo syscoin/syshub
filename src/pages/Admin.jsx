@@ -1,7 +1,7 @@
 import React from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
-import { Redirect } from "react-router";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router";
 
 import { useUser } from "../context/user-context";
 
@@ -10,7 +10,8 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Loading from "../components/global/Loading";
 import UsersTable from "../components/admin/UsersTable";
 import ProposalsTable from "../components/admin/ProposalsTable";
-
+import FaqTable from "../components/admin/FaqTable";
+import FaqForm from "../components/admin/FaqForm";
 
 /**
  * Admin page that shows at /admin
@@ -20,6 +21,7 @@ import ProposalsTable from "../components/admin/ProposalsTable";
  */
 const Admin = ({ t }) => {
   const { userAdmin, loadingAdmin } = useUser();
+  let { path } = useRouteMatch();
 
   return (
     <>
@@ -31,35 +33,64 @@ const Admin = ({ t }) => {
               <MetaTags>
                 <title> {t("admin.meta.title")} </title>
                 <meta name="keywords" content={t("admin.meta.keywords")} />
-                {/* <meta
-                  name="description"
-                  content={t("admin.meta.description")}
-                /> */}
               </MetaTags>
-              <div className="shell-large">
-                <div className="section__body">
-                  <div className="articles">
-                    <section className="article">
-                      <div className="cols">
-                        <div className="col col--size-12">
-                          <div className="article__content article__content--pull-left">
-                            <UsersTable />
+              <Switch>
+                <Route exact path={path}>
+                  <div className="shell-large">
+                    <div className="section__body">
+                      <div className="articles">
+                        <section className="article">
+                          <div className="cols">
+                            <div className="col col--size-12">
+                              <div className="article__content article__content--pull-left">
+                                <UsersTable />
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </section>
-                    <section className="article">
-                      <div className="cols">
-                        <div className="col col--size-12">
-                          <div className="article__content article__content--pull-left">
-                            <ProposalsTable />
+                        </section>
+                        <section className="article">
+                          <div className="cols">
+                            <div className="col col--size-12">
+                              <div className="article__content article__content--pull-left">
+                                <ProposalsTable />
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </section>
+                        <section className="article">
+                          <div className="cols">
+                            <div className="col col--size-12">
+                              <div className="article__content article__content--pull-left">
+                                <FaqTable />
+                              </div>
+                            </div>
+                          </div>
+                        </section>
                       </div>
-                    </section>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </Route>
+                <Route path={[`${path}/faq`, `${path}/faq/:id`]} exact>
+                  <div className="shell-large">
+                    <div className="section__body">
+                      <div className="articles">
+                        <section className="article">
+                          <div className="cols">
+                            <div className="col col--size-12">
+                              <div className="article__content article__content--pull-left">
+                                <FaqForm />
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </Route>
+                <Route path={path}>
+                  <Redirect to={path} />
+                </Route>
+              </Switch>
             </main>
           </Background>
         ) : (
