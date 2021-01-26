@@ -240,15 +240,24 @@ const FaqForm = () => {
                 editorState={proposalDescription}
                 onEditorStateChange={onEditorStageChange}
                 wrapperClassName="proposalEditor-wrapper article"
-                editorClassName="proposal-editor styled"
+                editorClassName="faq-editor styled"
                 toolbar={{
-                  options: ["inline", "list"],
-                  inline: {
-                    options: ["bold", "italic", "underline", "monospace"],
-                    list: {
-                      options: ["unordered", "ordered"],
-                    },
-                  },
+                  options: ["inline",
+                    "blockType",
+                    "fontSize",
+                    "fontFamily",
+                    "textAlign",
+                    "colorPicker",
+                    "link",
+                    "image",
+                    "emoji",
+                    "history",
+                    "list"],
+                  // inline: {
+                  //   options: ["bold", "italic", "underline", "monospace"],
+                  //   list: {
+                  //     options: ["unordered", "ordered"],
+                  //   },
                 }}
                 toolbarClassName="toolbarClassName"
                 toolbarStyle={{ borderRadius: "3px" }}
