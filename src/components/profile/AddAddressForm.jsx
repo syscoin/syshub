@@ -221,7 +221,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
                     placeholder="Paste your addresses here"
                   ></textarea>
                   <IconInput dataId="masternodeConf" marginRight={true}>
-                    <p>lalalala</p>
+                    <p>All existing voting addresses, to get them run the <mark>protx_list_wallet 1</mark> command from your Syscoin-qt.</p>
                   </IconInput>
                 </div>
                 

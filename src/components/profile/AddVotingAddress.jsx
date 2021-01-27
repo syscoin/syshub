@@ -72,19 +72,35 @@ function AddVotingAddress() {
           Swal.showLoading()
         }
       });
-      await createVotingAddress( {listMN: masternodeConf}).catch(err => { throw err });
-      await Swal.fire({
-        icon: 'success',
-        title: 'Voting address added',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      setSubmitting(false);
-      history.push('/profile');
+     await createVotingAddress( {listMN: masternodeConf})
+       .then(async res=>{
+         await Swal.fire({
+           icon: 'success',
+           title: res.data.message,
+           showConfirmButton: false,
+           timer: 1800
+         });
+         setSubmitting(false);
+         history.push('/profile');
+       })
+        .catch(err => {
+          console.log(err.response.data)
+          console.log(err.response.status)
+          if (err.response.status===406){
+            Swal.fire({
+              title: 'There was an error',
+              text: err.response.data.message,
+              icon: 'error'
+            });
+            setSubmitting(false);
+          }
+          if (err.response.status===500){throw err}
+        });
+
     } catch (error) {
       Swal.fire({
         title: 'There was an error',
-        text: 'Please verify the data and try again',
+        text: 'Invalid format, Please verify the data and try again',
         icon: 'error'
       });
       setSubmitting(false);
