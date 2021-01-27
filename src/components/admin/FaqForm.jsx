@@ -295,7 +295,7 @@ const FaqForm = () => {
           )}
         </div>
 
-        <div className="form-actions-spaced">
+        <div className="form-actions-spaced text-center">
           {showEditor && (
             <button
               className="btn btn--blue-border"
@@ -329,7 +329,7 @@ const FaqForm = () => {
         </div>
       </form>
       <div className="text-center" style={{marginTop: '50px'}}>
-        <Link to="/admin" className="btn btn--blue-border">Admin panel</Link>
+        <Link to="/admin" className="btn btn--blue-border">Go back</Link>
       </div>
     </>
   );
