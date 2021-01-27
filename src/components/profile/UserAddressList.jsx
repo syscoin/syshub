@@ -8,7 +8,7 @@ import { useUser } from '../../context/user-context';
 import { getUserVotingAddress, updateVotingAddress, destroyVotingAddress, get2faInfoUser } from '../../utils/request';
 
 import SubTitle from "../global/SubTitle";
-import UserMN from './UserAddress';
+import UserAddress from './UserAddress';
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "./2FA/Modal2FA";
 
@@ -191,7 +191,7 @@ function UserAddressList() {
       <SubTitle heading={t('profile.data.address.heading')} />
       {
         (votingAddress.length > 0 && !isFetching) && votingAddress.map((voteAddress, index) => (
-          <UserMN onEdit={editVotingAddress} onRemove={removeVotingAddress} address={voteAddress} key={voteAddress.uid} index={index} />
+          <UserAddress onEdit={editVotingAddress} onRemove={removeVotingAddress} address={voteAddress} key={voteAddress.uid} index={index} />
         ))
       }
       {

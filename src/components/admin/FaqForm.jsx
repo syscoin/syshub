@@ -17,6 +17,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { createFaq, getSingleFaq, updateFaq } from "../../utils/request";
 import Title from "../global/Title";
 import swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const schema = yup.object().shape({
   title: yup.string().required("The title is required"),
@@ -203,10 +204,7 @@ const FaqForm = () => {
       });
     }
   }
-// `
-// color: #0f1f1f
-// background-color: rgba(138, 196, 247, 0.322);
-// `
+
   return (
     <>
       {id ? (
@@ -243,7 +241,7 @@ const FaqForm = () => {
                 editorState={proposalDescription}
                 onEditorStateChange={onEditorStageChange}
                 wrapperClassName="faq-editor-wrapper article"
-                editorClassName="editor faq-editor styled"
+                editorClassName="faq-editor styled"
                 toolbar={{
                   options: ["inline",
                     "blockType",
@@ -263,8 +261,13 @@ const FaqForm = () => {
                   //   },
                 }}
                 toolbarClassName="toolbarClassName"
-                toolbarStyle={{ borderRadius: "3px" }}
-                editorStyle={{ paddingTop: 0, paddingBottom: 0 }}
+                toolbarStyle={{ borderRadius: "3px", color: '#0f1f1f' }}
+                editorStyle={{
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  color: '#0f1f1f',
+                  backgroundColor: 'rgba(138, 196, 247, 0.322)'
+                }}
               />
               {editorEmpty(proposalDescription) && (
                 <small>
@@ -325,6 +328,9 @@ const FaqForm = () => {
           </button>
         </div>
       </form>
+      <div className="text-center" style={{marginTop: '50px'}}>
+        <Link to="/admin" className="btn btn--blue-border">Admin panel</Link>
+      </div>
     </>
   );
 };

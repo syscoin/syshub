@@ -4,12 +4,13 @@ import { withTranslation } from "react-i18next";
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
+import FaqList from "../components/faq/FaqList";
 
 const FAQ = ({t}) => {
   return (
     <>
       <Background>
-        <BackgroundInner type="B" />
+        <BackgroundInner />
         <main className="section faqPage">
           <MetaTags>
             <title> {t("faq.meta.title")} </title>
@@ -23,6 +24,7 @@ const FAQ = ({t}) => {
                     <div className="col col--size-12">
                       <div className="article__content article__content--pull-left">
                         <Title heading={t('faq.heading')} />
+                        <FaqList />
                       </div>
                     </div>
                   </div>

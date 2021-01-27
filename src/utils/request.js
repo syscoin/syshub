@@ -717,14 +717,12 @@ export const deleteUser = async (id) => {
     })
   })
 }
+
 /* F.A.Q. */
-export const getPublicFaqs = async (page, email = '', cancelToken) => {
-  await firebase.refreshInRequest();
-  let { token } = getToken();
+export const getPublicFaqs = async (cancelToken) => {
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/faq/forall`, {
       headers: {
-        Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
       },
       cancelToken: cancelToken

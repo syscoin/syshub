@@ -117,8 +117,13 @@ function DescriptionProposal({onNext, onBack}) {
                   }
                 }}
                 toolbarClassName="toolbarClassName"
-                toolbarStyle={{ borderRadius: '3px' }}
-                editorStyle={{ paddingTop: 0, paddingBottom: 0 }}
+                toolbarStyle={{ borderRadius: '3px', color: '#0f1f1f' }}
+                editorStyle={{
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  color: '#0f1f1f',
+                  backgroundColor: 'rgba(138, 196, 247, 0.322)'
+                }}
               />
               {
                 editorEmpty(proposalDescription) && <small>

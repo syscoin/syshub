@@ -43,14 +43,14 @@ const FaqTable = ({ t }) => {
   const executeScroll = () => scrollRef.current.scrollIntoView();
 
   /**
-   * function that load all the hidden proposals from the API
+   * function that load all the questions from the API
    * @function
    */
   const loadQuestions = useCallback(async () => {
     setDataload(0);
     try {
       const response = await getAllFaqs(currentPage, cancelSource.token);
-      console.log(response);
+      // console.log(response);
       if (response.data.faqs) {
         if (isMounted.current) {
           setDataTable(response.data.faqs);
@@ -67,7 +67,7 @@ const FaqTable = ({ t }) => {
   }, [currentPage, cancelSource]);
 
   /**
-   * UseEffect that loads the hidden proposals
+   * UseEffect that loads the questions
    * @function
    */
   useEffect(() => {
@@ -184,7 +184,7 @@ const FaqTable = ({ t }) => {
 
       {dataload === 1 ? (
         dataTable.length === 0 ? (
-          <p className="text-center">There are no hidden proposals.</p>
+          <p className="text-center">There are no questions.</p>
         ) : (
           <FaqPagination
             data={dataTable}
