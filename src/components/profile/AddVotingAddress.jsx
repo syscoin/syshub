@@ -45,8 +45,7 @@ function AddVotingAddress() {
         timer: 1500
       });
       setSubmitting(false);
-      return true;
-      // history.push('/profile');
+      history.push('/profile');
     } catch (error) {
       Swal.fire({
         title: 'There was an error',
