@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import { Collapse } from "react-collapse";
 
+/**
+ * Component that shows the F.A.Q. item inside the faq list
+ * @component
+ * @subcategory FAQ
+ * @param {Object} faq the question to show 
+ * @param {Object} index the index of the question to show 
+ * @example
+ * const faq = {};
+ * const index = 0;
+ * return (
+ *  <FaqItem faq={faq} index={index} />
+ * )
+ */
 const FaqItem = ({ faq, index }) => {
   const [isActive, setIsActive] = useState(false);
 

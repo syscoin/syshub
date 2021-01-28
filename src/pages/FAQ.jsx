@@ -6,6 +6,13 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import FaqList from "../components/faq/FaqList";
 
+
+/**
+ * FAQ page that shows at /faq
+ * @component
+ * @category Pages
+ * @param {*} t t prop received from withTranslation
+ */
 const FAQ = ({t}) => {
   return (
     <>

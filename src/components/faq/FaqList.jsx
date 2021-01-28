@@ -11,6 +11,15 @@ import { useTranslation } from "react-i18next";
 import { getPublicFaqs } from "../../utils/request";
 import FaqItem from "./FaqItem";
 
+/**
+ * Component that shows the F.A.Q. List
+ * @component
+ * @subcategory FAQ
+ * @example
+ * return (
+ *  <FaqList />
+ * )
+ */
 const FaqList = () => {
   const { t } = useTranslation();
   const [dataload, setDataload] = useState(0);
