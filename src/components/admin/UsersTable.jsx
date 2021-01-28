@@ -19,7 +19,7 @@ import UsersAddModal from "./UsersAddModal";
 /**
  * Component that shows the Users info and table inside admin section
  * @component
- * @subcategory Admin
+ * @subcategory admin
  * @param {*} t t prop received from withTranslation
  * @example
  * return (

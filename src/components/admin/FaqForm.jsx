@@ -23,6 +23,15 @@ const schema = yup.object().shape({
   title: yup.string().required("The title is required"),
 });
 
+/**
+ * Component that shows the form to add or update a F.A.Q. inside admin section
+ * @component
+ * @subcategory admin
+ * @example
+ * return (
+ *  <FaqForm />
+ * )
+ */
 const FaqForm = () => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -46,7 +55,7 @@ const FaqForm = () => {
 
   useEffect(() => {
     /**
-     * function to get saved proposal from the API
+     * function to get the faq to update from the API
      * @function
      */
     const getFAQ = async (uid) => {
@@ -107,7 +116,7 @@ const FaqForm = () => {
   }, [id, cancelSource, setValue, history]);
 
   /**
-   * shows the description editor
+   * function that shows the description editor
    * @function
    * @param {*} editorState the editor state
    */
@@ -131,6 +140,11 @@ const FaqForm = () => {
     }
   };
 
+  /**
+   * function that handles the submit of the form
+   * @function
+   * @param {{string}} title title received from the form 
+   */
   const submit = async ({ title }) => {
     const descriptionRaw = draftToHtml(
       convertToRaw(proposalDescription.getCurrentContent())
@@ -147,6 +161,12 @@ const FaqForm = () => {
       });
     }
   };
+
+  /**
+   * function to update a previous faq
+   * @function
+   * @param {object} faq the faq information received from submit
+   */
   const update = async (faq) => { 
     swal.fire({
       title: "Updating question please wait",
@@ -177,6 +197,11 @@ const FaqForm = () => {
 
   }
   
+  /**
+   * function to create a new faq
+   * @function
+   * @param {object} faq the faq information received from submit
+   */
   const create = async (data) => {
     swal.fire({
       title: "Adding question please wait",
@@ -253,12 +278,7 @@ const FaqForm = () => {
                     "image",
                     "emoji",
                     "history",
-                    "list"],
-                  // inline: {
-                  //   options: ["bold", "italic", "underline", "monospace"],
-                  //   list: {
-                  //     options: ["unordered", "ordered"],
-                  //   },
+                    "list"]
                 }}
                 toolbarClassName="toolbarClassName"
                 toolbarStyle={{ borderRadius: "3px", color: '#0f1f1f' }}

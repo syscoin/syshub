@@ -17,7 +17,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 /**
  * Component that shows the F.A.Q. info and table inside admin section
  * @component
- * @subcategory Admin
+ * @subcategory admin
  * @param {*} t t prop received from withTranslation
  * @example
  * return (
@@ -98,44 +98,6 @@ const FaqTable = ({ t }) => {
   };
 
   /**
-   * function to update a faq
-   * @param {object} faq the data of the faq to update
-   */
-  const doUpdateFaq = async (faq) => {
-    const result = await swal.fire({
-      title: `You will show this proposal on the app again`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, show it",
-    });
-    if (result.isConfirmed) {
-      swal.fire({
-        title: "Showing proposal please wait",
-        showConfirmButton: false,
-        willOpen: () => {
-          swal.showLoading();
-        },
-      });
-      try {
-        // await deleteHiddenProposal();
-        swal.fire({
-          icon: "success",
-          title: "The proposal is now showing",
-          timer: 2500,
-        });
-        loadQuestions();
-        executeScroll();
-      } catch (error) {
-        swal.fire({
-          icon: "error",
-          title: "There was an error",
-          text: error.message,
-        });
-      }
-    }
-  };
-
-  /**
    * function to delete a faq
    * @param {object} faq the data of the faq to delete
    */
@@ -192,7 +154,6 @@ const FaqTable = ({ t }) => {
             sizePerPage={sizePerPage}
             totalSize={totalRecords}
             onTableChange={handleTableChange}
-            onUpdateFaq={doUpdateFaq}
             onDeleteFaq={doDeleteFaq}
             t={t}
             path={path}

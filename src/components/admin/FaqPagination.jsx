@@ -24,7 +24,6 @@ const FaqPagination = ({
   sizePerPage,
   onTableChange,
   totalSize,
-  onUpdateFaq,
   onDeleteFaq,
   t,
   path

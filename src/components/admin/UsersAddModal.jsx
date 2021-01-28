@@ -27,7 +27,7 @@ const schema = yup.object().shape({
 /**
  * Component that shows the inside of the add admin modal
  * @component
- * @subcategory Admin
+ * @subcategory admin
  * @param {*} t t prop received from withTranslation
  * @param {*} onAddAdmin function to add a new admin
  * @example
