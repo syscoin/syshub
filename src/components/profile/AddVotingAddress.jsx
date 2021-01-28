@@ -87,8 +87,6 @@ function AddVotingAddress() {
           history.push("/profile");
         })
         .catch((err) => {
-          console.log(err.response.data);
-          console.log(err.response.status);
           if (err.response.status === 406) {
             Swal.fire({
               title: "There was an error",

@@ -230,7 +230,6 @@ class Firebase {
       const decoded = jwtDecode(token.decryptedToken);
       const dateNow = new Date().getTime();
       if (Math.floor(dateNow / 1000) > decoded.exp) {
-        console.log('token refrescado')
         const newTokenRefreshed = await this.refreshToken().catch(err => {
           throw err
         })

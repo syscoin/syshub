@@ -126,8 +126,7 @@ const ProposalsTable = ({t}) => {
       }
     });
     await createHiddenProposal({hash: proposalHash})
-      .then(res => {
-        console.log(res)
+      .then(() => {
         swal.fire({
           icon: 'success',
           title: 'The proposal is hidden',
