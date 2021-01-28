@@ -6,14 +6,14 @@ import React, {
   useRef,
 } from "react";
 import axios from "axios";
-import { withTranslation } from "react-i18next";
+import {withTranslation} from "react-i18next";
 import swal from 'sweetalert2';
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { yupResolver } from "@hookform/resolvers";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { createHiddenProposal, deleteHiddenProposal, getAllHiddenProposals } from "../../utils/request";
+import {createHiddenProposal, deleteHiddenProposal, getAllHiddenProposals} from "../../utils/request";
 import ProposalPagination from "./ProposalPagination";
 import SubTitle from "../global/SubTitle";
 
@@ -33,7 +33,7 @@ const schema = yup.object().shape({
  *  <ProposalsTable />
  * )
  */
-const ProposalsTable = ({ t }) => {
+const ProposalsTable = ({t}) => {
   const [dataload, setDataload] = useState(0);
   const [dataTable, setDataTable] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +44,7 @@ const ProposalsTable = ({ t }) => {
   const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  const { register, handleSubmit, errors, reset } = useForm({
+  const {register, handleSubmit, errors, reset} = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
@@ -105,10 +105,10 @@ const ProposalsTable = ({ t }) => {
   /**
    * function that handles the table changes and sets the current page
    * @function
-   * @param {*} type 
+   * @param {*} type
    * @param {{number}} page current page in the table
    */
-  const handleTableChange = (type, { page }) => {
+  const handleTableChange = (type, {page}) => {
     setCurrentPage(page);
     executeScroll();
   };
@@ -125,32 +125,39 @@ const ProposalsTable = ({ t }) => {
         swal.showLoading()
       }
     });
-    try {
-      const response = await createHiddenProposal({ hash: proposalHash });
-      if (response.data.ok) {
+    await createHiddenProposal({hash: proposalHash})
+      .then(res => {
+        console.log(res)
         swal.fire({
           icon: 'success',
           title: 'The proposal is hidden',
-          timer: 2500
+          timer: 2800
         });
-        reset({ proposalHash: '' });
+        reset({proposalHash: ''});
         loadProposals();
         executeScroll();
-      }
-      else {
-        swal.fire({
-          icon: 'info',
-          title: response.data.message,
-          timer: 2500
-        });
-      }
-    } catch (error) {
-      swal.fire({
-        icon: 'error',
-        title: 'There was an error',
-        text: error.message
-      });
-    }
+
+      })
+      .catch(err => {
+        if (err.response.status === 406) {
+          swal.fire({
+            icon: 'info',
+            title: 'information',
+            text: err.response.data.message,
+            timer: 2500
+          });
+          reset({proposalHash: ''});
+          loadProposals();
+          executeScroll();
+        } else {
+          swal.fire({
+            icon: 'error',
+            title: 'There was an error',
+            text: err.message
+          });
+        }
+      })
+
   };
 
   /**
@@ -193,12 +200,12 @@ const ProposalsTable = ({ t }) => {
 
   return (
     <>
-      <SubTitle propsRef={scrollRef} heading={t("admin.proposals.heading")} />
+      <SubTitle propsRef={scrollRef} heading={t("admin.proposals.heading")}/>
 
       <form className="input-form" onSubmit={handleSubmit(doHideProposal)}>
         <div className="form-group">
           <label htmlFor="proposalHash">{t("admin.proposals.label")}</label>
-          <br />
+          <br/>
 
           <input
             id="proposalHash"
@@ -211,14 +218,14 @@ const ProposalsTable = ({ t }) => {
           <ErrorMessage
             errors={errors}
             name="proposalHash"
-            render={({ message }) => (
+            render={({message}) => (
               <small>
-                <p style={{ lineHeight: "1.5" }}>{message}</p>
+                <p style={{lineHeight: "1.5"}}>{message}</p>
               </small>
             )}
           />
         </div>
-        <div className="btn-group text-center" style={{ marginTop: "20px" }}>
+        <div className="btn-group text-center" style={{marginTop: "20px"}}>
           <button type="submit" className="btn btn--blue">
             Hide
           </button>
