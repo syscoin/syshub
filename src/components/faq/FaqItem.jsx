@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import DOMPurify from "dompurify";
 import { Collapse } from "react-collapse";
 
 /**
  * Component that shows the F.A.Q. item inside the faq list
  * @component
  * @subcategory FAQ
- * @param {Object} faq the question to show 
- * @param {Object} index the index of the question to show 
+ * @param {Object} faq the question to show
+ * @param {Object} index the index of the question to show
  * @example
  * const faq = {};
  * const index = 0;
@@ -51,9 +52,9 @@ const FaqItem = ({ faq, index }) => {
           }}
         >
           <div
-            style={{margin: "0 20px"}}
+            style={{ margin: "0 20px" }}
             dangerouslySetInnerHTML={{
-              __html: faq.description,
+              __html: DOMPurify.sanitize(faq.description),
             }}
           ></div>
         </article>

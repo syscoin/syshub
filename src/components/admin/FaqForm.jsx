@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router";
 import { useForm } from "react-hook-form";
@@ -143,7 +144,7 @@ const FaqForm = () => {
   /**
    * function that handles the submit of the form
    * @function
-   * @param {{string}} title title received from the form 
+   * @param {{string}} title title received from the form
    */
   const submit = async ({ title }) => {
     const descriptionRaw = draftToHtml(
@@ -152,12 +153,12 @@ const FaqForm = () => {
     if (id) {
       update({
         title,
-        description: descriptionRaw
+        description: descriptionRaw,
       });
     } else {
       create({
         title,
-        description: descriptionRaw
+        description: descriptionRaw,
       });
     }
   };
@@ -167,17 +168,17 @@ const FaqForm = () => {
    * @function
    * @param {object} faq the faq information received from submit
    */
-  const update = async (faq) => { 
+  const update = async (faq) => {
     swal.fire({
       title: "Updating question please wait",
       showConfirmButton: false,
       willOpen: () => {
         swal.showLoading();
-      }
+      },
     });
     try {
       await updateFaq(id, {
-        data: faq
+        data: faq,
       });
       await swal.fire({
         icon: "success",
@@ -185,18 +186,17 @@ const FaqForm = () => {
         timer: 2500,
         showConfirmButton: false,
       });
-      history.push('/admin');
+      history.push("/admin");
     } catch (error) {
       swal.fire({
         icon: "error",
         title: "There was an error",
         text: error.response?.data?.message,
-        footer: error.message
+        footer: error.message,
       });
     }
+  };
 
-  }
-  
   /**
    * function to create a new faq
    * @function
@@ -208,7 +208,7 @@ const FaqForm = () => {
       showConfirmButton: false,
       willOpen: () => {
         swal.showLoading();
-      }
+      },
     });
 
     try {
@@ -219,16 +219,16 @@ const FaqForm = () => {
         timer: 2500,
         showConfirmButton: false,
       });
-      history.push('/admin');
+      history.push("/admin");
     } catch (error) {
       swal.fire({
         icon: "error",
         title: "There was an error",
         text: error.response?.data?.message,
-        footer: error.message
+        footer: error.message,
       });
     }
-  }
+  };
 
   return (
     <>
@@ -268,7 +268,8 @@ const FaqForm = () => {
                 wrapperClassName="faq-editor-wrapper article"
                 editorClassName="faq-editor styled"
                 toolbar={{
-                  options: ["inline",
+                  options: [
+                    "inline",
                     "blockType",
                     "fontSize",
                     "fontFamily",
@@ -278,15 +279,16 @@ const FaqForm = () => {
                     "image",
                     "emoji",
                     "history",
-                    "list"]
+                    "list",
+                  ],
                 }}
                 toolbarClassName="toolbarClassName"
-                toolbarStyle={{ borderRadius: "3px", color: '#0f1f1f' }}
+                toolbarStyle={{ borderRadius: "3px", color: "#0f1f1f" }}
                 editorStyle={{
                   paddingTop: 0,
                   paddingBottom: 0,
-                  color: '#0f1f1f',
-                  backgroundColor: 'rgba(138, 196, 247, 0.322)'
+                  color: "#0f1f1f",
+                  backgroundColor: "rgba(138, 196, 247, 0.322)",
                 }}
               />
               {editorEmpty(proposalDescription) && (
@@ -304,8 +306,10 @@ const FaqForm = () => {
                   className="proposalContent-div"
                   id="preview-html-container"
                   dangerouslySetInnerHTML={{
-                    __html: draftToHtml(
-                      convertToRaw(proposalDescription.getCurrentContent())
+                    __html: DOMPurify.sanitize(
+                      draftToHtml(
+                        convertToRaw(proposalDescription.getCurrentContent())
+                      )
                     ),
                   }}
                   style={{ margin: "0 10px" }}
@@ -348,8 +352,10 @@ const FaqForm = () => {
           </button>
         </div>
       </form>
-      <div className="text-center" style={{marginTop: '50px'}}>
-        <Link to="/admin" className="btn btn--blue-border">Go back</Link>
+      <div className="text-center" style={{ marginTop: "50px" }}>
+        <Link to="/admin" className="btn btn--blue-border">
+          Go back
+        </Link>
       </div>
     </>
   );
