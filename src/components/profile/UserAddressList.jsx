@@ -4,13 +4,13 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import swal from 'sweetalert2';
 import { useTranslation } from 'react-i18next/';
 
-import { useUser } from '../../context/user-context';
-import { getUserVotingAddress, updateVotingAddress, destroyVotingAddress, get2faInfoUser } from '../../utils/request';
+// import { useUser } from '../../context/user-context';
+import { getUserVotingAddress, updateVotingAddress, destroyVotingAddress } from '../../utils/request';
 
 import SubTitle from "../global/SubTitle";
 import UserAddress from './UserAddress';
-import CustomModal from "../global/CustomModal";
-import Modal2FA from "./2FA/Modal2FA";
+// import CustomModal from "../global/CustomModal";
+// import Modal2FA from "./2FA/Modal2FA";
 
 /**
  * Component to show the user address at profile
@@ -22,14 +22,14 @@ import Modal2FA from "./2FA/Modal2FA";
  * )
  */
 function UserAddressList() {
-  const { user } = useUser();
+  // const { user } = useUser();
   const { url } = useRouteMatch();
   const [votingAddress, setVotingAddress] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [voteAddressToDelete, setVoteAddressToDelete] = useState('');
-  const [userSignInGAuth, setUserSignInGAuth] = useState(null);
-  const [user2FA, setUser2FA] = useState(null);
-  const [open2FAModal, setOpen2FAModal] = useState(false);
+  // const [userSignInGAuth, setUserSignInGAuth] = useState(null);
+  // const [user2FA, setUser2FA] = useState(null);
+  // const [open2FAModal, setOpen2FAModal] = useState(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
   const isMounted = useRef(false);
   const { t } = useTranslation();
@@ -127,27 +127,29 @@ function UserAddressList() {
     })
     if (result.isConfirmed) {
       await setVoteAddressToDelete(uid);
-      try {
-        let user2fa = await get2faInfoUser(user.data.user_id);
-        if (user2fa.twoFa === true) {
-          setUser2FA(user2fa);
-          if (user2fa.gAuth === true) {
-            setUserSignInGAuth({secret: user2fa.gAuthSecret});
-          }
-          setOpen2FAModal(true);
-        }
-        else {
-          deleteVotingAddressAfterVerification(uid);
-        }
-      }
-      catch (error) {
-        swal.fire({
-          icon: 'error',
-          title: 'There was an error',
-          text: error.message,
-        });
-      }
+      // try {
+      //   let user2fa = await get2faInfoUser(user.data.user_id);
+      //   if (user2fa.twoFa === true) {
+      //     setUser2FA(user2fa);
+      //     if (user2fa.gAuth === true) {
+      //       setUserSignInGAuth({secret: user2fa.gAuthSecret});
+      //     }
+      //     setOpen2FAModal(true);
+      //   }
+      //   else {
+      //     deleteVotingAddressAfterVerification(uid);
+      //   }
+      // }
+      // catch (error) {
+      //   swal.fire({
+      //     icon: 'error',
+      //     title: 'There was an error',
+      //     text: error.message,
+      //   });
+      // }
+      deleteVotingAddressAfterVerification(uid);
     }
+
   }
 
   /**
@@ -156,7 +158,7 @@ function UserAddressList() {
    * @param {string} [uid] uid of the v.a. to remove (optional)
    */
   const deleteVotingAddressAfterVerification = async (uid = null) => {
-    setOpen2FAModal(false);
+    // setOpen2FAModal(false);
     swal.fire({
       title: 'Deleting voting address',
       showConfirmButton: false,
@@ -207,7 +209,7 @@ function UserAddressList() {
       <Link to={`${url}/add-voting-address`} className="btn btn--blue-border">
         Add voting address
       </Link>
-      <CustomModal
+      {/* <CustomModal
         open={open2FAModal}
         onClose={() => setOpen2FAModal(false)}
       >
@@ -217,7 +219,7 @@ function UserAddressList() {
           onGAuth={deleteVotingAddressAfterVerification}
           onPhoneSMS={deleteVotingAddressAfterVerification}
         />}
-      </CustomModal>
+      </CustomModal> */}
     </>
   )
 }

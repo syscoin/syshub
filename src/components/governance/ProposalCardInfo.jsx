@@ -1,5 +1,8 @@
 import React from "react";
 import DOMPurify from "dompurify";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import swal from "sweetalert2";
+
 
 /**
  * Component to show certain info of the proposal inside proposalCard
@@ -22,6 +25,7 @@ function ProposalCardInfo({
   month_remaining,
   payment_type,
 }) {
+
   /**
    * Function that returns an html with the link or not of the proposal
    * @function
@@ -39,6 +43,19 @@ function ProposalCardInfo({
     }
   }
 
+  /**
+   * function after copy the hash of the proposal
+   * @function
+   */
+  const onCopy = () => {
+    swal.fire({
+      icon: "success",
+      title: "Copied",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  };
+
   return (
     <div className="budget">
       {proposal.description !== "" && (
@@ -53,7 +70,10 @@ function ProposalCardInfo({
         </>
       )}
       <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
-        Hash: {proposal.Hash}
+        Hash: <CopyToClipboard
+          text={proposal.Hash}
+          onCopy={onCopy}
+        ><span style={{cursor:'pointer'}}>{proposal.Hash}</span></CopyToClipboard>
       </p>
       <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
         Collateral hash:{" "}
