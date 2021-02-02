@@ -97,7 +97,7 @@ class Footer extends Component {
                             <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://bitcointalk.org/index.php?topic=1466445.0"
+                            href="https://github.com/syscoin"
                             >
                             <i className="ico-bitcoin"></i>
                             </a>
@@ -124,7 +124,7 @@ class Footer extends Component {
                             <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://github.com/syscoin"
+                            href="https://bitcointalk.org/index.php?topic=1466445.0"
                             >
                             <i className="ico-github"></i>
                             </a>
