@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     )
     .required('Voting address is required'),
   txId: yup.string()
-    .matches(/-0|-1/, 'Tx Id must end with -0 or -1')
+    .matches(/-0$|-1$/, 'Tx Id must end with the index: -0 or -1')
     .required('tx id is required'),
   privateKey: yup.string().required('private key is required')
 });

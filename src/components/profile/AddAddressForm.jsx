@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";
@@ -18,7 +19,7 @@ const schema = yup.object().shape({
     .required("Voting address is required"),
   txId: yup
     .string()
-    .matches(/-0|-1/, "Tx Id must end with -0 or -1")
+    .matches(/-0$|-1$/, "Tx Id must end with the index: -0 or -1")
     .required("Tx id is required"),
   privateKey: yup.string().required("Private key is required"),
 });
@@ -209,7 +210,7 @@ function AddAddressForm({ onSingleCreation, onMultipleCreation, submitting }) {
           <div className={`wizard-body ${showMulti ? "" : "collapsed"}`}>
             <div className="form-group">
               <div className="form-group">
-                <label htmlFor="masternodeConf">Voting addresses</label>
+                <label htmlFor="masternodeConf">Voting addresses list from the <code>"protx_list_wallet 1"</code> command</label>
                 <div style={{ position: 'relative' }}>
                   <textarea
                     className="styled"
