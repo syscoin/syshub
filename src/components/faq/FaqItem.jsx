@@ -35,7 +35,6 @@ const FaqItem = ({ faq, index }) => {
           collapse: "ReactCollapse--collapse",
           content: "ReactCollapse--content wizard-body",
         }}
-        onWork={console.log}
         isOpened={isActive}
         initialStyle={{ height: 0, overflow: "hidden" }}
       >
