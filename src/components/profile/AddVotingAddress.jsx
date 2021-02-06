@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useHistory} from "react-router-dom";
 import Swal from "sweetalert2";
-import { useTranslation } from "react-i18next/";
-import { createVotingAddress } from "../../utils/request";
+import {useTranslation} from "react-i18next/";
+import {createVotingAddress} from "../../utils/request";
 
 import AddAddressForm from "./AddAddressForm";
 import Title from "../global/Title";
@@ -18,7 +18,7 @@ import Title from "../global/Title";
  */
 function AddVotingAddress() {
   const history = useHistory();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,17 +36,30 @@ function AddVotingAddress() {
           Swal.showLoading();
         },
       });
-      await createVotingAddress(data).catch((err) => {
-        throw err;
-      });
-      await Swal.fire({
-        title: "Voting address added",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setSubmitting(false);
-      history.push("/profile");
+      await createVotingAddress(data)
+        .then(async (res) => {
+          await Swal.fire({
+            icon: "success",
+            title: res.data.message,
+            showConfirmButton: false,
+            timer: 1800,
+          });
+          setSubmitting(false);
+          history.push("/profile");
+        })
+        .catch((err) => {
+          if (err.response.status === 406) {
+            Swal.fire({
+              title: "There was an error",
+              text: err.response.data.message,
+              icon: "error",
+            });
+            setSubmitting(false);
+          }
+          if (err.response.status === 500) {
+            throw err;
+          }
+        });
     } catch (error) {
       Swal.fire({
         title: "There was an error",
@@ -65,7 +78,7 @@ function AddVotingAddress() {
    * function that handles the many voting address creation
    * @param {Object} data the data from the multiple add form
    */
-  const addManyAddress = async ({ masternodeConf }) => {
+  const addManyAddress = async ({masternodeConf}) => {
     setSubmitting(true);
     try {
       Swal.fire({
@@ -75,7 +88,7 @@ function AddVotingAddress() {
           Swal.showLoading();
         },
       });
-      await createVotingAddress({ listMN: masternodeConf })
+      await createVotingAddress({listMN: masternodeConf})
         .then(async (res) => {
           await Swal.fire({
             icon: "success",
@@ -117,7 +130,7 @@ function AddVotingAddress() {
             <div className="cols">
               <div className="col col--size-12">
                 <div className="article__content article__content--pull-left text-center">
-                  <Title heading={t("profile.data.address.addAddress")} />
+                  <Title heading={t("profile.data.address.addAddress")}/>
                   <AddAddressForm
                     onSingleCreation={addAddress}
                     onMultipleCreation={addManyAddress}
