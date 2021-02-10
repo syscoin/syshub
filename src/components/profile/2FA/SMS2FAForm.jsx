@@ -146,7 +146,11 @@ function SMS2FAForm({ onClose }) {
         });
       })
       .catch((err) => {
-        throw err;
+        swal.fire({
+          icon: "error",
+          title: "Error",
+          text: err.message
+        });
       });
     // SMSAuth({phoneNumber, ...data});
   };
