@@ -185,6 +185,8 @@ function ProposalForm() {
       confirmButtonText: 'Delete'
     })
     if (swalConfirm.isConfirmed) {
+      setUseCollapse(false);
+      setCollapse(true);
       cancelCurrentProposal();
     }
   }
