@@ -93,7 +93,7 @@ function UserAddressList() {
       }
     });
     try {
-      const response = await updateVotingAddress( uid, {data: data});
+      const response = await updateVotingAddress( uid, data);
       if (response.data) {
         swal.fire({
           icon: "success",

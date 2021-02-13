@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {firebase} from "../context/user-context";
 import {getToken} from "./auth-token";
+import {decryptVotingKey, encryptVotingKey} from "./encryption";
 
 // const API_URI = 'http://localhost:3000'
 // const API_URI = 'http://198.211.117.144:3000'
@@ -135,9 +136,10 @@ export const getOneMasterNode = async (id) => {
  */
 export const getUserVotingAddress = async ({hash, cancelToken}) => {
   try {
+    let newDataRes = [];
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.get(typeof hash !== "undefined" ?
+    let newData = await axios.get(typeof hash !== "undefined" ?
       `${API_URI}/address?hash=${hash}` :
       `${API_URI}/address`
       , {
@@ -149,6 +151,15 @@ export const getUserVotingAddress = async ({hash, cancelToken}) => {
       }).catch(err => {
       throw err
     })
+    if (newData.data) {
+      newData.data.nodes.map((item) => {
+        newDataRes.push(decryptVotingKey(item))
+      })
+      newData.data.nodes = [...newDataRes]
+      return newData
+    } else {
+      return newData
+    }
   } catch (err) {
     throw err
   }
@@ -161,9 +172,18 @@ export const getUserVotingAddress = async ({hash, cancelToken}) => {
  */
 export const createVotingAddress = async (data) => {
   try {
+    let newData;
+    const newDataMany = [];
     await firebase.refreshInRequest()
+    if (data.listMN) {
+      JSON.parse(data.listMN).forEach(item => {
+        newDataMany.push(encryptVotingKey(item))
+      })
+    } else {
+      newData = encryptVotingKey(data)
+    }
     let {token} = getToken()
-    return await axios.post(`${API_URI}/address`, data, {
+    return await axios.post(`${API_URI}/address`, data.listMN ? {listMN: newDataMany} : newData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
@@ -186,7 +206,8 @@ export const updateVotingAddress = async (id, data) => {
   try {
     await firebase.refreshInRequest()
     let {token} = getToken()
-    return await axios.put(`${API_URI}/address/${id}`, data, {
+    let newData=encryptVotingKey(data)
+    return await axios.put(`${API_URI}/address/${id}`, {data:newData}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
@@ -223,8 +244,8 @@ export const destroyVotingAddress = async (id) => {
 
 /**
  * Not used
- * @param {*} id 
- * @param {*} data 
+ * @param {*} id
+ * @param {*} data
  */
 export const voteIn = async (id, data) => {
   await firebase.refreshInRequest()
@@ -432,7 +453,7 @@ export const submitProposal = async (id, data) => {
 /**
  * function to vote in a proposal
  * @function
- * @param {*} data 
+ * @param {*} data
  */
 export const voteProposal = async (data) => {
   await firebase.refreshInRequest()
@@ -522,7 +543,7 @@ export const createProposal = async (data) => {
  * function to update a proposal with new data
  * @function
  * @param {string} id id of the proposal
- * @param {Object} data data of the proposal 
+ * @param {Object} data data of the proposal
  */
 export const updateProposal = async (id, data) => {
   try {
@@ -654,7 +675,7 @@ export const get2faInfoUser = async (id) => {
  * request to update the user data and credentials
  * @function
  * @param {string} uid uid of the user to update
- * @param {Object} data data to update 
+ * @param {Object} data data to update
  */
 export const updateUser = async (id, data) => {
   await firebase.refreshInRequest()
@@ -733,7 +754,7 @@ export const getPublicFaqs = async (cancelToken) => {
 
 export const getAllFaqs = async (page, cancelToken) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/faq/?page=${page}`, {
       headers: {
@@ -747,7 +768,7 @@ export const getAllFaqs = async (page, cancelToken) => {
 }
 export const getSingleFaq = async (uid, cancelToken) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/faq/${uid}`, {
       headers: {
@@ -762,7 +783,7 @@ export const getSingleFaq = async (uid, cancelToken) => {
 
 export const createFaq = async (data) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.post(`${API_URI}/faq`, data, {
       headers: {
@@ -776,7 +797,7 @@ export const createFaq = async (data) => {
 
 export const updateFaq = async (uid, data) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.put(`${API_URI}/faq/${uid}`, data, {
       headers: {
@@ -790,7 +811,7 @@ export const updateFaq = async (uid, data) => {
 
 export const deleteFaq = async (uid) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.delete(`${API_URI}/faq/${uid}`, {
       headers: {
@@ -806,7 +827,7 @@ export const deleteFaq = async (uid) => {
 
 export const getAllUsers = async (page, email = '', cancelToken) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/user/?page=${page}&email=${email}`, {
       headers: {
@@ -821,7 +842,7 @@ export const getAllUsers = async (page, email = '', cancelToken) => {
 
 export const makeAdmin = async (data) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.post(`${API_URI}/admin/`, data, {
       headers: {
@@ -835,7 +856,7 @@ export const makeAdmin = async (data) => {
 
 export const deleteAdmin = async (uid) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.delete(`${API_URI}/admin/${uid}`, {
       headers: {
@@ -850,7 +871,7 @@ export const deleteAdmin = async (uid) => {
 
 export const getAllHiddenProposals = async (page, cancelToken) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.get(`${API_URI}/proposal/hiddenproposal/all/?page=${page}`, {
       headers: {
@@ -865,7 +886,7 @@ export const getAllHiddenProposals = async (page, cancelToken) => {
 
 export const createHiddenProposal = async (data) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.post(`${API_URI}/proposal/hiddenproposal`, data, {
       headers: {
@@ -879,7 +900,7 @@ export const createHiddenProposal = async (data) => {
 
 export const deleteHiddenProposal = async (hash) => {
   await firebase.refreshInRequest();
-  let { token } = getToken();
+  let {token} = getToken();
   return new Promise((resolve, reject) => {
     axios.delete(`${API_URI}/proposal/hiddenproposal/${hash}`, {
       headers: {

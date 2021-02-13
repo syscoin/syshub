@@ -13,7 +13,7 @@ import {get2faInfoUser} from "../utils/request";
 import CustomModal from "../components/global/CustomModal";
 import SMSTwoFAFormLogin from "../components/login/SMSTwoFAFormLogin";
 import GAuthTwoFAFormLogin from "../components/login/GAuthTwoFAFormLogin";
-import {decryptAes} from "../utils/encryption";
+import {createSeed, decryptJWT, removeSeed} from "../utils/encryption";
 import {verifyAuthCode} from "../utils/twoFaAuthentication";
 import swal from "sweetalert2";
 
@@ -55,6 +55,7 @@ function Login({ t }) {
     setSubmitting(true);
     try {
       let user = await loginUser(loginData);
+      createSeed(loginData.password)
       let user2fa = await get2faInfoUser(user.uid);
       if (user2fa.twoFa === true && user2fa.sms === true) {
         swal.close();
@@ -83,6 +84,7 @@ function Login({ t }) {
         title: "Error",
         text: error.message
       });
+      removeSeed();
       return setSubmitting(false);
     }
   }
@@ -99,8 +101,8 @@ function Login({ t }) {
         swal.showLoading()
       }
     })
-    let secret = decryptAes(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let h = decryptAes(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
+    let secret = decryptJWT(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
+    let h = decryptJWT(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
     let isVerified = verifyAuthCode(h, gAuthCode);
 
     if (isVerified) {

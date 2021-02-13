@@ -5,6 +5,8 @@ import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
 import {register, updateUser, updateActionsUser, deleteUser, getUserInfo} from '../utils/request';
 import {useHistory} from 'react-router';
+import {getSeed, removeSeed} from "../utils/encryption";
+
 const UserContext = React.createContext();
 export const firebase = new Firebase();
 
@@ -27,11 +29,24 @@ export function UserProvider(props) {
    */
   useEffect(() => {
     async function loadUser() {
+      const seed = getSeed();
       const token = getToken();
+
       if (!token) {
+        if (seed){
+          removeSeed();
+        }
         setLoadingUser(false);
         return;
       }
+      if(!seed){
+        if (token){
+          deleteToken();
+        }
+        setLoadingUser(false);
+        return;
+      }
+
       const decoded = jwtDecode(token.decryptedToken);
       setUser({data: decoded, token: token.token});
       setLoadingUser(false);
@@ -50,8 +65,7 @@ export function UserProvider(props) {
             // console.log(userIsAdmin);
             setUserAdmin(userIsAdmin || null);
             setLoadingAdmin(false);
-          }
-          else {
+          } else {
             setLoadingAdmin(false);
           }
         } catch (error) {
@@ -75,7 +89,9 @@ export function UserProvider(props) {
       await register({uid: response.user.uid}).catch(err => {
         throw err
       });
-     await firebase.generateLinkVerification().catch(err=>{throw err})
+      await firebase.generateLinkVerification().catch(err => {
+        throw err
+      })
       const decoded = jwtDecode(response.user.ya);
       setToken(response.user.ya);
       setUser({data: decoded, token: getToken().token});
@@ -142,6 +158,7 @@ export function UserProvider(props) {
    */
   async function logoutUser() {
     setUser(null);
+    removeSeed();
     deleteToken();
     await history.go('/login');
     await firebase.signOut();
@@ -168,7 +185,7 @@ export function UserProvider(props) {
    * function to update the user data and credentials from firebase
    * @function
    * @param {string} uid uid of the user to update
-   * @param {Object} data data to update 
+   * @param {Object} data data to update
    */
   const updateCurrentUser = async (uid, data) => {
     try {

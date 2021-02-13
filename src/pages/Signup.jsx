@@ -10,6 +10,7 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import SignupForm from "../components/signup/SignupForm";
 import swal from "sweetalert2";
+import {createSeed, removeSeed} from "../utils/encryption";
 
 /**
  * Signup page showed at /signup
@@ -42,6 +43,7 @@ function Signup({ t }) {
       await signupUser(registerData).catch(err => {
         throw err;
       });
+      createSeed(registerData.password);
       swal.fire({
         icon: "success",
         title: "Your account was created",
@@ -56,6 +58,7 @@ function Signup({ t }) {
         title: "Error",
         text: error.message
       });
+      removeSeed();
     }
 
   }

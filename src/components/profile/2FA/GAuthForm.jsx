@@ -11,7 +11,7 @@ import {
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
 import { useUser } from "../../../context/user-context";
-import { encryptAes } from "../../../utils/encryption";
+import { encryptJWT } from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
@@ -77,7 +77,7 @@ function GAuthForm({ onClose }) {
     });
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
-      let gAuthSecretEncrypt = encryptAes(QRCode.secret);
+      let gAuthSecretEncrypt = encryptJWT(QRCode.secret);
       let changeUserData = {
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,

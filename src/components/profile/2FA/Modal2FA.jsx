@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import swal from "sweetalert2";
 
-import {decryptAes} from "../../../utils/encryption";
+import {decryptJWT} from "../../../utils/encryption";
 import {verifyAuthCode} from "../../../utils/twoFaAuthentication";
 import {useUser} from '../../../context/user-context';
 
@@ -109,8 +109,8 @@ function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
         swal.showLoading()
       }
     })
-    let secret = decryptAes(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let h = decryptAes(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
+    let secret = decryptJWT(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
+    let h = decryptJWT(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
     let isVerified = verifyAuthCode(h, gAuthCode);
 
     if (isVerified) {

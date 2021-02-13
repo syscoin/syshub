@@ -1,4 +1,4 @@
-import {decryptAes, encryptAes} from "./encryption";
+import {decryptJWT, encryptJWT} from "./encryption";
 
 /**
  * set the token on the localstorage
@@ -6,7 +6,7 @@ import {decryptAes, encryptAes} from "./encryption";
  * @param {*} jwt jwt to save on the localstorage
  */
 export function setToken(jwt) {
-  window.localStorage.setItem('token', encryptAes(JSON.stringify(jwt)));
+  window.localStorage.setItem('token', encryptJWT(JSON.stringify(jwt)));
 }
 
 /**
@@ -16,7 +16,7 @@ export function setToken(jwt) {
 export function getToken() {
   let token = window.localStorage.getItem('token');
   if (token) {
-    return {decryptedToken:JSON.parse(decryptAes(token)), token};
+    return {decryptedToken:JSON.parse(decryptJWT(token)), token};
   }
   return null;
 }
