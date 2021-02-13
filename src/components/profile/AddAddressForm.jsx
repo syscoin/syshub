@@ -24,7 +24,7 @@ const schema = yup.object().shape({
   privateKey: yup.string().required("Private key is required"),
 });
 const schema2 = yup.object().shape({
-  masternodeConf: yup.string().required("Masternode.conf is a required field"),
+  masternodeConf: yup.string().required("Voting addresses are required"),
 });
 
 /**
