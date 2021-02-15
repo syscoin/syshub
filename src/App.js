@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 
 import { UserProvider } from './context/user-context';
 
@@ -46,7 +46,8 @@ class AppComponent extends Component {
                     <PrivateRoute path="/create-proposal" component={NewProposal} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/admin" component={Admin} />
-                    <PublicRoute restricted={false} component={Error} />
+                    <PublicRoute restricted={false} path="/404" component={Error} />
+                    <Redirect to="/404" />
                 </Switch>
                 <div className="clearfix"></div>
                 <Footer />
