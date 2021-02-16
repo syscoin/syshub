@@ -35,7 +35,7 @@ const Admin = ({ t }) => {
                 <meta name="keywords" content={t("admin.meta.keywords")} />
               </MetaTags>
               <Switch>
-                <Route exact path="/admin">
+                <Route exact path={path}>
                   <div className="shell-large">
                     <div className="section__body">
                       <div className="articles">
@@ -70,7 +70,7 @@ const Admin = ({ t }) => {
                     </div>
                   </div>
                 </Route>
-                <Route path={[`/admin/faq`, `/admin/faq/:id`]} exact>
+                <Route path={[`${path}/faq`, `${path}/faq/:id`]} exact>
                   <div className="shell-large">
                     <div className="section__body">
                       <div className="articles">
@@ -87,8 +87,8 @@ const Admin = ({ t }) => {
                     </div>
                   </div>
                 </Route>
-                <Route path="*">
-                  <Redirect to="/admin" />
+                <Route path={path}>
+                  <Redirect to={path} />
                 </Route>
               </Switch>
             </main>
