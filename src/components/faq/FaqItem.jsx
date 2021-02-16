@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import DOMPurify from "dompurify";
-import { Collapse } from "react-collapse";
+import {Collapse} from "react-collapse";
 
 /**
  * Component that shows the F.A.Q. item inside the faq list
@@ -15,8 +15,34 @@ import { Collapse } from "react-collapse";
  *  <FaqItem faq={faq} index={index} />
  * )
  */
-const FaqItem = ({ faq, index }) => {
+const FaqItem = ({faq, index}) => {
   const [isActive, setIsActive] = useState(false);
+  const re = new RegExp('target="_blank"', 'gmi');
+
+  /* TODO */
+  /*
+  * the text editor for creating the FAQ does not add the rel = "noopener"
+  therefore DOMPurify.sanitize (faq.description) removes the target = "_ blank" from the images
+  * function array_move(arr, old_index, new_index) {
+    if (new_index >= arr.length) {
+      let k = new_index - arr.length + 1;
+      while (k--) {
+        arr.push(undefined);
+      }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+  };
+
+  const assignText = faq.description.split(' ').filter((e) => {
+    if (re.exec(e)) {
+      let j=array_move(e.split('>').concat('rel="noopener"'), 2, 1)
+      return j.join('>').replace('/>/',' ')
+    }else{
+      return e;
+    }
+  });
+  * */
 
   const toggleActive = () => setIsActive(!isActive);
 
@@ -24,7 +50,7 @@ const FaqItem = ({ faq, index }) => {
     <div className="faq-item">
       <div
         className="wizard-head"
-        style={{ cursor: "pointer" }}
+        style={{cursor: "pointer"}}
         onClick={toggleActive}
       >
         <span>{index}</span>
@@ -36,7 +62,7 @@ const FaqItem = ({ faq, index }) => {
           content: "ReactCollapse--content wizard-body",
         }}
         isOpened={isActive}
-        initialStyle={{ height: 0, overflow: "hidden" }}
+        initialStyle={{height: 0, overflow: "hidden"}}
       >
         <article
           className="answer-container"
@@ -51,9 +77,9 @@ const FaqItem = ({ faq, index }) => {
           }}
         >
           <div
-            style={{ margin: "0 20px" }}
+            style={{margin: "0 20px"}}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(faq.description),
+              __html: faq.description,
             }}
           ></div>
         </article>
