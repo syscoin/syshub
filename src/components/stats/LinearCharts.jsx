@@ -84,13 +84,13 @@ class LinearChart extends Component {
         this.setState({
         dataload: 1,
         dataChart1: {
-            totalMN,
-            totalEnabled,
-            enabledPercent,
-            totalNewStart,
-            newStartPercent,
-            totalSent,
-            sentPercent
+          totalMN,
+          totalEnabled,
+          enabledPercent:Number.isFinite(enabledPercent)?enabledPercent:0,
+          totalNewStart:Number.isFinite(totalNewStart)?totalNewStart:0,
+          newStartPercent:Number.isFinite(newStartPercent)?newStartPercent:0,
+          totalSent,
+          sentPercent:Number.isFinite(sentPercent)?sentPercent:0
         },
         dataChart2: {
             totalLocked,
