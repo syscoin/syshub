@@ -69,10 +69,9 @@ class LinearChart extends Component {
         let totalNewStart = this.formatNumber(response.new_start_required);
         let totalSent = this.formatNumber(response.sentinel_ping_expired);
         let totalMN = totalEnabled + totalNewStart + totalSent;
-
-        let enabledPercent = `${this.round((totalEnabled / totalMN) * 100, 2)}%`;
-        let newStartPercent = `${this.round((totalNewStart / totalMN) * 100, 2)}%`;
-        let sentPercent = `${this.round((totalSent / totalMN) * 100, 2)}%`;
+        let enabledPercent = `${Number.isFinite(this.round((totalEnabled / totalMN) * 100, 2))?this.round((totalEnabled / totalMN) * 100, 2): 0}%`;
+        let newStartPercent = `${Number.isFinite(this.round((totalNewStart / totalMN) * 100, 2))?this.round((totalNewStart / totalMN) * 100, 2):0}%`;
+        let sentPercent = `${Number.isFinite(this.round((totalSent / totalMN) * 100, 2))?this.round((totalSent / totalMN) * 100, 2):0}%`;
 
         let totalLocked = this.formatNumber(response.total_locked);
         let remSupply = this.formatNumber(response.current_supply) - this.formatNumber(response.total_locked);
@@ -86,11 +85,11 @@ class LinearChart extends Component {
         dataChart1: {
           totalMN,
           totalEnabled,
-          enabledPercent:Number.isFinite(enabledPercent)?enabledPercent:0,
-          totalNewStart:Number.isFinite(totalNewStart)?totalNewStart:0,
-          newStartPercent:Number.isFinite(newStartPercent)?newStartPercent:0,
+          enabledPercent,
+          totalNewStart,
+          newStartPercent,
           totalSent,
-          sentPercent:Number.isFinite(sentPercent)?sentPercent:0
+          sentPercent
         },
         dataChart2: {
             totalLocked,
