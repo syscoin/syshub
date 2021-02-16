@@ -187,17 +187,24 @@ class Firebase {
    * @name refreshToken
    */
 
-  //
+    //
   refreshToken = () => {
     return new Promise((resolve, reject) => {
         // if (this.auth.currentUser !== null) {
-          this.auth.onIdTokenChanged(async user => {
-            // unsubscribe()
+        // this.auth.onAuthStateChanged(user => {
+        //   console.log(user)
+        // })
+        this.auth.onIdTokenChanged(async user => {
+          // unsubscribe()
+          if (user !== null) {
             const refreshedToken = await user
               .getIdToken(true)
               .catch(err => reject(err))
             resolve(refreshedToken)
-          }, (err) => reject(err))
+          } else {
+            return new Error('no authenticated')
+          }
+        }, (err) => reject(err))
         // }
       }
     )
