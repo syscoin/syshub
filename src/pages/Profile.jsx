@@ -18,7 +18,7 @@ import UserAddress from "../components/profile/UserAddressList";
  * @param {*} t t prop received from withTranslation
  */
 function Profile({ t }) {
-  let { path } = useRouteMatch();
+  // let { path } = useRouteMatch();
 
     return (
       <Background>
@@ -27,10 +27,9 @@ function Profile({ t }) {
           <MetaTags>
             <title> {t("profile.meta.title")} </title>
             <meta name="keywords" content={t("profile.meta.keywords")} />
-            {/* <meta name="description" content={t("profile.meta.description")} /> */}
           </MetaTags>
           <Switch>
-            <Route exact path={path}>
+            <Route exact path="/profile">
               <div className="shell-large">
                 <div className="section__body">
                   <div className="articles">
@@ -60,11 +59,11 @@ function Profile({ t }) {
               </div>
             </Route>
 
-            <Route path={`${path}/add-voting-address`} exact>
+            <Route path={`/profile/add-voting-address`} exact>
               <AddVotingAddress />
             </Route>
-            <Route path={path}>
-              <Redirect to={path} />
+            <Route path="*">
+              <Redirect to="/profile" />
             </Route>
           </Switch>
         </main>
