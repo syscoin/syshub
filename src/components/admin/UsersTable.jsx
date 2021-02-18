@@ -133,7 +133,8 @@ const UsersTable = ({ t }) => {
    */
   const doAddAdmin = async (user) => {
     const result = await swal.fire({
-      title: `Give admin privileges to ${user.email}?`,
+      title: `Give admin privileges to this user?`,
+      text: user.email,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -150,7 +151,8 @@ const UsersTable = ({ t }) => {
         await makeAdmin({ uid: user.uid, email: user.email });
         swal.fire({
           icon: 'success',
-          title: `${user.email} is now an admin`,
+          title: `The user is now an admin`,
+          text: user.email,
           timer: 2500
         });
         loadUsers();
@@ -173,7 +175,8 @@ const UsersTable = ({ t }) => {
    */
   const doRemoveAdmin = async (user) => {
     const result = await swal.fire({
-      title: `Remove admin privileges of ${user.email}?`,
+      title: `Remove admin privileges of the user?`,
+      text: user.email,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, remove it',
