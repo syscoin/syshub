@@ -25,7 +25,7 @@ const SignupForm = (props) => {
   const { firebase } = useUser();
   const isMounted = useRef(false);
 
-  const {register, handleSubmit, errors} = useForm({
+  const {register, handleSubmit, errors, formState} = useForm({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
@@ -107,7 +107,7 @@ const SignupForm = (props) => {
           <button
             className="btn btn--blue"
             type="submit"
-            disabled={props.submitting || !recaptchaVerified}
+            disabled={props.submitting || !recaptchaVerified || !(formState.isValid)}
           >Sign up
           </button>
         </div>
