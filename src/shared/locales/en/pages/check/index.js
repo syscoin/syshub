@@ -2,7 +2,7 @@ const check = {
   check: {
     title: 'Masternodes Check',
     meta: {
-      title: 'Syscoin Masternodes - Masternode Check',
+      title: 'Syscoin Masternodes - Masternodes Check',
       keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
       description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
     },
@@ -24,6 +24,10 @@ const check = {
       d2: 'to',
       d3: 'of',
       d4: 'records',
+    },
+    register: {
+      title: 'Register a masternode',
+      link: 'Masternodes registration'
     }
   },
 }

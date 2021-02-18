@@ -3,6 +3,7 @@ import axios from "axios";
 import { withTranslation } from "react-i18next";
 
 import RemotePagination from "./RemotePagination";
+import { Link } from "react-router-dom";
 const API_URI = process.env.REACT_APP_SYS_API_URI;
 /**
  * Component that renders the masternodes table
@@ -49,7 +50,7 @@ class MasternodeTable extends Component {
    */
   componentWillUnmount() {
     this._isMounted = false;
-    this.source.cancel('Request has been canceled')
+    this.source.cancel("Request has been canceled");
   }
   /**
    * Function that takes the value of the searh input and refetch LoadData
@@ -66,7 +67,7 @@ class MasternodeTable extends Component {
     document.getElementById("srcVal").value = "";
     this.loadData();
   }
-  
+
   handleTableChange = (type, { page, sizePerPage }) => {
     this.setState({
       dataload: 0,
@@ -75,8 +76,8 @@ class MasternodeTable extends Component {
     this.loadData(src, page, sizePerPage);
   };
 
-  changeFieldOrder(field, order) { }
-  
+  changeFieldOrder(field, order) {}
+
   onSizeChange(e) {
     var size = e.target.value;
     var pagenum = this.state.page;
@@ -87,9 +88,9 @@ class MasternodeTable extends Component {
   /**
    * Function that fetch the masternodes data from the API
    * @function
-   * @param {*} srcData 
-   * @param {*} page 
-   * @param {*} sizePerPage 
+   * @param {*} srcData
+   * @param {*} page
+   * @param {*} sizePerPage
    */
   async loadData(srcData, page, sizePerPage) {
     var postData = {
@@ -118,18 +119,18 @@ class MasternodeTable extends Component {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     let axiosConfig = {
-      params:postData,
+      params: postData,
       headers: {
         // "Content-Type": "application/json;charset=UTF-8",
         // Accept: "application/json, text/plain, */*",
         // "Access-Control-Allow-Origin": "*",
-        'appclient': process.env.REACT_APP_CLIENT
+        appclient: process.env.REACT_APP_CLIENT,
       },
-      cancelToken: this.source.token
+      cancelToken: this.source.token,
     };
 
     await axios
-      .get(`${API_URI}/statsInfo/masternodes`,  axiosConfig)
+      .get(`${API_URI}/statsInfo/masternodes`, axiosConfig)
       .then((res) => {
         if (this._isMounted) {
           this.setState({
@@ -140,43 +141,55 @@ class MasternodeTable extends Component {
         }
       })
       .catch((err) => {
-        if (this._isMounted) { 
+        if (this._isMounted) {
           this.setState({
             dataload: 2,
           });
         }
-
       });
   }
 
   render() {
     const { dataload, page, tableData, sizePerPage, totalRecords } = this.state;
-    const { t } = this.props;
+    const { t, path } = this.props;
 
     if (dataload === 1) {
       return (
         <>
           <div className="input-form">
-            <input
-              id="srcVal"
-              type="text"
-              className="ip"
-              placeholder={t("check.table.ipInput")}
-              onKeyUp={this.searchInTable}
-            />
+            <div className="form-group">
+              <input
+                id="srcVal"
+                type="text"
+                className="ip"
+                placeholder={t("check.table.ipInput")}
+                onKeyUp={this.searchInTable}
+              />
+              <div
+                className="btn-group text-center"
+                style={{ marginTop: "20px" }}
+              >
+                <button
+                  type="button"
+                  className="btn btn--blue"
+                  onClick={this.resetSearch}
+                >
+                  {t("check.table.resetBtn")}
+                </button>
 
-            <button
-              type="button"
-              className="btn btn--blue"
-              onClick={this.resetSearch}
-              style={{
-                margin: "20px auto",
-                width: "150px",
-                display: "block",
-              }}
-            >
-              {t("check.table.resetBtn")}
-            </button>
+                <Link
+                  to={`${path}/masternode-registration`}
+                  className="btn btn--blue"
+                  style={{
+                    display: "inline-block",
+                    width: " auto",
+                    marginTop: "auto",
+                  }}
+                >
+                  {t("check.register.link")}
+                </Link>
+              </div>
+            </div>
           </div>
 
           <RemotePagination
@@ -192,15 +205,10 @@ class MasternodeTable extends Component {
           />
         </>
       );
-    } else if(dataload === 0) {
-      return (
-        <p className="text-center">{t("check.loading")}</p>
-      );
-    }
-    else {
-      return (
-        <p className="text-center">{t("check.noData")}</p>
-      );
+    } else if (dataload === 0) {
+      return <p className="text-center">{t("check.loading")}</p>;
+    } else {
+      return <p className="text-center">{t("check.noData")}</p>;
     }
   }
 }
