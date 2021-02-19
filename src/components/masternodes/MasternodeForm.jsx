@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import swal from "sweetalert2";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import MasternodeDetails from "./masternodeForm/MasternodeDetails";
 import MasternodePrepared from "./masternodeForm/MasternodePrepared";
+import MasternodeSigned from "./masternodeForm/MasternodeSigned";
 
 /**
  * Component to show the create Proposal form
@@ -17,8 +19,9 @@ function MasternodeForm() {
   //COMPONENT STATES
   const [currentStep, setCurrentStep] = useState(0);
 
-  //PROPOSAL STATES
+  //masternodes STATES
   const [prepareCommand, setPrepareCommand] = useState("");
+  const [signCommand, setSignCommand] = useState("");
   const [submitCommand, setSubmitCommand] = useState("");
 
   const generatePrepareCommand = (
@@ -32,12 +35,12 @@ function MasternodeForm() {
     payoutAddress,
     feeSourceAddress
   ) => {
-    return `protx_register_prepare ${collateralHash} ${collateralIndex} ${ipAddress}:18369 ${ownerKeyAddr} ${operatorPubKey} ${votingKeyAddr} ${votingKeyAddr} ${operatorReward} ${payoutAddress} ${
+    return `protx_register_prepare ${collateralHash} ${collateralIndex} ${ipAddress}:18369 ${ownerKeyAddr} ${operatorPubKey} ${votingKeyAddr} ${operatorReward} ${payoutAddress} ${
       feeSourceAddress || ""
     }`.trim();
   };
 
-  const generateSingCommand = (collateralAddress, signMessage) => {
+  const generateSignCommand = (collateralAddress, signMessage) => {
     if (
       collateralAddress.startsWith("sys") ||
       collateralAddress.startsWith("tsys")
@@ -68,6 +71,19 @@ function MasternodeForm() {
     setCurrentStep(currentStep + 1);
   };
 
+  /**
+   * function that triggers sweet alert to show the copy is successful
+   * @function
+   */
+  const copyButton = () => {
+    swal.fire({
+      icon: "success",
+      title: "Copied",
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  };
+
   const getMasternodeDetails = async (data) => {
     swal.fire({
       title: "Creating the prepare command",
@@ -78,18 +94,20 @@ function MasternodeForm() {
     });
 
     try {
-      await setPrepareCommand (generatePrepareCommand(
-        data.collateralHash,
-        data.collateralIndex,
-        data.ipAddress,
-        data.ownerAddress,
-        data.operatorPubKey,
-        data.votingAddress,
-        data.operatorReward,
-        data.payoutAddress,
-        data.fundAddress
-      ));
-      
+      await setPrepareCommand(
+        generatePrepareCommand(
+          data.collateralHash,
+          data.collateralIndex,
+          data.ipAddress,
+          data.ownerAddress,
+          data.operatorPubKey,
+          data.votingAddress,
+          data.operatorReward,
+          data.payoutAddress,
+          data.fundAddress
+        )
+      );
+
       await swal.fire({
         icon: "success",
         title: "The command was created",
@@ -104,7 +122,65 @@ function MasternodeForm() {
         text: error,
       });
     }
-    
+  };
+
+  const prepareToSign = async (data) => {
+    swal.fire({
+      title: "Creating the sign command",
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading();
+      },
+    });
+
+    try {
+      await setSignCommand(
+        generateSignCommand(data.prepareAddress, data.messageSign)
+      );
+
+      await swal.fire({
+        icon: "success",
+        title: "The command was created",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      next();
+    } catch (error) {
+      await swal.fire({
+        icon: "error",
+        title: "There was an error please try again",
+        text: error,
+      });
+    }
+  };
+
+  const signAndSubmit = async (data) => {
+    swal.fire({
+      title: "Creating the submit command",
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading();
+      },
+    });
+    console.log(data)
+
+    try {
+      await setSubmitCommand(generateSubmitCommand(data.tx, data.signature));
+
+      await swal.fire({
+        icon: "success",
+        title: "The command was created",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      next();
+    } catch (error) {
+      await swal.fire({
+        icon: "error",
+        title: "There was an error please try again",
+        text: error,
+      });
+    }
   };
 
   return (
@@ -121,21 +197,67 @@ function MasternodeForm() {
           </div>
 
           <div className="wizard-head">
-            <span>2</span>Masternode sign
+            <span>2</span>Masternode prepare
           </div>
           <div
             className={`wizard-body ${currentStep === 1 ? "" : "collapsed"}`}
           >
-            <MasternodePrepared onNext={''} onCancel={back} prepareCommand={prepareCommand} />
+            <MasternodePrepared
+              onNext={prepareToSign}
+              onCancel={back}
+              prepareCommand={prepareCommand}
+            />
           </div>
 
           <div className="wizard-head">
-            <span>3</span>Masternode submit
+            <span>3</span>Masternode sign
           </div>
           <div
             className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}
           >
+            <MasternodeSigned
+              onNext={signAndSubmit}
+              onCancel={back}
+              signCommand={signCommand}
+            />
+          </div>
+          <div className="wizard-head">
+            <span>4</span>Masternode submit
+          </div>
+          <div
+            className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}
+          >
+            <div className="form-group article">
+              <textarea
+                className="styled"
+                name="submitCommand"
+                id="submitCommand"
+                rows="5"
+                disabled
+                value={submitCommand}
+              ></textarea>
+              <small>
+                <p style={{ lineHeight: "1.5" }}>
+                  Submit command is ready to be copied. Please copy and paste it
+                  into Syscoin Q.T console to register the masternode.
+                </p>
+              </small>
+            </div>
 
+            <div className="form-actions-spaced">
+              <button
+                className="btn btn--blue-border"
+                type="button"
+                onClick={back}
+              >
+                Back
+              </button>
+              <CopyToClipboard text={submitCommand} onCopy={copyButton}>
+                <button className="btn btn--blue" type="button">
+                  Copy
+                </button>
+              </CopyToClipboard>
+            </div>
           </div>
         </div>
       </div>

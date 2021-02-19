@@ -9,18 +9,13 @@ import swal from "sweetalert2";
 import IconInput from "../../global/IconInput";
 
 const schema = yup.object().shape({
-  prepareAddress: yup
+  tx: yup
     .string()
-    // .test(
-    //   'test-sys-address',
-    //   'Must be a valid Syscoin address',
-    //   async (value) => await WAValidator.validate(value, 'sys')
-    // )
-    .required("The address is required"),
-  messageSign: yup.string().required("The message is required"),
+    .required("The tx is required"),
+  signature: yup.string().required("The signature is required")
 });
 
-const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
+const MasternodeSigned = ({ onNext, onCancel, signCommand }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
@@ -47,23 +42,22 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
       <div className="form-group article">
         <textarea
           className="styled"
-          name="prepareCommand"
-          id="prepareCommand"
+          name="signCommand"
+          id="signCommand"
           rows="5"
           disabled
-          value={prepareCommand}
+          value={signCommand}
         ></textarea>
         <small>
           <p style={{ lineHeight: "1.5" }}>
-            Prepare command is ready to be copied. Please copy and paste it into
-            Syscoin Q.T console to obtain the collateral address and sign
-            message, save the tx as you will use it to create the submit command.
+            Sign command is ready to be copied. Please copy and paste it into
+            Syscoin Q.T console to obtain the signature.
           </p>
         </small>
       </div>
 
       <div className="form-actions-spaced">
-        <CopyToClipboard text={prepareCommand} onCopy={copyButton}>
+        <CopyToClipboard text={signCommand} onCopy={copyButton}>
           <button className="btn btn--blue-border" type="button">
             Copy
           </button>
@@ -71,23 +65,27 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
       </div>
 
       <form className="input-form" onSubmit={handleSubmit(onNext)}>
-        <div className="form-group">
-          <label htmlFor="prepareAddress">Collateral address</label>
+      <div className="form-group">
+          <label htmlFor="tx">Tx</label>
           <div style={{ position: "relative" }}>
-            <input
-              type="text"
-              id="prepareAddress"
-              ref={register}
-              name="prepareAddress"
+            <textarea
               className="styled"
-            />
-            <IconInput dataId="prepareAddress">
-              <p>The syscoin address to use for the private key.</p>
+              style={{ resize: "vertical" }}
+              ref={register}
+              rows="5"
+              name="tx"
+              id="tx"
+              placeholder="Paste the tx here"
+            ></textarea>
+            <IconInput dataId="tx" marginRight={true}>
+              <p>
+                The serialized transaction previously returned by "protx_register_prepare".
+              </p>
             </IconInput>
           </div>
           <ErrorMessage
             errors={errors}
-            name="prepareAddress"
+            name="tx"
             render={({ message }) => (
               <small>
                 <p style={{ lineHeight: "1.5" }}>{message}</p>
@@ -97,26 +95,22 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="messageSign">Sign message</label>
+          <label htmlFor="signature">Signature</label>
           <div style={{ position: "relative" }}>
-            <textarea
-              className="styled"
-              style={{ resize: "vertical" }}
+            <input
+              type="text"
+              id="signature"
               ref={register}
-              rows="5"
-              name="messageSign"
-              id="messageSign"
-              placeholder={'Paste the sign message here, do not omit the quotes ("")'}
-            ></textarea>
-            <IconInput dataId="messageSign" marginRight={true}>
-              <p>
-                The message to sign
-              </p>
+              name="signature"
+              className="styled"
+            />
+            <IconInput dataId="signature">
+              <p>The signature signed with the collateral key. Must be in base64 format.</p>
             </IconInput>
           </div>
           <ErrorMessage
             errors={errors}
-            name="messageSign"
+            name="signature"
             render={({ message }) => (
               <small>
                 <p style={{ lineHeight: "1.5" }}>{message}</p>
@@ -124,6 +118,8 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
             )}
           />
         </div>
+
+        
         <div className="form-actions-spaced">
           <button
             className="btn btn--blue-border"
@@ -133,7 +129,7 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
             Back
           </button>
           <button className="btn btn--blue" type="submit">
-            Next
+            Submit
           </button>
         </div>
       </form>
@@ -141,4 +137,4 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
   );
 };
 
-export default MasternodePrepared;
+export default MasternodeSigned;

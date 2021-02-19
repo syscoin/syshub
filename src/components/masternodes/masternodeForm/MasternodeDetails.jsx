@@ -307,7 +307,7 @@ const MasternodeDetails = ({ onNext }) => {
 
       <div className="form-actions-spaced">
         <button className="btn btn--blue" type="submit">
-          Prepare
+          Next
         </button>
       </div>
     </form>

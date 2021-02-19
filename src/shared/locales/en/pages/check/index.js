@@ -26,7 +26,7 @@ const check = {
       d4: 'records',
     },
     register: {
-      title: 'Register a masternode',
+      title: 'Masternodes registration helper',
       link: 'Masternodes registration'
     }
   },
