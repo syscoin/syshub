@@ -7,7 +7,7 @@ import MasternodePrepared from "./masternodeForm/MasternodePrepared";
 import MasternodeSigned from "./masternodeForm/MasternodeSigned";
 
 /**
- * Component to show the create Proposal form
+ * component for creating help commands for registering a masternode
  * @component
  * @subcategory Proposal
  * @example
@@ -24,6 +24,10 @@ function MasternodeForm() {
   const [signCommand, setSignCommand] = useState("");
   const [submitCommand, setSubmitCommand] = useState("");
 
+  /**
+   * function generate command protx_register_prepare
+   * @function
+   */
   const generatePrepareCommand = (
     collateralHash,
     collateralIndex,
@@ -40,6 +44,10 @@ function MasternodeForm() {
     }`.trim();
   };
 
+  /**
+   * function generate command signmessagebech32 || signmessage
+   * @function
+   */
   const generateSignCommand = (collateralAddress, signMessage) => {
     if (
       collateralAddress.startsWith("sys") ||
@@ -51,6 +59,10 @@ function MasternodeForm() {
     }
   };
 
+  /**
+   * function generate command protx_register_submit
+   * @function
+   */
   const generateSubmitCommand = (tx, sig) => {
     return `protx_register_submit ${tx} ${sig}`.trim();
   };
@@ -84,6 +96,10 @@ function MasternodeForm() {
     });
   };
 
+  /**
+   * function to get and create the prepare command
+   * @function
+   */
   const getMasternodeDetails = async (data) => {
     swal.fire({
       title: "Creating the prepare command",
@@ -124,6 +140,10 @@ function MasternodeForm() {
     }
   };
 
+  /**
+   * function to get and create the signmessage command
+   * @function
+   */
   const prepareToSign = async (data) => {
     swal.fire({
       title: "Creating the sign command",
@@ -154,6 +174,10 @@ function MasternodeForm() {
     }
   };
 
+  /**
+   * function to get and create the submit command
+   * @function
+   */
   const signAndSubmit = async (data) => {
     swal.fire({
       title: "Creating the submit command",

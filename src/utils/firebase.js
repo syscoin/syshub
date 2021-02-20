@@ -182,12 +182,28 @@ class Firebase {
   }
 
   /**
+   * function to verify the user's saved information and their authentication
+   * @function
+   * @name onAuthState
+   */
+
+  onAuthState = () => {
+    return new Promise((resolve, reject) => {
+      this.auth.onAuthStateChanged((user) => {
+        resolve(user)
+      }, (err) => {
+        reject(err)
+      });
+    })
+  }
+
+  /**
    * function to refresh the authorization token of the user
    * @function
    * @name refreshToken
    */
 
-    //
+  //
   refreshToken = () => {
     return new Promise((resolve, reject) => {
         // if (this.auth.currentUser !== null) {
@@ -241,7 +257,7 @@ class Firebase {
           throw err
         })
         setToken(newTokenRefreshed);
-        }
+      }
     }
   }
 }

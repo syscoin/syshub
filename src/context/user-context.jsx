@@ -19,6 +19,7 @@ export const firebase = new Firebase();
 export function UserProvider(props) {
   const history = useHistory();
   const [user, setUser] = useState(null); //no se sabe si hay usuario autenticado
+
   const [loadingUser, setLoadingUser] = useState(true);
   const [userAdmin, setUserAdmin] = useState(null);
   const [loadingAdmin, setLoadingAdmin] = useState(true);
@@ -33,14 +34,14 @@ export function UserProvider(props) {
       const token = getToken();
 
       if (!token) {
-        if (seed){
+        if (seed) {
           removeSeed();
         }
         setLoadingUser(false);
         return;
       }
-      if(!seed){
-        if (token){
+      if (!seed) {
+        if (token) {
           deleteToken();
         }
         setLoadingUser(false);
@@ -53,6 +54,7 @@ export function UserProvider(props) {
     }
 
     loadUser();
+    onStateAuthUser();
   }, []);
 
   useEffect(() => {
@@ -149,6 +151,19 @@ export function UserProvider(props) {
       return {message: 'Ok'};
     } catch (err) {
       new Error(err)
+    }
+  }
+
+  /**
+   * function used to verify the saved information of the firebase user
+   * @function
+   * @return {Object || null} user data or null
+   */
+  async function onStateAuthUser(){
+    const authStateUser = await firebase.onAuthState();
+    if (authStateUser === null) {
+      setUser(null);
+      setLoadingUser(false);
     }
   }
 
