@@ -187,7 +187,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="operatorPubKey">
-            <p>The BLS public key generated above (or provided by your hosting service)</p>
+            <p style={{ lineHeight: "1.5" }}>The BLS public key generated above (or provided by your hosting service)</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -212,7 +212,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="votingAddress">
-            <p>The Syscoin address generated above, or the address of a delegate, used for proposal voting</p>
+            <p style={{ lineHeight: "1.5" }}>The Syscoin address generated above, or the address of a delegate, used for proposal voting</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -240,8 +240,8 @@ const MasternodeDetails = ({ onNext }) => {
             style={{paddingRight: '30px'}}
           />
           <IconInput dataId="operatorReward">
-            <p>The percentage of the block reward allocated to the operator as payment,</p>
-            <p>0 for no reward - this is if you want to pay someone else a % of your rewards.</p>
+            <p style={{ lineHeight: "1.5" }}>The percentage of the block reward allocated to the operator as payment,</p>
+            <p style={{ lineHeight: "1.5" }}>0 for no reward - this is if you want to pay someone else a % of your rewards.</p>
           </IconInput>
         </div>
         <ErrorMessage
