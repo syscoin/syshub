@@ -106,11 +106,12 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
               rows="5"
               name="messageSign"
               id="messageSign"
-              placeholder={'Paste the sign message here, do not omit the quotes ("")'}
+              placeholder={'Paste only the signMessage property from the output obtained from your protx_register_prepare command here, excluding ("")'}
             ></textarea>
+            {/*do not omit the quotes ("")*/}
             <IconInput dataId="messageSign" marginRight={true}>
               <p>
-                The message to sign
+                The message to sign.
               </p>
             </IconInput>
           </div>

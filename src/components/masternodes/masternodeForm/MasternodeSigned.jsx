@@ -75,11 +75,11 @@ const MasternodeSigned = ({ onNext, onCancel, signCommand }) => {
               rows="5"
               name="tx"
               id="tx"
-              placeholder="Paste the tx here"
+              placeholder='Paste only the tx property from the output obtained from your protx_register_prepare command here, excluding ("")'
             ></textarea>
             <IconInput dataId="tx" marginRight={true}>
               <p>
-                The serialized transaction previously returned by "protx_register_prepare".
+                The serialized transaction previously returned in the tx output field from the "protx_register_prepare" command.
               </p>
             </IconInput>
           </div>

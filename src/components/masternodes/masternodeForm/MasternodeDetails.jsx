@@ -86,7 +86,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="collateralHash">
-            <p>The collateral transaction hash.</p>
+            <p>The txid of the 100000 Syscoin collateral funding transaction.</p>
           </IconInput>
         </div>
         
@@ -110,7 +110,7 @@ const MasternodeDetails = ({ onNext }) => {
           defaultValue=""
         >
           <option value="" hidden>
-            Select the collateral index
+            Select The output index of the 100000 Syscoin funding transaction
           </option>
           <option value="0">0</option>
           <option value="1">1</option>
@@ -162,7 +162,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="ownerAddress">
-            <p>The Syscoin address to use for payee updates and proposal voting.</p>
+            <p>The Syscoin address generated above for the owner address</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -187,7 +187,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="operatorPubKey">
-            <p>The operator BLS public key. The BLS private key does not have to be known, Do not place it.</p>
+            <p>The BLS public key generated above (or provided by your hosting service)</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -212,7 +212,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="votingAddress">
-            <p>The voting address.</p>
+            <p>The Syscoin address generated above, or the address of a delegate, used for proposal voting</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -240,7 +240,8 @@ const MasternodeDetails = ({ onNext }) => {
             style={{paddingRight: '30px'}}
           />
           <IconInput dataId="operatorReward">
-            <p>The fraction in %% to share with the operator. The value must be between 0.00 and 100.00.</p>
+            <p>The percentage of the block reward allocated to the operator as payment,</p>
+            <p>0 for no reward - this is if you want to pay someone else a % of your rewards.</p>
           </IconInput>
         </div>
         <ErrorMessage
@@ -265,7 +266,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="payoutAddress">
-            <p>The Syscoin address to use for masternode reward payments.</p>
+            <p>A Syscoin address to receive the owner’s masternode rewards.</p>
           </IconInput>
         </div>
         <ErrorMessage

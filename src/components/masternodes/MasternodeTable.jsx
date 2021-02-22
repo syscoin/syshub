@@ -178,7 +178,7 @@ class MasternodeTable extends Component {
                 </button>
 
                 <Link
-                  to={`${path}/masternode-registration`}
+                  to={path !== undefined ?`${path}/masternode-registration`:`masternodes/masternode-registration`}
                   className="btn btn--blue"
                   style={{
                     display: "inline-block",
