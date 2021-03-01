@@ -1,6 +1,9 @@
 import firebase from 'firebase';
 import jwtDecode from "jwt-decode";
 import {getToken, setToken} from "./auth-token";
+import {getUserVotingAddress, updateVotingAddress} from "./request";
+import {createSeed} from "./encryption";
+import axios from "axios";
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -164,16 +167,35 @@ class Firebase {
    */
   changePassword = async (oldPwd, password) => {
     const currentUser = this.auth.currentUser;
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
 
     if (currentUser) {
       const credentials = this.firebaseApp.auth.EmailAuthProvider.credential(currentUser.email, oldPwd)
 
-      return new Promise(async (resolve, reject) => {
-        currentUser.reauthenticateWithCredential(credentials).then(async () => {
-          await currentUser.updatePassword(password).catch(err => {
+      return new Promise((resolve, reject) => {
+        currentUser.reauthenticateWithCredential(credentials).then(() => {
+          currentUser.updatePassword(password).then(async ()=>{
+            let {data: {nodes}} = await getUserVotingAddress({cancelToken: source.token}).catch(err => {
+              throw err
+            });
+            createSeed(password)
+            await Promise.all(nodes.map(async (addressData, i) => {
+              let {uid, address, name, privateKey, txId} = addressData;
+              await updateVotingAddress(uid, {address, name, privateKey, txId})
+                  .catch((err) => {
+                    reject(err)
+                  })
+                  .catch((err)=>{
+                    reject(err)
+                  })
+              })).catch((err) => {
+                reject(err)
+              })
+              resolve('pwd Changed')
+          }).catch(err => {
             reject(err)
           })
-          resolve('pwd Changed')
         }).catch(err => {
           reject(err)
         })

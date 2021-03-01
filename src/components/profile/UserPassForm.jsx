@@ -6,6 +6,7 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 
 import { useUser } from '../../context/user-context';
+import swal from "sweetalert2";
 
 const schema = yup.object().shape({
   oldPassword: yup.string().required('Old password is required'),
@@ -40,6 +41,13 @@ function UserPassForm() {
    */
   async function passwordChange(data) {
     setSubmitting(true);
+    swal.fire({
+      title: 'Verifying',
+      showConfirmButton: false,
+      willOpen: () => {
+        swal.showLoading()
+      }
+    });
     try {
       await changePassword({ oldPassword: data.oldPassword, newPassword: data.newPassword });
       await Swal.fire({
