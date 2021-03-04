@@ -58,14 +58,14 @@ class Governance extends Component {
   async apiLoader() {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
-    let axiosConfig = {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Accept': 'application/json, text/plain, */*',
-        "Access-Control-Allow-Origin": "*",
-      },
-      cancelToken: this.source.token
-    };
+    // let axiosConfig = {
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=UTF-8',
+    //     'Accept': 'application/json, text/plain, */*',
+    //     "Access-Control-Allow-Origin": "*",
+    //   },
+    //   cancelToken: this.source.token
+    // };
 
     let data = await axios
       .get(`${API_URI}/statsInfo/mnStats`, {

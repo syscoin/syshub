@@ -17,7 +17,7 @@ import {Collapse} from "react-collapse";
  */
 const FaqItem = ({faq, index}) => {
   const [isActive, setIsActive] = useState(false);
-  const re = new RegExp('target="_blank"', 'gmi');
+  // const re = new RegExp('target="_blank"', 'gmi');
 
   /* TODO */
   /*

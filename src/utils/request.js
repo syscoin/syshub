@@ -136,7 +136,6 @@ export const getOneMasterNode = async (id) => {
  */
 export const getUserVotingAddress = async ({hash, cancelToken}) => {
   try {
-    let newDataRes = [];
     await firebase.refreshInRequest()
     let {token} = getToken()
     let newData = await axios.get(typeof hash !== "undefined" ?
@@ -152,10 +151,9 @@ export const getUserVotingAddress = async ({hash, cancelToken}) => {
       throw err
     })
     if (newData.data) {
-      newData.data.nodes.map((item) => {
-        newDataRes.push(decryptVotingKey(item))
-      })
-      newData.data.nodes = [...newDataRes]
+       newData.data.nodes.reduce((acc,item) => {
+        return acc.concat(decryptVotingKey(item))
+      },[])
       return newData
     } else {
       return newData

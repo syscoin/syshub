@@ -4,7 +4,6 @@ import {ErrorMessage} from "@hookform/error-message";
 import {yupResolver} from "@hookform/resolvers";
 import * as yup from "yup";
 import {useUser} from "../../context/user-context";
-import { window } from "rxjs/operators";
 
 const schema = yup.object().shape({
   phoneCode: yup.string().required("The verification code is required"),
