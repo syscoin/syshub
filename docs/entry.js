@@ -1,287 +1,283 @@
+window.reactComponents = {};
 
-    window.reactComponents = {};
+window.vueComponents = {};
 
-    window.vueComponents = {};
+import React from "react";
 
-  
-      import React from "react";
+import ReactDOM from "react-dom";
 
-      import ReactDOM from "react-dom";
+import ReactWrapper from "../node_modules/better-docs/lib/react-wrapper.js";
 
+window.React = React;
 
-      import ReactWrapper from '../node_modules/better-docs/lib/react-wrapper.js';
+window.ReactDOM = ReactDOM;
 
-      window.React = React;
+window.ReactWrapper = ReactWrapper;
 
-      window.ReactDOM = ReactDOM;
+import "./styles/reset.css";
 
-      window.ReactWrapper = ReactWrapper;
+import "./styles/iframe.css";
 
-    
-    import './styles/reset.css';
+import Component0 from "../src/pages/About.js";
+reactComponents["About"] = Component0;
 
-    import './styles/iframe.css';
+import Component1 from "../src/components/profile/AddAddressForm.jsx";
+reactComponents["AddAddressForm"] = Component1;
 
-  import Component0 from '../src/pages/About.js';
-reactComponents['About'] = Component0;
+import Component2 from "../src/components/governance/AddressItem.jsx";
+reactComponents["AddressItem"] = Component2;
 
-import Component1 from '../src/components/profile/AddAddressForm.jsx';
-reactComponents['AddAddressForm'] = Component1;
+import Component3 from "../src/components/governance/AddressList.jsx";
+reactComponents["AddressList"] = Component3;
 
-import Component2 from '../src/components/governance/AddressItem.jsx';
-reactComponents['AddressItem'] = Component2;
+import Component4 from "../src/components/profile/AddVotingAddress.jsx";
+reactComponents["AddVotingAddress"] = Component4;
 
-import Component3 from '../src/components/governance/AddressList.jsx';
-reactComponents['AddressList'] = Component3;
+import Component5 from "../src/pages/Admin.jsx";
+reactComponents["Admin"] = Component5;
 
-import Component4 from '../src/components/profile/AddVotingAddress.jsx';
-reactComponents['AddVotingAddress'] = Component4;
+import Component6 from "../src/App.js";
+reactComponents["App"] = Component6;
 
-import Component5 from '../src/pages/Admin.jsx';
-reactComponents['Admin'] = Component5;
+import Component7 from "../src/App.js";
+reactComponents["App"] = Component7;
 
-import Component6 from '../src/App.js';
-reactComponents['App'] = Component6;
+import Component8 from "../src/components/global/Background.jsx";
+reactComponents["Background"] = Component8;
 
-import Component7 from '../src/App.js';
-reactComponents['App'] = Component7;
+import Component9 from "../src/components/global/BackgroundInner.jsx";
+reactComponents["BackgroundInner"] = Component9;
 
-import Component8 from '../src/components/global/Background.jsx';
-reactComponents['Background'] = Component8;
+import Component10 from "../src/components/global/Banner.js";
+reactComponents["Banner"] = Component10;
 
-import Component9 from '../src/components/global/BackgroundInner.jsx';
-reactComponents['BackgroundInner'] = Component9;
+import Component11 from "../src/components/stats/Blockchain.jsx";
+reactComponents["Blockchain"] = Component11;
 
-import Component10 from '../src/components/global/Banner.js';
-reactComponents['Banner'] = Component10;
+import Component12 from "../src/components/proposal/DescriptionProposal.jsx";
+reactComponents["DescriptionProposal"] = Component12;
 
-import Component11 from '../src/components/stats/Blockchain.jsx';
-reactComponents['Blockchain'] = Component11;
+import Component13 from "../src/components/stats/Doughnut.js";
+reactComponents["Doughnut"] = Component13;
 
-import Component12 from '../src/components/proposal/DescriptionProposal.jsx';
-reactComponents['DescriptionProposal'] = Component12;
+import Component14 from "../src/pages/Error.js";
+reactComponents["Error"] = Component14;
 
-import Component13 from '../src/components/stats/Doughnut.js';
-reactComponents['Doughnut'] = Component13;
+import Component15 from "../src/pages/FAQ.jsx";
+reactComponents["FAQ"] = Component15;
 
-import Component14 from '../src/pages/Error.js';
-reactComponents['Error'] = Component14;
+import Component16 from "../src/components/admin/FaqForm.jsx";
+reactComponents["FaqForm"] = Component16;
 
-import Component15 from '../src/pages/FAQ.jsx';
-reactComponents['FAQ'] = Component15;
+import Component17 from "../src/components/faq/FaqItem.jsx";
+reactComponents["FaqItem"] = Component17;
 
-import Component16 from '../src/components/admin/FaqForm.jsx';
-reactComponents['FaqForm'] = Component16;
+import Component18 from "../src/components/faq/FaqList.jsx";
+reactComponents["FaqList"] = Component18;
 
-import Component17 from '../src/components/faq/FaqItem.jsx';
-reactComponents['FaqItem'] = Component17;
+import Component19 from "../src/components/admin/FaqPagination.jsx";
+reactComponents["FaqPagination"] = Component19;
 
-import Component18 from '../src/components/faq/FaqList.jsx';
-reactComponents['FaqList'] = Component18;
+import Component20 from "../src/components/admin/FaqTable.jsx";
+reactComponents["FaqTable"] = Component20;
 
-import Component19 from '../src/components/admin/FaqPagination.jsx';
-reactComponents['FaqPagination'] = Component19;
+import Component21 from "../src/components/global/Footer.js";
+reactComponents["Footer"] = Component21;
 
-import Component20 from '../src/components/admin/FaqTable.jsx';
-reactComponents['FaqTable'] = Component20;
+import Component22 from "../src/components/recover/formRecover.jsx";
+reactComponents["FormRecover"] = Component22;
 
-import Component21 from '../src/components/global/Footer.js';
-reactComponents['Footer'] = Component21;
+import Component23 from "../src/components/profile/2FA/GAuthForm.jsx";
+reactComponents["GAuthForm"] = Component23;
 
-import Component22 from '../src/components/recover/formRecover.jsx';
-reactComponents['FormRecover'] = Component22;
+import Component24 from "../src/components/profile/2FA/GAuth.jsx";
+reactComponents["GAuthTwoFA"] = Component24;
 
-import Component23 from '../src/components/profile/2FA/GAuthForm.jsx';
-reactComponents['GAuthForm'] = Component23;
+import Component25 from "../src/components/login/GAuthTwoFAFormLogin.jsx";
+reactComponents["GAuthTwoFAFormLogin"] = Component25;
 
-import Component24 from '../src/components/profile/2FA/GAuth.jsx';
-reactComponents['GAuthTwoFA'] = Component24;
+import Component26 from "../src/components/governance/GovDetails.jsx";
+reactComponents["Govdetails"] = Component26;
 
-import Component25 from '../src/components/login/GAuthTwoFAFormLogin.jsx';
-reactComponents['GAuthTwoFAFormLogin'] = Component25;
+import Component27 from "../src/pages/Governance.js";
+reactComponents["Governance"] = Component27;
 
-import Component26 from '../src/components/governance/GovDetails.jsx';
-reactComponents['Govdetails'] = Component26;
+import Component28 from "../src/components/governance/GovList.js";
+reactComponents["GovList"] = Component28;
 
-import Component27 from '../src/pages/Governance.js';
-reactComponents['Governance'] = Component27;
+import Component29 from "../src/components/governance/GovListRow.js";
+reactComponents["GovListRow"] = Component29;
 
-import Component28 from '../src/components/governance/GovList.js';
-reactComponents['GovList'] = Component28;
+import Component30 from "../src/components/global/Header.js";
+reactComponents["Header"] = Component30;
 
-import Component29 from '../src/components/governance/GovListRow.js';
-reactComponents['GovListRow'] = Component29;
+import Component31 from "../src/pages/Home.js";
+reactComponents["Home"] = Component31;
 
-import Component30 from '../src/components/global/Header.js';
-reactComponents['Header'] = Component30;
+import Component32 from "../src/components/home/HomeButtons.jsx";
+reactComponents["HomeButtons"] = Component32;
 
-import Component31 from '../src/pages/Home.js';
-reactComponents['Home'] = Component31;
+import Component33 from "../src/components/stats/Income.js";
+reactComponents["Income"] = Component33;
 
-import Component32 from '../src/components/home/HomeButtons.jsx';
-reactComponents['HomeButtons'] = Component32;
+import Component34 from "../src/components/global/InnerBanner.js";
+reactComponents["InnerBanner"] = Component34;
 
-import Component33 from '../src/components/stats/Income.js';
-reactComponents['Income'] = Component33;
+import Component35 from "../src/components/stats/Investment.js";
+reactComponents["Investment"] = Component35;
 
-import Component34 from '../src/components/global/InnerBanner.js';
-reactComponents['InnerBanner'] = Component34;
+import Component36 from "../src/components/stats/LinearCharts.jsx";
+reactComponents["LinearChart"] = Component36;
 
-import Component35 from '../src/components/stats/Investment.js';
-reactComponents['Investment'] = Component35;
+import Component37 from "../src/components/global/Loading.jsx";
+reactComponents["Loading"] = Component37;
 
-import Component36 from '../src/components/stats/LinearCharts.jsx';
-reactComponents['LinearChart'] = Component36;
+import Component38 from "../src/pages/Login.jsx";
+reactComponents["Login"] = Component38;
 
-import Component37 from '../src/components/global/Loading.jsx';
-reactComponents['Loading'] = Component37;
+import Component39 from "../src/components/login/LoginForm.jsx";
+reactComponents["LoginForm"] = Component39;
 
-import Component38 from '../src/pages/Login.jsx';
-reactComponents['Login'] = Component38;
+import Component40 from "../src/pages/Masternodes.js";
+reactComponents["Masternodes"] = Component40;
 
-import Component39 from '../src/components/login/LoginForm.jsx';
-reactComponents['LoginForm'] = Component39;
+import Component41 from "../src/components/masternodes/MasternodeTable.jsx";
+reactComponents["MasternodeTable"] = Component41;
 
-import Component40 from '../src/pages/Masternodes.js';
-reactComponents['Masternodes'] = Component40;
+import Component42 from "../src/components/profile/2FA/Modal2FA.jsx";
+reactComponents["Modal2FA"] = Component42;
 
-import Component41 from '../src/components/masternodes/MasternodeTable.jsx';
-reactComponents['MasternodeTable'] = Component41;
+import Component43 from "../src/components/global/BannerImage.jsx";
+reactComponents["BannerImage"] = Component43;
 
-import Component42 from '../src/components/profile/2FA/Modal2FA.jsx';
-reactComponents['Modal2FA'] = Component42;
+import Component44 from "../src/components/global/CustomModal.jsx";
+reactComponents["CustomModal"] = Component44;
 
-import Component43 from '../src/components/global/BannerImage.jsx';
-reactComponents['BannerImage'] = Component43;
+import Component45 from "../src/components/global/SubTitle.jsx";
+reactComponents["SubTitle"] = Component45;
 
-import Component44 from '../src/components/global/CustomModal.jsx';
-reactComponents['CustomModal'] = Component44;
+import Component46 from "../src/components/global/SubTitleSide.jsx";
+reactComponents["SubTitle"] = Component46;
 
-import Component45 from '../src/components/global/SubTitle.jsx';
-reactComponents['SubTitle'] = Component45;
+import Component47 from "../src/components/global/Title.jsx";
+reactComponents["Title"] = Component47;
 
-import Component46 from '../src/components/global/SubTitleSide.jsx';
-reactComponents['SubTitle'] = Component46;
+import Component48 from "../src/pages/NewProposal.jsx";
+reactComponents["NewProposal"] = Component48;
 
-import Component47 from '../src/components/global/Title.jsx';
-reactComponents['Title'] = Component47;
+import Component49 from "../src/components/proposal/PaymentProposal.jsx";
+reactComponents["PaymentProposal"] = Component49;
 
-import Component48 from '../src/pages/NewProposal.jsx';
-reactComponents['NewProposal'] = Component48;
+import Component50 from "../src/components/profile/2FA/PreviousPhoneForm.jsx";
+reactComponents["PreviousPhoneForm"] = Component50;
 
-import Component49 from '../src/components/proposal/PaymentProposal.jsx';
-reactComponents['PaymentProposal'] = Component49;
+import Component51 from "../src/components/stats/Price.js";
+reactComponents["Price"] = Component51;
 
-import Component50 from '../src/components/profile/2FA/PreviousPhoneForm.jsx';
-reactComponents['PreviousPhoneForm'] = Component50;
+import Component52 from "../src/components/stats/PriceLineChart.js";
+reactComponents["PriceLineChart"] = Component52;
 
-import Component51 from '../src/components/stats/Price.js';
-reactComponents['Price'] = Component51;
+import Component53 from "../src/components/global/PrivateRoute.jsx";
+reactComponents["PrivateRoute"] = Component53;
 
-import Component52 from '../src/components/stats/PriceLineChart.js';
-reactComponents['PriceLineChart'] = Component52;
+import Component54 from "../src/pages/Profile.jsx";
+reactComponents["Profile"] = Component54;
 
-import Component53 from '../src/components/global/PrivateRoute.jsx';
-reactComponents['PrivateRoute'] = Component53;
+import Component55 from "../src/components/governance/ProposalCard.jsx";
+reactComponents["ProposalCard"] = Component55;
 
-import Component54 from '../src/pages/Profile.jsx';
-reactComponents['Profile'] = Component54;
+import Component56 from "../src/components/governance/ProposalCardInfo.jsx";
+reactComponents["ProposalCardInfo"] = Component56;
 
-import Component55 from '../src/components/governance/ProposalCard.jsx';
-reactComponents['ProposalCard'] = Component55;
+import Component57 from "../src/components/proposal/ProposalForm.jsx";
+reactComponents["ProposalForm"] = Component57;
 
-import Component56 from '../src/components/governance/ProposalCardInfo.jsx';
-reactComponents['ProposalCardInfo'] = Component56;
+import Component58 from "../src/components/admin/ProposalPagination.jsx";
+reactComponents["ProposalPagination"] = Component58;
 
-import Component57 from '../src/components/proposal/ProposalForm.jsx';
-reactComponents['ProposalForm'] = Component57;
+import Component59 from "../src/components/proposal/ProposalPreview.jsx";
+reactComponents["ProposalPreview"] = Component59;
 
-import Component58 from '../src/components/admin/ProposalPagination.jsx';
-reactComponents['ProposalPagination'] = Component58;
+import Component60 from "../src/components/governance/ProposalsList.jsx";
+reactComponents["ProposalsList"] = Component60;
 
-import Component59 from '../src/components/proposal/ProposalPreview.jsx';
-reactComponents['ProposalPreview'] = Component59;
+import Component61 from "../src/components/admin/ProposalsTable.jsx";
+reactComponents["ProposalsTable"] = Component61;
 
-import Component60 from '../src/components/governance/ProposalsList.jsx';
-reactComponents['ProposalsList'] = Component60;
+import Component62 from "../src/components/global/PublicRoute.jsx";
+reactComponents["PublicRoute"] = Component62;
 
-import Component61 from '../src/components/admin/ProposalsTable.jsx';
-reactComponents['ProposalsTable'] = Component61;
+import Component63 from "../src/pages/Recover.jsx";
+reactComponents["Recover"] = Component63;
 
-import Component62 from '../src/components/global/PublicRoute.jsx';
-reactComponents['PublicRoute'] = Component62;
+import Component64 from "../src/components/masternodes/RemotePagination.jsx";
+reactComponents["RemotePagination"] = Component64;
 
-import Component63 from '../src/pages/Recover.jsx';
-reactComponents['Recover'] = Component63;
+import Component65 from "../src/components/global/ScrollToTop.jsx";
+reactComponents["ScrollToTop"] = Component65;
 
-import Component64 from '../src/components/masternodes/RemotePagination.jsx';
-reactComponents['RemotePagination'] = Component64;
+import Component66 from "../src/pages/Setup.js";
+reactComponents["Setup"] = Component66;
 
-import Component65 from '../src/components/global/ScrollToTop.jsx';
-reactComponents['ScrollToTop'] = Component65;
+import Component67 from "../src/pages/Signup.jsx";
+reactComponents["Signup"] = Component67;
 
-import Component66 from '../src/pages/Setup.js';
-reactComponents['Setup'] = Component66;
+import Component68 from "../src/components/signup/SignupForm.jsx";
+reactComponents["SignupForm"] = Component68;
 
-import Component67 from '../src/pages/Signup.jsx';
-reactComponents['Signup'] = Component67;
+import Component69 from "../src/components/profile/2FA/SMS2FAForm.jsx";
+reactComponents["SMS2FAForm"] = Component69;
 
-import Component68 from '../src/components/signup/SignupForm.jsx';
-reactComponents['SignupForm'] = Component68;
+import Component70 from "../src/components/profile/2FA/SMS2FA.jsx";
+reactComponents["SMSTwoFA"] = Component70;
 
-import Component69 from '../src/components/profile/2FA/SMS2FAForm.jsx';
-reactComponents['SMS2FAForm'] = Component69;
+import Component71 from "../src/components/login/SMSTwoFAFormLogin.jsx";
+reactComponents["SMSTwoFAFormLogin"] = Component71;
 
-import Component70 from '../src/components/profile/2FA/SMS2FA.jsx';
-reactComponents['SMSTwoFA'] = Component70;
+import Component72 from "../src/pages/Stats.js";
+reactComponents["Stats"] = Component72;
 
-import Component71 from '../src/components/login/SMSTwoFAFormLogin.jsx';
-reactComponents['SMSTwoFAFormLogin'] = Component71;
+import Component73 from "../src/components/stats/StatsShow.jsx";
+reactComponents["StatsShow"] = Component73;
 
-import Component72 from '../src/pages/Stats.js';
-reactComponents['Stats'] = Component72;
+import Component74 from "../src/components/governance/SuperBlocks.js";
+reactComponents["SuperBlocks"] = Component74;
 
-import Component73 from '../src/components/stats/StatsShow.jsx';
-reactComponents['StatsShow'] = Component73;
+import Component75 from "../src/components/proposal/TitleProposal.jsx";
+reactComponents["TitleProposal"] = Component75;
 
-import Component74 from '../src/components/governance/SuperBlocks.js';
-reactComponents['SuperBlocks'] = Component74;
+import Component76 from "../src/components/profile/UserAddress.jsx";
+reactComponents["UserAddress"] = Component76;
 
-import Component75 from '../src/components/proposal/TitleProposal.jsx';
-reactComponents['TitleProposal'] = Component75;
+import Component77 from "../src/components/profile/UserAddressList.jsx";
+reactComponents["UserAddressList"] = Component77;
 
-import Component76 from '../src/components/profile/UserAddress.jsx';
-reactComponents['UserAddress'] = Component76;
+import Component78 from "../src/components/profile/UserDelete.jsx";
+reactComponents["UserDelete"] = Component78;
 
-import Component77 from '../src/components/profile/UserAddressList.jsx';
-reactComponents['UserAddressList'] = Component77;
+import Component79 from "../src/components/profile/UserInfo.jsx";
+reactComponents["UserInfo"] = Component79;
 
-import Component78 from '../src/components/profile/UserDelete.jsx';
-reactComponents['UserDelete'] = Component78;
+import Component80 from "../src/components/admin/UserPagination.jsx";
+reactComponents["UserPagination"] = Component80;
 
-import Component79 from '../src/components/profile/UserInfo.jsx';
-reactComponents['UserInfo'] = Component79;
+import Component81 from "../src/components/profile/UserPassForm.jsx";
+reactComponents["UserPassForm"] = Component81;
 
-import Component80 from '../src/components/admin/UserPagination.jsx';
-reactComponents['UserPagination'] = Component80;
+import Component82 from "../src/context/user-context.jsx";
+reactComponents["UserProvider"] = Component82;
 
-import Component81 from '../src/components/profile/UserPassForm.jsx';
-reactComponents['UserPassForm'] = Component81;
+import Component83 from "../src/components/admin/UsersAddModal.jsx";
+reactComponents["UsersAddModal"] = Component83;
 
-import Component82 from '../src/context/user-context.jsx';
-reactComponents['UserProvider'] = Component82;
+import Component84 from "../src/components/admin/UsersTable.jsx";
+reactComponents["UsersTable"] = Component84;
 
-import Component83 from '../src/components/admin/UsersAddModal.jsx';
-reactComponents['UsersAddModal'] = Component83;
+import Component85 from "../src/components/profile/2FA/UserTwoFA.jsx";
+reactComponents["UserTwoFA"] = Component85;
 
-import Component84 from '../src/components/admin/UsersTable.jsx';
-reactComponents['UsersTable'] = Component84;
+import Component86 from "../src/context/user-context.jsx";
+reactComponents["UserProvider"] = Component86;
 
-import Component85 from '../src/components/profile/2FA/UserTwoFA.jsx';
-reactComponents['UserTwoFA'] = Component85;
-
-import Component86 from '../src/context/user-context.jsx';
-reactComponents['UserProvider'] = Component86;
-
-import Component87 from '../src/components/stats/WorldMap.js';
-reactComponents['WorldMap'] = Component87;
+import Component87 from "../src/components/stats/WorldMap.js";
+reactComponents["WorldMap"] = Component87;

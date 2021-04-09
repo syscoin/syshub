@@ -27,4 +27,4 @@ package-lock.json
 .env
 debug.log
 .firebase*
-.eslintcache
+.eslintcache*

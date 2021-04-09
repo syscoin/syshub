@@ -1,95 +1,364 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>components/profile/2FA/GAuthForm.jsx</title>
 
-<head>
-  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/profile/2FA/GAuthForm.jsx</title>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css"
+    />
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css" />
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css" />
+    <link type="text/css" rel="stylesheet" href="" />
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </head>
 
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="./build/entry.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-  <link type="text/css" rel="stylesheet" href="">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  
-</head>
-
-
-
-<body class="layout small-header">
+  <body class="layout small-header">
     <div id="stickyNavbarOverlay"></div>
-    
 
-<div class="top-nav">
-    <div class="inner">
-        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+    <div class="top-nav">
+      <div class="inner">
+        <a
+          id="hamburger"
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
         <div class="logo">
-            
-             
-                <a href="index.html">
-                    <h1 class="navbar-item">Sysnode Doc</h1>
-                </a>
-            
+          <a href="index.html">
+            <h1 class="navbar-item">Sysnode Doc</h1>
+          </a>
         </div>
         <div class="menu">
-            
-            <div class="navigation">
-                <a
-                    href="index.html"
-                    class="link"
-                >
-                    API Documentation
-                </a>
-                
-                
-                
-            </div>
+          <div class="navigation">
+            <a href="index.html" class="link"> API Documentation </a>
+          </div>
         </div>
+      </div>
     </div>
-</div>
     <div id="main">
-        <div
-            class="sidebar "
-            id="sidebarNav"
-        >
-            
-            <nav>
-                
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Firebase.html">Firebase</a></li></ul><h3>Components / Profile</h3><ul><li><a href="AddAddressForm.html">AddAddressForm</a></li><li><a href="AddVotingAddress.html">AddVotingAddress</a></li><li><a href="GAuthForm.html">GAuthForm</a></li><li><a href="GAuthTwoFA.html">GAuthTwoFA</a></li><li><a href="Modal2FA.html">Modal2FA</a></li><li><a href="PreviousPhoneForm.html">PreviousPhoneForm</a></li><li><a href="SMS2FAForm.html">SMS2FAForm</a></li><li><a href="SMSTwoFA.html">SMSTwoFA</a></li><li><a href="UserAddress.html">UserAddress</a></li><li><a href="UserAddressList.html">UserAddressList</a></li><li><a href="UserDelete.html">UserDelete</a></li><li><a href="UserInfo.html">UserInfo</a></li><li><a href="UserPassForm.html">UserPassForm</a></li><li><a href="UserTwoFA.html">UserTwoFA</a></li></ul><h3>Components / Governance</h3><ul><li><a href="AddressItem.html">AddressItem</a></li><li><a href="AddressList.html">AddressList</a></li><li><a href="Govdetails.html">Govdetails</a></li><li><a href="GovList.html">GovList</a></li><li><a href="GovListRow.html">GovListRow</a></li><li><a href="ProposalCard.html">ProposalCard</a></li><li><a href="ProposalCardInfo.html">ProposalCardInfo</a></li><li><a href="ProposalsList.html">ProposalsList</a></li><li><a href="SuperBlocks.html">SuperBlocks</a></li></ul><h3>Components / Global</h3><ul><li><a href="Background.html">Background</a></li><li><a href="BackgroundInner.html">BackgroundInner</a></li><li><a href="Banner.html">Banner</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Header.html">Header</a></li><li><a href="InnerBanner.html">InnerBanner</a></li><li><a href="Loading.html">Loading</a></li><li><a href="module.exports.html">exports</a></li><li><a href="PrivateRoute.html">PrivateRoute</a></li><li><a href="PublicRoute.html">PublicRoute</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li></ul><h3>Components / Stats</h3><ul><li><a href="Blockchain.html">Blockchain</a></li><li><a href="Doughnut.html">Doughnut</a></li><li><a href="Income.html">Income</a></li><li><a href="Investment.html">Investment</a></li><li><a href="LinearChart.html">LinearChart</a></li><li><a href="Price.html">Price</a></li><li><a href="PriceLineChart.html">PriceLineChart</a></li><li><a href="StatsShow.html">StatsShow</a></li><li><a href="WorldMap.html">WorldMap</a></li></ul><h3>Components / Proposal</h3><ul><li><a href="DescriptionProposal.html">DescriptionProposal</a></li><li><a href="PaymentProposal.html">PaymentProposal</a></li><li><a href="ProposalForm.html">ProposalForm</a></li><li><a href="ProposalPreview.html">ProposalPreview</a></li><li><a href="TitleProposal.html">TitleProposal</a></li></ul><h3>Components / admin</h3><ul><li><a href="FaqForm.html">FaqForm</a></li><li><a href="FaqPagination.html">FaqPagination</a></li><li><a href="FaqTable.html">FaqTable</a></li><li><a href="ProposalPagination.html">ProposalPagination</a></li><li><a href="ProposalsTable.html">ProposalsTable</a></li><li><a href="UserPagination.html">UserPagination</a></li><li><a href="UsersAddModal.html">UsersAddModal</a></li><li><a href="UsersTable.html">UsersTable</a></li></ul><h3>Components / FAQ</h3><ul><li><a href="FaqItem.html">FaqItem</a></li><li><a href="FaqList.html">FaqList</a></li></ul><h3>Components / recover</h3><ul><li><a href="FormRecover.html">FormRecover</a></li></ul><h3>Components / login</h3><ul><li><a href="GAuthTwoFAFormLogin.html">GAuthTwoFAFormLogin</a></li><li><a href="LoginForm.html">LoginForm</a></li><li><a href="SMSTwoFAFormLogin.html">SMSTwoFAFormLogin</a></li></ul><h3>Components / Home</h3><ul><li><a href="HomeButtons.html">HomeButtons</a></li></ul><h3>Components / masternodes</h3><ul><li><a href="MasternodeTable.html">MasternodeTable</a></li><li><a href="RemotePagination.html">RemotePagination</a></li></ul><h3>Components / signup</h3><ul><li><a href="SignupForm.html">SignupForm</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculatePaymentDates">calculatePaymentDates</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#checkProposal">checkProposal</a></li><li><a href="global.html#createProposal">createProposal</a></li><li><a href="global.html#createVotingAddress">createVotingAddress</a></li><li><a href="global.html#decryptAes">decryptAes</a></li><li><a href="global.html#deleteToken">deleteToken</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#destroyProposal">destroyProposal</a></li><li><a href="global.html#destroyVotingAddress">destroyVotingAddress</a></li><li><a href="global.html#encryptAes">encryptAes</a></li><li><a href="global.html#generateLinkVerification">generateLinkVerification</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#get2faInfoUser">get2faInfoUser</a></li><li><a href="global.html#getAuthQrCode">getAuthQrCode</a></li><li><a href="global.html#getGovernanceInfo">getGovernanceInfo</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#getMiningInfo">getMiningInfo</a></li><li><a href="global.html#getOneMasterNode">getOneMasterNode</a></li><li><a href="global.html#getOneProposal">getOneProposal</a></li><li><a href="global.html#getPhoneAuthProviderID">getPhoneAuthProviderID</a></li><li><a href="global.html#getSuperBlockBudget">getSuperBlockBudget</a></li><li><a href="global.html#getToken">getToken</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#getUserVotingAddress">getUserVotingAddress</a></li><li><a href="global.html#isoArray">isoArray</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginWithCredentials">loginWithCredentials</a></li><li><a href="global.html#loginWithEmailAndPassword">loginWithEmailAndPassword</a></li><li><a href="global.html#loginWithPhone">loginWithPhone</a></li><li><a href="global.html#newPhoneAuthProvider">newPhoneAuthProvider</a></li><li><a href="global.html#newRecaptchaVerifier">newRecaptchaVerifier</a></li><li><a href="global.html#nextGovernanceRewardInfo">nextGovernanceRewardInfo</a></li><li><a href="global.html#notCompletedProposal">notCompletedProposal</a></li><li><a href="global.html#passwordReset">passwordReset</a></li><li><a href="global.html#phoneValidation">phoneValidation</a></li><li><a href="global.html#prepareProposal">prepareProposal</a></li><li><a href="global.html#refreshInRequest">refreshInRequest</a></li><li><a href="global.html#refreshToken">refreshToken</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removePhoneNumber">removePhoneNumber</a></li><li><a href="global.html#sendSMSToPhone">sendSMSToPhone</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#signOut">signOut</a></li><li><a href="global.html#signVote">signVote</a></li><li><a href="global.html#submitProposal">submitProposal</a></li><li><a href="global.html#updateActionsUser">updateActionsUser</a></li><li><a href="global.html#updatePhoneCredentials">updatePhoneCredentials</a></li><li><a href="global.html#updateProposal">updateProposal</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateVotingAddress">updateVotingAddress</a></li><li><a href="global.html#useDeviceLanguage">useDeviceLanguage</a></li><li><a href="global.html#verifyAuthCode">verifyAuthCode</a></li><li><a href="global.html#verifyPhoneCode">verifyPhoneCode</a></li><li><a href="global.html#voteIn">voteIn</a></li><li><a href="global.html#voteProposal">voteProposal</a></li></ul></div><div class="category"><h2>App</h2><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="AppComponent.html">AppComponent</a></li></ul></div><div class="category"><h2>Pages</h2><h3>Components</h3><ul><li><a href="About.html">About</a></li><li><a href="Admin.html">Admin</a></li><li><a href="Error.html">Error</a></li><li><a href="FAQ.html">FAQ</a></li><li><a href="Governance.html">Governance</a></li><li><a href="Home.html">Home</a></li><li><a href="Login.html">Login</a></li><li><a href="Masternodes.html">Masternodes</a></li><li><a href="NewProposal.html">NewProposal</a></li><li><a href="Profile.html">Profile</a></li><li><a href="Recover.html">Recover</a></li><li><a href="Setup.html">Setup</a></li><li><a href="Signup.html">Signup</a></li><li><a href="Stats.html">Stats</a></li></ul></div><div class="category"><h2>context</h2><h3>Components</h3><ul><li><a href="UserProvider.html">UserProvider</a></li><li><a href="useUser.html">useUser</a></li></ul></div>
-                
-            </nav>
-        </div>
-        <div class="core" id="main-content-wrapper">
-            <div class="content">
-                <header class="page-title">
-                    <p>Source</p>
-                    <h1>components/profile/2FA/GAuthForm.jsx</h1>
-                </header>
-                
+      <div class="sidebar" id="sidebarNav">
+        <nav>
+          <h2><a href="index.html">Documentation</a></h2>
+          <div class="category">
+            <h3>Classes</h3>
+            <ul>
+              <li><a href="Firebase.html">Firebase</a></li>
+            </ul>
+            <h3>Components / Profile</h3>
+            <ul>
+              <li><a href="AddAddressForm.html">AddAddressForm</a></li>
+              <li><a href="AddVotingAddress.html">AddVotingAddress</a></li>
+              <li><a href="GAuthForm.html">GAuthForm</a></li>
+              <li><a href="GAuthTwoFA.html">GAuthTwoFA</a></li>
+              <li><a href="Modal2FA.html">Modal2FA</a></li>
+              <li><a href="PreviousPhoneForm.html">PreviousPhoneForm</a></li>
+              <li><a href="SMS2FAForm.html">SMS2FAForm</a></li>
+              <li><a href="SMSTwoFA.html">SMSTwoFA</a></li>
+              <li><a href="UserAddress.html">UserAddress</a></li>
+              <li><a href="UserAddressList.html">UserAddressList</a></li>
+              <li><a href="UserDelete.html">UserDelete</a></li>
+              <li><a href="UserInfo.html">UserInfo</a></li>
+              <li><a href="UserPassForm.html">UserPassForm</a></li>
+              <li><a href="UserTwoFA.html">UserTwoFA</a></li>
+            </ul>
+            <h3>Components / Governance</h3>
+            <ul>
+              <li><a href="AddressItem.html">AddressItem</a></li>
+              <li><a href="AddressList.html">AddressList</a></li>
+              <li><a href="Govdetails.html">Govdetails</a></li>
+              <li><a href="GovList.html">GovList</a></li>
+              <li><a href="GovListRow.html">GovListRow</a></li>
+              <li><a href="ProposalCard.html">ProposalCard</a></li>
+              <li><a href="ProposalCardInfo.html">ProposalCardInfo</a></li>
+              <li><a href="ProposalsList.html">ProposalsList</a></li>
+              <li><a href="SuperBlocks.html">SuperBlocks</a></li>
+            </ul>
+            <h3>Components / Global</h3>
+            <ul>
+              <li><a href="Background.html">Background</a></li>
+              <li><a href="BackgroundInner.html">BackgroundInner</a></li>
+              <li><a href="Banner.html">Banner</a></li>
+              <li><a href="Footer.html">Footer</a></li>
+              <li><a href="Header.html">Header</a></li>
+              <li><a href="InnerBanner.html">InnerBanner</a></li>
+              <li><a href="Loading.html">Loading</a></li>
+              <li><a href="module.exports.html">exports</a></li>
+              <li><a href="PrivateRoute.html">PrivateRoute</a></li>
+              <li><a href="PublicRoute.html">PublicRoute</a></li>
+              <li><a href="ScrollToTop.html">ScrollToTop</a></li>
+            </ul>
+            <h3>Components / Stats</h3>
+            <ul>
+              <li><a href="Blockchain.html">Blockchain</a></li>
+              <li><a href="Doughnut.html">Doughnut</a></li>
+              <li><a href="Income.html">Income</a></li>
+              <li><a href="Investment.html">Investment</a></li>
+              <li><a href="LinearChart.html">LinearChart</a></li>
+              <li><a href="Price.html">Price</a></li>
+              <li><a href="PriceLineChart.html">PriceLineChart</a></li>
+              <li><a href="StatsShow.html">StatsShow</a></li>
+              <li><a href="WorldMap.html">WorldMap</a></li>
+            </ul>
+            <h3>Components / Proposal</h3>
+            <ul>
+              <li>
+                <a href="DescriptionProposal.html">DescriptionProposal</a>
+              </li>
+              <li><a href="PaymentProposal.html">PaymentProposal</a></li>
+              <li><a href="ProposalForm.html">ProposalForm</a></li>
+              <li><a href="ProposalPreview.html">ProposalPreview</a></li>
+              <li><a href="TitleProposal.html">TitleProposal</a></li>
+            </ul>
+            <h3>Components / admin</h3>
+            <ul>
+              <li><a href="FaqForm.html">FaqForm</a></li>
+              <li><a href="FaqPagination.html">FaqPagination</a></li>
+              <li><a href="FaqTable.html">FaqTable</a></li>
+              <li><a href="ProposalPagination.html">ProposalPagination</a></li>
+              <li><a href="ProposalsTable.html">ProposalsTable</a></li>
+              <li><a href="UserPagination.html">UserPagination</a></li>
+              <li><a href="UsersAddModal.html">UsersAddModal</a></li>
+              <li><a href="UsersTable.html">UsersTable</a></li>
+            </ul>
+            <h3>Components / FAQ</h3>
+            <ul>
+              <li><a href="FaqItem.html">FaqItem</a></li>
+              <li><a href="FaqList.html">FaqList</a></li>
+            </ul>
+            <h3>Components / recover</h3>
+            <ul>
+              <li><a href="FormRecover.html">FormRecover</a></li>
+            </ul>
+            <h3>Components / login</h3>
+            <ul>
+              <li>
+                <a href="GAuthTwoFAFormLogin.html">GAuthTwoFAFormLogin</a>
+              </li>
+              <li><a href="LoginForm.html">LoginForm</a></li>
+              <li><a href="SMSTwoFAFormLogin.html">SMSTwoFAFormLogin</a></li>
+            </ul>
+            <h3>Components / Home</h3>
+            <ul>
+              <li><a href="HomeButtons.html">HomeButtons</a></li>
+            </ul>
+            <h3>Components / masternodes</h3>
+            <ul>
+              <li><a href="MasternodeTable.html">MasternodeTable</a></li>
+              <li><a href="RemotePagination.html">RemotePagination</a></li>
+            </ul>
+            <h3>Components / signup</h3>
+            <ul>
+              <li><a href="SignupForm.html">SignupForm</a></li>
+            </ul>
+            <h3>Global</h3>
+            <ul>
+              <li>
+                <a href="global.html#calculatePaymentDates"
+                  >calculatePaymentDates</a
+                >
+              </li>
+              <li><a href="global.html#changePassword">changePassword</a></li>
+              <li><a href="global.html#checkProposal">checkProposal</a></li>
+              <li><a href="global.html#createProposal">createProposal</a></li>
+              <li>
+                <a href="global.html#createVotingAddress"
+                  >createVotingAddress</a
+                >
+              </li>
+              <li><a href="global.html#decryptAes">decryptAes</a></li>
+              <li><a href="global.html#deleteToken">deleteToken</a></li>
+              <li><a href="global.html#deleteUser">deleteUser</a></li>
+              <li><a href="global.html#destroyProposal">destroyProposal</a></li>
+              <li>
+                <a href="global.html#destroyVotingAddress"
+                  >destroyVotingAddress</a
+                >
+              </li>
+              <li><a href="global.html#encryptAes">encryptAes</a></li>
+              <li>
+                <a href="global.html#generateLinkVerification"
+                  >generateLinkVerification</a
+                >
+              </li>
+              <li><a href="global.html#generateToken">generateToken</a></li>
+              <li><a href="global.html#get2faInfoUser">get2faInfoUser</a></li>
+              <li><a href="global.html#getAuthQrCode">getAuthQrCode</a></li>
+              <li>
+                <a href="global.html#getGovernanceInfo">getGovernanceInfo</a>
+              </li>
+              <li><a href="global.html#getInfo">getInfo</a></li>
+              <li><a href="global.html#getMiningInfo">getMiningInfo</a></li>
+              <li>
+                <a href="global.html#getOneMasterNode">getOneMasterNode</a>
+              </li>
+              <li><a href="global.html#getOneProposal">getOneProposal</a></li>
+              <li>
+                <a href="global.html#getPhoneAuthProviderID"
+                  >getPhoneAuthProviderID</a
+                >
+              </li>
+              <li>
+                <a href="global.html#getSuperBlockBudget"
+                  >getSuperBlockBudget</a
+                >
+              </li>
+              <li><a href="global.html#getToken">getToken</a></li>
+              <li><a href="global.html#getUserInfo">getUserInfo</a></li>
+              <li>
+                <a href="global.html#getUserVotingAddress"
+                  >getUserVotingAddress</a
+                >
+              </li>
+              <li><a href="global.html#isoArray">isoArray</a></li>
+              <li><a href="global.html#list">list</a></li>
+              <li><a href="global.html#login">login</a></li>
+              <li>
+                <a href="global.html#loginWithCredentials"
+                  >loginWithCredentials</a
+                >
+              </li>
+              <li>
+                <a href="global.html#loginWithEmailAndPassword"
+                  >loginWithEmailAndPassword</a
+                >
+              </li>
+              <li><a href="global.html#loginWithPhone">loginWithPhone</a></li>
+              <li>
+                <a href="global.html#newPhoneAuthProvider"
+                  >newPhoneAuthProvider</a
+                >
+              </li>
+              <li>
+                <a href="global.html#newRecaptchaVerifier"
+                  >newRecaptchaVerifier</a
+                >
+              </li>
+              <li>
+                <a href="global.html#nextGovernanceRewardInfo"
+                  >nextGovernanceRewardInfo</a
+                >
+              </li>
+              <li>
+                <a href="global.html#notCompletedProposal"
+                  >notCompletedProposal</a
+                >
+              </li>
+              <li><a href="global.html#passwordReset">passwordReset</a></li>
+              <li><a href="global.html#phoneValidation">phoneValidation</a></li>
+              <li><a href="global.html#prepareProposal">prepareProposal</a></li>
+              <li>
+                <a href="global.html#refreshInRequest">refreshInRequest</a>
+              </li>
+              <li><a href="global.html#refreshToken">refreshToken</a></li>
+              <li><a href="global.html#register">register</a></li>
+              <li>
+                <a href="global.html#removePhoneNumber">removePhoneNumber</a>
+              </li>
+              <li><a href="global.html#sendSMSToPhone">sendSMSToPhone</a></li>
+              <li><a href="global.html#setToken">setToken</a></li>
+              <li><a href="global.html#signOut">signOut</a></li>
+              <li><a href="global.html#signVote">signVote</a></li>
+              <li><a href="global.html#submitProposal">submitProposal</a></li>
+              <li>
+                <a href="global.html#updateActionsUser">updateActionsUser</a>
+              </li>
+              <li>
+                <a href="global.html#updatePhoneCredentials"
+                  >updatePhoneCredentials</a
+                >
+              </li>
+              <li><a href="global.html#updateProposal">updateProposal</a></li>
+              <li><a href="global.html#updateUser">updateUser</a></li>
+              <li>
+                <a href="global.html#updateVotingAddress"
+                  >updateVotingAddress</a
+                >
+              </li>
+              <li>
+                <a href="global.html#useDeviceLanguage">useDeviceLanguage</a>
+              </li>
+              <li><a href="global.html#verifyAuthCode">verifyAuthCode</a></li>
+              <li><a href="global.html#verifyPhoneCode">verifyPhoneCode</a></li>
+              <li><a href="global.html#voteIn">voteIn</a></li>
+              <li><a href="global.html#voteProposal">voteProposal</a></li>
+            </ul>
+          </div>
+          <div class="category">
+            <h2>App</h2>
+            <h3>Components</h3>
+            <ul>
+              <li><a href="App.html">App</a></li>
+              <li><a href="AppComponent.html">AppComponent</a></li>
+            </ul>
+          </div>
+          <div class="category">
+            <h2>Pages</h2>
+            <h3>Components</h3>
+            <ul>
+              <li><a href="About.html">About</a></li>
+              <li><a href="Admin.html">Admin</a></li>
+              <li><a href="Error.html">Error</a></li>
+              <li><a href="FAQ.html">FAQ</a></li>
+              <li><a href="Governance.html">Governance</a></li>
+              <li><a href="Home.html">Home</a></li>
+              <li><a href="Login.html">Login</a></li>
+              <li><a href="Masternodes.html">Masternodes</a></li>
+              <li><a href="NewProposal.html">NewProposal</a></li>
+              <li><a href="Profile.html">Profile</a></li>
+              <li><a href="Recover.html">Recover</a></li>
+              <li><a href="Setup.html">Setup</a></li>
+              <li><a href="Signup.html">Signup</a></li>
+              <li><a href="Stats.html">Stats</a></li>
+            </ul>
+          </div>
+          <div class="category">
+            <h2>context</h2>
+            <h3>Components</h3>
+            <ul>
+              <li><a href="UserProvider.html">UserProvider</a></li>
+              <li><a href="useUser.html">useUser</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="core" id="main-content-wrapper">
+        <div class="content">
+          <header class="page-title">
+            <p>Source</p>
+            <h1>components/profile/2FA/GAuthForm.jsx</h1>
+          </header>
 
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, {useState, useEffect} from "react";
+          <section>
+            <article>
+              <pre
+                class="prettyprint source linenums"
+              ><code>import React, {useState, useEffect} from "react";
 import swal from "sweetalert2";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useForm } from "react-hook-form";
@@ -345,31 +614,36 @@ function GAuthForm({ onClose }) {
 }
 
 export default GAuthForm;</code></pre>
-        </article>
-    </section>
-
-
-
-
-            </div>
-            
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
-                    <p class="sidebar-created-by">
-                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-                    </p>
-                </div>
-            </footer>
-            
+            </article>
+          </section>
         </div>
-        <div id="side-nav" class="side-nav">
-        </div>
+
+        <footer class="footer">
+          <div class="content has-text-centered">
+            <p>
+              Documentation generated by
+              <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+            </p>
+            <p class="sidebar-created-by">
+              <a
+                href="https://github.com/SoftwareBrothers/better-docs"
+                target="_blank"
+                >BetterDocs theme</a
+              >
+              provided with <i class="fas fa-heart"></i> by
+              <a href="http://softwarebrothers.co" target="_blank"
+                >SoftwareBrothers - JavaScript Development Agency</a
+              >
+            </p>
+          </div>
+        </footer>
+      </div>
+      <div id="side-nav" class="side-nav"></div>
     </div>
-<script src="scripts/app.min.js"></script>
-<script>PR.prettyPrint();</script>
-<script src="scripts/linenumber.js"> </script>
-
-</body>
+    <script src="scripts/app.min.js"></script>
+    <script>
+      PR.prettyPrint();
+    </script>
+    <script src="scripts/linenumber.js"></script>
+  </body>
 </html>
