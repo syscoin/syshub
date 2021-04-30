@@ -183,17 +183,7 @@ class Home extends Component {
                                             <p>Everything you need to know about Masternodes and Governance.</p>
                                         </div>
 
-                                        <div className="article__actions vertical">
-                                            <Link to="/about" className="btn btn--blue-border">
-                                                Learn More
-                                            </Link>
-                                            <Link to="/setup" className="btn btn--blue-border">
-                                                Setup Masternode
-                                            </Link>
-                                            <Link to="/register" className="btn btn--blue-border">
-                                                Register
-                                            </Link>
-                                        </div>
+                                        <HomeButtons />
                                     </BannerImage>
                                 </div>
                             </div>
