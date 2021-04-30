@@ -39,7 +39,7 @@ function MasternodeForm() {
     payoutAddress,
     feeSourceAddress
   ) => {
-    return `protx_register_prepare ${collateralHash} ${collateralIndex} ${ipAddress}:18369 ${ownerKeyAddr} ${operatorPubKey} ${votingKeyAddr} ${operatorReward} ${payoutAddress} ${
+    return `protx_register_prepare ${collateralHash} ${collateralIndex} ${ipAddress}:8369 ${ownerKeyAddr} ${operatorPubKey} ${votingKeyAddr} ${operatorReward} ${payoutAddress} ${
       feeSourceAddress || ""
     }`.trim();
   };
