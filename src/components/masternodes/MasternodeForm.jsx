@@ -49,13 +49,14 @@ function MasternodeForm() {
    * @function
    */
   const generateSignCommand = (collateralAddress, signMessage) => {
+    // check for new addresses to validate
     if (
       collateralAddress.startsWith("sys") ||
       collateralAddress.startsWith("tsys")
     ) {
       return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
     } else {
-      return `signmessage ${collateralAddress} ${signMessage}`.trim();
+      return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
     }
   };
 
