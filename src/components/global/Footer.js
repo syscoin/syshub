@@ -186,7 +186,7 @@ class Footer extends Component {
                         </ul>
                     </div>
                     <div className="copyright">
-                        <p>© 2020 Syscoin. All rights reserved</p>
+                        <p>© {new Date().getFullYear()} Syscoin. All rights reserved</p>
                     </div>
                     </div>
                 </div>
