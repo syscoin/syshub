@@ -73,7 +73,7 @@
     "sweetalert": "^2.1.0",
     "sweetalert2": "^7.28.4",
     "uid": "^1.0.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "dotenv-cli": "^2.0.0"
