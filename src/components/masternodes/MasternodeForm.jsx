@@ -50,14 +50,10 @@ function MasternodeForm() {
    */
   const generateSignCommand = (collateralAddress, signMessage) => {
     // check for new addresses to validate
-    if (
-      collateralAddress.startsWith("sys") ||
-      collateralAddress.startsWith("tsys")
-    ) {
-      return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
-    } else {
-      return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
-    }
+    /* Note: Previously, the differentiation with signmessagebech32 or signmessage was made to take into account the use cases of the addresses to be used,
+     in theory the signmessagebech32 command should apply to all
+    * */
+    return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
   };
 
   /**
