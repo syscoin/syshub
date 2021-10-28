@@ -1,9 +1,8 @@
-import {crypto, ECPair,networks} from 'bitcoinjs-lib'
+import {crypto, ECPair,networks,address} from 'bitcoinjs-lib'
 import {Buffer} from 'buffer'
 import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
 import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
-
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
  * @function
@@ -14,7 +13,7 @@ const signVote = (obj) => {
   // eslint-disable-next-line
   try {
     const {mnPrivateKey, vinMasternode, gObjectHash, voteOutcome} = obj
-    const network= process.env.REACT_APP_CHAIN_NETWORK !== 'main'?networks.testnet:networks.bitcoin;
+    const network= process.env.REACT_APP_CHAIN_NETWORK !== 'main'? networks.testnet:networks.bitcoin;
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, 'hex');
     const voteSignalNum = 1; // 'funding'
@@ -24,19 +23,14 @@ const signVote = (obj) => {
 
     const vinMasternodeBuffer = Buffer.from(masterNodeTx[0], 'hex');
     swapEndiannessInPlace(vinMasternodeBuffer);
-
     const vinMasternodeIndexBuffer = Buffer.allocUnsafe(4);
     const outputIndex = parseInt(masterNodeTx[1]);
     vinMasternodeIndexBuffer.writeInt32LE(outputIndex);
-
     const gObjectHashBufferLE = swapEndianness(gObjectHashBuffer);
-
     const voteOutcomeBuffer = Buffer.allocUnsafe(4);
     voteOutcomeBuffer.writeInt32LE(voteOutcomeNum);
-
     const voteSignalBuffer = Buffer.allocUnsafe(4);
     voteSignalBuffer.writeInt32LE(voteSignalNum);
-
     const timeBuffer = new Int64LE(time).toBuffer();
     const message = Buffer.concat([
       vinMasternodeBuffer,
@@ -50,9 +44,7 @@ const signVote = (obj) => {
     const hash = crypto.hash256(message);
     const keyPair = ECPair.fromWIF(`${mnPrivateKey}`,network)
     const sigObj = secp256k1.sign(hash, keyPair.privateKey);
-
     const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
-
     const recIdBuffer = Buffer.allocUnsafe(1);
     recIdBuffer.writeInt8(recId);
     const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
@@ -72,7 +64,6 @@ const signVote = (obj) => {
     if (voteOutcomeNum === 1) vote = 'yes';
     if (voteOutcomeNum === 2) vote = 'no';
     if (voteOutcomeNum === 3) vote = 'abstain';
-
     return {
       txHash: masterNodeTx[0],
       txIndex: masterNodeTx[1],

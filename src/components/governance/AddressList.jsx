@@ -10,6 +10,7 @@ import AddressItem from "./AddressItem";
 
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
+import {decryptVotingKey} from "../../utils/encryption";
 
 /**
  * Component to show the voting address list of the user
@@ -152,13 +153,13 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
     let addressVoted = []
     let addressErrorVote = []
     for await (const address of addressToVote) {
+      const addrDecrypt=decryptVotingKey({privateKey:address.privateKey, txId:address.txId})
       const proposalVoteNo = {
-        mnPrivateKey: address.privateKey,
-        vinMasternode: address.txId,
+        mnPrivateKey: addrDecrypt.privateKey,
+        vinMasternode: addrDecrypt.txId,
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
@@ -177,6 +178,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
           // })
         })
         .catch(err => {
+          console.log(err)
           addressErrorVote.push({
             name: address.name,
             err: (voteData === 'Invalid network version') ? 'Invalid network version' : err.response.data.message
