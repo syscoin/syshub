@@ -113,7 +113,7 @@ function SMS2FAForm({ onClose }) {
    * @function
    * @param {{phoneCode: string}} data phone code received from the phone code input form 
    */
-  const auth = async ({ phoneCode }) => {
+  const auth = async ({ phoneCode,phoneCodePassword }) => {
     swal.fire({
       title: 'Verifying',
       showConfirmButton: false,
@@ -126,6 +126,7 @@ function SMS2FAForm({ onClose }) {
       .updatePhoneCredentials(credentials)
       .then(async () => {
         let currentUserDataUpdate = {
+          pwd:phoneCodePassword,
           sms: true,
           twoFa: true,
           gAuth: false
@@ -197,6 +198,7 @@ function SMS2FAForm({ onClose }) {
               name="phoneNumber"
               type="tel"
               id="phoneNumber"
+              placeholder={"Phone Number"}
               ref={register}
             />
             <ErrorMessage
@@ -246,6 +248,7 @@ function SMS2FAForm({ onClose }) {
               type="text"
               id="phoneCode"
               ref={register2}
+              placeholder={"Phone Code"}
               disabled={!codeSent}
             />
             <ErrorMessage
@@ -258,7 +261,26 @@ function SMS2FAForm({ onClose }) {
               )}
             />
           </div>
-
+          <div className="form-group">
+            <input
+                className="styled"
+                name="phoneCodePassword"
+                type="password"
+                id="phoneCodePassword"
+                placeholder={"Password"}
+                ref={register2}
+                disabled={!codeSent}
+            />
+            <ErrorMessage
+                errors={errors2}
+                name="phoneCode"
+                render={({message}) => (
+                    <small>
+                      <p style={{lineHeight: "1.5"}}>{message}</p>
+                    </small>
+                )}
+            />
+          </div>
           <button
             className="btn btn--blue btn-center"
             disabled={!codeSent}

@@ -67,7 +67,8 @@ function GAuthForm({ onClose }) {
    * @function
    * @param {{verificationCode: string}} verificationCode code from the input to verificate google authenticator
    */
-  const verifyCode = async ({verificationCode}) => {
+  const verifyCode = async ({verificationCode,verificationPassword}) => {
+    console.log(verificationPassword)
     swal.fire({
       title: 'Verifying',
       showConfirmButton: false,
@@ -79,6 +80,7 @@ function GAuthForm({ onClose }) {
     if (gAuthVerifyCode) {
       let gAuthSecretEncrypt = encryptJWT(QRCode.secret);
       let changeUserData = {
+        pwd:verificationPassword,
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,
         twoFa: true,
@@ -197,6 +199,7 @@ function GAuthForm({ onClose }) {
                         name="verificationCode"
                         type="text"
                         id="verificationCode"
+                        placeholder={'Verification code'}
                         ref={register}
                       />
                       <ErrorMessage
@@ -207,6 +210,25 @@ function GAuthForm({ onClose }) {
                             <p style={{lineHeight: "1.5"}}>{message}</p>
                           </small>
                         )}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                          className="styled"
+                          name="verificationPassword"
+                          type="text"
+                          id="verificationPassword"
+                          placeholder={'Paswword'}
+                          ref={register}
+                      />
+                      <ErrorMessage
+                          errors={errors}
+                          name="verificationPassword"
+                          render={({message}) => (
+                              <small>
+                                <p style={{lineHeight: "1.5"}}>{message}</p>
+                              </small>
+                          )}
                       />
                     </div>
                     <div className="text-center">

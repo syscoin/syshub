@@ -57,33 +57,46 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
       showCancelButton: true,
       confirmButtonText: 'Yes, remove it'
     })
-    if (result.isConfirmed) { 
-      swal.fire({
-        title: 'Removing please wait',
-        showConfirmButton: false,
-        willOpen: () => {
-          swal.showLoading()
+    if (result.isConfirmed) {
+      const { value: password } = await swal.fire({
+        title: 'Enter your Password',
+        input: 'password',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return `Please enter password`
+          }
         }
-      });
-      await firebase.removePhoneNumber().catch(err => {
-        // console.log(err)
-        throw err
-      });
-      let currentUserDataUpdate = {
-        sms: false,
-        twoFa: false
-      }
-      await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
-        // console.log(err)
-      });
-      
-      swal.fire({
-        icon: 'success',
-        title: 'Your phone number was removed',
-        timer: 2000
-      });
+      })
+      if (password){
+        swal.fire({
+          title: 'Removing please wait',
+          showConfirmButton: false,
+          willOpen: () => {
+            swal.showLoading()
+          }
+        });
+        await firebase.removePhoneNumber().catch(err => {
+          throw err
+        });
+        let currentUserDataUpdate = {
+          pwd:password,
+          sms: false,
+          twoFa: false
+        }
+        await updateCurrentActionsUser(currentUserDataUpdate).then().catch(err => {
+          throw err
+        });
 
-      await onTwoFAChange();
+        swal.fire({
+          icon: 'success',
+          title: 'Your phone number was removed',
+          timer: 2000
+        });
+
+        await onTwoFAChange();
+      }
+
     }
   }
 
@@ -123,39 +136,55 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
       confirmButtonText: 'Yes, remove it',
     })
     if (result.isConfirmed) {
-      swal.fire({
-        title: 'Removing please wait',
-        showConfirmButton: false,
-        willOpen: () => {
-          swal.showLoading()
-        }
-      });
-      try {
-        let currentUserDataUpdate = {
-          gAuthSecret: null,
-          gAuth: false,
-          twoFa: false
-        }
-        await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-          throw err;
-        });
-  
+        const { value: password } = await swal.fire({
+            title: 'Enter your Password',
+            input: 'password',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return `Please enter password`
+                }
+            }
+        })
+
+      if (password){
         swal.fire({
-          icon: 'success',
-          title: 'Your secret was removed',
-          text: 'Google authenticator is disabled',
-          timer: 2000
+          title: 'Removing please wait',
+          showConfirmButton: false,
+          willOpen: () => {
+            swal.showLoading()
+          }
         });
-    
-        await onTwoFAChange();
-        
-      } catch (error) {
-        swal.fire({
-          icon: 'error',
-          title: 'There was an error',
-          text: error.message
-        });
+        try {
+          let currentUserDataUpdate = {
+            pwd:password,
+            gAuthSecret: null,
+            gAuth: false,
+            twoFa: false
+          }
+          await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
+            throw err;
+          });
+
+          swal.fire({
+            icon: 'success',
+            title: 'Your secret was removed',
+            text: 'Google authenticator is disabled',
+            timer: 2000
+          });
+
+          await onTwoFAChange();
+
+        } catch (error) {
+          swal.fire({
+            icon: 'error',
+            title: 'There was an error',
+            text: error.message
+          });
+        }
       }
+
+
     }
 
   }
