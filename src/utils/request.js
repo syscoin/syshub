@@ -656,8 +656,10 @@ export const getUserInfo = async (id, cancelToken) => {
  */
 export const get2faInfoUser = async (id) => {
   return new Promise((resolve, reject) => {
+    let {token} = getToken()
     axios.get(`${API_URI}/user/verify2fa/${id}`, {
       headers: {
+        Authorization: `Bearer ${token}`,
         'appclient': process.env.REACT_APP_CLIENT
       }
     }).then(({data}) => {

@@ -113,6 +113,7 @@ export function UserProvider(props) {
   const loginUser = async (loginData) => {
     return new Promise((resolve, reject) => {
       firebase.loginWithEmailAndPassword(loginData).then(({user}) => {
+        setToken(user.ya);
         resolve(user)
       }).catch(err => {
         reject(err)
