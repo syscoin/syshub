@@ -107,8 +107,9 @@ function UserAddressList() {
       swal.fire({
         icon: "error",
         title: "The voting address couldn't update, please try again",
-        text: error.message
+        // text: error.message
       });
+      loadVotingAddress();
       // console.log(error);
     }
   }
