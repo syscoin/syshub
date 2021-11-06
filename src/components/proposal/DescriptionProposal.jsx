@@ -146,7 +146,8 @@ function DescriptionProposal({ onNext, onBack }) {
                   __html: DOMPurify.sanitize(
                     draftToHtml(
                       convertToRaw(proposalDescription.getCurrentContent())
-                    )
+                    ),
+                { ALLOWED_TAGS: ['p', '#text'] }
                   ),
                 }}
                 style={{ margin: "0 10px" }}
