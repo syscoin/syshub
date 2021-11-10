@@ -911,3 +911,16 @@ export const deleteHiddenProposal = async (hash) => {
             .catch(err => reject(err))
     })
 }
+
+export const logout = async (uid)=>{
+    await firebase.refreshInRequest();
+    let {token} = getToken();
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URI}/user/revoke/${uid}`, {token},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => resolve(resp))
+            .catch(err => reject(err))
+    })
+}

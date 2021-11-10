@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import {register, updateUser, updateActionsUser, deleteUser, getUserInfo} from '../utils/request';
+import {register, updateUser, updateActionsUser, deleteUser, getUserInfo, logout} from '../utils/request';
 import {useHistory} from 'react-router';
 import {getSeed, removeSeed} from "../utils/encryption";
 
@@ -173,10 +173,11 @@ export function UserProvider(props) {
    * @function
    */
   async function logoutUser() {
+    await logout(user.data.user_id)
     setUser(null);
+    await history.go('/login');
     removeSeed();
     deleteToken();
-    await history.go('/login');
     await firebase.signOut();
     history.go(0);
   }
