@@ -88,9 +88,6 @@ export function UserProvider(props) {
   const signupUser = async (registerData) => {
     try {
       const response = await firebase.register(registerData);
-      await register({uid: response.user.uid}).catch(err => {
-        throw err
-      });
       await firebase.generateLinkVerification().catch(err => {
         throw err
       })
