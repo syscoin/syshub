@@ -216,7 +216,7 @@ function GAuthForm({ onClose }) {
                       <input
                           className="styled"
                           name="verificationPassword"
-                          type="text"
+                          type="password"
                           id="verificationPassword"
                           placeholder={'Paswword'}
                           ref={register}
