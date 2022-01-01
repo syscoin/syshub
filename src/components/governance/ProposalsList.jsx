@@ -48,7 +48,6 @@ function ProposalsList(props) {
         }
       }
     } catch (error) {
-      // console.log(error);
       isMounted.current && setDataload(2);
     }
   }, [cancelSource]);

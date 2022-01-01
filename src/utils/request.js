@@ -700,7 +700,7 @@ export const updateUser = async (id, data) => {
  * @param {string} id id of the user
  * @param {*} data data of the user
  */
-export const updateActionsUser = async (id, data) => {
+export const updateActionsUser = async (id, data,params) => {
     await firebase.refreshInRequest()
     let {token} = getToken()
     return new Promise((resolve, reject) => {
@@ -708,6 +708,9 @@ export const updateActionsUser = async (id, data) => {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'appclient': process.env.REACT_APP_CLIENT
+            },
+            params: {
+                ...params
             }
         }).then(resp => {
             resolve(resp)
@@ -912,11 +915,11 @@ export const deleteHiddenProposal = async (hash) => {
     })
 }
 
-export const logout = async (uid)=>{
+export const logout = async (uid) => {
     await firebase.refreshInRequest();
     let {token} = getToken();
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URI}/user/revoke/${uid}`, {token},{
+        axios.post(`${API_URI}/user/revoke/${uid}`, {token}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

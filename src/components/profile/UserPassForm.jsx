@@ -61,7 +61,6 @@ function UserPassForm() {
 
       await logoutUser();
     } catch (error) {
-      // console.log(error)
       Swal.fire({ title: error, icon: 'error' });
       setSubmitting(false);
     }

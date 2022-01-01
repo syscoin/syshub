@@ -16,6 +16,7 @@ import GAuthTwoFAFormLogin from "../components/login/GAuthTwoFAFormLogin";
 import {createSeed, decryptJWT, removeSeed} from "../utils/encryption";
 import {verifyAuthCode} from "../utils/twoFaAuthentication";
 import swal from "sweetalert2";
+import {deleteToken} from "../utils/auth-token";
 
 /**
  * Login page showed at /login
@@ -79,6 +80,7 @@ function Login({ t }) {
         history.push('/governance');
       }
     } catch (error) {
+      deleteToken()
       swal.fire({
         icon: "error",
         title: "Error",
@@ -153,7 +155,6 @@ function Login({ t }) {
       history.push('/governance');
       
     } catch (error) {
-      // console.log(error)
       swal.fire({
         icon: "error",
         title: "Error",

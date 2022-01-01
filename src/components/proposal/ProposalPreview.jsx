@@ -1,5 +1,6 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
+import {unescape} from "./DescriptionProposal";
 
 
 /**
@@ -25,7 +26,7 @@ function ProposalPreview({ title, description, url, payment }) {
     <div className="proposals">
       <div className="proposal" style={{float: 'none'}}>
         <label style={{fontSize: '24px'}}>{title}</label>
-        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }} style={{margin:'0 10px'}}></div>
+        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(unescape(description)) }} style={{margin:'0 10px'}}></div>
         <label>{url || 'No URL was given'}</label>
         {
           payment && (

@@ -73,7 +73,6 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
           }
         }
       } catch (error) {
-        // console.log(error);
         if (isMounted.current) {
           setLoadingAddress(false);
         }
@@ -178,7 +177,6 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
           // })
         })
         .catch(err => {
-          console.log(err)
           addressErrorVote.push({
             name: address.name,
             err: (voteData === 'Invalid network version') ? 'Invalid network version' : err.response.data.message

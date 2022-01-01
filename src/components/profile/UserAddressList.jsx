@@ -110,7 +110,6 @@ function UserAddressList() {
         // text: error.message
       });
       loadVotingAddress();
-      // console.log(error);
     }
   }
 

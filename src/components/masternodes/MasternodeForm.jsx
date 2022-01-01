@@ -183,7 +183,6 @@ function MasternodeForm() {
         swal.showLoading();
       },
     });
-    // console.log(data)
 
     try {
       await setSubmitCommand(generateSubmitCommand(data.tx, data.signature));

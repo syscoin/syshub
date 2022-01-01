@@ -50,7 +50,6 @@ const FaqTable = ({ t }) => {
     setDataload(0);
     try {
       const response = await getAllFaqs(currentPage, cancelSource.token);
-      // console.log(response);
       if (response.data.faqs) {
         if (isMounted.current) {
           setDataTable(response.data.faqs);
@@ -62,7 +61,6 @@ const FaqTable = ({ t }) => {
       }
     } catch (error) {
       isMounted.current && setDataload(2);
-      // console.log(error);
     }
   }, [currentPage, cancelSource]);
 

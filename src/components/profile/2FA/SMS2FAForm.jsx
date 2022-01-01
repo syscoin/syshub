@@ -33,7 +33,7 @@ const schema2 = yup.object().shape({
  *  <SMS2FAForm onClose={onClose} />
  * )
  */
-function SMS2FAForm({ onClose }) {
+function SMS2FAForm({ onClose, appVerifier}) {
   const {firebase, updateCurrentActionsUser} = useUser();
 
   const [codeSent, setCodeSent] = useState(false);
@@ -62,19 +62,19 @@ function SMS2FAForm({ onClose }) {
    * useEffect to render the invisible recaptcha at mount
    * @function
    */
-  useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
-      size: "invisible",
-      callback: (resp) => {
-        // console.log(resp);
-      },
-      error: (err) => {
-        // console.log(err);
-      },
-    });
-    window.recaptchaVerifier.render();
+  // useEffect(() => {
+    // window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+    //   size: "invisible",
+    //   callback: (resp) => {
+    //     // console.log(resp);
+    //   },
+    //   error: (err) => {
+    //     // console.log(err);
+    //   },
+    // });
+    // window.recaptchaVerifier.render();
     //eslint-disable-next-line
-  }, []);
+  // }, []);
 
   /**
    * function to send the sms
@@ -92,7 +92,6 @@ function SMS2FAForm({ onClose }) {
         }
       })
 
-      const appVerifier = window.recaptchaVerifier;
       const verificationId = await firebase.sendSMSToPhone(
         phoneUtil.format(userPhone, PNF.E164),
         appVerifier
@@ -145,8 +144,7 @@ function SMS2FAForm({ onClose }) {
         }).catch((err) => {
           throw err;
         });
-      })
-      .catch((err) => {
+      }).catch((err) => {
         swal.fire({
           icon: "error",
           title: "Error",

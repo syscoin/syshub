@@ -115,7 +115,6 @@ class MasternodeTable extends Component {
     if (srcData !== undefined && srcData !== "") {
       postData.search = srcData;
     }
-    // console.log(postData);
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     let axiosConfig = {

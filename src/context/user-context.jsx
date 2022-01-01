@@ -216,9 +216,9 @@ export function UserProvider(props) {
    * @function
    * @param {*} data data of the user
    */
-  const updateCurrentActionsUser = async (data) => {
+  const updateCurrentActionsUser = async (data, params) => {
     try {
-      return await updateActionsUser(user.data.user_id, {data: data}).catch(err => {
+      return await updateActionsUser(user.data.user_id, {data: data}, params).catch(err => {
         throw err
       })
     } catch (err) {

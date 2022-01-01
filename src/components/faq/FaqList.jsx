@@ -36,7 +36,6 @@ const FaqList = () => {
     setDataload(0);
     try {
       const response = await getPublicFaqs(cancelSource.token);
-      // console.log(response);
       if (response.data.faqs) {
         if (isMounted.current) {
           setFaqList(response.data.faqs);
@@ -46,7 +45,6 @@ const FaqList = () => {
       }
     } catch (error) {
       isMounted.current && setDataload(2);
-      // console.log(error);
     }
   }, [cancelSource]);
 
