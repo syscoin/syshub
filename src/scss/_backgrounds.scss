@@ -1,0 +1,130 @@
+/* ------------------------------------------------------------ *\
+	Main
+\* ------------------------------------------------------------ */
+
+.main { position: relative; padding-top: 200px; overflow: hidden; min-height: 100vh; }
+
+/*  Main Gradient  */
+.main .main__gradient { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -5; background-image: linear-gradient(202deg, #1e3863 0%, #1f1c5e 53%, #19195a 100%); }
+
+/*  Main Backgrounds  */
+.main .main__backgrounds { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -5; pointer-events: none; }
+
+.main .main__background { position: absolute; background-repeat: no-repeat;  }
+
+/*  Background Dots  */
+.main .main__background--dots { top: 0; left: 0; z-index: 0; width: 100%; height: 100%; background-repeat: repeat; }
+
+/*  Background Top Gradient  */
+.main .main__background--top-gradient { top: 0; left: 0; z-index: 10; width: 100%; height: 1613px; background-size: cover; }
+
+/*  Background Encrypted Messaging  */
+.main .encrypted-top-bg { top: -5%; left: 0; z-index: 10; width: 100%; height:35%; background-size: cover; }
+
+/*  Background Top Left  */
+.main .main__background--top-left { top: 0; left: 0; width: 655px; height: 598px; background-size: 545px 598px; background-repeat: no-repeat; }
+
+/*  Background Top Right  */
+.main .main__background--top-right { top: -127px; right: 0; width: 1702px; height: 1404px; background-size: 1702px 1404px; background-repeat: no-repeat; }
+
+/*  Background Oval Top Right Secondary  */
+.main .main__background--oval-top-right-secondary { top: 0; right: 0; z-index: -5; width: 1377px; height: 1378px; background-size: 1377px 1378px; background-repeat: no-repeat; }
+
+/*  Background Top Right Secondary  */
+.main .main__background--top-right-secondary { top: 0; right: 0; width: 276px; height: 2285px; background-size: 276px 2285px; background-repeat: no-repeat; }
+
+/*  Background Half Oval Bottom Left  */
+.main .main__background--half-oval-bottom-left { bottom: 0; left: 0; width: 687px; height: 1572px; background-size: 687px 1572px; background-repeat: no-repeat; }
+
+/*  Background Half Oval Left  */
+.main .main__background--half-oval-left { top: 2210px; left: 0; width: 907px; height: 1949px; background-size: 907px 1949px; background-repeat: no-repeat; }
+
+/*  Background Half Radar Left  */
+.main .main__background--half-radar-left { top: 2583px; left: 0; width: 606px; height: 1310px; background-size: 606px 1310px; background-repeat: no-repeat; }
+
+/*  Background Half Oval Left  */
+.main .main__background--half-oval-small-left { top: 3024px; left: 0; width: 354px; height: 1353px; background-size: 354px 1353px; background-repeat: no-repeat; }
+
+/*  Background Half Oval Right  */
+.main .main__background--oval-right { top: 1605px; right: 0; width: 1101px; height: 1460px; background-size: 1101px 1460px; background-repeat: no-repeat; }
+
+/*  Background Wave Bottom  */
+.main .main__background--wave-bottom { bottom: 0; left: 50%; width: 100%; height: 2247px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Wave Secondary Radar Bottom  */
+.main .main__background--wave-radar-bottom { bottom: 0; left: 50%; width: 100%; height: 1847px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Wave Bottom  */
+.main .main__background--wave-secondary-radar-bottom { bottom: 0; left: 50%; width: 100%; height: 1796px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Rectangle Right  */
+.main .main__background--rectangle-right { top: 1490px; right: 0; width: 1169px; height: 2030px; background-size: 1169px 2030px; background-repeat: no-repeat; }
+
+/*  Background Rectangle Left  */
+.main .main__background--rectangle-left { top: 1343px; left: 0; width: 830px; height: 1670px; background-size: 830px 1670px; background-repeat: no-repeat; }
+
+/*  Background Rectangle Top Left  */
+.main .main__background--rectangle-top-left { top: -280px; left: -190px; width: 1555px; height: 1553px; background-size: 1555px 1553px; background-repeat: no-repeat; }
+
+/*  Background Rectangles Top Left  */
+.main .main__background--rectangles-top-left { top: 0; left: 0; width: 1476px; height: 1279px; background-size: 1476px 1279px; background-repeat: no-repeat; }
+
+/*  Background Ornament Bottom  */
+.main .main__background--ornament-bottom { bottom: 0; left: 50%; width: 100%; height: 1765px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Bottom Secondary  */
+.main .main__background--ornament-bottom-secondary { bottom: 0; left: 50%; width: 100%; height: 1625px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Top Secondary  */
+.main .main__background--ornament-top-secondary { top: 0; left: 50%; z-index: -1; width: 100%; height: 46%; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Top Tertiary  */
+.main .main__background--ornament-top-tertiary { top: -689px; left: 50%; z-index: -1; width: 100%; height: 1948px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Lines Top  */
+.main .main__background--lines-top { top: 0; left: 50%; z-index: -1; width: 100%; height: 500px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Secondary Bottom  */
+.main .main__background--ornament-secondary-bottom { bottom: 0; left: 50%; width: 100%; height: 1769px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Secondary Bottom Tall  */
+.main .main__background--ornament-secondary-bottom-tall { bottom: 0; left: 50%; width: 100%; height: 2000px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Secondary Radar Bottom  */
+.main .main__background--ornament-secondary-radar-bottom { bottom: 0; left: 50%; width: 100%; height: 1769px; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Tertiary Bottom  */
+.main .main__background--ornament-tertiary-bottom { bottom: 0; left: 50%; width: 1920px; height: 1625px; background-size: 1920px 1625px; background-repeat: no-repeat; transform: translateX(-50%); }
+
+/*  Background Ornament Quaternary  */
+.main .main__background--ornament-quaternary { top: 287px; left: 50%; z-index: -5; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; transform: translateX(-50%); }
+
+.main--encrypted-messaging .main__background--top-left { z-index: 10; }
+
+.main--certificates .main__background--rectangle-top-left { top: 253px; left: -102px; }
+
+
+.main--offset-clear { padding-top: 138px; }
+
+.main--offset-null { padding-top: 0 !important; }
+
+.main--alt-color { color: $off-white; }
+
+/* Tablet Portrait */
+
+@media (max-width:$breakpoint-tablet-portrait) {
+	.main { padding-top: 138px; }
+
+	.main .main__background--ornament-quaternary { top: 200px; }
+
+	.main--about .main__background--oval-right { display: none; }
+
+	.main--about .main__background--wave-radar-bottom { height: 1500px; }
+}
+
+/* Mobile */
+
+@media (max-width:$breakpoint-mobile) {
+	.main { padding-top: 100px; }
+	.main--offset-null { padding-top: 100px !important; }
+}

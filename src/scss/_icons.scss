@@ -1,0 +1,133 @@
+.ico-facebook {
+    background-image: url(../images/sprite.png);
+    background-position: 66.36085626911316% 62.94642857142857%;
+    background-size: 3370.0000000000005% 1278.9473684210525%;
+    width: 10px;
+    height: 19px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-twitter {
+    background-image: url(../images/sprite.png);
+    background-position: 84.63949843260188% 89.47368421052632%;
+    background-size: 1872.2222222222222% 1620%;
+    width: 18px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-instagram {
+    background-image: url(../images/sprite.png);
+    background-position: 77.88161993769471% 99.11894273127754%;
+    background-size: 2106.25% 1518.75%;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-bitcoin {
+    background-image: url(../images/sprite.png);
+    background-position: 100% 99.11111111111111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-discord {
+    background-image: url(../images/sprite.png);
+    background-position: 85.35825545171339% 60.71428571428571%;
+    background-size: 2106.25% 1278.9473684210525%;
+    width: 16px;
+    height: 19px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-send {
+    background-image: url(../images/sprite.png);
+    background-position: 84.11214953271028% 98.2532751091703%;
+    background-size: 2106.25% 1735.7142857142858%;
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-github {
+    background-image: url(../images/sprite.png);
+    background-position: 78.36990595611285% 71.11111111111111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-reddit {
+    background-image: url(../images/sprite.png);
+    background-position: 85.26645768025078% 80.1762114537445%;
+    background-size: 1872.2222222222222% 1518.75%;
+    width: 18px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.ico-wisdom {
+    background-image: url(../images/sprite.png);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+    background-position: 71.369906% 71.11111111111111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+}
+.ico-linkedin {
+    background-image: url(../images/sprite.png);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+    background-position: 71.369906% 80.111111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+}
+.ico-wechat {
+    background-image: url(../images/sprite.png);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+    background-position: 71.369906% 99.511111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+}
+.ico-youtube {
+    background-image: url(../images/sprite.png);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+    background-position: 71.369906% 89.511111%;
+    background-size: 1872.2222222222222% 1350%;
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 390px)
+{
+.socials li~li {
+    margin-left: 6px !important;
+}
+}
+@media (max-width: 460px)
+{
+.socials li~li {
+    margin-left: 12px;
+}
+}
