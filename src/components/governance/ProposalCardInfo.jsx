@@ -2,6 +2,7 @@ import React from "react";
 import DOMPurify from "dompurify";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import swal from "sweetalert2";
+import {unescape} from "../proposal/DescriptionProposal";
 
 
 /**
@@ -62,11 +63,11 @@ function ProposalCardInfo({
         <>
           <span>Description:</span>
           <div
-            className="description-proposal"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(proposal.description),
-            }}
-          ></div>
+    className="description-proposal"
+    dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(unescape(proposal.description)),
+    }}
+    />
         </>
       )}
       <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>

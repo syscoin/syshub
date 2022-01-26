@@ -38,7 +38,7 @@ function ProposalsList(props) {
       if (response.data) {
         let govdata = response.data;
         Object.keys(govdata).forEach(function(key) {
-          if(govdata[key].ObectType===2) {
+          if(govdata[key].type===2) {
               delete govdata[key];
           }
         });
