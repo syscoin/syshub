@@ -8,6 +8,7 @@
     "npm": "6.x"
   },
   "dependencies": {
+    "@babel/core": "^7.26.0",
     "@hookform/error-message": "0.0.4",
     "@hookform/resolvers": "^0.1.1",
     "@swyftx/api-crypto-address-validator": "^1.13.1",
@@ -15,7 +16,6 @@
     "axios": "^0.21.1",
     "bitcoinjs-lib": "^4.0.2",
     "bootstrap-sass": "^3.4.1",
-    "buffer-math": "^0.3.0",
     "crypto-js": "^4.0.0",
     "datamaps": "^0.5.9",
     "dompurify": "^2.2.6",
@@ -83,6 +83,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",

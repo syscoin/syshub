@@ -2,7 +2,7 @@ import {crypto, ECPair,networks,address} from 'bitcoinjs-lib'
 import {Buffer} from 'buffer'
 import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
-import {swapEndiannessInPlace, swapEndianness} from 'buffer-math'
+import {swapEndiannessInPlace, swapEndianness} from './buffer-math'
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
  * @function
