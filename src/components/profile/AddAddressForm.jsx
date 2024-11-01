@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
 import IconInput from "../global/IconInput";
 
 const schema = yup.object().shape({

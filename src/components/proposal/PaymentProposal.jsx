@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useMemo} from 'react';
-import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';

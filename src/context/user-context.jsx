@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import {getToken, setToken, deleteToken} from '../utils/auth-token';
 import Firebase from '../utils/firebase';
-import {register, updateUser, updateActionsUser, deleteUser, getUserInfo, logout} from '../utils/request';
+import {updateUser, updateActionsUser, deleteUser, getUserInfo, logout} from '../utils/request';
 import {useHistory} from 'react-router';
 import {getSeed, removeSeed} from "../utils/encryption";
 

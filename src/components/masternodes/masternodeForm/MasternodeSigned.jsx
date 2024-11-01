@@ -1,5 +1,4 @@
 import React from "react";
-import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";

@@ -1,4 +1,4 @@
-import {crypto, ECPair,networks,address} from 'bitcoinjs-lib'
+import {crypto, ECPair,networks} from 'bitcoinjs-lib'
 import {Buffer} from 'buffer'
 import {Int64LE} from 'int64-buffer'
 import secp256k1 from 'secp256k1'
