@@ -27,14 +27,6 @@ jobs:
       - name: Build the React app
         run: npm run build
 
-      - name: Tag the commit
-        id: tag
-        run: |
-          # Create a tag based on the current commit hash
-          TAG_NAME="v$(date +'%Y.%m.%d.%H%M')"
-          git tag -a $TAG_NAME -m "Auto-tagged build $TAG_NAME"
-          git push origin $TAG_NAME
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
