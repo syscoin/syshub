@@ -90,5 +90,6 @@
     "better-docs": "^2.3.2",
     "jsdoc": "^3.6.6",
     "react-test-render": "^1.1.2"
-  }
+  },
+  "homepage": "https://osiastedian.github.io/syshub"
 }
