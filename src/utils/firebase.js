@@ -256,7 +256,7 @@ class Firebase {
   generateLinkVerification = async () => {
     await this.auth.currentUser.sendEmailVerification(
       {
-        url: 'https://syshub-dev.web.app/',
+        url: window.location.origin,
         handleCodeInApp: true
       }).catch(err => {
       throw err

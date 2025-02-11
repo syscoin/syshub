@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "^12.16.x",
+    "node": "^14.21.3",
     "npm": "6.x"
   },
   "dependencies": {
@@ -31,7 +31,6 @@
     "i18next-http-backend": "^1.0.21",
     "int64-buffer": "^0.99.1007",
     "jwt-decode": "^3.0.0",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
@@ -90,6 +89,5 @@
     "better-docs": "^2.3.2",
     "jsdoc": "^3.6.6",
     "react-test-render": "^1.1.2"
-  },
-  "homepage": "https://osiastedian.github.io/syshub"
+  }
 }
