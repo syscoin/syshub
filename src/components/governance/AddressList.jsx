@@ -4,7 +4,8 @@ import swal from 'sweetalert2'
 
 import {useUser} from "../../context/user-context";
 import {getUserVotingAddress, get2faInfoUser} from "../../utils/request";
-import signVote from "../../utils/sign-vote";
+// TODO: Move to api
+// import signVote from "../../utils/sign-vote";
 import {voteProposal} from "../../utils/request";
 import AddressItem from "./AddressItem";
 
@@ -159,7 +160,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-      const voteData = signVote(proposalVoteNo)
+      const voteData = {} // Send to api: signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
           addressVoted.push({

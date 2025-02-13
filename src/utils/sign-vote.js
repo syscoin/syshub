@@ -1,8 +1,13 @@
-import {crypto, ECPair,networks} from 'bitcoinjs-lib'
-import {Buffer} from 'buffer'
-import {Int64LE} from 'int64-buffer'
-import secp256k1 from 'secp256k1'
-import {swapEndiannessInPlace, swapEndianness} from './buffer-math'
+import { crypto, networks } from "bitcoinjs-lib";
+import { ECPairFactory } from "ecpair";
+import { Buffer } from "buffer";
+import { Int64LE } from "int64-buffer";
+import secp256k1 from "secp256k1";
+import { swapEndiannessInPlace, swapEndianness } from "./buffer-math";
+import * as nobleSecp from "@noble/secp256k1";
+
+const ECPair = ECPairFactory(nobleSecp);
+
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
  * @function
@@ -12,16 +17,19 @@ import {swapEndiannessInPlace, swapEndianness} from './buffer-math'
 const signVote = (obj) => {
   // eslint-disable-next-line
   try {
-    const {mnPrivateKey, vinMasternode, gObjectHash, voteOutcome} = obj
-    const network= process.env.REACT_APP_CHAIN_NETWORK !== 'main'? networks.testnet:networks.bitcoin;
+    const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome } = obj;
+    const network =
+      process.env.REACT_APP_CHAIN_NETWORK !== "main"
+        ? networks.testnet
+        : networks.bitcoin;
     const time = Math.floor(Date.now() / 1000);
-    const gObjectHashBuffer = Buffer.from(gObjectHash, 'hex');
+    const gObjectHashBuffer = Buffer.from(gObjectHash, "hex");
     const voteSignalNum = 1; // 'funding'
     const voteOutcomeNum = voteOutcome; // 1 for yes. 2 for no. 0 for abstain
 
-    const masterNodeTx = vinMasternode.split('-');
+    const masterNodeTx = vinMasternode.split("-");
 
-    const vinMasternodeBuffer = Buffer.from(masterNodeTx[0], 'hex');
+    const vinMasternodeBuffer = Buffer.from(masterNodeTx[0], "hex");
     swapEndiannessInPlace(vinMasternodeBuffer);
     const vinMasternodeIndexBuffer = Buffer.allocUnsafe(4);
     const outputIndex = parseInt(masterNodeTx[1]);
@@ -38,44 +46,44 @@ const signVote = (obj) => {
       gObjectHashBufferLE,
       voteOutcomeBuffer,
       voteSignalBuffer,
-      timeBuffer
+      timeBuffer,
     ]);
 
     const hash = crypto.hash256(message);
-    const keyPair = ECPair.fromWIF(`${mnPrivateKey}`,network)
+    const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
     const sigObj = secp256k1.sign(hash, keyPair.privateKey);
     const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
     const recIdBuffer = Buffer.allocUnsafe(1);
     recIdBuffer.writeInt8(recId);
     const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
-    const signature = rawSignature.toString('base64');
+    const signature = rawSignature.toString("base64");
 
     let vote;
     let signal;
 
     // Note: RPC command uses english, signed vote message uses numbers
-    if (voteSignalNum === 0) signal = 'none';
-    if (voteSignalNum === 1) signal = 'funding'; // -- fund this object for it's stated amount
-    if (voteSignalNum === 2) signal = 'valid'; //   -- this object checks out in sentinel engine
-    if (voteSignalNum === 3) signal = 'delete'; //  -- this object should be deleted from memory entirely
-    if (voteSignalNum === 4) signal = 'endorsed'; //   -- officially endorsed by the network somehow (delegation)
+    if (voteSignalNum === 0) signal = "none";
+    if (voteSignalNum === 1) signal = "funding"; // -- fund this object for it's stated amount
+    if (voteSignalNum === 2) signal = "valid"; //   -- this object checks out in sentinel engine
+    if (voteSignalNum === 3) signal = "delete"; //  -- this object should be deleted from memory entirely
+    if (voteSignalNum === 4) signal = "endorsed"; //   -- officially endorsed by the network somehow (delegation)
 
-    if (voteOutcomeNum === 0) vote = 'none';
-    if (voteOutcomeNum === 1) vote = 'yes';
-    if (voteOutcomeNum === 2) vote = 'no';
-    if (voteOutcomeNum === 3) vote = 'abstain';
+    if (voteOutcomeNum === 0) vote = "none";
+    if (voteOutcomeNum === 1) vote = "yes";
+    if (voteOutcomeNum === 2) vote = "no";
+    if (voteOutcomeNum === 3) vote = "abstain";
     return {
       txHash: masterNodeTx[0],
       txIndex: masterNodeTx[1],
-      governanceHash: gObjectHashBuffer.toString('hex'),
+      governanceHash: gObjectHashBuffer.toString("hex"),
       signal,
       vote,
       time,
-      signature
-    }
+      signature,
+    };
   } catch (err) {
-    return err.message
+    return err.message;
   }
-}
+};
 
 export default signVote;
