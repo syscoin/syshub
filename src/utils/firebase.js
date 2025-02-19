@@ -322,13 +322,12 @@ class Firebase {
    * @name refreshInRequest
    */
   refreshInRequest = async () => {
-    const token = getUserData();
-    if (!token) {
+    const userData = getUserData();
+    if (!userData) {
       return null;
     } else {
-      const decoded = jwtDecode(token.decryptedToken);
       const dateNow = new Date().getTime();
-      if (Math.floor(dateNow / 1000) > decoded.exp) {
+      if (dateNow > userData.stsTokenManager.expirationTime) {
         const newTokenRefreshed = await this.refreshToken().catch((err) => {
           throw err;
         });

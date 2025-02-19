@@ -28,7 +28,7 @@ function UserInfo() {
    */
   const loadUserInfo = useCallback(async () => {
     try {
-      const response = await getUserInfo(user.data.user_id, cancelSource.token);
+      const response = await getUserInfo(user.data.uid, cancelSource.token);
       if (response.data) {
         await setUserInfo(response.data.user);
       }
