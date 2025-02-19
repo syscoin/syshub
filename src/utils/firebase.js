@@ -20,7 +20,7 @@ import {
   updatePhoneNumber,
 } from "firebase/auth";
 import jwtDecode from "jwt-decode";
-import { getToken, setToken } from "./auth-token";
+import { getUserData, saveUserData } from "./auth-token";
 import { getUserVotingAddress, updateVotingAddress } from "./request";
 import { createSeed } from "./encryption";
 import axios from "axios";
@@ -322,7 +322,7 @@ class Firebase {
    * @name refreshInRequest
    */
   refreshInRequest = async () => {
-    const token = getToken();
+    const token = getUserData();
     if (!token) {
       return null;
     } else {
@@ -332,7 +332,7 @@ class Firebase {
         const newTokenRefreshed = await this.refreshToken().catch((err) => {
           throw err;
         });
-        setToken(newTokenRefreshed);
+        saveUserData(newTokenRefreshed);
       }
     }
   };

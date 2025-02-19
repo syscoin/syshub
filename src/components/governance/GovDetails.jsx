@@ -77,27 +77,27 @@ class Govdetails extends Component {
                             <div className="ministats mndata-governance">
                                 <div className="stat">
                                     {this.state.superBlockData.sb1}
-                                    <div className="stat-data">{this.state.superBlockData.sb1Budget} SYS</div>
+                                    <div className="stat-data">{this.state.superBlockData.sb1Budget.result} SYS</div>
                                     <div className="stat-data">{this.state.superBlockData.sb1Date}</div>
                                 </div>
                                 <div className="stat">
                                     {this.state.superBlockData.sb2}
-                                    <div className="stat-data">{this.state.superBlockData.sb2Budget} SYS</div>
+                                    <div className="stat-data">{this.state.superBlockData.sb2Budget.result} SYS</div>
                                     <div className="stat-data">{this.state.superBlockData.sb2Date}</div>
                                 </div>
                                 <div className="stat">
                                     {this.state.superBlockData.sb3}
-                                    <div className="stat-data">{this.state.superBlockData.sb3Budget} SYS</div>
+                                    <div className="stat-data">{this.state.superBlockData.sb3Budget.result} SYS</div>
                                     <div className="stat-data">{this.state.superBlockData.sb3Date}</div>
                                 </div>
                                 <div className="stat">
                                     {this.state.superBlockData.sb4}
-                                    <div className="stat-data">{this.state.superBlockData.sb4Budget} SYS</div>
+                                    <div className="stat-data">{this.state.superBlockData.sb4Budget.result} SYS</div>
                                     <div className="stat-data">{this.state.superBlockData.sb4Date}</div>
                                 </div>
                                 <div className="stat">
                                     {this.state.superBlockData.sb5}
-                                    <div className="stat-data">{this.state.superBlockData.sb5Budget} SYS</div>
+                                    <div className="stat-data">{this.state.superBlockData.sb5Budget.result} SYS</div>
                                     <div className="stat-data">{this.state.superBlockData.sb5Date}</div>
                                 </div>
                             </div>

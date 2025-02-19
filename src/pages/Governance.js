@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import axios from "axios";
 
-import {withTranslation} from "react-i18next";
-import MetaTags from 'react-meta-tags';
+import { withTranslation } from "react-i18next";
+import MetaTags from "react-meta-tags";
 
-import Background from '../components/global/Background';
-import BackgroundInner from '../components/global/BackgroundInner';
-import BannerImage from '../components/global/BannerImage';
-import GovDetails from '../components/governance/GovDetails';
-import ProposalsList from '../components/governance/ProposalsList';
+import Background from "../components/global/Background";
+import BackgroundInner from "../components/global/BackgroundInner";
+import BannerImage from "../components/global/BannerImage";
+import GovDetails from "../components/governance/GovDetails";
+import ProposalsList from "../components/governance/ProposalsList";
 
 const API_URI = process.env.REACT_APP_SYS_API_URI;
 
@@ -29,8 +29,8 @@ class Governance extends Component {
       dataLoad: 0,
       statsData: [],
       govData: [],
-      budgetSum: 0
-    }
+      budgetSum: 0,
+    };
   }
 
   /**
@@ -48,7 +48,7 @@ class Governance extends Component {
    */
   componentWillUnmount() {
     this._isMounted = false;
-    this.source.cancel('Request has been canceled');
+    this.source.cancel("Request has been canceled");
   }
 
   /**
@@ -70,9 +70,9 @@ class Governance extends Component {
     let data = await axios
       .get(`${API_URI}/statsInfo/mnStats`, {
         headers: {
-          'appclient': process.env.REACT_APP_CLIENT
+          appclient: process.env.REACT_APP_CLIENT,
         },
-        cancelToken: this.source.token
+        cancelToken: this.source.token,
       })
       .then(function (result) {
         return result;
@@ -89,12 +89,13 @@ class Governance extends Component {
     //     // console.log(err);
     // });
 
-    let govres = await axios.get(`${API_URI}/statsInfo/list`, {
-      headers: {
-        'appclient': process.env.REACT_APP_CLIENT
-      },
-      cancelToken: this.source.token
-    })
+    let govres = await axios
+      .get(`${API_URI}/statsInfo/list`, {
+        headers: {
+          appclient: process.env.REACT_APP_CLIENT,
+        },
+        cancelToken: this.source.token,
+      })
       .then((res) => {
         return res;
       })
@@ -102,7 +103,7 @@ class Governance extends Component {
         // console.log(err);
       });
 
-    if ((typeof data) !== 'undefined' && (typeof govres) !== 'undefined') {
+    if (typeof data !== "undefined" && typeof govres !== "undefined") {
       let stats_response;
       stats_response = data.data;
 
@@ -126,84 +127,71 @@ class Governance extends Component {
           statsData: stats_response,
           govData: govdata,
           budgetSum: budgetSum,
-          dataLoad: 1
+          dataLoad: 1,
         });
       }
     } else {
       if (this._isMounted) {
         this.setState({
-          dataLoad: 2
+          dataLoad: 2,
         });
       }
     }
-
   }
 
   render() {
-    const {t} = this.props;
-    if (this.state.dataLoad === 1) {
+    const { t } = this.props;
+    const isDataLoaded = this.state.dataLoad === 1;
 
-      return (
-        <Background>
-          <BackgroundInner/>
-          <main className="section govPage">
-            <MetaTags>
-              <title>{t('governance.title')}</title>
-              <meta name="keywords" content={t('governance.keywords')}/>
-              {/* <meta name="description" content={t('governance.description')} /> */}
-            </MetaTags>
-            <div className="shell-large">
-              <div className="section__body">
-                <div className="articles">
-                  <BannerImage heading={t('governance.heading')} direction="top-right">
-                    <p>{t('governance.par1')}</p>
-                    <p>{t('governance.par2')}</p>
-                  </BannerImage>
-
-                  <section className="article article--revirse article--offsets-bottom">
-                    <div className="cols">
-                      <div className="col col--size12">
-                        <div className="article__content">
-                          <ProposalsList statsData={this.state.statsData.stats.mn_stats}/>
+    return (
+      <Background>
+        <BackgroundInner />
+        <main className="section govPage">
+          <MetaTags>
+            <title>{t("governance.title")}</title>
+            <meta name="keywords" content={t("governance.keywords")} />
+            <meta name="description" content={t("governance.description")} />
+          </MetaTags>
+          <div className="shell-large">
+            <div className="section__body">
+              <div className="articles">
+                <BannerImage
+                  heading={t("governance.heading")}
+                  direction="top-right"
+                >
+                  <p>{t("governance.par1")}</p>
+                  <p>{t("governance.par2")}</p>
+                </BannerImage>
+                {isDataLoaded && (
+                  <>
+                    <section className="article article--revirse article--offsets-bottom">
+                      <div className="cols">
+                        <div className="col col--size12">
+                          <div className="article__content">
+                            <ProposalsList
+                              statsData={this.state.statsData.stats.mn_stats}
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </section>
+                    </section>
 
-                  <section className="article">
-                    <GovDetails budgetSum={this.state.budgetSum}
-                                superBlockData={this.state.statsData.stats.superblock_stats}/>
-                  </section>
-                </div>
+                    <section className="article">
+                      <GovDetails
+                        budgetSum={this.state.budgetSum}
+                        superBlockData={
+                          this.state.statsData?.stats?.superblock_stats ?? {}
+                        }
+                      />
+                    </section>
+                  </>
+                )}
               </div>
             </div>
-          </main>
-        </Background>
-      )
-    } else {
-      return (
-        <Background>
-          <BackgroundInner/>
-          <main className="section govPage">
-            <MetaTags>
-              <title>{t('governance.title')}</title>
-              <meta name="keywords" content={t('governance.keywords')}/>
-              <meta name="description" content={t('governance.description')}/>
-            </MetaTags>
-            <div className="shell-large">
-              <div className="section__body">
-                <div className="articles">
-                  <BannerImage heading={t('governance.heading')} direction="top-right">
-                    <p>{t('governance.par1')}</p>
-                    <p>{t('governance.par2')}</p>
-                  </BannerImage>
-                </div>
-              </div>
-            </div>
-          </main>
-        </Background>
-      )
-    }
+          </div>
+        </main>
+      </Background>
+    );
   }
 }
 

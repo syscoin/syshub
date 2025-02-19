@@ -65,7 +65,7 @@ function ProposalCardInfo({
           <div
     className="description-proposal"
     dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(unescape(proposal.description)),
+        __html: DOMPurify.sanitize(unescape(proposal.description ?? '')),
     }}
     />
         </>
