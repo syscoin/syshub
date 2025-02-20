@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import swal from "sweetalert2";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useForm } from "react-hook-form";
@@ -19,14 +19,14 @@ const schema = yup.object().shape({
     .required("The verification code is required")
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(6, "Must be 6 digits")
-    .max(6, "Must be 6 digits")
+    .max(6, "Must be 6 digits"),
 });
 
 /**
  * Component to show inside 2fa modal to activate gauth
  * @component
  * @subcategory Profile
- * @param {*} onClose function to close after the verification 
+ * @param {*} onClose function to close after the verification
  * @example
  * const onClose = () => {}
  * return (
@@ -34,10 +34,10 @@ const schema = yup.object().shape({
  * )
  */
 function GAuthForm({ onClose }) {
-  const {firebase, user, updateCurrentActionsUser} = useUser();
+  const { firebase, user, updateCurrentActionsUser } = useUser();
   const [QRCode, setQRCode] = useState(null);
 
-  const {register, handleSubmit, errors} = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
@@ -47,17 +47,21 @@ function GAuthForm({ onClose }) {
    * @function
    */
   useEffect(() => {
-    const {secret, gAuthSecret, qrCodeURL} = getAuthQrCode(user.data.email);
-    setQRCode({secret, gAuthSecret, qrCodeURL});
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
-      size: "invisible",
-      callback: (resp) => {
-        // console.log(resp);
-      },
-      error: (err) => {
-        // console.log(err);
-      },
-    });
+    const { secret, gAuthSecret, qrCodeURL } = getAuthQrCode(user.data.email);
+    console.log({ secret, gAuthSecret, qrCodeURL });
+    setQRCode({ secret, gAuthSecret, qrCodeURL });
+    window.recaptchaVerifier = firebase.newRecaptchaVerifier(
+      "recaptcha-gauth",
+      {
+        size: "invisible",
+        callback: (resp) => {
+          // console.log(resp);
+        },
+        error: (err) => {
+          // console.log(err);
+        },
+      }
+    );
     window.recaptchaVerifier.render();
     // eslint-disable-next-line
   }, []);
@@ -67,43 +71,46 @@ function GAuthForm({ onClose }) {
    * @function
    * @param {{verificationCode: string}} verificationCode code from the input to verificate google authenticator
    */
-  const verifyCode = async ({verificationCode,verificationPassword}) => {
-    console.log(verificationPassword)
+  const verifyCode = async ({ verificationCode, verificationPassword }) => {
+    console.log(verificationPassword);
     swal.fire({
-      title: 'Verifying',
+      title: "Verifying",
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
-      }
+        swal.showLoading();
+      },
     });
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
       let gAuthSecretEncrypt = encryptJWT(QRCode.secret);
       let changeUserData = {
-        pwd:verificationPassword,
+        pwd: verificationPassword,
         gAuth: true,
         gAuthSecret: gAuthSecretEncrypt,
         twoFa: true,
-        sms: false
+        sms: false,
       };
-      await updateCurrentActionsUser(changeUserData).then(async () => {
-        await swal.fire({
-          icon: "success",
-          title: "Google Authenticator it's activated",
-          text: "Please log in again",
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => {
-          onClose()
+      await updateCurrentActionsUser(changeUserData)
+        .then(async () => {
+          await swal
+            .fire({
+              icon: "success",
+              title: "Google Authenticator it's activated",
+              text: "Please log in again",
+              timer: 1500,
+              showConfirmButton: false,
+            })
+            .then(() => {
+              onClose();
+            });
         })
-      }).catch((err) => {
-        swal.fire({
-          icon: "error",
-          title: "There was an error",
-          text: err.message
+        .catch((err) => {
+          swal.fire({
+            icon: "error",
+            title: "There was an error",
+            text: err.message,
+          });
         });
-      });
-
     } else {
       swal.fire({
         icon: "error",
@@ -120,7 +127,7 @@ function GAuthForm({ onClose }) {
     swal.fire({
       icon: "success",
       title: "Copied",
-      text: "your secret code was succesfully copied",
+      text: "your secret code was successfully copied",
       timer: 2000,
       showConfirmButton: false,
     });
@@ -129,7 +136,7 @@ function GAuthForm({ onClose }) {
   return (
     <>
       <h3>Google Authenticator</h3>
-      <div id="recaptcha" style={{display: "inline-block"}}/>
+      <div id="recaptcha-gauth" style={{ display: "inline-block" }} />
       {QRCode && (
         <>
           <div className="article">
@@ -137,12 +144,12 @@ function GAuthForm({ onClose }) {
               <div className="form-group col col--size6">
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <img src={QRCode.qrCodeURL} alt="QR Code"/>
+                  <img src={QRCode.qrCodeURL} alt="QR Code" />
                 </div>
               </div>
               <div className="col col--size6">
@@ -199,36 +206,36 @@ function GAuthForm({ onClose }) {
                         name="verificationCode"
                         type="text"
                         id="verificationCode"
-                        placeholder={'Verification code'}
+                        placeholder={"Verification code"}
                         ref={register}
                       />
                       <ErrorMessage
                         errors={errors}
                         name="verificationCode"
-                        render={({message}) => (
+                        render={({ message }) => (
                           <small>
-                            <p style={{lineHeight: "1.5"}}>{message}</p>
+                            <p style={{ lineHeight: "1.5" }}>{message}</p>
                           </small>
                         )}
                       />
                     </div>
                     <div className="form-group">
                       <input
-                          className="styled"
-                          name="verificationPassword"
-                          type="password"
-                          id="verificationPassword"
-                          placeholder={'Paswword'}
-                          ref={register}
+                        className="styled"
+                        name="verificationPassword"
+                        type="password"
+                        id="verificationPassword"
+                        placeholder="Password"
+                        ref={register}
                       />
                       <ErrorMessage
-                          errors={errors}
-                          name="verificationPassword"
-                          render={({message}) => (
-                              <small>
-                                <p style={{lineHeight: "1.5"}}>{message}</p>
-                              </small>
-                          )}
+                        errors={errors}
+                        name="verificationPassword"
+                        render={({ message }) => (
+                          <small>
+                            <p style={{ lineHeight: "1.5" }}>{message}</p>
+                          </small>
+                        )}
                       />
                     </div>
                     <div className="text-center">

@@ -149,12 +149,10 @@ export function UserProvider(props) {
    * @function
    * @param {*} ya token of the user
    */
-  const setUserDataLogin = ({ ya }) => {
+  const setUserDataLogin = (user) => {
     try {
-      const decoded = jwtDecode(ya);
-      saveUserData(ya);
-      setUser({ data: decoded, token: getUserData().token });
-
+      saveUserData(user);
+      setUser({ data: user, token: user.accessToken });
       return { message: "Ok" };
     } catch (err) {
       new Error(err);

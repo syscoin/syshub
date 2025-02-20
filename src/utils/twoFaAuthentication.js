@@ -12,13 +12,18 @@ import qrCode from "qrcode";
 export const getAuthQrCode = (email) => {
   const secretObj = speakeasy.generateSecret();
   const secret = secretObj.base32;
-  let qrCodeURL;
-  let url = speakeasy.otpauthURL({
-    algorithm: "sha256",
-    issuer: "Syshub",
-    secret: secret,
+
+  const otpAuthUrl = speakeasy.otpauthURL({
     label: email,
+    secret: secret,
+    issuer: "Syshub",
+    // No support yet for SHA256 for Google Authenticator
+    // https://github.com/google/google-authenticator-libpam/issues/11
+    algorithm: "sha1",
   });
+
+  let qrCodeURL;
+  let url = otpAuthUrl;
   const gAuthSecret = url.split("secret=")[1].split("&issuer=")[0];
   qrCode.toDataURL(url, (err, data_url) => (qrCodeURL = data_url));
   return { secret, gAuthSecret, qrCodeURL };
@@ -39,7 +44,7 @@ export const generateToken = (secret) =>
  * @param {string} token the token used to verify
  */
 export const verifyAuthCode = (secret, token) =>
-  speakeasy.totp.verify({ secret: secret, token });
+  speakeasy.totp.verify({ secret, token });
 
 // export const verifyAuthCode = (secret, token) => {
 //
