@@ -13,8 +13,7 @@ import { get2faInfoUser, verifyGauthCode } from "../utils/request";
 import CustomModal from "../components/global/CustomModal";
 import SMSTwoFAFormLogin from "../components/login/SMSTwoFAFormLogin";
 import GAuthTwoFAFormLogin from "../components/login/GAuthTwoFAFormLogin";
-import { createSeed, decryptJWT, removeSeed } from "../utils/encryption";
-import { verifyAuthCode } from "../utils/twoFaAuthentication";
+import { createSeed, removeSeed } from "../utils/encryption";
 import swal from "sweetalert2";
 import { deleteUserData } from "../utils/auth-token";
 
