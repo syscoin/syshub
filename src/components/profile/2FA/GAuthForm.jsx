@@ -48,7 +48,6 @@ function GAuthForm({ onClose }) {
    */
   useEffect(() => {
     const { secret, gAuthSecret, qrCodeURL } = getAuthQrCode(user.data.email);
-    console.log({ secret, gAuthSecret, qrCodeURL });
     setQRCode({ secret, gAuthSecret, qrCodeURL });
     window.recaptchaVerifier = firebase.newRecaptchaVerifier(
       "recaptcha-gauth",
@@ -82,11 +81,10 @@ function GAuthForm({ onClose }) {
     });
     let gAuthVerifyCode = verifyAuthCode(QRCode.secret, verificationCode);
     if (gAuthVerifyCode) {
-      let gAuthSecretEncrypt = encryptJWT(QRCode.secret);
       let changeUserData = {
         pwd: verificationPassword,
         gAuth: true,
-        gAuthSecret: gAuthSecretEncrypt,
+        gAuthSecret: QRCode.secret,
         twoFa: true,
         sms: false,
       };

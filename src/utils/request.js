@@ -1019,14 +1019,32 @@ export const deleteHiddenProposal = async (hash) => {
   });
 };
 
-export const logout = async (uid) => {
+export const logout = async () => {
   await firebase.refreshInRequest();
-  let { accessToken } = getUserData();
+  let { accessToken, uid } = getUserData();
   return new Promise((resolve, reject) => {
     axios
       .post(
         `${API_URI}/user/revoke/${uid}`,
-        { accessToken },
+        { token: accessToken },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((resp) => resolve(resp))
+      .catch((err) => reject(err));
+  });
+};
+
+export const verifyGauthCode = async (code) => {
+  let { accessToken } = getUserData();
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        `${API_URI}/user/verify-gauth-code`,
+        { code },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

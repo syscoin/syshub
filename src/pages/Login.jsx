@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {MetaTags} from "react-meta-tags";
-import {withTranslation} from "react-i18next";
+import React, { useEffect, useState } from "react";
+import { MetaTags } from "react-meta-tags";
+import { withTranslation } from "react-i18next";
 
-import {useUser} from '../context/user-context';
+import { useUser } from "../context/user-context";
 
 import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import Title from "../components/global/Title";
 import LoginForm from "../components/login/LoginForm";
-import {Link, useHistory} from "react-router-dom";
-import {get2faInfoUser} from "../utils/request";
+import { Link, useHistory } from "react-router-dom";
+import { get2faInfoUser, verifyGauthCode } from "../utils/request";
 import CustomModal from "../components/global/CustomModal";
 import SMSTwoFAFormLogin from "../components/login/SMSTwoFAFormLogin";
 import GAuthTwoFAFormLogin from "../components/login/GAuthTwoFAFormLogin";
-import {createSeed, decryptJWT, removeSeed} from "../utils/encryption";
-import {verifyAuthCode} from "../utils/twoFaAuthentication";
+import { createSeed, decryptJWT, removeSeed } from "../utils/encryption";
+import { verifyAuthCode } from "../utils/twoFaAuthentication";
 import swal from "sweetalert2";
-import {deleteUserData} from "../utils/auth-token";
+import { deleteUserData } from "../utils/auth-token";
 
 /**
  * Login page showed at /login
@@ -38,29 +38,32 @@ function Login({ t }) {
       setSubmitting(false);
       setOpenGAuth2Fa(false);
       setOpenSMS2Fa(false);
-    }
-  }, [])
+    };
+  }, []);
 
   /**
-   * Function that verifies the user2fa and proceeds to open the 2faModal; in case 2fa isn't active, it signs in the user 
+   * Function that verifies the user2fa and proceeds to open the 2faModal; in case 2fa isn't active, it signs in the user
    * @param {{email:string, password: string}} loginData Login data received from LoginForm it has email and password
    */
   const loginToApp = async (loginData) => {
     swal.fire({
-      title: 'Submitting',
+      title: "Submitting",
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
-      }
+        swal.showLoading();
+      },
     });
     setSubmitting(true);
     try {
       let user = await loginUser(loginData);
-      createSeed(loginData.password)
+      createSeed(loginData.password);
       let user2fa = await get2faInfoUser(user.uid);
       if (user2fa.twoFa === true && user2fa.sms === true) {
         swal.close();
-        let phoneProvider = await loginWithPhoneNumber(user.phoneNumber, window.recaptchaVerifier);
+        let phoneProvider = await loginWithPhoneNumber(
+          user.phoneNumber,
+          window.recaptchaVerifier
+        );
         setUserSignInSms(phoneProvider);
         setOpenSMS2Fa(true);
         setSubmitting(false);
@@ -74,74 +77,72 @@ function Login({ t }) {
           icon: "success",
           title: "Logged in",
           timer: 2000,
-          showConfirmButton: false
+          showConfirmButton: false,
         });
-        setUserDataLogin(user)
-        history.push('/governance');
+        setUserDataLogin(user);
+        history.push("/governance");
       }
     } catch (error) {
-      deleteUserData()
+      deleteUserData();
       swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message
+        text: error.message,
       });
       removeSeed();
       return setSubmitting(false);
     }
-  }
+  };
 
   /**
-   * Function that verifies the GAuth verification code and proceeds to login 
+   * Function that verifies the GAuth verification code and proceeds to login
    * @param {string} gAuthCode gAuthcode submitted by the user in the 2fa modal
    */
   const verifyGAuth = async ({ gAuthCode }) => {
     swal.fire({
-      title: 'Verifying',
+      title: "Verifying",
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
-      }
-    })
-    let secret = decryptJWT(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let h = decryptJWT(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let isVerified = verifyAuthCode(h, gAuthCode);
+        swal.showLoading();
+      },
+    });
 
-    if (isVerified) {
-      setOpenGAuth2Fa(false);
-      await swal.fire({
-        icon: "success",
-        title: "Logged in",
-        text: "Code verified",
-        timer: 2000,
-        showConfirmButton: false
+    verifyGauthCode(gAuthCode)
+      .then(() => {
+        setOpenGAuth2Fa(false);
+        swal.fire({
+          icon: "success",
+          title: "Logged in",
+          text: "Code verified",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        setUserDataLogin(userSignInGAuth);
+        history.push("/governance");
+      })
+      .catch((err) => {
+        swal.fire({
+          icon: "error",
+          title: "Invalid code",
+        });
       });
-
-      setUserDataLogin(userSignInGAuth);
-      history.push('/governance');
-    } else {
-      swal.fire({
-        icon: "error",
-        title: "Invalid code"
-      });
-    }
-  }
+  };
 
   /**
-   * Function that verifies the SMS verification code and proceeds to login 
+   * Function that verifies the SMS verification code and proceeds to login
    * @param {string} phoneCode phoneCode submitted by the user in the 2fa modal
    */
   const verifyPhone = async ({ phoneCode }) => {
     swal.fire({
-      title: 'Verifying',
+      title: "Verifying",
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
-      }
-    })
+        swal.showLoading();
+      },
+    });
     try {
-      let { user } = await userSignInSms.confirm(phoneCode).catch(err => {
-        throw err
+      let { user } = await userSignInSms.confirm(phoneCode).catch((err) => {
+        throw err;
       });
       setOpenSMS2Fa(false);
       await swal.fire({
@@ -149,27 +150,26 @@ function Login({ t }) {
         title: "Logged in",
         text: "Code verified",
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
       setUserDataLogin(user);
-      history.push('/governance');
-      
+      history.push("/governance");
     } catch (error) {
       swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message
+        text: error.message,
       });
     }
-  }
-  
+  };
+
   return (
     <Background>
-      <BackgroundInner/>
+      <BackgroundInner />
       <main className="section loginPage">
         <MetaTags>
           <title> {t("login.meta.title")} </title>
-          <meta name="keywords" content={t("login.meta.keywords")}/>
+          <meta name="keywords" content={t("login.meta.keywords")} />
           {/* <meta name="description" content={t("login.meta.description")}/> */}
         </MetaTags>
         <div className="shell-large">
@@ -179,11 +179,11 @@ function Login({ t }) {
                 <div className="cols">
                   <div className="col col--size-12">
                     <div className="article__content article__content--pull-left text-center">
-                      <Title heading={t("login.data.heading")}/>
+                      <Title heading={t("login.data.heading")} />
 
-                      <LoginForm onLogin={loginToApp} submitting={submitting}/>
+                      <LoginForm onLogin={loginToApp} submitting={submitting} />
                       <div className="input-cont">
-                        <Link to="/recover">Forgot your password?</Link> <br/>
+                        <Link to="/recover">Forgot your password?</Link> <br />
                         <Link to="/signup">Don't have an account?</Link>
                       </div>
                     </div>
@@ -194,14 +194,13 @@ function Login({ t }) {
           </div>
         </div>
       </main>
-      <CustomModal
-        open={openSMS2Fa}
-        onClose={() => setOpenSMS2Fa(false)}>
-        <SMSTwoFAFormLogin userSignInSms={verifyPhone} closeModal={() => setOpenSMS2Fa(false)} />
+      <CustomModal open={openSMS2Fa} onClose={() => setOpenSMS2Fa(false)}>
+        <SMSTwoFAFormLogin
+          userSignInSms={verifyPhone}
+          closeModal={() => setOpenSMS2Fa(false)}
+        />
       </CustomModal>
-      <CustomModal
-        open={openGAuthFa}
-        onClose={() => setOpenGAuth2Fa(false)}>
+      <CustomModal open={openGAuthFa} onClose={() => setOpenGAuth2Fa(false)}>
         <GAuthTwoFAFormLogin userSignInGAuth={verifyGAuth} />
       </CustomModal>
     </Background>

@@ -177,7 +177,7 @@ export function UserProvider(props) {
    * @function
    */
   async function logoutUser() {
-    await logout(user.data.user_id);
+    await logout();
     setUser(null);
     await history.go("/login");
     removeSeed();
@@ -225,7 +225,7 @@ export function UserProvider(props) {
   const updateCurrentActionsUser = async (data, params) => {
     try {
       return await updateActionsUser(
-        user.data.user_id,
+        user.data.uid,
         { data: data },
         params
       ).catch((err) => {
