@@ -12,6 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
       - name: Checkout code
@@ -27,9 +28,15 @@ jobs:
 
       - name: Build the React app
         env:
-          REACT_APP_FIREBASE_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_DOMAIN }}
+          PUBLIC_URL: ${{ vars.PUBLIC_URL }}
+          REACT_APP_SYS_API_URI: ${{ vars.REACT_APP_SYS_API_URI }}
+          REACT_APP_CLIENT: ${{ vars.REACT_APP_CLIENT}}
+          REACT_APP_ENCRYPT_KEY_DATA: ${{ secrets.REACT_APP_ENCRYPT_KEY_DATA }}
           REACT_APP_FIREBASE_KEY: ${{ secrets.REACT_APP_FIREBASE_KEY }}
           REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
+          REACT_APP_FIREBASE_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_DOMAIN }}
+          REACT_APP_FIREBASE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}
+          REACT_APP_CHAIN_NETWORK: ${{ secrets.REACT_APP_CHAIN_NETWORK }}
         run: npm run build
 
       - name: Set up Docker Buildx
