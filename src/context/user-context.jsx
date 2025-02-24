@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
-import jwtDecode from "jwt-decode";
 
 import { getUserData, saveUserData, deleteUserData } from "../utils/auth-token";
 import Firebase from "../utils/firebase";

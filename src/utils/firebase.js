@@ -19,7 +19,7 @@ import {
   updatePassword,
   updatePhoneNumber,
 } from "firebase/auth";
-import jwtDecode from "jwt-decode";
+
 import { getUserData, saveUserData } from "./auth-token";
 import { getUserVotingAddress, updateVotingAddress } from "./request";
 import { createSeed } from "./encryption";

@@ -160,7 +160,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-      const voteData = {} // Send to api: signVote(proposalVoteNo)
+      const voteData = { proposalVoteNo } // Send to api: signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
           addressVoted.push({

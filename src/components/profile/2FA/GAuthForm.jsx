@@ -11,7 +11,6 @@ import {
   verifyAuthCode,
 } from "../../../utils/twoFaAuthentication";
 import { useUser } from "../../../context/user-context";
-import { encryptJWT } from "../../../utils/encryption";
 
 const schema = yup.object().shape({
   verificationCode: yup
