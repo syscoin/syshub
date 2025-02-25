@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from "react-i18next";
 
-var publicurl=process.env.PUBLIC_URL ?? '__PUBLIC_URL__';
 
 /**
  * Component that shows the old banner of sysnode
@@ -27,7 +26,7 @@ class Banner extends Component {
                     </div>
                     <div className="col-lg-6 col-md-12 col-sm-12 order-first mb-5 mb-lg-0">
                         <div className="banner_image_right res_md_mb_50 res_xs_mb_20 animation bounceimg text-center" data-animation-delay="1.5s" data-animation="fadeInRight">
-                            <img className="img-fluid" alt="banner_vector6" src={publicurl+'/assets/images/masternode.png'}/>
+                            <img className="img-fluid" alt="banner_vector6" src={'/assets/images/masternode.png'}/>
                         </div>
                     </div>
                 </div>

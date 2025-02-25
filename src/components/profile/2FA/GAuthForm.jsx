@@ -165,9 +165,7 @@ function GAuthForm({ onClose }) {
                     >
                       <img
                         width={113}
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/assets/images/png_icon_google.png"
+                        src={"/assets/images/png_icon_google.png"
                         }
                         alt="Google Play"
                       />
@@ -185,7 +183,6 @@ function GAuthForm({ onClose }) {
                       <img
                         width={100}
                         src={
-                          process.env.PUBLIC_URL +
                           "/assets/images/png_icon_apple.png"
                         }
                         alt="App Store"

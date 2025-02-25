@@ -6,7 +6,6 @@ import Background from "../components/global/Background";
 import BackgroundInner from "../components/global/BackgroundInner";
 import InnerBanner from "../components/global/InnerBanner";
 
-var publicurl = process.env.PUBLIC_URL;
 
 /**
  * Old About page
@@ -65,7 +64,7 @@ class About extends Component {
                                     <div className="col-lg-5 col-md-12 col-sm-12 mb-5 mb-lg-0 order-1 order-lg-2">
                                         <div className="about-img text-center text-lg-right">
                                         <img
-                                            src={publicurl + "/assets/images/header-img1.png"}
+                                            src={ "/assets/images/header-img1.png"}
                                             alt=""
                                             className="img-fluid"
                                         />
@@ -81,7 +80,7 @@ class About extends Component {
                                     <div className="col-lg-6 col-md-12 col-sm-12 mb-5 mb-lg-0">
                                         <div className="about-img text-center text-lg-right">
                                         <img
-                                            src={publicurl + "/assets/images/governance.png"}
+                                            src={ "/assets/images/governance.png"}
                                             alt=""
                                             className="img-fluid"
                                         />
@@ -114,7 +113,7 @@ class About extends Component {
                                     <div className="col-lg-6 col-md-12 col-sm-12 mb-5 mb-lg-0 order-1 order-lg-2">
                                         <div className="about-img text-center text-lg-right">
                                         <img
-                                            src={publicurl + "/assets/images/reward.png"}
+                                            src={ "/assets/images/reward.png"}
                                             alt=""
                                             className="img-fluid"
                                         />

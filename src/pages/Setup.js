@@ -7,7 +7,7 @@ import Background from '../components/global/Background';
 import BackgroundInner from '../components/global/BackgroundInner';
 import InnerBanner from '../components/global/InnerBanner';
 
-var publicurl=process.env.PUBLIC_URL;
+
 
 /**
  * Old setup page 
@@ -134,7 +134,7 @@ class Setup extends Component {
                                                                 <p>{t('setup.installation.p3.d1')}<br/>
                                                                 {t('setup.installation.p3.d2')} <code>{t('setup.installation.p3.d3')}</code>  {t('setup.installation.p3.d4')} <code>{t('setup.installation.p3.d5')}</code>.</p>
                                                                 <p>{t('setup.installation.p3.d6')}</p>
-                                                                <img src={publicurl+'/assets/images/ss.png'} alt="" className="img-fluid" />
+                                                                <img src={'/assets/images/ss.png'} alt="" className="img-fluid" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -158,7 +158,7 @@ class Setup extends Component {
                                                                     <li>{t('setup.installation.p4.d11')}<br/>
                                                                     </li>
                                                                 </ol>
-                                                                <img src={publicurl+'/assets/images/ss2.png'} alt="" className="img-fluid" />
+                                                                <img src={'/assets/images/ss2.png'} alt="" className="img-fluid" />
                                                                 <p><strong>{t('setup.installation.p4.d12')}</strong> {t('setup.installation.p4.d13')}</p>
                                                             </div>
                                                         </div>
@@ -176,7 +176,7 @@ class Setup extends Component {
                                                                     <li>{t('setup.installation.p5.d1')} <code>{t('setup.installation.p5.d2')}</code> {t('setup.installation.p5.d3')}</li>
                                                                     <li>{t('setup.installation.p5.d4')} <code>{t('setup.installation.p5.d5')}</code><br/>
                                                                     </li>
-                                                                    <div><img src={publicurl+'/assets/images/ss3.png'} alt="" className="img-fluid" /></div>
+                                                                    <div><img src={'/assets/images/ss3.png'} alt="" className="img-fluid" /></div>
                                                                     <li>{t('setup.installation.p5.d6')} <code>OK</code>.
                                                                     <ul>
                                                                     <li>{t('setup.installation.p5.d7')}</li>
@@ -184,11 +184,11 @@ class Setup extends Component {
                                                                     </li>
                                                                     <li>{t('setup.installation.p5.d8')} <code>{t('setup.installation.p5.d9')}</code> {t('setup.installation.p5.d10')}</li>
                                                                     <li>{t('setup.installation.p5.d11')} <code>{t('setup.installation.p5.d12')}</code> {t('setup.installation.p5.d13')} <code>{t('setup.installation.p5.d14')}</code> {t('setup.installation.p5.d15')} <strong>{t('setup.installation.p5.d16')}</strong> {t('setup.installation.p5.d17')}<br/>                                            </li>
-                                                                    <div><img src={publicurl+'/assets/images/ss4.png'} alt="" className="img-fluid" /></div>
+                                                                    <div><img src={'/assets/images/ss4.png'} alt="" className="img-fluid" /></div>
                                                                     <li>{t('setup.installation.p5.d18')} <code>{t('setup.installation.p5.d19')}</code>, {t('setup.installation.p5.d20')}</li>
                                                                     <li>{t('setup.installation.p5.d21')}<br/>
                                                                     </li>
-                                                                    <div><img src={publicurl+'/assets/images/ss5.png'} alt="" className="img-fluid" /></div>
+                                                                    <div><img src={'/assets/images/ss5.png'} alt="" className="img-fluid" /></div>
                                                                     <li>{t('setup.installation.p5.d22')} <code>{t('setup.installation.p5.d23')}</code>.</li>
                                                                 </ol>
                                                             </div>
@@ -205,7 +205,7 @@ class Setup extends Component {
                                                             <div className="card-body">
                                                                 <ul>
                                                                 <li>{t('setup.installation.p6.d1')} <code>{t('setup.installation.p6.d2')}</code> {t('setup.installation.p6.d3')} <code>{t('setup.installation.p6.d4')}</code>.<br/>
-                                                                    <div><img src={publicurl+'/assets/images/ss6.png'} alt="" className="img-fluid" /></div>
+                                                                    <div><img src={'/assets/images/ss6.png'} alt="" className="img-fluid" /></div>
                                                                     {t('setup.installation.p6.d5')}</li>
                                                                 </ul>
                                                             </div>

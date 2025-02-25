@@ -18,7 +18,7 @@ class Footer extends Component {
                         <div
                         className="logo"
                         style={{
-                            backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/logo.svg)`,
+                            backgroundImage: `url(/assets/images/logo.svg)`,
                         }}
                         ></div>
                     </Link>

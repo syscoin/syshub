@@ -19,7 +19,7 @@ export default function BannerImage(props) {
             <div className="cols morder">
                 <div className="col col--size6">
                     <div className={`article__image ${checkImageDirection()} hidmob`}>
-                        <img src={process.env.PUBLIC_URL+'/assets/images/masternode.png'} alt="" />
+                        <img src={'/assets/images/masternode.png'} alt="" />
                     </div>
                 </div>
 
