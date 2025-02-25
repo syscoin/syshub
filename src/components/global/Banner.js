@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from "react-i18next";
 
-var publicurl=process.env.PUBLIC_URL;
+var publicurl=process.env.PUBLIC_URL ?? '__PUBLIC_URL__';
 
 /**
  * Component that shows the old banner of sysnode
