@@ -122,7 +122,7 @@ function Header({t}) {
                 </li>
 
                 <li onClick={menuLinks}>
-                  <Link to="/masternodes">{t("header.masternodes")}</Link>
+                  <Link to="/sentrynodes">{t("header.masternodes")}</Link>
                 </li>
 
                 <li onClick={menuLinks}>

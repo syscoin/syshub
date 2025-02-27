@@ -10,11 +10,11 @@ import { MasternodeRegister } from "../components/masternodes/MasternodeRegister
 import MasternodeTable from "../components/masternodes/MasternodeTable";
 
 /**
- * Masternodes page that shows at /masternodes
+ * SentryNodes page that shows at /masternodes
  * @component
  * @category Pages
  */
-const Masternodes = ({ t }) => {
+const SentryNodes = ({ t }) => {
   let { path } = useRouteMatch();
 
   return (
@@ -56,4 +56,4 @@ const Masternodes = ({ t }) => {
   );
 };
 
-export default withTranslation()(Masternodes);
+export default withTranslation()(SentryNodes);

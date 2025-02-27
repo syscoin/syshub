@@ -1,6 +1,6 @@
 const worldMap = {
   worldMap: {
-    title: 'Masternode Locations',
+    title: 'SentryNode Locations',
     noMasternodes: 'No masternodes in',
   },
 }

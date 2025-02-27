@@ -2,8 +2,8 @@ const error = {
     error: {
       meta: {
         title: 'Page not found',
-        keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
-        description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
+        keywords: 'Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
+        description: 'Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!',
       },
       title: 'Oops! The page you are looking for cannot be found.'
     }

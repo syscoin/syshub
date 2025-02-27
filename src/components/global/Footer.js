@@ -27,7 +27,7 @@ class Footer extends Component {
                         <ul>
                         <li>
                             <a
-                                href="https://syscoin.org/masternodes"
+                                href="https://sysnode.info/about"
                                 rel="noopener noreferrer"
                                 target="_blank"
                             >About</a>
@@ -50,7 +50,7 @@ class Footer extends Component {
                         </li>
 
                         <li>
-                            <Link to="/masternodes">Masternodes</Link>
+                            <Link to="/sentrynodes">SentryNodes</Link>
                         </li>
 
                         <li>
@@ -106,7 +106,7 @@ class Footer extends Component {
                             <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://discord.gg/RkK2AXD"
+                            href="https://discord.com/invite/syscoin"
                             >
                             <i className="ico-discord"></i>
                             </a>
@@ -124,27 +124,9 @@ class Footer extends Component {
                             <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://bitcointalk.org/index.php?topic=1466445.0"
-                            >
-                            <i className="ico-github"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                            target="_blank"
-                            rel="noopener noreferrer"
                             href="https://www.reddit.com/r/SysCoin/"
                             >
                             <i className="ico-reddit"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://bitcoinwisdom.io/markets/binance/sysbtc"
-                            >
-                            <i className="ico-wisdom"></i>
                             </a>
                         </li>
                         <li>
@@ -178,7 +160,7 @@ class Footer extends Component {
                             <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://www.youtube.com/channel/UCTx546WgFKfKQg0_814FfMA"
+                            href="https://www.youtube.com/@Syscoin"
                             >
                             <i className="ico-youtube"></i>
                             </a>

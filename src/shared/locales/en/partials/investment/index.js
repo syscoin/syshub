@@ -5,7 +5,7 @@ const investment = {
       label: 'Label',
       value: 'Value',
       coinsRequired: 'Coins Required',
-      masterNodePrice: 'Masternode Price',
+      masterNodePrice: 'SentryNode Price',
       roi: 'ROI',
       payoutFrequency: 'Approx. Payout Frequency',
       firstPayment: 'Approx. First Payment',

@@ -29,7 +29,7 @@ function HomeButtons() {
         rel="noopener noreferrer"
         target="_blank"
       >
-        Setup Masternode
+        Setup SentryNode
       </a>
       {!user && (<Link to="/signup" className="btn btn--blue-border">
         Sign up

@@ -208,7 +208,7 @@ function MasternodeForm() {
       <div className="input-form">
         <div className="form-group">
           <div className="wizard-head">
-            <span>1</span>Masternode details
+            <span>1</span>SentryNode details
           </div>
           <div
             className={`wizard-body ${currentStep === 0 ? "" : "collapsed"}`}
@@ -217,7 +217,7 @@ function MasternodeForm() {
           </div>
 
           <div className="wizard-head">
-            <span>2</span>Masternode prepare
+            <span>2</span>SentryNode prepare
           </div>
           <div
             className={`wizard-body ${currentStep === 1 ? "" : "collapsed"}`}
@@ -230,7 +230,7 @@ function MasternodeForm() {
           </div>
 
           <div className="wizard-head">
-            <span>3</span>Masternode sign
+            <span>3</span>SentryNode sign
           </div>
           <div
             className={`wizard-body ${currentStep === 2 ? "" : "collapsed"}`}
@@ -242,7 +242,7 @@ function MasternodeForm() {
             />
           </div>
           <div className="wizard-head">
-            <span>4</span>Masternode submit
+            <span>4</span>SentryNode submit
           </div>
           <div
             className={`wizard-body ${currentStep === 3 ? "" : "collapsed"}`}

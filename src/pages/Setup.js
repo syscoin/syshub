@@ -226,7 +226,7 @@ class Setup extends Component {
                                                                     <li>{t('setup.installation.p7.d5')} <code>masternode.conf</code> {t('setup.installation.p7.d6')}</li>
                                                                 </ol>
                                                                 <blockquote>
-                                                                    <p><code># Masternode config file</code><br/>
+                                                                    <p><code># SentryNode config file</code><br/>
                                                                     <code># Format: alias IP:port control_token collateral_output_txid collateral_output_index</code></p>
                                                                 </blockquote>
                                                                 <ol start="3">
@@ -241,7 +241,7 @@ class Setup extends Component {
                                                                     </li>
                                                                 </ol>
                                                                 <blockquote>
-                                                                    <p><code># Masternode config file</code><br/>
+                                                                    <p><code># SentryNode config file</code><br/>
                                                                     <code># Format: alias IP:port control_token collateral_output_txid collateral_output_index</code><br/>
                                                                     <code>mn1 123.123.123.123:8369 5ra1rhngvNkhkiFE8STrmvH3LvYTCzLyRFHFsZvrJUBV6ZmWnc 06e38868bb8f9958e34d5155437d009b72dff33fc87fd42e51c0f74fdb 0</code></p>
                                                                 </blockquote>
@@ -249,7 +249,7 @@ class Setup extends Component {
                                                                     <li>{t('setup.installation.p7.d17')}</li>
                                                                     <li>{t('setup.installation.p7.d18')}
                                                                     <ul>
-                                                                    <li>{t('setup.installation.p7.d19')} <code>Masternode</code> {t('setup.installation.p7.d20')}</li>
+                                                                    <li>{t('setup.installation.p7.d19')} <code>SentryNode</code> {t('setup.installation.p7.d20')}</li>
                                                                     <li>{t('setup.installation.p7.d21')}</li>
                                                                     <li>{t('setup.installation.p7.d22')}</li>
                                                                     <li>
@@ -299,9 +299,9 @@ class Setup extends Component {
                                                                     </ul>
                                                                     <blockquote>
                                                                     <p><code>Syscoin Core Github Branch [master]:</code><br/>
-                                                                    <code>Masternode Control Token []: 5ra1rhngvNkhkiFE8STrmvH3LvYTCzLyRFHFsZvrJUBV6ZmWnc</code><br/>
+                                                                    <code>SentryNode Control Token []: 5ra1rhngvNkhkiFE8STrmvH3LvYTCzLyRFHFsZvrJUBV6ZmWnc</code><br/>
                                                                     <code>External IP Address [123.123.123.123]: </code><br/>
-                                                                    <code>Masternode Port [8369]:</code><br/>
+                                                                    <code>SentryNode Port [8369]:</code><br/>
                                                                     <code>Configure for mainnet? [Y/n]:</code><br/>
                                                                     Press any key to continue or Ctrl+C to exit…</p>
                                                                     </blockquote>
@@ -333,7 +333,7 @@ class Setup extends Component {
                                                         <div id="collapse9" className="collapse" data-parent="#accordion">
                                                             <div className="card-body">
                                                                 <p><strong>{t('setup.installation.p9.d1')}</strong> {t('setup.installation.p9.d2')}</p>
-                                                                <p><s>1. {t('setup.installation.p9.d3')} <code>Masternodes</code> {t('setup.installation.p9.d4')}</s><br/>
+                                                                <p><s>1. {t('setup.installation.p9.d3')} <code>SentryNodes</code> {t('setup.installation.p9.d4')}</s><br/>
                                                                 <s>2. {t('setup.installation.p9.d5')} <code>Initialize</code>.</s><br/>
                                                                 <strong>{t('setup.installation.p9.d6')}</strong> {t('setup.installation.p9.d7')} <code>Initialize</code> {t('setup.installation.p9.d8')}</p>
                                                                 <ol>

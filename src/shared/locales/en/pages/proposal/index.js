@@ -1,9 +1,9 @@
 const proposal =  {
   proposal: {
     meta: {
-      title: 'Syscoin Masternodes - Create a proposal',
-      keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
-      description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
+      title: 'Syscoin SentryNodes - Create a proposal',
+      keywords: 'Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
+      description: 'Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!',
     },
     data: {
       heading: 'Create a proposal'

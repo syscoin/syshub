@@ -57,8 +57,8 @@ class StatsShow extends Component {
             <div className="stat">
               Monthly income
               <div className="stat-data">
-                <span title="Regular Masternode">{statsData.income_stats.usd.monthly}</span> /{" "}
-                <span title="Masternode with 1 year seniority">{statsData.income_stats_seniority_one_year.usd.monthly}</span>
+                <span title="Regular SentryNode">{statsData.income_stats.usd.monthly}</span> /{" "}
+                <span title="SentryNode with 1 year seniority">{statsData.income_stats_seniority_one_year.usd.monthly}</span>
               </div>
             </div>
             <div className="stat">
@@ -70,10 +70,10 @@ class StatsShow extends Component {
               <div className="stat-data">{statsData.mn_stats.reward_eligble}</div>
             </div>
             <div className="stat">
-              Masternodes
+              SentryNodes
               <div className="stat-data">
-                <span title="Enabled Masternodes">{statsData.mn_stats.enabled}</span> /{" "}
-                <span title="All Masternodes">{statsData.mn_stats.total}</span>
+                <span title="Enabled SentryNodes">{statsData.mn_stats.enabled}</span> /{" "}
+                <span title="All SentryNodes">{statsData.mn_stats.total}</span>
               </div>
             </div>
             <div className="stat">

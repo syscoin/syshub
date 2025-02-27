@@ -1,7 +1,7 @@
 const banner = {
   banner: {
-    title: 'Syscoin Masternodes',
-    info: 'Everything you need to know about Masternodes',
+    title: 'Syscoin SentryNodes',
+    info: 'Everything you need to know about SentryNodes',
     learnMore: 'Learn More',
   },
 }

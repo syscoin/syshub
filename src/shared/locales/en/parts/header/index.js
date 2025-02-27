@@ -4,7 +4,7 @@ const header = {
     about: 'About',
     stats: 'Stats',
     setup: 'Setup',
-    masternodes: 'Masternodes',
+    masternodes: 'SentryNodes',
     support: 'Support',
     governance: 'Governance',
     login: 'Log in',

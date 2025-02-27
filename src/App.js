@@ -11,7 +11,7 @@ import Header from './components/global/Header';
 import Footer from './components/global/Footer';
 
 import Home from './pages/Home';
-import Masternodes from './pages/Masternodes';
+import SentryNodes from './pages/SentryNodes';
 import Stats from './pages/Stats';
 import Governance from './pages/Governance';
 import Login from './pages/Login';
@@ -36,7 +36,7 @@ class AppComponent extends Component {
                 <Header />
                 <Switch>
                     <PublicRoute restricted={false} path="/" component={Home} exact />
-                    <PublicRoute restricted={false} path="/masternodes" component={Masternodes} />
+                    <PublicRoute restricted={false} path="/sentrynodes" component={SentryNodes} />
                     <PublicRoute restricted={false} path="/stats" component={Stats} />
                     <PublicRoute restricted={false} path="/governance" component={Governance} />
                     <PublicRoute restricted={true} path="/login" component={Login} />

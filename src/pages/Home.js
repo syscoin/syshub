@@ -110,7 +110,7 @@ class Home extends Component {
                                     <BannerImage heading={t('home.title')} direction="left">
                                         <div className="article__content-text">
                                             <p>
-                                                Everything you need to know about Masternodes and Governance.
+                                                Everything you need to know about SentryNodes and Governance.
                                             </p>
                                         </div>
 
@@ -121,10 +121,10 @@ class Home extends Component {
                                         <div className="cols">
                                             <div className="col col--size-12">
                                                 <div className="article__content">
-                                                    <SubTitle heading="Check your masternode" />
+                                                    <SubTitle heading="Check your sentrynode" />
                                                     <MasternodeTable simple={true} sizePerPage={5} />
                                                     <div className="article__actions text-center">
-                                                        <Link to="/masternodes" className="btn btn--blue-border">All masternodes</Link>
+                                                        <Link to="/sentrynodes" className="btn btn--blue-border">All masternodes</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,7 +180,7 @@ class Home extends Component {
                                 <div className="articles">
                                     <BannerImage heading={t('home.title')} direction="left">
                                         <div className="article__content-text">
-                                            <p>Everything you need to know about Masternodes and Governance.</p>
+                                            <p>Everything you need to know about SentryNodes and Governance.</p>
                                         </div>
 
                                         <HomeButtons />

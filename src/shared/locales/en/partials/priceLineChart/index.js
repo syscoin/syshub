@@ -1,6 +1,6 @@
 const priceLineChart = {
   priceLineChart: {
-    title: 'Masternode',
+    title: 'SentryNode',
   },
 }
 export default priceLineChart;

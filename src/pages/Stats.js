@@ -89,9 +89,9 @@ class Stats extends Component {
                     <BackgroundInner type="B" />
                     <main className="section statsPage">
                         <MetaTags>
-                            <title>Syscoin Masternodes - Masternode Stats</title>
-                            <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                            {/* <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" /> */}
+                            <title>Syscoin SentryNodes - SentryNode Stats</title>
+                            <meta name="keywords" content="Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
+                            {/* <meta name="description" content="Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!" /> */}
                         </MetaTags>
                         <div className="shell-large">
                         <div className="section__body">
@@ -100,7 +100,7 @@ class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content">
-                                                <Title heading="Masternodes Stats" />
+                                                <Title heading="SentryNodes Stats" />
                                                 <StatsShow statsData={this.state.api_data.stats} />
                                                 <LinearChart chartData={this.state.api_data.stats.mn_stats}/>
                                             </div>
@@ -168,9 +168,9 @@ class Stats extends Component {
                     <BackgroundInner type="B" />
                     <main className="section statsPage">
                         <MetaTags>
-                            <title>Syscoin Masternodes - Masternode Stats</title>
-                            <meta name="keywords" content="Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
-                            <meta name="description" content="Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!" />
+                            <title>Syscoin SentryNodes - SentryNode Stats</title>
+                            <meta name="keywords" content="Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards" />
+                            <meta name="description" content="Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!" />
                         </MetaTags>
                         <div className="shell-large">
                         <div className="section__body">
@@ -179,7 +179,7 @@ class Stats extends Component {
                                     <div className="cols">
                                         <div className="col col--size-12">
                                             <div className="article__content article__content--pull-left text-center">
-                                                <Title heading="Masternodes Stats" />
+                                                <Title heading="SentryNodes Stats" />
                                                 <p>Loading...</p>
                                             </div>
                                         </div>

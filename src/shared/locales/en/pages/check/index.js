@@ -1,10 +1,10 @@
 const check = {
   check: {
-    title: 'Masternodes Check',
+    title: 'SentryNodes Check',
     meta: {
-      title: 'Syscoin Masternodes - Masternodes Check',
-      keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
-      description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
+      title: 'Syscoin SentryNodes - SentryNodes Check',
+      keywords: 'Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
+      description: 'Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!',
     },
     loading: 'Loading...',
     noData: "The data couldn't be fetched",
@@ -26,8 +26,8 @@ const check = {
       d4: 'records',
     },
     register: {
-      title: 'Masternodes registration helper',
-      link: 'Masternodes registration'
+      title: 'SentryNodes registration helper',
+      link: 'SentryNodes registration'
     }
   },
 }

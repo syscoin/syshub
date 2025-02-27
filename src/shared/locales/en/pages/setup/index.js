@@ -1,11 +1,11 @@
 const setup = {
   setup: {
     meta: {
-      title: 'Syscoin Masternodes - Masternode Setup',
-      keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
-      description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
+      title: 'Syscoin SentryNodes - SentryNode Setup',
+      keywords: 'Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
+      description: 'Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!',
     },
-    title: 'Learn About Syscoin Masternodes',
+    title: 'Learn About Syscoin SentryNodes',
     preliminaries: {
       title: 'Important Preliminaries',
       description: 'Please read them carefully.',
@@ -44,7 +44,7 @@ const setup = {
         d9: 'walletlock',
       },
       p3: {
-        title: 'Generating a Masternode Control Token',
+        title: 'Generating a SentryNode Control Token',
         d1: 'To generate your masternode control token, go to Console',
         d2: 'and type:',
         d3: 'masternode genkey',
@@ -62,7 +62,7 @@ const setup = {
         d6: 'Enter',
         d7: 'Pick something descriptive, such as',
         d8: 'as label.',
-        d9: 'Masternodes require legacy addresses, and will neither work with the new Bech32 addresses that start with',
+        d9: 'SentryNodes require legacy addresses, and will neither work with the new Bech32 addresses that start with',
         d10: 'nor with ordinary addresses starting with',
         d11: 'Copy this address as well as you will need to send your collateral to it in the next step.',
         d12: 'Note:',
@@ -163,8 +163,8 @@ const setup = {
         d30: 'type',
         d31: 'and press',
         d32: 'Enter',
-        d33: 'You will get this error until you start your Masternode as below',
-        d34: '“status”: “Not capable masternode: Masternode not in masternode list”',
+        d33: 'You will get this error until you start your SentryNode as below',
+        d34: '“status”: “Not capable masternode: SentryNode not in masternode list”',
         d35: 'START MASTERNODE',
       },
       p9: {

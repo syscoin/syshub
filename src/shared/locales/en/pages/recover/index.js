@@ -1,9 +1,9 @@
 const recover = {
   recover: {
     meta: {
-      title: 'Syscoin Masternodes - Recover your password',
-      keywords: 'Syscoin, Masternodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
-      description: 'Sysnode.info provides Syscoin Masternode Operators the tools to maximise the most from their Masternodes!',
+      title: 'Syscoin SentryNodes - Recover your password',
+      keywords: 'Syscoin, SentryNodes, Blockchain, Crypto, Blockmarket, Coins, Bitcoin, Cryptocurrency, Rewards',
+      description: 'Sysnode.info provides Syscoin SentryNode Operators the tools to maximise the most from their SentryNodes!',
     },
     data: {
       heading: 'Recover your password'

@@ -2,7 +2,7 @@ const doughnut = {
   doughnut: {
     charts: {
       masterNodes: {
-        title: 'Total Masternodes',
+        title: 'Total SentryNodes',
         enabled: 'Enabled',
         startRequired: 'New Start Required',
         pingExpired: 'Sentinel Ping Expired',
