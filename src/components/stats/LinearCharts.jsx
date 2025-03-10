@@ -108,7 +108,7 @@ class LinearChart extends Component {
             return (
             <>
                 <div className="ministats">
-                    <div className="subtitle">Total masternodes ({dataChart1.totalMN})</div>
+                    <div className="subtitle">Total SentryNodes ({dataChart1.totalMN})</div>
                     <div className="chart-mini-hor">
                         <div className="blue" style={{ width: dataChart1.enabledPercent }} title={dataChart1.totalEnabled}></div>
                         <div className="red" style={{ width: dataChart1.newStartPercent }} title={dataChart1.totalNewStart}></div>

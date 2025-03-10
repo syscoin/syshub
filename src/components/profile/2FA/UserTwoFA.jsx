@@ -136,28 +136,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         }
     }
 
-    /* const enableGAuth = async (data) => {
-      // console.log('enable GAuth');
-      let currentUserDataUpdate = {
-        gAuth: false
-      }
-      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-        // console.log(err)
-      })
-    } */
-
-    /* const disableGAuth = async () => {
-      // console.log('disable GAuth')
-      let currentUserDataUpdate = {
-        gAuth: false
-      }
-      await updateCurrentActionsUser(currentUserDataUpdate).catch(err => {
-        // console.log(err)
-      });
-
-      await onTwoFAChange();
-
-      } */
+    
 
     /**
      * to remove the secret of google authenticator
@@ -270,7 +249,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
 
     return (
         <div className="cols-top cols">
-            <div className="form-group col col--size6">
+            {/* <div className="form-group col col--size6">
                 <label className="big">2FA SMS</label>
                 {
                     authData.sms ? (
@@ -309,7 +288,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
                         </div>
                     )
                 }
-            </div>
+            </div> */}
             <div className="form-group col col--size6">
                 <label className="big">Google Authenticator</label>
                 {
