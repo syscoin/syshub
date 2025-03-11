@@ -22,6 +22,7 @@ import Profile from './pages/Profile';
 import NewProposal from './pages/NewProposal';
 import Admin from './pages/Admin';
 import FAQ from './pages/FAQ';
+import About from './pages/About'
 
 /**
  * App component that handles the use of the Header and Footer components, alongside with the Routing
@@ -36,6 +37,7 @@ class AppComponent extends Component {
                 <Header />
                 <Switch>
                     <PublicRoute restricted={false} path="/" component={Home} exact />
+                    <PublicRoute restricted={false} path="/about" component={About} />
                     <PublicRoute restricted={false} path="/sentrynodes" component={SentryNodes} />
                     <PublicRoute restricted={false} path="/stats" component={Stats} />
                     <PublicRoute restricted={false} path="/governance" component={Governance} />

@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
-
 import { useUser } from "../../context/user-context";
-
 
 /**
  * Component that shows the Header alongside with the navbar
@@ -12,9 +10,9 @@ import { useUser } from "../../context/user-context";
  * @subcategory Global
  * @param {*} props the T prop comes from withTranslation to use react-i18next
  */
-function Header({t}) {
+function Header({ t }) {
   const { user, userAdmin, logoutUser } = useUser();
-  
+
   const isMounted = useRef(false);
 
   const [isNotTop, setIsNotTop] = useState(false);
@@ -34,13 +32,13 @@ function Header({t}) {
     });
     return () => {
       isMounted.current = false;
-    }
+    };
   });
 
   /**
-  * Function that handles the activation of the responsive menu 
-  * @function
-  */
+   * Function that handles the activation of the responsive menu
+   * @function
+   */
   const menuLinks = () => {
     if (isMobileMenu) {
       toggleMenu();
@@ -48,9 +46,9 @@ function Header({t}) {
   };
 
   /**
-  * Function that toggles the state of isMobileMenu
-  * @function
-  */
+   * Function that toggles the state of isMobileMenu
+   * @function
+   */
   const toggleMenu = () => {
     setIsMobileMenu(!isMobileMenu);
   };
@@ -61,7 +59,7 @@ function Header({t}) {
    */
   const logout = () => {
     logoutUser();
-  }
+  };
 
   /**
    * Returns a showable username
@@ -70,12 +68,14 @@ function Header({t}) {
    * @return {string}         Username of the user
    */
   const username = (userInfo) => {
-    let username = userInfo.data.email.substring(0, userInfo.data.email.lastIndexOf("@"));
-    
-    return username;
-  }
+    let username = userInfo.data.email.substring(
+      0,
+      userInfo.data.email.lastIndexOf("@")
+    );
 
-  
+    return username;
+  };
+
   return (
     <header className={`header ${isNotTop ? "fixed" : ""}`}>
       {/* TODO: add className "fixed" to .header when scroll > 0 */}
@@ -94,13 +94,7 @@ function Header({t}) {
             <nav className="nav">
               <ul style={{ width: "100%" }}>
                 <li onClick={menuLinks}>
-                  <a
-                    href="https://syscoin.org/masternodes"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {t("header.about")}
-                  </a>
+                  <Link to="/about">{t("header.about")}</Link>
                 </li>
 
                 <li onClick={menuLinks}>
@@ -177,29 +171,25 @@ function Header({t}) {
                               <Link to="/profile">{t("header.profile")}</Link>
                             </li>
                             <li onClick={menuLinks}>
-                              <Link to="/create-proposal">{t("header.proposal")}</Link>
+                              <Link to="/create-proposal">
+                                {t("header.proposal")}
+                              </Link>
                             </li>
-                            {
-                              userAdmin === "admin" && (
-                                <li onClick={menuLinks}>
-                                  <Link to="/admin">{t("header.admin")}</Link>
-                                </li>
-                              )
-                            }
+                            {userAdmin === "admin" && (
+                              <li onClick={menuLinks}>
+                                <Link to="/admin">{t("header.admin")}</Link>
+                              </li>
+                            )}
                             <li onClick={menuLinks}>
                               <Link to="/faq">{t("header.faq")}</Link>
                             </li>
                             <li onClick={menuLinks}>
-                              <button
-                                className='nav-btn'
-                                onClick={logout}
-                              >
+                              <button className="nav-btn" onClick={logout}>
                                 {t("header.logout")}
                               </button>
                             </li>
                           </>
                         )}
-
                       </ul>
                     </div>
                   </div>
