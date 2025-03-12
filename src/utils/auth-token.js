@@ -1,11 +1,19 @@
 const TOKEN_KEY = "user-data";
 
+const isValidUser = (user) => {
+  return user && user.accessToken;
+};
+
 /**
  * set the token on the localstorage
  * @function
  * @param {*} jwt jwt to save on the localstorage
  */
 export function saveUserData(user) {
+  if (!isValidUser(user)) {
+    console.trace("Invalid user data");
+    return;
+  }
   window.localStorage.setItem(TOKEN_KEY, JSON.stringify({ ...user }));
 }
 
@@ -15,6 +23,14 @@ export function saveUserData(user) {
  */
 export function getUserData() {
   const savedToken = window.localStorage.getItem(TOKEN_KEY);
+  const parsedUser = JSON.parse(savedToken);
+
+  if (!isValidUser(parsedUser)) {
+    console.trace("Invalid user data");
+    deleteUserData();
+    return null;
+  }
+
   return savedToken ? JSON.parse(savedToken) : null;
 }
 
