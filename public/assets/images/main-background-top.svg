@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="1437px" viewBox="0 0 1920 1437" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>main-background-top</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="22.1021789%" y1="28.9830415%" x2="22.1021789%" y2="111.570867%" id="linearGradient-1">
+            <stop stop-color="#924BD6" stop-opacity="0.28832654" offset="0%"></stop>
+            <stop stop-color="#233560" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-4.2%" y="-5.6%" width="108.3%" height="111.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="Details" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Arbitrated-Escrow" fill="url(#linearGradient-1)">
+            <g id="Background" transform="translate(0.000000, -259.000000)">
+                <g id="Bottom-CTA-BG" transform="translate(-837.000000, -1088.000000)">
+                    <ellipse id="main-background-top" filter="url(#filter-2)" cx="1796.5" cy="1350.5" rx="1796.5" ry="1350.5"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

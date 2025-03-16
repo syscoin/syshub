@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="3380px" viewBox="0 0 1920 3380" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>main-background-faq</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="48.9735819%" cy="-11.1663958%" fx="48.9735819%" fy="-11.1663958%" r="129.995372%" gradientTransform="translate(0.489736,-0.111664),scale(1.000000,0.563435),rotate(90.000000),scale(1.000000,1.296146),translate(-0.489736,0.111664)" id="radialGradient-1">
+            <stop stop-color="#203E84" offset="0%"></stop>
+            <stop stop-color="#271E70" offset="65.6435524%"></stop>
+            <stop stop-color="#1B1557" offset="100%"></stop>
+        </radialGradient>
+        <path d="M1925,1.81588148 L1925,3416 L0.571807382,3416 L0.571807382,0.472916058 C252.211994,99.3798855 591.376566,160 964.5,160 C1335.9317,160 1673.71177,99.9283409 1925,1.81588148 Z" id="path-2"></path>
+        <linearGradient x1="-4.56936849%" y1="-7.37887356%" x2="81.005271%" y2="107.72442%" id="linearGradient-4">
+            <stop stop-color="#242E7A" offset="0%"></stop>
+            <stop stop-color="#2D2977" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-8.7%" y="-11.4%" width="117.4%" height="122.9%" filterUnits="objectBoundingBox" id="filter-5">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="46.5009357%" y1="88.699924%" x2="46.5009357%" y2="100%" id="linearGradient-6">
+            <stop stop-color="#369EF5" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#5B8DF6" stop-opacity="0.202332428" offset="50.1397559%"></stop>
+            <stop stop-color="#7CB3F6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Details" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="FAQ" transform="translate(0.000000, -288.000000)">
+            <g id="Background">
+                <g id="Ornament-Object-2" transform="translate(-5.000000, 287.000000)">
+                    <g id="main-background-faq">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="main-background-ornament-quaternary" fill="url(#radialGradient-1)" xlink:href="#path-2"></use>
+                        <path d="M-18.9005629,1665 C294.521033,1665 1681.79294,1799.83155 1681.79294,1491.65666 C1681.79294,1183.48177 267.421596,382.717479 -46,382.717479 L-18.9005629,1665 Z" id="Oval" fill="url(#linearGradient-4)" filter="url(#filter-5)" mask="url(#mask-3)"></path>
+                        <ellipse id="Oval" stroke="url(#linearGradient-6)" stroke-width="4" opacity="0.699999988" mask="url(#mask-3)" cx="964.5" cy="-423" rx="1405.5" ry="586"></ellipse>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

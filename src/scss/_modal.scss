@@ -1,0 +1,111 @@
+.backdrop
+{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#444680d4;
+    overflow: hidden;
+    padding:20px;
+    backdrop-filter: blur(2px);
+    z-index:1000;
+
+    .modal
+    {
+        max-width:$shell-large-max-width;
+        background:#242652;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        @include border-radius(5px);
+        max-height: calc(100vh - 130px);
+        overflow-y: auto;
+
+        &.sm 
+        {
+            max-width:$shell-sm-max-width;
+        }
+
+        &.md
+        {
+            max-width:$shell-md-max-width;
+        }
+
+        .modal-title 
+        {
+            padding:20px;
+            border-bottom:1px solid #ffffff1c;
+
+            .close 
+            {
+                position:absolute;
+                top:20px;
+                right:20px;
+                line-height: 1.2;
+                transition: color .3s;
+
+                &:hover 
+                {
+                    color:$blue;
+                }
+            }
+        }
+
+        .modal-body
+        {
+            padding:20px;
+
+            .modal-section
+            {
+                padding:10px 0;
+                border-bottom:1px solid #ffffff0f;
+
+                &:last-child
+                {
+                    border-bottom:none;
+                }
+            }
+        }
+
+        .modal-footer
+        {
+            padding:20px 20px 0 20px;
+            border-top:1px solid #ffffff1c;
+
+            .modal__actions 
+            {
+                &.actions_left
+                {
+                    float:left;
+
+                    .btn
+                    {
+                        margin-right:20px;
+                    }
+                }
+
+                &.actions_right
+                {
+                    float:right;
+
+                    .btn
+                    {
+                        margin-left:20px;
+                    }
+                }
+                
+                .btn
+                {
+                    margin-bottom:20px;
+                }
+            }
+        }
+    }
+}
+
+.tooltipSysClass {
+    background: #242652;
+    border-radius: 5px;
+}
