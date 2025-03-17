@@ -3,7 +3,7 @@ name: Build and Package to GHCR
 on:
   push:
     branches:
-      - update-to-v20
+      - master
 
 permissions:
   contents: read
