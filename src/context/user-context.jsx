@@ -176,7 +176,11 @@ export function UserProvider(props) {
    * @function
    */
   async function logoutUser() {
-    await logout();
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
     setUser(null);
     await history.go("/login");
     removeSeed();
