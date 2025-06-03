@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import prettyMilliseconds from "pretty-ms";
 
 /**
  * Component to show the stats data
@@ -79,7 +78,9 @@ class StatsShow extends Component {
             </div>
             <div className="stat">
               Reward elegibility
-              <div className="stat-data">{statsData.mn_stats.reward_eligble}</div>
+              <div className="stat-data">
+                {statsData.mn_stats.reward_eligble}
+              </div>
             </div>
             <div className="stat">
               SentryNodes
