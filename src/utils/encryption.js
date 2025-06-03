@@ -1,51 +1,54 @@
 const CryptoJS = require("crypto-js");
 
-export const createSeed = (pwd) => {
-  window.localStorage.setItem(
-    "seed",
-    CryptoJS.AES.encrypt(pwd, process.env.REACT_APP_ENCRYPT_KEY_DATA).toString()
-  );
+/**
+ * Hash password directly with SHA-256 to derive a fixed AES key
+ */
+const deriveKey = (pwd) => {
+  return CryptoJS.SHA256(pwd).toString(); // SHA-256 hashed password as key
 };
 
-export const getSeed = () => window.localStorage.getItem("seed");
+export const createSeed = (pwd) => {
+  const derivedKey = deriveKey(pwd);
+  window.localStorage.setItem("seed", derivedKey);
+};
 
-export const removeSeed = () => window.localStorage.removeItem("seed");
+export const getSeed = () => {
+  return window.localStorage.getItem("seed");
+};
+
+export const removeSeed = () => {
+  return window.localStorage.removeItem("seed");
+};
 
 export const encryptVotingKey = (data) => {
   try {
-    let encryptedData = {};
-    let pwd = getSeed();
-    Object.keys(data).forEach((item) => {
-      if (
-        item === "label" ||
-        item === "name" ||
-        item === "votingAddress" ||
-        item === "address" ||
-        item === "collateralIndex"
-      ) {
-        encryptedData[item] = data[item];
-      } else if (item === "txId") {
-        encryptedData[item] =
-          CryptoJS.AES.encrypt(
-            data[item].split("-")[0].toString(),
-            `${CryptoJS.AES.decrypt(
-              pwd,
-              process.env.REACT_APP_ENCRYPT_KEY_DATA
-            ).toString(CryptoJS.enc.Utf8)}${
-              process.env.REACT_APP_ENCRYPT_KEY_DATA
-            }`
-          ).toString() +
-          "-" +
-          data[item].split("-")[1];
+    const {
+      label,
+      name,
+      votingAddress,
+      address,
+      collateralIndex,
+      ...otherProps
+    } = data;
+
+    let encryptedData = {
+      label: data.label,
+      name: data.name,
+      votingAddress: data.votingAddress,
+      address: data.address,
+      collateralIndex: data.collateralIndex,
+    };
+    let derivedKey = getSeed();
+
+    Object.entries(otherProps).forEach(([key, value]) => {
+      if (key === "txId") {
+        const [hash, index] = value.split("-");
+        encryptedData[key] =
+          CryptoJS.AES.encrypt(hash, derivedKey).toString() + "-" + index;
       } else {
-        encryptedData[item] = CryptoJS.AES.encrypt(
-          data[item].toString(),
-          `${CryptoJS.AES.decrypt(
-            pwd,
-            process.env.REACT_APP_ENCRYPT_KEY_DATA
-          ).toString(CryptoJS.enc.Utf8)}${
-            process.env.REACT_APP_ENCRYPT_KEY_DATA
-          }`
+        encryptedData[key] = CryptoJS.AES.encrypt(
+          value.toString(),
+          derivedKey
         ).toString();
       }
     });
@@ -58,32 +61,21 @@ export const encryptVotingKey = (data) => {
 export const decryptVotingKey = (data) => {
   try {
     let decryptedData = {};
-    let pwd = getSeed();
+    let derivedKey = getSeed();
     Object.keys(data).forEach((item) => {
       if (item === "txId") {
         const collateralHash = data[item].slice(0, data[item].length - 2);
         const collateralIndex = data[item].charAt(data[item].length - 1);
         decryptedData[item] =
-          CryptoJS.AES.decrypt(
-            collateralHash,
-            `${CryptoJS.AES.decrypt(
-              pwd,
-              process.env.REACT_APP_ENCRYPT_KEY_DATA
-            ).toString(CryptoJS.enc.Utf8)}${
-              process.env.REACT_APP_ENCRYPT_KEY_DATA
-            }`
-          ).toString(CryptoJS.enc.Utf8) +
+          CryptoJS.AES.decrypt(collateralHash, derivedKey).toString(
+            CryptoJS.enc.Utf8
+          ) +
           "-" +
           collateralIndex;
       } else if (item === "privateKey") {
         decryptedData[item] = CryptoJS.AES.decrypt(
           data[item],
-          `${CryptoJS.AES.decrypt(
-            pwd,
-            process.env.REACT_APP_ENCRYPT_KEY_DATA
-          ).toString(CryptoJS.enc.Utf8)}${
-            process.env.REACT_APP_ENCRYPT_KEY_DATA
-          }`
+          derivedKey
         ).toString(CryptoJS.enc.Utf8);
       } else {
         decryptedData[item] = data[item];

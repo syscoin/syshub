@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import prettyMilliseconds from "pretty-ms";
 
 import MetaTags from 'react-meta-tags';
 import Background from '../components/global/Background';
@@ -58,6 +59,8 @@ class Stats extends Component {
     async getStats() {
         const CancelToken = axios.CancelToken;
         this.source = CancelToken.source();
+        const sysnodeStats = await axios.get('https://syscoin.dev/mnstats')
+        console.log({sysnodeStats})
         let data = await axios
             .get(`${API_URI}/statsInfo/mnStats`, {
                 headers: {
@@ -65,8 +68,18 @@ class Stats extends Component {
                 },
             cancelToken: this.source.token
         })
-        .then(function(result) {
-            return result;
+        .then(function(ownResults) {
+            const updatedResults = {...sysnodeStats.data}
+            const days = 3600000;
+            const enabled = parseInt(updatedResults.stats.mn_stats.enabled.replace(/,/g, ""));
+            const rewardElig = (enabled * 4) / 60;
+            const avgPayoutFrequency = enabled / 24;
+
+            updatedResults.stats.mn_stats.first_pay = prettyMilliseconds(avgPayoutFrequency * days);
+            updatedResults.stats.mn_stats.reward_eligble = prettyMilliseconds(rewardElig * days);
+            updatedResults.stats.mn_stats.new_start_required = ownResults.data.stats.mn_stats.new_start_required;
+            updatedResults.stats.mn_stats.sentinel_ping_expired = ownResults.data.stats.mn_stats.sentinel_ping_expired;
+            return {...sysnodeStats, data: updatedResults};
         })
         .catch(function (error) {
             // console.log(error);
