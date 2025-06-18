@@ -27,6 +27,7 @@ import AddressList from "./AddressList";
  */
 function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
   const {user} = useUser();
+  
   const {t} = useTranslation();
   const [useCollapse, setUseCollapse] = useState(false);
   const [openAddressList, setOpenAddressList] = useState(false);

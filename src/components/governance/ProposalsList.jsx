@@ -59,12 +59,12 @@ function ProposalsList(props) {
   const loadUserInfo = useCallback(async () => {
     if (user) {
       try {
-        const response = await getUserInfo(user.data.user_id, cancelSource.token);
+        const response = await getUserInfo(user.data.uid, cancelSource.token);
         if (response.data) {
           await setUserInfo(response.data.user);
         }
-      } catch (error) {
-        // console.log(error);
+      } catch (getUserInfoError) {
+        console.log(getUserInfoError);
       }
     }
   }, [user, cancelSource]);

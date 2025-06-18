@@ -10,10 +10,14 @@
     "@babel/core": "^7.26.0",
     "@hookform/error-message": "0.0.4",
     "@hookform/resolvers": "^0.1.1",
+    "@noble/hashes": "^1.8.0",
     "@noble/secp256k1": "^2.2.3",
+    "@scure/base": "^1.2.6",
+    "@scure/bip32": "^1.7.0",
     "@swyftx/api-crypto-address-validator": "^1.13.1",
     "anychart-react": "^1.4.1",
     "axios": "^0.21.1",
+    "bech32": "^2.0.0",
     "bitcoinjs-lib": "^6.1.7",
     "bootstrap-sass": "^3.4.1",
     "crypto-browserify": "^3.12.1",
@@ -65,7 +69,7 @@
     "url": "^0.11.4",
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2",
-    "yup": "^0.29.3"
+    "yup": "^1.6.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -101,5 +105,6 @@
   },
   "overrides": {
     "underscore": "1.13.7"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

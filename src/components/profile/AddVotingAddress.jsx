@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import {useTranslation} from "react-i18next/";
 import {createVotingAddress} from "../../utils/request";
 
-import AddAddressForm from "./AddAddressForm";
+import AddAddressForm from "./AddAddress/Form";
 import Title from "../global/Title";
 
 /**
