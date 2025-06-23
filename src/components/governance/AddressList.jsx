@@ -12,6 +12,7 @@ import AddressItem from "./AddressItem";
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
 import {decryptVotingKey} from "../../utils/encryption";
+import signVote from "../../utils/sign-vote";
 
 /**
  * Component to show the voting address list of the user
@@ -52,7 +53,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
     const getAddressOfUser = async () => {
       setLoadingAddress(true);
       try {
-        let { data, status } = await getUserVotingAddress({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        let { data, status } = await getUserVotingAddress({ hash: proposal.Key, cancelToken: cancelSource.token })
         .catch((err) => {
           throw err;
         });
@@ -160,7 +161,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
       };
-      const voteData = { proposalVoteNo } // Send to api: signVote(proposalVoteNo)
+      const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
           addressVoted.push({

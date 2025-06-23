@@ -1,12 +1,14 @@
 import { crypto, networks } from "bitcoinjs-lib";
-import { ECPairFactory } from "ecpair";
+// import { ECPairFactory } from "ecpair";
 import { Buffer } from "buffer";
 import { Int64LE } from "int64-buffer";
 import secp256k1 from "secp256k1";
 import { swapEndiannessInPlace, swapEndianness } from "./buffer-math";
-import * as nobleSecp from "@noble/secp256k1";
+// import * as nobleSecp from "@noble/secp256k1";
+// import * as tinySecp from "tiny-secp256k1";
 
-const ECPair = ECPairFactory(nobleSecp);
+// const ecc = tinySecp(nobleSecp)
+// const ECPair = ECPairFactory(ecc);
 
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
@@ -50,7 +52,11 @@ const signVote = (obj) => {
     ]);
 
     const hash = crypto.hash256(message);
-    const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
+    const keyPair = {
+      privateKey: "test",
+      compressed: true,
+    };
+    // const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
     const sigObj = secp256k1.sign(hash, keyPair.privateKey);
     const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
     const recIdBuffer = Buffer.allocUnsafe(1);

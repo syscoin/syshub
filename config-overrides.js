@@ -8,13 +8,13 @@ module.exports = function override(config) {
     util: require.resolve("util/"),
     stream: require.resolve("stream-browserify"),
     vm: require.resolve("vm-browserify"),
-    // buffer: require.resolve("buffer"),
+    buffer: require.resolve("buffer/"),
     // process: require.resolve("process/browser"),
   };
   config.plugins = [
     ...config.plugins,
     new webpack.ProvidePlugin({
-      // Buffer: ["buffer", "Buffer"], // Automatically provide Buffer
+      Buffer: ["buffer", "Buffer"], // Automatically provide Buffer
       process: "process/browser",
     }),
   ];

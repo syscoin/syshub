@@ -130,7 +130,7 @@ function ProposalCard({proposal, enabled, userInfo, onLoadProposals}) {
    * @param {number} vote type of the vote received from the button
    */
   function openMnVote(vote) {
-    if (userInfo?.emailVerified) {
+    if (userInfo.authData?.emailVerified) {
       setVote(vote);
       setOpenAddressList(true);
     }
