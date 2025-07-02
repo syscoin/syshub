@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
+    "@bitcoinerlab/secp256k1": "^1.2.0",
     "@hookform/error-message": "0.0.4",
     "@hookform/resolvers": "^0.1.1",
     "@noble/hashes": "^1.8.0",
-    "@noble/secp256k1": "^2.2.3",
     "@scure/base": "^1.2.6",
     "@scure/bip32": "^1.7.0",
     "@swyftx/api-crypto-address-validator": "^1.13.1",

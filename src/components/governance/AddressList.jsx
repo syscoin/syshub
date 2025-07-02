@@ -115,7 +115,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
    */
   const prepareVoting = async () => {
     try {
-      let user2fa = await get2faInfoUser(user.data.user_id);
+      let user2fa = await get2faInfoUser(user.data.uid);
       if (user2fa.twoFa === true) {
         setUser2FA(user2fa);
         if (user2fa.gAuth === true) {
@@ -160,6 +160,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         vinMasternode: addrDecrypt.txId,
         gObjectHash: proposal.Hash,
         voteOutcome: vote,
+        type: address.type
       };
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)

@@ -1,14 +1,15 @@
-import { crypto, networks } from "bitcoinjs-lib";
-// import { ECPairFactory } from "ecpair";
+import { crypto } from "bitcoinjs-lib";
+import { ECPairFactory } from "ecpair";
 import { Buffer } from "buffer";
 import { Int64LE } from "int64-buffer";
 import secp256k1 from "secp256k1";
 import { swapEndiannessInPlace, swapEndianness } from "./buffer-math";
-// import * as nobleSecp from "@noble/secp256k1";
-// import * as tinySecp from "tiny-secp256k1";
+import { HDKey } from "@scure/bip32";
+import { syscoinNetworks } from "./networks";
+import * as secp from "@bitcoinerlab/secp256k1";
+import { parseDescriptor } from "../components/profile/AddAddress/validation-utils";
 
-// const ecc = tinySecp(nobleSecp)
-// const ECPair = ECPairFactory(ecc);
+const ECPair = ECPairFactory(secp);
 
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
@@ -19,11 +20,11 @@ import { swapEndiannessInPlace, swapEndianness } from "./buffer-math";
 const signVote = (obj) => {
   // eslint-disable-next-line
   try {
-    const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome } = obj;
+    const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome, type } = obj;
     const network =
-      process.env.REACT_APP_CHAIN_NETWORK !== "main"
-        ? networks.testnet
-        : networks.bitcoin;
+      process.env.REACT_APP_CHAIN_NETWORK === "main"
+        ? syscoinNetworks.mainnet.bip32
+        : syscoinNetworks.testnet.bip32;
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, "hex");
     const voteSignalNum = 1; // 'funding'
@@ -52,17 +53,23 @@ const signVote = (obj) => {
     ]);
 
     const hash = crypto.hash256(message);
-    const keyPair = {
-      privateKey: "test",
-      compressed: true,
-    };
-    // const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
-    const sigObj = secp256k1.sign(hash, keyPair.privateKey);
-    const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
-    const recIdBuffer = Buffer.allocUnsafe(1);
-    recIdBuffer.writeInt8(recId);
-    const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
-    const signature = rawSignature.toString("base64");
+
+    let signature = null;
+    if (type === "descriptor") {
+      const { xprv } = parseDescriptor(mnPrivateKey);
+      const node = HDKey.fromExtendedKey(xprv, network);
+      const signRaw = node.sign(hash);
+      console.log({ signRaw });
+      signature = btoa(String.fromCharCode(...signRaw));
+    } else {
+      const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
+      const sigObj = secp256k1.sign(hash, keyPair.privateKey);
+      const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
+      const recIdBuffer = Buffer.allocUnsafe(1);
+      recIdBuffer.writeInt8(recId);
+      const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
+      signature = rawSignature.toString("base64");
+    }
 
     let vote;
     let signal;

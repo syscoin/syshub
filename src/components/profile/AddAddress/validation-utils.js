@@ -3,33 +3,16 @@ import { bech32 } from "bech32";
 import { sha256 } from "@noble/hashes/sha256";
 import { ripemd160 } from "@noble/hashes/ripemd160";
 import { hex } from "@scure/base";
-const syscoinNetworks = {
-  mainnet: {
-    messagePrefix: "\x18Syscoin Signed Message:\n",
-    bech32: "sys",
-    bip32: {
-      public: 0x0488b21e,
-      private: 0x0488ade4,
-    },
-    pubKeyHash: 0x3f,
-    scriptHash: 0x05,
-    wif: 0x80,
-  },
-  testnet: {
-    messagePrefix: "\x18Syscoin Signed Message:\n",
-    bech32: "tsys",
-    bip32: {
-      public: 0x043587cf,
-      private: 0x04358394,
-    },
-    pubKeyHash: 0x41,
-    scriptHash: 0xc4,
-    wif: 0xef,
-  },
-};
+import { syscoinNetworks } from "../../../utils/networks";
+
 
 // Network prefix for mainnet (bc) or testnet (tb)
-const HRP = syscoinNetworks.testnet.bech32; // 'tb' for testnet
+export const network =
+      process.env.REACT_APP_CHAIN_NETWORK === "main"
+        ? syscoinNetworks.mainnet
+        : syscoinNetworks.testnet;
+
+const HRP = network.bech32; // 'tb' for testnet
 
 // hash160 = RIPEMD160(SHA256(pubkey))
 function hash160(pubkey) {
@@ -45,8 +28,8 @@ function toBech32Address(pubkey) {
 
 // Derive addresses from xprv
 export function deriveAddressesFromXprv(xprv, path, count = 100) {
-  const node = HDKey.fromExtendedKey(xprv, syscoinNetworks.testnet.bip32); // assumes mainnet
-
+  const node = HDKey.fromExtendedKey(xprv, network.bip32); // assumes mainnet
+  
   const addresses = [];
 
   for (let i = 0; i < count; i++) {
