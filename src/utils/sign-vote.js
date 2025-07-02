@@ -23,8 +23,8 @@ const signVote = (obj) => {
     const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome, type } = obj;
     const network =
       process.env.REACT_APP_CHAIN_NETWORK === "main"
-        ? syscoinNetworks.mainnet.bip32
-        : syscoinNetworks.testnet.bip32;
+        ? syscoinNetworks.mainnet
+        : syscoinNetworks.testnet;
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, "hex");
     const voteSignalNum = 1; // 'funding'
@@ -55,15 +55,16 @@ const signVote = (obj) => {
     const hash = crypto.hash256(message);
 
     let signature = null;
+
     if (type === "descriptor") {
       const { xprv } = parseDescriptor(mnPrivateKey);
-      const node = HDKey.fromExtendedKey(xprv, network);
+      const node = HDKey.fromExtendedKey(xprv, network.bip32);
       const signRaw = node.sign(hash);
       console.log({ signRaw });
       signature = btoa(String.fromCharCode(...signRaw));
     } else {
       const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
-      const sigObj = secp256k1.sign(hash, keyPair.privateKey);
+      const sigObj = secp256k1.sign(hash, Buffer.from(keyPair.privateKey));
       const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
       const recIdBuffer = Buffer.allocUnsafe(1);
       recIdBuffer.writeInt8(recId);

@@ -2,15 +2,19 @@ import { HDKey } from "@scure/bip32";
 import { bech32 } from "bech32";
 import { sha256 } from "@noble/hashes/sha256";
 import { ripemd160 } from "@noble/hashes/ripemd160";
-import { hex } from "@scure/base";
 import { syscoinNetworks } from "../../../utils/networks";
 
+import { ECPairFactory } from "ecpair";
+import * as secp from "@bitcoinerlab/secp256k1";
+import * as bitcoin from "bitcoinjs-lib";
+
+const ECPair = ECPairFactory(secp);
 
 // Network prefix for mainnet (bc) or testnet (tb)
 export const network =
-      process.env.REACT_APP_CHAIN_NETWORK === "main"
-        ? syscoinNetworks.mainnet
-        : syscoinNetworks.testnet;
+  process.env.REACT_APP_CHAIN_NETWORK === "main"
+    ? syscoinNetworks.mainnet
+    : syscoinNetworks.testnet;
 
 const HRP = network.bech32; // 'tb' for testnet
 
@@ -29,7 +33,7 @@ function toBech32Address(pubkey) {
 // Derive addresses from xprv
 export function deriveAddressesFromXprv(xprv, path, count = 100) {
   const node = HDKey.fromExtendedKey(xprv, network.bip32); // assumes mainnet
-  
+
   const addresses = [];
 
   for (let i = 0; i < count; i++) {
@@ -53,4 +57,15 @@ export function parseDescriptor(descriptor) {
   const path = match[2].replace("/*", "").replaceAll("h", "'"); // we'll add index later
 
   return { xprv, path };
+}
+
+export function deriveAddressFromWifPrivKey(privkey) {
+  const wallet = ECPair.fromWIF(`${privkey}`, network);
+  // How to get the address and return it? tb1....
+  const payment = bitcoin.payments.p2wpkh({
+    pubkey: Buffer.from(wallet.publicKey),
+    network,
+  });
+
+  return payment.address;
 }

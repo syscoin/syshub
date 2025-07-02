@@ -5,7 +5,11 @@ import * as yup from "yup";
 import IconInput from "../../global/IconInput";
 import WalletTypeSelection from "./WalletType";
 import { PrivateKey } from "./PrivateKey";
-import { parseDescriptor, deriveAddressesFromXprv } from "./validation-utils";
+import {
+  parseDescriptor,
+  deriveAddressesFromXprv,
+  deriveAddressFromWifPrivKey,
+} from "./validation-utils";
 
 const schema = yup.object().shape({
   name: yup.string().required("Label is required"),
@@ -26,6 +30,12 @@ const schema = yup.object().shape({
         if (!parent.privateKey) {
           return false;
         }
+
+        if (parent.type === "legacy") {
+          const address = deriveAddressFromWifPrivKey(parent.privateKey);
+          return address === value;
+        }
+
         const results = parseDescriptor(parent.privateKey);
 
         if (!results.xprv || !results.path) {
