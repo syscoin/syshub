@@ -60,7 +60,6 @@ const signVote = (obj) => {
       const { xprv } = parseDescriptor(mnPrivateKey);
       const node = HDKey.fromExtendedKey(xprv, network.bip32);
       const signRaw = node.sign(hash);
-      console.log({ signRaw });
       signature = btoa(String.fromCharCode(...signRaw));
     } else {
       const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
@@ -89,7 +88,7 @@ const signVote = (obj) => {
     return {
       txHash: masterNodeTx[0],
       txIndex: masterNodeTx[1],
-      governanceHash: gObjectHashBuffer.toString("hex"),
+      governanceHash: gObjectHash, //gObjectHashBuffer.toString("hex"),
       signal,
       vote,
       time,

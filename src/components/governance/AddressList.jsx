@@ -158,7 +158,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
       const proposalVoteNo = {
         mnPrivateKey: addrDecrypt.privateKey,
         vinMasternode: addrDecrypt.txId,
-        gObjectHash: proposal.Hash,
+        gObjectHash: proposal.Key,
         voteOutcome: vote,
         type: address.type
       };
