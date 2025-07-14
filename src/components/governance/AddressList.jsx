@@ -160,7 +160,8 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         vinMasternode: addrDecrypt.txId,
         gObjectHash: proposal.Key,
         voteOutcome: vote,
-        type: address.type
+        type: address.type,
+        votingAddress: address.address
       };
       const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)

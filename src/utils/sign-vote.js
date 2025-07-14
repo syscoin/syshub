@@ -1,4 +1,4 @@
-import { crypto } from "bitcoinjs-lib";
+import { crypto, payments } from "bitcoinjs-lib";
 import { ECPairFactory } from "ecpair";
 import { Buffer } from "buffer";
 import { Int64LE } from "int64-buffer";
@@ -20,7 +20,14 @@ const ECPair = ECPairFactory(secp);
 const signVote = (obj) => {
   // eslint-disable-next-line
   try {
-    const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome, type } = obj;
+    const {
+      mnPrivateKey,
+      vinMasternode,
+      gObjectHash,
+      voteOutcome,
+      type,
+      votingAddress,
+    } = obj;
     const network =
       process.env.REACT_APP_CHAIN_NETWORK === "main"
         ? syscoinNetworks.mainnet
@@ -54,22 +61,41 @@ const signVote = (obj) => {
 
     const hash = crypto.hash256(message);
 
-    let signature = null;
-
+    let signObj = null;
+    let isCompressed = false;
     if (type === "descriptor") {
       const { xprv } = parseDescriptor(mnPrivateKey);
-      const node = HDKey.fromExtendedKey(xprv, network.bip32);
-      const signRaw = node.sign(hash);
-      signature = btoa(String.fromCharCode(...signRaw));
+      const rootNode = HDKey.fromExtendedKey(xprv, network.bip32);
+      const basePath = "m/84h/1h/0h/0/*".replaceAll("h", "'");
+      const maxIndex = 100;
+      let derivedNode = null;
+      for (let i = 0; i < maxIndex; i++) {
+        const fullPath = basePath.replace("*", i.toString());
+        let node = rootNode.derive(fullPath);
+        const pubkey = Buffer.from(node.publicKey);
+        const { address } = payments.p2wpkh({ pubkey, network });
+        if (address === votingAddress) {
+          derivedNode = node;
+          break;
+        }
+      }
+
+      if (!derivedNode) {
+        throw new Error("Not able to find derivation");
+      }
+      signObj = secp256k1.sign(hash, Buffer.from(derivedNode.privateKey));
+      isCompressed = true;
     } else {
       const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
-      const sigObj = secp256k1.sign(hash, Buffer.from(keyPair.privateKey));
-      const recId = 27 + sigObj.recovery + (keyPair.compressed ? 4 : 0);
-      const recIdBuffer = Buffer.allocUnsafe(1);
-      recIdBuffer.writeInt8(recId);
-      const rawSignature = Buffer.concat([recIdBuffer, sigObj.signature]);
-      signature = rawSignature.toString("base64");
+      signObj = secp256k1.sign(hash, Buffer.from(keyPair.privateKey));
+      isCompressed = keyPair.compressed;
     }
+    const recId = 27 + signObj.recovery + (isCompressed ? 4 : 0);
+
+    const recIdBuffer = Buffer.allocUnsafe(1);
+    recIdBuffer.writeInt8(recId);
+    const rawSignature = Buffer.concat([recIdBuffer, signObj.signature]);
+    const signature = rawSignature.toString("base64");
 
     let vote;
     let signal;
