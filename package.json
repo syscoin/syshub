@@ -8,21 +8,26 @@
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
+    "@bitcoinerlab/secp256k1": "^1.2.0",
     "@hookform/error-message": "0.0.4",
     "@hookform/resolvers": "^0.1.1",
-    "@noble/secp256k1": "^2.2.3",
+    "@noble/hashes": "^1.8.0",
+    "@scure/base": "^1.2.6",
+    "@scure/bip32": "^1.7.0",
     "@swyftx/api-crypto-address-validator": "^1.13.1",
     "anychart-react": "^1.4.1",
     "axios": "^0.21.1",
+    "bech32": "^2.0.0",
     "bitcoinjs-lib": "^6.1.7",
     "bootstrap-sass": "^3.4.1",
+    "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "crypto-js": "^4.0.0",
     "datamaps": "^0.5.9",
     "dompurify": "^2.2.6",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
-    "ecpair": "^2.1.0",
+    "ecpair": "^3.0.0",
     "express": "^4.17.1",
     "firebase": "^11.3.1",
     "firebase-tools": "^13.30.0",
@@ -65,7 +70,7 @@
     "url": "^0.11.4",
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2",
-    "yup": "^0.29.3"
+    "yup": "^1.6.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -101,5 +106,6 @@
   },
   "overrides": {
     "underscore": "1.13.7"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

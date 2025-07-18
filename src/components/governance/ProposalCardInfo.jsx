@@ -104,7 +104,7 @@ function ProposalCardInfo({
             type="text"
             className="styled"
             style={{ resize: "none" }}
-            value={`gobject_vote_many ${proposal.Hash} funding yes`}
+            value={`gobject_vote_many ${proposal.Key} funding yes`}
             disabled={true}
           />
         </div>

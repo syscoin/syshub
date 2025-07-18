@@ -28,16 +28,19 @@ export const encryptVotingKey = (data) => {
       votingAddress,
       address,
       collateralIndex,
+      type,
       ...otherProps
     } = data;
 
-    let encryptedData = {
+    const encryptedData = {
       label: data.label,
       name: data.name,
       votingAddress: data.votingAddress,
       address: data.address,
       collateralIndex: data.collateralIndex,
+      type,
     };
+
     let derivedKey = getSeed();
 
     Object.entries(otherProps).forEach(([key, value]) => {

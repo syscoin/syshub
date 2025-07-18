@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
-import { yupResolver } from '@hookform/resolvers';
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-import WAValidator from '@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js';
-import IconInput from '../global/IconInput';
-
+import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
+import IconInput from "../global/IconInput";
 
 const schema = yup.object().shape({
-  name: yup.string().required('Label is required'),
-  address: yup.string()
+  name: yup.string().required("Label is required"),
+  address: yup
+    .string()
     .test(
-      'test-sys-address',
-      'Must be a valid Syscoin address',
-      async (value) => await WAValidator.validate(value, 'sys')
+      "test-sys-address",
+      "Must be a valid Syscoin address",
+      async (value) =>
+        await WAValidator.validate(
+          value,
+          process.env.REACT_APP_CHAIN_NETWORK === "main" ? "sys" : "tsys"
+        )
     )
-    .required('Voting address is required'),
-  txId: yup.string()
-    .matches(/-0$|-1$/, 'Tx Id must end with the index: -0 or -1')
-    .required('tx id is required'),
-  privateKey: yup.string().required('private key is required')
+    .required("Voting address is required"),
+  txId: yup
+    .string()
+    .matches(/-0$|-1$/, "Tx Id must end with the index: -0 or -1")
+    .required("tx id is required"),
+  privateKey: yup.string().required("private key is required"),
 });
 
 /**
  * Component to show a the data of a single address inside a form
  * @component
  * @subcategory Profile
- * @param {*} onEdit callback to edit the address 
- * @param {*} onRemove callback to remove the address 
+ * @param {*} onEdit callback to edit the address
+ * @param {*} onRemove callback to remove the address
  * @param {Object} address address info to show
  * @param {number} index index of the address on the array
  * @example
@@ -43,14 +48,19 @@ function UserAddress({ onEdit, onRemove, address, index }) {
   const [editting, setEditting] = useState(false);
   const [show, setShow] = useState(false);
 
-  const { register, handleSubmit, errors, reset: resetForm } = useForm({
+  const {
+    register,
+    handleSubmit,
+    errors,
+    reset: resetForm,
+  } = useForm({
     defaultValues: {
       name: address.name,
       address: address.address,
       txId: address.txId,
-      privateKey: address.privateKey
+      privateKey: address.privateKey,
     },
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   /**
@@ -80,7 +90,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
     setEditting(!editting);
     if (!show) toggleShow();
   }
-  
+
   /**
    * function to toggle the show inputs
    * @function
@@ -98,44 +108,80 @@ function UserAddress({ onEdit, onRemove, address, index }) {
   }
 
   return (
-    <div className="address input-form" >
+    <div className="address input-form">
       <div className="form-group">
-        { !editting && <div className="indicator">{address.name}</div> }
+        {!editting && <div className="indicator">{address.name}</div>}
         <form>
           {editting && (
             <div className="description">
               <label htmlFor={`name-${index}`}>Label</label>
-              <div style={{ position: 'relative' }}>
-                <input type="text" name="name" ref={register} className="styled" id={`name-${index}`} required />
+              <div style={{ position: "relative" }}>
+                <input
+                  type="text"
+                  name="name"
+                  ref={register}
+                  className="styled"
+                  id={`name-${index}`}
+                  required
+                />
                 <IconInput dataId="name">
-                  <p>Label to differentiate from other voting address at the moment of vote</p>
+                  <p>
+                    Label to differentiate from other voting address at the
+                    moment of vote
+                  </p>
                 </IconInput>
               </div>
               <ErrorMessage
                 errors={errors}
                 name="name"
-                render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+                render={({ message }) => (
+                  <small>
+                    <p style={{ lineHeight: "1.5" }}>{message}</p>
+                  </small>
+                )}
               />
             </div>
           )}
           <div className="description">
             <label htmlFor={`address-${index}`}>Voting address</label>
-            <div style={{position: 'relative'}}>
-              <input type="text" name="address" ref={register} className="styled" id={`address-${index}`} required disabled={!editting} />
+            <div style={{ position: "relative" }}>
+              <input
+                type="text"
+                name="address"
+                ref={register}
+                className="styled"
+                id={`address-${index}`}
+                required
+                disabled={!editting}
+              />
               <IconInput dataId="address">
-                <p>The same voting address that you used in your protx_register</p>
+                <p>
+                  The same voting address that you used in your protx_register
+                </p>
               </IconInput>
             </div>
             <ErrorMessage
               errors={errors}
               name="address"
-              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
             />
           </div>
           <div className="description">
             <label htmlFor={`privkey-${index}`}>Voting key</label>
-            <div style={{ position: 'relative' }}>
-              <input type={show ? 'text': 'password'} name="privateKey" ref={register} className="styled" id={`privkey-${index}`} required disabled={!editting} />
+            <div style={{ position: "relative" }}>
+              <input
+                type={show ? "text" : "password"}
+                name="privateKey"
+                ref={register}
+                className="styled"
+                id={`privkey-${index}`}
+                required
+                disabled={!editting}
+              />
               <IconInput dataId="privateKey">
                 <p>The private key of the voting address</p>
               </IconInput>
@@ -143,44 +189,92 @@ function UserAddress({ onEdit, onRemove, address, index }) {
             <ErrorMessage
               errors={errors}
               name="privateKey"
-              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
             />
           </div>
 
           <div className="description">
             <label htmlFor={`txid-${index}`}>Tx id</label>
-            <div style={{ position: 'relative' }}>
-              <input type={show ? 'text': 'password'} name="txId" ref={register} className="styled" id={`txid-${index}`} required disabled={!editting} />
+            <div style={{ position: "relative" }}>
+              <input
+                type={show ? "text" : "password"}
+                name="txId"
+                ref={register}
+                className="styled"
+                id={`txid-${index}`}
+                required
+                disabled={!editting}
+              />
               <IconInput dataId="txId">
-                <p>The collateral hash and collateral index of your masternode</p>
+                <p>
+                  The collateral hash and collateral index of your masternode
+                </p>
               </IconInput>
             </div>
             <ErrorMessage
               errors={errors}
               name="txId"
-              render={({ message }) => <small><p style={{lineHeight:'1.5'}}>{message}</p></small>}
+              render={({ message }) => (
+                <small>
+                  <p style={{ lineHeight: "1.5" }}>{message}</p>
+                </small>
+              )}
             />
           </div>
-        
+
           {editting && (
             <div className="form-actions-spaced">
-              <button className="btn btn--blue" type="button" onClick={handleSubmit(formSubmit)}>Save</button>
-              <button className="btn btn--blue-border" type="button" onClick={cancelEdition}>Cancel</button>
+              <button
+                className="btn btn--blue"
+                type="button"
+                onClick={handleSubmit(formSubmit)}
+              >
+                Save
+              </button>
+              <button
+                className="btn btn--blue-border"
+                type="button"
+                onClick={cancelEdition}
+              >
+                Cancel
+              </button>
             </div>
           )}
         </form>
 
         {!editting && (
           <div className="form-actions-spaced">
-            <button className="btn btn--blue" type="button" onClick={toggleShow}>{show ? 'Hide' : 'Show'}</button>
-            <button className="btn btn--blue" type="button" onClick={toggleEdition}>Edit</button>
-            <button className="btn btn--blue-border" type="button" onClick={removeMN}>Remove</button>
+            <button
+              className="btn btn--blue"
+              type="button"
+              onClick={toggleShow}
+            >
+              {show ? "Hide" : "Show"}
+            </button>
+            <button
+              className="btn btn--blue"
+              type="button"
+              onClick={toggleEdition}
+            >
+              Edit
+            </button>
+            <button
+              className="btn btn--blue-border"
+              type="button"
+              onClick={removeMN}
+            >
+              Remove
+            </button>
           </div>
         )}
         <div className="form-group spacer line"></div>
       </div>
     </div>
-  )
+  );
 }
 
 export default UserAddress;

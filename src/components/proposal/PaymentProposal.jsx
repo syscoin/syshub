@@ -111,6 +111,7 @@ const PaymentProposal = ({onNext, onBack}) => {
       proposalPayoutDates.push(firstRewardDateEpoch + superblockCycleEpoch * i);
     }
     const gapEnsurePayment = superblockCycleEpoch / 2;
+    
     const paymentInfo = {
       proposalPayoutDates,
       endEpoch: proposalPayoutDates[nPayments - 1] + gapEnsurePayment

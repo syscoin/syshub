@@ -7,6 +7,7 @@ import {useUser} from '../../../context/user-context';
 
 import SMS2FA from './SMS2FA';
 import GAuth from './GAuth';
+import { verifyGauthCode } from '../../../utils/request';
 
 /**
  * The modal content when using 2FA
@@ -109,10 +110,10 @@ function Modal2FA({user2fa, userSignInGAuth, onGAuth, onPhoneSMS}) {
         swal.showLoading()
       }
     })
-    let secret = decryptJWT(userSignInGAuth.secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let h = decryptJWT(secret, process.env.REACT_APP_ENCRYPT_KEY_DATA);
-    let isVerified = verifyAuthCode(h, gAuthCode);
+    
+    const verificationResponse = await verifyGauthCode(gAuthCode).then(a => a.data).catch(() => ({ok: false}));
 
+    const isVerified = Boolean(verificationResponse.ok)
     if (isVerified) {
       await swal.fire({
         icon: "success",

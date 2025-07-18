@@ -12,6 +12,7 @@ import AddressItem from "./AddressItem";
 import CustomModal from "../global/CustomModal";
 import Modal2FA from "../profile/2FA/Modal2FA";
 import {decryptVotingKey} from "../../utils/encryption";
+import signVote from "../../utils/sign-vote";
 
 /**
  * Component to show the voting address list of the user
@@ -52,7 +53,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
     const getAddressOfUser = async () => {
       setLoadingAddress(true);
       try {
-        let { data, status } = await getUserVotingAddress({ hash: proposal.Hash, cancelToken: cancelSource.token })
+        let { data, status } = await getUserVotingAddress({ hash: proposal.Key, cancelToken: cancelSource.token })
         .catch((err) => {
           throw err;
         });
@@ -114,7 +115,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
    */
   const prepareVoting = async () => {
     try {
-      let user2fa = await get2faInfoUser(user.data.user_id);
+      let user2fa = await get2faInfoUser(user.data.uid);
       if (user2fa.twoFa === true) {
         setUser2FA(user2fa);
         if (user2fa.gAuth === true) {
@@ -157,10 +158,12 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
       const proposalVoteNo = {
         mnPrivateKey: addrDecrypt.privateKey,
         vinMasternode: addrDecrypt.txId,
-        gObjectHash: proposal.Hash,
+        gObjectHash: proposal.Key,
         voteOutcome: vote,
+        type: address.type,
+        votingAddress: address.address
       };
-      const voteData = { proposalVoteNo } // Send to api: signVote(proposalVoteNo)
+      const voteData = signVote(proposalVoteNo)
       await voteProposal(voteData)
         .then(async data => {
           addressVoted.push({
