@@ -87,7 +87,7 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
       isMounted.current = false;
       cancelSource.cancel('The request has been canceled');
     }
-  }, [cancelSource, proposal.Hash]);
+  }, [cancelSource, proposal.Key]);
 
   /**
    * Function that adds an address to the state of selected addresses
