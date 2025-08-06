@@ -34,16 +34,18 @@ function Modal2FA({ user2fa, userSignInGAuth, onGAuth, onPhoneSMS }) {
    * @function
    */
   useEffect(() => {
-    window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
-      size: "invisible",
-      callback: () => {
-        setRecaptchaVerified(true);
-      },
-      error: (err) => {
-        setRecaptchaVerified(false);
-      },
-    });
-    window.recaptchaVerifier.render();
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = firebase.newRecaptchaVerifier("recaptcha", {
+        size: "invisible",
+        callback: () => {
+          setRecaptchaVerified(true);
+        },
+        error: (err) => {
+          setRecaptchaVerified(false);
+        },
+      });
+      window.recaptchaVerifier.render();
+    }
 
     const createPhoneProvider = async () => {
       let phone = await firebase.getPhoneAuthProviderID();
