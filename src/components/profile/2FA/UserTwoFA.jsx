@@ -283,10 +283,10 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
                 {
                     authData.sms && (
                         <div className="btn-group">
-                            <button className="btn btn--blue-border" onClick={() => setOpenSMS(true)}>
+                            <button className="btn btn-outline-primary" onClick={() => setOpenSMS(true)}>
                                 Change phone
                             </button>
-                            <button className="btn btn--blue-border" onClick={disableSMS}>
+                            <button className="btn btn-outline-primary" onClick={disableSMS}>
                                 Disable
                             </button>
                         </div>
@@ -312,7 +312,7 @@ function UserTwoFA({authData, onTwoFAChange, userPhone}) {
         )}
         {authData.gAuth && (
           <div className="btn-group">
-            <button className="btn btn--blue-border" onClick={removeSecret}>
+            <button className="btn btn-outline-primary" onClick={removeSecret}>
               Remove secret and disable
             </button>
           </div>

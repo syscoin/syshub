@@ -1,3 +1,5 @@
+@use "settings" as *;
+
 /* ------------------------------------------------------------ *\
 	Button
 \* ------------------------------------------------------------ */
@@ -22,11 +24,11 @@
 
 .btn--blue:hover { box-shadow:none; background-position: -100%; }
 
-/*  btn--blue-border  */
+/*  btn-outline-primary  */
 
-.btn--blue-border { background:transparent; border: 2px solid $blue; line-height: 44px; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12); }
+.btn-outline-primary { background:transparent; border: 2px solid $blue; line-height: 44px; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12); }
 
-.btn--blue-border:hover { background: $blue; }
+.btn-outline-primary:hover { background: $blue; }
 
 .btn--small { min-width: 152px; }
 .btn--md { min-width: 236px; }

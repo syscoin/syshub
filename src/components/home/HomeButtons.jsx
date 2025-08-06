@@ -16,19 +16,19 @@ function HomeButtons() {
 
   return (
     <div className="article__actions vertical">
-      <Link to="/about" className="btn btn--blue-border">
+      <Link to="/about" className="btn btn-outline-primary">
         Learn More
       </Link>
       <a
         href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
-        className="btn btn--blue-border"
+        className="btn btn-outline-primary"
         rel="noopener noreferrer"
         target="_blank"
       >
         Setup SentryNode
       </a>
       {!user && (
-        <Link to="/signup" className="btn btn--blue-border">
+        <Link to="/signup" className="btn btn-outline-primary">
           Sign up
         </Link>
       )}

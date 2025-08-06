@@ -199,7 +199,7 @@ function DescriptionProposal({onNext, onBack}) {
 
             <div className="form-actions-spaced">
                 <button
-                    className="btn btn--blue-border"
+                    className="btn btn-outline-primary"
                     type="button"
                     onClick={backEditor}
                 >
@@ -208,7 +208,7 @@ function DescriptionProposal({onNext, onBack}) {
 
                 {showEditor && (
                     <button
-                        className="btn btn--blue-border"
+                        className="btn btn-outline-primary"
                         onClick={() => {
                             setShowPreview(true);
                             setShowEditor(false);
@@ -219,7 +219,7 @@ function DescriptionProposal({onNext, onBack}) {
                 )}
                 {showPreview && (
                     <button
-                        className="btn btn--blue-border"
+                        className="btn btn-outline-primary"
                         onClick={() => {
                             setShowPreview(false);
                             setShowEditor(true);

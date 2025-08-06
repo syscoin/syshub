@@ -411,7 +411,7 @@ function ProposalForm() {
               <ProposalPreview title={title} description={description} url={url} payment={payment}/>
 
               <div className="form-actions-spaced">
-                <button className="btn btn--blue-border" type="button" onClick={back}>Back</button>
+                <button className="btn btn-outline-primary" type="button" onClick={back}>Back</button>
                 <button
                   className="btn btn--blue"
                   type="button"
@@ -454,7 +454,7 @@ function ProposalForm() {
                   text={prepareCommand}
                   onCopy={copyButton}
                 >
-                  <button className="btn btn--blue-border" type="button">Copy</button>
+                  <button className="btn btn-outline-primary" type="button">Copy</button>
                 </CopyToClipboard>
               </div>
 
@@ -469,7 +469,7 @@ function ProposalForm() {
                   />
                 </div>
                 <div className="form-actions-spaced">
-                  <button className="btn btn--blue-border" type="button" onClick={cancelProposalBtn}>Cancel</button>
+                  <button className="btn btn-outline-primary" type="button" onClick={cancelProposalBtn}>Cancel</button>
                   <button className="btn btn--blue" type="submit">Next</button>
                 </div>
               </form>
@@ -502,7 +502,7 @@ function ProposalForm() {
                   text={submitCommand}
                   onCopy={copyButton}
                 >
-                  <button className="btn btn--blue-border" type="button">Copy</button>
+                  <button className="btn btn-outline-primary" type="button">Copy</button>
                 </CopyToClipboard>
               </div>
 
@@ -517,7 +517,7 @@ function ProposalForm() {
                   />
                 </div>
                 <div className="form-actions-spaced">
-                  <button className="btn btn--blue-border" type="button" onClick={cancelProposalBtn}>Cancel</button>
+                  <button className="btn btn-outline-primary" type="button" onClick={cancelProposalBtn}>Cancel</button>
                   <button className="btn btn--blue" type="submit">Submit</button>
                 </div>
               </form>
@@ -539,7 +539,7 @@ function ProposalForm() {
         <ProposalPreview title={title} description={description} url={url} payment={payment}/>
 
         <button
-          className="btn btn--blue-border"
+          className="btn btn-outline-primary"
           style={{marginBottom: '10px', marginLeft: '10px'}}
           onClick={cancelCurrentProposal}
         >Cancel

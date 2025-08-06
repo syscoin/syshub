@@ -206,7 +206,7 @@ function UserAddressList() {
           <p className="indicator">{t('profile.data.address.loading')}</p>
         )
       }
-      <Link to={`${url}/add-voting-address`} className="btn btn--blue-border">
+      <Link to={`${url}/add-voting-address`} className="btn btn-outline-primary">
         Add voting address
       </Link>
       {/* <CustomModal

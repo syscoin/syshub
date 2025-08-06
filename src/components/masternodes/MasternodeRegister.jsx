@@ -13,7 +13,7 @@ export const MasternodeRegister = () => {
       <Title heading={t("check.register.title")} />
       <MasternodeForm />
       <div className="text-center article">
-        <Link to="/sentrynodes" className="btn btn--blue-border">SentryNodes</Link>
+        <Link to="/sentrynodes" className="btn btn-outline-primary">SentryNodes</Link>
       </div>
     </>
   )

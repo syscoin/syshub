@@ -22,8 +22,6 @@ function UserDelete() {
   const [open2FAModal, setOpen2FAModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log({ user });
-
   /**
    * function to confirm the deletion of the account and check the 2fa auth to open the modal
    * @function

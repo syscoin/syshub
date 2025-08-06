@@ -19,7 +19,7 @@
     "axios": "^0.21.1",
     "bech32": "^2.0.0",
     "bitcoinjs-lib": "^6.1.7",
-    "bootstrap-sass": "^3.4.1",
+    "bootstrap": "^5.3.7",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "crypto-js": "^4.0.0",
@@ -101,8 +101,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "better-docs": "2.3",
+    "copy-webpack-plugin": "^13.0.0",
     "jsdoc": "^4.0.4",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "sass": "^1.90.0"
   },
   "overrides": {
     "underscore": "1.13.7"

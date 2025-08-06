@@ -267,7 +267,7 @@ const UsersTable = ({ t }) => {
           <div className="btn-group text-center" style={{ marginTop: "20px" }}>
             <button
               type="reset"
-              className="btn btn--blue-border"
+              className="btn btn-outline-primary"
               onClick={doReset}
             >
               Clear

@@ -322,7 +322,7 @@ const FaqForm = () => {
         <div className="form-actions-spaced text-center">
           {showEditor && (
             <button
-              className="btn btn--blue-border"
+              className="btn btn-outline-primary"
               onClick={() => {
                 setShowPreview(true);
                 setShowEditor(false);
@@ -333,7 +333,7 @@ const FaqForm = () => {
           )}
           {showPreview && (
             <button
-              className="btn btn--blue-border"
+              className="btn btn-outline-primary"
               onClick={() => {
                 setShowPreview(false);
                 setShowEditor(true);
@@ -353,7 +353,7 @@ const FaqForm = () => {
         </div>
       </form>
       <div className="text-center" style={{ marginTop: "50px" }}>
-        <Link to="/admin" className="btn btn--blue-border">
+        <Link to="/admin" className="btn btn-outline-primary">
           Go back
         </Link>
       </div>

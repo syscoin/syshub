@@ -266,7 +266,7 @@ function MasternodeForm() {
 
             <div className="form-actions-spaced">
               <button
-                className="btn btn--blue-border"
+                className="btn btn-outline-primary"
                 type="button"
                 onClick={back}
               >

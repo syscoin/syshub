@@ -63,7 +63,7 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
 
       <div className="form-actions-spaced">
         <CopyToClipboard text={prepareCommand} onCopy={copyButton}>
-          <button className="btn btn--blue-border" type="button">
+          <button className="btn btn-outline-primary" type="button">
             Copy
           </button>
         </CopyToClipboard>
@@ -126,7 +126,7 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
         </div>
         <div className="form-actions-spaced">
           <button
-            className="btn btn--blue-border"
+            className="btn btn-outline-primary"
             type="button"
             onClick={onCancel}
           >

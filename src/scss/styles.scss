@@ -1,11 +1,20 @@
-@import '_mixins.scss';
-@import '_settings.scss';
-@import '_header.scss';
-@import '_nav.scss';
-@import '_backgrounds.scss';
-@import '_btns.scss';
-@import '_article.scss';
-@import '_inputs.scss';
-@import '_tables.scss';
-@import '_modal.scss';
-@import '_icons.scss';
+// @text-color: #D3DFFF;
+// $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Default variable overrides
+$body-bg: #000;
+$body-color: #D3DFFF;
+// Required
+@use "bootstrap/scss/bootstrap";
+// @import "_mixins.scss";
+// @use "_settings.scss";
+// @import "_header.scss";
+// @import "_nav.scss";
+// @import "_backgrounds.scss";
+// @use "_btns.scss";
+// @import "_article.scss";
+// @import "_inputs.scss";
+// @import "_tables.scss";
+// @import "_modal.scss";
+// @import "_icons.scss";
