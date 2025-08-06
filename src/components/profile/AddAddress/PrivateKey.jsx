@@ -21,7 +21,17 @@ export const PrivateKey = () => {
           placeholder={isLegacySelected ? "012314...." : "wpkh(.....)"}
         />
         <IconInput dataId="privateKey">
-          <p>The private key of the voting address</p>
+          {isLegacySelected ? (
+            <p>The private key of the voting address</p>
+          ) : (
+            <>
+              <p>The descriptor of the voting address.</p>
+              <p>
+                This can be fetched using <code>listdescriptors true</code> on
+                your console.
+              </p>
+            </>
+          )}
         </IconInput>
       </div>
       <ErrorMessage
