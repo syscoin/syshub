@@ -288,7 +288,7 @@ const PaymentProposal = ({onNext, onBack}) => {
         </p>
       </div>
       <div className="form-actions-spaced">
-        <button className="btn btn--blue-border" type="button" onClick={onBack}>Back</button>
+        <button className="btn btn-outline-primary" type="button" onClick={onBack}>Back</button>
         <button className="btn btn--blue" type="submit" disabled={!theDatesWereLoaded}>Next</button>
       </div>
     </form>

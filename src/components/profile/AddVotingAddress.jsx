@@ -136,7 +136,7 @@ function AddVotingAddress() {
                     onMultipleCreation={addManyAddress}
                     submitting={submitting}
                   />
-                  <Link to="/profile" className="btn btn--blue-border">
+                  <Link to="/profile" className="btn btn-outline-primary">
                     Go back
                   </Link>
                 </div>

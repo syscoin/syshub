@@ -57,7 +57,7 @@ const MasternodeSigned = ({ onNext, onCancel, signCommand }) => {
 
       <div className="form-actions-spaced">
         <CopyToClipboard text={signCommand} onCopy={copyButton}>
-          <button className="btn btn--blue-border" type="button">
+          <button className="btn btn-outline-primary" type="button">
             Copy
           </button>
         </CopyToClipboard>
@@ -121,7 +121,7 @@ const MasternodeSigned = ({ onNext, onCancel, signCommand }) => {
         
         <div className="form-actions-spaced">
           <button
-            className="btn btn--blue-border"
+            className="btn btn-outline-primary"
             type="button"
             onClick={onCancel}
           >

@@ -124,7 +124,7 @@ class Home extends Component {
                                                     <SubTitle heading="Check your sentrynode" />
                                                     <MasternodeTable simple={true} sizePerPage={5} />
                                                     <div className="article__actions text-center">
-                                                        <Link to="/sentrynodes" className="btn btn--blue-border">All masternodes</Link>
+                                                        <Link to="/sentrynodes" className="btn btn-outline-primary">All masternodes</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@ class Home extends Component {
                                                 <div className="article__content">
                                                     <ProposalsList statsData={this.state.api_data.stats.mn_stats} />
                                                     <div className="article__actions text-center">
-                                                        <Link to="/governance" className="btn btn--blue-border">More about governance</Link>
+                                                        <Link to="/governance" className="btn btn-outline-primary">More about governance</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -153,7 +153,7 @@ class Home extends Component {
                                                     <LinearCharts chartData={this.state.api_data.stats.mn_stats}/>
                                                     <WorldMap mapData={this.state.api_data.mapData} mapFills={this.state.api_data.mapFills} />
                                                     <div className="article__actions text-center">
-                                                        <Link to="/stats" className="btn btn--blue-border">More stats</Link>
+                                                        <Link to="/stats" className="btn btn-outline-primary">More stats</Link>
                                                     </div>
                                                 </div>
                                             </div>

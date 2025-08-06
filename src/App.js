@@ -24,6 +24,8 @@ import Admin from './pages/Admin';
 import FAQ from './pages/FAQ';
 import About from './pages/About'
 
+import './scss/styles.scss'
+
 /**
  * App component that handles the use of the Header and Footer components, alongside with the Routing
  * @component

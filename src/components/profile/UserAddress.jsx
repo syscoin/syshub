@@ -236,7 +236,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
                 Save
               </button>
               <button
-                className="btn btn--blue-border"
+                className="btn btn-outline-primary"
                 type="button"
                 onClick={cancelEdition}
               >
@@ -263,7 +263,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
               Edit
             </button>
             <button
-              className="btn btn--blue-border"
+              className="btn btn-outline-primary"
               type="button"
               onClick={removeMN}
             >

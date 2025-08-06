@@ -383,7 +383,7 @@ nav ol { list-style: none outside none; }
 /* title border */
 
 .title-border { position: relative; padding-top: 23px; }
-.title-border:before { content: ''; position: absolute; top: -2px; left: 50%; width: 48px; height: 2px; transform: translateX(-50%); background-image: url(../images/svg/line-ornament/Orange.svg);-webkit-transition: opacity .4s;-o-transition: opacity .4s;transition: opacity .4s; }
+.title-border:before { content: ''; position: absolute; top: -2px; left: 50%; width: 48px; height: 2px; transform: translateX(-50%); background-image: url(../images/line-ornament/Orange.svg);-webkit-transition: opacity .4s;-o-transition: opacity .4s;transition: opacity .4s; }
 .title-border:hover::before {opacity: 0.4;}
 
 .title-border--left:before { left: 0; transform: translateX(0); }
