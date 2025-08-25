@@ -50,7 +50,7 @@ function Signup({ t }) {
         timer: 2000,
         showConfirmButton: false
       });
-      history.push('/profile');
+      history.push('/profile?verifyEmail=true');
     } catch (error) {
       setSubmitting(false);
       swal.fire({

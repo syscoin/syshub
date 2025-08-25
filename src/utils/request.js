@@ -9,6 +9,25 @@ import { decryptVotingKey, encryptVotingKey } from "./encryption";
 const API_URI = process.env.REACT_APP_SYS_API_URI;
 /* MasterNodes and Governance */
 
+export const apiClient = axios.create({
+  baseURL: API_URI,
+  headers: {
+    appclient: process.env.REACT_APP_CLIENT,
+  },
+});
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API ERROR", error.request);
+    if (error.response?.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 /**
  * get the list of masternodes
  * @function
@@ -16,11 +35,8 @@ const API_URI = process.env.REACT_APP_SYS_API_URI;
  */
 export const list = async (cancelToken) => {
   try {
-    return await axios
-      .get(`${API_URI}/statsInfo/list`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
+    return await apiClient
+      .get(`/statsInfo/list`, {
         cancelToken: cancelToken,
       })
       .catch((err) => {
@@ -38,11 +54,8 @@ export const list = async (cancelToken) => {
  */
 export const getInfo = async (cancelToken) => {
   try {
-    return await axios
-      .get(`${API_URI}/statsInfo/getinfo`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
+    return await apiClient
+      .get(`/statsInfo/getinfo`, {
         cancelToken: cancelToken,
       })
       .catch((err) => {
@@ -59,15 +72,9 @@ export const getInfo = async (cancelToken) => {
  */
 export const getMiningInfo = async () => {
   try {
-    return await axios
-      .get(`${API_URI}/statsInfo/getmininginfo`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return await apiClient.get(`/statsInfo/getmininginfo`).catch((err) => {
+      throw err;
+    });
   } catch (err) {
     new Error(err);
   }
@@ -80,11 +87,8 @@ export const getMiningInfo = async () => {
  */
 export const getGovernanceInfo = async (cancelToken) => {
   try {
-    return await axios
-      .get(`${API_URI}/statsInfo/getgovernanceinfo`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
+    return await apiClient
+      .get(`/statsInfo/getgovernanceinfo`, {
         cancelToken: cancelToken,
       })
       .catch((err) => {
@@ -102,11 +106,8 @@ export const getGovernanceInfo = async (cancelToken) => {
  */
 export const getSuperBlockBudget = async (cancelToken) => {
   try {
-    return await axios
-      .get(`${API_URI}/statsInfo/getsuperblockbudget`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
+    return await apiClient
+      .get(`/statsInfo/getsuperblockbudget`, {
         cancelToken: cancelToken,
       })
       .catch((err) => {
@@ -125,11 +126,10 @@ export const getSuperBlockBudget = async (cancelToken) => {
 export const getOneMasterNode = async (id) => {
   try {
     let { accessToken } = getUserData();
-    return await axios
-      .get(`${API_URI}/address/${id}`, {
+    return await apiClient
+      .get(`/address/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -150,19 +150,13 @@ export const getUserVotingAddress = async ({ hash, cancelToken }) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    let newData = await axios
-      .get(
-        typeof hash !== "undefined"
-          ? `${API_URI}/address?hash=${hash}`
-          : `${API_URI}/address`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            appclient: process.env.REACT_APP_CLIENT,
-          },
-          cancelToken: cancelToken,
-        }
-      )
+    let newData = await apiClient
+      .get(typeof hash !== "undefined" ? `/address?hash=${hash}` : `/address`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        cancelToken: cancelToken,
+      })
       .catch((err) => {
         throw err;
       });
@@ -197,17 +191,12 @@ export const createVotingAddress = async (data) => {
       newData = encryptVotingKey(data);
     }
     let { accessToken } = getUserData();
-    return await axios
-      .post(
-        `${API_URI}/address`,
-        data.listMN ? { listMN: newDataMany } : newData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            appclient: process.env.REACT_APP_CLIENT,
-          },
-        }
-      )
+    return await apiClient
+      .post(`/address`, data.listMN ? { listMN: newDataMany } : newData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .catch((err) => {
         throw err;
       });
@@ -227,14 +216,13 @@ export const updateVotingAddress = async (id, data) => {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
     let newData = encryptVotingKey(data);
-    return await axios
+    return await apiClient
       .put(
-        `${API_URI}/address/${id}`,
+        `/address/${id}`,
         { data: newData },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            appclient: process.env.REACT_APP_CLIENT,
           },
         }
       )
@@ -255,11 +243,10 @@ export const destroyVotingAddress = async (id) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .delete(`${API_URI}/address/${id}`, {
+    return await apiClient
+      .delete(`/address/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -429,11 +416,10 @@ export const checkProposal = async (data) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .post(`${API_URI}/proposal/check`, data, {
+    return await apiClient
+      .post(`/proposal/check`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -453,11 +439,10 @@ export const prepareProposal = async (data) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .post(`${API_URI}/proposal/prepare`, data, {
+    return await apiClient
+      .post(`/proposal/prepare`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -478,11 +463,10 @@ export const submitProposal = async (id, data) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .put(`${API_URI}/proposal/submit/${id}`, data, {
+    return await apiClient
+      .put(`/proposal/submit/${id}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -527,11 +511,10 @@ export const getOneProposal = async (id) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .get(`${API_URI}/proposal/${id}`, {
+    return await apiClient
+      .get(`/proposal/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -577,11 +560,10 @@ export const createProposal = async (data) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .post(`${API_URI}/proposal`, data, {
+    return await apiClient
+      .post(`/proposal`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -602,14 +584,13 @@ export const updateProposal = async (id, data) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
+    return await apiClient
       .put(
-        `${API_URI}/proposal/${id}`,
+        `/proposal/${id}`,
         { data: data },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            appclient: process.env.REACT_APP_CLIENT,
           },
         }
       )
@@ -630,11 +611,10 @@ export const destroyProposal = async (id) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
-    return await axios
-      .delete(`${API_URI}/proposal/${id}`, {
+    return await apiClient
+      .delete(`/proposal/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .catch((err) => {
@@ -654,15 +634,9 @@ export const destroyProposal = async (id) => {
  */
 export const login = async (data) => {
   try {
-    return await axios
-      .post(`${API_URI}/auth/login`, data, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return await apiClient.post(`/auth/login`, data).catch((err) => {
+      throw err;
+    });
   } catch (err) {
     if (err.response) {
       return { status: err.response.status, error: err.response.data };
@@ -679,15 +653,9 @@ export const login = async (data) => {
  */
 export const register = async (data) => {
   try {
-    return await axios
-      .post(`${API_URI}/auth/register`, data, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return await apiClient.post(`/auth/register`, data).catch((err) => {
+      throw err;
+    });
   } catch (err) {
     throw err;
   }
@@ -705,11 +673,10 @@ export const getUserInfo = async (id, cancelToken) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/user/${id}`, {
+    apiClient
+      .get(`/user/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         cancelToken: cancelToken,
       })
@@ -718,19 +685,13 @@ export const getUserInfo = async (id, cancelToken) => {
   });
 };
 
-/**
- * function that gets the two factor authorization info of the user from the api
- * @function
- * @param {string} id id of the user
- */
 export const get2faInfoUser = async (id) => {
   return new Promise((resolve, reject) => {
     let { accessToken } = getUserData();
-    axios
-      .get(`${API_URI}/user/verify2fa/${id}`, {
+    apiClient
+      .get(`/user/verify2fa/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then(({ data }) => {
@@ -743,21 +704,14 @@ export const get2faInfoUser = async (id) => {
   });
 };
 
-/**
- * request to update the user data and credentials
- * @function
- * @param {string} uid uid of the user to update
- * @param {Object} data data to update
- */
 export const updateUser = async (id, data) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .put(`${API_URI}/user/${id}`, data, {
+    apiClient
+      .put(`/user/${id}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => {
@@ -769,21 +723,14 @@ export const updateUser = async (id, data) => {
   });
 };
 
-/**
- * request to update the two factor authorization data
- * @function
- * @param {string} id id of the user
- * @param {*} data data of the user
- */
 export const updateActionsUser = async (id, data, params) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .put(`${API_URI}/user/extend/${id}`, data, {
+    apiClient
+      .put(`/user/extend/${id}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         params: {
           ...params,
@@ -798,20 +745,14 @@ export const updateActionsUser = async (id, data, params) => {
   });
 };
 
-/**
- * function to remove the user from the database and delete his account
- * @function
- * @param {string} uid the user uid to delete
- */
 export const deleteUser = async (id) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .delete(`${API_URI}/user/${id}`, {
+    apiClient
+      .delete(`/user/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => {
@@ -826,11 +767,8 @@ export const deleteUser = async (id) => {
 /* F.A.Q. */
 export const getPublicFaqs = async (cancelToken) => {
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/faq/forall`, {
-        headers: {
-          appclient: process.env.REACT_APP_CLIENT,
-        },
+    apiClient
+      .get(`/faq/forall`, {
         cancelToken: cancelToken,
       })
       .then((resp) => resolve(resp))
@@ -842,11 +780,10 @@ export const getAllFaqs = async (page, cancelToken) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/faq/?page=${page}`, {
+    apiClient
+      .get(`/faq/?page=${page}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         cancelToken: cancelToken,
       })
@@ -854,15 +791,15 @@ export const getAllFaqs = async (page, cancelToken) => {
       .catch((err) => reject(err));
   });
 };
+
 export const getSingleFaq = async (uid, cancelToken) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/faq/${uid}`, {
+    apiClient
+      .get(`/faq/${uid}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         cancelToken: cancelToken,
       })
@@ -875,11 +812,10 @@ export const createFaq = async (data) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .post(`${API_URI}/faq`, data, {
+    apiClient
+      .post(`/faq`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -891,11 +827,10 @@ export const updateFaq = async (uid, data) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .put(`${API_URI}/faq/${uid}`, data, {
+    apiClient
+      .put(`/faq/${uid}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -907,11 +842,10 @@ export const deleteFaq = async (uid) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .delete(`${API_URI}/faq/${uid}`, {
+    apiClient
+      .delete(`/faq/${uid}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -925,11 +859,10 @@ export const getAllUsers = async (page, email = "", cancelToken) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/user/?page=${page}&email=${email}`, {
+    apiClient
+      .get(`/user/?page=${page}&email=${email}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         cancelToken: cancelToken,
       })
@@ -942,11 +875,10 @@ export const makeAdmin = async (data) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .post(`${API_URI}/admin/`, data, {
+    apiClient
+      .post(`/admin/`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -958,11 +890,10 @@ export const deleteAdmin = async (uid) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .delete(`${API_URI}/admin/${uid}`, {
+    apiClient
+      .delete(`/admin/${uid}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -974,11 +905,10 @@ export const getAllHiddenProposals = async (page, cancelToken) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${API_URI}/proposal/hiddenproposal/all/?page=${page}`, {
+    apiClient
+      .get(`/proposal/hiddenproposal/all/?page=${page}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
         cancelToken: cancelToken,
       })
@@ -991,11 +921,10 @@ export const createHiddenProposal = async (data) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .post(`${API_URI}/proposal/hiddenproposal`, data, {
+    apiClient
+      .post(`/proposal/hiddenproposal`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -1007,11 +936,10 @@ export const deleteHiddenProposal = async (hash) => {
   await firebase.refreshInRequest();
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
-      .delete(`${API_URI}/proposal/hiddenproposal/${hash}`, {
+    apiClient
+      .delete(`/proposal/hiddenproposal/${hash}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          appclient: process.env.REACT_APP_CLIENT,
         },
       })
       .then((resp) => resolve(resp))
@@ -1023,9 +951,9 @@ export const logout = async () => {
   await firebase.refreshInRequest();
   let { accessToken, uid } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
+    apiClient
       .post(
-        `${API_URI}/user/revoke/${uid}`,
+        `/user/revoke/${uid}`,
         { token: accessToken },
         {
           headers: {
@@ -1041,9 +969,9 @@ export const logout = async () => {
 export const verifyGauthCode = async (code) => {
   let { accessToken } = getUserData();
   return new Promise((resolve, reject) => {
-    axios
+    apiClient
       .post(
-        `${API_URI}/user/verify-gauth-code`,
+        `/user/verify-gauth-code`,
         { code },
         {
           headers: {
