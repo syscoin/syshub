@@ -63,9 +63,9 @@ export function UserProvider(props) {
 
   useEffect(() => {
     async function loadAdminInfo() {
-      if (user) {
+      if (user?.data) {
         try {
-          const response = await getUserInfo(user.data.user_id);
+          const response = await getUserInfo(user.data.uid);
           if (response.data) {
             const userIsAdmin = response.data.user.roles.find(
               (role) => role === "admin"
@@ -84,7 +84,7 @@ export function UserProvider(props) {
     }
 
     loadAdminInfo();
-  }, [user]);
+  }, [user?.data]);
 
   /**
    * function used to signup the user in the app
