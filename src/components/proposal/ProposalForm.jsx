@@ -369,7 +369,7 @@ function ProposalForm() {
       await swal.fire({
         icon: 'error',
         title: 'There was an error please try again',
-        text: error.message
+        text: error.response?.data?.message ?? error.message
       });
     }
 
