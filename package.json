@@ -78,7 +78,9 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "docs": "jsdoc -c jsdoc.conf.json"
+    "docs": "jsdoc -c jsdoc.conf.json",
+    "serve:build": "node server.js",
+    "screenshot:footer": "node scripts/capture-footer.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -103,6 +105,7 @@
     "better-docs": "2.3",
     "copy-webpack-plugin": "^13.0.0",
     "jsdoc": "^4.0.4",
+    "puppeteer": "^24.17.1",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.90.0"
   },
