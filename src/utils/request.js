@@ -380,7 +380,8 @@ export const nextGovernanceRewardInfo = async (cancelToken) => {
     });
 
     const blockHeight = BlockChainInfo.blocks;
-    const blockGenerationCycle = 60; // Defined by the chain White_paper doc.
+    // https://syscoin.org/file/syscoin4-whitepaper.pdf IV. SPECIFICATIONS
+    const blockGenerationCycle = 150; // Defined by the chain White_paper doc.
     const votingDeadlineGap = 3;
     const superblockCycleEpoch = superblockcycle * blockGenerationCycle;
     const nextRewardInSeconds =

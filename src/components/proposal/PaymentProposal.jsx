@@ -74,17 +74,24 @@ const PaymentProposal = ({onNext, onBack}) => {
    * @returns {string}
    */
   const yearDayMonth = (dateInMills, format) => {
-    const firstDay = `0${new Date(dateInMills).getDate()}`.slice(-2);
-    const firstMonth = `0${parseInt(new Date(dateInMills).getMonth(), 10) + 1}`.slice(-2);
-    const firstYear = new Date(dateInMills).getFullYear();
+    const date = new Date(dateInMills);
+    const firstDay = `0${date.getDate()}`.slice(-2);
+    const firstMonth = `0${parseInt(date.getMonth(), 10) + 1}`.slice(-2);
+    const firstYear = date.getFullYear();
+    const hours = `0${date.getHours()}`.slice(-2);
+    const minutes = `0${date.getMinutes()}`.slice(-2);
+    
+    // Get timezone abbreviation
+    const timezoneAbbr = new Intl.DateTimeFormat('en', { timeZoneName: 'short' }).formatToParts(date)
+      .find(part => part.type === 'timeZoneName')?.value || '';
 
     switch (format) {
       case 'usa':
-        return `${firstMonth}/${firstDay}/${firstYear}`;
+        return `${firstMonth}/${firstDay}/${firstYear} ${hours}:${minutes} ${timezoneAbbr}`;
       case 'eu':
-        return `${firstDay}/${firstMonth}/${firstYear}`;
+        return `${firstDay}/${firstMonth}/${firstYear} ${hours}:${minutes} ${timezoneAbbr}`;
       default:
-        return `${firstYear}-${firstMonth}-${firstDay}`;
+        return `${firstYear}-${firstMonth}-${firstDay} ${hours}:${minutes} ${timezoneAbbr}`;
     }
   };
 
@@ -258,20 +265,20 @@ const PaymentProposal = ({onNext, onBack}) => {
           {`This proposal will result in ${paymentQuantity} payments of ${amount} SYS`}
         </p>
         <div>
-          <div>{`Payout dates approximately:`}</div>
+          <div>Payout dates approximately (in your local timezone):</div>
           <div
             className="payment-dates"
             style={{
               maxHeight: '200px',
               overflowY: 'auto',
               display: 'flex',
-              flexFlow: 'row wrap'
+              flexDirection: 'column'
             }}
           >
             {theDatesWereLoaded === true ?
               proposalPayoutDates.map((epoch, index) => {
                 return (
-                  <div key={index} style={{width: '50%'}}>
+                  <div key={index} style={{width: '100%', marginBottom: '8px'}}>
                     {yearDayMonth(epoch * 1000, 'usa')}
                   </div>
                 );
