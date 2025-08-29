@@ -584,7 +584,7 @@ nav ol {
 
 .footer .copyright {
   position: relative;
-  margin-top: -18px;
+  margin-top: 0;
   color: #B2BDDB; }
 
 /* Tablet Portrait */
@@ -626,6 +626,7 @@ nav ol {
 .socials ul {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
   margin-bottom: 0;
   list-style: none; }
 
