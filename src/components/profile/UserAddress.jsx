@@ -3,22 +3,12 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-import WAValidator from "@swyftx/api-crypto-address-validator/dist/wallet-address-validator.min.js";
 import IconInput from "../global/IconInput";
 
 const schema = yup.object().shape({
   name: yup.string().required("Label is required"),
   address: yup
     .string()
-    .test(
-      "test-sys-address",
-      "Must be a valid Syscoin address",
-      async (value) =>
-        await WAValidator.validate(
-          value,
-          process.env.REACT_APP_CHAIN_NETWORK === "main" ? "sys" : "tsys"
-        )
-    )
     .required("Voting address is required"),
   txId: yup
     .string()
@@ -111,7 +101,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
     <div className="address input-form">
       <div className="form-group">
         {!editting && <div className="indicator">{address.name}</div>}
-        <form>
+        <form onSubmit={handleSubmit(formSubmit)}>
           {editting && (
             <div className="description">
               <label htmlFor={`name-${index}`}>Label</label>
@@ -228,11 +218,7 @@ function UserAddress({ onEdit, onRemove, address, index }) {
 
           {editting && (
             <div className="form-actions-spaced">
-              <button
-                className="btn btn--blue"
-                type="button"
-                onClick={handleSubmit(formSubmit)}
-              >
+              <button className="btn btn--blue" type="submit">
                 Save
               </button>
               <button
