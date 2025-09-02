@@ -75,7 +75,6 @@ export const SingleAddressForm = ({ onSingleCreation, isSubmitting }) => {
     await onSingleCreation(data);
   };
   const { errors } = formState;
-  console.log({ errors });
 
   return (
     <FormProvider {...form}>

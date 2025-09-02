@@ -7,7 +7,7 @@ export const WalletTypeSelection = () => {
       <label htmlFor="type">Address Type</label>
       <div style={{ position: "relative" }}>
         <select className="styled" name="type" ref={register}>
-          <option value="descriptor">Descriptor (QT Default)</option>
+          <option value="descriptor">From Descriptor (QT Default)</option>
           <option value="legacy">Legacy</option>
         </select>
         <div className="icon-input">
