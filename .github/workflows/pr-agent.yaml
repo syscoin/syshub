@@ -17,16 +17,11 @@ jobs:
         uses: qodo-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LLM_PROVIDER: gemini
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_MODEL: gemini-1.5-flash
-          MODEL: gemini/gemini-1.5-flash
-          FALLBACK_MODELS: ""
-          # Enable summary comments on PRs
-          PR_SUMMARIZER: true
-          # Optionally enable full reviews/checklists. Omit to avoid settings shape issues
-          # Optional: model/provider tuning (defaults work fine)
-          # GEMINI_API_BASE: ${{ secrets.GEMINI_API_BASE }}
-          # LLM_TEMPERATURE: "0.2"
+          config.model: "gemini/gemini-1.5-flash"
+          config.fallback_models: '["gemini/gemini-1.5-flash"]'
+          GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          github_action_config.auto_review: "true"
+          github_action_config.auto_describe: "true"
+          github_action_config.auto_improve: "true"
 
 
