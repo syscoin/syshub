@@ -1,4 +1,9 @@
-const CryptoJS = require("crypto-js");
+import CryptoJS from "crypto-js";
+import { payments } from "bitcoinjs-lib";
+import { HDKey } from "@scure/bip32";
+import { Buffer } from "buffer";
+import { syscoinNetworks } from "./networks";
+import { parseDescriptor } from "../components/profile/AddAddress/validation-utils";
 
 /**
  * Hash password directly with SHA-256 to derive a fixed AES key
@@ -25,7 +30,6 @@ export const encryptVotingKey = (data) => {
     const {
       label,
       name,
-      votingAddress,
       address,
       collateralIndex,
       type,
@@ -35,7 +39,6 @@ export const encryptVotingKey = (data) => {
     const encryptedData = {
       label: data.label,
       name: data.name,
-      votingAddress: data.votingAddress,
       address: data.address,
       collateralIndex: data.collateralIndex,
       type,
@@ -48,6 +51,46 @@ export const encryptVotingKey = (data) => {
         const [hash, index] = value.split("-");
         encryptedData[key] =
           CryptoJS.AES.encrypt(hash, derivedKey).toString() + "-" + index;
+      } else if (key === "privateKey") {
+        // Derive the node matching the provided votingAddress from the descriptor wallet
+        const network =
+          process.env.REACT_APP_CHAIN_NETWORK === "main"
+            ? syscoinNetworks.mainnet
+            : syscoinNetworks.testnet;
+
+        const { xprv } = parseDescriptor(value);
+        const rootNode = HDKey.fromExtendedKey(xprv, network.bip32);
+        const basePath = "m/84h/1h/0h/0/*".replaceAll("h", "'");
+        const maxIndex = 100;
+        let derivedNode = null;
+
+        for (let i = 0; i < maxIndex; i++) {
+          const fullPath = basePath.replace("*", i.toString());
+          const node = rootNode.derive(fullPath);
+          const pubkey = Buffer.from(node.publicKey);
+          const { address: derivedAddress } = payments.p2wpkh({
+            pubkey,
+            network,
+          });
+          if (derivedAddress === address) {
+            derivedNode = node;
+            break;
+          }
+        }
+
+        if (!derivedNode) {
+          throw new Error(
+            `Voting address ${address} does not belong to the provided descriptor wallet.`
+          );
+        }
+
+        const privateKeyHex = Buffer.from(derivedNode.privateKey).toString(
+          "hex"
+        );
+        encryptedData[key] = CryptoJS.AES.encrypt(
+          privateKeyHex,
+          derivedKey
+        ).toString();
       } else {
         encryptedData[key] = CryptoJS.AES.encrypt(
           value.toString(),

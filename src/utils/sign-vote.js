@@ -1,15 +1,9 @@
-import { crypto, payments } from "bitcoinjs-lib";
-import { ECPairFactory } from "ecpair";
+import { crypto } from "bitcoinjs-lib";
 import { Buffer } from "buffer";
 import { Int64LE } from "int64-buffer";
 import secp256k1 from "secp256k1";
 import { swapEndiannessInPlace, swapEndianness } from "./buffer-math";
-import { HDKey } from "@scure/bip32";
-import { syscoinNetworks } from "./networks";
-import * as secp from "@bitcoinerlab/secp256k1";
-import { parseDescriptor } from "../components/profile/AddAddress/validation-utils";
-
-const ECPair = ECPairFactory(secp);
+ 
 
 /**
  * This function returns an object that the api must receive to make the vote through the mn, collecting the data for the vote and making the signature
@@ -20,18 +14,7 @@ const ECPair = ECPairFactory(secp);
 const signVote = (obj) => {
   // eslint-disable-next-line
   try {
-    const {
-      mnPrivateKey,
-      vinMasternode,
-      gObjectHash,
-      voteOutcome,
-      type,
-      votingAddress,
-    } = obj;
-    const network =
-      process.env.REACT_APP_CHAIN_NETWORK === "main"
-        ? syscoinNetworks.mainnet
-        : syscoinNetworks.testnet;
+    const { mnPrivateKey, vinMasternode, gObjectHash, voteOutcome } = obj;
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, "hex");
     const voteSignalNum = 1; // 'funding'
@@ -62,34 +45,10 @@ const signVote = (obj) => {
     const hash = crypto.hash256(message);
 
     let signObj = null;
-    let isCompressed = false;
-    if (type === "descriptor") {
-      const { xprv } = parseDescriptor(mnPrivateKey);
-      const rootNode = HDKey.fromExtendedKey(xprv, network.bip32);
-      const basePath = "m/84h/1h/0h/0/*".replaceAll("h", "'");
-      const maxIndex = 100;
-      let derivedNode = null;
-      for (let i = 0; i < maxIndex; i++) {
-        const fullPath = basePath.replace("*", i.toString());
-        let node = rootNode.derive(fullPath);
-        const pubkey = Buffer.from(node.publicKey);
-        const { address } = payments.p2wpkh({ pubkey, network });
-        if (address === votingAddress) {
-          derivedNode = node;
-          break;
-        }
-      }
-
-      if (!derivedNode) {
-        throw new Error("Not able to find derivation");
-      }
-      signObj = secp256k1.sign(hash, Buffer.from(derivedNode.privateKey));
-      isCompressed = true;
-    } else {
-      const keyPair = ECPair.fromWIF(`${mnPrivateKey}`, network);
-      signObj = secp256k1.sign(hash, Buffer.from(keyPair.privateKey));
-      isCompressed = keyPair.compressed;
-    }
+    // mnPrivateKey is expected to be a hex-encoded private key from the descriptor derivation
+    const privateKeyBuffer = Buffer.from(mnPrivateKey, "hex");
+    signObj = secp256k1.sign(hash, privateKeyBuffer);
+    const isCompressed = true;
     const recId = 27 + signObj.recovery + (isCompressed ? 4 : 0);
 
     const recIdBuffer = Buffer.allocUnsafe(1);

@@ -11,7 +11,9 @@ export const PrivateKey = () => {
 
   return (
     <div className="form-group">
-      <label htmlFor="privateKey">Voting key</label>
+      <label htmlFor="privateKey">
+        {isLegacySelected ? "Voting key" : "Descriptor Wallet"}
+      </label>
       <div style={{ position: "relative" }}>
         <input
           type="text"
