@@ -26,6 +26,10 @@ function ProposalCardInfo({
   month_remaining,
   payment_type,
 }) {
+  const isMainnet = process.env.REACT_APP_CHAIN_NETWORK === "main";
+  const blockbookBase = isMainnet
+    ? "https://blockbook.syscoin.org"
+    : "https://blockbook-dev.syscoin.org";
 
   /**
    * Function that returns an html with the link or not of the proposal
@@ -79,7 +83,7 @@ function ProposalCardInfo({
       <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
         Collateral hash:{" "}
         <a
-          href={`https://chainz.cryptoid.info/sys/tx.dws?${proposal.ColHash}`}
+          href={`${blockbookBase}/tx/${proposal.ColHash}`}
           target="_blank"
           rel="noopener noreferrer"
         >
