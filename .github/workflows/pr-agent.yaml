@@ -16,7 +16,7 @@ jobs:
         uses: qodo-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_KEY: ${{ secrets.OPENAI_API_KEY }}
           # Enable summary comments on PRs
           PR_SUMMARIZER: true
           # Optionally enable full reviews/checklists. Set to true if desired.
