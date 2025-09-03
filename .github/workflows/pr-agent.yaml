@@ -1,0 +1,29 @@
+name: PR Agent
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pr_agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run PR Agent
+        uses: qodo-ai/pr-agent@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Enable summary comments on PRs
+          PR_SUMMARIZER: true
+          # Optionally enable full reviews/checklists. Set to true if desired.
+          PR_REVIEWER: false
+          # Optional: model/provider tuning (defaults work fine)
+          # OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
+          # OPENAI_MODEL: gpt-4o-mini
+
+
