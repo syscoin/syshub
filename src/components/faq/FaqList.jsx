@@ -28,10 +28,7 @@ const FaqList = () => {
   const isMounted = useRef(false);
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
-  /**
-   * function that load all the questions from the API
-   * @function
-   */
+  
   const loadQuestions = useCallback(async () => {
     setDataload(0);
     try {
@@ -48,18 +45,12 @@ const FaqList = () => {
     }
   }, [cancelSource]);
 
-  /**
-   * UseEffect that loads the questions
-   * @function
-   */
+  
   useEffect(() => {
     loadQuestions();
   }, [loadQuestions]);
 
-  /**
-   * UseEffect that handles the mounting and unmounting and cancels requests
-   * @function
-   */
+  
   useEffect(() => {
     isMounted.current = true;
     return () => {

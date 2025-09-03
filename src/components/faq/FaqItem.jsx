@@ -16,32 +16,7 @@ import {Collapse} from "react-collapse";
  */
 const FaqItem = ({faq, index}) => {
   const [isActive, setIsActive] = useState(false);
-  // const re = new RegExp('target="_blank"', 'gmi');
-
-  /* TODO */
-  /*
-  * the text editor for creating the FAQ does not add the rel = "noopener"
-  therefore DOMPurify.sanitize (faq.description) removes the target = "_ blank" from the images
-  * function array_move(arr, old_index, new_index) {
-    if (new_index >= arr.length) {
-      let k = new_index - arr.length + 1;
-      while (k--) {
-        arr.push(undefined);
-      }
-    }
-    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    return arr; // for testing
-  };
-
-  const assignText = faq.description.split(' ').filter((e) => {
-    if (re.exec(e)) {
-      let j=array_move(e.split('>').concat('rel="noopener"'), 2, 1)
-      return j.join('>').replace('/>/',' ')
-    }else{
-      return e;
-    }
-  });
-  * */
+  
 
   const toggleActive = () => setIsActive(!isActive);
 
