@@ -45,15 +45,11 @@ function MasternodeForm() {
   };
 
   /**
-   * function generate command signmessagebech32 || signmessage
+   * function generate command signmessage
    * @function
    */
   const generateSignCommand = (collateralAddress, signMessage) => {
-    // check for new addresses to validate
-    /* Note: Previously, the differentiation with signmessagebech32 or signmessage was made to take into account the use cases of the addresses to be used,
-     in theory the signmessagebech32 command should apply to all
-    * */
-    return `signmessagebech32 ${collateralAddress} ${signMessage}`.trim();
+    return `signmessage ${collateralAddress} ${signMessage}`.trim();
   };
 
   /**
