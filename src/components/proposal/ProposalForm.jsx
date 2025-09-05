@@ -482,6 +482,10 @@ function ProposalForm() {
               initialStyle={{height: 0, overflow: 'hidden'}}
             >
               <div className="form-group article">
+                {/* Disclaimer about waiting before go_submit */}
+                <div className="alert alert-warning mb-3 py-2 px-3" role="alert">
+                  <strong>Important:</strong> Please wait at least <b>5 minutes</b> or <b>1 block confirmation</b> after sending the payment transaction before running <code>go_submit</code>. Submitting too early may cause your proposal to fail.
+                </div>
                 <textarea
                   className="styled"
                   name="submitCommand"
