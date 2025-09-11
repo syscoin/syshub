@@ -205,30 +205,36 @@ function ProposalCard({ proposal, enabled, userInfo, onLoadProposals }) {
         <div className="actions">
           <button
             style={{ border: "none", outline: "none" }}
-            className="vote"
-            title="Vote yes"
+            className="vote vote--yes"
+            title={t("govlist.vote.yes_tooltip", "Vote YES - Support this proposal")}
+            aria-label={t("govlist.vote.yes_aria", "Vote yes for this proposal")}
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(1)}
           >
-            <i className="icon-up-open"></i>
+            <i className="icon-thumbs-up" aria-hidden="true"></i>
+            <span className="vote-label">{t("govlist.vote.yes", "YES")}</span>
           </button>
           <button
             style={{ border: "none", outline: "none" }}
-            className="vote"
-            title="Abstain"
+            className="vote vote--abstain"
+            title={t("govlist.vote.abstain_tooltip", "ABSTAIN - Neutral vote")}
+            aria-label={t("govlist.vote.abstain_aria", "Abstain from voting on this proposal")}
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(3)}
           >
-            <i className="icon-minus-outline"></i>
+            <i className="icon-pause" aria-hidden="true"></i>
+            <span className="vote-label">{t("govlist.vote.abstain", "ABSTAIN")}</span>
           </button>
           <button
             style={{ border: "none", outline: "none" }}
-            className="vote"
-            title="Vote no"
+            className="vote vote--no"
+            title={t("govlist.vote.no_tooltip", "Vote NO - Reject this proposal")}
+            aria-label={t("govlist.vote.no_aria", "Vote no for this proposal")}
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(2)}
           >
-            <i className="icon-down-open"></i>
+            <i className="icon-thumbs-down" aria-hidden="true"></i>
+            <span className="vote-label">{t("govlist.vote.no", "NO")}</span>
           </button>
         </div>
       )}

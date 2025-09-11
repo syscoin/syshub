@@ -15,6 +15,17 @@ const govList = {
         red_text:'This Proposal needs [API] more YES Votes',
         view_proposal_txt:'VIew Proposal'
       },
+      vote: {
+        yes: 'YES',
+        no: 'NO',
+        abstain: 'ABSTAIN',
+        yes_tooltip: 'Vote YES - Support this proposal',
+        no_tooltip: 'Vote NO - Reject this proposal',
+        abstain_tooltip: 'ABSTAIN - Neutral vote',
+        yes_aria: 'Vote yes for this proposal',
+        no_aria: 'Vote no for this proposal',
+        abstain_aria: 'Abstain from voting on this proposal'
+      },
       loading: 'Loading...'
     },
   }

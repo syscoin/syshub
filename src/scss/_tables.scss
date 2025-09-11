@@ -252,40 +252,95 @@ ul.pagination
                 background:#1e255f29;
                 line-height: 40px;
                 text-align: center;
-                width:70px;
-                height:40px;
+                width:90px;
+                height:50px;
                 float:right;
                 clear:right;
                 @include transition(all, .3s);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                border: 2px solid transparent;
+                cursor: pointer;
 
                 &:hover
                 {
                     color:$color-blue-main;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                 }
 
-                &:nth-child(1)
+                &:focus
+                {
+                    outline: 2px solid $color-blue-main;
+                    outline-offset: 2px;
+                }
+
+                &:disabled
+                {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                    transform: none;
+                    box-shadow: none;
+                }
+
+                i
+                {
+                    font-size: 16px;
+                    margin-bottom: 2px;
+                }
+
+                .vote-label
+                {
+                    font-size: 10px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+
+                &.vote--yes
                 {
                     @include border-radii(35px,35px,0,0);
                     &:hover 
                     {
                         background:$vote-green;
+                        border-color: darken($vote-green, 10%);
+                        color: white;
+                    }
+                    &:focus
+                    {
+                        border-color: $vote-green;
                     }
                 }
 
-                &:nth-child(2)
+                &.vote--abstain
                 {
                     &:hover 
                     {
                         background:$off-white;
-                    } 
+                        border-color: darken($off-white, 20%);
+                        color: $color-blue-main;
+                    }
+                    &:focus
+                    {
+                        border-color: $off-white;
+                    }
                 }
 
-                &:nth-child(3)
+                &.vote--no
                 {
                     @include border-radii(0,0,35px,35px);
                     &:hover 
                     {
                         background:$vote-red;
+                        border-color: darken($vote-red, 10%);
+                        color: white;
+                    }
+                    &:focus
+                    {
+                        border-color: $vote-red;
                     }
                 }
             }
