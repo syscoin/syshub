@@ -126,7 +126,7 @@ const MasternodeDetails = ({ onNext }) => {
       </div>
       
       <div className="form-group">
-        <label htmlFor="ipAddress">IP address</label>
+        <label htmlFor="ipAddress">IP Address (without port)</label>
         <div style={{ position: 'relative' }}>
           <input
             type="text"
