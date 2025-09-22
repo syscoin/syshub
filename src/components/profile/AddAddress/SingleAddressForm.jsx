@@ -27,18 +27,22 @@ const schema = yup.object().shape({
       "Validated Address Validity",
       "Invalid Address",
       (value, { parent }) => {
-        if (!parent.privateKey) {
+        if (!parent?.privateKey || !value) {
           return false;
         }
 
         if (parent.type === "legacy") {
-          const address = deriveAddressFromWifPrivKey(parent.privateKey);
-          return address === value;
+          // Validate that provided legacy WIF corresponds to the provided address
+          try {
+            const derived = deriveAddressFromWifPrivKey(parent.privateKey);
+            return (derived || "").toLowerCase() === value.toLowerCase();
+          } catch (_) {
+            return false;
+          }
         }
 
         const results = parseDescriptor(parent.privateKey);
-
-        if (!results.xprv || !results.path) {
+        if (!results || !results.xprv || !results.path) {
           return false;
         }
 
@@ -48,11 +52,9 @@ const schema = yup.object().shape({
           100
         );
 
-        const result = addresses
-          .map((a) => a.toLowerCase())
+        return addresses
+          .map((a) => (a || "").toLowerCase())
           .includes(value.toLowerCase());
-        console.log({ addresses, result });
-        return result;
       }
     ),
   txId: yup

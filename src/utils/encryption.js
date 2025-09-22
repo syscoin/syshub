@@ -27,14 +27,7 @@ export const removeSeed = () => {
 
 export const encryptVotingKey = (data) => {
   try {
-    const {
-      label,
-      name,
-      address,
-      collateralIndex,
-      type,
-      ...otherProps
-    } = data;
+    const { label, name, address, collateralIndex, type, ...otherProps } = data;
 
     const encryptedData = {
       label: data.label,
@@ -52,45 +45,53 @@ export const encryptVotingKey = (data) => {
         encryptedData[key] =
           CryptoJS.AES.encrypt(hash, derivedKey).toString() + "-" + index;
       } else if (key === "privateKey") {
-        // Derive the node matching the provided votingAddress from the descriptor wallet
-        const network =
-          process.env.REACT_APP_CHAIN_NETWORK === "main"
-            ? syscoinNetworks.mainnet
-            : syscoinNetworks.testnet;
+        if (type === "descriptor") {
+          // Derive the node matching the provided votingAddress from the descriptor wallet
+          const network =
+            process.env.REACT_APP_CHAIN_NETWORK === "main"
+              ? syscoinNetworks.mainnet
+              : syscoinNetworks.testnet;
 
-        const { xprv } = parseDescriptor(value);
-        const rootNode = HDKey.fromExtendedKey(xprv, network.bip32);
-        const basePath = "m/84h/1h/0h/0/*".replaceAll("h", "'");
-        const maxIndex = 100;
-        let derivedNode = null;
+          const { xprv } = parseDescriptor(value);
+          const rootNode = HDKey.fromExtendedKey(xprv, network.bip32);
+          const basePath = "m/84h/1h/0h/0/*".replaceAll("h", "'");
+          const maxIndex = 100;
+          let derivedNode = null;
 
-        for (let i = 0; i < maxIndex; i++) {
-          const fullPath = basePath.replace("*", i.toString());
-          const node = rootNode.derive(fullPath);
-          const pubkey = Buffer.from(node.publicKey);
-          const { address: derivedAddress } = payments.p2wpkh({
-            pubkey,
-            network,
-          });
-          if (derivedAddress === address) {
-            derivedNode = node;
-            break;
+          for (let i = 0; i < maxIndex; i++) {
+            const fullPath = basePath.replace("*", i.toString());
+            const node = rootNode.derive(fullPath);
+            const pubkey = Buffer.from(node.publicKey);
+            const { address: derivedAddress } = payments.p2wpkh({
+              pubkey,
+              network,
+            });
+            if (derivedAddress === address) {
+              derivedNode = node;
+              break;
+            }
           }
-        }
 
-        if (!derivedNode) {
-          throw new Error(
-            `Voting address ${address} does not belong to the provided descriptor wallet.`
+          if (!derivedNode) {
+            throw new Error(
+              `Voting address ${address} does not belong to the provided descriptor wallet.`
+            );
+          }
+
+          const privateKeyHex = Buffer.from(derivedNode.privateKey).toString(
+            "hex"
           );
+          encryptedData[key] = CryptoJS.AES.encrypt(
+            privateKeyHex,
+            derivedKey
+          ).toString();
+        } else {
+          // Legacy: encrypt the provided WIF directly
+          encryptedData[key] = CryptoJS.AES.encrypt(
+            value,
+            derivedKey
+          ).toString();
         }
-
-        const privateKeyHex = Buffer.from(derivedNode.privateKey).toString(
-          "hex"
-        );
-        encryptedData[key] = CryptoJS.AES.encrypt(
-          privateKeyHex,
-          derivedKey
-        ).toString();
       } else {
         encryptedData[key] = CryptoJS.AES.encrypt(
           value.toString(),
