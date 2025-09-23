@@ -23,17 +23,22 @@ export const getAxiosErrorDetails = (error) => {
 
   if (!axios.isAxiosError(error)) {
     if (error instanceof Error) {
-      return { message: error.message };
+      return {
+        message: error.message,
+        name: error.name,
+      };
     }
 
     return { message: String(error) };
   }
 
-  const { response, config, message, code } = error;
+  const { response, config, message, code, name, stack } = error;
 
   return {
     message,
     code,
+    name,
+    stack,
     status: response?.status,
     statusText: response?.statusText,
     data: normalizeResponseData(response?.data),
@@ -91,12 +96,24 @@ export const getAxiosErrorFooter = (error) => {
 
 export const logAxiosError = (context, error, extraContext = {}) => {
   const details = getAxiosErrorDetails(error);
-  const payload = Object.keys(extraContext).length ? { ...details, context: extraContext } : details;
+  const hasExtraContext = extraContext && Object.keys(extraContext).length > 0;
+  const payload = hasExtraContext ? { ...details, context: extraContext } : details;
+
+  if (context && error) {
+    console.error(`[${context}]`, payload, error);
+    return;
+  }
 
   if (context) {
     console.error(`[${context}]`, payload);
-  } else {
-    console.error(payload);
+    return;
   }
+
+  if (error) {
+    console.error(payload, error);
+    return;
+  }
+
+  console.error(payload);
 };
 

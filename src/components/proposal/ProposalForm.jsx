@@ -80,15 +80,15 @@ function ProposalForm() {
      */
     const getSavedProposal = async () => {
       try {
-        let {data} = await notCompletedProposal(cancelSource.token).catch((err) => {
-          throw err;
-        });
-        // console.log(data);
+        const {data} = await notCompletedProposal(cancelSource.token);
+
         if (data.proposal) {
           showSavedProposal(data.proposal);
         }
       } catch (error) {
-        // console.log(error)
+        if (!axios.isCancel(error)) {
+          logAxiosError('ProposalForm::getSavedProposal', error);
+        }
       }
     };
     isMounted.current = true;
@@ -133,16 +133,21 @@ function ProposalForm() {
     if (openModal) setOpenModal(false);
     setCurrentStep(0);
     try {
-      await destroyProposal(proposalUid).catch((err) => {
-        throw err;
-      });
-
-
+      await destroyProposal(proposalUid);
     } catch (error) {
+      logAxiosError('ProposalForm::cancelCurrentProposal', error, { proposalUid });
+
+      const errorMessage = getAxiosErrorMessage(
+        error,
+        'Unable to cancel the proposal. Please reload the page.'
+      );
+      const footer = getAxiosErrorFooter(error);
+
       await swal.fire({
         icon: 'error',
         title: 'Please reload the page',
-        text: error.message,
+        text: errorMessage,
+        footer,
         timer: 2000
       });
     }
@@ -274,24 +279,33 @@ function ProposalForm() {
     }
 
     try {
-      await checkProposal(proposal).catch(err => {
-        throw err
-      });
+      await checkProposal(proposal);
 
-      const prepare = await prepareProposal(proposal).catch(err => {
-        throw err
-      });
-      setProposalUid(prepare.data.uid)
-      setPrepareCommand(prepare.data.command);
+      const prepareResponse = await prepareProposal(proposal);
+      const preparedUid = prepareResponse?.data?.uid;
+      const prepareCommand = prepareResponse?.data?.command;
 
-      setPreparing(false);
-      await next();
+      if (!preparedUid || !prepareCommand) {
+        throw new Error('Prepare command was not returned by the API.');
+      }
+
+      setProposalUid(preparedUid);
+      setPrepareCommand(prepareCommand);
+      next();
     } catch (error) {
-      return swal.fire({
-        icon: "error",
-        title: "there was an error",
-        text: error.message
+      logAxiosError('ProposalForm::checkProposalAndPrepare', error, { proposal });
+
+      const errorMessage = getAxiosErrorMessage(error, 'There was an error');
+      const footer = getAxiosErrorFooter(error);
+
+      await swal.fire({
+        icon: 'error',
+        title: 'There was an error',
+        text: errorMessage,
+        footer
       });
+    } finally {
+      setPreparing(false);
     }
 
   }
