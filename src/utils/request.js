@@ -2,6 +2,7 @@ import axios from "axios";
 import { firebase } from "../context/user-context";
 import { getUserData } from "./auth-token";
 import { decryptVotingKey, encryptVotingKey } from "./encryption";
+import { logAxiosError } from "./errorHandler";
 
 // const API_URI = 'http://localhost:3000'
 // const API_URI = 'http://198.211.117.144:3000'
@@ -19,7 +20,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API ERROR", error.request);
+    logAxiosError("API ERROR", error);
     if (error.response?.status === 401) {
       localStorage.clear();
       window.location.href = "/login";
@@ -43,7 +44,7 @@ export const list = async (cancelToken) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -62,7 +63,7 @@ export const getInfo = async (cancelToken) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -76,7 +77,7 @@ export const getMiningInfo = async () => {
       throw err;
     });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -95,7 +96,7 @@ export const getGovernanceInfo = async (cancelToken) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -114,7 +115,7 @@ export const getSuperBlockBudget = async (cancelToken) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -136,7 +137,7 @@ export const getOneMasterNode = async (id) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -230,7 +231,7 @@ export const updateVotingAddress = async (id, data) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -474,7 +475,7 @@ export const submitProposal = async (id, data) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -522,7 +523,7 @@ export const getOneProposal = async (id) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
@@ -571,7 +572,7 @@ export const createProposal = async (data) => {
         throw err;
       });
   } catch (err) {
-    new Error(err);
+    throw err;
   }
 };
 
