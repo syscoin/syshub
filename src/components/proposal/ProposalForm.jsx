@@ -8,7 +8,8 @@ import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
-import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal, destroyProposal} from "../../utils/request";
+import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal, destroyProposal, getOneProposal} from "../../utils/request";
+import {getAxiosErrorFooter, getAxiosErrorMessage, logAxiosError} from "../../utils/errorHandler";
 
 import CustomModal from '../global/CustomModal';
 import TitleProposal from './TitleProposal';
@@ -79,15 +80,15 @@ function ProposalForm() {
      */
     const getSavedProposal = async () => {
       try {
-        let {data} = await notCompletedProposal(cancelSource.token).catch((err) => {
-          throw err;
-        });
-        // console.log(data);
+        const {data} = await notCompletedProposal(cancelSource.token);
+
         if (data.proposal) {
           showSavedProposal(data.proposal);
         }
       } catch (error) {
-        // console.log(error)
+        if (!axios.isCancel(error)) {
+          logAxiosError('ProposalForm::getSavedProposal', error);
+        }
       }
     };
     isMounted.current = true;
@@ -132,16 +133,21 @@ function ProposalForm() {
     if (openModal) setOpenModal(false);
     setCurrentStep(0);
     try {
-      await destroyProposal(proposalUid).catch((err) => {
-        throw err;
-      });
-
-
+      await destroyProposal(proposalUid);
     } catch (error) {
+      logAxiosError('ProposalForm::cancelCurrentProposal', error, { proposalUid });
+
+      const errorMessage = getAxiosErrorMessage(
+        error,
+        'Unable to cancel the proposal. Please reload the page.'
+      );
+      const footer = getAxiosErrorFooter(error);
+
       await swal.fire({
         icon: 'error',
         title: 'Please reload the page',
-        text: error.message,
+        text: errorMessage,
+        footer,
         timer: 2000
       });
     }
@@ -273,24 +279,33 @@ function ProposalForm() {
     }
 
     try {
-      await checkProposal(proposal).catch(err => {
-        throw err
-      });
+      await checkProposal(proposal);
 
-      const prepare = await prepareProposal(proposal).catch(err => {
-        throw err
-      });
-      setProposalUid(prepare.data.uid)
-      setPrepareCommand(prepare.data.command);
+      const prepareResponse = await prepareProposal(proposal);
+      const preparedUid = prepareResponse?.data?.uid;
+      const prepareCommand = prepareResponse?.data?.command;
 
-      setPreparing(false);
-      await next();
+      if (!preparedUid || !prepareCommand) {
+        throw new Error('Prepare command was not returned by the API.');
+      }
+
+      setProposalUid(preparedUid);
+      setPrepareCommand(prepareCommand);
+      next();
     } catch (error) {
-      return swal.fire({
-        icon: "error",
-        title: "there was an error",
-        text: error.message
+      logAxiosError('ProposalForm::checkProposalAndPrepare', error, { proposal });
+
+      const errorMessage = getAxiosErrorMessage(error, 'There was an error');
+      const footer = getAxiosErrorFooter(error);
+
+      await swal.fire({
+        icon: 'error',
+        title: 'There was an error',
+        text: errorMessage,
+        footer
       });
+    } finally {
+      setPreparing(false);
     }
 
   }
@@ -305,22 +320,30 @@ function ProposalForm() {
       title: 'Creating submit command',
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
+        swal.showLoading();
       }
     });
-    let {paymentTxId} = data;
-    await updateProposal(proposalUid, {txId: paymentTxId}).then(async resp => {
-      let {data: {proposal: {prepareObjectProposal}}} = resp;
-      let {data: {commandSubmit}} = await submitProposal(proposalUid, {...prepareObjectProposal, txId: paymentTxId})
-        .catch(err => {
-          swal.fire({
-            icon: 'error',
-            title: 'There was an error',
-            text: err.message
-          });
-          // console.log(err)
-        })
+
+    const { paymentTxId } = data;
+    let prepareObjectProposal;
+
+    try {
+      const updateResponse = await updateProposal(proposalUid, { txId: paymentTxId });
+      prepareObjectProposal = updateResponse?.data?.proposal?.prepareObjectProposal;
+
+      if (!prepareObjectProposal) {
+        throw new Error('The prepare payload is missing from the update response.');
+      }
+
+      const submitResponse = await submitProposal(proposalUid, { ...prepareObjectProposal, txId: paymentTxId });
+      const commandSubmit = submitResponse?.data?.commandSubmit;
+
+      if (!commandSubmit) {
+        throw new Error('Submit command was not returned by the API.');
+      }
+
       setSubmitCommand(commandSubmit);
+
       await swal.fire({
         icon: 'success',
         title: 'Submit command created',
@@ -330,13 +353,70 @@ function ProposalForm() {
 
       setUseCollapse(true);
       setCollapse(false);
-    }).catch(err => {
-      swal.fire({
+    } catch (error) {
+      logAxiosError('ProposalForm::enterPaymentTxId', error, {
+        proposalUid,
+        paymentTxId,
+        hasPreparePayload: Boolean(prepareObjectProposal)
+      });
+
+      const errorMessage = getAxiosErrorMessage(error, 'Unable to create submit command.');
+      const footer = getAxiosErrorFooter(error);
+
+      await swal.fire({
         icon: 'error',
         title: 'There was an error',
-        text: err.message
+        text: errorMessage,
+        footer
       });
-    })
+    }
+  }
+
+  const confirmProposalCompletion = async (proposalId, expectedHash) => {
+    if (!proposalId) {
+      return { isCompleted: false };
+    }
+
+    try {
+      const response = await getOneProposal(proposalId);
+      const savedProposal = response?.data?.proposal;
+
+      if (!savedProposal) {
+        return { isCompleted: false };
+      }
+
+      const normalizedExpectedHash = typeof expectedHash === 'string'
+        ? expectedHash.trim().toLowerCase()
+        : '';
+
+      const candidateHashes = [
+        savedProposal.hash,
+        savedProposal.proposalHash,
+        savedProposal.proposal_hash,
+      ]
+        .filter((value) => typeof value === 'string' && value.trim().length > 0)
+        .map((value) => value.trim().toLowerCase());
+
+      const matchesHash = Boolean(
+        normalizedExpectedHash && candidateHashes.includes(normalizedExpectedHash)
+      );
+
+      const isComplete = Boolean(
+        savedProposal.complete === true ||
+        savedProposal.status === 'complete' ||
+        savedProposal.state === 'complete' ||
+        matchesHash
+      );
+
+      return {
+        isCompleted: isComplete,
+        matchesHash,
+        resolvedHash: candidateHashes[0] || null,
+      };
+    } catch (statusError) {
+      logAxiosError('ProposalForm::confirmProposalCompletion', statusError, { proposalId });
+      return { isCompleted: false };
+    }
   }
 
   /**
@@ -349,14 +429,15 @@ function ProposalForm() {
       title: 'Creating the proposal',
       showConfirmButton: false,
       willOpen: () => {
-        swal.showLoading()
+        swal.showLoading();
       }
     });
-    let {proposalHash} = data;
+
+    const { proposalHash } = data;
+
     try {
-      await updateProposal(proposalUid, {hash: proposalHash, complete: true}).catch(err => {
-        throw err
-      })
+      await updateProposal(proposalUid, { hash: proposalHash, complete: true });
+
       await swal.fire({
         icon: 'success',
         title: 'The proposal was created',
@@ -364,12 +445,44 @@ function ProposalForm() {
         showConfirmButton: false
       });
       history.push('/governance');
-
     } catch (error) {
+      logAxiosError('ProposalForm::enterProposalHash', error, {
+        proposalUid,
+        proposalHash
+      });
+
+      const errorMessage = getAxiosErrorMessage(error, 'There was an error please try again');
+      const footer = getAxiosErrorFooter(error);
+
+      const completionCheck = await confirmProposalCompletion(proposalUid, proposalHash);
+
+      if (completionCheck.isCompleted) {
+        const footerDetails = [errorMessage];
+
+        if (footer) {
+          footerDetails.push(footer);
+        }
+
+        if (completionCheck.resolvedHash) {
+          footerDetails.push(`Hash detected: ${completionCheck.resolvedHash}`);
+        }
+
+        await swal.fire({
+          icon: 'warning',
+          title: 'Proposal creation confirmed after timeout',
+          text: 'The proposal appears to have been registered even though the server timed out. You can confirm it from the governance page.',
+          footer: footerDetails.join('<br />'),
+        });
+
+        history.push('/governance');
+        return;
+      }
+
       await swal.fire({
         icon: 'error',
         title: 'There was an error please try again',
-        text: error.response?.data?.message ?? error.message
+        text: errorMessage,
+        footer
       });
     }
 
