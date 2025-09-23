@@ -14,7 +14,17 @@ import InnerBanner from "../components/global/InnerBanner";
  */
 class About extends Component {
     render() {
-    const { t } = this.props;
+        const { t } = this.props;
+        const requirementKeys = [
+            'about.requirements.requirement.r1',
+            'about.requirements.requirement.r2',
+            'about.requirements.requirement.r3',
+            'about.requirements.requirement.r4',
+            'about.requirements.requirement.r5',
+            'about.requirements.requirement.r6',
+            'about.requirements.requirement.r7',
+            'about.requirements.requirement.r8',
+        ];
         return (
             <Background>
                 <BackgroundInner />
@@ -183,34 +193,12 @@ class About extends Component {
                                     <div className="col-lg-12 col-md-12 col-sm-12 text-center text-white">
                                         <h4 className="text-white">{t("about.requirements.title")}</h4>
                                         <ul className="list-unstyled Requirements__list mb-0">
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r1")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r2")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r3")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r4")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r5")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r6")}
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-angle-right"></i>{" "}
-                                            {t("about.requirements.requirement.r7")}
-                                        </li>
+                                            {requirementKeys.map((key) => (
+                                                <li key={key}>
+                                                    <i className="fa fa-angle-right"></i>{" "}
+                                                    {t(key)}
+                                                </li>
+                                            ))}
                                         </ul>
                                     </div>
                                     </div>
