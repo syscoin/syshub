@@ -329,7 +329,7 @@ const useProposalSubmission = ({
         clearCancelSource(cancelSource)
       }
     },
-    [clearCancelSource, createCancelSource, ensureProposalUid, history, proposalUid]
+    [clearCancelSource, createCancelSource, ensureProposalUid, history, proposalUid, confirmProposalCompletion]
   )
 
   return { enterPaymentTxId, enterProposalHash }
