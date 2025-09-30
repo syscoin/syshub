@@ -8,7 +8,7 @@ import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
 import * as yup from "yup";
 
-import {checkProposal, prepareProposal, submitProposal, updateProposal, notCompletedProposal, destroyProposal, getOneProposal} from "../../utils/request";
+import {checkProposal, prepareProposal, notCompletedProposal, destroyProposal} from "../../utils/request";
 import {getAxiosErrorFooter, getAxiosErrorMessage, logAxiosError} from "../../utils/errorHandler";
 
 import CustomModal from '../global/CustomModal';
@@ -17,6 +17,7 @@ import DescriptionProposal from './DescriptionProposal';
 import PaymentProposal from './PaymentProposal';
 import ProposalPreview from "./ProposalPreview";
 import axios from 'axios';
+import useProposalSubmission from './hooks/useProposalSubmission';
 
 
 const schema = yup.object().shape({
@@ -59,6 +60,14 @@ function ProposalForm() {
   const [proposalUid, setProposalUid] = useState('');
 
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
+
+  const { enterPaymentTxId, enterProposalHash } = useProposalSubmission({
+    proposalUid,
+    history,
+    setSubmitCommand,
+    setUseCollapse,
+    setCollapse,
+  });
 
   const {register, handleSubmit, errors} = useForm({
     mode: 'onSubmit',
@@ -315,6 +324,7 @@ function ProposalForm() {
    * @function
    * @param {{paymentTxId: string}} data payment txid from the input
    */
+<<<<<<< HEAD
   const enterPaymentTxId = async (data) => {
     swal.fire({
       title: 'Creating submit command',
@@ -487,6 +497,9 @@ function ProposalForm() {
     }
 
   }
+=======
+  
+>>>>>>> ada6fc3f (feat: improve proposal submission timer handling)
 
   return (
     <>

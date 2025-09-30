@@ -582,19 +582,25 @@ export const createProposal = async (data) => {
  * @param {string} id id of the proposal
  * @param {Object} data data of the proposal
  */
-export const updateProposal = async (id, data) => {
+export const updateProposal = async (id, data, options = {}) => {
   try {
     await firebase.refreshInRequest();
     let { accessToken } = getUserData();
+    const baseHeaders = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+    const mergedConfig = {
+      ...options,
+      headers: {
+        ...baseHeaders,
+        ...(options.headers || {}),
+      },
+    };
     return await apiClient
       .put(
         `/proposal/${id}`,
         { data: data },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+        mergedConfig,
       )
       .catch((err) => {
         throw err;
