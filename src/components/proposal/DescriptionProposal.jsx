@@ -14,7 +14,7 @@ import {Editor} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const schema = yup.object().shape({
-    proposalUrl: yup.string().url("Must be a valid url"),
+    proposalUrl: yup.string().url("Must be a valid url").required("URL is required"),
 });
 
 
@@ -185,6 +185,7 @@ function DescriptionProposal({onNext, onBack}) {
                     name="proposalUrl"
                     id="proposalUrl"
                     ref={register}
+                    required
                 />
                 <ErrorMessage
                     errors={errors}

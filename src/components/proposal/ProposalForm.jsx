@@ -278,7 +278,7 @@ function ProposalForm() {
       title,
       name,
       description,
-      url: url || 'emptyField',
+      url,
       firstEpoch: payment.proposalStartEpoch,
       startEpoch: payment.proposalStartEpoch,
       endEpoch: payment.proposalEndEpoch,
