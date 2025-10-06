@@ -273,7 +273,7 @@ const useProposalSubmission = ({
         history.push('/governance')
       } catch (error) {
         await swalPromise.catch(() => undefined)
-        const timedOutMessage = 'Proposal submission is still processing. Please try again later.'
+        const timedOutMessage = 'Proposal submission failed. Please verify that the proposal is not displayed on the Governance page, and if not, try again in 5 minutes.'
         const defaultMessage = 'Proposal submission failed. Please try again in 5mins.'
         const isTimeoutError =
           error.message === 'Proposal submission timed out' || axios.isCancel(error)
