@@ -38,7 +38,7 @@ class About extends Component {
                         <div className="section__body">
                             <div className="articles">
                                 <InnerBanner heading={t("about.title")} />
-                                <section className="section_About bg-light">
+                                <section className="section_About">
                                 <div className="container">
                                     <div className="row">
                                     <div className="col-lg-7 col-md-12 col-sm-12 order-2 order-lg-1">
@@ -110,7 +110,7 @@ class About extends Component {
                                 </div>
                                 </section>
 
-                                <section className="section_About bg-light">
+                                <section className="section_About">
                                 <div className="container">
                                     <div className="row">
                                     <div className="col-lg-6 col-md-12 col-sm-12 order-2 order-lg-1">

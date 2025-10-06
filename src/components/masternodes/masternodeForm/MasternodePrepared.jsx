@@ -81,7 +81,7 @@ const MasternodePrepared = ({ onNext, onCancel, prepareCommand }) => {
               className="styled"
             />
             <IconInput dataId="prepareAddress">
-              <p>The syscoin address to use for the private key.</p>
+              <p>The Syscoin address that holds the 100,000 SYS collateral for this SentryNode.</p>
             </IconInput>
           </div>
           <ErrorMessage

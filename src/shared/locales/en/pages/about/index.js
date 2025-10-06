@@ -86,7 +86,7 @@ const about = {
         r3: 'KVM or OpenVZ (KVM preferred)',
         r4: '64-bit CPU — 2 Cores (4 Cores preferred)',
         r5: '4GB RAM (real) minimum (8GB RAM preferred)',
-        r6: '4GB swap (if less than 8GB real RAM). Will need to use SSD if using Swap',
+        r6: '4GB swap (if less than 8GB real RAM) Will need to use SSD if using Swap',
         r7: '80GB Disk Space (100GB + SSD preferred).',
         r8: 'Static IP Address',
       },
