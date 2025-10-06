@@ -211,8 +211,8 @@ function ProposalCard({ proposal, enabled, userInfo, onLoadProposals }) {
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(1)}
           >
-            <i className="icon-thumbs-up" aria-hidden="true"></i>
-            <span className="vote-label">{t("govlist.vote.yes", "YES")}</span>
+            <span className="vote-emoji">👍</span>
+            <span className="vote-label">{t("govlist.vote.yes", "Vote Yes")}</span>
           </button>
           <button
             style={{ border: "none", outline: "none" }}
@@ -222,8 +222,8 @@ function ProposalCard({ proposal, enabled, userInfo, onLoadProposals }) {
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(3)}
           >
-            <i className="icon-pause" aria-hidden="true"></i>
-            <span className="vote-label">{t("govlist.vote.abstain", "ABSTAIN")}</span>
+            <span className="vote-emoji">➖</span>
+            <span className="vote-label">{t("govlist.vote.abstain", "Abstain")}</span>
           </button>
           <button
             style={{ border: "none", outline: "none" }}
@@ -233,8 +233,8 @@ function ProposalCard({ proposal, enabled, userInfo, onLoadProposals }) {
             disabled={userInfo ? false : true}
             onClick={() => openMnVote(2)}
           >
-            <i className="icon-thumbs-down" aria-hidden="true"></i>
-            <span className="vote-label">{t("govlist.vote.no", "NO")}</span>
+            <span className="vote-emoji">👎</span>
+            <span className="vote-label">{t("govlist.vote.no", "Vote No")}</span>
           </button>
         </div>
       )}

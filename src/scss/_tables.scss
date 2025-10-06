@@ -249,27 +249,30 @@ ul.pagination
 
             .vote 
             {
-                background:#1e255f29;
-                line-height: 40px;
+                line-height: 1.2;
                 text-align: center;
-                width:90px;
-                height:50px;
-                float:right;
-                clear:right;
+                width: 90px;
+                height: 36px;
+                float: right;
+                clear: right;
+                margin-bottom: 4px;
                 @include transition(all, .3s);
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
                 justify-content: center;
                 position: relative;
-                border: 2px solid transparent;
+                border: none;
+                border-radius: 4px;
                 cursor: pointer;
+                color: white;
+                font-weight: 600;
+                padding: 0 8px;
 
                 &:hover
                 {
-                    color:$color-blue-main;
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    transform: translateY(-1px);
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
                 }
 
                 &:focus
@@ -286,61 +289,64 @@ ul.pagination
                     box-shadow: none;
                 }
 
-                i
+                .vote-emoji
                 {
-                    font-size: 16px;
-                    margin-bottom: 2px;
+                    font-size: 14px;
+                    margin-right: 4px;
+                    display: inline-block;
                 }
 
                 .vote-label
                 {
                     font-size: 10px;
                     font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
+                    text-transform: none;
+                    letter-spacing: 0.1px;
+                    white-space: nowrap;
                 }
 
                 &.vote--yes
                 {
-                    @include border-radii(35px,35px,0,0);
+                    background: #28a745 !important;
+                    color: white !important;
+                    
                     &:hover 
                     {
-                        background:$vote-green;
-                        border-color: darken($vote-green, 10%);
-                        color: white;
+                        background: #218838 !important;
                     }
                     &:focus
                     {
-                        border-color: $vote-green;
+                        outline-color: #28a745;
                     }
                 }
 
                 &.vote--abstain
                 {
+                    background: #6c757d !important;
+                    color: white !important;
+                    
                     &:hover 
                     {
-                        background:$off-white;
-                        border-color: darken($off-white, 20%);
-                        color: $color-blue-main;
+                        background: #5a6268 !important;
                     }
                     &:focus
                     {
-                        border-color: $off-white;
+                        outline-color: #6c757d;
                     }
                 }
 
                 &.vote--no
                 {
-                    @include border-radii(0,0,35px,35px);
+                    background: #dc3545 !important;
+                    color: white !important;
+                    
                     &:hover 
                     {
-                        background:$vote-red;
-                        border-color: darken($vote-red, 10%);
-                        color: white;
+                        background: #c82333 !important;
                     }
                     &:focus
                     {
-                        border-color: $vote-red;
+                        outline-color: #dc3545;
                     }
                 }
             }
