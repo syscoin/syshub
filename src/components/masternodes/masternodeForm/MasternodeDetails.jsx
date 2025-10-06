@@ -141,7 +141,7 @@ const MasternodeDetails = ({ onNext }) => {
             className="styled"
           />
           <IconInput dataId="ipAddress">
-            <p>Must be unique on the network. Can be set to 0, which will require a ProUpServTx.</p>
+            <p>Enter the IP address of your SentryNode server (without port number). Must be unique on the network. Can be set to 0, which will require a ProUpServTx.</p>
           </IconInput>
         </div>
         <ErrorMessage
