@@ -143,7 +143,7 @@ function DescriptionProposal({onNext, onBack}) {
                             editorStyle={{
                                 paddingTop: 0,
                                 paddingBottom: 0,
-                                color: "#0f1f1f",
+                                color: "#ffffff",
                                 backgroundColor: "rgba(138, 196, 247, 0.322)",
                             }}
                         />

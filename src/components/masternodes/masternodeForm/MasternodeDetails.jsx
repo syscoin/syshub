@@ -101,19 +101,24 @@ const MasternodeDetails = ({ onNext }) => {
       </div>
       <div className="form-group">
         <label htmlFor="collateralIndex">Collateral index</label>
-        <select
-          className="styled"
-          name="collateralIndex"
-          id="collateralIndex"
-          ref={register}
-          defaultValue=""
-        >
-          <option value="" hidden>
-            Select The output index of the 100000 Syscoin funding transaction
-          </option>
-          <option value="0">0</option>
-          <option value="1">1</option>
-        </select>
+        <div style={{ position: 'relative' }}>
+          <select
+            className="styled"
+            name="collateralIndex"
+            id="collateralIndex"
+            ref={register}
+            defaultValue=""
+          >
+            <option value="" hidden>
+              Select The output index of the 100000 Syscoin funding transaction
+            </option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </select>
+          <IconInput dataId="collateralIndex">
+            <p>The output index of the 100000 Syscoin funding transaction. Use the <code>masternode_outputs</code> command in your QT wallet to get the collateral_hash and corresponding index.</p>
+          </IconInput>
+        </div>
         <ErrorMessage
           errors={errors}
           name="collateralIndex"
