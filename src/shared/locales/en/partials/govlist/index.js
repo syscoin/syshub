@@ -16,9 +16,9 @@ const govList = {
         view_proposal_txt:'VIew Proposal'
       },
       vote: {
-        yes: 'YES',
-        no: 'NO',
-        abstain: 'ABSTAIN',
+        yes: 'Vote Yes',
+        no: 'Vote No',
+        abstain: 'Abstain',
         yes_tooltip: 'Vote YES - Support this proposal',
         no_tooltip: 'Vote NO - Reject this proposal',
         abstain_tooltip: 'ABSTAIN - Neutral vote',

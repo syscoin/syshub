@@ -2908,51 +2908,6 @@ ul.pagination {
     .proposals .proposal .actions {
       width: 10%;
       float: left; }
-      .proposals .proposal .actions .vote {
-        background: #1e255f29;
-        line-height: 40px;
-        text-align: center;
-        width: 70px;
-        height: 40px;
-        float: right;
-        clear: right;
-        transition: all 0.3s linear;
-        -webkit-transition: all 0.3s linear;
-        -moz-transition: all 0.3s linear; }
-        .proposals .proposal .actions .vote:hover {
-          color: #19195A; }
-        .proposals .proposal .actions .vote:nth-child(1) {
-          border-top-left-radius: 35px;
-          border-top-right-radius: 35px;
-          border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
-          -webkit-border-top-left-radius: 35px;
-          -webkit-border-top-right-radius: 35px;
-          -webkit-border-bottom-right-radius: 0;
-          -webkit-border-bottom-left-radius: 0;
-          -moz-border-radius-topleft: 35px;
-          -moz-border-radius-topright: 35px;
-          -moz-border-radius-bottomright: 0;
-          -moz-border-radius-bottomleft: 0; }
-          .proposals .proposal .actions .vote:nth-child(1):hover {
-            background: #6fcc8f; }
-        .proposals .proposal .actions .vote:nth-child(2):hover {
-          background: #B2BDDB; }
-        .proposals .proposal .actions .vote:nth-child(3) {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 35px;
-          border-bottom-left-radius: 35px;
-          -webkit-border-top-left-radius: 0;
-          -webkit-border-top-right-radius: 0;
-          -webkit-border-bottom-right-radius: 35px;
-          -webkit-border-bottom-left-radius: 35px;
-          -moz-border-radius-topleft: 0;
-          -moz-border-radius-topright: 0;
-          -moz-border-radius-bottomright: 35px;
-          -moz-border-radius-bottomleft: 35px; }
-          .proposals .proposal .actions .vote:nth-child(3):hover {
-            background: #cc6666; }
 
 .ministats .subtitle, .world-dist .subtitle {
   font-weight: 500;
