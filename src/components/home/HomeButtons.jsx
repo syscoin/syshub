@@ -20,7 +20,7 @@ function HomeButtons() {
         Learn More
       </Link>
       <a
-        href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+        href="https://support.syscoin.org/t/syscoin-nexus-sentry-node-install-guide/463"
         className="btn btn-outline-primary"
         rel="noopener noreferrer"
         target="_blank"

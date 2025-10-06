@@ -26,11 +26,7 @@ class Footer extends Component {
                     <nav className="nav">
                         <ul>
                         <li>
-                            <a
-                                href="https://sysnode.info/about"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >About</a>
+                            <Link to="/stats">About</Link>
                         </li>
 
                         <li>
@@ -39,7 +35,7 @@ class Footer extends Component {
 
                         <li>
                             <a
-                                href="https://support.syscoin.org/t/masternode-setup-guide-fresh-install-automated-server-setup/19"
+                                href="https://support.syscoin.org/t/syscoin-nexus-sentry-node-install-guide/463"
                                 rel="noopener noreferrer"
                                 target="_blank"
                             >Setup</a>
