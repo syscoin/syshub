@@ -101,15 +101,36 @@ function ProposalCardInfo({
           } Remaining)`}</span>
         )}
       </p>
-      <span style={{ lineHeight: "1.5" }}>Voting string:</span>
+      <span style={{ lineHeight: "1.5" }}>Voting strings (CLI):</span>
       <div className="input-form">
-        <div className="form-group">
+        <div className="form-group" style={{marginBottom: '6px'}}>
           <textarea
             type="text"
             className="styled"
             style={{ resize: "none" }}
             value={`gobject_vote_many ${proposal.Key} funding yes`}
             disabled={true}
+            aria-label="CLI vote yes command"
+          />
+        </div>
+        <div className="form-group" style={{marginBottom: '6px'}}>
+          <textarea
+            type="text"
+            className="styled"
+            style={{ resize: "none" }}
+            value={`gobject_vote_many ${proposal.Key} funding no`}
+            disabled={true}
+            aria-label="CLI vote no command"
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            type="text"
+            className="styled"
+            style={{ resize: "none" }}
+            value={`gobject_vote_many ${proposal.Key} funding abstain`}
+            disabled={true}
+            aria-label="CLI vote abstain command"
           />
         </div>
       </div>

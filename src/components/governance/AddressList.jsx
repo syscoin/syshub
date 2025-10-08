@@ -181,9 +181,12 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
           // })
         })
         .catch(err => {
+          const message = (voteData === 'Invalid network version')
+            ? 'Invalid network version'
+            : (err?.response?.data?.message || err?.message || 'Unknown error');
           addressErrorVote.push({
             name: address.name,
-            err: (voteData === 'Invalid network version') ? 'Invalid network version' : err.response.data.message
+            err: message
           })
         });
     }
@@ -233,9 +236,12 @@ const AddressList = ({proposal, vote, onAfterVote}) => {
         </>
       ) : (
         <>
-          {
-            loadingAddress && <p>Loading...</p>
-          }
+          {loadingAddress && (
+            <div className="loading loading--center" role="status" aria-live="polite">
+              <div className="spinner" aria-hidden></div>
+              <span className="loading__label">Loading addresses…</span>
+            </div>
+          )}
           {
             (!loadingAddress && addressList.length === 0) && <p>You don't have a voting address please add one</p>
           }

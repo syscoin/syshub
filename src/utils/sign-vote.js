@@ -27,7 +27,7 @@ const signVote = (obj) => {
     const time = Math.floor(Date.now() / 1000);
     const gObjectHashBuffer = Buffer.from(gObjectHash, "hex");
     const voteSignalNum = 1; // 'funding'
-    const voteOutcomeNum = voteOutcome; // 1 for yes. 2 for no. 0 for abstain
+    const voteOutcomeNum = voteOutcome; // 1 = yes, 2 = no, 3 = abstain
 
     const masterNodeTx = vinMasternode.split("-");
 
