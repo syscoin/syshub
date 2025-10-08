@@ -116,7 +116,7 @@ export function UserProvider(props) {
       firebase
         .loginWithEmailAndPassword(loginData)
         .then(({ user }) => {
-          saveUserData(user);
+          // Do not persist user here. Persist only after passing 2FA (if enabled).
           resolve(user);
         })
         .catch((err) => {

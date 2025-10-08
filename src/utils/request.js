@@ -693,14 +693,20 @@ export const getUserInfo = async (id, cancelToken) => {
   });
 };
 
-export const get2faInfoUser = async (id) => {
+export const get2faInfoUser = async (id, tokenOverride) => {
   return new Promise((resolve, reject) => {
-    let { accessToken } = getUserData();
+    let accessToken = tokenOverride;
+    if (!accessToken) {
+      const stored = getUserData();
+      accessToken = stored?.accessToken;
+    }
     apiClient
       .get(`/user/verify2fa/${id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        headers: accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`,
+            }
+          : {},
       })
       .then(({ data }) => {
         let { user } = data;
@@ -974,17 +980,23 @@ export const logout = async () => {
   });
 };
 
-export const verifyGauthCode = async (code) => {
-  let { accessToken } = getUserData();
+export const verifyGauthCode = async (code, tokenOverride) => {
+  let accessToken = tokenOverride;
+  if (!accessToken) {
+    const stored = getUserData();
+    accessToken = stored?.accessToken;
+  }
   return new Promise((resolve, reject) => {
     apiClient
       .post(
         `/user/verify-gauth-code`,
         { code },
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: accessToken
+            ? {
+                Authorization: `Bearer ${accessToken}`,
+              }
+            : {},
         }
       )
       .then((resp) => resolve(resp))

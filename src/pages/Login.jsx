@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { withTranslation } from "react-i18next";
 
@@ -26,70 +26,103 @@ import { deleteUserData } from "../utils/auth-token";
 function Login({ t }) {
   const history = useHistory();
   const { loginUser, loginWithPhoneNumber, setUserDataLogin } = useUser();
-  const [openSMS2Fa, setOpenSMS2Fa] = useState(false);
-  const [openGAuthFa, setOpenGAuth2Fa] = useState(false);
+  // UI state
   const [submitting, setSubmitting] = useState(false);
-  const [userSignInSms, setUserSignInSms] = useState({});
-  const [userSignInGAuth, setUserSignInGAuth] = useState("");
+  const [active2FAMethod, setActive2FAMethod] = useState(null); // 'sms' | 'gauth' | null
+
+  // 2FA session state (in-memory, only during current login flow)
+  const [pendingUser, setPendingUser] = useState(null); // firebase user from base login
+  const [pendingPassword, setPendingPassword] = useState(""); // used to create seed after 2FA
+  const [smsConfirmation, setSmsConfirmation] = useState(null); // result from signInWithPhoneNumber
+  const [gauthContext, setGauthContext] = useState(null); // { ...user, secret }
 
   useEffect(() => {
     return () => {
       setSubmitting(false);
-      setOpenGAuth2Fa(false);
-      setOpenSMS2Fa(false);
+      setActive2FAMethod(null);
     };
   }, []);
+
+  // Alert helpers
+  const showLoading = useCallback((title) => {
+    swal.fire({
+      title: title || "Processing",
+      showConfirmButton: false,
+      willOpen: () => swal.showLoading(),
+    });
+  }, []);
+
+  const showSuccess = useCallback(async (message = "Logged in") => {
+    await swal.fire({
+      icon: "success",
+      title: message,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }, []);
+
+  const showError = useCallback((message = "Error") => {
+    swal.fire({ icon: "error", title: "Error", text: message });
+  }, []);
+
+  // Finalize login: persist and navigate
+  const finalizeLogin = useCallback(
+    async (user) => {
+      if (pendingPassword) {
+        createSeed(pendingPassword);
+      }
+      setUserDataLogin(user);
+      history.push("/governance");
+    },
+    [history, pendingPassword, setUserDataLogin]
+  );
 
   /**
    * Function that verifies the user2fa and proceeds to open the 2faModal; in case 2fa isn't active, it signs in the user
    * @param {{email:string, password: string}} loginData Login data received from LoginForm it has email and password
    */
   const loginToApp = async (loginData) => {
-    swal.fire({
-      title: "Submitting",
-      showConfirmButton: false,
-      willOpen: () => {
-        swal.showLoading();
-      },
-    });
+    showLoading("Submitting");
     setSubmitting(true);
     try {
-      let user = await loginUser(loginData);
-      createSeed(loginData.password);
-      let user2fa = await get2faInfoUser(user.uid);
-      if (user2fa.twoFa === true && user2fa.sms === true) {
+      const user = await loginUser(loginData);
+      // store ephemeral data for post-2FA persistence
+      setPendingPassword(loginData.password);
+      setPendingUser(user);
+
+      const user2fa = await get2faInfoUser(user.uid, user.accessToken);
+      const hasSms2FA = user2fa.twoFa === true && user2fa.sms === true;
+      const hasGAuth2FA = user2fa.twoFa === true && user2fa.gAuth === true;
+
+      if (hasSms2FA) {
         swal.close();
-        let phoneProvider = await loginWithPhoneNumber(
+        const confirmation = await loginWithPhoneNumber(
           user.phoneNumber,
           window.recaptchaVerifier
         );
-        setUserSignInSms(phoneProvider);
-        setOpenSMS2Fa(true);
+        setSmsConfirmation(confirmation);
+        setActive2FAMethod("sms");
         setSubmitting(false);
-      } else if (user2fa.twoFa === true && user2fa.gAuth === true) {
-        swal.close();
-        setUserSignInGAuth({ ...user, secret: user2fa.gAuthSecret });
-        setOpenGAuth2Fa(true);
-        setSubmitting(false);
-      } else {
-        await swal.fire({
-          icon: "success",
-          title: "Logged in",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        setUserDataLogin(user);
-        history.push("/governance");
+        return;
       }
+
+      if (hasGAuth2FA) {
+        swal.close();
+        setGauthContext({ ...user, secret: user2fa.gAuthSecret });
+        setActive2FAMethod("gauth");
+        setSubmitting(false);
+        return;
+      }
+
+      // No 2FA: finalize immediately
+      await showSuccess("Logged in");
+      createSeed(loginData.password);
+      await finalizeLogin(user);
     } catch (error) {
       deleteUserData();
-      swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
-      });
+      showError(error.message);
       removeSeed();
-      return setSubmitting(false);
+      setSubmitting(false);
     }
   };
 
@@ -98,33 +131,15 @@ function Login({ t }) {
    * @param {string} gAuthCode gAuthcode submitted by the user in the 2fa modal
    */
   const verifyGAuth = async ({ gAuthCode }) => {
-    swal.fire({
-      title: "Verifying",
-      showConfirmButton: false,
-      willOpen: () => {
-        swal.showLoading();
-      },
-    });
-
-    verifyGauthCode(gAuthCode)
-      .then(() => {
-        setOpenGAuth2Fa(false);
-        swal.fire({
-          icon: "success",
-          title: "Logged in",
-          text: "Code verified",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        setUserDataLogin(userSignInGAuth);
-        history.push("/governance");
-      })
-      .catch((err) => {
-        swal.fire({
-          icon: "error",
-          title: "Invalid code",
-        });
-      });
+    showLoading("Verifying");
+    try {
+      await verifyGauthCode(gAuthCode, pendingUser?.accessToken);
+      setActive2FAMethod(null);
+      await showSuccess("Logged in");
+      await finalizeLogin(gauthContext);
+    } catch (err) {
+      showError("Invalid code");
+    }
   };
 
   /**
@@ -132,33 +147,14 @@ function Login({ t }) {
    * @param {string} phoneCode phoneCode submitted by the user in the 2fa modal
    */
   const verifyPhone = async ({ phoneCode }) => {
-    swal.fire({
-      title: "Verifying",
-      showConfirmButton: false,
-      willOpen: () => {
-        swal.showLoading();
-      },
-    });
+    showLoading("Verifying");
     try {
-      let { user } = await userSignInSms.confirm(phoneCode).catch((err) => {
-        throw err;
-      });
-      setOpenSMS2Fa(false);
-      await swal.fire({
-        icon: "success",
-        title: "Logged in",
-        text: "Code verified",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      setUserDataLogin(user);
-      history.push("/governance");
+      const { user } = await smsConfirmation.confirm(phoneCode);
+      setActive2FAMethod(null);
+      await showSuccess("Logged in");
+      await finalizeLogin(user);
     } catch (error) {
-      swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
-      });
+      showError(error.message);
     }
   };
 
@@ -193,13 +189,13 @@ function Login({ t }) {
           </div>
         </div>
       </main>
-      <CustomModal open={openSMS2Fa} onClose={() => setOpenSMS2Fa(false)}>
+      <CustomModal open={active2FAMethod === "sms"} onClose={() => setActive2FAMethod(null)}>
         <SMSTwoFAFormLogin
           userSignInSms={verifyPhone}
-          closeModal={() => setOpenSMS2Fa(false)}
+          closeModal={() => setActive2FAMethod(null)}
         />
       </CustomModal>
-      <CustomModal open={openGAuthFa} onClose={() => setOpenGAuth2Fa(false)}>
+      <CustomModal open={active2FAMethod === "gauth"} onClose={() => setActive2FAMethod(null)}>
         <GAuthTwoFAFormLogin userSignInGAuth={verifyGAuth} />
       </CustomModal>
     </Background>
