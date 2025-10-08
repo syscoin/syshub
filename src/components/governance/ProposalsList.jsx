@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import axios from 'axios';
 import { withTranslation } from "react-i18next";
 import { useUser } from '../../context/user-context';
+import swal from 'sweetalert2';
 
 import { list, getUserInfo } from '../../utils/request';
 
@@ -83,12 +84,30 @@ function ProposalsList(props) {
     }
   }, [cancelSource, loadProposals, loadUserInfo]);
 
+  useEffect(() => {
+    if (dataload === 2) {
+      swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: t('govlist.error_fetch', 'Failed to fetch proposals'),
+        showConfirmButton: false,
+        timer: 2500
+      });
+    }
+  }, [dataload, t]);
+
 
   return (
     <>
       <SubTitle heading={t('govlist.table.title')} />
       {
-        (dataload === 0) && <p className="text-center">{t('govlist.loading')}</p>
+        (dataload === 0) && (
+          <div className="loading loading--center" role="status" aria-live="polite">
+            <div className="spinner" aria-hidden></div>
+            <span className="loading__label">{t('govlist.loading', 'Loading proposals...')}</span>
+          </div>
+        )
       }
       {
         (dataload === 1 && proposals.length > 0) && <div className="proposals">
