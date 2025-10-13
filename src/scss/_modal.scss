@@ -108,4 +108,11 @@
 .tooltipSysClass {
     background: #242652;
     border-radius: 5px;
+    max-width: 300px !important;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-align: left;
 }
