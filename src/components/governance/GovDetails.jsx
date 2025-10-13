@@ -42,6 +42,9 @@ class Govdetails extends Component {
     render() {
         const { t } = this.props;
         if(this.state.dataload===1) {
+            // Debug: Log the superBlockData structure
+            console.log('superBlockData:', this.state.superBlockData);
+            console.log('sb1Budget:', this.state.superBlockData.sb1Budget);
             return (
                 <div className="cols-top cols">
                     <div className="col col--size6">
@@ -90,27 +93,27 @@ class Govdetails extends Component {
                                     <tbody>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb1}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb1Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb1Budget?.result || this.state.superBlockData.sb1Budget || 'N/A'} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb1Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb2}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb2Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb2Budget?.result || this.state.superBlockData.sb2Budget || 'N/A'} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb2Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb3}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb3Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb3Budget?.result || this.state.superBlockData.sb3Budget || 'N/A'} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb3Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb4}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb4Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb4Budget?.result || this.state.superBlockData.sb4Budget || 'N/A'} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb4Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb5}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb5Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb5Budget?.result || this.state.superBlockData.sb5Budget || 'N/A'} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb5Date}</td>
                                         </tr>
                                     </tbody>
