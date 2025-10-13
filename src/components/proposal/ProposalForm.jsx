@@ -379,14 +379,22 @@ function ProposalForm() {
               initialStyle={{height: 0, overflow: 'hidden'}}
             >
               <div className="form-group article">
-                <textarea
-                  className="styled"
-                  name="prepareCommand"
-                  id="prepareCommand"
-                  rows="5"
-                  disabled
-                  value={prepareCommand}
-                ></textarea>
+                <div className="cli-command-container">
+                  <textarea
+                    className="styled"
+                    name="prepareCommand"
+                    id="prepareCommand"
+                    rows="5"
+                    disabled
+                    value={prepareCommand}
+                  ></textarea>
+                  <CopyToClipboard
+                    text={prepareCommand}
+                    onCopy={copyButton}
+                  >
+                    <button className="copy-icon" type="button" title="Copy command">📋</button>
+                  </CopyToClipboard>
+                </div>
                 <small>
                   <p style={{lineHeight: "1.5"}}>
                     Prepare command is ready to be copied. Please copy and paste it into Syscoin Q.T console for payment txid.
@@ -399,7 +407,7 @@ function ProposalForm() {
                   text={prepareCommand}
                   onCopy={copyButton}
                 >
-                  <button className="btn btn-outline-primary" type="button">Copy</button>
+                  <button className="btn btn--blue" type="button">Copy Command</button>
                 </CopyToClipboard>
               </div>
 
@@ -431,14 +439,22 @@ function ProposalForm() {
                 <div className="alert alert-warning mb-3 py-2 px-3" role="alert">
                   <strong>Important:</strong> Please wait at least <b>5 minutes</b> or <b>1 block confirmation</b> after sending the payment transaction before running <code>go_submit</code>. Submitting too early may cause your proposal to fail.
                 </div>
-                <textarea
-                  className="styled"
-                  name="submitCommand"
-                  id="submitCommand"
-                  rows="5"
-                  disabled
-                  value={submitCommand}
-                ></textarea>
+                <div className="cli-command-container">
+                  <textarea
+                    className="styled"
+                    name="submitCommand"
+                    id="submitCommand"
+                    rows="5"
+                    disabled
+                    value={submitCommand}
+                  ></textarea>
+                  <CopyToClipboard
+                    text={submitCommand}
+                    onCopy={copyButton}
+                  >
+                    <button className="copy-icon" type="button" title="Copy command">📋</button>
+                  </CopyToClipboard>
+                </div>
                 <small>
                   <p style={{lineHeight: "1.5"}}>
                     Submit command is ready to be copied. Please copy and paste it into Syscoin Q.T console to submit your proposal. This could take a couple minutes.
@@ -451,7 +467,7 @@ function ProposalForm() {
                   text={submitCommand}
                   onCopy={copyButton}
                 >
-                  <button className="btn btn-outline-primary" type="button">Copy</button>
+                  <button className="btn btn--blue" type="button">Copy Command</button>
                 </CopyToClipboard>
               </div>
 
