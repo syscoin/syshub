@@ -90,27 +90,27 @@ class Govdetails extends Component {
                                     <tbody>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb1}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb1Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb1Budget || 0} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb1Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb2}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb2Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb2Budget || 0} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb2Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb3}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb3Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb3Budget || 0} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb3Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb4}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb4Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb4Budget || 0} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb4Date}</td>
                                         </tr>
                                         <tr>
                                             <td className="table-label">{this.state.superBlockData.sb5}</td>
-                                            <td className="table-value">{this.state.superBlockData.sb5Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb5Budget || 0} SYS</td>
                                             <td className="table-value">{this.state.superBlockData.sb5Date}</td>
                                         </tr>
                                     </tbody>
