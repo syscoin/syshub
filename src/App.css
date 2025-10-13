@@ -78,3 +78,113 @@ textarea#submitCommand::selection {
 .cli-command-container .copy-icon:active {
   transform: scale(0.95);
 }
+
+/* Governance Proposal Link Button */
+.proposal-link-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.proposal-link-button:hover {
+  background: linear-gradient(135deg, #e55a2b, #e0841a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.proposal-link-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.proposal-link-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Voting Command Sections */
+.voting-command-section {
+  margin: 16px 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  clear: both;
+}
+
+.voting-command-section .cli-command-container textarea {
+  min-height: 60px;
+  height: auto;
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 12px 50px 12px 12px; /* top right bottom left - extra padding on right for copy icon */
+  word-break: break-all;
+  box-sizing: border-box;
+}
+
+.voting-command-label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.voting-command-label--yes {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.voting-command-label--no {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.voting-command-label--abstain {
+  background-color: rgba(156, 163, 175, 0.2);
+  color: #9ca3af;
+  border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+/* Hash Info Section - Less Prominent */
+.hash-info-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.8;
+}
+
+.hash-info-section p {
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+/* Override width constraints for voting commands in proposal budget section */
+.proposal .budget .voting-command-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  float: none !important;
+  clear: both;
+}
+
+.proposal .budget .voting-command-section .cli-command-container {
+  width: 100% !important;
+  max-width: 100% !important;
+}

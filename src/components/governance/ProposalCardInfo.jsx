@@ -39,8 +39,13 @@ function ProposalCardInfo({
   function proposalUrl(url) {
     if (url !== "" && url !== "emptyField") {
       return (
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          View proposal on syscoin.org
+        <a 
+          href={url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="proposal-link-button"
+        >
+          📄 View Full Proposal on Syscoin.org
         </a>
       );
     } else {
@@ -74,22 +79,12 @@ function ProposalCardInfo({
     />
         </>
       )}
-      <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
-        Hash: <CopyToClipboard
-          text={proposal.Hash}
-          onCopy={onCopy}
-        ><span style={{cursor:'pointer'}}>{proposal.Hash}</span></CopyToClipboard>
-      </p>
-      <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
-        Collateral hash:{" "}
-        <a
-          href={`${blockbookBase}/tx/${proposal.ColHash}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {proposal.ColHash}
-        </a>
-      </p>
+      
+      {/* Prominent View Proposal Button */}
+      <div className="proposal-link-section">
+        {proposalUrl(proposal.url)}
+      </div>
+      
       <p>
         {days_remaining < 30 ? (
           <span>{`(${days_remaining} Day${
@@ -101,20 +96,93 @@ function ProposalCardInfo({
           } Remaining)`}</span>
         )}
       </p>
-      <span style={{ lineHeight: "1.5" }}>Voting string:</span>
-      <div className="input-form">
-        <div className="form-group">
+      <span style={{ lineHeight: "1.5" }}>Voting Commands:</span>
+      
+      {/* Yes Vote Command */}
+      <div className="voting-command-section">
+        <label className="voting-command-label voting-command-label--yes">
+          👍 Vote YES
+        </label>
+        <div className="cli-command-container">
           <textarea
-            type="text"
             className="styled"
-            style={{ resize: "none" }}
+            style={{ resize: "none", minHeight: "60px" }}
             value={`gobject_vote_many ${proposal.Key} funding yes`}
             disabled={true}
+            rows="3"
           />
+          <CopyToClipboard
+            text={`gobject_vote_many ${proposal.Key} funding yes`}
+            onCopy={onCopy}
+          >
+            <button className="copy-icon" type="button" title="Copy YES command">📋</button>
+          </CopyToClipboard>
         </div>
       </div>
 
-      <>{proposalUrl(proposal.url)}</>
+      {/* No Vote Command */}
+      <div className="voting-command-section">
+        <label className="voting-command-label voting-command-label--no">
+          👎 Vote NO
+        </label>
+        <div className="cli-command-container">
+          <textarea
+            className="styled"
+            style={{ resize: "none", minHeight: "60px" }}
+            value={`gobject_vote_many ${proposal.Key} funding no`}
+            disabled={true}
+            rows="3"
+          />
+          <CopyToClipboard
+            text={`gobject_vote_many ${proposal.Key} funding no`}
+            onCopy={onCopy}
+          >
+            <button className="copy-icon" type="button" title="Copy NO command">📋</button>
+          </CopyToClipboard>
+        </div>
+      </div>
+
+      {/* Abstain Vote Command */}
+      <div className="voting-command-section">
+        <label className="voting-command-label voting-command-label--abstain">
+          ➖ ABSTAIN
+        </label>
+        <div className="cli-command-container">
+          <textarea
+            className="styled"
+            style={{ resize: "none", minHeight: "60px" }}
+            value={`gobject_vote_many ${proposal.Key} funding abstain`}
+            disabled={true}
+            rows="3"
+          />
+          <CopyToClipboard
+            text={`gobject_vote_many ${proposal.Key} funding abstain`}
+            onCopy={onCopy}
+          >
+            <button className="copy-icon" type="button" title="Copy ABSTAIN command">📋</button>
+          </CopyToClipboard>
+        </div>
+      </div>
+
+      {/* Hash Information - Less Prominent */}
+      <div className="hash-info-section">
+        <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
+          Hash: <CopyToClipboard
+            text={proposal.Hash}
+            onCopy={onCopy}
+          ><span style={{cursor:'pointer'}}>{proposal.Hash}</span></CopyToClipboard>
+        </p>
+        <p style={{ lineBreak: "anywhere", lineHeight: "initial" }}>
+          Collateral hash:{" "}
+          <a
+            href={`${blockbookBase}/tx/${proposal.ColHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {proposal.ColHash}
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
