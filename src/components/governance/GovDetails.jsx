@@ -47,59 +47,74 @@ class Govdetails extends Component {
                     <div className="col col--size6">
                         <div className="article__content">
                             <h3 className="article__title title-border title-border--left title-border--blue">{t('superblocks.govdetailtable.title')}</h3>
-                            <div className="ministats mndata-governance">
-                                <div className="stat">
-                                    {t('superblocks.govdetailtable.current_superblock')}
-                                    <div className="stat-data">{this.state.superBlockData.next_superblock}</div>
-                                </div>
-                                <div className="stat">
-                                    {t('superblocks.govdetailtable.superblock_budget')}
-                                    <div className="stat-data">{this.state.superBlockData.budget} SYS</div>
-                                </div>
-                                <div className="stat">
-                                    {t('superblocks.govdetailtable.requested_superblock_budget')}
-                                    <div className="stat-data">{this.state.budgetSum} SYS</div>
-                                </div>
-                                <div className="stat">
-                                    {t('superblocks.govdetailtable.superblock_date_utc')}
-                                    <div className="stat-data">{this.state.superBlockData.superblock_date}</div>
-                                </div>
-                                <div className="stat">
-                                    {t('superblocks.govdetailtable.voting_deadline_utc')}
-                                    <div className="stat-data">{this.state.superBlockData.voting_deadline}</div>
-                                </div>
+                            <div className="table-responsive">
+                                <table className="table table--governance">
+                                    <tbody>
+                                        <tr>
+                                            <td className="table-label">Current SuperBlock:</td>
+                                            <td className="table-value">{this.state.superBlockData.next_superblock}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">SuperBlock Budget:</td>
+                                            <td className="table-value">{this.state.superBlockData.budget} SYS</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">Requested SuperBlock Budget:</td>
+                                            <td className="table-value">{this.state.budgetSum} SYS</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">SuperBlock Date (UTC):</td>
+                                            <td className="table-value">{this.state.superBlockData.superblock_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">Voting Deadline (UTC):</td>
+                                            <td className="table-value">{this.state.superBlockData.voting_deadline}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                     <div className="col col--size6">
                         <div className="article__content">
                             <h3 className="article__title title-border title-border--left title-border--blue">{t('superblocks.nextsuperblockstable.title')}</h3>
-                            <div className="ministats mndata-governance">
-                                <div className="stat">
-                                    {this.state.superBlockData.sb1}
-                                    <div className="stat-data">{this.state.superBlockData.sb1Budget.result} SYS</div>
-                                    <div className="stat-data">{this.state.superBlockData.sb1Date}</div>
-                                </div>
-                                <div className="stat">
-                                    {this.state.superBlockData.sb2}
-                                    <div className="stat-data">{this.state.superBlockData.sb2Budget.result} SYS</div>
-                                    <div className="stat-data">{this.state.superBlockData.sb2Date}</div>
-                                </div>
-                                <div className="stat">
-                                    {this.state.superBlockData.sb3}
-                                    <div className="stat-data">{this.state.superBlockData.sb3Budget.result} SYS</div>
-                                    <div className="stat-data">{this.state.superBlockData.sb3Date}</div>
-                                </div>
-                                <div className="stat">
-                                    {this.state.superBlockData.sb4}
-                                    <div className="stat-data">{this.state.superBlockData.sb4Budget.result} SYS</div>
-                                    <div className="stat-data">{this.state.superBlockData.sb4Date}</div>
-                                </div>
-                                <div className="stat">
-                                    {this.state.superBlockData.sb5}
-                                    <div className="stat-data">{this.state.superBlockData.sb5Budget.result} SYS</div>
-                                    <div className="stat-data">{this.state.superBlockData.sb5Date}</div>
-                                </div>
+                            <div className="table-responsive">
+                                <table className="table table--governance">
+                                    <thead>
+                                        <tr>
+                                            <th>SuperBlock</th>
+                                            <th>Budget</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td className="table-label">{this.state.superBlockData.sb1}</td>
+                                            <td className="table-value">{this.state.superBlockData.sb1Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb1Date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">{this.state.superBlockData.sb2}</td>
+                                            <td className="table-value">{this.state.superBlockData.sb2Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb2Date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">{this.state.superBlockData.sb3}</td>
+                                            <td className="table-value">{this.state.superBlockData.sb3Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb3Date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">{this.state.superBlockData.sb4}</td>
+                                            <td className="table-value">{this.state.superBlockData.sb4Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb4Date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="table-label">{this.state.superBlockData.sb5}</td>
+                                            <td className="table-value">{this.state.superBlockData.sb5Budget.result} SYS</td>
+                                            <td className="table-value">{this.state.superBlockData.sb5Date}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
