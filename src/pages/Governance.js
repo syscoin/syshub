@@ -9,6 +9,7 @@ import BackgroundInner from "../components/global/BackgroundInner";
 import BannerImage from "../components/global/BannerImage";
 import GovDetails from "../components/governance/GovDetails";
 import ProposalsList from "../components/governance/ProposalsList";
+import Breadcrumbs from "../components/global/Breadcrumbs";
 
 const API_URI = process.env.REACT_APP_SYS_API_URI;
 
@@ -155,6 +156,10 @@ class Governance extends Component {
           <div className="shell-large">
             <div className="section__body">
               <div className="articles">
+                <Breadcrumbs items={[
+                  { label: t('header.home', 'Home'), to: '/' },
+                  { label: t('header.governance', 'Governance') }
+                ]} />
                 <BannerImage
                   heading={t("governance.heading")}
                   direction="top-right"
@@ -168,6 +173,7 @@ class Governance extends Component {
                       <div className="cols">
                         <div className="col col--size12">
                           <div className="article__content">
+                            <h2 className="section-heading" id="proposals-heading">{t('govlist.table.title')}</h2>
                             <ProposalsList
                               statsData={this.state.statsData.stats.mn_stats}
                             />

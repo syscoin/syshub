@@ -153,6 +153,20 @@ ul.pagination
         padding:20px;
         @include border-radius(3px);
         margin-bottom:10px;
+        border: 1px solid transparent;
+        @include transition(all, .15s);
+
+        &:hover {
+            background: rgba(255,255,255,0.18);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.25);
+        }
+
+        &.proposal--expanded {
+            background: rgba(255,255,255,0.24);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+            border-color: rgba(255,255,255,0.35);
+        }
 
         .vote-count
         {
@@ -222,6 +236,35 @@ ul.pagination
             font-size:24px;
             color:white;
 
+            .proposal-title {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: #fff;
+                background: transparent;
+                border: none;
+                padding: 2px 4px;
+                margin: 0;
+                cursor: pointer;
+                text-decoration: underline;
+                text-decoration-color: rgba(255,255,255,0.5);
+                text-underline-offset: 2px;
+                font-size: inherit;
+                line-height: 1.2;
+                border-radius: 4px;
+                @include transition(all, .15s);
+            }
+            .proposal-title:hover,
+            .proposal-title:focus {
+                outline: 2px solid rgba(255,255,255,0.35);
+                outline-offset: 2px;
+                background: rgba(255,255,255,0.10);
+            }
+            .proposal-title__icon {
+                font-size: 0.9em;
+                opacity: 0.9;
+            }
+
             .date 
             {
                 color:$off-white;
@@ -242,6 +285,10 @@ ul.pagination
             
         }
 
+        .proposal-back {
+            margin-top: 12px;
+        }
+
         .actions 
         {
             width:10%;
@@ -251,8 +298,8 @@ ul.pagination
             {
                 line-height: 1.2;
                 text-align: center;
-                width: 90px;
-                height: 36px;
+                width: 100px;
+                height: 44px;
                 float: right;
                 clear: right;
                 margin-bottom: 4px;
@@ -277,8 +324,7 @@ ul.pagination
 
                 &:focus
                 {
-                    outline: 2px solid $color-blue-main;
-                    outline-offset: 2px;
+                    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.35);
                 }
 
                 &:disabled
@@ -316,7 +362,7 @@ ul.pagination
                     }
                     &:focus
                     {
-                        outline-color: #28a745;
+                        box-shadow: 0 0 0 3px rgba(40,167,69,0.35);
                     }
                 }
 
@@ -331,7 +377,7 @@ ul.pagination
                     }
                     &:focus
                     {
-                        outline-color: #6c757d;
+                        box-shadow: 0 0 0 3px rgba(108,117,125,0.35);
                     }
                 }
 
@@ -346,13 +392,40 @@ ul.pagination
                     }
                     &:focus
                     {
-                        outline-color: #dc3545;
+                        box-shadow: 0 0 0 3px rgba(220,53,69,0.35);
                     }
                 }
             }
         }
     }
 }
+
+/* Breadcrumbs */
+.breadcrumbs {
+    font-size: 14px;
+    color: #ddd;
+    margin: 10px 0 20px;
+}
+.breadcrumbs a {
+    color: #fff;
+    text-decoration: underline;
+}
+.breadcrumbs .breadcrumb-sep {
+    margin: 0 8px;
+    opacity: .7;
+}
+.breadcrumbs .breadcrumb-current {
+    color: #fff;
+}
+
+/* Loading spinner */
+.loading--center { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.spinner {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
 .ministats, .world-dist
 {
