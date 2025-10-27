@@ -44,7 +44,7 @@ function ProposalForm() {
   const cancelSource = useMemo(() => axios.CancelToken.source(), []);
 
   const onPaymentTxIdEntered = useCallback(() => {
-    next(); // Move to step 6 (submit proposal)
+    setCurrentStep(prev => prev + 1); // Move to step 6 (submit proposal)
   }, []);
 
   const { enterPaymentTxId, enterProposalHash } = useProposalSubmission({

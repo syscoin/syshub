@@ -1,14 +1,14 @@
-import React from "react";
-import {CopyToClipboard} from "react-copy-to-clipboard";
-import {useForm} from "react-hook-form";
+import React from 'react';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {useForm} from 'react-hook-form';
 import {ErrorMessage} from '@hookform/error-message';
 import {yupResolver} from '@hookform/resolvers';
-import * as yup from "yup";
-import swal from "sweetalert2";
+import * as yup from 'yup';
+import swal from 'sweetalert2';
 
 const schema = yup.object().shape({
   paymentTxId: yup.string()
-    .test('len', 'Must be exactly 64 characters', val => val.length === 64)
+    .test('len', 'Must be exactly 64 characters', val => val && val.length === 64)
     .required('Payment txid is required')
 });
 
@@ -37,12 +37,12 @@ function PrepareProposal({ prepareCommand, onSubmit, onCancel }) {
    */
   const copyButton = () => {
     swal.fire({
-      icon: "success",
-      title: "Copied",
+      icon: 'success',
+      title: 'Copied',
       timer: 2000,
       showConfirmButton: false,
     });
-  }
+  };
 
   return (
     <div>
