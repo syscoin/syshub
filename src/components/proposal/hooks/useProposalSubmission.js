@@ -18,8 +18,7 @@ const useProposalSubmission = ({
   proposalUid,
   history,
   setSubmitCommand,
-  setUseCollapse,
-  setCollapse,
+  onPaymentTxIdEntered,
 }) => {
   const ensureProposalUid = useCallback(async () => {
     if (!proposalUid) {
@@ -91,8 +90,6 @@ const useProposalSubmission = ({
         }
 
         setSubmitCommand(commandSubmit)
-        setUseCollapse(true)
-        setCollapse(false)
 
         await swal.fire({
           icon: 'success',
@@ -100,6 +97,11 @@ const useProposalSubmission = ({
           timer: 2000,
           showConfirmButton: false,
         })
+
+        // Advance to the next step (Step 6: Submit proposal)
+        if (onPaymentTxIdEntered) {
+          onPaymentTxIdEntered()
+        }
       } catch (error) {
         logAxiosError('useProposalSubmission::enterPaymentTxId', error, {
           proposalUid,
@@ -120,7 +122,7 @@ const useProposalSubmission = ({
         clearCancelSource(cancelSource)
       }
     },
-    [clearCancelSource, createCancelSource, ensureProposalUid, proposalUid, setCollapse, setSubmitCommand, setUseCollapse]
+    [clearCancelSource, createCancelSource, ensureProposalUid, proposalUid, setSubmitCommand, onPaymentTxIdEntered]
   )
 
   const confirmProposalCompletion = useCallback(
